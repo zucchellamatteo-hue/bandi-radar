@@ -1,6 +1,6 @@
 # Bandi Radar — Piano di progetto v1
 
-*Bozza del 23/09/2026 — da approvare con Matteo.*
+*Bozza del 23/09/2026, rivista lo stesso giorno con le prime decisioni di Matteo (vedi §10).*
 
 ---
 
@@ -9,11 +9,12 @@
 Trovare in automatico **tutti i bandi aperti** (UE, nazionali, regionali, camerali, altri enti), trasformarli in **schede ordinate** (chi può partecipare, cosa si finanzia, quanto, entro quando) e **abbinarli ai clienti di Contract to Cash**. Ai clienti arriva una proposta via email e possono consultare tutto da un cruscotto.
 
 Requisiti di Matteo:
-- **Non si scartano** regioni ed enti locali.
+- **Non si scartano** regioni ed enti locali. **Nemmeno i Comuni** (vedi §3).
 - **Plancia di controllo** per vedere lo stato di ogni fonte, rilanciare le automazioni e accorgersi delle fonti "mute" da troppo tempo (possibile guasto).
 - **Cruscotto** consultabile anche dai clienti.
 - **Match automatici** con notifica ed email.
-- Deve reggere la crescita da 0 a molti clienti senza che i costi esplodano.
+- Deve reggere la crescita da 0 a molti clienti senza che i costi esplodano (obiettivo: 100 clienti entro 6 mesi).
+- Deve **funzionare da solo ed essere facilmente trasferibile**: il codice di Contract to Cash e l'hosting sono in mano a Sergio, quindi Bandi Radar nasce come sistema autonomo (Docker Compose, un file di configurazione, un comando per avviarlo) e il collegamento a C2C si fa più avanti.
 
 ---
 
@@ -39,9 +40,11 @@ Requisiti di Matteo:
 | 3 | **Abbinamento** | Confronta ogni scheda con ogni profilo cliente e assegna un punteggio con la motivazione | Regole automatiche; IA solo per scrivere la spiegazione |
 | 4 | **Plancia di controllo** | Salute delle fonti, allarmi, rilanci, costi | Piccola app web React (stessa tecnologia di C2C) |
 | 5 | **API** | Il "rubinetto" da cui Contract to Cash prende bandi e match | REST, chiamata dal backend Java di C2C |
-| 6 | **Cruscotto clienti + email** | Pagine dentro Contract to Cash e invio delle proposte | React in C2C + servizio email europeo (es. Brevo) |
+| 6 | **Cruscotto clienti + email** | Pagine per i clienti e invio delle proposte. Nascono dentro Bandi Radar, da incorporare in C2C più avanti | React + servizio email transazionale (Resend, vedi §7) |
 
-**Scelta chiave: Bandi Radar non conosce i clienti per nome.** Riceve solo profili anonimi (codice interno, ATECO, provincia, dimensione, fatturato a fasce, export sì/no…). Nomi, email e invii restano dentro Contract to Cash. È più sicuro per la privacy e più semplice da difendere con i clienti.
+**Scelta chiave: Bandi Radar non conosce i clienti per nome.** Riceve solo profili anonimi (codice interno, ATECO, provincia, comune, dimensione, fatturato a fasce, export sì/no…). Nomi, email e invii restano nel sistema che gestisce i clienti. È più sicuro per la privacy e più semplice da difendere con i clienti.
+
+**Da dove arrivano i profili, oggi e domani.** Il codice di Contract to Cash non è accessibile (lo gestisce Sergio), quindi il collegamento a C2C si rinvia. Nella prima versione i profili anonimi si generano dalle **anagrafiche che Matteo ha nel suo Postgres in Docker**: un piccolo script legge quelle tabelle e produce i profili nel formato standard di Bandi Radar. Quando C2C sarà collegato, farà la stessa cosa attraverso l'API (modulo 5): il formato del profilo è lo stesso, cambia solo chi lo manda. Per lo stesso motivo il **cruscotto clienti e l'invio delle email (modulo 6) nascono dentro Bandi Radar**, con un accesso per cliente, e verranno incorporati in C2C quando sarà possibile.
 
 **Come teniamo tutte le regioni e le Camere senza 80 programmi diversi:** non si scrive uno script per ogni sito. C'è **un solo "osservatore di pagine" generico**: per ogni fonte basta una riga di configurazione (indirizzo della pagina elenco, eventuale feed RSS). L'osservatore confronta la pagina con quella della volta prima e **manda all'IA solo la parte cambiata**. Aggiungere una fonte significa aggiungere una riga, non scrivere codice. Quando un sito cambia aspetto, di solito si aggiorna quella riga.
 
@@ -66,7 +69,11 @@ Requisiti di Matteo:
 | Fondazioni bancarie (selezione) | ~5 | poche finestre all'anno | 1 volta a settimana | osservatore |
 | **Totale** | **~92** | | | |
 
-**I Comuni** (quasi 7.900) non si possono controllare tutti. Proposta: in Fase 7 aggiungiamo i **capoluoghi di Lombardia e FVG**. Per gli altri ci affidiamo al campo "comuni" di incentivi.gov.it. Decide Matteo.
+**I Comuni: tutti, ma in modo intelligente.** Matteo ha chiesto di coprire tutti i Comuni (quasi 7.900). Controllare 7.900 siti ogni settimana non è sensato né utile: la maggior parte non ha clienti e molti non pubblicano mai bandi per imprese. Si procede così:
+1. **Copertura generale** con le fonti che già aggregano i bandi comunali: incentivi.gov.it (campo "comuni"), i portali regionali che rilanciano gli avvisi degli enti locali, i bandi delle Camere di Commercio in convenzione con i Comuni.
+2. **Osservatore attivato dai clienti**: per ogni cliente si aggiungono in automatico alla lista delle fonti il **Comune della sede** e, se indicato, i Comuni delle unità locali. Con 100 clienti si osservano al massimo 100 Comuni, non 7.900, e sono proprio quelli che contano. L'indirizzo della pagina "bandi e avvisi" di ogni Comune si cerca una volta sola (con aiuto dell'IA) e finisce nel registro delle fonti.
+3. **Comuni grandi sempre osservati**: i capoluoghi di provincia di Lombardia e FVG dalla Fase 1, gli altri capoluoghi in Fase 7.
+Così la copertura cresce con i clienti, e il costo resta proporzionale.
 
 **Fonti escluse dalla raccolta**: TED (sono appalti), OpenCoesione (storico), aggregatori privati (i loro elenchi hanno diritti sulla banca dati; possono servire solo per un controllo manuale).
 **RNA** non serve a trovare bandi: entra in Fase 7 per il controllo del *de minimis* dei clienti.
@@ -99,6 +106,11 @@ Ipotesi: 150–300 novità a settimana raccolte da tutte le fonti, di cui 60–1
 La parte grossa del costo è **fissa** (leggere i bandi). Ogni bando si legge una volta, qualunque sia il numero di clienti, e un cliente in più costa pochi centesimi. Più clienti ci sono, più il servizio si ripaga.
 
 **Costo di sviluppo:** le sessioni di lavoro con me in Claude Code rientrano nel tuo abbonamento, non si pagano a token. Nelle settimane di sviluppo intenso potresti arrivare ai limiti del piano: in quel caso si valuta un piano superiore solo per quel periodo.
+
+**Abbonamento e API sono due cose diverse.** L'abbonamento copre il lavoro interattivo (Claude Code, chat). Il sistema in produzione, che legge i bandi da solo di notte, deve chiamare l'API di Anthropic, che si paga a consumo e richiede un account separato (Console Anthropic) con carta e un tetto di spesa mensile. Le condizioni d'uso non permettono di usare le credenziali dell'abbonamento dentro un'applicazione propria. Per contenere la spesa iniziale:
+- **Fasi 0, 1 e 2 non usano l'IA**: raccolta, archivio e plancia funzionano con soli script. L'account API serve dalla **Fase 3** (schede).
+- Durante lo sviluppo, le prove sulle schede si fanno **nelle sessioni di Claude Code**, quindi dentro l'abbonamento. L'API entra solo quando il flusso è automatico.
+- Si parte con un tetto basso (es. 30 € al mese) che si alza quando le schede sono a regime. Con i volumi stimati sopra, i primi mesi costano 20–50 € al mese.
 
 **Server:** un piccolo server in Europa (8–20 €/mese) oppure un container in più accanto a quelli di Contract to Cash, se il tuo hosting lo permette.
 
@@ -146,7 +158,8 @@ Ogni scheda riporta **"Informazione indicativa, verificare il bando ufficiale"**
 2. **Punteggio**: prima i requisiti obbligatori (territorio, ATECO, dimensione, forma giuridica: se ne manca uno il match si scarta), poi quelli di preferenza.
 3. **Fase iniziale: approva Matteo.** I match vanno in una coda nella plancia e Matteo sceglie se inviare, modificare o scartare. Da commercialista, è una garanzia di qualità verso il cliente.
 4. **Dopo la taratura**: i match con punteggio alto partono da soli, quelli incerti restano in coda.
-5. **Email** inviata da Contract to Cash (è C2C a conoscere gli indirizzi): oggetto chiaro, 3 righe di motivo, link al cruscotto. Mai due volte lo stesso bando allo stesso cliente. Promemoria 15 giorni prima della scadenza se il cliente ha cliccato "mi interessa".
+5. **Email** inviata dal modulo 6 (nella prima versione dentro Bandi Radar, poi da C2C): oggetto chiaro, 3 righe di motivo, link al cruscotto. Mai due volte lo stesso bando allo stesso cliente. Promemoria 15 giorni prima della scadenza se il cliente ha cliccato "mi interessa".
+6. **Servizio email: Resend.** Sergio lo usa già per altro, quindi quando il modulo passerà in C2C non si cambia fornitore. Va attivata la **regione europea** di Resend (i dati restano in UE) e firmato il loro accordo sul trattamento dati. Brevo sarebbe stato equivalente sul piano tecnico; il vantaggio di Resend è avere un solo fornitore tra i due sistemi. Il piano gratuito (3.000 email al mese) basta fino a qualche centinaio di clienti.
 
 ---
 
@@ -154,7 +167,7 @@ Ogni scheda riporta **"Informazione indicativa, verificare il bando ufficiale"**
 
 - **Profili anonimi** verso Bandi Radar e verso l'IA (vedi §2).
 - **Contratti con i fornitori**: accordi sul trattamento dati (DPA) con Anthropic, il servizio email e l'hosting.
-- **Informativa ai clienti e registro dei trattamenti**: da aggiornare con il tuo consulente privacy.
+- **Informativa ai clienti e registro dei trattamenti**: non c'è un consulente privacy. In Fase 6 preparo io le bozze (informativa, registro, DPA da firmare, testo per il consenso alle email). Sono bozze tecniche: prima dei clienti reali conviene farle leggere a un professionista, anche solo per una revisione di poche ore.
 - **Siti pubblici**: si leggono solo informazioni pubbliche, rispettando le regole dei siti (robots.txt) e a ritmo moderato. Si citano le fonti come richiedono le licenze dei dati aperti.
 
 ---
@@ -165,24 +178,38 @@ Partenza ipotizzata **lunedì 28/09/2026**, con 2–3 sessioni di lavoro a setti
 
 | Fase | Settimane | Contenuto | Cosa provi tu alla fine |
 |---|---|---|---|
-| **0 — Fondamenta** | 1 (28/09–04/10) | Repository e regole di lavoro (CLAUDE.md), ambiente cloud con accesso ai siti delle fonti, database, **registro completo delle ~92 fonti con indirizzi verificati** | L'elenco delle fonti, consultabile |
+| **0 — Fondamenta** | 1 (28/09–04/10) | Repository e regole di lavoro (CLAUDE.md), Docker Compose avviabile con un comando, ambiente cloud con accesso ai siti delle fonti, database, **registro completo delle ~92 fonti con indirizzi verificati** | Il sistema che parte sul tuo PC e l'elenco delle fonti |
 | **1 — Raccolta** | 2–4 (05/10–25/10) | Connettori per incentivi.gov.it, Portale UE e dati aperti Lombardia; osservatore di pagine per Regioni, Camere ed enti nazionali; archivio; **inizio misurazione delle frequenze** | Ogni lunedì un'email "novità della settimana" |
 | **2 — Plancia di controllo v1** | 4–5 (19/10–01/11) | Semafori, silenzi, rilanci, log, costi, allarmi email. **Taratura delle frequenze** con 4 settimane di dati reali | La plancia nel browser |
 | **3 — Schede bando** | 5–7 (26/10–15/11) | Lettura dei PDF, scheda standard, doppioni, proroghe e chiusure. **Controllo qualità: Matteo verifica 30 schede** a campione | Schede leggibili, con i tuoi voti sulla qualità |
-| **4 — Profili e match** | 7–9 (09/11–29/11) | Formato del profilo anonimo, API per C2C, motore di abbinamento, spiegazioni. Test con 5 imprese di prova | Per ogni impresa di prova, i suoi bandi con il motivo |
-| **5 — Cruscotto clienti ed email** | 9–11 (23/11–13/12) | Pagine React in C2C, coda di approvazione, invio email, preferenze e disiscrizione | Il cruscotto in C2C e un'email di prova |
-| **6 — Pilota** | 11–12 (07/12–20/12) | Primi clienti reali, correzioni, documenti privacy, messa online stabile | Il servizio acceso per i primi clienti |
-| **7 — Estensioni** | da gennaio 2027 | RNA/de minimis, bandi agricoli (PSR), Comuni capoluogo, avvisi SIMEST, scadenzario | Uno alla volta, a tua scelta |
+| **4 — Profili e match** | 7–9 (09/11–29/11) | Formato del profilo anonimo, script che legge le anagrafiche dal Postgres di Matteo, API (pronta per C2C), motore di abbinamento, spiegazioni, Comuni dei clienti aggiunti alle fonti. Test con 5 imprese di prova | Per ogni impresa di prova, i suoi bandi con il motivo |
+| **5 — Cruscotto clienti ed email** | 9–11 (23/11–13/12) | Pagine React dentro Bandi Radar con accesso per cliente, coda di approvazione, invio email con Resend, preferenze e disiscrizione | Il cruscotto e un'email di prova |
+| **6 — Pilota** | 11–12 (07/12–20/12) | Primi clienti reali, correzioni, bozze dei documenti privacy, messa online stabile | Il servizio acceso per i primi clienti |
+| **7 — Estensioni** | da gennaio 2027 | Collegamento a C2C (con Sergio), RNA/de minimis, bandi agricoli (PSR), altri Comuni capoluogo, avvisi SIMEST, scadenzario | Uno alla volta, a tua scelta |
 
 Alcune fasi si sovrappongono di una settimana, apposta. Nella **Fase 0** e nella **Fase 3** l'impegno di Matteo è maggiore: decisioni e verifica delle schede.
 
 ---
 
-## 10. Decisioni aperte per Matteo
+## 10. Decisioni prese e punti aperti
 
-1. **Comuni**: bastano i capoluoghi di Lombardia e FVG, o ne servono altri?
-2. **Server**: stesso hosting di Contract to Cash (dove si trova oggi?) o server separato?
-3. **Approvazione manuale** dei match: per quanto tempo prima di passare all'invio automatico?
-4. **Cruscotto clienti**: il cliente vede solo i suoi match o anche tutto il catalogo?
-5. **Il servizio è incluso** nell'abbonamento di C2C o a pagamento? Non cambia la tecnica, ma cambia le priorità.
-6. **Integrazione con C2C**: chi lavora sul codice di Contract to Cash? È su GitHub, e posso accedervi?
+**Decise il 23/09/2026:**
+
+| Tema | Decisione |
+|---|---|
+| Integrazione con Contract to Cash | Rinviata: il codice è di Sergio. Bandi Radar nasce autonomo; nella prima versione i profili arrivano dal Postgres di Matteo e cruscotto ed email vivono dentro Bandi Radar. |
+| Server | Non definito (in mano a Sergio). Il sistema deve funzionare da solo ed essere trasferibile: Docker Compose, configurazione in un file, backup del database in un comando. Durante lo sviluppo gira sul PC di Matteo o su un piccolo server in Europa. |
+| IA | Fasi 0–2 senza IA. Account API Anthropic a consumo dalla Fase 3, con tetto di spesa basso. Le prove durante lo sviluppo restano nell'abbonamento. |
+| Approvazione manuale dei match | Per tutto il pilota e almeno i primi 2 mesi con clienti reali. |
+| Catalogo visibile ai clienti | Solo i propri match nella prima versione; catalogo completo in Fase 7. |
+| Comuni | Tutti, con il meccanismo di §3: copertura generale dalle fonti aggregate, osservatore attivato per i Comuni dei clienti, capoluoghi sempre osservati. |
+| Modello commerciale | Da decidere. È un'opportunità di cross-selling verso la consulenza sui bandi: il pulsante "Mi interessa, contattatemi" è quindi centrale e va curato per primo. |
+| Clienti | Oggi 0, obiettivo 100 entro 6 mesi. Test con le anagrafiche del Postgres di Matteo. |
+| Servizio email | Resend (già usato da Sergio), regione europea. |
+| Consulente privacy | Nessuno. Bozze preparate in Fase 6, da far rivedere a un professionista prima dei clienti reali. |
+
+**Ancora aperti:**
+
+1. **Struttura delle anagrafiche in Postgres**: entro la Fase 4 serve lo schema delle tabelle (senza dati) e i campi disponibili per costruire il profilo anonimo (ATECO, comune, dimensione, fatturato, forma giuridica…).
+2. **Dove gira durante lo sviluppo**: PC di Matteo (Docker) oppure un piccolo server in Europa da 8–20 €/mese? Sul PC costa zero ma la raccolta funziona solo quando il PC è acceso, e la misurazione delle frequenze in Fase 1 richiede controlli ogni giorno.
+3. **Modello commerciale**: resta da decidere, non blocca lo sviluppo.
