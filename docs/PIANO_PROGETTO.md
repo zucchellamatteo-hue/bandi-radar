@@ -115,7 +115,7 @@ La parte grossa del costo è **fissa** (leggere i bandi). Ogni bando si legge un
 - Durante lo sviluppo, le prove sulle schede si fanno **nelle sessioni di Claude Code**, quindi dentro l'abbonamento. L'API entra solo quando il flusso è automatico.
 - Si parte con un tetto basso (es. 30 € al mese) che si alza quando le schede sono a regime. Con i volumi stimati sopra, i primi mesi costano 20–50 € al mese.
 
-**Server:** un piccolo server in Europa (8–20 €/mese) oppure un container in più accanto a quelli di Contract to Cash, se il tuo hosting lo permette.
+**Server:** OVH VPS-2 con Ubuntu 24.04 in Francia, 8,80 €/mese IVA inclusa (stesso fornitore e stesso tipo di Sergio, così il trasferimento futuro è una copia dei container e del database). Il backup giornaliero è incluso; in più il sistema fa un proprio dump del database ogni notte.
 
 ---
 
@@ -201,7 +201,7 @@ Alcune fasi si sovrappongono di una settimana, apposta. Nella **Fase 0** e nella
 | Tema | Decisione |
 |---|---|
 | Integrazione con Contract to Cash | Rinviata: il codice è di Sergio. Bandi Radar nasce autonomo; nella prima versione i profili arrivano dal Postgres di Matteo e cruscotto ed email vivono dentro Bandi Radar. |
-| Server | In mano a Sergio. Il sistema deve funzionare da solo ed essere trasferibile: Docker Compose, configurazione in un file, backup del database in un comando. Le sessioni cloud di Claude Code non possono ospitarlo (contenitori temporanei). Si compra un server dello stesso tipo di quello di Sergio, così il trasferimento è una copia: Matteo chiede a Sergio fornitore, tipo di server e paese dei dati. |
+| Server | Sergio usa **OVHcloud, VPS con Ubuntu, in Europa**. Si compra lo stesso: **OVH VPS-2** (4 vCore, 8 GB RAM, 75 GB NVMe, backup giornaliero incluso, 8,80 €/mese IVA inclusa), **Ubuntu 24.04 LTS**, datacenter in **Francia** (Gravelines o Strasburgo). Il VPS-1 da 4 GB è troppo stretto per Postgres, i lettori di pagine e un browser senza interfaccia insieme; il VPS-3 non serve prima di qualche centinaio di clienti. Le sessioni cloud di Claude Code non possono ospitare il sistema (contenitori temporanei). |
 | IA | Fasi 0–2 senza IA. Account API Anthropic a consumo dalla Fase 3, con tetto di spesa basso. Prima di automatizzare, Matteo lancia lui stesso nelle sessioni di Claude Code (abbonamento) le stesse richieste che farà il sistema, come **mappature** salvate in `docs/ricerche/`, per vedere cosa esce dai siti. |
 | Approvazione manuale dei match | Per tutto il pilota e almeno i primi 2 mesi con clienti reali. |
 | Catalogo visibile ai clienti | Solo i propri match nella prima versione; catalogo completo in Fase 7. |
@@ -214,6 +214,6 @@ Alcune fasi si sovrappongono di una settimana, apposta. Nella **Fase 0** e nella
 **Ancora aperti:**
 
 1. **Struttura delle anagrafiche in Postgres**: entro la Fase 4 serve lo schema delle tabelle (senza dati) e i campi disponibili per costruire il profilo anonimo (ATECO, comune, dimensione, fatturato, forma giuridica…).
-2. **Server**: fornitore, tipo e paese del server di Sergio, per comprarne uno uguale. Finché non arriva la risposta, in Fase 0 si parte sul PC di Matteo con Docker.
+2. **Server**: deciso (OVH VPS-2, Ubuntu 24.04, Francia). Da comprare prima della Fase 1; in Fase 0 serve l'accesso SSH per preparare la macchina.
 4. **Rete della sessione cloud**: da allargare nelle impostazioni dell'ambiente, altrimenti le mappature e la Fase 1 non raggiungono i siti delle fonti.
 3. **Modello commerciale**: resta da decidere, non blocca lo sviluppo.
