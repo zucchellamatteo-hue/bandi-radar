@@ -99,7 +99,7 @@ Circa 180 voci, dopo le mappature in `docs/ricerche/`. Divise per modo di lettur
 **L'osservatore non consuma token.** Scaricare una pagina e confrontarla con la versione precedente è un lavoro da script. L'IA entra solo in due momenti: quando un frammento è cambiato (smistamento con Haiku, pochi centesimi) e quando un bando nuovo va trasformato in scheda (Sonnet, qualche decina di centesimi con i PDF). **La frequenza dei controlli quindi non incide sul costo IA**: i bandi nuovi da leggere sono gli stessi, che li si scopra il giorno dopo o due settimane dopo. Incide solo sulla tempestività, e molti bandi restano aperti poche settimane (in Lombardia, "Fondo giovani agricoltori 2026" apre il 13/10 e chiude il 27/10). Per questo le frequenze restano quelle di §3; controllare ogni 10–15 giorni farebbe risparmiare solo banda, che costa nulla.
 
 **Quando rifare le mappature manuali** (sessioni di Claude Code con agenti, come quelle del 23/09):
-1. **Appena c'è un accesso stabile** (PC di Matteo o VPS): un'ora per testare i 15 siti difficili e i 4 open data non raggiungibili dalla sessione cloud.
+1. **Appena il VPS è attivo**: un'ora per testare i 15 siti difficili e i 4 open data non raggiungibili dalla sessione cloud.
 2. **A fine Fase 0**: verifica automatica di tutti i 180 indirizzi (la fa il sistema, non l'IA).
 3. **Ogni sei mesi**, a gennaio (bandi annuali delle Camere) e a luglio: rimappatura con gli agenti per fonti nuove e siti rifatti.
 4. **Quando la plancia lo chiede**: se in un mese più del 10% delle fonti segnala "struttura cambiata" o "silenzio sospetto".
@@ -138,7 +138,7 @@ La parte grossa del costo è **fissa** (leggere i bandi). Ogni bando si legge un
 - Durante lo sviluppo, le prove sulle schede si fanno **nelle sessioni di Claude Code**, quindi dentro l'abbonamento. L'API entra solo quando il flusso è automatico.
 - Si parte con un tetto basso (es. 30 € al mese) che si alza quando le schede sono a regime. Con i volumi stimati sopra, i primi mesi costano 20–50 € al mese.
 
-**Server:** zero fino alla Fase 5 (PC di Matteo con Docker). Poi OVH VPS-2 con Ubuntu 24.04 in Francia, 8,80 €/mese IVA inclusa (stesso fornitore e stesso tipo di Sergio, così il trasferimento futuro è una copia dei container e del database). Il backup giornaliero è incluso; in più il sistema fa un proprio dump del database ogni notte.
+**Server:** OVH VPS-2 con Ubuntu 24.04 in Francia, 8,80 €/mese IVA inclusa, condiviso con altri progetti di Matteo (stesso fornitore e stesso tipo di Sergio, così il trasferimento futuro è una copia dei container e del database). Il backup giornaliero è incluso; in più il sistema fa un proprio dump del database ogni notte.
 
 ---
 
@@ -204,7 +204,7 @@ Partenza ipotizzata **lunedì 28/09/2026**, con 2–3 sessioni di lavoro a setti
 
 | Fase | Settimane | Contenuto | Cosa provi tu alla fine |
 |---|---|---|---|
-| **0 — Fondamenta** | 1 (28/09–04/10) | Repository e regole di lavoro (CLAUDE.md), Docker Compose avviabile con un comando sul PC di Matteo, attività pianificata per la raccolta, database, **registro completo delle ~180 fonti con indirizzi verificati** | Il sistema che parte sul tuo PC e l'elenco delle fonti |
+| **0 — Fondamenta** | 1 (28/09–04/10) | Repository e regole di lavoro (CLAUDE.md), VPS OVH preparato (Docker, firewall, backup notturno), Docker Compose avviabile con un comando, raccolta pianificata, database, **registro completo delle ~180 fonti con indirizzi verificati** | Il sistema che parte sul tuo PC e l'elenco delle fonti |
 | **1 — Raccolta** | 2–4 (05/10–25/10) | Connettori per incentivi.gov.it, Portale UE e dati aperti Lombardia; osservatore di pagine per Regioni, Camere ed enti nazionali; archivio; **inizio misurazione delle frequenze** | Ogni lunedì un'email "novità della settimana" |
 | **2 — Plancia di controllo v1** | 4–5 (19/10–01/11) | Semafori, silenzi, rilanci, log, costi, allarmi email. **Taratura delle frequenze** con 4 settimane di dati reali | La plancia nel browser |
 | **3 — Schede bando** | 5–7 (26/10–15/11) | Lettura dei PDF, scheda standard, doppioni, proroghe e chiusure. **Controllo qualità: Matteo verifica 30 schede** a campione | Schede leggibili, con i tuoi voti sulla qualità |
@@ -224,7 +224,7 @@ Alcune fasi si sovrappongono di una settimana, apposta. Nella **Fase 0** e nella
 | Tema | Decisione |
 |---|---|
 | Integrazione con Contract to Cash | Rinviata: il codice è di Sergio. Bandi Radar nasce autonomo; nella prima versione i profili arrivano dal Postgres di Matteo e cruscotto ed email vivono dentro Bandi Radar. |
-| Server | **Rinviato alla Fase 5.** Finché il sistema non è in mano ai clienti, gira sul **PC di Matteo con Docker**, con un'attività pianificata che lancia la raccolta ogni mattina a PC acceso: costa zero, e l'indirizzo IP domestico supera i blocchi che alcuni siti (Milano, incentivi.gov.it) applicano ai server. Il VPS serve quando cruscotto ed email devono essere raggiungibili sempre. Scelta già fatta per allora: **OVH VPS-2** (4 vCore, 8 GB, 75 GB, backup incluso, 8,80 €/mese IVA inclusa), Ubuntu 24.04 LTS, Francia, come il server di Sergio. Le sessioni cloud di Claude Code non possono ospitare il sistema (contenitori temporanei). |
+| Server | **OVH VPS-2** (4 vCore, 8 GB, 75 GB NVMe, backup incluso, 8,80 €/mese IVA inclusa), Ubuntu 24.04 LTS, datacenter in Francia, come il server di Sergio. Matteo lo compra subito, anche per altri progetti: il VPS-2 regge Bandi Radar più uno o due progetti leggeri; se arriva un secondo progetto con database e browser propri, si passa al VPS-3 (12 GB) senza reinstallare (OVH permette di salire di taglia, non di scendere). Ogni progetto vive nel suo Docker Compose, isolato dagli altri. Le sessioni cloud di Claude Code non possono ospitare il sistema. Se qualche sito blocca l'IP del VPS (Milano, incentivi.gov.it), il ripiego è un browser senza interfaccia o un lancio dal PC di Matteo. |
 | IA | Fasi 0–2 senza IA. Account API Anthropic a consumo dalla Fase 3, con tetto di spesa basso. Prima di automatizzare, Matteo lancia lui stesso nelle sessioni di Claude Code (abbonamento) le stesse richieste che farà il sistema, come **mappature** salvate in `docs/ricerche/`, per vedere cosa esce dai siti. |
 | Approvazione manuale dei match | Per tutto il pilota e almeno i primi 2 mesi con clienti reali. |
 | Catalogo visibile ai clienti | Solo i propri match nella prima versione; catalogo completo in Fase 7. |
@@ -237,6 +237,6 @@ Alcune fasi si sovrappongono di una settimana, apposta. Nella **Fase 0** e nella
 **Ancora aperti:**
 
 1. **Struttura delle anagrafiche in Postgres**: entro la Fase 4 serve lo schema delle tabelle (senza dati) e i campi disponibili per costruire il profilo anonimo (ATECO, comune, dimensione, fatturato, forma giuridica…).
-2. **Server**: OVH VPS-2 deciso ma da comprare solo in Fase 5. Fino ad allora PC di Matteo con Docker: in Fase 0 serve sapere il sistema operativo del PC e se Docker Desktop è installato.
+2. **Server**: OVH VPS-2, acquisto immediato. In Fase 0 serve l'accesso SSH, da inserire come segreto dell'ambiente cloud (mai in chat).
 4. **Rete della sessione cloud**: da allargare nelle impostazioni dell'ambiente, altrimenti le mappature e la Fase 1 non raggiungono i siti delle fonti.
 3. **Modello commerciale**: resta da decidere, non blocca lo sviluppo.
