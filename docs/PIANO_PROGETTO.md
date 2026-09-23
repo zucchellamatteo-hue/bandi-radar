@@ -238,7 +238,7 @@ Alcune fasi si sovrappongono di una settimana, apposta. Nella **Fase 0** e nella
 **Ancora aperti:**
 
 1. **Struttura delle anagrafiche in Postgres**: entro la Fase 4 serve lo schema delle tabelle (senza dati) e i campi disponibili per costruire il profilo anonimo (ATECO, comune, dimensione, fatturato, forma giuridica…).
-2. **Server**: OVH VPS-2, acquisto immediato. In Fase 0 serve l'accesso SSH, da inserire come segreto dell'ambiente cloud (mai in chat).
+2. **Server**: OVH VPS-2 acquistato (Gravelines, Ubuntu 24.04). Prima accensione con lo script `deploy/bootstrap.sh` (istruzioni in `deploy/README.md`); da lì il server si aggiorna da solo da GitHub ogni 5 minuti. Le sessioni cloud non possono usare SSH, quindi nessuna credenziale del server va nel cloud.
 4. **Dominio**: qiaro.it è di Matteo. Da chiedere a Sergio solo dove sono i nameserver (GoDaddy o altro).
 5. **Rete della sessione cloud**: da allargare nelle impostazioni dell'ambiente, altrimenti le mappature e la Fase 1 non raggiungono i siti delle fonti.
 3. **Modello commerciale**: resta da decidere, non blocca lo sviluppo.
