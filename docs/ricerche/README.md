@@ -18,4 +18,4 @@ In una sessione di Claude Code su questo repository, descrivere la domanda e chi
 
 | Data | File | Domanda |
 |---|---|---|
-| 2026-09-23 | `2026-09-23_province_capoluoghi.md` | Province e Comuni capoluogo pubblicano bandi di finanza agevolata per imprese? |
+| 2026-09-23 | `2026-09-23_province_capoluoghi.md` | Province e Comuni capoluogo pubblicano bandi di finanza agevolata per imprese? (parziale, solo ricerca web) |

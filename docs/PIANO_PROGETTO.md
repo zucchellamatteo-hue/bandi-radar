@@ -9,7 +9,7 @@
 Trovare in automatico **tutti i bandi aperti** (UE, nazionali, regionali, camerali, altri enti), trasformarli in **schede ordinate** (chi può partecipare, cosa si finanzia, quanto, entro quando) e **abbinarli ai clienti di Contract to Cash**. Ai clienti arriva una proposta via email e possono consultare tutto da un cruscotto.
 
 Requisiti di Matteo:
-- **Non si scartano** regioni ed enti locali. **Nemmeno i Comuni** (vedi §3).
+- **Non si scartano** regioni ed enti locali. Per i Comuni si coprono i **capoluoghi di provincia** (vedi §3).
 - **Plancia di controllo** per vedere lo stato di ogni fonte, rilanciare le automazioni e accorgersi delle fonti "mute" da troppo tempo (possibile guasto).
 - **Cruscotto** consultabile anche dai clienti.
 - **Match automatici** con notifica ed email.
@@ -66,14 +66,16 @@ Requisiti di Matteo:
 | MIMIT, Invitalia, GSE, SIMEST | 4 | poche misure nuove al mese, ma aperture di sportello e modifiche frequenti | 3 volte a settimana | osservatore |
 | **CCIAA Milano-MB-Lodi e Pordenone-Udine** | 2 | 1–4 bandi al mese, concentrati a inizio anno | ogni giorno | osservatore |
 | Altre Camere di Commercio | ~58 | 1–4 bandi al mese, concentrati a inizio anno | 1 volta a settimana (2 volte tra gennaio e aprile) | osservatore |
+| Comuni capoluogo di provincia | ~80 | 1–5 bandi all'anno ciascuno, per commercio e centro storico | 1 volta a settimana | osservatore |
+| Province con bandi propri (eccezioni) | ~7 | poche misure all'anno | 1 volta a settimana | osservatore |
 | Fondazioni bancarie (selezione) | ~5 | poche finestre all'anno | 1 volta a settimana | osservatore |
-| **Totale** | **~92** | | | |
+| **Totale** | **~180** | | | |
 
-**I Comuni: tutti, ma in modo intelligente.** Matteo ha chiesto di coprire tutti i Comuni (quasi 7.900). Controllare 7.900 siti ogni settimana non è sensato né utile: la maggior parte non ha clienti e molti non pubblicano mai bandi per imprese. Si procede così:
-1. **Copertura generale** con le fonti che già aggregano i bandi comunali: incentivi.gov.it (campo "comuni"), i portali regionali che rilanciano gli avvisi degli enti locali, i bandi delle Camere di Commercio in convenzione con i Comuni.
-2. **Osservatore attivato dai clienti**: per ogni cliente si aggiungono in automatico alla lista delle fonti il **Comune della sede** e, se indicato, i Comuni delle unità locali. Con 100 clienti si osservano al massimo 100 Comuni, non 7.900, e sono proprio quelli che contano. L'indirizzo della pagina "bandi e avvisi" di ogni Comune si cerca una volta sola (con aiuto dell'IA) e finisce nel registro delle fonti.
-3. **Comuni grandi sempre osservati**: i capoluoghi di provincia di Lombardia e FVG dalla Fase 1, gli altri capoluoghi in Fase 7.
-Così la copertura cresce con i clienti, e il costo resta proporzionale.
+**Province e Comuni.** Una mappatura del 23/09/2026 (`docs/ricerche/2026-09-23_province_capoluoghi.md`, fatta con la sola ricerca web, quindi da verificare sui siti) dice questo:
+- **Le Province non sono una fonte**: pubblicano appalti e concorsi, non finanza agevolata. Le eccezioni entrano nel registro una per una: Province autonome di Trento e Bolzano, Belluno, Treviso, Città metropolitane di Bologna, Milano e Torino. In FVG le Province non esistono più e gli EDR che le hanno sostituite non fanno bandi per imprese.
+- **I Comuni capoluogo sì**: circa due terzi pubblicano bandi propri per imprese (commercio di vicinato, centro storico, locali sfitti, nuove aperture, start-up), con Nord più attivo del Sud. I 4 capoluoghi del FVG (Udine, Pordenone, Trieste, Gorizia) sono tra i più attivi d'Italia. Entrano tutti nel registro (~80 fonti, controllo settimanale), con priorità FVG e Lombardia.
+- **I Comuni non capoluogo restano fuori**: chi eroga è quasi sempre Regione, Camera di Commercio o capoluogo. Resta possibile, su richiesta, aggiungere il Comune della sede di un cliente come fonte dedicata.
+- La mappatura è incompleta (Lazio, Puglia, Basilicata, parte di Sicilia e Sardegna) e va completata con accesso diretto ai siti.
 
 **Fonti escluse dalla raccolta**: TED (sono appalti), OpenCoesione (storico), aggregatori privati (i loro elenchi hanno diritti sulla banca dati; possono servire solo per un controllo manuale).
 **RNA** non serve a trovare bandi: entra in Fase 7 per il controllo del *de minimis* dei clienti.
@@ -178,7 +180,7 @@ Partenza ipotizzata **lunedì 28/09/2026**, con 2–3 sessioni di lavoro a setti
 
 | Fase | Settimane | Contenuto | Cosa provi tu alla fine |
 |---|---|---|---|
-| **0 — Fondamenta** | 1 (28/09–04/10) | Repository e regole di lavoro (CLAUDE.md), Docker Compose avviabile con un comando, ambiente cloud con accesso ai siti delle fonti, database, **registro completo delle ~92 fonti con indirizzi verificati** | Il sistema che parte sul tuo PC e l'elenco delle fonti |
+| **0 — Fondamenta** | 1 (28/09–04/10) | Repository e regole di lavoro (CLAUDE.md), Docker Compose avviabile con un comando, ambiente cloud con accesso ai siti delle fonti, database, **registro completo delle ~180 fonti con indirizzi verificati** | Il sistema che parte sul tuo PC e l'elenco delle fonti |
 | **1 — Raccolta** | 2–4 (05/10–25/10) | Connettori per incentivi.gov.it, Portale UE e dati aperti Lombardia; osservatore di pagine per Regioni, Camere ed enti nazionali; archivio; **inizio misurazione delle frequenze** | Ogni lunedì un'email "novità della settimana" |
 | **2 — Plancia di controllo v1** | 4–5 (19/10–01/11) | Semafori, silenzi, rilanci, log, costi, allarmi email. **Taratura delle frequenze** con 4 settimane di dati reali | La plancia nel browser |
 | **3 — Schede bando** | 5–7 (26/10–15/11) | Lettura dei PDF, scheda standard, doppioni, proroghe e chiusure. **Controllo qualità: Matteo verifica 30 schede** a campione | Schede leggibili, con i tuoi voti sulla qualità |
@@ -198,11 +200,11 @@ Alcune fasi si sovrappongono di una settimana, apposta. Nella **Fase 0** e nella
 | Tema | Decisione |
 |---|---|
 | Integrazione con Contract to Cash | Rinviata: il codice è di Sergio. Bandi Radar nasce autonomo; nella prima versione i profili arrivano dal Postgres di Matteo e cruscotto ed email vivono dentro Bandi Radar. |
-| Server | Non definito (in mano a Sergio). Il sistema deve funzionare da solo ed essere trasferibile: Docker Compose, configurazione in un file, backup del database in un comando. Durante lo sviluppo gira sul PC di Matteo o su un piccolo server in Europa. |
-| IA | Fasi 0–2 senza IA. Account API Anthropic a consumo dalla Fase 3, con tetto di spesa basso. Le prove durante lo sviluppo restano nell'abbonamento. |
+| Server | In mano a Sergio. Il sistema deve funzionare da solo ed essere trasferibile: Docker Compose, configurazione in un file, backup del database in un comando. Le sessioni cloud di Claude Code non possono ospitarlo (contenitori temporanei). Si compra un server dello stesso tipo di quello di Sergio, così il trasferimento è una copia: Matteo chiede a Sergio fornitore, tipo di server e paese dei dati. |
+| IA | Fasi 0–2 senza IA. Account API Anthropic a consumo dalla Fase 3, con tetto di spesa basso. Prima di automatizzare, Matteo lancia lui stesso nelle sessioni di Claude Code (abbonamento) le stesse richieste che farà il sistema, come **mappature** salvate in `docs/ricerche/`, per vedere cosa esce dai siti. |
 | Approvazione manuale dei match | Per tutto il pilota e almeno i primi 2 mesi con clienti reali. |
 | Catalogo visibile ai clienti | Solo i propri match nella prima versione; catalogo completo in Fase 7. |
-| Comuni | Tutti, con il meccanismo di §3: copertura generale dalle fonti aggregate, osservatore attivato per i Comuni dei clienti, capoluoghi sempre osservati. |
+| Province e Comuni | Corretto il 23/09: bastano Province e Comuni capoluogo. La mappatura in `docs/ricerche/` mostra che le Province non pubblicano bandi per imprese (salvo poche eccezioni, inserite singolarmente) e che i capoluoghi sì: entrano tutti i capoluoghi (~80) e le Province eccezione (~7). Comuni minori fuori, salvo richiesta per il Comune di un cliente. |
 | Modello commerciale | Da decidere. È un'opportunità di cross-selling verso la consulenza sui bandi: il pulsante "Mi interessa, contattatemi" è quindi centrale e va curato per primo. |
 | Clienti | Oggi 0, obiettivo 100 entro 6 mesi. Test con le anagrafiche del Postgres di Matteo. |
 | Servizio email | Resend (già usato da Sergio), regione europea. |
@@ -211,5 +213,6 @@ Alcune fasi si sovrappongono di una settimana, apposta. Nella **Fase 0** e nella
 **Ancora aperti:**
 
 1. **Struttura delle anagrafiche in Postgres**: entro la Fase 4 serve lo schema delle tabelle (senza dati) e i campi disponibili per costruire il profilo anonimo (ATECO, comune, dimensione, fatturato, forma giuridica…).
-2. **Dove gira durante lo sviluppo**: PC di Matteo (Docker) oppure un piccolo server in Europa da 8–20 €/mese? Sul PC costa zero ma la raccolta funziona solo quando il PC è acceso, e la misurazione delle frequenze in Fase 1 richiede controlli ogni giorno.
+2. **Server**: fornitore, tipo e paese del server di Sergio, per comprarne uno uguale. Finché non arriva la risposta, in Fase 0 si parte sul PC di Matteo con Docker.
+4. **Rete della sessione cloud**: da allargare nelle impostazioni dell'ambiente, altrimenti le mappature e la Fase 1 non raggiungono i siti delle fonti.
 3. **Modello commerciale**: resta da decidere, non blocca lo sviluppo.
