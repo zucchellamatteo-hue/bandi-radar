@@ -40,3 +40,33 @@ Utili come **dati di contesto** per il matching, non come fonti di bandi: Milano
 4. **Il catalogo nazionale dati.gov.it è a sua volta una fonte da osservare**, una volta al mese, con le stesse dieci ricerche di oggi: se un ente pubblica un nuovo dataset di bandi aperti, lo si scopre lì senza controllare cento portali.
 5. **incentivi.gov.it rifiuta le connessioni da questa rete** (come Milano). Nel piano è la fonte nazionale principale: va testato per primo dal VPS OVH. Se anche da lì è bloccato, servono i suoi open data pubblicati altrove o un browser senza interfaccia.
 6. **Per la plancia**: ogni fonte open data deve mostrare la data dell'ultimo record, non solo l'esito dell'ultimo scaricamento. Palermo insegna.
+
+---
+
+## Seconda passata con i sinonimi (stessa giornata)
+
+Matteo ha chiesto se la sonda avesse usato anche i sinonimi. La prima passata usava dieci termini sul catalogo nazionale ma **solo "bandi" sui portali comunali**. La seconda passata ha usato **34 termini** (incentivi, agevolazioni, finanza agevolata, finanziamenti imprese, fondo perduto, voucher, contributi imprese, sostegno imprese, aiuti imprese, ristori, microcredito, credito imposta, start up, PMI, attività produttive, artigianato, commercio, distretto del commercio, botteghe, nuove imprese, imprenditoria, SUAP, avvisi pubblici, bando, opportunità, sovvenzioni, bandi aperti, avvisi aperti, calendario bandi, catalogo incentivi, misure agevolative, aiuti di stato…) su 17 portali con API funzionante (11 comunali, 5 regionali, il catalogo nazionale): 2.137 dataset unici esaminati sul catalogo nazionale.
+
+**Sui portali comunali il risultato non cambia**: i sinonimi fanno emergere elenchi di esercizi commerciali, attività artigianali, botteghe storiche, pratiche SUAP, statistiche sulle imprese. Nessun elenco di bandi aperti. Dati di contesto in più: Milano "Elenco attività storiche e di tradizione" (2026), Modena e Regione Emilia-Romagna "Limiti delle zone con agevolazioni fiscali", Genova "Numeri civici ammessi ad aiuti di Stato a finalità regionale".
+
+**Sul catalogo nazionale invece i sinonimi hanno fatto emergere cinque fonti nuove**, che con "bandi" non uscivano:
+
+| Fonte | Cosa contiene | Verifica | Uso |
+|---|---|---|---|
+| **Regione Lombardia, "Anagrafica dei bandi regionali"** (dati.lombardia.it, id `bukx-h2uy`) | **tutti i bandi e le misure pubblicati su Bandi Online dal 2015**: 1.912 record con codice, titolo, direzione generale, ente, apertura, chiusura, tipo di strumento, numero di domande. Oggi **122 aperti**, di cui 11 di Sviluppo Economico, 6 Agricoltura, 3 Università e Ricerca; comprende anche i bandi con apertura futura (es. giovani agricoltori dal 13/10/2026). Il codice porta alla scheda: `bandi.regione.lombardia.it/servizi/servizio/bandi/dettaglio/<codice>`, raggiungibile da qui | **funziona**, API Socrata con filtri (`$where=chiusura_adesione>…`), righe aggiornate al 01/09/2026, quindi cadenza mensile circa | **Fonte primaria per la Lombardia**: il registro dice cosa c'è e quando apre e chiude, la scheda su Bandi Online dà requisiti e documenti. L'osservatore HTML di Bandi Online resta per le novità tra un aggiornamento mensile e l'altro |
+| **MIMIT, "Open Data RNA Aiuti"** (rna.gov.it) | un file XML al mese con **tutti gli aiuti concessi registrati nel Registro Nazionale Aiuti** dal 2017 a marzo 2026 | rna.gov.it rifiuta le connessioni da qui, da riprovare dal VPS | **Fase 7, de minimis**: per ogni cliente, gli aiuti già ricevuti; e per ogni misura, chi la ottiene davvero (dimensione, settore, provincia) |
+| **Regione Lombardia, "Aiuti di Stato individuali"** (id `f468-u5ng`) | aiuti sopra 500.000 € con beneficiario, partita IVA, dimensione, provincia, settore, strumento, obiettivo | funziona | contesto, complementare al RNA |
+| **Regione Calabria, "Calendario avvisi 21-27"** | calendario degli avvisi programmati FESR e FSE+ 2021-27 (obbligo dell'art. 49 del Reg. UE 2021/1060: **ogni Regione deve pubblicare questo calendario**) | dati.regione.calabria.it rifiuta le connessioni da qui; il file più recente visto è dell'ottobre 2023 | calendario, come quelli di Trento. **Da cercare per tutte le Regioni**: l'obbligo è europeo, il calendario esiste anche dove non è open data |
+| **GAL Terra dei Messapi, feed RSS bandi** | feed dei bandi di un Gruppo di Azione Locale (sviluppo rurale) | funziona, ultimo aggiornamento gennaio 2026 | apre la categoria **GAL** (circa 200 in Italia): bandi PSR per micro-imprese rurali, agriturismo, artigianato locale. Da valutare in Fase 7 per i clienti in zone rurali |
+
+Non pertinente ma istruttivo: "Avvisi PA digitale 2026" del Dipartimento Trasformazione Digitale (57 avvisi in JSON su GitHub, con date, stato, importi, destinatari) è il formato ideale, ma i destinatari sono Comuni e scuole, non imprese.
+
+**Conclusione della seconda passata.** I sinonimi non cambiano il giudizio sui Comuni, ma cambiano quello sulle Regioni: **la Lombardia ha un registro strutturato di tutti i suoi bandi**, ed è la regione più importante per il progetto. La lezione per il sistema: le ricerche sul catalogo nazionale vanno fatte sempre con l'intera lista di sinonimi, perché i dataset migliori si chiamano "anagrafica", "calendario", "aiuti", non "bandi".
+
+## Conseguenze aggiuntive per il registro delle fonti
+
+7. **Lombardia**: aggiungere l'Anagrafica dei bandi regionali come fonte strutturata (API, controllo giornaliero, costo zero), collegata alle schede di Bandi Online per i dettagli. Attivarla in Fase 1 per prima: è il caso di prova ideale per il flusso "registro strutturato + scheda HTML".
+8. **Calendari degli avvisi 2021-27**: cercarli per tutte le 21 Regioni e Province autonome, in qualunque formato (open data, PDF, pagina web). Sono la fonte più anticipata che esista: dicono cosa aprirà nei prossimi mesi.
+9. **RNA open data**: fonte di Fase 7, da testare dal VPS; scaricare i file mensili e caricarli in una tabella "aiuti concessi".
+10. **GAL**: nuova categoria di fonti, da valutare in Fase 7 in base alla distribuzione dei clienti.
+11. **Sonda mensile del catalogo nazionale**: con i 34 termini, non con dieci.
