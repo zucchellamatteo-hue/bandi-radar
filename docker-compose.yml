@@ -1,4 +1,4 @@
-# Bandi Radar - servizi di produzione (Fase 0).
+# Bandi Radar - servizi di produzione.
 # Si avvia con: docker compose up -d --build
 # Le variabili ${...} arrivano dal file .env accanto a questo file (vedi deploy/env.example).
 
@@ -24,8 +24,9 @@ services:
       retries: 5
       start_period: 10s
 
-  # Applicazione Python (FastAPI): per ora /health e una pagina "in costruzione".
+  # Applicazione Python (FastAPI): la plancia (React), la sua API sotto /api e /health.
   # All'avvio applica le migrazioni del database (app/db/migrazioni), poi parte il server web.
+  # Legge (senza poterli modificare) gli allegati scaricati dalla raccolta, per servirli dalla plancia.
   app:
     build: .
     restart: unless-stopped
@@ -40,6 +41,9 @@ services:
       PGDATABASE: ${POSTGRES_DB:-bandi_radar}
       BASIC_AUTH_USER: ${BASIC_AUTH_USER:?imposta BASIC_AUTH_USER nel file .env}
       BASIC_AUTH_PASSWORD: ${BASIC_AUTH_PASSWORD:?imposta BASIC_AUTH_PASSWORD nel file .env}
+      ALLEGATI_CARTELLA: /srv/allegati
+    volumes:
+      - allegati:/srv/allegati:ro         # sola lettura: scrive solo la raccolta
     depends_on:
       db:
         condition: service_healthy
@@ -52,6 +56,9 @@ services:
 
   # Raccolta (Fase 1): ogni ora controlla le fonti in scadenza e salva gli annunci nel database.
   # Stessa immagine dell'app, comando diverso. Log: docker compose logs -f raccolta
+  # Dalla Fase 3 si usa anche per lo smistamento e gli allegati (deploy/MANUALE.md):
+  #   docker compose run --rm raccolta python -m app.schede.smista
+  #   docker compose run --rm raccolta python -m app.schede.allegati
   raccolta:
     build:
       context: .
@@ -71,6 +78,9 @@ services:
       RESEND_API_KEY: ${RESEND_API_KEY:-}
       EMAIL_MATTEO: ${EMAIL_MATTEO:-}
       EMAIL_MITTENTE: ${EMAIL_MITTENTE:-}
+      ALLEGATI_CARTELLA: /srv/allegati
+    volumes:
+      - allegati:/srv/allegati            # documenti dei bandi (PDF, moduli, FAQ), una cartella per annuncio
     depends_on:
       db:
         condition: service_healthy
@@ -103,5 +113,6 @@ networks:
 
 volumes:
   pgdata:
+  allegati:      # allegati scaricati (Fase 3): persistenti, sopravvivono ai riavvii e agli aggiornamenti
   caddy_data:
   caddy_config:
