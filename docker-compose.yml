@@ -1,0 +1,67 @@
+# Bandi Radar - servizi di produzione (Fase 0).
+# Si avvia con: docker compose up -d --build
+# Le variabili ${...} arrivano dal file .env accanto a questo file (vedi deploy/env.example).
+
+name: bandi-radar
+
+services:
+
+  # Database: tutti i dati (bandi, fonti, profili) stanno qui.
+  db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      # Il backup notturno (deploy/bootstrap.sh) usa l'utente "postgres": lascia il default.
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?imposta POSTGRES_PASSWORD nel file .env}
+      POSTGRES_DB: ${POSTGRES_DB:-bandi_radar}
+    volumes:
+      - pgdata:/var/lib/postgresql/data   # volume persistente: i dati sopravvivono ai riavvii
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-postgres} -d ${POSTGRES_DB:-bandi_radar}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+  # Applicazione Python (FastAPI): per ora /health e una pagina "in costruzione".
+  app:
+    build: .
+    restart: unless-stopped
+    environment:
+      DATABASE_URL: postgresql://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB:-bandi_radar}
+      BASIC_AUTH_USER: ${BASIC_AUTH_USER:?imposta BASIC_AUTH_USER nel file .env}
+      BASIC_AUTH_PASSWORD: ${BASIC_AUTH_PASSWORD:?imposta BASIC_AUTH_PASSWORD nel file .env}
+    depends_on:
+      db:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request,sys; sys.exit(0 if urllib.request.urlopen('http://127.0.0.1:8000/health', timeout=3).status == 200 else 1)"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+      start_period: 15s
+
+  # Caddy: pubblica l'applicazione in HTTPS con certificato automatico Let's Encrypt.
+  caddy:
+    image: caddy:2-alpine
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+      - "443:443/udp"
+    environment:
+      SITE_ADDRESS: ${SITE_ADDRESS:-finanzagevolata.qiaro.it}
+      ACME_EMAIL: ${ACME_EMAIL:?imposta ACME_EMAIL nel file .env}
+    volumes:
+      - ./deploy/Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data       # certificati: persistenti, cosi' non si richiedono a ogni riavvio
+      - caddy_config:/config
+    depends_on:
+      app:
+        condition: service_healthy
+
+volumes:
+  pgdata:
+  caddy_data:
+  caddy_config:

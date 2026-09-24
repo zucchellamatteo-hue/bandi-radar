@@ -1,0 +1,11 @@
+# Caddy: HTTPS automatico (Let's Encrypt) davanti all'applicazione.
+# SITE_ADDRESS e ACME_EMAIL arrivano dal file .env tramite docker-compose.yml.
+# L'autenticazione base la fa l'applicazione (utente e password in .env), non Caddy.
+{
+	email {$ACME_EMAIL}
+}
+
+{$SITE_ADDRESS} {
+	encode gzip
+	reverse_proxy app:8000
+}

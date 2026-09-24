@@ -1,0 +1,9 @@
+# Prova in locale (PC o copia di lavoro sul server) SENZA toccare le porte 80/443 e senza
+# chiedere certificati a Let's Encrypt. Caddy risponde in HTTP semplice su http://localhost:8080.
+# Uso (con un .env di prova che contenga SITE_ADDRESS=:8080):
+#   docker compose -p bandi-radar-test --env-file .env.locale \
+#     -f docker-compose.yml -f deploy/compose.local.yml up -d --build
+services:
+  caddy:
+    ports: !override
+      - "127.0.0.1:8080:8080"
