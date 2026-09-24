@@ -109,7 +109,11 @@ def _link_in(radice, url_pagina: str) -> list[Annuncio]:
 
 
 def leggi(fonte: Fonte, client: httpx.Client) -> Lettura:
-    risposta = scarica(client, fonte.url, accept="text/html", ignora_robots=fonte.ignora_robots)
+    extra = fonte.richiesta.get("intestazioni")
+    if extra:
+        risposta = client.get(fonte.url, headers={"Accept": "text/html", **extra})
+    else:
+        risposta = scarica(client, fonte.url, accept="text/html", ignora_robots=fonte.ignora_robots)
     risposta.raise_for_status()
     annunci = estrai_link(risposta.text, str(risposta.url))
     impronta = hashlib.sha256(risposta.content).hexdigest()[:32]

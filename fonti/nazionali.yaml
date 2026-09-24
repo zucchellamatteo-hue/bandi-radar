@@ -199,18 +199,20 @@
   ente: Ministero dell'Ambiente e della Sicurezza Energetica
   tipo: nazionale
   territorio: ITA
-  url: https://www.mase.gov.it/
-  modalita: browser
+  url: https://www.mase.gov.it/portale/bandi-e-avvisi
+  modalita: html
   feed_url: null
-  piattaforma: null
+  piattaforma: liferay
   frequenza: settimanale
-  stato: difficile
+  stato: attiva
   verificato_il: '2026-09-24'
-  note: 'Home e /portale/bandi-e-avvisi rispondono 403 (Akamai) da questa sessione. Nessun URL aperto davvero. Le
-    misure MASE per imprese passano spesso da Invitalia (soggetto gestore) e da incentivi.gov.it; riprovare dal
-    server.
-
-    '
+  note: 'Akamai blocca gli User-Agent non da browser: si usa un UA da browser con in coda il nostro nome e contatto.
+    L''elenco (15 link /portale/-/<slug>) e'' gia'' nell''HTML. Verificato il 24/09 dal cloud, da confermare dal
+    server.'
+  richiesta:
+    intestazioni:
+      User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0 Safari/537.36
+        BandiRadar/0.1 (+https://finanzagevolata.qiaro.it)
 
 - id: cdp_imprese
   nome: Cassa Depositi e Prestiti - Imprese

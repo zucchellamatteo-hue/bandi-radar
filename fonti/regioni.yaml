@@ -67,17 +67,17 @@
   tipo: regione
   territorio: LOM
   url: https://www.finlombarda.it/it/prodotti-e-servizi/prodotti-servizi/index?ProdottiServiziSearch%5Bscope%5D=1
-  modalita: browser
-  feed_url: null
-  piattaforma: null
+  modalita: api
+  feed_url: https://www.finlombarda.it/prodotti-e-servizi/prodotti-servizi/ajax-filter-prodotti?ProdottiServiziSearch%5Bscope%5D=1&page=1
+  piattaforma: html_in_json
   frequenza: settimanale
-  stato: difficile
+  stato: attiva
   verificato_il: '2026-09-24'
-  note: 'Pagina aperta (200) ma l''elenco dei prodotti/agevolazioni è caricato via JavaScript: nel sorgente ci sono
-    solo i filtri (Chi sei? / Che soluzione cerchi? / Finalità). Servirebbe il browser senza interfaccia. Le misure
-    Finlombarda compaiono comunque su Bandi Online di Regione Lombardia, quindi fonte di riserva.
-
-    '
+  note: 'Filtro AJAX del sito (GET con X-Requested-With): JSON con un frammento HTML di schede (link /it/prodotti-e-servizi/prodotti-servizi/<id>/<slug>,
+    titolo, stato Aperto, destinatari). Pagine page=1..18; le date sono solo nella scheda. Trovata il 24/09.'
+  richiesta:
+    intestazioni:
+      X-Requested-With: XMLHttpRequest
 
 - id: emilia_romagna_imprese_bandi_api
   nome: Regione Emilia-Romagna - Portale Imprese, tutti i bandi (API Plone)
@@ -212,21 +212,15 @@
   tipo: regione
   territorio: VEN
   url: https://bandi.regione.veneto.it/Public/Elenco?Tipo=1
-  modalita: browser
-  feed_url: null
-  piattaforma: null
+  modalita: api
+  feed_url: https://bandi.regione.veneto.it/Public/GetListaAttiJson?cig=&parolaChiave=&tipoAttoTmp=1&destinatariTmp=&struttureTmp=0&categorieTmp=0&statoTmp=4&materieTmp=&paginaIniziale=Elenco&sEcho=1&iDisplayStart=0&iDisplayLength=100
+  piattaforma: html_in_json
   frequenza: giornaliera
-  stato: difficile
+  stato: attiva
   verificato_il: '2026-09-24'
-  note: 'Portale unico (regione.veneto.it/web/bandi-avvisi-concorsi reindirizza qui). La pagina risponde 200 ma
-    la tabella è riempita via DataTables da /Public/GetListaAttiJson (parametri cig, parolaChiave, tipoAttoTmp=1,
-    destinatariTmp, struttureTmp, categorieTmp, statoTmp, materieTmp, paginaIniziale + sEcho/iDisplayStart/iDisplayLength).
-    Con cookie di sessione e Referer l''endpoint risponde JSON ma sempre recordsTotal 0; /Public/GetListaAttiOnloadJson
-    rimanda a /Public/Error. Funzionano i dizionari: GetDestinatariJsonResult (1 Cittadino, 2 Ente, 3 Impresa) e
-    GetStatiJsonResult (4 PUBBLICATO, 5 SCADUTO, 6 ARCHIVIATO). Serve il browser senza interfaccia, poi filtrare
-    destinatario Impresa e stato PUBBLICATO. Esiste anche /Public/Scadenzario.
-
-    '
+  note: 'API DataTables del portale (GET senza cookie): aaData = frammenti HTML con titolo, stato, scadenza e link
+    Dettaglio?idAtto=N. statoTmp=4 solo PUBBLICATO (40), statoTmp=0 tutti (809). Categorie: 30 Contributo, 3 Finanziamento,
+    6 Fondo di rotazione. Trovata il 24/09 osservando le chiamate della pagina.'
 
 - id: veneto_fesr_calendario_inviti
   nome: Regione del Veneto - PR FESR 2021-2027, Calendario degli inviti e bandi (art. 49)
@@ -373,17 +367,39 @@
   tipo: regione
   territorio: LIG
   url: https://www.filse.it/it/bandi-avvisi-gare/bandi-attivi/publiccompetitions/
-  modalita: browser
-  feed_url: null
-  piattaforma: joomla
+  modalita: api
+  feed_url: https://www.filse.it/index.php
+  piattaforma: generico
   frequenza: tre_a_settimana
-  stato: difficile
+  stato: attiva
   verificato_il: '2026-09-24'
-  note: 'Pagina aperta (200) ma l''elenco è caricato via JavaScript (chiamata allo stesso indirizzo); anche la POST
-    con i filtri di Regione Liguria non restituisce schede. In home compaiono alcune schede /it/bandi-attivi-nascosto/publiccompetition/<id>:…
-    I bandi FESR gestiti da FILSE sono comunque pubblicati anche da Regione Liguria.
-
-    '
+  note: 'Chiamata AJAX di Joomla (POST modulo, senza cookie): items[] gia'' strutturati con title, publish_up (apertura),
+    publish_down (scadenza), Beneficiari, Fondo, txt_descr. 259 bandi, 50 per pagina. Trovata il 24/09.'
+  richiesta:
+    metodo: POST
+    intestazioni:
+      X-Requested-With: XMLHttpRequest
+    corpo_form:
+      option: com_publiccompetitions
+      task: display.ajaxLoadBandi
+      format: json
+      id: '2'
+      showBandi: '0'
+      pcQuickSearch: '1'
+      pcPagination: '1'
+      pcPaginationResults: '50'
+      limit: '50'
+      limitstart: '0'
+      page: '1'
+      startPage: '0'
+      quicksearch: ''
+      quicksearch_action: '1'
+      quicksearch_OrderField[]: '6'
+      quicksearch_OrderDir[]: '1'
+      pcOrderField: '6'
+      pcOrderDir: '1'
+      ActionSearch: '1'
+    url_modello: https://www.filse.it/it/bandi-avvisi-gare/bandi-attivi/publiccompetition/{id}:{alias}.html
 
 - id: valle_aosta_portale_imprese_bandi
   nome: Regione Valle d'Aosta - Portale imprese, bandi a scadenza
@@ -531,21 +547,15 @@
   tipo: provincia
   territorio: BZ
   url: https://mycivis.civis.bz.it/it/Services/
-  modalita: browser
-  feed_url: null
-  piattaforma: null
+  modalita: api
+  feed_url: https://mycivis.civis.bz.it/_api/products/?$filter=statecode%20eq%200%20and%20ntt_visibleonmycivis%20eq%20true%20and%20producttypecode%20eq%203&$select=ntt_name_italian,productnumber,modifiedon
+  piattaforma: odata
   frequenza: tre_a_settimana
-  stato: difficile
+  stato: attiva
   verificato_il: '2026-09-24'
-  note: 'Tutti i siti provinciali sono applicazioni JavaScript con pagina vuota nel sorgente (home.provincia.bz.it,
-    economia.provincia.bz.it, europa.provincia.bz.it, news.provincia.bz.it: 2-3 KB). Il catalogo myCIVIS ha 243
-    KB ma le schede sono template riempiti via JavaScript (ServiceDetail/?id=<slug>_<numero>). Il motore di ricerca
-    interno è api.integrations.services.siag.it/pub/cocweb/quelix/aprov/api/search (risponde 400 senza i parametri
-    giusti). Open data data.civis.bz.it (CKAN): nessun dataset "bandi". Calendario art. 49 FESR non trovato (le
-    pagine "europa" storiche rispondono 404). IDM Alto Adige (idm-suedtirol.com/it/) aperto ma senza elenco bandi.
-    Serve il browser senza interfaccia.
-
-    '
+  note: 'OData pubblica di myCIVIS (GET senza token): value[] con ntt_name_italian, productnumber, modifiedon. 961
+    servizi, circa 260 sono contributi. Niente date di apertura: serve a vedere servizi nuovi o modificati, poi
+    si legge la scheda. Trovata il 24/09.'
 
 - id: bolzano_economia
   nome: Provincia autonoma di Bolzano - Ripartizione Economia
@@ -553,16 +563,18 @@
   tipo: provincia
   territorio: BZ
   url: https://economia.provincia.bz.it/it/home
-  modalita: browser
-  feed_url: null
-  piattaforma: null
+  modalita: api
+  feed_url: https://deliver.kontent.ai/34709482-d191-0125-83d4-7f2a83348147/items?system.type=page&elements=title,url&order=system.last_modified[desc]&limit=50&language=it&system.language=it
+  piattaforma: kontent_ai
   frequenza: tre_a_settimana
-  stato: difficile
+  stato: attiva
   verificato_il: '2026-09-24'
-  note: 'Sito della Ripartizione Economia (contributi alle imprese), applicazione JavaScript: sorgente di 2,5 KB,
-    nessun contenuto senza browser. Da riprovare con il browser senza interfaccia in Fase 1.
-
-    '
+  note: 'CMS headless Kontent.ai con API pubblica: items[] con system.last_modified, elements.title e url. Pagine
+    chiave: agevolazioni-all-economia, contributi-per-gli-anni-2024-2028. Le news economia stanno in un secondo
+    progetto Kontent (c1c45d5a-...). Trovata il 24/09.'
+  richiesta:
+    url_modello: https://economia.provincia.bz.it/it/{elements.url.value}
+  ignora_robots: true   # robots.txt vieta l'API interna del sito; Matteo ha deciso il 24/09 di leggerla lo stesso
 
 - id: toscana_bandi_aperti
   nome: Regione Toscana - Bandi aperti
@@ -1165,17 +1177,18 @@
   tipo: regione
   territorio: CAL
   url: https://calabriaeuropa.regione.calabria.it/programmazione-2021-2027/attuazione-del-programma/calendario-inviti/
-  modalita: browser
-  feed_url: null
-  piattaforma: wordpress
+  modalita: api
+  feed_url: https://calabriaeuropa.regione.calabria.it/be-inviti/api/invitiPubblicati
+  piattaforma: generico
   frequenza: mensile
-  stato: difficile
+  stato: attiva
   verificato_il: '2026-09-24'
-  note: 'Pagina "Calendario Avvisi 21-27" prevista dall''art. 49 Reg. UE 2021/1060. Si apre (200) ma il calendario
-    vero e'' in un iframe (/fe-inviti/, applicazione Angular) che senza browser e'' vuoto. Serve la modalita'' browser
-    oppure scoprire l''API che l''applicazione interroga.
-
-    '
+  note: 'API del calendario (POST con corpo vuoto, senza cookie; risponde JSON anche se dichiara text/html): elements[]
+    con codice, titolo, data_apertura, data_chiusura, dotazione_finanziaria, stato, link alla scheda, tipologia_beneficiari,
+    ambito_tematico. 78 inviti. Trovata il 24/09.'
+  richiesta:
+    metodo: POST
+    corpo_json: {}
 
 - id: calabria_regione_procedure_rss
   nome: Regione Calabria - Bandi e avvisi (feed procedure)
@@ -1314,19 +1327,55 @@
   tipo: regione
   territorio: SAR
   url: https://www.regione.sardegna.it/atti-bandi-archivi/atti-amministrativi/bandi
-  modalita: browser
-  feed_url: null
-  piattaforma: null
+  modalita: api
+  feed_url: https://www.regione.sardegna.it/api/search?index=contentrepository
+  piattaforma: sardegna_search_api
   frequenza: tre_a_settimana
-  stato: difficile
+  stato: attiva
   verificato_il: '2026-09-24'
-  note: 'Nuovo sito (Next.js): la pagina si apre (200) ma l''elenco e'' una "lista filtrata" caricata dal browser
-    via GraphQL (nel __NEXT_DATA__ content e'' null). Senza browser non si vede nessun bando. Il vecchio archivio
-    old.regione.sardegna.it/servizi/cittadino/bandi/ e'' linkato ma non provato. Nessun RSS trovato; /api/bandi
-    non esiste. Il sito sardegnaprogrammazione.it (PR 21-27) e'' un''applicazione JavaScript pura, vuota senza browser:
-    calendario art. 49 non verificabile.
-
-    '
+  note: 'Motore di ricerca del sito (POST JSON, senza cookie): results[] con titolo, dataPubblicazione, dataScadenza,
+    slug, destinazione (es. impresa), documentiList. 7222 bandi in archivio, 50 per pagina ordinati per data. Trovata
+    il 24/09 osservando le chiamate della pagina.'
+  richiesta:
+    metodo: POST
+    corpo_json:
+      state:
+        current: 1
+        resultsPerPage: 50
+        searchTerm: ''
+        sortList:
+        - field: dataPubblicazione
+          direction: desc
+        filters:
+        - field: stato.keyword
+          type: any
+          values:
+          - PUBBLICATO
+        - field: esterno
+          type: any
+          values:
+          - 'false'
+        - field: tipoContenuto.keyword
+          type: any
+          values:
+          - BANDO
+      config:
+        result_fields: {}
+        facets: {}
+        filters:
+        - field: stato.keyword
+          type: any
+          values:
+          - PUBBLICATO
+        - field: esterno
+          type: any
+          values:
+          - 'false'
+        - field: tipoContenuto.keyword
+          type: any
+          values:
+          - BANDO
+    url_modello: https://www.regione.sardegna.it/atti-bandi-archivi/atti-amministrativi/bandi/{slug}
 
 - id: sardegna_sardegnaimpresa_agevolazioni
   nome: SardegnaImpresa - Agevolazioni per le imprese
