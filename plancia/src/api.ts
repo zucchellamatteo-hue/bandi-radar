@@ -10,10 +10,23 @@ export interface Fonte {
   ultima_novita: string | null; ultimo_titolo: string | null; novita_30: number; novita_90: number;
 }
 
+export type Esito = "rilevante" | "non_rilevante" | "da_rivedere";
+
 export interface Annuncio {
   id: number; fonte_id: string; fonte: string; ente: string; tipo: string; territorio: string;
   url: string; titolo: string; riassunto: string | null; pubblicato_il: string | null; trovato_il: string;
   scadenza?: string | null;
+  smistamento?: Esito | null; smistamento_da?: string | null; smistamento_motivo?: string | null; n_allegati?: number;
+}
+
+export interface Smistamento {
+  esito: Esito; motivo: string | null; deciso_da: "regole" | "ia" | "matteo"; costo: number | null; deciso_il: string;
+  proposta_esito: Esito | null; proposta_motivo: string | null; proposta_da: string | null;
+}
+
+export interface Allegato {
+  id: number; url: string; nome: string; tipo: string; dimensione: number | null; impronta: string | null;
+  scaricato_il: string; errore: string | null; ha_file: boolean; caratteri_testo: number | null;
 }
 
 export interface Riepilogo {
@@ -47,6 +60,11 @@ export const api = {
   annunci: (parametri: Record<string, string>) =>
     chiama<{ totale: number; pagina: number; per_pagina: number; annunci: Annuncio[]; territori: string[] }>(
       "/api/annunci?" + new URLSearchParams(parametri).toString()),
+  annuncio: (id: string) =>
+    chiama<Omit<Annuncio, "smistamento"> & { fonte_url: string | null; smistamento: Smistamento | null; allegati: Allegato[] }>(
+      `/api/annunci/${id}`),
+  correggiSmistamento: (id: number, esito: Esito) =>
+    chiama<{ esito: Esito; deciso_da: string }>(`/api/annunci/${id}/smistamento`, { method: "POST", body: JSON.stringify({ esito }) }),
   settimane: () => chiama<Settimana[]>("/api/novita/settimane"),
   settimana: (chiave: string) => chiama<SettimanaDettaglio>(`/api/novita/settimane/${chiave}`),
 };
@@ -55,6 +73,18 @@ export const NOMI_TIPO: Record<string, string> = {
   ue: "Unione europea", nazionale: "Nazionali", regione: "Regioni", camera: "Camere di Commercio",
   capoluogo: "Comuni capoluogo", provincia: "Province", fondazione: "Fondazioni", contesto: "Dati di contesto",
 };
+
+export const NOMI_ESITO: Record<Esito, string> = {
+  rilevante: "Rilevante", non_rilevante: "Non rilevante", da_rivedere: "Da rivedere",
+};
+
+export const NOMI_DECISO_DA: Record<string, string> = { regole: "regole", ia: "IA", matteo: "Matteo" };
+
+export function dimensione(byte: number | null | undefined): string {
+  if (byte == null) return "–";
+  if (byte < 1024 * 1024) return `${Math.max(1, Math.round(byte / 1024))} kB`;
+  return `${(byte / 1024 / 1024).toFixed(1)} MB`;
+}
 
 export function data(iso: string | null | undefined, conOra = false): string {
   if (!iso) return "–";

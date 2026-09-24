@@ -2,6 +2,7 @@ import { NavLink, Route, Routes } from "react-router-dom";
 import Fonti from "./pagine/Fonti";
 import DettaglioFonte from "./pagine/DettaglioFonte";
 import Catalogo from "./pagine/Catalogo";
+import DettaglioAnnuncio from "./pagine/DettaglioAnnuncio";
 import Novita from "./pagine/Novita";
 import Settimana from "./pagine/Settimana";
 
@@ -22,6 +23,7 @@ export default function App() {
           <Route path="/" element={<Fonti />} />
           <Route path="/fonti/:id" element={<DettaglioFonte />} />
           <Route path="/catalogo" element={<Catalogo />} />
+          <Route path="/annunci/:id" element={<DettaglioAnnuncio />} />
           <Route path="/novita" element={<Novita />} />
           <Route path="/novita/:chiave" element={<Settimana />} />
         </Routes>

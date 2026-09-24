@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import { Annuncio, api, data, NOMI_TIPO } from "../api";
+import Smistamento from "../Smistamento";
 
 export default function Catalogo() {
   const [parametri, setParametri] = useSearchParams();
@@ -25,7 +26,7 @@ export default function Catalogo() {
   return (
     <>
       <h1>Catalogo</h1>
-      <div className="avviso">Qui ci sono gli <b>annunci</b> trovati sulle fonti: avvisi, notizie e bandi non ancora smistati. Con la Fase 3 ogni bando avrà la sua scheda e i filtri per ATECO, dimensione e tipo di agevolazione.</div>
+      <div className="avviso">Qui ci sono gli <b>annunci</b> trovati sulle fonti: avvisi, notizie e bandi. Le regole li smistano in <b>rilevanti</b> (aiuti alle imprese), <b>non rilevanti</b> e <b>da rivedere</b>: con ✓ ? ✗ correggi a mano, e le tue correzioni servono a tarare le regole. Cliccando il titolo si vedono i dettagli e gli allegati scaricati. Con le schede arriveranno i filtri per ATECO, dimensione e tipo di agevolazione.</div>
       <form className="filtri" onSubmit={(e) => { e.preventDefault(); imposta("q", testo); }}>
         <input type="text" placeholder="Cerca nel titolo, nel riassunto o nell'ente…" value={testo} onChange={(e) => setTesto(e.target.value)} />
         <button type="submit">Cerca</button>
@@ -43,17 +44,25 @@ export default function Catalogo() {
           <option value="">Qualunque scadenza</option>
           <option value="7">Scade entro 7 giorni</option><option value="30">Scade entro 30 giorni</option><option value="90">Scade entro 90 giorni</option>
         </select>
+        <select value={parametri.get("esito") || ""} onChange={(e) => imposta("esito", e.target.value)}>
+          <option value="">Qualunque smistamento</option>
+          <option value="rilevante">Solo rilevanti</option><option value="da_rivedere">Da rivedere</option>
+          <option value="non_rilevante">Non rilevanti</option><option value="non_smistato">Non ancora smistati</option>
+        </select>
         {risposta && <span className="piccolo">{risposta.totale} annunci</span>}
       </form>
       {!risposta ? <div className="caricamento">Caricamento…</div> : (
         <table>
-          <thead><tr><th>Data</th><th>Annuncio</th><th>Scadenza</th><th className="nascondi-mobile">Fonte</th></tr></thead>
+          <thead><tr><th>Data</th><th>Annuncio</th><th>Scadenza</th><th>Smistamento</th><th className="nascondi-mobile">Fonte</th></tr></thead>
           <tbody>{risposta.annunci.map((a) => (
             <tr key={a.id}>
               <td>{data(a.pubblicato_il || a.trovato_il)}</td>
-              <td><a href={a.url} target="_blank" rel="noreferrer" className="titolo-annuncio">{a.titolo}</a>
+              <td><Link to={`/annunci/${a.id}`} className="titolo-annuncio">{a.titolo}</Link>
+                {" "}<a href={a.url} target="_blank" rel="noreferrer" className="piccolo" title="Pagina originale dell'ente">originale ↗</a>
+                {a.n_allegati ? <span className="piccolo"> · {a.n_allegati} allegati</span> : null}
                 {a.riassunto && <div className="riassunto">{a.riassunto.slice(0, 220)}</div>}</td>
               <td className="scadenza">{a.scadenza ? data(a.scadenza) : ""}</td>
+              <td><Smistamento annuncioId={a.id} esito={a.smistamento} decisoDa={a.smistamento_da} motivo={a.smistamento_motivo} /></td>
               <td className="nascondi-mobile"><span className="etichetta-tipo">{NOMI_TIPO[a.tipo] || a.tipo}</span>{a.ente}<div className="piccolo">{a.territorio}</div></td>
             </tr>
           ))}</tbody>

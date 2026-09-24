@@ -38,3 +38,12 @@ button:hover { border-color: var(--accento); color: var(--accento); }
 .caricamento { color: var(--grigio); padding: 2rem; text-align: center; }
 @media (max-width: 800px) { main { padding: 1rem; } th, td { padding: .4rem; font-size: .85rem; } .nascondi-mobile { display: none; } }
 .scadenza { color: #9a3412; font-size: .85rem; white-space: nowrap; }
+.smistamento { white-space: nowrap; }
+.smistamento .esito { display: inline-block; border-radius: 4px; padding: .1rem .4rem; font-size: .78rem; font-weight: 600; }
+.esito.rilevante { background: #e3f4ea; color: #1e6b3e; } .esito.non_rilevante { background: #f0f2f5; color: var(--grigio); }
+.esito.da_rivedere { background: #fff4d6; color: #8a6100; } .esito.nessuno { background: #fff; color: var(--grigio); border: 1px dashed var(--bordo); }
+.smistamento .correggi { margin-top: .3rem; display: flex; gap: .25rem; }
+.smistamento .correggi button { padding: .1rem .45rem; }
+.smistamento .correggi button.scelto { background: #eef2f7; color: var(--testo); }
+.errore-allegato { color: #9a3412; }
+.testo-lungo { white-space: pre-wrap; background: var(--carta); border: 1px solid var(--bordo); border-radius: 8px; padding: .8rem 1rem; }
