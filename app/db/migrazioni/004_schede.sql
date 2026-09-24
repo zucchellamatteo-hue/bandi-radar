@@ -19,7 +19,8 @@ CREATE TABLE IF NOT EXISTS bandi (
     contributo_massimo  numeric,                       -- euro, per singola impresa
     percentuale         numeric,                       -- percentuale massima delle spese coperta (0-100)
     spese_ammesse       text,
-    codici_ateco        text[],                        -- codici o prefissi ATECO ammessi (es. '62', '25.62'); vuoto = nessun limite dichiarato
+    codici_ateco        text[],                        -- codici o prefissi ATECO ammessi (es. '62', '25.62', sezione 'C'); null = nessun limite dichiarato
+    codici_ateco_esclusi text[],                       -- codici o sezioni esclusi: molti bandi ammettono "tutti i settori tranne..."
     dimensioni_ammesse  text[],                        -- micro | piccola | media | grande
     requisiti           text,
     tema                text,                          -- digitale | green | internazionalizzazione | investimenti | formazione | ricerca | ...

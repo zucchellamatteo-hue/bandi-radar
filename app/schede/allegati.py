@@ -28,7 +28,7 @@ import zipfile
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Callable, Iterable
-from urllib.parse import unquote, unquote_plus, urldefrag, urljoin, urlsplit
+from urllib.parse import parse_qsl, unquote, unquote_plus, urldefrag, urljoin, urlsplit
 
 import httpx
 from bs4 import BeautifulSoup
@@ -92,13 +92,25 @@ class Risultato:
 
 # --- trovare i link -----------------------------------------------------------------------------
 
+def _nome_nella_query(url: str) -> str | None:
+    """Alcuni siti mettono il nome del file nei parametri (Regione Lombardia: /download/8a5a...?fileName=Bando.pdf)."""
+    for _, valore in parse_qsl(urlsplit(url).query):
+        if _ESTENSIONE.search(valore.lower()):
+            return valore
+    return None
+
+
 def tipo_da_url(url: str) -> str | None:
     """"bando.pdf" -> pdf; "bando.pdf.p7m" -> p7m (vince l'ultima estensione); nessuna -> None."""
     trovate = _ESTENSIONE.findall(unquote(urlsplit(url).path).lower())
+    if not trovate:
+        trovate = _ESTENSIONE.findall((_nome_nella_query(url) or "").lower())
     return trovate[-1] if trovate else None
 
 
 def _nome_da_url(url: str) -> str:
+    if not _ESTENSIONE.search(unquote(urlsplit(url).path).lower()) and _nome_nella_query(url):
+        return _nome_nella_query(url)
     percorso = unquote_plus(urlsplit(url).path).rstrip("/")   # molti siti scrivono gli spazi come +
     parti = [p for p in percorso.split("/") if p]
     # Liferay: il nome del file e' la parte con l'estensione, non l'ultima.

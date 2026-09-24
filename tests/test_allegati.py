@@ -58,6 +58,10 @@ def test_tipo_da_url():
     assert tipo_da_url("https://x.it/a/decreto.pdf.p7m") == "p7m"
     assert tipo_da_url("https://x.it/documents/1/Allegato.docx/uuid?t=1") == "docx"
     assert tipo_da_url("https://x.it/bandi/pdf-e-moduli") is None
+    # Regione Lombardia, Bandi Online: il nome del file sta nei parametri.
+    url = "https://www.bandi.regione.lombardia.it/servizi/servizio/bandi/download/8a5a0034?fileName=Allegato%20A%20bando.pdf"
+    assert tipo_da_url(url) == "pdf"
+    assert allegati._nome_da_url(url) == "Allegato A bando.pdf"
 
 
 def test_trova_allegati_nella_pagina():
