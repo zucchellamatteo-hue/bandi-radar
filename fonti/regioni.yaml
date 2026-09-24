@@ -292,12 +292,12 @@
   frequenza: settimanale
   stato: da_verificare
   verificato_il: '2026-09-24'
-  note: 'Calendario art. 49 del PR FESR 2021-2027 NON trovato: la pagina Politiche di coesione 2021-2027 (aperta)
-    non lo linka, le pagine "pr-fesr-2021-2027" provate rispondono 404 e la ricerca interna non aiuta. Esiste solo
-    il "Calendario Bandi" del POR FESR 2014-2020 (…/por-fesr/calendario-bandi/, 200). Da cercare a mano nel sito
-    o chiedendo all''AdG.
-
-    '
+  note: >
+    Calendario art. 49 del PR FESR 2021-2027 NON trovato: la pagina Politiche di coesione 2021-2027 (aperta)
+    non lo linka, le pagine "pr-fesr-2021-2027" provate rispondono 404 e la ricerca interna non aiuta. Esiste
+    solo il "Calendario Bandi" del POR FESR 2014-2020 (…/por-fesr/calendario-bandi/, 200). Da cercare a mano
+    nel sito o chiedendo all'AdG. Dal VPS il 24/09: la pagina risponde, ma nessun calendario art. 49 linkato;
+    i 50 link letti sono menu. Resta da cercare a mano.
 
 - id: liguria_bandi_avvisi
   nome: Regione Liguria - Bandi e avvisi (elenco, filtro imprese/attivi)
@@ -665,13 +665,16 @@
   frequenza: tre_a_settimana
   stato: attiva
   verificato_il: '2026-09-24'
-  note: 'La pagina ufficiale https://www.regione.umbria.it/la-regione/bandi (aperta, 200) contiene solo un iframe
-    verso questo motore di ricerca bandi. L''indirizzo con il filtro "Imprese" risponde 200 e mostra "Risultati
-    1 - 20 su 31", 20 per pagina, con link di dettaglio per codice bando (_bandi_WAR_bandiportlet_codBando=...).
-    Altri filtri: materia ("Attivita'' produttive e imprese"), fonteFinanziaria, tipologiaBando, testo. I link portano
-    un jsessionid da ignorare nel confronto. Nessun RSS. Il portale dati.umbria.it non era raggiungibile dalla sessione.
-
-    '
+  note: >
+    La pagina ufficiale https://www.regione.umbria.it/la-regione/bandi (aperta, 200) contiene solo un iframe
+    verso questo motore di ricerca bandi. L'indirizzo con il filtro "Imprese" risponde 200 e mostra "Risultati
+    1 - 20 su 31", 20 per pagina, con link di dettaglio per codice bando
+    (_bandi_WAR_bandiportlet_codBando=...). Altri filtri: materia ("Attivita' produttive e imprese"),
+    fonteFinanziaria, tipologiaBando, testo. I link portano un jsessionid da ignorare nel confronto. Nessun
+    RSS. Il portale dati.umbria.it non era raggiungibile dalla sessione. Dal VPS il 24/09: 20 bandi letti
+    dalla tabella (Oggetto, date, link 'Dettaglio'). Il lettore ora prende il titolo dalla cella piu' lunga
+    della riga e toglie il ;jsessionid dai link, che altrimenti cambierebbero a ogni visita. Il filtro Imprese
+    dell'indirizzo non filtra davvero: arrivano anche avvisi per Comuni e premi di laurea.
 
 - id: umbria_avvisi_attivita_produttive
   nome: Regione Umbria - Avvisi attivita' produttive
@@ -683,14 +686,15 @@
   feed_url: null
   piattaforma: liferay
   frequenza: tre_a_settimana
-  stato: difficile
+  stato: esclusa
   verificato_il: '2026-09-24'
-  note: 'Sezione "Avvisi" per materia (elenco da /avvisi: agricoltura, energia, turismo, lavoro...). La pagina risponde
-    200 ma l''elenco e'' in portlet caricati via JavaScript (render_portlet): nell''HTML scaricato non compare nessun
-    avviso. Da provare con browser senza interfaccia. Esiste solo l''RSS dell''agenzia stampa (ufficio-stampa/agenzia-umbria-notizie),
-    non degli avvisi.
-
-    '
+  note: >
+    Sezione "Avvisi" per materia (elenco da /avvisi: agricoltura, energia, turismo, lavoro...). La pagina
+    risponde 200 ma l'elenco e' in portlet caricati via JavaScript (render_portlet): nell'HTML scaricato non
+    compare nessun avviso. Da provare con browser senza interfaccia. Esiste solo l'RSS dell'agenzia stampa
+    (ufficio-stampa/agenzia-umbria-notizie), non degli avvisi. Dal VPS il 24/09: la pagina risponde (200) ma
+    contiene solo il menu della sezione, anche col browser; nessun elenco di avvisi. I bandi per imprese sono
+    gia' letti dalla voce umbria_bandi_imprese.
 
 - id: sviluppumbria_avvisi
   nome: Sviluppumbria - Avvisi pubblici (home)
@@ -721,16 +725,16 @@
   feed_url: null
   piattaforma: dotnetnuke
   frequenza: tre_a_settimana
-  stato: difficile
+  stato: attiva
   verificato_il: '2026-09-24'
-  note: 'Elenco dei bandi di contributo (link di dettaglio ?idb=NNNNN, filtro per tema ?p=1&t=103 agricoltura, 107
-    enti locali, 112 lavoro...). Prima richiesta 200 con elenco completo; dalla quarta richiesta in poi il sito
-    rimanda tutto (pagine e feed) a validate.perfdrive.com (Radware Bot Manager). Serve un ritmo molto basso o un
-    browser senza interfaccia; da ritentare. Esiste anche /Entra-in-Regione/Bandi-e-opportunita (aperta, 200) con
-    tre sottopagine: Bandi-attivi, Bandi-in-uscita (pianificazione dei vantaggi economici = calendario avvisi),
-    Bandi-scaduti; le sottopagine sono state bloccate dal bot manager.
-
-    '
+  note: >
+    Elenco dei bandi di contributo (link di dettaglio ?idb=NNNNN, filtro per tema ?p=1&t=103 agricoltura, 107
+    enti locali, 112 lavoro...). Prima richiesta 200 con elenco completo; dalla quarta richiesta in poi il
+    sito rimanda tutto (pagine e feed) a validate.perfdrive.com (Radware Bot Manager). Serve un ritmo molto
+    basso o un browser senza interfaccia; da ritentare. Esiste anche /Entra-in-Regione/Bandi-e-opportunita
+    (aperta, 200) con tre sottopagine: Bandi-attivi, Bandi-in-uscita (pianificazione dei vantaggi economici =
+    calendario avvisi), Bandi-scaduti; le sottopagine sono state bloccate dal bot manager. Dal VPS il 24/09:
+    16 link letti, bandi (?idb=...) misti a link di categoria (?t=...): lo smistamento separera' quelli utili.
 
 - id: marche_rss_tematici
   nome: Regione Marche - Feed RSS per tema
@@ -739,16 +743,19 @@
   territorio: MAR
   url: https://www.regione.marche.it/rss
   modalita: rss
-  feed_url: null
+  feed_url: https://www.regione.marche.it/DesktopModules/Blog/API/RSS/Get?tabid=152&moduleid=6549&blog=10
   piattaforma: dotnetnuke
   frequenza: tre_a_settimana
-  stato: da_verificare
+  stato: attiva
   verificato_il: '2026-09-24'
-  note: 'La pagina /rss (aperta, 200) elenca feed per tema con indirizzo /DesktopModules/Blog/API/RSS/Get?tabid=152&moduleid=6549&blog=NN
-    (13 Attivita'' Produttive, 10 Fondi Europei, 05 Opportunita'' per il territorio, 14 Lavoro). I feed NON sono
-    stati aperti: la richiesta e'' stata bloccata dal bot manager. feed_url resta vuoto finche'' non si verifica.
-
-    '
+  note: >
+    La pagina /rss (aperta, 200) elenca feed per tema con indirizzo
+    /DesktopModules/Blog/API/RSS/Get?tabid=152&moduleid=6549&blog=NN (13 Attivita' Produttive, 10 Fondi
+    Europei, 05 Opportunita' per il territorio, 14 Lavoro). I feed NON sono stati aperti: la richiesta e'
+    stata bloccata dal bot manager. feed_url resta vuoto finche' non si verifica. Dal VPS il 24/09: /rss e'
+    l'indice dei feed, non un feed. Si legge il feed tematico 'Fondi Europei e Attivita Internazionali'
+    (blog=10, 30 voci, ultima 18/09). 'Attivita Produttive' (blog=13) e' fermo a maggio 2026, 'Opportunita per
+    il territorio' (blog=05) al 2021; il feed di tutte le news e' il parametro senza blog=.
 
 - id: lazio_avvisi_e_bandi
   nome: Regione Lazio - Avvisi e bandi (hub)
@@ -920,16 +927,19 @@
   feed_url: null
   piattaforma: flexcmp
   frequenza: tre_a_settimana
-  stato: difficile
+  stato: attiva
   verificato_il: '2026-09-24'
-  note: 'Non e'' stata trovata una pagina "bandi e avvisi" con elenco: la voce "Consultare bandi e avvisi pubblici"
-    (IDPagina/55) porta all''Albo pretorio online (IDPagina/8363) che rimanda a un applicativo esterno cloud.urbi.it;
-    PubblicazioneAtti.php risponde 403. Le pagine "Per le Imprese" (IDPagina/49), "Sportello Europa" (IDPagina/40),
-    "Coesione Italia 2021-2027" (IDPagina/19254) e "FESR" (IDPagina/8549) sono aperte (200) ma senza elenco bandi
-    ne'' calendario art. 49. Resta la home, che elenca le notizie in <h5> (es. "Presentato l''Avviso STEP Molise").
-    moliseeuropa.regione.molise.it non raggiungibile (502 dal proxy). Nessun RSS trovato.
-
-    '
+  note: >
+    Non e' stata trovata una pagina "bandi e avvisi" con elenco: la voce "Consultare bandi e avvisi pubblici"
+    (IDPagina/55) porta all'Albo pretorio online (IDPagina/8363) che rimanda a un applicativo esterno
+    cloud.urbi.it; PubblicazioneAtti.php risponde 403. Le pagine "Per le Imprese" (IDPagina/49), "Sportello
+    Europa" (IDPagina/40), "Coesione Italia 2021-2027" (IDPagina/19254) e "FESR" (IDPagina/8549) sono aperte
+    (200) ma senza elenco bandi ne' calendario art. 49. Resta la home, che elenca le notizie in <h5> (es.
+    "Presentato l'Avviso STEP Molise"). moliseeuropa.regione.molise.it non raggiungibile (502 dal proxy).
+    Nessun RSS trovato. Dal VPS il 24/09: con il selettore div.Notizie si leggono le notizie della home invece
+    dei link del menu.
+  richiesta:
+    selettore: div.Notizie
 
 - id: sviluppo_italia_molise_bandi
   nome: Sviluppo Italia Molise - Bandi pubblici
@@ -941,15 +951,16 @@
   feed_url: null
   piattaforma: wordpress
   frequenza: tre_a_settimana
-  stato: da_verificare
+  stato: attiva
   verificato_il: '2026-09-24'
-  note: 'Agenzia regionale, organismo intermedio del PR Molise. Elenco WordPress (tema Divi) con schede "<h2 class=et_pb_module_header>":
-    OSAKA 2025 voucher imprese, High Tech Business, Ricettivita'' alberghiera, Comprensori sciistici, Bandi Covid19
-    (molte voci vecchie). La pagina /bandi-pr-molise/ ("Bandi competenza OI", 200) contiene l''avviso STEP Molise.
-    Il sito risponde a intermittenza (piu'' richieste cadute con 000/502): da riprovare dal server prima di fidarsi.
-    Feed /feed/ non raggiunto. Finmolise (finmolise.it) non raggiungibile.
-
-    '
+  note: >
+    Agenzia regionale, organismo intermedio del PR Molise. Elenco WordPress (tema Divi) con schede "<h2
+    class=et_pb_module_header>": OSAKA 2025 voucher imprese, High Tech Business, Ricettivita' alberghiera,
+    Comprensori sciistici, Bandi Covid19 (molte voci vecchie). La pagina /bandi-pr-molise/ ("Bandi competenza
+    OI", 200) contiene l'avviso STEP Molise. Il sito risponde a intermittenza (piu' richieste cadute con
+    000/502): da riprovare dal server prima di fidarsi. Feed /feed/ non raggiunto. Finmolise (finmolise.it)
+    non raggiungibile. Dal VPS il 24/09: 17 avvisi letti (voucher Osaka, High Tech Business, ricettivita
+    alberghiera).
 
 - id: campania_regione_bandi_avvisi
   nome: Regione Campania - Bandi e avvisi
@@ -1002,14 +1013,16 @@
   feed_url: null
   piattaforma: null
   frequenza: settimanale
-  stato: da_verificare
+  stato: attiva
   verificato_il: '2026-09-24'
-  note: 'Si apre (200) ma l''elenco sembra fermo al ciclo 2014-2020 (Campania Start-up, avvisi Covid, technology
-    platform). Non compare un calendario degli avvisi 2021-27. Da tenere con frequenza bassa finche'' non si capisce
-    se viene ancora aggiornato; l''avviso FESR 21-27 sull''efficientamento delle imprese e'' in home page come news,
-    non in questo elenco.
-
-    '
+  note: >
+    Si apre (200) ma l'elenco sembra fermo al ciclo 2014-2020 (Campania Start-up, avvisi Covid, technology
+    platform). Non compare un calendario degli avvisi 2021-27. Da tenere con frequenza bassa finche' non si
+    capisce se viene ancora aggiornato; l'avviso FESR 21-27 sull'efficientamento delle imprese e' in home page
+    come news, non in questo elenco. Dal VPS il 24/09: senza selettore il lettore prendeva i pulsanti di
+    condivisione; con #news_body legge 75 avvisi e incentivi del PR FESR.
+  richiesta:
+    selettore: '#news_body'
 
 - id: puglia_regione_bandi_avvisi_rss
   nome: Regione Puglia - Bandi e avvisi (feed)
@@ -1081,13 +1094,14 @@
   feed_url: null
   piattaforma: null
   frequenza: settimanale
-  stato: da_verificare
+  stato: attiva
   verificato_il: '2026-09-24'
-  note: 'La home si apre (200) ma non ha un elenco proprio di bandi per le imprese: rimanda a por.regione.puglia.it
-    e ha solo la pagina "Just Transition Fund - Avvisi per la provincia di Taranto" (/it/Just-Transition-Fund-Avvisi-per-la-provincia-di-Taranto,
-    200, contenuto non leggibile senza JavaScript) e le gare in "contrasparenza". Da tenere solo come riferimento.
-
-    '
+  note: >
+    La home si apre (200) ma non ha un elenco proprio di bandi per le imprese: rimanda a por.regione.puglia.it
+    e ha solo la pagina "Just Transition Fund - Avvisi per la provincia di Taranto" (/it/Just-Transition-Fund-
+    Avvisi-per-la-provincia-di-Taranto, 200, contenuto non leggibile senza JavaScript) e le gare in
+    "contrasparenza". Da tenere solo come riferimento. Dal VPS il 24/09: 7 notizie lette dalla home (Minibond,
+    Puglia Moltiplica, Start Cup); la pagina e' lenta (26 s).
 
 - id: basilicata_portale_bandi_api
   nome: Regione Basilicata - Portale Bandi (API)
@@ -1140,16 +1154,16 @@
   feed_url: null
   piattaforma: null
   frequenza: settimanale
-  stato: attiva
+  stato: difficile
   verificato_il: '2026-09-24'
-  note: >
-    ROBOTS.TXT VIETA questo indirizzo a tutti i robot (verificato 24/09): Matteo ha deciso il 24/09 di leggerlo lo stesso (ignora_robots), un controllo alla frequenza prevista con User-Agent dichiarato.
-    'Elenco degli incentivi gestiti dalla societa'' regionale (Fondo Microfinanza, Avviso Energia, Imprese artigiane,
-    Imprese costituite/costituende, Microcredito, Mobilita'' elettrica...). Pagina semplice, titoli in h4 con link;
-    nessun RSS.
-
-    '
   ignora_robots: true
+  note: >
+    ROBOTS.TXT VIETA questo indirizzo a tutti i robot (verificato 24/09): Matteo ha deciso il 24/09 di
+    leggerlo lo stesso (ignora_robots), un controllo alla frequenza prevista con User-Agent dichiarato.
+    'Elenco degli incentivi gestiti dalla societa'' regionale (Fondo Microfinanza, Avviso Energia, Imprese
+    artigiane, Imprese costituite/costituende, Microcredito, Mobilita'' elettrica...). Pagina semplice, titoli
+    in h4 con link; nessun RSS. ' Bloccata anche dal VPS il 24/09: 403 in IPv4 (nessun IPv6), con qualunque
+    User-Agent; col browser pagina di blocco di 2 KB.
 
 - id: calabria_europa_bandi_api
   nome: Calabria Europa - Bandi e avvisi PR 2021-27 (API)
@@ -1407,11 +1421,11 @@
   feed_url: https://www.sfirs.it/feed/
   piattaforma: wordpress
   frequenza: settimanale
-  stato: da_verificare
+  stato: attiva
   verificato_il: '2026-09-24'
-  note: 'Finanziaria regionale. La pagina "Bandi e gare" e'' quasi vuota (gare e selezioni); le misure per le imprese
-    (Sardinia Fintech, Fondo minibond) compaiono come notizie nel feed generale, che e'' soprattutto comunicazione
-    istituzionale. Utile solo come segnale secondario.
-
-    '
+  note: >
+    Finanziaria regionale. La pagina "Bandi e gare" e' quasi vuota (gare e selezioni); le misure per le
+    imprese (Sardinia Fintech, Fondo minibond) compaiono come notizie nel feed generale, che e' soprattutto
+    comunicazione istituzionale. Utile solo come segnale secondario. Dal VPS il 24/09: feed RSS con 10 voci,
+    ultima 16/09; per lo piu' notizie istituzionali.
 

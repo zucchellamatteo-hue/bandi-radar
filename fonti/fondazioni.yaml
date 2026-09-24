@@ -7,19 +7,20 @@
   tipo: fondazione
   territorio: LOM
   url: https://www.fondazionecariplo.it/it/bandi/bandi.html
-  modalita: html
+  modalita: browser
   feed_url: null
   piattaforma: wordpress
   frequenza: settimanale
-  stato: difficile
+  stato: attiva
   verificato_il: '2026-09-24'
-  note: 'Tutto il sito risponde 403 (Cloudflare) da questa sessione e da WebFetch: URL non aperto davvero, riportato
-    solo perche'' indicato dal sito stesso nelle pagine indicizzate. Da ricerca web: nel 2026 17 bandi (Progetti
-    Emblematici, Luoghi Plurali, Riprogettiamo il futuro, Innovacultura, Get it!), tutti rivolti a enti non profit
-    del territorio lombardo e delle province di Novara e VCO. Salvo eccezioni (Get it! per imprese sociali) non
-    riguarda le imprese: se dal server la pagina si apre, valutare l''esclusione.
-
-    '
+  note: >
+    Tutto il sito risponde 403 (Cloudflare) da questa sessione e da WebFetch: URL non aperto davvero,
+    riportato solo perche' indicato dal sito stesso nelle pagine indicizzate. Da ricerca web: nel 2026 17
+    bandi (Progetti Emblematici, Luoghi Plurali, Riprogettiamo il futuro, Innovacultura, Get it!), tutti
+    rivolti a enti non profit del territorio lombardo e delle province di Novara e VCO. Salvo eccezioni (Get
+    it! per imprese sociali) non riguarda le imprese: se dal server la pagina si apre, valutare l'esclusione.
+    Dal VPS il 24/09: Cloudflare risponde 403 'Just a moment' a una richiesta semplice (anche in IPv6); col
+    browser la pagina si apre e si leggono 4 bandi.
 
 - id: compagnia_san_paolo_contributi
   nome: Compagnia di San Paolo - Bandi e contributi
@@ -121,15 +122,16 @@
   tipo: fondazione
   territorio: VEN
   url: https://www.fondazionecariverona.org/bandi/
-  modalita: html
+  modalita: browser
   feed_url: null
   piattaforma: null
   frequenza: settimanale
-  stato: difficile
+  stato: attiva
   verificato_il: '2026-09-24'
-  note: 'Tutto il sito risponde 403 (Cloudflare) da questa sessione e da WebFetch: URL non aperto davvero, riportato
-    come indirizzo canonico da verificare dal server. Per quanto noto i bandi Cariverona (province di Verona, Vicenza,
-    Belluno, Ancona, Mantova) sono per enti non profit: probabile esclusione una volta verificata la pagina.
-
-    '
+  note: >
+    Tutto il sito risponde 403 (Cloudflare) da questa sessione e da WebFetch: URL non aperto davvero,
+    riportato come indirizzo canonico da verificare dal server. Per quanto noto i bandi Cariverona (province
+    di Verona, Vicenza, Belluno, Ancona, Mantova) sono per enti non profit: probabile esclusione una volta
+    verificata la pagina. Dal VPS il 24/09: Cloudflare risponde 403 a una richiesta semplice; col browser si
+    leggono i bandi (6 link, tra cui Nutrire il cambiamento, Zenit).
 
