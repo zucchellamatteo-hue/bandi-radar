@@ -1,19 +1,24 @@
-"""Bandi Radar - applicazione web (Fase 0: impalcatura).
+"""Bandi Radar - applicazione web.
 
 Espone:
 - GET /health  : stato dell'applicazione e del database, senza autenticazione (usato dal healthcheck)
-- GET /        : pagina "in costruzione", protetta da autenticazione base (utente/password dal file .env)
+- /api/...     : API della plancia (app/plancia/api.py), protetta da autenticazione base
+- /            : la plancia (React, cartella plancia/dist costruita nel Dockerfile), protetta da autenticazione base
 """
 
 import os
 import secrets
+from pathlib import Path
 
 import psycopg
 from fastapi import Depends, FastAPI, HTTPException, status
-from fastapi.responses import HTMLResponse, JSONResponse
+from fastapi.responses import FileResponse, HTMLResponse, JSONResponse
 from fastapi.security import HTTPBasic, HTTPBasicCredentials
 
+from app.plancia.api import router as api_plancia
+
 app = FastAPI(title="Bandi Radar", docs_url=None, redoc_url=None, openapi_url=None)
+CARTELLA_PLANCIA = Path(__file__).resolve().parents[1] / "plancia" / "dist"
 
 _basic = HTTPBasic(realm="Bandi Radar")
 
@@ -61,31 +66,21 @@ def health() -> JSONResponse:
     return JSONResponse(body, status_code=200 if db_error is None else 503)
 
 
-_PAGE = """<!doctype html>
-<html lang="it">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="robots" content="noindex, nofollow">
-  <title>Bandi Radar - in costruzione</title>
-  <style>
-    body { font-family: system-ui, sans-serif; margin: 0; min-height: 100vh; display: grid; place-items: center;
-           background: #f6f7f9; color: #1f2933; }
-    main { text-align: center; padding: 2rem; }
-    h1 { font-weight: 600; margin-bottom: .5rem; }
-    p { color: #52606d; }
-  </style>
-</head>
-<body>
-  <main>
-    <h1>Bandi Radar</h1>
-    <p>Sito in costruzione.</p>
-  </main>
-</body>
-</html>
-"""
+_PAGINA_IN_COSTRUZIONE = """<!doctype html><html lang="it"><head><meta charset="utf-8"><meta name="robots" content="noindex">
+<title>Bandi Radar</title></head><body style="font-family:system-ui;padding:2rem"><h1>Bandi Radar</h1>
+<p>La plancia non e' stata costruita in questa immagine (manca plancia/dist).</p></body></html>"""
+
+app.include_router(api_plancia, dependencies=[Depends(require_user)])
 
 
-@app.get("/", response_class=HTMLResponse)
-def home(_: str = Depends(require_user)) -> str:
-    return _PAGE
+@app.get("/{percorso:path}", response_class=HTMLResponse)
+def plancia(percorso: str, _: str = Depends(require_user)):
+    """Serve la plancia: i file costruiti da Vite; qualunque altro percorso torna index.html (app a pagina singola)."""
+    if percorso.startswith("api/"):
+        raise HTTPException(status_code=404, detail="non trovato")
+    if CARTELLA_PLANCIA.is_dir():
+        candidato = (CARTELLA_PLANCIA / percorso).resolve() if percorso else None
+        if candidato and candidato.is_file() and CARTELLA_PLANCIA in candidato.parents:
+            return FileResponse(candidato)
+        return FileResponse(CARTELLA_PLANCIA / "index.html")
+    return HTMLResponse(_PAGINA_IN_COSTRUZIONE)
