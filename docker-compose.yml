@@ -29,7 +29,13 @@ services:
     build: .
     restart: unless-stopped
     environment:
-      DATABASE_URL: postgresql://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB:-bandi_radar}
+      # Dati di accesso al database passati separati (non in un URL): cosi' la password
+      # puo' contenere qualunque carattere, anche / + = che in un URL romperebbero tutto.
+      PGHOST: db
+      PGPORT: "5432"
+      PGUSER: ${POSTGRES_USER:-postgres}
+      PGPASSWORD: ${POSTGRES_PASSWORD}
+      PGDATABASE: ${POSTGRES_DB:-bandi_radar}
       BASIC_AUTH_USER: ${BASIC_AUTH_USER:?imposta BASIC_AUTH_USER nel file .env}
       BASIC_AUTH_PASSWORD: ${BASIC_AUTH_PASSWORD:?imposta BASIC_AUTH_PASSWORD nel file .env}
     depends_on:

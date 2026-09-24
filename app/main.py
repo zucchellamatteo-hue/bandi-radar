@@ -20,11 +20,11 @@ _basic = HTTPBasic(realm="Bandi Radar")
 
 def _check_database() -> str | None:
     """Ritorna None se il database risponde, altrimenti il messaggio d'errore."""
-    url = os.environ.get("DATABASE_URL")
-    if not url:
-        return "DATABASE_URL non impostata"
+    # psycopg legge da solo PGHOST, PGPORT, PGUSER, PGPASSWORD e PGDATABASE dall'ambiente.
+    if not os.environ.get("PGHOST"):
+        return "PGHOST non impostata"
     try:
-        with psycopg.connect(url, connect_timeout=3) as conn:
+        with psycopg.connect(connect_timeout=3) as conn:
             conn.execute("SELECT 1")
     except Exception as exc:  # noqa: BLE001 - qualunque errore va riportato nello stato
         return str(exc).strip()
