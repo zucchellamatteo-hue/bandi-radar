@@ -280,7 +280,7 @@
   territorio: PUG
   url: https://www.comune.taranto.it/it/news?type=3
   modalita: rss
-  feed_url: https://www.comune.taranto.it/it/feeds
+  feed_url: https://www.comune.taranto.it/it/news/feed
   piattaforma: municipium
   frequenza: settimanale
   stato: attiva
@@ -307,7 +307,7 @@
   territorio: SIC
   url: https://www.comune.ragusa.it/it/news?type=3
   modalita: rss
-  feed_url: https://www.comune.ragusa.it/it/feeds
+  feed_url: https://www.comune.ragusa.it/it/news/feed
   piattaforma: municipium
   frequenza: settimanale
   stato: attiva
@@ -321,7 +321,7 @@
   territorio: SIC
   url: https://www.comune.messina.it/it/news?type=3
   modalita: rss
-  feed_url: https://www.comune.messina.it/it/feeds
+  feed_url: https://www.comune.messina.it/it/news/feed
   piattaforma: municipium
   frequenza: settimanale
   stato: attiva
@@ -375,7 +375,7 @@
   territorio: SAR
   url: https://www.provinciasulcisiglesiente.it/it/news?type=3
   modalita: rss
-  feed_url: https://www.provinciasulcisiglesiente.it/it/feeds
+  feed_url: https://www.provinciasulcisiglesiente.it/it/news/feed
   piattaforma: municipium
   frequenza: mensile
   stato: attiva

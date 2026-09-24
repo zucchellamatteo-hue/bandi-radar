@@ -28,6 +28,7 @@ Qui vive l'elenco delle fonti che Bandi Radar controlla. **Aggiungere una fonte 
   verificato_il: 2026-09-24            # data dell'ultima verifica a mano dell'indirizzo
   note: >                              # cosa pubblica, filtri consigliati, problemi visti
     Elenco misto, filtrare per "imprese".
+  ignora_robots: false                 # true solo per decisione esplicita di Matteo: legge la pagina anche se robots.txt la vieta
 ```
 
 Regole:
@@ -35,6 +36,7 @@ Regole:
 - Se una fonte ha sia una pagina HTML sia un feed o un'API, si preferisce il feed o l'API (`modalita: rss` o `api`) e la pagina HTML resta in `url` come riferimento per le persone.
 - `stato: difficile` per i siti che rifiutano i server o caricano tutto via JavaScript; `esclusa` per fonti valutate e scartate, con il motivo nelle note (così non si rivalutano ogni volta).
 - Le frequenze seguono §3 del piano: sono stime da tarare a fine Fase 2.
+- La raccolta rispetta `robots.txt`. Alcuni enti vietano tutto a tutti i robot (es. Regione Liguria, Regione Abruzzo): quelle voci restano `da_verificare` finché Matteo non decide, fonte per fonte, se impostare `ignora_robots: true`.
 
 ## Controllo
 

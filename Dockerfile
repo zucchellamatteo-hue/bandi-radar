@@ -9,6 +9,7 @@ COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
 COPY app ./app
+COPY fonti ./fonti
 
 # L'applicazione non gira come root.
 RUN useradd --system --no-create-home appuser

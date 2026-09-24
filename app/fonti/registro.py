@@ -23,7 +23,7 @@ STATI = {"attiva", "da_verificare", "difficile", "esclusa"}
 _ID_VALIDO = re.compile(r"^[a-z0-9_]+$")
 _CAMPI_NOTI = {
     "id", "nome", "ente", "tipo", "territorio", "url", "modalita", "feed_url",
-    "piattaforma", "frequenza", "stato", "verificato_il", "note",
+    "piattaforma", "frequenza", "stato", "verificato_il", "note", "ignora_robots",
 }
 
 
@@ -42,6 +42,7 @@ class Fonte:
     piattaforma: str | None = None
     verificato_il: date | None = None
     note: str = ""
+    ignora_robots: bool = False  # solo per decisione esplicita di Matteo, fonte per fonte
     file: str = ""  # nome del file YAML di provenienza
 
     @property
@@ -97,6 +98,10 @@ def _controlla_voce(voce: dict, file: str, posizione: int) -> tuple[Fonte | None
         except ValueError:
             errori.append(f"{dove}: verificato_il deve essere una data AAAA-MM-GG")
 
+    ignora_robots = voce.get("ignora_robots", False)
+    if not isinstance(ignora_robots, bool):
+        errori.append(f"{dove}: ignora_robots deve essere true o false")
+
     if errori:
         return None, errori
     return (
@@ -114,6 +119,7 @@ def _controlla_voce(voce: dict, file: str, posizione: int) -> tuple[Fonte | None
             piattaforma=valori["piattaforma"] or None,
             verificato_il=verificato_il,
             note=valori["note"],
+            ignora_robots=ignora_robots,
             file=file,
         ),
         [],

@@ -315,9 +315,11 @@
   feed_url: null
   piattaforma: joomla
   frequenza: tre_a_settimana
-  stato: attiva
+  stato: da_verificare
   verificato_il: '2026-09-24'
-  note: 'Elenco misto (ERP, borse di studio, bandi imprese). Il filtro funziona solo in POST: quicksearch_beneficiari_list=2
+  note: >
+    ROBOTS.TXT VIETA questo indirizzo a tutti i robot (verificato 24/09): la raccolta lo salta. Matteo decide se impostare ignora_robots: true (un controllo alla frequenza prevista, con User-Agent dichiarato) oppure cercare un'alternativa.
+    'Elenco misto (ERP, borse di studio, bandi imprese). Il filtro funziona solo in POST: quicksearch_beneficiari_list=2
     (imprese; 1 enti, 3 privati), quicksearch_stato=1 (attivi), quicksearch_OrderField[]=2, quicksearch_OrderDir[]=1;
     con gli stessi parametri in GET risponde 404. L''osservatore deve quindi inviare una POST. Le schede sono /homepage-bandi-e-avvisi/publiccompetition/<id>:<slug>.html.
 
@@ -333,9 +335,11 @@
   feed_url: null
   piattaforma: joomla
   frequenza: tre_a_settimana
-  stato: attiva
+  stato: da_verificare
   verificato_il: '2026-09-24'
-  note: 'Categoria con i soli bandi FESR 21-27 (20 schede nell''HTML), senza bisogno di POST. Molti sono gestiti
+  note: >
+    ROBOTS.TXT VIETA questo indirizzo a tutti i robot (verificato 24/09): la raccolta lo salta. Matteo decide se impostare ignora_robots: true (un controllo alla frequenza prevista, con User-Agent dichiarato) oppure cercare un'alternativa.
+    'Categoria con i soli bandi FESR 21-27 (20 schede nell''HTML), senza bisogno di POST. Molti sono gestiti
     operativamente da FILSE.
 
     '
@@ -350,9 +354,11 @@
   feed_url: null
   piattaforma: joomla
   frequenza: settimanale
-  stato: attiva
+  stato: da_verificare
   verificato_il: '2026-09-24'
-  note: 'Pagina art. 49 c. 2 con allegato "calendario degli inviti a presentare proposte Pr Fesr 2021-2027 - versione
+  note: >
+    ROBOTS.TXT VIETA questo indirizzo a tutti i robot (verificato 24/09): la raccolta lo salta. Matteo decide se impostare ignora_robots: true (un controllo alla frequenza prevista, con User-Agent dichiarato) oppure cercare un'alternativa.
+    'Pagina art. 49 c. 2 con allegato "calendario degli inviti a presentare proposte Pr Fesr 2021-2027 - versione
     aggiornata al 22 aprile 2026" (documento /component/publiccompetitions/document/48729:…). Da osservare la riga
     "versione aggiornata al". Alias breve: …/cosa-cerchi/fesr_2021-2027_calendario_bandi.html (200).
 
@@ -439,16 +445,18 @@
   feed_url: https://www.provincia.tn.it/opendata/api/content/search/classes%20%5Bpublic_service%5D%20and%20q%20%3D%20%27bando%27%20limit%2050
   piattaforma: opencity
   frequenza: tre_a_settimana
-  stato: attiva
+  stato: da_verificare
   verificato_il: '2026-09-24'
-  note: 'Il sito è OpenCity/OpenPA: la pagina /Servizi è riempita via JavaScript ma l''API /opendata/api/content/search/
-    risponde JSON senza chiave (query nel percorso, es. "classes [public_service] and q = ''bando'' limit 50": 139
+  note: >
+    ROBOTS.TXT VIETA /opendata/api (verificato 24/09): la raccolta la salta. Alternative: i dataset CSV dei
+    calendari o la pagina /Servizi con browser. Il sito è OpenCity/OpenPA: la pagina /Servizi è riempita via JavaScript ma l'API /opendata/api/content/search/
+    risponde JSON senza chiave (query nel percorso, es. "classes [public_service] and q = 'bando' limit 50": 139
     risultati; senza q: 1213 servizi). Ogni risultato ha metadata.name, modified, published e link ("read/<id>"
-    = /opendata/api/content/read/<id>); la pagina web è /content/view/full/<mainNodeId>. Provare anche q = ''contributo''
-    e ''avviso''. Lenta (>25 s a volte): usare timeout alto. /Servizi/Bandi risponde 410. La pagina /Argomenti/Focus/Aiuti-alle-imprese
+    = /opendata/api/content/read/<id>); la pagina web è /content/view/full/<mainNodeId>. Provare anche q = 'contributo'
+    e 'avviso'. Lenta (>25 s a volte): usare timeout alto. /Servizi/Bandi risponde 410. La pagina /Argomenti/Focus/Aiuti-alle-imprese
     (200) linka solo 3 misure.
 
-    '
+    
 
 - id: trento_fesr_calendario_avvisi
   nome: Provincia autonoma di Trento - FESR 2021-2027, Calendario degli avvisi (art. 49, CSV)
@@ -480,9 +488,11 @@
   feed_url: null
   piattaforma: opencity
   frequenza: settimanale
-  stato: attiva
+  stato: da_verificare
   verificato_il: '2026-09-24'
-  note: 'Dataset "FSE+ Calendario degli avvisi e degli inviti a partecipare" (modificato 2026-07-28), stessa struttura
+  note: >
+    ROBOTS.TXT VIETA questo indirizzo a tutti i robot (verificato 24/09): la raccolta lo salta. Matteo decide se impostare ignora_robots: true (un controllo alla frequenza prevista, con User-Agent dichiarato) oppure cercare un'alternativa.
+    'Dataset "FSE+ Calendario degli avvisi e degli inviti a partecipare" (modificato 2026-07-28), stessa struttura
     del FESR; export CSV atteso in /customexport/dataset-csv_resource-27833 (non aperto in questa verifica). Il
     sito fse.provincia.tn.it ha solo avvisi 2014-2020.
 
@@ -498,9 +508,11 @@
   feed_url: null
   piattaforma: opencity
   frequenza: settimanale
-  stato: attiva
+  stato: da_verificare
   verificato_il: '2026-09-24'
-  note: 'Dataset "Calendario degli avvisi e degli inviti a partecipare - Bandi FEASR" (modificato 2026-07-04); export
+  note: >
+    ROBOTS.TXT VIETA questo indirizzo a tutti i robot (verificato 24/09): la raccolta lo salta. Matteo decide se impostare ignora_robots: true (un controllo alla frequenza prevista, con User-Agent dichiarato) oppure cercare un'alternativa.
+    'Dataset "Calendario degli avvisi e degli inviti a partecipare - Bandi FEASR" (modificato 2026-07-04); export
     CSV atteso in /customexport/dataset-csv_resource-27806 (non aperto). Trentino Sviluppo (trentinosviluppo.it):
     la sezione "bandi-attivi" contiene appalti e la pagina "finanza-bandi" è descrittiva: nessun elenco di agevolazioni
     da osservare.
@@ -806,9 +818,11 @@
   feed_url: http://www2.regione.abruzzo.it/taxonomy/term/3573/feed
   piattaforma: drupal
   frequenza: tre_a_settimana
-  stato: attiva
+  stato: da_verificare
   verificato_il: '2026-09-24'
-  note: 'Elenco Drupal 7 degli avvisi "Contributi e finanziamenti" con data (gg/mm/aaaa) e categorie per materia;
+  note: >
+    ROBOTS.TXT VIETA questo indirizzo a tutti i robot (verificato 24/09): la raccolta lo salta. Matteo decide se impostare ignora_robots: true (un controllo alla frequenza prevista, con User-Agent dichiarato) oppure cercare un'alternativa.
+    'Elenco Drupal 7 degli avvisi "Contributi e finanziamenti" con data (gg/mm/aaaa) e categorie per materia;
     feed RSS della stessa vista (4 voci, ultima 17/09/2026). Contenuto misto: molte voci sono graduatorie di bandi
     agricoli. ATTENZIONE: in https il certificato di www e www2 non passa la verifica ("unable to get local issuer
     certificate", catena incompleta lato server); in http entrambi rispondono 200. Da controllare se il server di
@@ -829,7 +843,9 @@
   frequenza: settimanale
   stato: da_verificare
   verificato_il: '2026-09-24'
-  note: 'Elenco paginato (?page=1..3) degli avvisi FESR, ma le voci viste sono del POR FESR 2014-2020: sembra fermo.
+  note: >
+    ROBOTS.TXT VIETA questo indirizzo a tutti i robot (verificato 24/09): la raccolta lo salta. Matteo decide se impostare ignora_robots: true (un controllo alla frequenza prevista, con User-Agent dichiarato) oppure cercare un'alternativa.
+    'Elenco paginato (?page=1..3) degli avvisi FESR, ma le voci viste sono del POR FESR 2014-2020: sembra fermo.
     Nessuna pagina "calendario avvisi" art. 49 per il PR FESR 2021-2027 trovata sui siti regionali raggiunti. Stesso
     problema di certificato https descritto sopra.
 
@@ -1104,9 +1120,11 @@
   feed_url: null
   piattaforma: null
   frequenza: settimanale
-  stato: attiva
+  stato: da_verificare
   verificato_il: '2026-09-24'
-  note: 'Elenco degli incentivi gestiti dalla societa'' regionale (Fondo Microfinanza, Avviso Energia, Imprese artigiane,
+  note: >
+    ROBOTS.TXT VIETA questo indirizzo a tutti i robot (verificato 24/09): la raccolta lo salta. Matteo decide se impostare ignora_robots: true (un controllo alla frequenza prevista, con User-Agent dichiarato) oppure cercare un'alternativa.
+    'Elenco degli incentivi gestiti dalla societa'' regionale (Fondo Microfinanza, Avviso Energia, Imprese artigiane,
     Imprese costituite/costituende, Microcredito, Mobilita'' elettrica...). Pagina semplice, titoli in h4 con link;
     nessun RSS.
 
