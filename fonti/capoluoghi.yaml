@@ -1,0 +1,420 @@
+# Comuni capoluogo e Province eccezione. Formato in README.md.
+# Voci verificate il 23/09/2026 con lettura diretta (docs/ricerche/2026-09-23_province_capoluoghi_parte2.md).
+# Gli elenchi comunali sono sempre misti (gare, concorsi, contributi a cittadini): filtrare per parole chiave
+# (imprese, attivita' produttive, commercio, contributo, voucher, bando) e far smistare il resto all'IA.
+
+- id: comune_trieste_bandi_contributi
+  nome: Comune di Trieste - Bandi per concessioni contributi
+  ente: Comune di Trieste
+  tipo: capoluogo
+  territorio: FVG
+  url: https://bandieconcorsi.comune.trieste.it/p/index/tipo/Bandi%20per%20Concessioni%20Contributi/
+  modalita: html
+  piattaforma: piattaforma_regionale_fvg
+  frequenza: settimanale
+  stato: attiva
+  verificato_il: 2026-09-23
+  note: Tabella HTML dei bandi per contributi; storico 2022-24, niente per imprese nel 2026. Filtro parole chiave.
+
+- id: comune_gorizia_sitemap
+  nome: Comune di Gorizia - sitemap del sito
+  ente: Comune di Gorizia
+  tipo: capoluogo
+  territorio: FVG
+  url: https://www.comune.gorizia.it/sitemap.xml
+  modalita: browser
+  piattaforma: piattaforma_regionale_fvg
+  frequenza: quindicinale
+  stato: difficile
+  verificato_il: 2026-09-23
+  note: Sito a pagina singola (Angular). Si osservano le URL nuove nella sitemap, il dettaglio richiede il browser.
+
+- id: comune_udine_avvisi
+  nome: Comune di Udine - Novita' > Avvisi
+  ente: Comune di Udine
+  tipo: capoluogo
+  territorio: FVG
+  url: https://www.comune.udine.it/Novita/Avvisi
+  modalita: html
+  piattaforma: opencity
+  frequenza: settimanale
+  stato: attiva
+  verificato_il: 2026-09-23
+  note: Tra i capoluoghi piu' attivi d'Italia per bandi alle imprese. Osservare anche /Novita/Comunicati.
+
+- id: comune_pordenone_bandi_api
+  nome: Comune di Pordenone - Altri bandi e avvisi pubblici (API JSON)
+  ente: Comune di Pordenone
+  tipo: capoluogo
+  territorio: FVG
+  url: https://www.comune.pordenone.it/it/amministrazione/bandi-di-gara-e-avvisi-pubblici/altri-bandi-e-avvisi-pubblici
+  modalita: api
+  feed_url: https://www.comune.pordenone.it/api/it/amministrazione/bandi-di-gara-e-avvisi-pubblici/altri-bandi-e-avvisi-pubblici
+  piattaforma: plone
+  frequenza: settimanale
+  stato: attiva
+  verificato_il: 2026-09-23
+  note: >
+    Plone 6: HTML vuoto, API JSON con header Accept: application/json. Anche gli avvisi:
+    https://www.comune.pordenone.it/api/@search?tipologia_notizia=Avviso&sort_on=effective&sort_order=descending&b_size=20
+
+- id: comune_milano_impresa
+  nome: Comune di Milano - Argomento Impresa e portale Economia e Lavoro
+  ente: Comune di Milano
+  tipo: capoluogo
+  territorio: LOM
+  url: https://www.comune.milano.it/argomenti/impresa
+  modalita: browser
+  frequenza: settimanale
+  stato: difficile
+  verificato_il: 2026-09-23
+  note: >
+    Da server risponde 403 (firewall applicativo) sia comune.milano.it sia economiaelavoro.comune.milano.it;
+    Matteo ha verificato a mano che i bandi per imprese ci sono. Dal VPS il sito risponde (24/09): provare
+    prima in html, poi browser. Non esiste open data sui bandi (dati.comune.milano.it ha solo i perimetri DUC).
+
+- id: comune_bergamo_avvisi
+  nome: Comune di Bergamo - Avvisi pubblici con procedura in corso
+  ente: Comune di Bergamo
+  tipo: capoluogo
+  territorio: LOM
+  url: https://www.comune.bergamo.it/avvisi-pubblici
+  modalita: html
+  piattaforma: drupal
+  frequenza: settimanale
+  stato: attiva
+  verificato_il: 2026-09-23
+  note: Tabella con scadenze; seconda pagina con ?page=1. Bandi per imprese ricorrenti.
+
+- id: comune_brescia_contributi
+  nome: Comune di Brescia - Contributi e agevolazioni sviluppo economico e turismo
+  ente: Comune di Brescia
+  tipo: capoluogo
+  territorio: LOM
+  url: https://www.comune.brescia.it/it/servizi/contributi-e-agevolazioni-tramite-bandi-relativi-all-area-sviluppo-economico-e-turismo
+  modalita: rss
+  feed_url: https://www.comune.brescia.it/it/news/feed
+  piattaforma: municipium
+  frequenza: settimanale
+  stato: attiva
+  verificato_il: 2026-09-23
+  note: Pagina dedicata ai contributi per imprese piu' il feed delle news (5 voci, filtrare per parole chiave).
+
+- id: comune_como_avvisi
+  nome: Comune di Como - Novita' > Avvisi
+  ente: Comune di Como
+  tipo: capoluogo
+  territorio: LOM
+  url: https://www.comune.como.it/novita/avvisi/
+  modalita: html
+  frequenza: quindicinale
+  stato: attiva
+  verificato_il: 2026-09-23
+  note: Elenco misto, bandi per imprese rari. L'RSS del sito copre solo eventi e notizie.
+
+- id: comune_cremona_avvisi
+  nome: Comune di Cremona - Novita' > Avvisi
+  ente: Comune di Cremona
+  tipo: capoluogo
+  territorio: LOM
+  url: https://www.comune.cremona.it/novita/avvisi
+  modalita: html
+  piattaforma: drupal
+  frequenza: quindicinale
+  stato: attiva
+  verificato_il: 2026-09-23
+  note: Elenco misto; rss.xml esiste ma e' vuoto.
+
+- id: comune_lecco_avvisi
+  nome: Comune di Lecco - Novita' > Avvisi
+  ente: Comune di Lecco
+  tipo: capoluogo
+  territorio: LOM
+  url: https://www.comune.lecco.it/Novita/Avvisi
+  modalita: html
+  piattaforma: opencity
+  frequenza: quindicinale
+  stato: attiva
+  verificato_il: 2026-09-23
+  note: Elenco misto, bandi per imprese rari.
+
+- id: comune_lodi_imprese
+  nome: Comune di Lodi - Servizi per enti e imprese
+  ente: Comune di Lodi
+  tipo: capoluogo
+  territorio: LOM
+  url: https://www.comune.lodi.it/flex/cm/pages/ServeBLOB.php/L/IT/IDPagina/11667
+  modalita: browser
+  piattaforma: flexcmp
+  frequenza: mensile
+  stato: difficile
+  verificato_il: 2026-09-23
+  note: Bassa priorita'; serve il browser.
+
+- id: comune_mantova_avvisi_rss
+  nome: Comune di Mantova - Avvisi
+  ente: Comune di Mantova
+  tipo: capoluogo
+  territorio: LOM
+  url: https://www.comune.mantova.it/it/news?type=1
+  modalita: rss
+  feed_url: https://www.comune.mantova.it/it/news/feed
+  piattaforma: municipium
+  frequenza: quindicinale
+  stato: attiva
+  verificato_il: 2026-09-23
+  note: Feed di 5 voci, filtrare per parole chiave.
+
+- id: comune_monza_avvisi_rss
+  nome: Comune di Monza - Avvisi
+  ente: Comune di Monza
+  tipo: capoluogo
+  territorio: LOM
+  url: https://www.comune.monza.it/it/news?type=1
+  modalita: rss
+  feed_url: https://www.comune.monza.it/it/news/feed
+  piattaforma: municipium
+  frequenza: quindicinale
+  stato: attiva
+  verificato_il: 2026-09-23
+  note: Feed di 5 voci, filtrare per parole chiave.
+
+- id: comune_pavia_avvisi_rss
+  nome: Comune di Pavia - Novita' > Avvisi
+  ente: Comune di Pavia
+  tipo: capoluogo
+  territorio: LOM
+  url: https://www.comune.pavia.it/novita/avvisi
+  modalita: rss
+  feed_url: https://www.comune.pavia.it/rss.xml
+  piattaforma: drupal
+  frequenza: settimanale
+  stato: attiva
+  verificato_il: 2026-09-23
+  note: RSS globale del sito, filtrare per parole chiave.
+
+- id: comune_sondrio_avvisi_rss
+  nome: Comune di Sondrio - Avvisi
+  ente: Comune di Sondrio
+  tipo: capoluogo
+  territorio: LOM
+  url: https://comune.sondrio.it/tipi_notizia/avvisi/
+  modalita: rss
+  feed_url: https://comune.sondrio.it/tipi_notizia/avvisi/feed/
+  piattaforma: wordpress_design_comuni
+  frequenza: settimanale
+  stato: attiva
+  verificato_il: 2026-09-23
+  note: Feed pulito degli avvisi; bandi per imprese nel 2025-26.
+
+- id: comune_varese_home
+  nome: Comune di Varese - home (avvisi)
+  ente: Comune di Varese
+  tipo: capoluogo
+  territorio: LOM
+  url: https://www.comune.varese.it/
+  modalita: browser
+  piattaforma: halley
+  frequenza: quindicinale
+  stato: difficile
+  verificato_il: 2026-09-23
+  note: Redirect via JavaScript, serve il browser. Link avvisi del tipo novita_NNN.html.
+
+- id: roma_capitale_bandi_sviluppo_economico
+  nome: Roma Capitale - Bandi Dipartimento Sviluppo Economico e Attivita' Produttive
+  ente: Roma Capitale
+  tipo: capoluogo
+  territorio: LAZ
+  url: https://www.comune.roma.it/web/it/bandi-e-concorsi.page?struttura=dip_ln
+  modalita: html
+  piattaforma: liferay
+  frequenza: settimanale
+  stato: attiva
+  verificato_il: 2026-09-23
+  note: HTML paginato, blocchi bando-concorso.page?contentId=BEC...; bandi per imprese ricorrenti.
+
+- id: comune_pesaro_nuove_imprese
+  nome: Comune di Pesaro - Contributi nuove imprese
+  ente: Comune di Pesaro
+  tipo: capoluogo
+  territorio: MAR
+  url: https://www.comune.pesaro.pu.it/contributinuoveimprese/notizie-contributi-nuove-imprese/archivio-notizie/
+  modalita: rss
+  feed_url: https://www.comune.pesaro.pu.it/novita-in-comune/rss/
+  piattaforma: typo3
+  frequenza: mensile
+  stato: attiva
+  verificato_il: 2026-09-23
+  note: Sezione dedicata; RSS generale del Comune da filtrare per "imprese" e "attivita' produttive".
+
+- id: comune_la_spezia_avvisi_api
+  nome: Comune della Spezia - Avvisi (API Plone)
+  ente: Comune della Spezia
+  tipo: capoluogo
+  territorio: LIG
+  url: https://www.comune.laspezia.it/novita/avvisi
+  modalita: api
+  feed_url: https://www.comune.laspezia.it/++api++/@search?path.query=/novita/avvisi&path.depth=1&sort_on=effective&sort_order=descending&b_size=30&metadata_fields=effective
+  piattaforma: plone
+  frequenza: settimanale
+  stato: attiva
+  verificato_il: 2026-09-23
+  note: "Header Accept: application/json. Bandi per botteghe e imprese ricorrenti. La piattaforma bandispezia (SPID) non e' osservabile."
+
+- id: provincia_lecco_bandi_contributi
+  nome: Provincia di Lecco - Bandi per contributi
+  ente: Provincia di Lecco
+  tipo: provincia
+  territorio: LOM
+  url: https://www.provincia.lecco.it/documenti-e-dati/bandi/bandi-per-contributi/
+  modalita: html
+  frequenza: mensile
+  stato: da_verificare
+  verificato_il: 2026-09-23
+  note: Non chiaro se i contributi sono per imprese o per Comuni; c'e' anche la rassegna mensile InformaBandi.
+
+- id: comune_taranto_avvisi_rss
+  nome: Comune di Taranto - Avvisi (economia, commercio, artigianato)
+  ente: Comune di Taranto
+  tipo: capoluogo
+  territorio: PUG
+  url: https://www.comune.taranto.it/it/news?type=3
+  modalita: rss
+  feed_url: https://www.comune.taranto.it/it/feeds
+  piattaforma: municipium
+  frequenza: settimanale
+  stato: attiva
+  verificato_il: 2026-09-23
+  note: "Filtro economia in html: /it/news-category/100269?type=3. Parole chiave contributo, imprese, voucher."
+
+- id: comune_bari_avvisi
+  nome: Comune di Bari - Avvisi, argomento imprese
+  ente: Comune di Bari
+  tipo: capoluogo
+  territorio: PUG
+  url: https://www.comune.bari.it/avvisi
+  modalita: html
+  piattaforma: liferay
+  frequenza: settimanale
+  stato: attiva
+  verificato_il: 2026-09-23
+  note: Priorita' bassa; filtrare i tag Imprese e Commercio. Anche /argomenti/imprese-e-attivita-economiche/imprese.
+
+- id: comune_ragusa_avvisi_rss
+  nome: Comune di Ragusa - Avvisi pubblici (sviluppo economico)
+  ente: Comune di Ragusa
+  tipo: capoluogo
+  territorio: SIC
+  url: https://www.comune.ragusa.it/it/news?type=3
+  modalita: rss
+  feed_url: https://www.comune.ragusa.it/it/feeds
+  piattaforma: municipium
+  frequenza: settimanale
+  stato: attiva
+  verificato_il: 2026-09-23
+  note: Bandi per imprese ricorrenti.
+
+- id: comune_messina_avvisi_rss
+  nome: Comune di Messina - Avvisi e comunicati
+  ente: Comune di Messina
+  tipo: capoluogo
+  territorio: SIC
+  url: https://www.comune.messina.it/it/news?type=3
+  modalita: rss
+  feed_url: https://www.comune.messina.it/it/feeds
+  piattaforma: municipium
+  frequenza: settimanale
+  stato: attiva
+  verificato_il: 2026-09-23
+  note: PON Metro Plus, imprese sociali. Anche /it/news?type=0.
+
+- id: comune_cagliari_bandi_contributi
+  nome: Comune di Cagliari - Bandi per contributi
+  ente: Comune di Cagliari
+  tipo: capoluogo
+  territorio: SAR
+  url: https://www.comune.cagliari.it/portale/page/it/bandi_contributi
+  modalita: browser
+  piattaforma: entando
+  frequenza: mensile
+  stato: difficile
+  verificato_il: 2026-09-23
+  note: Elenco caricato via JavaScript; RSS dinamico su /portale/page/it/rss.
+
+- id: comune_agrigento_avvisi_rss
+  nome: Comune di Agrigento - Avvisi
+  ente: Comune di Agrigento
+  tipo: capoluogo
+  territorio: SIC
+  url: https://comune.agrigento.it/tipi_notizia/avvisi/
+  modalita: rss
+  feed_url: https://comune.agrigento.it/tipi_notizia/avvisi/feed/
+  piattaforma: wordpress_design_comuni
+  frequenza: quindicinale
+  stato: attiva
+  verificato_il: 2026-09-23
+  note: Non chiaro se pubblica bandi per imprese; filtro parole chiave.
+
+- id: comune_sassari_novita_rss
+  nome: Comune di Sassari - Novita' (RSS)
+  ente: Comune di Sassari
+  tipo: capoluogo
+  territorio: SAR
+  url: https://www.comune.sassari.it/
+  modalita: rss
+  feed_url: https://www.comune.sassari.it/it/service/rss/rss_novita.xml
+  frequenza: quindicinale
+  stato: attiva
+  verificato_il: 2026-09-23
+  note: Elenco via JavaScript, ma il feed delle novita' funziona; filtro parole chiave.
+
+- id: provincia_sulcis_iglesiente_avvisi_rss
+  nome: Provincia del Sulcis Iglesiente - Avvisi
+  ente: Provincia del Sulcis Iglesiente
+  tipo: provincia
+  territorio: SAR
+  url: https://www.provinciasulcisiglesiente.it/it/news?type=3
+  modalita: rss
+  feed_url: https://www.provinciasulcisiglesiente.it/it/feeds
+  piattaforma: municipium
+  frequenza: mensile
+  stato: attiva
+  verificato_il: 2026-09-23
+  note: Bassa priorita'.
+
+- id: comune_lecce
+  nome: Comune di Lecce
+  ente: Comune di Lecce
+  tipo: capoluogo
+  territorio: PUG
+  url:
+  modalita: browser
+  frequenza: quindicinale
+  stato: da_verificare
+  verificato_il: 2026-09-23
+  note: Rifiuta le connessioni da server (https://www.comune.lecce.it). Da provare dal VPS o dal PC di Matteo.
+
+- id: comune_potenza
+  nome: Comune di Potenza
+  ente: Comune di Potenza
+  tipo: capoluogo
+  territorio: BAS
+  url:
+  modalita: browser
+  frequenza: quindicinale
+  stato: da_verificare
+  verificato_il: 2026-09-23
+  note: Rifiuta le connessioni da server (https://www.comune.potenza.it). Da provare dal VPS.
+
+- id: comune_barletta
+  nome: Comune di Barletta
+  ente: Comune di Barletta
+  tipo: capoluogo
+  territorio: PUG
+  url:
+  modalita: browser
+  piattaforma: publisys
+  frequenza: quindicinale
+  stato: da_verificare
+  verificato_il: 2026-09-23
+  note: Sito Angular (https://www.comune.barletta.bt.it/sito/), non leggibile da server. Da provare con browser dal VPS.

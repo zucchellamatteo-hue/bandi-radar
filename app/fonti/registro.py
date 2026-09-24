@@ -130,7 +130,14 @@ def carica_registro(cartella: Path = CARTELLA_FONTI) -> list[Fonte]:
     visti: dict[str, str] = {}
 
     for percorso in sorted(cartella.glob("*.yaml")):
-        contenuto = yaml.safe_load(percorso.read_text(encoding="utf-8")) or []
+        try:
+            contenuto = yaml.safe_load(percorso.read_text(encoding="utf-8")) or []
+        except yaml.YAMLError as exc:
+            posizione = getattr(exc, "problem_mark", None)
+            riga = f" alla riga {posizione.line + 1}" if posizione is not None else ""
+            errori.append(f"{percorso.name}: file YAML mal formato{riga} ({getattr(exc, 'problem', exc)}). "
+                          "Un ':' seguito da spazio dentro un testo va messo tra virgolette.")
+            continue
         if not isinstance(contenuto, list):
             errori.append(f"{percorso.name}: il file deve contenere un elenco di voci (righe che iniziano con '- ')")
             continue

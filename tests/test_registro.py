@@ -74,3 +74,9 @@ def test_fonte_difficile_senza_indirizzo(tmp_path):
     _scrivi(tmp_path, "a.yaml", VOCE_OK.replace("url: https://esempio.it/bandi", "url:").replace("stato: attiva", "stato: difficile"))
     (fonte,) = carica_registro(tmp_path)
     assert fonte.url == "" and fonte.indirizzo_da_controllare == ""
+
+
+def test_yaml_mal_formato_segnalato_con_messaggio(tmp_path):
+    _scrivi(tmp_path, "a.yaml", VOCE_OK.replace("note: voce di prova", "note: Accept: application/json"))
+    with pytest.raises(ErroreRegistro, match="mal formato"):
+        carica_registro(tmp_path)
