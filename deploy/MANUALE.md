@@ -1,16 +1,17 @@
 # Bandi Radar: manuale del server
 
-*Aggiornato al 24/09/2026, fine della Fase 0 parte 1. Per i dettagli passo-passo vedi `deploy/README.md`.*
+*Aggiornato al 24/09/2026, inizio della Fase 1 (raccolta). Per i dettagli passo-passo vedi `deploy/README.md`.*
 
 ## 1. Cosa c'è sul server
 
-Un VPS OVH (Ubuntu 24.04, IP 146.59.145.138) che ospita il sito https://finanzagevolata.qiaro.it. Ci si collega con `ssh ubuntu@146.59.145.138`. Dentro girano tre "container" Docker, cioè tre programmi isolati che partono insieme:
+Un VPS OVH (Ubuntu 24.04, IP 146.59.145.138) che ospita il sito https://finanzagevolata.qiaro.it. Ci si collega con `ssh ubuntu@146.59.145.138`. Dentro girano quattro "container" Docker, cioè quattro programmi isolati che partono insieme:
 
 | Nome | Cosa fa | Se si rompe |
 |---|---|---|
 | `caddy` | Riceve le richieste dal browser, tiene il certificato HTTPS (Let's Encrypt, si rinnova da solo) | il sito non si apre o manca il lucchetto |
 | `app` | L'applicazione Python: oggi la pagina "in costruzione" e l'indirizzo `/health`; in futuro raccolta, schede, plancia | il sito risponde con un errore |
 | `db` | Il database Postgres, con i dati in un volume che sopravvive ai riavvii | l'applicazione risulta "unhealthy" |
+| `raccolta` | Il raccoglitore: ogni ora guarda quali fonti del registro sono da controllare, le legge (feed, API o pagina) e salva i controlli e gli annunci nel database | i bandi nuovi non arrivano; la plancia (Fase 2) lo mostrerà |
 
 Due cartelle da distinguere:
 
@@ -53,6 +54,28 @@ journalctl -u bandi-radar-deploy.service -n 20                # ultimi aggiornam
 systemctl --user status claude-remote-control                 # "active (running)"
 ```
 E ogni tanto `ls -lh /var/backups/bandi-radar` per vedere che i backup notturni ci siano.
+
+### La raccolta
+
+Il servizio `raccolta` scrive nel log una riga per ogni fonte controllata (esito, elementi letti, novità):
+```
+cd /srv/bandi-radar && sudo -u deploy docker compose logs --tail 100 raccolta
+```
+Per guardare i dati nel database (solo lettura, senza modificare nulla):
+```
+cd /srv/bandi-radar && sudo -u deploy docker compose exec db psql -U postgres bandi_radar
+```
+e poi, dentro `psql`:
+```
+SELECT esito, count(*) FROM controlli WHERE iniziato_il > now() - interval '1 day' GROUP BY esito;   -- com'è andata oggi
+SELECT fonte_id, titolo, trovato_il FROM annunci ORDER BY trovato_il DESC LIMIT 30;                  -- ultimi annunci
+\q
+```
+Per provare una fonte a mano, senza scrivere nel database (utile quando si corregge una voce del registro):
+```
+cd /srv/bandi-radar && sudo -u deploy docker compose run --rm raccolta python -m app.raccolta.esegui --prova ID_FONTE
+```
+Per controllare subito una fonte: lo stesso comando con `--fonte ID_FONTE`. Finché la plancia non c'è (Fase 2), questi comandi sono l'unico modo di vedere la raccolta.
 
 ## 6. Se qualcosa non va
 
