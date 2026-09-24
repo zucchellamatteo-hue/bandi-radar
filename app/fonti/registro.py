@@ -69,9 +69,12 @@ def _controlla_voce(voce: dict, file: str, posizione: int) -> tuple[Fonte | None
         errori.append(f"{dove}: campi non previsti: {', '.join(sorted(sconosciuti))}")
 
     valori = {campo: _testo(voce.get(campo)) for campo in _CAMPI_NOTI}
-    for campo in ("id", "nome", "ente", "tipo", "territorio", "url", "modalita", "frequenza", "stato"):
+    for campo in ("id", "nome", "ente", "tipo", "territorio", "modalita", "frequenza", "stato"):
         if not valori[campo]:
             errori.append(f"{dove}: manca il campo obbligatorio '{campo}'")
+    # L'indirizzo puo' mancare solo se la fonte non e' ancora stata verificata o e' stata scartata.
+    if not valori["url"] and valori["stato"] in {"attiva", ""}:
+        errori.append(f"{dove}: una fonte attiva deve avere url")
 
     if valori["id"] and not _ID_VALIDO.match(valori["id"]):
         errori.append(f"{dove}: id non valido (solo minuscole, numeri e _)")
@@ -81,7 +84,7 @@ def _controlla_voce(voce: dict, file: str, posizione: int) -> tuple[Fonte | None
     for campo in ("url", "feed_url"):
         if valori[campo] and not valori[campo].startswith(("http://", "https://")):
             errori.append(f"{dove}: {campo} deve iniziare con http:// o https://")
-    if valori["modalita"] in {"rss", "api"} and not valori["feed_url"]:
+    if valori["modalita"] in {"rss", "api"} and not valori["feed_url"] and valori["stato"] == "attiva":
         errori.append(f"{dove}: modalita '{valori['modalita']}' richiede feed_url")
 
     verificato_il: date | None = None

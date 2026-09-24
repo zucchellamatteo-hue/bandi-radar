@@ -51,6 +51,7 @@ def test_feed_preferito_alla_pagina(tmp_path):
         (("tipo: regione", "tipo: comune"), "tipo 'comune' non ammesso"),
         (("modalita: html", "modalita: rss"), "richiede feed_url"),
         (("url: https://esempio.it/bandi", "url: esempio.it/bandi"), "deve iniziare con http"),
+        (("url: https://esempio.it/bandi", "url:"), "una fonte attiva deve avere url"),
         (("id: prova_ok", "id: Prova-OK"), "id non valido"),
         (("verificato_il: 2026-09-24", "verificato_il: ieri"), "AAAA-MM-GG"),
         (("  note: voce di prova", "  note: x\n  colore: blu"), "campi non previsti: colore"),
@@ -67,3 +68,9 @@ def test_id_duplicato_tra_file(tmp_path):
     _scrivi(tmp_path, "b.yaml", VOCE_OK)
     with pytest.raises(ErroreRegistro, match="gia' usato"):
         carica_registro(tmp_path)
+
+
+def test_fonte_difficile_senza_indirizzo(tmp_path):
+    _scrivi(tmp_path, "a.yaml", VOCE_OK.replace("url: https://esempio.it/bandi", "url:").replace("stato: attiva", "stato: difficile"))
+    (fonte,) = carica_registro(tmp_path)
+    assert fonte.url == "" and fonte.indirizzo_da_controllare == ""

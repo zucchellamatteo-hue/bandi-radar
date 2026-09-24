@@ -88,7 +88,7 @@ def main(argv: list[str] | None = None) -> int:
     if args.solo_controllo:
         return 0
 
-    esiti = verifica([f for f in fonti if f.stato != "esclusa"], timeout=args.timeout)
+    esiti = verifica([f for f in fonti if f.stato != "esclusa" and f.indirizzo_da_controllare], timeout=args.timeout)
     for esito in esiti:
         print(_riga(esito))
     falliti = [e for e in esiti if not e.ok]
