@@ -1,0 +1,9 @@
+# Segreti: restano solo sul server
+.env
+.env.*
+!deploy/env.example
+
+# Python
+__pycache__/
+*.pyc
+.venv/
