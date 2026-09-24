@@ -1,0 +1,135 @@
+# Fondazioni bancarie: quasi tutte solo per enti non profit, tenute come 'esclusa' con motivo.
+# Formato in README.md. Mappatura: docs/ricerche/2026-09-24_regioni_nazionali.md
+
+- id: fondazione_cariplo_bandi
+  nome: Fondazione Cariplo - Bandi
+  ente: Fondazione Cariplo
+  tipo: fondazione
+  territorio: LOM
+  url: https://www.fondazionecariplo.it/it/bandi/bandi.html
+  modalita: html
+  feed_url: null
+  piattaforma: wordpress
+  frequenza: settimanale
+  stato: difficile
+  verificato_il: '2026-09-24'
+  note: 'Tutto il sito risponde 403 (Cloudflare) da questa sessione e da WebFetch: URL non aperto davvero, riportato
+    solo perche'' indicato dal sito stesso nelle pagine indicizzate. Da ricerca web: nel 2026 17 bandi (Progetti
+    Emblematici, Luoghi Plurali, Riprogettiamo il futuro, Innovacultura, Get it!), tutti rivolti a enti non profit
+    del territorio lombardo e delle province di Novara e VCO. Salvo eccezioni (Get it! per imprese sociali) non
+    riguarda le imprese: se dal server la pagina si apre, valutare l''esclusione.
+
+    '
+
+- id: compagnia_san_paolo_contributi
+  nome: Compagnia di San Paolo - Bandi e contributi
+  ente: Fondazione Compagnia di San Paolo
+  tipo: fondazione
+  territorio: PIE
+  url: https://www.compagniadisanpaolo.it/it/cosa-facciamo/contributi/
+  modalita: rss
+  feed_url: https://www.compagniadisanpaolo.it/it/feed/
+  piattaforma: wordpress
+  frequenza: settimanale
+  stato: esclusa
+  verificato_il: '2026-09-24'
+  note: 'Pagina elenco aperta (200): bandi su salute mentale giovani, artisti e creativi, comunita'' educanti, ricerca
+    interdisciplinare, MedTech. Feed RSS valido (10 voci) ma di notizie generali, non solo bandi. Destinatari: enti
+    non profit, scuole, universita''; l''unico bando che nomina le imprese ("Impulso - trasformare le imprese con
+    una filiera sostenibile") e'' rivolto a enti che accompagnano le imprese. Esclusa perche'' non finanzia imprese
+    direttamente; da rivalutare solo se compaiono bandi per PMI.
+
+    '
+
+- id: fondazione_crt_bandi
+  nome: Fondazione CRT - Progetti e bandi
+  ente: Fondazione CRT
+  tipo: fondazione
+  territorio: PIE
+  url: https://www.fondazionecrt.it/progetti-e-bandi/
+  modalita: rss
+  feed_url: https://www.fondazionecrt.it/feed/
+  piattaforma: wordpress
+  frequenza: settimanale
+  stato: esclusa
+  verificato_il: '2026-09-24'
+  note: 'Pagina aperta (200, 490 KB): bandi Agenda disabilita'', Bando UniTo, Beni senza tempo, Culture of Solidarity,
+    Eventi for all. Feed RSS valido (10 voci) di notizie. La pagina /bandi/ rimanda a un articolo sui bandi di Film
+    Commission Torino Piemonte. Destinatari: enti non profit, scuole, enti locali (Piemonte e Valle d''Aosta). Esclusa:
+    non finanzia imprese.
+
+    '
+
+- id: fondazione_cr_firenze_bandi
+  nome: Fondazione CR Firenze - Bandi
+  ente: Fondazione Cassa di Risparmio di Firenze
+  tipo: fondazione
+  territorio: TOS
+  url: https://fondazionecrfirenze.it/cosa-facciamo/bandi/
+  modalita: html
+  feed_url: https://fondazionecrfirenze.it/feed/
+  piattaforma: wordpress
+  frequenza: settimanale
+  stato: esclusa
+  verificato_il: '2026-09-24'
+  note: 'Pagina aperta (200): 12 bandi con data di scadenza nel HTML (arte e cultura, welfare, scuola, solidarieta'',
+    grandi attrezzature, spettacolo dal vivo, musei). Feed RSS valido (10 voci) di notizie generali. Destinatari:
+    enti del Terzo settore e istituzioni; nessun bando per imprese. Esclusa; la pagina e'' comunque la piu'' facile
+    da leggere (titolo + "Scadenza: gg mese aaaa").
+
+    '
+
+- id: fondazione_friuli_bandi
+  nome: Fondazione Friuli - Bandi online
+  ente: Fondazione Friuli
+  tipo: fondazione
+  territorio: FVG
+  url: https://fondazionefriuli.it/contributi-e-bandi/bandi-online/
+  modalita: html
+  feed_url: null
+  piattaforma: null
+  frequenza: settimanale
+  stato: esclusa
+  verificato_il: '2026-09-24'
+  note: 'Pagina aperta (200, 123 KB): elenco storico dei bandi (Welfare, Anziani, Arti sceniche, Arricchimento offerta
+    formativa) dal 2013 in poi; la pagina dichiara che i contributi vanno a "enti e istituzioni non profit". Nessun
+    feed (/feed/ da'' 404; il sito non e'' WordPress). Esclusa: non finanzia imprese. Novita'' in /comunicazione/news/.
+
+    '
+
+- id: fondazione_cariparo_bandi
+  nome: Fondazione Cariparo - Bandi
+  ente: Fondazione Cassa di Risparmio di Padova e Rovigo
+  tipo: fondazione
+  territorio: VEN
+  url: https://fondazionecariparo.it/bandi/
+  modalita: rss
+  feed_url: https://fondazionecariparo.it/feed/
+  piattaforma: wordpress
+  frequenza: settimanale
+  stato: esclusa
+  verificato_il: '2026-09-24'
+  note: 'Pagina aperta (200): e'' la categoria "Bandi" del blog (articoli con data, paginati /bandi/page/2/): Centri
+    estivi, Oltre la campanella, Ricerca pediatrica, premi di laurea, SMAQ Veneto. Feed RSS valido (10 voci). Destinatari:
+    scuole, enti non profit, universita'' (province di Padova e Rovigo). Esclusa: non finanzia imprese.
+
+    '
+
+- id: fondazione_cariverona_bandi
+  nome: Fondazione Cariverona - Bandi
+  ente: Fondazione Cariverona
+  tipo: fondazione
+  territorio: VEN
+  url: https://www.fondazionecariverona.org/bandi/
+  modalita: html
+  feed_url: null
+  piattaforma: null
+  frequenza: settimanale
+  stato: difficile
+  verificato_il: '2026-09-24'
+  note: 'Tutto il sito risponde 403 (Cloudflare) da questa sessione e da WebFetch: URL non aperto davvero, riportato
+    come indirizzo canonico da verificare dal server. Per quanto noto i bandi Cariverona (province di Verona, Vicenza,
+    Belluno, Ancona, Mantova) sono per enti non profit: probabile esclusione una volta verificata la pagina.
+
+    '
+

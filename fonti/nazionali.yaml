@@ -1,0 +1,305 @@
+# Fonti nazionali ed europee. Formato in README.md. Mappatura: docs/ricerche/2026-09-24_regioni_nazionali.md
+
+- id: incentivi_gov_ricerca
+  nome: incentivi.gov.it - Cerca incentivi
+  ente: Ministero delle Imprese e del Made in Italy (portale incentivi.gov.it)
+  tipo: nazionale
+  territorio: ITA
+  url: https://www.incentivi.gov.it/it/cerca-incentivi
+  modalita: browser
+  feed_url: null
+  piattaforma: drupal
+  frequenza: giornaliera
+  stato: da_verificare
+  verificato_il: '2026-09-24'
+  note: 'Da questa sessione cloud il sito chiude la connessione (reset) su tutte le pagine, come previsto; anche
+    il servizio WebFetch riceve 503. Indirizzi NON aperti davvero: vanno verificati dal server di produzione. La
+    pagina di ricerca e'' un''app JavaScript, quindi modalita browser. Fonte primaria di riferimento: preferire
+    i dati aperti (voce incentivi_gov_open_data).
+
+    '
+
+- id: incentivi_gov_open_data
+  nome: incentivi.gov.it - Open data (registro incentivi)
+  ente: Ministero delle Imprese e del Made in Italy (portale incentivi.gov.it)
+  tipo: nazionale
+  territorio: ITA
+  url: https://www.incentivi.gov.it/it/open-data
+  modalita: api
+  feed_url: https://www.incentivi.gov.it/sites/default/files/open-data/
+  piattaforma: drupal
+  frequenza: giornaliera
+  stato: da_verificare
+  verificato_il: '2026-09-24'
+  note: 'Non aperto da qui (connessione chiusa dal sito). Da ricerca web: la pagina open-data offre l''export dell''intero
+    registro incentivi in CSV compresso e JSON, licenza IODL 2.0, con campi ID_Incentivo, Titolo, Descrizione, Data_apertura,
+    Data_chiusura, Forma_agevolazione, Settore_Attivita, Codici_ATECO, ecc. Un file di esempio indicizzato dai motori:
+    /sites/default/files/open-data/2025-4-5_opendata-export.csv (nome con data, quindi cambia a ogni export: il
+    feed_url e'' la cartella, il file va scoperto dalla pagina). Da verificare dal server: nome del file corrente
+    e frequenza di aggiornamento. Su dati.gov.it non risulta un dataset dedicato (ricerca "incentivi.gov.it" senza
+    esito).
+
+    '
+
+- id: mimit_incentivi
+  nome: MIMIT - Tutti gli incentivi
+  ente: Ministero delle Imprese e del Made in Italy
+  tipo: nazionale
+  territorio: ITA
+  url: https://www.mimit.gov.it/it/incentivi
+  modalita: rss
+  feed_url: https://www.mimit.gov.it/it/incentivi?format=feed&type=rss
+  piattaforma: joomla
+  frequenza: tre_a_settimana
+  stato: attiva
+  verificato_il: '2026-09-24'
+  note: 'Feed RSS 2.0 valido (10 voci, ultima del 22/09/2026): elenco delle schede incentivo (Nuova Sabatini, Fondo
+    di garanzia, Transizione 5.0, ...). La pagina HTML e'' paginata (?start=20, fino a 280 voci, quindi ~300 schede
+    storiche). Sotto-elenchi utili: /it/incentivi-mise/incentivi-in-evidenza e /incentivi-in-gestione. Per le novita''
+    su decreti, proroghe e sportelli usare la voce mimit_incentivi_aggiornamenti.
+
+    '
+
+- id: mimit_incentivi_aggiornamenti
+  nome: MIMIT - Incentivi, novita' e aggiornamenti
+  ente: Ministero delle Imprese e del Made in Italy
+  tipo: nazionale
+  territorio: ITA
+  url: https://www.mimit.gov.it/it/incentivi-aggiornamenti
+  modalita: rss
+  feed_url: https://www.mimit.gov.it/it/incentivi-aggiornamenti?format=feed&type=rss
+  piattaforma: joomla
+  frequenza: tre_a_settimana
+  stato: attiva
+  verificato_il: '2026-09-24'
+  note: 'Feed RSS 2.0 valido (10 voci, ultima 22/09/2026): decreti direttoriali di apertura sportelli, proroghe,
+    graduatorie. E'' il feed piu'' tempestivo del MIMIT. Elenco di tutti i feed del sito: https://www.mimit.gov.it/it/rss.
+
+    '
+
+- id: invitalia_incentivi_imprese
+  nome: Invitalia - Incentivi e strumenti per le imprese
+  ente: Invitalia
+  tipo: nazionale
+  territorio: ITA
+  url: https://www.invitalia.it/per-le-imprese/incentivi-e-strumenti
+  modalita: html
+  feed_url: null
+  piattaforma: null
+  frequenza: tre_a_settimana
+  stato: attiva
+  verificato_il: '2026-09-24'
+  note: 'Pagina HTML aperta (200, 600 KB): 16 schede con etichetta di stato nel markup ("Attivo", "In apertura",
+    "Chiuso"), es. Contratto di sviluppo, Investimenti sostenibili 4.0 bando 2026, Smart&Start, Resto al Sud 2.0.
+    Nessun RSS (/rss da'' 404). Osservare anche /per-chi-vuole-fare-impresa/incentivi-e-strumenti (nuove imprese).
+
+    '
+
+- id: gse_bandi_avvisi
+  nome: GSE - Bandi e avvisi, meccanismi di incentivazione
+  ente: Gestore dei Servizi Energetici
+  tipo: nazionale
+  territorio: ITA
+  url: https://www.gse.it/
+  modalita: browser
+  feed_url: null
+  piattaforma: null
+  frequenza: tre_a_settimana
+  stato: difficile
+  verificato_il: '2026-09-24'
+  note: 'Tutto il sito risponde 403 "Access Denied" (protezione Akamai) sia con User-Agent BandiRadar sia con User-Agent
+    Chrome; anche WebFetch ottiene 404/403. Nessuna pagina elenco aperta davvero, quindi nessun URL di dettaglio
+    riportato. Da riprovare dal server di produzione con browser senza interfaccia; in alternativa seguire le novita''
+    GSE (Conto Termico, Transizione 5.0, CER) tramite MIMIT e incentivi.gov.it. Il portale appalti.gse.it riguarda
+    solo gare fornitori: non serve.
+
+    '
+
+- id: simest_finanziamenti_agevolati
+  nome: SIMEST - Finanziamenti agevolati per l'internazionalizzazione
+  ente: SIMEST (gruppo CDP)
+  tipo: nazionale
+  territorio: ITA
+  url: https://www.simest.it/per-le-imprese/finanziamenti-agevolati/
+  modalita: html
+  feed_url: null
+  piattaforma: wordpress
+  frequenza: tre_a_settimana
+  stato: attiva
+  verificato_il: '2026-09-24'
+  note: 'Pagina aperta (200, 42 KB): sezioni "Scopri gli strumenti oggi attivi", "Finanziamenti agevolati per l''internazionalizzazione",
+    "Contributi straordinari per imprese esportatrici colpite da eventi meteorologici", strumenti PNRR. Le schede
+    dei singoli strumenti sono caricate dentro la pagina (nessun link a sottopagine nel HTML), quindi osservare
+    il testo della pagina intera. Il feed WordPress /feed/ risponde 200 ma e'' vuoto (0 voci) e l''API wp-json/posts
+    restituisce lista vuota: non usarli.
+
+    '
+
+- id: mcc_fondo_garanzia_news
+  nome: Fondo di garanzia PMI - News e circolari
+  ente: Mediocredito Centrale (gestore Fondo di garanzia)
+  tipo: nazionale
+  territorio: ITA
+  url: https://www.fondidigaranzia.it/archivio-delle-news/
+  modalita: rss
+  feed_url: https://www.fondidigaranzia.it/feed/
+  piattaforma: wordpress
+  frequenza: settimanale
+  stato: attiva
+  verificato_il: '2026-09-24'
+  note: 'Feed RSS valido (10 voci: nuove sezioni speciali, tassi, apertura Terzo settore). Non pubblica bandi ma
+    novita'' operative sul Fondo di garanzia (circolari in /normativa-e-modulistica/circolari-operative/). Utile
+    come fonte di contesto per le schede che citano la garanzia pubblica. La pagina www.mcc.it/agevolazioni/ elenca
+    le misure gestite (Nuova Sabatini, Fare Lazio, Garanzia Campania Bond...) ma il feed www.mcc.it/feed/ e'' vuoto.
+
+    '
+
+- id: masaf_bandi_gare
+  nome: MASAF - Gare e bandi
+  ente: Ministero dell'Agricoltura, della Sovranita' alimentare e delle Foreste
+  tipo: nazionale
+  territorio: ITA
+  url: https://www.masaf.gov.it/flex/cm/pages/ServeBLOB.php/L/IT/IDPagina/473
+  modalita: rss
+  feed_url: https://www.masaf.gov.it/flex/cm/pages/ServeFeed.php/L/IT/fmt/rss20/feed/pages%3A11
+  piattaforma: flex_cms
+  frequenza: settimanale
+  stato: attiva
+  verificato_il: '2026-09-24'
+  note: 'Feed RSS 2.0 valido (20 voci, codifica ISO-8859-1). Elenco misto: consultazioni di mercato e appalti insieme
+    a bandi di finanziamento (es. "Contratti di filiera e di distretto IV bando", "Bando mense scolastiche biologiche",
+    D.M. 457610/2026). Non filtrare per la parola "gara"; smistare con l''IA. Il sito non ha una sezione "incentivi
+    per imprese" separata.
+
+    '
+
+- id: ministero_turismo_strumenti
+  nome: Ministero del Turismo - Strumenti di sostegno
+  ente: Ministero del Turismo
+  tipo: nazionale
+  territorio: ITA
+  url: https://www.ministeroturismo.gov.it/strumenti-di-sostegno/
+  modalita: html
+  feed_url: null
+  piattaforma: wordpress
+  frequenza: settimanale
+  stato: da_verificare
+  verificato_il: '2026-09-24'
+  note: 'La pagina risponde 200 (118 KB) ma il sito e'' protetto da un bot manager Radware: la home ha rimandato
+    a una pagina di controllo e nel HTML della sezione non compaiono link leggibili (probabile caricamento via JavaScript).
+    Dalla home risultano le sezioni /fondo-per-il-turismo-sostenibile/ (avvisi pubblici n. 1, 2, 3 ed edizione 2024),
+    /fondo-unico-nazionale-per-il-turismo/, /strumenti-di-sostegno/fondo-accessibilita-turistica/. Il feed /feed/
+    (200, 10 voci) e'' quasi solo rassegna stampa: non usarlo come elenco bandi. Da riprovare dal server con browser
+    senza interfaccia.
+
+    '
+
+- id: mase_bandi_avvisi
+  nome: MASE - Bandi e avvisi
+  ente: Ministero dell'Ambiente e della Sicurezza Energetica
+  tipo: nazionale
+  territorio: ITA
+  url: https://www.mase.gov.it/
+  modalita: browser
+  feed_url: null
+  piattaforma: null
+  frequenza: settimanale
+  stato: difficile
+  verificato_il: '2026-09-24'
+  note: 'Home e /portale/bandi-e-avvisi rispondono 403 (Akamai) da questa sessione. Nessun URL aperto davvero. Le
+    misure MASE per imprese passano spesso da Invitalia (soggetto gestore) e da incentivi.gov.it; riprovare dal
+    server.
+
+    '
+
+- id: cdp_imprese
+  nome: Cassa Depositi e Prestiti - Imprese
+  ente: Cassa Depositi e Prestiti
+  tipo: nazionale
+  territorio: ITA
+  url: https://www.cdp.it/sitointernet/it/imprese.page
+  modalita: html
+  feed_url: null
+  piattaforma: liferay
+  frequenza: mensile
+  stato: esclusa
+  verificato_il: '2026-09-24'
+  note: 'Pagina aperta (200) ma presenta prodotti finanziari (finanziamenti, basket bond), non bandi con scadenza.
+    La pagina "avvisi" (/sitointernet/it/avvisi_ricerca.page) e'' caricata via JavaScript e i bandi di CDP sono
+    quelli della Fondazione CDP (non profit). Esclusa: le agevolazioni CDP per imprese arrivano tramite SIMEST e
+    i bandi MIMIT.
+
+    '
+
+- id: ue_funding_tenders_api
+  nome: Portale Funding & Tenders UE - API di ricerca (SEDIA)
+  ente: Commissione europea
+  tipo: ue
+  territorio: UE
+  url: https://ec.europa.eu/info/funding-tenders/opportunities/portal/screen/opportunities/topic-search
+  modalita: api
+  feed_url: https://api.tech.ec.europa.eu/search-api/prod/rest/search?apiKey=SEDIA&text=***&pageSize=50&pageNumber=1
+  piattaforma: sedia
+  frequenza: giornaliera
+  stato: attiva
+  verificato_il: '2026-09-24'
+  note: 'Verificata con esito 200. Chiamata: POST multipart/form-data con parte "query" (JSON, content-type application/json
+    obbligatorio: senza dichiararlo il server risponde 500) e opzionali "languages" (["en"]) e "sort" ({"field":"startDate","order":"DESC"}).
+    Query minima per topic e bandi aperti o in apertura: {"bool":{"must":[{"terms":{"type":["1","2"]}},{"terms":{"status":["31094501","31094502"]}}]}}
+    (status 31094501 = forthcoming, 31094502 = open, 31094503 = closed). Risposta JSON con totalResults (1088 topic
+    aperti/in apertura al 24/09/2026) e per ogni risultato metadata.identifier, title, callIdentifier, callTitle,
+    status, startDate, deadlineDate, deadlineModel, frameworkProgramme, programmePeriod e url della scheda. GET
+    non ammesso (405). Il portale HTML e'' un''app JavaScript: serve solo come riferimento umano.
+
+    '
+
+- id: ue_eismea_calls
+  nome: EISMEA - Calls for proposals
+  ente: European Innovation Council and SMEs Executive Agency
+  tipo: ue
+  territorio: UE
+  url: https://eismea.ec.europa.eu/funding-opportunities/calls-proposals_en
+  modalita: rss
+  feed_url: https://eismea.ec.europa.eu/node/7/rss_en
+  piattaforma: drupal
+  frequenza: settimanale
+  stato: attiva
+  verificato_il: '2026-09-24'
+  note: 'Feed RSS valido (5 voci): bandi I3 interregionali, open call di progetti (SYSTEMEU, UNITE). Doppione parziale
+    del portale Funding & Tenders, utile per le open call in cascata che non compaiono nel portale.
+
+    '
+
+- id: ue_eic_calls
+  nome: EIC - Calls for proposals
+  ente: European Innovation Council
+  tipo: ue
+  territorio: UE
+  url: https://eic.ec.europa.eu/eic-funding-opportunities/calls-proposals_en
+  modalita: rss
+  feed_url: https://eic.ec.europa.eu/node/21/rss_en
+  piattaforma: drupal
+  frequenza: settimanale
+  stato: attiva
+  verificato_il: '2026-09-24'
+  note: 'Feed RSS valido (2 voci: EIC Accelerator 2026, EIC STEP Scale Up). Poche voci ma rilevanti per PMI innovative.
+
+    '
+
+- id: ue_cinea_life_calls
+  nome: CINEA (LIFE, energia) - Calls for proposals
+  ente: European Climate, Infrastructure and Environment Executive Agency
+  tipo: ue
+  territorio: UE
+  url: https://cinea.ec.europa.eu/funding-opportunities/calls-proposals_en
+  modalita: rss
+  feed_url: https://cinea.ec.europa.eu/node/161/rss_en
+  piattaforma: drupal
+  frequenza: settimanale
+  stato: attiva
+  verificato_il: '2026-09-24'
+  note: 'Feed RSS valido (10 voci) con i bandi LIFE, Horizon energia, CEF. La pagina dedicata LIFE (/programmes/life/life-calls-proposals_en)
+    rimanda a un elenco 2023 non aggiornato: usare il feed generale dell''agenzia.
+
+    '
+

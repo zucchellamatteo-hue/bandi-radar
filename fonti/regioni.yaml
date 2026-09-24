@@ -1,0 +1,1341 @@
+# Regioni e Province autonome (portali bandi, feed/API, calendari art. 49, agenzie regionali).
+# Formato in README.md. Mappatura: docs/ricerche/2026-09-24_regioni_nazionali.md
+
+- id: lombardia_bandi_online_imprese
+  nome: Regione Lombardia - Bandi Online, categoria Attività produttive e imprese
+  ente: Regione Lombardia
+  tipo: regione
+  territorio: LOM
+  url: https://www.bandi.regione.lombardia.it/servizi/servizio/bandi/attivita-produttive-imprese
+  modalita: html
+  feed_url: null
+  piattaforma: null
+  frequenza: giornaliera
+  stato: attiva
+  verificato_il: '2026-09-24'
+  note: 'Elenco HTML (non JavaScript) dei bandi della categoria "Attività produttive e imprese": 15 link a schede
+    /servizi/servizio/bandi/dettaglio/... con etichetta di stato (Aperto, In apertura, Chiuso). L''elenco generale
+    è /servizi/servizio/bandi (tutte le categorie); utile anche la categoria /servizi/servizio/bandi/ricerca-innovazione.
+    Non esiste un RSS (…/bandi/rss risponde "Pagina non trovata"). Il codice bando (es. RLO12026055023) in fondo
+    all''indirizzo della scheda coincide con codice_bando dell''Anagrafica open data.
+
+    '
+
+- id: lombardia_anagrafica_bandi_api
+  nome: Regione Lombardia - Anagrafica dei bandi regionali (open data Socrata)
+  ente: Regione Lombardia
+  tipo: regione
+  territorio: LOM
+  url: https://www.dati.lombardia.it/api/views/bukx-h2uy.json
+  modalita: api
+  feed_url: https://www.dati.lombardia.it/resource/bukx-h2uy.json?$order=apertura_adesione%20DESC&$limit=200
+  piattaforma: socrata
+  frequenza: giornaliera
+  stato: attiva
+  verificato_il: '2026-09-24'
+  note: 'Dataset bukx-h2uy "Anagrafica dei bandi regionali" (aggiornato il 2026-09-01), API SODA senza chiave. Campi:
+    codice_bando, titolo_bando, direzione_generale, ente, apertura_adesione, chiusura_adesione, tipo_strumento (Bando,
+    Avviso Dote, Manifestazione di Interesse...), presentato. Copre tutte le direzioni (welfare, formazione, ...):
+    filtrare per direzione_generale o per data di apertura. Non contiene il link alla scheda: si ricava cercando
+    il codice su Bandi Online. Il catalogo si interroga con /api/catalog/v1?q=bandi&domains=www.dati.lombardia.it.
+
+    '
+
+- id: lombardia_fesr_calendario_inviti
+  nome: Regione Lombardia - PR FESR 2021-2027, Calendario degli inviti (art. 49)
+  ente: Regione Lombardia
+  tipo: regione
+  territorio: LOM
+  url: https://fesr.regione.lombardia.it/it/pc2127/prlombardiafesr2021-2027/calendario-degli-inviti-1
+  modalita: html
+  feed_url: null
+  piattaforma: null
+  frequenza: settimanale
+  stato: attiva
+  verificato_il: '2026-09-24'
+  note: 'Pagina del calendario art. 49 Reg. UE 2021/1060: testo + allegato XLSX "Calendario inviti PR FESR Lombardia
+    2021-2027 - 20260515.xlsx" (ultima modifica 15/05/2026, aggiornato almeno tre volte l''anno). Da osservare il
+    nome/data dell''allegato. Il calendario FSE+ è su https://fse.regione.lombardia.it/it/pc2127/prlombardiafse2021-2027/calendario-degli-inviti
+    (aperto, 200). L''elenco bandi FESR su ue.regione.lombardia.it (…/bandi-pr-fesr-2021-2028 e /it/ricerca-globale-bandi)
+    è caricato via JavaScript: non serve, i bandi FESR compaiono comunque su Bandi Online.
+
+    '
+
+- id: finlombarda_prodotti_imprese
+  nome: Finlombarda - Prodotti e servizi per le imprese
+  ente: Finlombarda S.p.A.
+  tipo: regione
+  territorio: LOM
+  url: https://www.finlombarda.it/it/prodotti-e-servizi/prodotti-servizi/index?ProdottiServiziSearch%5Bscope%5D=1
+  modalita: browser
+  feed_url: null
+  piattaforma: null
+  frequenza: settimanale
+  stato: difficile
+  verificato_il: '2026-09-24'
+  note: 'Pagina aperta (200) ma l''elenco dei prodotti/agevolazioni è caricato via JavaScript: nel sorgente ci sono
+    solo i filtri (Chi sei? / Che soluzione cerchi? / Finalità). Servirebbe il browser senza interfaccia. Le misure
+    Finlombarda compaiono comunque su Bandi Online di Regione Lombardia, quindi fonte di riserva.
+
+    '
+
+- id: emilia_romagna_imprese_bandi_api
+  nome: Regione Emilia-Romagna - Portale Imprese, tutti i bandi (API Plone)
+  ente: Regione Emilia-Romagna
+  tipo: regione
+  territorio: EMR
+  url: https://imprese.regione.emilia-romagna.it/leggi-atti-bandi/tutti-i-bandi
+  modalita: api
+  feed_url: https://imprese.regione.emilia-romagna.it/++api++/@search?portal_type=Bando&sort_on=modified&sort_order=descending&b_size=50&metadata_fields=_all
+  piattaforma: plone
+  frequenza: giornaliera
+  stato: attiva
+  verificato_il: '2026-09-24'
+  note: 'Il vecchio bandi.regione.emilia-romagna.it reindirizza al sito istituzionale (Plone/Volto). Il portale
+    imprese espone l''API REST di Plone senza autenticazione: 106 oggetti di tipo "Bando" con title, @id (link alla
+    scheda), modified, review_state; con metadata_fields=_all anche descrizione e date. Sezioni: Industria e artigianato,
+    Internazionalizzazione, RSI, Turismo, Commercio, Ricerca e innovazione, Finanza. L''RSS della pagina (…/tutti-i-bandi/RSS)
+    elenca solo le sottosezioni, non i bandi.
+
+    '
+
+- id: emilia_romagna_bandi_regione_api
+  nome: Regione Emilia-Romagna - Bandi, finanziamenti e contributi (sito istituzionale, API Plone)
+  ente: Regione Emilia-Romagna
+  tipo: regione
+  territorio: EMR
+  url: https://www.regione.emilia-romagna.it/leggi-atti-bandi/bandi-finanziamenti-contributi
+  modalita: api
+  feed_url: https://www.regione.emilia-romagna.it/++api++/@search?portal_type=Bando&sort_on=modified&sort_order=descending&b_size=50&metadata_fields=_all
+  piattaforma: plone
+  frequenza: giornaliera
+  stato: attiva
+  verificato_il: '2026-09-24'
+  note: 'Stessa API del portale imprese ma sul sito principale: 85 oggetti "Bando" di altri settori (sport, cultura,
+    relazioni internazionali, agricoltura...). Complementare alla voce del portale imprese; molti non riguardano
+    le imprese, da smistare per titolo.
+
+    '
+
+- id: emilia_romagna_fesr_calendario_inviti
+  nome: Regione Emilia-Romagna - PR FESR 2021-2027, Calendario dei bandi (art. 49)
+  ente: Regione Emilia-Romagna
+  tipo: regione
+  territorio: EMR
+  url: https://fesr.regione.emilia-romagna.it/programmi-e-strategie/2021-2027/calendario-inviti-a-presentare-proposte
+  modalita: html
+  feed_url: null
+  piattaforma: plone
+  frequenza: settimanale
+  stato: attiva
+  verificato_il: '2026-09-24'
+  note: 'Calendario art. 49 c. 2 pubblicato direttamente in HTML, per anno e mese, con priorità, azione, obiettivo
+    specifico e beneficiari; mantiene anche il pregresso. I bandi FESR 21-27 sono su https://fesr.regione.emilia-romagna.it/opportunita/opportunita-di-finanziamento/bandi-21-27
+    (aperto, sottopagine per priorità; l''RSS …/bandi-21-27/RSS elenca solo le cartelle). ART-ER (www.art-er.it)
+    non raggiungibile dalla rete di questa sessione: da verificare da un''altra postazione.
+
+    '
+
+- id: piemonte_bandi_imprese_aperti
+  nome: Regione Piemonte - Bandi, contributi e finanziamenti per imprese (aperti)
+  ente: Regione Piemonte
+  tipo: regione
+  territorio: PIE
+  url: https://bandi.regione.piemonte.it/contributi-finanziamenti?destinatari=imprese&stato=aperto
+  modalita: html
+  feed_url: null
+  piattaforma: drupal
+  frequenza: giornaliera
+  stato: attiva
+  verificato_il: '2026-09-24'
+  note: 'Portale bandi.regione.piemonte.it (Drupal), sezione "Contributi e finanziamenti" già filtrata per destinatario
+    "Imprese e liberi professionisti" e stato "Aperto": 20 voci per pagina, 8 pagine (&page=N). Altri stati: pre-informazione,
+    scaduto, esito. Le procedure gestite da Finpiemonte compaiono qui con tipo "Avviso di procedura presso Finpiemonte".
+
+    '
+
+- id: piemonte_bandi_rss
+  nome: Regione Piemonte - RSS di tutti i bandi
+  ente: Regione Piemonte
+  tipo: regione
+  territorio: PIE
+  url: https://bandi.regione.piemonte.it/
+  modalita: rss
+  feed_url: https://bandi.regione.piemonte.it/tutti/rss.xml
+  piattaforma: drupal
+  frequenza: giornaliera
+  stato: attiva
+  verificato_il: '2026-09-24'
+  note: 'RSS 2.0 valido ("Bandi Regione Piemonte: tutti i bandi"), 10 voci più recenti, tutte le sezioni (contributi,
+    bandi per enti locali, ecc.): serve come segnale di novità, il dettaglio si legge dalla pagina filtrata.
+
+    '
+
+- id: piemonte_fesr_calendario_inviti
+  nome: Regione Piemonte - PR FESR 2021-2027, Calendario inviti a presentare proposte (art. 49)
+  ente: Regione Piemonte
+  tipo: regione
+  territorio: PIE
+  url: https://www.regione.piemonte.it/web/temi/fondi-progetti-europei/fondo-europeo-sviluppo-regionale-fesr/calendario-degli-inviti/calendario-inviti-presentare-proposte
+  modalita: html
+  feed_url: null
+  piattaforma: drupal
+  frequenza: settimanale
+  stato: attiva
+  verificato_il: '2026-09-24'
+  note: 'Pagina con allegato PDF "Calendario degli inviti PR FESR Piemonte 2021-2027 - terzo aggiornamento 2026"
+    (link /web/media/41541/download). Da osservare il titolo dell''allegato. La pagina madre …/calendario-degli-inviti
+    è solo un indice.
+
+    '
+
+- id: finpiemonte_agevolazioni
+  nome: Finpiemonte - Agevolazioni
+  ente: Finpiemonte S.p.A.
+  tipo: regione
+  territorio: PIE
+  url: https://www.finpiemonte.it/agevolazioni
+  modalita: html
+  feed_url: null
+  piattaforma: null
+  frequenza: giornaliera
+  stato: attiva
+  verificato_il: '2026-09-24'
+  note: 'Elenco HTML di tutte le agevolazioni gestite (/agevolazioni/<slug>), aperte e chiuse, senza filtro di stato
+    nell''indirizzo: confrontare l''elenco per scoprire le nuove voci. Nessun RSS trovato; /bandi risponde 404.
+
+    '
+
+- id: veneto_portale_bandi
+  nome: Regione del Veneto - Portale Bandi, Avvisi e Concorsi (elenco bandi)
+  ente: Regione del Veneto
+  tipo: regione
+  territorio: VEN
+  url: https://bandi.regione.veneto.it/Public/Elenco?Tipo=1
+  modalita: browser
+  feed_url: null
+  piattaforma: null
+  frequenza: giornaliera
+  stato: difficile
+  verificato_il: '2026-09-24'
+  note: 'Portale unico (regione.veneto.it/web/bandi-avvisi-concorsi reindirizza qui). La pagina risponde 200 ma
+    la tabella è riempita via DataTables da /Public/GetListaAttiJson (parametri cig, parolaChiave, tipoAttoTmp=1,
+    destinatariTmp, struttureTmp, categorieTmp, statoTmp, materieTmp, paginaIniziale + sEcho/iDisplayStart/iDisplayLength).
+    Con cookie di sessione e Referer l''endpoint risponde JSON ma sempre recordsTotal 0; /Public/GetListaAttiOnloadJson
+    rimanda a /Public/Error. Funzionano i dizionari: GetDestinatariJsonResult (1 Cittadino, 2 Ente, 3 Impresa) e
+    GetStatiJsonResult (4 PUBBLICATO, 5 SCADUTO, 6 ARCHIVIATO). Serve il browser senza interfaccia, poi filtrare
+    destinatario Impresa e stato PUBBLICATO. Esiste anche /Public/Scadenzario.
+
+    '
+
+- id: veneto_fesr_calendario_inviti
+  nome: Regione del Veneto - PR FESR 2021-2027, Calendario degli inviti e bandi (art. 49)
+  ente: Regione del Veneto
+  tipo: regione
+  territorio: VEN
+  url: https://venetocoesione.regione.veneto.it/fesr/calendario-inviti
+  modalita: html
+  feed_url: null
+  piattaforma: liferay
+  frequenza: settimanale
+  stato: attiva
+  verificato_il: '2026-09-24'
+  note: 'Sito "Veneto Coesione": tabella HTML "Bandi in uscita" (oggetto, azione, direzione, mese, modalità di sostegno,
+    beneficiari) + allegati PDF e CSV "Pubblicazione bandi e avvisi FESR luglio - dicembre 2026 - decimo cronoprogramma".
+    La vecchia pagina regione.veneto.it/web/programmi-comunitari/cronoprogramma-bandi-21-27 (200) rimanda qui. AVEPA
+    (avepa.it) e Veneto Innovazione (venetoinnovazione.it) non raggiungibili dalla rete di questa sessione: da verificare
+    altrove.
+
+    '
+
+- id: fvg_bandi_avvisi
+  nome: Regione FVG - Bandi e avvisi in corso (modulo bandi_avvisi)
+  ente: Regione Autonoma Friuli Venezia Giulia
+  tipo: regione
+  territorio: FVG
+  url: https://www.regione.fvg.it/rafvg/cms/RAFVG/MODULI/bandi_avvisi/
+  modalita: html
+  feed_url: null
+  piattaforma: null
+  frequenza: giornaliera
+  stato: attiva
+  verificato_il: '2026-09-24'
+  note: 'Elenco HTML unico di tutti i bandi e avvisi regionali in corso (data pubblicazione, scadenza, titolo, struttura
+    competente), 13 pagine (?pag=N). Molto misto: avvisi ambientali, collocamento mirato (?p=cm), centri per l''impiego
+    (?p=cpi): filtrare per struttura (es. "Direzione centrale attività produttive") o parole chiave (contributo,
+    incentivo, imprese). Le pagine tematiche di economia-imprese (/rafvg/cms/RAFVG/economia-imprese/ con industria,
+    artigianato, commercio, accesso al credito, turismo) hanno schede FOGLIA per singola misura, senza elenco datato.
+    Open data FVG (dati.friuliveneziagiulia.it, Socrata): nessun dataset con "bandi".
+
+    '
+
+- id: fvg_notizie_rss
+  nome: Regione FVG - RSS notizie in evidenza
+  ente: Regione Autonoma Friuli Venezia Giulia
+  tipo: regione
+  territorio: FVG
+  url: https://www.regione.fvg.it/rafvg/cms/RAFVG/rss/
+  modalita: rss
+  feed_url: https://www.regione.fvg.it/rafvg/cms/RAFVG/rss/notizie-in-evidenza
+  piattaforma: null
+  frequenza: giornaliera
+  stato: attiva
+  verificato_il: '2026-09-24'
+  note: 'Unico feed regionale (RSS 2.0 valido): notizie, non bandi. Utile solo come segnale ("aperto il bando...");
+    l''altro feed è "notizie dalla giunta".
+
+    '
+
+- id: fvg_fesr_calendario_inviti
+  nome: Regione FVG - PR FESR 2021-2027, calendario degli inviti (art. 49)
+  ente: Regione Autonoma Friuli Venezia Giulia
+  tipo: regione
+  territorio: FVG
+  url: https://www.regione.fvg.it/rafvg/cms/RAFVG/fondi-europei-fvg-internazionale/POLITICHE_DI_COESIONE_2021-2027/
+  modalita: html
+  feed_url: null
+  piattaforma: null
+  frequenza: settimanale
+  stato: da_verificare
+  verificato_il: '2026-09-24'
+  note: 'Calendario art. 49 del PR FESR 2021-2027 NON trovato: la pagina Politiche di coesione 2021-2027 (aperta)
+    non lo linka, le pagine "pr-fesr-2021-2027" provate rispondono 404 e la ricerca interna non aiuta. Esiste solo
+    il "Calendario Bandi" del POR FESR 2014-2020 (…/por-fesr/calendario-bandi/, 200). Da cercare a mano nel sito
+    o chiedendo all''AdG.
+
+    '
+
+- id: liguria_bandi_avvisi
+  nome: Regione Liguria - Bandi e avvisi (elenco, filtro imprese/attivi)
+  ente: Regione Liguria
+  tipo: regione
+  territorio: LIG
+  url: https://www.regione.liguria.it/homepage-bandi-e-avvisi/publiccompetitions.html
+  modalita: html
+  feed_url: null
+  piattaforma: joomla
+  frequenza: tre_a_settimana
+  stato: attiva
+  verificato_il: '2026-09-24'
+  note: 'Elenco misto (ERP, borse di studio, bandi imprese). Il filtro funziona solo in POST: quicksearch_beneficiari_list=2
+    (imprese; 1 enti, 3 privati), quicksearch_stato=1 (attivi), quicksearch_OrderField[]=2, quicksearch_OrderDir[]=1;
+    con gli stessi parametri in GET risponde 404. L''osservatore deve quindi inviare una POST. Le schede sono /homepage-bandi-e-avvisi/publiccompetition/<id>:<slug>.html.
+
+    '
+
+- id: liguria_fesr_bandi
+  nome: Regione Liguria - Bandi PR FESR 2021-2027
+  ente: Regione Liguria
+  tipo: regione
+  territorio: LIG
+  url: https://www.regione.liguria.it/homepage-fondi-europei/servizi-in-evidenza/bandi-por-fesr-2021-2027/category/po-fesr-2021-2027.html
+  modalita: html
+  feed_url: null
+  piattaforma: joomla
+  frequenza: tre_a_settimana
+  stato: attiva
+  verificato_il: '2026-09-24'
+  note: 'Categoria con i soli bandi FESR 21-27 (20 schede nell''HTML), senza bisogno di POST. Molti sono gestiti
+    operativamente da FILSE.
+
+    '
+
+- id: liguria_fesr_calendario_inviti
+  nome: Regione Liguria - PR FESR 2021-2027, Calendario degli inviti (art. 49)
+  ente: Regione Liguria
+  tipo: regione
+  territorio: LIG
+  url: https://www.regione.liguria.it/homepage-fondi-europei/cosa-cerchi/le-programmazioni-fesr/programma-operativo-fesr-2021-2027/calndarioinviti-21-27-fesr.html
+  modalita: html
+  feed_url: null
+  piattaforma: joomla
+  frequenza: settimanale
+  stato: attiva
+  verificato_il: '2026-09-24'
+  note: 'Pagina art. 49 c. 2 con allegato "calendario degli inviti a presentare proposte Pr Fesr 2021-2027 - versione
+    aggiornata al 22 aprile 2026" (documento /component/publiccompetitions/document/48729:…). Da osservare la riga
+    "versione aggiornata al". Alias breve: …/cosa-cerchi/fesr_2021-2027_calendario_bandi.html (200).
+
+    '
+
+- id: filse_bandi_attivi
+  nome: FILSE - Bandi attivi
+  ente: FILSE S.p.A.
+  tipo: regione
+  territorio: LIG
+  url: https://www.filse.it/it/bandi-avvisi-gare/bandi-attivi/publiccompetitions/
+  modalita: browser
+  feed_url: null
+  piattaforma: joomla
+  frequenza: tre_a_settimana
+  stato: difficile
+  verificato_il: '2026-09-24'
+  note: 'Pagina aperta (200) ma l''elenco è caricato via JavaScript (chiamata allo stesso indirizzo); anche la POST
+    con i filtri di Regione Liguria non restituisce schede. In home compaiono alcune schede /it/bandi-attivi-nascosto/publiccompetition/<id>:…
+    I bandi FESR gestiti da FILSE sono comunque pubblicati anche da Regione Liguria.
+
+    '
+
+- id: valle_aosta_portale_imprese_bandi
+  nome: Regione Valle d'Aosta - Portale imprese, bandi a scadenza
+  ente: Regione Autonoma Valle d'Aosta
+  tipo: regione
+  territorio: VDA
+  url: https://imprese.regione.vda.it/agevolazioni/misure-e-agevolazioni/bandi-a-scadenza
+  modalita: rss
+  feed_url: https://imprese.regione.vda.it/rss?projection=1110
+  piattaforma: null
+  frequenza: tre_a_settimana
+  stato: attiva
+  verificato_il: '2026-09-24'
+  note: '"Lista bandi e avvisi" HTML con scadenza, data di pubblicazione e destinatari (Imprese, PMI, Startup...),
+    filtri per anno e destinatari. Le misure a sportello permanenti stanno in …/misure-e-agevolazioni/misure-e-agevolazioni.
+    L''RSS (20 voci, text/xml) è quello delle notizie del portale imprese, che include gli avvisi. www.regione.vda.it/bandi/
+    risponde 500.
+
+    '
+
+- id: valle_aosta_europa_bandi
+  nome: Regione Valle d'Aosta - Europa, bandi e avvisi dei fondi UE
+  ente: Regione Autonoma Valle d'Aosta
+  tipo: regione
+  territorio: VDA
+  url: https://new.regione.vda.it/europa/progetti/bandi-e-avvisi
+  modalita: rss
+  feed_url: https://new.regione.vda.it/rss?projection=10620
+  piattaforma: null
+  frequenza: tre_a_settimana
+  stato: attiva
+  verificato_il: '2026-09-24'
+  note: 'Sezione Europa del nuovo sito (new.regione.vda.it): bandi FESR/FSE+/FEASR/CTE con filtri ?termids=N. Il
+    feed "Notizie Bandi e avvisi" (20 voci) mescola bandi e notizie europee.
+
+    '
+
+- id: valle_aosta_fesr_calendario_inviti
+  nome: Regione Valle d'Aosta - PR FESR 2021-2027, Calendario degli inviti (art. 49)
+  ente: Regione Autonoma Valle d'Aosta
+  tipo: regione
+  territorio: VDA
+  url: https://new.regione.vda.it/europa/fondi-e-programmi/fondo-europeo-di-sviluppo-regionale/fesr-2021-27/calendario-degli-inviti-a-presentare-proposte
+  modalita: html
+  feed_url: null
+  piattaforma: null
+  frequenza: settimanale
+  stato: attiva
+  verificato_il: '2026-09-24'
+  note: 'Pagina art. 49 c. 2 con allegati PDF ("Calendario preavvisi FESR", ultimo "1° agg. 2025"). Finaosta (www.finaosta.com)
+    risponde 202 con pagina vuota di 169 byte (protezione anti-bot): non verificabile, non inserita.
+
+    '
+
+- id: trento_servizi_bandi_api
+  nome: Provincia autonoma di Trento - Servizi (bandi e contributi) via API OpenCity
+  ente: Provincia autonoma di Trento
+  tipo: provincia
+  territorio: TN
+  url: https://www.provincia.tn.it/Servizi
+  modalita: api
+  feed_url: https://www.provincia.tn.it/opendata/api/content/search/classes%20%5Bpublic_service%5D%20and%20q%20%3D%20%27bando%27%20limit%2050
+  piattaforma: opencity
+  frequenza: tre_a_settimana
+  stato: attiva
+  verificato_il: '2026-09-24'
+  note: 'Il sito è OpenCity/OpenPA: la pagina /Servizi è riempita via JavaScript ma l''API /opendata/api/content/search/
+    risponde JSON senza chiave (query nel percorso, es. "classes [public_service] and q = ''bando'' limit 50": 139
+    risultati; senza q: 1213 servizi). Ogni risultato ha metadata.name, modified, published e link ("read/<id>"
+    = /opendata/api/content/read/<id>); la pagina web è /content/view/full/<mainNodeId>. Provare anche q = ''contributo''
+    e ''avviso''. Lenta (>25 s a volte): usare timeout alto. /Servizi/Bandi risponde 410. La pagina /Argomenti/Focus/Aiuti-alle-imprese
+    (200) linka solo 3 misure.
+
+    '
+
+- id: trento_fesr_calendario_avvisi
+  nome: Provincia autonoma di Trento - FESR 2021-2027, Calendario degli avvisi (art. 49, CSV)
+  ente: Provincia autonoma di Trento
+  tipo: provincia
+  territorio: TN
+  url: https://www.provincia.tn.it/content/view/full/28909
+  modalita: api
+  feed_url: https://www.provincia.tn.it/customexport/dataset-csv_resource-27837
+  piattaforma: opencity
+  frequenza: settimanale
+  stato: attiva
+  verificato_il: '2026-09-24'
+  note: 'Dataset "FESR - Calendario degli avvisi e degli inviti a partecipare" (modificato 2026-08-07; indirizzo
+    canonico /Dati-e-statistiche/Dataset/FESR-Calendario-degli-avvisi-e-degli-inviti-a-partecipare). L''export CSV
+    è pulito: N.AVVISO, TITOLO, DATA APERTURA, DATA CHIUSURA, IMPORTO, BENEFICIARI, INFORMAZIONI (link alla scheda
+    /Servizi/...), AREA GEOGRAFICA, OBIETTIVO SPECIFICO. Il sito fesr.provincia.tn.it è fermo al 2014-2020 (RSS
+    404).
+
+    '
+
+- id: trento_fse_calendario_avvisi
+  nome: Provincia autonoma di Trento - FSE+ 2021-2027, Calendario degli avvisi (art. 49)
+  ente: Provincia autonoma di Trento
+  tipo: provincia
+  territorio: TN
+  url: https://www.provincia.tn.it/content/view/full/28905
+  modalita: html
+  feed_url: null
+  piattaforma: opencity
+  frequenza: settimanale
+  stato: attiva
+  verificato_il: '2026-09-24'
+  note: 'Dataset "FSE+ Calendario degli avvisi e degli inviti a partecipare" (modificato 2026-07-28), stessa struttura
+    del FESR; export CSV atteso in /customexport/dataset-csv_resource-27833 (non aperto in questa verifica). Il
+    sito fse.provincia.tn.it ha solo avvisi 2014-2020.
+
+    '
+
+- id: trento_feasr_calendario_avvisi
+  nome: Provincia autonoma di Trento - FEASR (CSR 2023-2027), Calendario degli avvisi
+  ente: Provincia autonoma di Trento
+  tipo: provincia
+  territorio: TN
+  url: https://www.provincia.tn.it/content/view/full/28878
+  modalita: html
+  feed_url: null
+  piattaforma: opencity
+  frequenza: settimanale
+  stato: attiva
+  verificato_il: '2026-09-24'
+  note: 'Dataset "Calendario degli avvisi e degli inviti a partecipare - Bandi FEASR" (modificato 2026-07-04); export
+    CSV atteso in /customexport/dataset-csv_resource-27806 (non aperto). Trentino Sviluppo (trentinosviluppo.it):
+    la sezione "bandi-attivi" contiene appalti e la pagina "finanza-bandi" è descrittiva: nessun elenco di agevolazioni
+    da osservare.
+
+    '
+
+- id: bolzano_civis_servizi
+  nome: Provincia autonoma di Bolzano - myCIVIS, catalogo servizi (contributi)
+  ente: Provincia autonoma di Bolzano
+  tipo: provincia
+  territorio: BZ
+  url: https://mycivis.civis.bz.it/it/Services/
+  modalita: browser
+  feed_url: null
+  piattaforma: null
+  frequenza: tre_a_settimana
+  stato: difficile
+  verificato_il: '2026-09-24'
+  note: 'Tutti i siti provinciali sono applicazioni JavaScript con pagina vuota nel sorgente (home.provincia.bz.it,
+    economia.provincia.bz.it, europa.provincia.bz.it, news.provincia.bz.it: 2-3 KB). Il catalogo myCIVIS ha 243
+    KB ma le schede sono template riempiti via JavaScript (ServiceDetail/?id=<slug>_<numero>). Il motore di ricerca
+    interno è api.integrations.services.siag.it/pub/cocweb/quelix/aprov/api/search (risponde 400 senza i parametri
+    giusti). Open data data.civis.bz.it (CKAN): nessun dataset "bandi". Calendario art. 49 FESR non trovato (le
+    pagine "europa" storiche rispondono 404). IDM Alto Adige (idm-suedtirol.com/it/) aperto ma senza elenco bandi.
+    Serve il browser senza interfaccia.
+
+    '
+
+- id: bolzano_economia
+  nome: Provincia autonoma di Bolzano - Ripartizione Economia
+  ente: Provincia autonoma di Bolzano
+  tipo: provincia
+  territorio: BZ
+  url: https://economia.provincia.bz.it/it/home
+  modalita: browser
+  feed_url: null
+  piattaforma: null
+  frequenza: tre_a_settimana
+  stato: difficile
+  verificato_il: '2026-09-24'
+  note: 'Sito della Ripartizione Economia (contributi alle imprese), applicazione JavaScript: sorgente di 2,5 KB,
+    nessun contenuto senza browser. Da riprovare con il browser senza interfaccia in Fase 1.
+
+    '
+
+- id: toscana_bandi_aperti
+  nome: Regione Toscana - Bandi aperti
+  ente: Regione Toscana
+  tipo: regione
+  territorio: TOS
+  url: https://www.regione.toscana.it/bandi-aperti
+  modalita: html
+  feed_url: null
+  piattaforma: liferay
+  frequenza: giornaliera
+  stato: attiva
+  verificato_il: '2026-09-24'
+  note: 'Elenco misto di tutti i bandi aperti della Regione (contributi, avvisi, concorsi, appalti): 20 schede per
+    pagina con titolo, link "/-/..." e "Scadenza presentazione domande". I filtri laterali (categorie Cittadini/Enti,
+    tipologia) sono caselle Liferay: non esiste un filtro "imprese" nell''indirizzo, quindi si osserva l''elenco
+    intero e si smista dopo. Nella pagina compaiono i parametri delta=20/40/60 e sortBy=desc&orderBy=modifiedDate
+    (visti nei link, non provati). Nessun RSS trovato. La pagina /bandi-tutti e /bandi-archiviati esistono ma non
+    sono state aperte.
+
+    '
+
+- id: toscana_pr_fesr_bandi_aperti
+  nome: Regione Toscana - PR FESR 2021-2027, bandi aperti
+  ente: Regione Toscana
+  tipo: regione
+  territorio: TOS
+  url: https://www.regione.toscana.it/pr-fesr-2021-2027/bandi-aperti
+  modalita: html
+  feed_url: null
+  piattaforma: liferay
+  frequenza: giornaliera
+  stato: attiva
+  verificato_il: '2026-09-24'
+  note: 'Sezione del programma FESR con i soli bandi aperti (7 schede al 24/09/2026, tutte per PMI: sovvenzioni
+    interessi, garanzie, obbligazioni, IGP, rifiuti). Stessa struttura a schede di /bandi-aperti. Utile perche''
+    gia'' filtrata sulle imprese; sovrapposta in parte all''elenco generale.
+
+    '
+
+- id: toscana_pr_fesr_calendario
+  nome: Regione Toscana - PR FESR 2021-2027, calendario delle opportunita' (art. 49)
+  ente: Regione Toscana
+  tipo: regione
+  territorio: TOS
+  url: https://www.regione.toscana.it/pr-fesr-2021-2027/calendario-delle-opportunit%C3%A0
+  modalita: html
+  feed_url: null
+  piattaforma: liferay
+  frequenza: settimanale
+  stato: attiva
+  verificato_il: '2026-09-24'
+  note: 'Pagina del calendario art. 49 Reg. UE 2021/1060: pubblica un file xlsx e un csv ("21-calendario-bandi-opportunita-al-7-settembre-2026",
+    il nome cambia a ogni aggiornamento). Il csv (aperto, 92 righe, separatore ";") ha colonne CATEG_RICHIEDENTE,
+    TIPO_RICHIEDENTE, DESCRIZIONE, IMPORTO_TOTALE, STATO_OPPORTUNITA, DATA_APERTURA, DATA_CHIUSURA, LINK. Osservare
+    la pagina per scoprire il nuovo file, poi leggere il csv. Aggiornamento "periodico".
+
+    '
+
+- id: sviluppo_toscana_bandi
+  nome: Sviluppo Toscana - Bandi
+  ente: Sviluppo Toscana S.p.A.
+  tipo: regione
+  territorio: TOS
+  url: https://www.sviluppo.toscana.it/bandi/
+  modalita: rss
+  feed_url: https://www.sviluppo.toscana.it/bandi/feed/
+  piattaforma: wordpress
+  frequenza: giornaliera
+  stato: attiva
+  verificato_il: '2026-09-24'
+  note: 'Agenzia in house che gestisce i bandi FESR per le imprese. Feed RSS valido (10 voci, ultima build 22/09/2026)
+    con titolo, link e data. L''elenco HTML ha filtri FacetWP (stato aperto/chiuso/ in-arrivo, destinatari pmi/grande-impresa/startup/liberi-professionisti/pa,
+    fondo fesr-2021-2027) ma caricati via JavaScript: l''indirizzo con ?_stato=aperto&_destinatario=sviluppo-imprese
+    risponde 200 con zero risultati. Nel feed compaiono anche voci di "rendicontazione" da scartare.
+
+    '
+
+- id: umbria_bandi_imprese
+  nome: Regione Umbria - Bandi (filtro beneficiario Imprese)
+  ente: Regione Umbria
+  tipo: regione
+  territorio: UMB
+  url: https://applicazioni.regione.umbria.it/widget/bandi1?p_p_id=bandi_WAR_bandiportlet&p_p_lifecycle=0&p_p_state=maximized&p_p_mode=view&_bandi_WAR_bandiportlet_tipoBeneficiario=Imprese
+  modalita: html
+  feed_url: null
+  piattaforma: liferay
+  frequenza: tre_a_settimana
+  stato: attiva
+  verificato_il: '2026-09-24'
+  note: 'La pagina ufficiale https://www.regione.umbria.it/la-regione/bandi (aperta, 200) contiene solo un iframe
+    verso questo motore di ricerca bandi. L''indirizzo con il filtro "Imprese" risponde 200 e mostra "Risultati
+    1 - 20 su 31", 20 per pagina, con link di dettaglio per codice bando (_bandi_WAR_bandiportlet_codBando=...).
+    Altri filtri: materia ("Attivita'' produttive e imprese"), fonteFinanziaria, tipologiaBando, testo. I link portano
+    un jsessionid da ignorare nel confronto. Nessun RSS. Il portale dati.umbria.it non era raggiungibile dalla sessione.
+
+    '
+
+- id: umbria_avvisi_attivita_produttive
+  nome: Regione Umbria - Avvisi attivita' produttive
+  ente: Regione Umbria
+  tipo: regione
+  territorio: UMB
+  url: https://www.regione.umbria.it/attivita-produttive-avvisi
+  modalita: browser
+  feed_url: null
+  piattaforma: liferay
+  frequenza: tre_a_settimana
+  stato: difficile
+  verificato_il: '2026-09-24'
+  note: 'Sezione "Avvisi" per materia (elenco da /avvisi: agricoltura, energia, turismo, lavoro...). La pagina risponde
+    200 ma l''elenco e'' in portlet caricati via JavaScript (render_portlet): nell''HTML scaricato non compare nessun
+    avviso. Da provare con browser senza interfaccia. Esiste solo l''RSS dell''agenzia stampa (ufficio-stampa/agenzia-umbria-notizie),
+    non degli avvisi.
+
+    '
+
+- id: sviluppumbria_avvisi
+  nome: Sviluppumbria - Avvisi pubblici (home)
+  ente: Sviluppumbria S.p.A.
+  tipo: regione
+  territorio: UMB
+  url: https://www.sviluppumbria.it/
+  modalita: html
+  feed_url: null
+  piattaforma: liferay
+  frequenza: tre_a_settimana
+  stato: attiva
+  verificato_il: '2026-09-24'
+  note: 'Agenzia regionale che pubblica avvisi per imprese (internazionalizzazione PMI, STEP 2026, imprese culturali
+    e creative, turismo). La pagina /avvisi-pubblici risponde 200 ma l''elenco e'' vuoto nell''HTML (caricato via
+    JavaScript); la home invece contiene 19 link "/-/avviso-..." statici, quindi si osserva la home. Elenco misto:
+    ci sono anche avvisi per famiglie e selezioni di personale.
+
+    '
+
+- id: marche_bandi
+  nome: Regione Marche - Bandi
+  ente: Regione Marche
+  tipo: regione
+  territorio: MAR
+  url: https://www.regione.marche.it/Entra-in-Regione/Bandi
+  modalita: html
+  feed_url: null
+  piattaforma: dotnetnuke
+  frequenza: tre_a_settimana
+  stato: difficile
+  verificato_il: '2026-09-24'
+  note: 'Elenco dei bandi di contributo (link di dettaglio ?idb=NNNNN, filtro per tema ?p=1&t=103 agricoltura, 107
+    enti locali, 112 lavoro...). Prima richiesta 200 con elenco completo; dalla quarta richiesta in poi il sito
+    rimanda tutto (pagine e feed) a validate.perfdrive.com (Radware Bot Manager). Serve un ritmo molto basso o un
+    browser senza interfaccia; da ritentare. Esiste anche /Entra-in-Regione/Bandi-e-opportunita (aperta, 200) con
+    tre sottopagine: Bandi-attivi, Bandi-in-uscita (pianificazione dei vantaggi economici = calendario avvisi),
+    Bandi-scaduti; le sottopagine sono state bloccate dal bot manager.
+
+    '
+
+- id: marche_rss_tematici
+  nome: Regione Marche - Feed RSS per tema
+  ente: Regione Marche
+  tipo: regione
+  territorio: MAR
+  url: https://www.regione.marche.it/rss
+  modalita: rss
+  feed_url: null
+  piattaforma: dotnetnuke
+  frequenza: tre_a_settimana
+  stato: da_verificare
+  verificato_il: '2026-09-24'
+  note: 'La pagina /rss (aperta, 200) elenca feed per tema con indirizzo /DesktopModules/Blog/API/RSS/Get?tabid=152&moduleid=6549&blog=NN
+    (13 Attivita'' Produttive, 10 Fondi Europei, 05 Opportunita'' per il territorio, 14 Lavoro). I feed NON sono
+    stati aperti: la richiesta e'' stata bloccata dal bot manager. feed_url resta vuoto finche'' non si verifica.
+
+    '
+
+- id: lazio_avvisi_e_bandi
+  nome: Regione Lazio - Avvisi e bandi (hub)
+  ente: Regione Lazio
+  tipo: regione
+  territorio: LAZ
+  url: https://www.regione.lazio.it/avvisi-e-bandi
+  modalita: html
+  feed_url: null
+  piattaforma: drupal
+  frequenza: giornaliera
+  stato: esclusa
+  verificato_il: '2026-09-24'
+  note: 'Pagina hub con sole tre sezioni: avvisi e bandi di gara, concorsi, aste pubbliche. I bandi di contributo
+    della Regione Lazio non stanno qui ma su lazioeuropa.it e lazioinnova.it. Esclusa per non rivalutarla. /per-le-imprese
+    (200) e'' un indice per tema, senza elenco bandi. Il feed https://www.regione.lazio.it/rss-giunta-regionale
+    (aperto, RSS valido, notizie della Giunta) e'' un segnale debole ma contiene annunci tipo "voucher-digitalizzazione-pmi-2026".
+
+    '
+
+- id: lazio_europa_bandi
+  nome: Lazio Europa - Bandi
+  ente: Regione Lazio
+  tipo: regione
+  territorio: LAZ
+  url: https://www.lazioeuropa.it/bandi/
+  modalita: rss
+  feed_url: https://www.lazioeuropa.it/bandi/feed/
+  piattaforma: wordpress
+  frequenza: giornaliera
+  stato: attiva
+  verificato_il: '2026-09-24'
+  note: 'Portale della programmazione europea del Lazio: elenco bandi regionali (13 nella prima pagina) con feed
+    RSS valido (10 voci; es. "Voucher Digitalizzazione Pmi 2026" dell''11/09/2026). Filtri nel modulo di ricerca:
+    f_destinatari[], f_fondi[], f_enti[], stati=aperto; l''indirizzo /bandi/?f_destinatari[]=1&stati=aperto risponde
+    200 con risultati ridotti, ma le etichette dei valori non sono leggibili nell''HTML. Il feed generale /feed/
+    e'' di notizie (graduatorie, proroghe).
+
+    '
+
+- id: lazio_europa_calendario_fesr
+  nome: Lazio Europa - PR FESR, calendario delle opportunita' (art. 49)
+  ente: Regione Lazio
+  tipo: regione
+  territorio: LAZ
+  url: https://www.lazioeuropa.it/pr-fesr/calendario-delle-opportunita-di-finanziamento/
+  modalita: html
+  feed_url: null
+  piattaforma: wordpress
+  frequenza: settimanale
+  stato: attiva
+  verificato_il: '2026-09-24'
+  note: 'Pagina del calendario art. 49 per il FESR: elenco di file xlsx datati (ultimo visto "Calendario-Opportunita-20-gennaio-2026.xlsx";
+    pagina modificata il 17/09/2026). Osservare la pagina per scoprire il nuovo file. Per l''FSE+ c''e'' https://www.lazioeuropa.it/fse-calendario-delle-opportunita-di-finanziamento/
+    (aperta, 200) con pdf fermi al 2024: meno utile per le imprese.
+
+    '
+
+- id: lazio_innova_bandi
+  nome: Lazio Innova - Bandi
+  ente: Lazio Innova S.p.A.
+  tipo: regione
+  territorio: LAZ
+  url: https://www.lazioinnova.it/bandi/
+  modalita: rss
+  feed_url: https://www.lazioinnova.it/bandi/feed/
+  piattaforma: wordpress
+  frequenza: giornaliera
+  stato: attiva
+  verificato_il: '2026-09-24'
+  note: 'Societa'' in house che gestisce i bandi FESR per le imprese. Elenco con etichette Aperto/Chiuso (11 bandi
+    nella prima pagina, 7 aperti) e feed RSS valido (10 voci). I filtri ?f_destinatari[]=1262&stati=aperto sono
+    applicati via JavaScript: la pagina filtrata risponde 200 ma senza risultati nell''HTML. Il feed generale /feed/
+    e'' di notizie ed eventi, non di bandi.
+
+    '
+
+- id: abruzzo_contributi_finanziamenti
+  nome: Regione Abruzzo - Avvisi contributi e finanziamenti
+  ente: Regione Abruzzo
+  tipo: regione
+  territorio: ABR
+  url: http://www2.regione.abruzzo.it/avvisi/contributi-e-finanziamenti
+  modalita: rss
+  feed_url: http://www2.regione.abruzzo.it/taxonomy/term/3573/feed
+  piattaforma: drupal
+  frequenza: tre_a_settimana
+  stato: attiva
+  verificato_il: '2026-09-24'
+  note: 'Elenco Drupal 7 degli avvisi "Contributi e finanziamenti" con data (gg/mm/aaaa) e categorie per materia;
+    feed RSS della stessa vista (4 voci, ultima 17/09/2026). Contenuto misto: molte voci sono graduatorie di bandi
+    agricoli. ATTENZIONE: in https il certificato di www e www2 non passa la verifica ("unable to get local issuer
+    certificate", catena incompleta lato server); in http entrambi rispondono 200. Da controllare se il server di
+    produzione ha lo stesso problema. La pagina indice https://www2.regione.abruzzo.it/content/bandi-contributi-e-finanziamenti
+    (aperta in http) rimanda anche a pesca.regione.abruzzo.it/avvisi-pubblici e ai bandi PAC 2023-2027.
+
+    '
+
+- id: abruzzo_fesr_opportunita
+  nome: Regione Abruzzo - Opportunita' di finanziamento FESR
+  ente: Regione Abruzzo
+  tipo: regione
+  territorio: ABR
+  url: http://www2.regione.abruzzo.it/content/opportunit%C3%A0-di-finanziamento-fesr
+  modalita: html
+  feed_url: null
+  piattaforma: drupal
+  frequenza: settimanale
+  stato: da_verificare
+  verificato_il: '2026-09-24'
+  note: 'Elenco paginato (?page=1..3) degli avvisi FESR, ma le voci viste sono del POR FESR 2014-2020: sembra fermo.
+    Nessuna pagina "calendario avvisi" art. 49 per il PR FESR 2021-2027 trovata sui siti regionali raggiunti. Stesso
+    problema di certificato https descritto sopra.
+
+    '
+
+- id: abruzzo_notizie_rss
+  nome: Regione Abruzzo - Notizie (RSS)
+  ente: Regione Abruzzo
+  tipo: regione
+  territorio: ABR
+  url: http://www.regione.abruzzo.it/novita
+  modalita: rss
+  feed_url: http://www.regione.abruzzo.it/rss.xml
+  piattaforma: drupal
+  frequenza: tre_a_settimana
+  stato: attiva
+  verificato_il: '2026-09-24'
+  note: 'Feed RSS valido (10 voci, aggiornato il 24/09/2026) delle notizie del portale nuovo (Drupal 11). Segnale
+    debole: in mezzo alle notizie compaiono "Avviso pubblico n. 2 ...", "Bando IRAN ...". La pagina /novita e''
+    paginata (?page=N). Il portale nuovo non ha ancora un elenco bandi proprio: la voce "Bandi per contributi" del
+    menu rimanda a www2.
+
+    '
+
+- id: fira_bandi_misure
+  nome: FIRA - Bandi e misure
+  ente: FIRA - Finanziaria Regionale Abruzzese
+  tipo: regione
+  territorio: ABR
+  url: https://www.fira.it/bandi_e_agevolazioni/
+  modalita: rss
+  feed_url: https://www.fira.it/category/bandi-e-misure/feed/
+  piattaforma: wordpress
+  frequenza: tre_a_settimana
+  stato: attiva
+  verificato_il: '2026-09-24'
+  note: 'Finanziaria regionale che gestisce bandi e strumenti finanziari per le imprese abruzzesi. La pagina "Bandi
+    e Agevolazioni" (200) e'' costruita con Elementor e nell''HTML non ci sono le schede dei bandi (caricate via
+    JavaScript). Il feed della categoria "Bandi e Misure" e'' valido (10 voci, ultima 22/09/2026) ma mescola bandi
+    regionali e notizie su misure nazionali (SIMEST, Fondo di Garanzia). Il sito ha risposto a intermittenza (diverse
+    richieste cadute senza risposta).
+
+    '
+
+- id: molise_home_notizie
+  nome: Regione Molise - Home (notizie e avvisi)
+  ente: Regione Molise
+  tipo: regione
+  territorio: MOL
+  url: https://www.regione.molise.it/flex/cm/pages/ServeBLOB.php/L/IT/IDPagina/1
+  modalita: html
+  feed_url: null
+  piattaforma: flexcmp
+  frequenza: tre_a_settimana
+  stato: difficile
+  verificato_il: '2026-09-24'
+  note: 'Non e'' stata trovata una pagina "bandi e avvisi" con elenco: la voce "Consultare bandi e avvisi pubblici"
+    (IDPagina/55) porta all''Albo pretorio online (IDPagina/8363) che rimanda a un applicativo esterno cloud.urbi.it;
+    PubblicazioneAtti.php risponde 403. Le pagine "Per le Imprese" (IDPagina/49), "Sportello Europa" (IDPagina/40),
+    "Coesione Italia 2021-2027" (IDPagina/19254) e "FESR" (IDPagina/8549) sono aperte (200) ma senza elenco bandi
+    ne'' calendario art. 49. Resta la home, che elenca le notizie in <h5> (es. "Presentato l''Avviso STEP Molise").
+    moliseeuropa.regione.molise.it non raggiungibile (502 dal proxy). Nessun RSS trovato.
+
+    '
+
+- id: sviluppo_italia_molise_bandi
+  nome: Sviluppo Italia Molise - Bandi pubblici
+  ente: Sviluppo Italia Molise S.p.A.
+  tipo: regione
+  territorio: MOL
+  url: https://www.sviluppoitaliamolise.com/bandi-pubblici/
+  modalita: html
+  feed_url: null
+  piattaforma: wordpress
+  frequenza: tre_a_settimana
+  stato: da_verificare
+  verificato_il: '2026-09-24'
+  note: 'Agenzia regionale, organismo intermedio del PR Molise. Elenco WordPress (tema Divi) con schede "<h2 class=et_pb_module_header>":
+    OSAKA 2025 voucher imprese, High Tech Business, Ricettivita'' alberghiera, Comprensori sciistici, Bandi Covid19
+    (molte voci vecchie). La pagina /bandi-pr-molise/ ("Bandi competenza OI", 200) contiene l''avviso STEP Molise.
+    Il sito risponde a intermittenza (piu'' richieste cadute con 000/502): da riprovare dal server prima di fidarsi.
+    Feed /feed/ non raggiunto. Finmolise (finmolise.it) non raggiungibile.
+
+    '
+
+- id: campania_regione_bandi_avvisi
+  nome: Regione Campania - Bandi e avvisi
+  ente: Regione Campania
+  tipo: regione
+  territorio: CAM
+  url: null
+  modalita: html
+  feed_url: null
+  piattaforma: null
+  frequenza: giornaliera
+  stato: difficile
+  verificato_il: '2026-09-24'
+  note: 'Il sito www.regione.campania.it (sezione /regione/it/bandi-e-avvisi) risponde 403 "Access Denied" (Akamai)
+    sia con User-Agent BandiRadar sia con uno Chrome puro, anche sulla home page. Da rete cloud non si apre nulla;
+    riprovare dal VPS. Nessun RSS e nessun calendario art. 49 verificabile: anche fesr.regione.campania.it, bandi.regione.campania.it
+    non rispondono. Il portale open data (dati.regione.campania.it) risponde ma e'' solo una pagina di rimando,
+    non cercato dentro.
+
+    '
+
+- id: campania_sviluppo_campania_bandi_aperti
+  nome: Sviluppo Campania - Bandi aperti
+  ente: Sviluppo Campania S.p.A.
+  tipo: regione
+  territorio: CAM
+  url: https://www.sviluppocampania.it/bandi-aperti/
+  modalita: html
+  feed_url: null
+  piattaforma: wordpress
+  frequenza: giornaliera
+  stato: attiva
+  verificato_il: '2026-09-24'
+  note: 'Agenzia in house che gestisce le misure per le imprese della Regione (FRC II edizione, Sostegno al lavoro
+    autonomo, Fondo Rotativo PMI, Distretti del commercio, Basket Eque, Garanzia Campania Bond, elencate anche in
+    /bandi-e-agevolazioni/). L''elenco "Bandi aperti" mescola avvisi per le imprese e avvisi interni (selezione
+    direttore, medico competente, albo competenze): filtrare per titolo. I feed RSS di WordPress (/feed/, /bandi-aperti/feed/,
+    /category/bandi-aperti/feed/) rispondono 500 o 403 e l''API wp-json chiede autenticazione (401): resta solo
+    l''HTML. C''e'' una seconda pagina (/bandi-aperti/page/2/).
+
+    '
+
+- id: campania_porfesr_opportunita
+  nome: POR FESR Campania - Opportunita di finanziamento
+  ente: Regione Campania
+  tipo: regione
+  territorio: CAM
+  url: https://porfesr.regione.campania.it/it/opportunita-e-bandi/opportunita-di-finanziamento
+  modalita: html
+  feed_url: null
+  piattaforma: null
+  frequenza: settimanale
+  stato: da_verificare
+  verificato_il: '2026-09-24'
+  note: 'Si apre (200) ma l''elenco sembra fermo al ciclo 2014-2020 (Campania Start-up, avvisi Covid, technology
+    platform). Non compare un calendario degli avvisi 2021-27. Da tenere con frequenza bassa finche'' non si capisce
+    se viene ancora aggiornato; l''avviso FESR 21-27 sull''efficientamento delle imprese e'' in home page come news,
+    non in questo elenco.
+
+    '
+
+- id: puglia_regione_bandi_avvisi_rss
+  nome: Regione Puglia - Bandi e avvisi (feed)
+  ente: Regione Puglia
+  tipo: regione
+  territorio: PUG
+  url: https://www.regione.puglia.it/bandi-e-avvisi
+  modalita: rss
+  feed_url: https://www.regione.puglia.it/feed-bandi-regione-puglia?p_p_id=com_liferay_asset_publisher_web_portlet_AssetPublisherPortlet_INSTANCE_zY8SiKCyhUKl&p_p_lifecycle=2&p_p_state=normal&p_p_mode=view&p_p_resource_id=getRSS&p_p_cacheability=cacheLevelPage&_com_liferay_asset_publisher_web_portlet_AssetPublisherPortlet_INSTANCE_zY8SiKCyhUKl_currentURL=%2Ffeed-bandi-regione-puglia&_com_liferay_asset_publisher_web_portlet_AssetPublisherPortlet_INSTANCE_zY8SiKCyhUKl_portletAjaxable=1
+  piattaforma: liferay
+  frequenza: giornaliera
+  stato: attiva
+  verificato_il: '2026-09-24'
+  note: 'Feed RSS "Regione Puglia - Bandi", 50 voci con titolo, link e data; elencato nella pagina ufficiale /feed-rss.
+    Elenco misto (concorsi, mobilita'', avvisi di tutti i dipartimenti): smistare per titolo. La pagina HTML /bandi-e-avvisi
+    e'' solo un modulo di ricerca: i risultati arrivano via POST (JavaScript), quindi non esiste un indirizzo gia''
+    filtrato per imprese. I filtri esistono (area tematica "Competitivita'', ricerca e Innovazione" = 66124, argomenti
+    "Internazionalizzazione", "Fesr", "FSC 21-27") ma solo nel modulo. Calendario art. 49 non trovato (nessun link
+    in home ne'' su por.regione.puglia.it).
+
+    '
+
+- id: puglia_por_bandi_imprenditoria
+  nome: POR Puglia - Bandi e avvisi (tema Imprenditoria)
+  ente: Regione Puglia
+  tipo: regione
+  territorio: PUG
+  url: https://por.regione.puglia.it/it/web/por/bandi-e-avvisi?p_r_p_categoryId=61182
+  modalita: html
+  feed_url: null
+  piattaforma: liferay
+  frequenza: giornaliera
+  stato: attiva
+  verificato_il: '2026-09-24'
+  note: 'Portale dei fondi strutturali; il titolo di pagina dice ancora "POR Puglia 2014-2020" ma elenca le misure
+    per le imprese in corso (Innoprocess, Innoaid, Titolo II, Minibond, NIDI, TecnoNidi, internazionalizzazione).
+    L''indirizzo e'' gia'' filtrato sul tema "Imprenditoria" (61182); altri temi verificati come link: Innovazione
+    61181, Ambiente 61180, Formazione professionale 61187. Esistono anche filtri per dimensione (micro/piccola/media/grande
+    impresa) e "Startup" nel menu laterale. Elenco completo senza filtri: https://por.regione.puglia.it/bandi-e-avvisi
+    (200). Nessun RSS trovato sul portale.
+
+    '
+
+- id: puglia_sistema_puglia
+  nome: Sistema Puglia - Bandi
+  ente: Regione Puglia
+  tipo: regione
+  territorio: PUG
+  url: null
+  modalita: browser
+  feed_url: null
+  piattaforma: null
+  frequenza: giornaliera
+  stato: difficile
+  verificato_il: '2026-09-24'
+  note: 'www.sistema.puglia.it (portale dove si presentano le domande e dove compaiono gli avvisi del Dipartimento
+    Sviluppo economico) chiude la connessione (reset) su https e risponde 503 su http: non raggiungibile da rete
+    cloud. Riprovare dal VPS.
+
+    '
+
+- id: puglia_puglia_sviluppo
+  nome: Puglia Sviluppo - Avvisi
+  ente: Puglia Sviluppo S.p.A.
+  tipo: regione
+  territorio: PUG
+  url: https://pugliasviluppo.eu/it
+  modalita: html
+  feed_url: null
+  piattaforma: null
+  frequenza: settimanale
+  stato: da_verificare
+  verificato_il: '2026-09-24'
+  note: 'La home si apre (200) ma non ha un elenco proprio di bandi per le imprese: rimanda a por.regione.puglia.it
+    e ha solo la pagina "Just Transition Fund - Avvisi per la provincia di Taranto" (/it/Just-Transition-Fund-Avvisi-per-la-provincia-di-Taranto,
+    200, contenuto non leggibile senza JavaScript) e le gare in "contrasparenza". Da tenere solo come riferimento.
+
+    '
+
+- id: basilicata_portale_bandi_api
+  nome: Regione Basilicata - Portale Bandi (API)
+  ente: Regione Basilicata
+  tipo: regione
+  territorio: BAS
+  url: https://portalebandi.regione.basilicata.it/avvisi-e-bandi/
+  modalita: api
+  feed_url: https://portalebandi.regione.basilicata.it/wp-json/wp/v2/avvisi-e-bandi?per_page=50
+  piattaforma: wordpress
+  frequenza: tre_a_settimana
+  stato: attiva
+  verificato_il: '2026-09-24'
+  note: 'Portale nuovo (WordPress "CeBas", Elementor) con tutti gli avvisi e bandi della Regione, comprese le misure
+    per le imprese (es. "Avviso pubblico FC Imprese", "FC Voucher professionisti"). L''API JSON risponde (200, 50
+    voci) con titolo, data, link, contenuto; esistono anche i tipi "proroga", "esiti", "lotti". In alternativa RSS
+    dedicato: https://portalebandi.regione.basilicata.it/feed/?post_type=avvisi-e-bandi (200, con voci); il feed
+    generico /feed/ e'' vuoto. Elenco misto (incarichi, borse di studio, enti locali): smistare per titolo. Pagina
+    HTML a 16 voci, senza filtri.
+
+    '
+
+- id: basilicata_sito_regione
+  nome: Regione Basilicata - Avvisi e bandi (sito istituzionale, open data)
+  ente: Regione Basilicata
+  tipo: regione
+  territorio: BAS
+  url: null
+  modalita: api
+  feed_url: null
+  piattaforma: null
+  frequenza: tre_a_settimana
+  stato: difficile
+  verificato_il: '2026-09-24'
+  note: 'Riprovato il 24/09 come chiesto: www.regione.basilicata.it (https e giunta/site/giunta/home.jsp) chiude
+    la connessione (reset), http risponde 503 "upstream connect error"; il JSON open data https://opservice.regione.basilicata.it/opendata/files/AvvisiBandi.json
+    e dati.regione.basilicata.it danno reset; anche pr-fesr.basilicata.it ed europa.basilicata.it non rispondono.
+    Sembra un blocco verso questa rete, non un guasto: riprovare dal VPS. Nel frattempo il Portale Bandi (voce basilicata_portale_bandi_api)
+    copre l''elenco. Calendario art. 49 non verificabile.
+
+    '
+
+- id: basilicata_sviluppo_basilicata_incentivi
+  nome: Sviluppo Basilicata - Incentivi
+  ente: Sviluppo Basilicata S.p.A.
+  tipo: regione
+  territorio: BAS
+  url: https://www.sviluppobasilicata.it/kweb-sviluppobasilicata/sito/sb/incentivi
+  modalita: html
+  feed_url: null
+  piattaforma: null
+  frequenza: settimanale
+  stato: attiva
+  verificato_il: '2026-09-24'
+  note: 'Elenco degli incentivi gestiti dalla societa'' regionale (Fondo Microfinanza, Avviso Energia, Imprese artigiane,
+    Imprese costituite/costituende, Microcredito, Mobilita'' elettrica...). Pagina semplice, titoli in h4 con link;
+    nessun RSS.
+
+    '
+
+- id: calabria_europa_bandi_api
+  nome: Calabria Europa - Bandi e avvisi PR 2021-27 (API)
+  ente: Regione Calabria
+  tipo: regione
+  territorio: CAL
+  url: https://calabriaeuropa.regione.calabria.it/bandi/
+  modalita: api
+  feed_url: https://calabriaeuropa.regione.calabria.it/wp-json/wp/v2/bando?per_page=50
+  piattaforma: wordpress
+  frequenza: tre_a_settimana
+  stato: attiva
+  verificato_il: '2026-09-24'
+  note: 'Portale del PR Calabria FESR-FSE+ 2021-27. La pagina /bandi/ carica l''elenco via JavaScript (admin-ajax),
+    quindi l''HTML da solo e'' vuoto; l''API WordPress del tipo "cem_procedure" (base "bando") risponde 200 con
+    50 voci: titolo, data, modifica, link (le date e i destinatari sono nel contenuto, non in campi separati). Attenzione:
+    il feed RSS /feed/?post_type=bando restituisce le notizie, non i bandi. Elenco misto (imprese, enti locali,
+    formazione): smistare per titolo.
+
+    '
+
+- id: calabria_europa_calendario_inviti
+  nome: Calabria Europa - Calendario avvisi 21-27 (art. 49)
+  ente: Regione Calabria
+  tipo: regione
+  territorio: CAL
+  url: https://calabriaeuropa.regione.calabria.it/programmazione-2021-2027/attuazione-del-programma/calendario-inviti/
+  modalita: browser
+  feed_url: null
+  piattaforma: wordpress
+  frequenza: mensile
+  stato: difficile
+  verificato_il: '2026-09-24'
+  note: 'Pagina "Calendario Avvisi 21-27" prevista dall''art. 49 Reg. UE 2021/1060. Si apre (200) ma il calendario
+    vero e'' in un iframe (/fe-inviti/, applicazione Angular) che senza browser e'' vuoto. Serve la modalita'' browser
+    oppure scoprire l''API che l''applicazione interroga.
+
+    '
+
+- id: calabria_regione_procedure_rss
+  nome: Regione Calabria - Bandi e avvisi (feed procedure)
+  ente: Regione Calabria
+  tipo: regione
+  territorio: CAL
+  url: https://www.regione.calabria.it/bandi-e-avvisi-di-gara/
+  modalita: rss
+  feed_url: https://www.regione.calabria.it/feed/?post_type=rc-procedure
+  piattaforma: wordpress
+  frequenza: tre_a_settimana
+  stato: attiva
+  verificato_il: '2026-09-24'
+  note: 'Sito istituzionale. Il feed del tipo "rc-procedure" (200, voci con titolo, data, categoria = dipartimento)
+    copre tutte le procedure: molte sono VIA, espropri, gare e avvisi Terna; le agevolazioni per le imprese passano
+    soprattutto da Calabria Europa e Fincalabra. La pagina HTML ha filtri per dipartimento (parametro filter_department)
+    e ordinamento. Non filtrare sulla parola "gara": la sezione si chiama "Bandi e avvisi di gara" ma contiene anche
+    avvisi pubblici.
+
+    '
+
+- id: calabria_fincalabra_bandi
+  nome: Fincalabra - Bandi aiuti alle imprese
+  ente: Fincalabra S.p.A.
+  tipo: regione
+  territorio: CAL
+  url: https://www.fincalabra.it/web/index.php/aiuti-alle-imprese/bandi
+  modalita: html
+  feed_url: null
+  piattaforma: joomla
+  frequenza: tre_a_settimana
+  stato: attiva
+  verificato_il: '2026-09-24'
+  note: 'Finanziaria regionale che gestisce le misure per le imprese (STEP Calabria, FEERI, Trasformer Calabria,
+    FUSESE, Dunamis, IN.TUR, attrazione investimenti, fondi PSR). Elenco lungo con titoli in h2; nessun RSS trovato.
+    La home (/) e'' solo un rimando a /web.
+
+    '
+
+- id: calabria_calabriaimpresa_agevolazioni
+  nome: Calabria Impresa - Agevolazioni
+  ente: Regione Calabria
+  tipo: regione
+  territorio: CAL
+  url: https://www.calabriaimpresa.eu/agevolazioni
+  modalita: html
+  feed_url: null
+  piattaforma: null
+  frequenza: tre_a_settimana
+  stato: attiva
+  verificato_il: '2026-09-24'
+  note: 'Portale regionale "Calabria Impresa" (linkato da Fincalabra come "Altri incentivi"): elenco dei bandi per
+    le imprese con "Cerca bandi" (STEP Calabria, FRI, Fondo Tecnologie STEP, FEERI, certificazione parita'' di genere).
+    Pagina leggera (68 KB), titoli in h3. Nessun RSS visto.
+
+    '
+
+- id: sicilia_regione_bandi_aperti
+  nome: Regione Siciliana - Bandi e avvisi pubblici (non scaduti)
+  ente: Regione Siciliana
+  tipo: regione
+  territorio: SIC
+  url: https://www.regione.sicilia.it/istituzioni/servizi-informativi/bandi?f%5B0%5D=expired%3A0
+  modalita: html
+  feed_url: null
+  piattaforma: drupal
+  frequenza: giornaliera
+  stato: attiva
+  verificato_il: '2026-09-24'
+  note: 'Elenco unico dei bandi di tutti i dipartimenti, gia'' filtrato sui non scaduti (expired:0); 18 voci per
+    pagina con titolo e scadenza. Filtri utili verificati: solo "Avvisi pubblici" (&f[0]=category:22&f[1]=expired:0)
+    e "Assessorato attivita'' produttive" (&f[0]=expired:0&f[1]=group:12, dove escono gli avvisi PR FESR 1.3.3 fiere
+    e "Sicilia che piace"). Molte voci sono gare, locazioni, mobilita'': smistare per titolo. Il feed /rss.xml del
+    sito e'' generale (news + qualche bando), non dedicato; /bandi/rss.xml non esiste (404).
+
+    '
+
+- id: sicilia_euroinfosicilia_bandi_aperti_rss
+  nome: EuroInfoSicilia - Bandi e avvisi aperti (feed)
+  ente: Regione Siciliana
+  tipo: regione
+  territorio: SIC
+  url: https://www.euroinfosicilia.it/bandi-e-avvisi-aperti/
+  modalita: rss
+  feed_url: https://www.euroinfosicilia.it/category/bandi/bandi-e-avvisi-aperti/feed/
+  piattaforma: wordpress
+  frequenza: giornaliera
+  stato: attiva
+  verificato_il: '2026-09-24'
+  note: 'Sito del Dipartimento Programmazione per PR FESR 21-27, FSC 21-27 e POC/PSC 14-20. Il feed della categoria
+    "Bandi e avvisi aperti" e'' pulito (solo bandi, 10 voci con data); il feed generale /feed/ e'' rumoroso (decreti
+    di liquidazione). Pagine collegate: /bandi-e-avvisi-in-scadenza/, /bandi-e-avvisi-pr-fesr-21-27/, /elenco-degli-avvisi-attivi-nellambito-del-pr-fesr-2021-2027/.
+    Elenco misto (imprese, enti locali, aree interne): smistare per titolo.
+
+    '
+
+- id: sicilia_euroinfosicilia_calendario_inviti
+  nome: EuroInfoSicilia - Calendario inviti PR FESR 21-27 (art. 49)
+  ente: Regione Siciliana
+  tipo: regione
+  territorio: SIC
+  url: https://www.euroinfosicilia.it/la-programmazione-fesr-2021-2027-in-sicilia/calendario-degli-inviti-a-presentare-proposte/
+  modalita: html
+  feed_url: null
+  piattaforma: wordpress
+  frequenza: mensile
+  stato: attiva
+  verificato_il: '2026-09-24'
+  note: 'Pagina con i documenti "Calendario inviti a presentare proposte ex art. 49.2 RDC", aggiornati circa ogni
+    quadrimestre (ultimo visto: 31/05/2026). I calendari sono allegati (PDF/Excel): osservare la comparsa di un
+    nuovo aggiornamento, poi leggere l''allegato.
+
+    '
+
+- id: sicilia_irfis_misure_agevolative_rss
+  nome: IRFIS FinSicilia - Misure agevolative (feed)
+  ente: IRFIS FinSicilia S.p.A.
+  tipo: regione
+  territorio: SIC
+  url: https://www.irfis.it/category/articoli-misure-agevolative/
+  modalita: rss
+  feed_url: https://www.irfis.it/category/articoli-misure-agevolative/feed/
+  piattaforma: wordpress
+  frequenza: tre_a_settimana
+  stato: attiva
+  verificato_il: '2026-09-24'
+  note: 'Finanziaria regionale: finanziamenti agevolati e fondo perduto (FSCA, ciclone Harry, editoria, circolante
+    commercio, poverta'' energetica). Feed di categoria pulito, 10 voci con data. CRIAS (www.crias.it) e'' un sito
+    statico con soli avvisi per albo legali/tecnici e un archivio fermo al 2018: esclusa, non aggiungere.
+
+    '
+
+- id: sardegna_regione_bandi
+  nome: Regione Sardegna - Bandi
+  ente: Regione Autonoma della Sardegna
+  tipo: regione
+  territorio: SAR
+  url: https://www.regione.sardegna.it/atti-bandi-archivi/atti-amministrativi/bandi
+  modalita: browser
+  feed_url: null
+  piattaforma: null
+  frequenza: tre_a_settimana
+  stato: difficile
+  verificato_il: '2026-09-24'
+  note: 'Nuovo sito (Next.js): la pagina si apre (200) ma l''elenco e'' una "lista filtrata" caricata dal browser
+    via GraphQL (nel __NEXT_DATA__ content e'' null). Senza browser non si vede nessun bando. Il vecchio archivio
+    old.regione.sardegna.it/servizi/cittadino/bandi/ e'' linkato ma non provato. Nessun RSS trovato; /api/bandi
+    non esiste. Il sito sardegnaprogrammazione.it (PR 21-27) e'' un''applicazione JavaScript pura, vuota senza browser:
+    calendario art. 49 non verificabile.
+
+    '
+
+- id: sardegna_sardegnaimpresa_agevolazioni
+  nome: SardegnaImpresa - Agevolazioni per le imprese
+  ente: Regione Autonoma della Sardegna
+  tipo: regione
+  territorio: SAR
+  url: https://www.sardegnaimpresa.eu/it/agevolazioni
+  modalita: html
+  feed_url: null
+  piattaforma: drupal
+  frequenza: tre_a_settimana
+  stato: attiva
+  verificato_il: '2026-09-24'
+  note: 'Portale regionale dedicato alle imprese: elenco con titolo, ordinabile per data di pubblicazione o di scadenza,
+    filtri per macrosettore (Industria/Servizi/Turismo), tipologia iniziativa (Nuova impresa / Impresa operante)
+    e spese ammissibili, tramite parametri f[0]=... nell''indirizzo. Contiene anche avvisi di Comuni e contributi
+    sportivi: smistare per titolo. Il feed /it/rss.xml risponde ma e'' rotto (link a un IP interno, voci del 2018-2020):
+    non usarlo.
+
+    '
+
+- id: sardegna_sfirs
+  nome: SFIRS - Bandi e notizie
+  ente: SFIRS S.p.A.
+  tipo: regione
+  territorio: SAR
+  url: https://www.sfirs.it/bandi/
+  modalita: rss
+  feed_url: https://www.sfirs.it/feed/
+  piattaforma: wordpress
+  frequenza: settimanale
+  stato: da_verificare
+  verificato_il: '2026-09-24'
+  note: 'Finanziaria regionale. La pagina "Bandi e gare" e'' quasi vuota (gare e selezioni); le misure per le imprese
+    (Sardinia Fintech, Fondo minibond) compaiono come notizie nel feed generale, che e'' soprattutto comunicazione
+    istituzionale. Utile solo come segnale secondario.
+
+    '
+

@@ -85,9 +85,11 @@ Requisiti di Matteo:
 
 ---
 
-## 3b. Stato del registro delle fonti (al 23/09/2026)
+## 3b. Stato del registro delle fonti (al 24/09/2026)
 
-Circa 180 voci, dopo le mappature in `docs/ricerche/`. Divise per modo di lettura:
+Il registro vive nella cartella `fonti/` (un file YAML per gruppo, formato in `fonti/README.md`) e si controlla con `python -m app.fonti.verifica`. Al 24/09 contiene **95 voci**: Regioni e Province autonome (70, comprese agenzie regionali e calendari art. 49), enti nazionali e UE (16), fondazioni (7, quasi tutte escluse perché solo per non profit), dati di contesto (2). Stati: 60 attive, 17 difficili (siti che bloccano i server o caricano tutto via JavaScript), 11 da verificare dal server, 7 escluse. Modalità: 26 feed RSS, 12 API, 45 pagine HTML, 12 da browser. Verifica automatica del 24/09 dalla sessione cloud: 77 indirizzi su 85 rispondono. Mancano Camere di Commercio e capoluoghi (prossime mappature). Dettagli in `docs/ricerche/2026-09-24_regioni_nazionali.md`.
+
+Stima complessiva a registro completo, circa 180 voci, divise per modo di lettura:
 
 | Tipo | Quante | Quali | Costo di ogni controllo |
 |---|---|---|---|
@@ -99,7 +101,7 @@ Circa 180 voci, dopo le mappature in `docs/ricerche/`. Divise per modo di lettur
 **L'osservatore non consuma token.** Scaricare una pagina e confrontarla con la versione precedente è un lavoro da script. L'IA entra solo in due momenti: quando un frammento è cambiato (smistamento con Haiku, pochi centesimi) e quando un bando nuovo va trasformato in scheda (Sonnet, qualche decina di centesimi con i PDF). **La frequenza dei controlli quindi non incide sul costo IA**: i bandi nuovi da leggere sono gli stessi, che li si scopra il giorno dopo o due settimane dopo. Incide solo sulla tempestività, e molti bandi restano aperti poche settimane (in Lombardia, "Fondo giovani agricoltori 2026" apre il 13/10 e chiude il 27/10). Per questo le frequenze restano quelle di §3; controllare ogni 10–15 giorni farebbe risparmiare solo banda, che costa nulla.
 
 **Quando rifare le mappature manuali** (sessioni di Claude Code con agenti, come quelle del 23/09):
-1. **Appena il VPS è attivo** (fatto in parte il 24/09: incentivi.gov.it, Milano e RNA raggiungibili; Basilicata no): completare con i 5 Comuni che rifiutano i server e gli 8 siti JavaScript.
+1. **Appena il VPS è attivo** (fatto in parte il 24/09: incentivi.gov.it, Milano e RNA raggiungibili; Basilicata no, ma il nuovo portalebandi.regione.basilicata.it risponde con API): completare con i 5 Comuni che rifiutano i server, gli 8 siti JavaScript e le voci `difficile` e `da_verificare` del registro.
 2. **A fine Fase 0**: verifica automatica di tutti i 180 indirizzi (la fa il sistema, non l'IA).
 3. **Ogni sei mesi**, a gennaio (bandi annuali delle Camere) e a luglio: rimappatura con gli agenti per fonti nuove e siti rifatti.
 4. **Quando la plancia lo chiede**: se in un mese più del 10% delle fonti segnala "struttura cambiata" o "silenzio sospetto".

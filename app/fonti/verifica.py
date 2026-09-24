@@ -39,7 +39,11 @@ def controlla(fonte: Fonte, client: httpx.Client) -> Esito:
         risposta = client.get(indirizzo)
         secondi = time.monotonic() - inizio
         ok = risposta.status_code == 200 and len(risposta.content) > 0
-        return Esito(fonte, ok, risposta.status_code, secondi, len(risposta.content), str(risposta.url))
+        nota = ""
+        if risposta.status_code == 405:
+            # Il sito risponde ma questa API accetta solo richieste POST: per la raggiungibilita' basta.
+            ok, nota = True, "risponde, ma vuole una richiesta POST (vedi note della fonte)"
+        return Esito(fonte, ok, risposta.status_code, secondi, len(risposta.content), str(risposta.url), errore=nota)
     except httpx.HTTPError as exc:
         secondi = time.monotonic() - inizio
         return Esito(fonte, False, None, secondi, 0, indirizzo, errore=type(exc).__name__ + ": " + str(exc)[:120])
