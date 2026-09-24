@@ -58,3 +58,115 @@ def test_api_plancia_risponde():
     assert c.get("/api/novita/settimane/2026-W39", auth=auth).status_code == 200
     assert c.get("/api/novita/settimane/x", auth=auth).status_code == 400
     assert c.get("/api/fonti/non_esiste", auth=auth).status_code == 404
+    assert "totale" in c.get("/api/annunci?esito=rilevante", auth=auth).json()
+    assert "totale" in c.get("/api/annunci?esito=non_smistato", auth=auth).json()
+    assert c.get("/api/allegati/999999999/file", auth=auth).status_code == 404
+
+
+# --- allegati e smistamento con un database finto (senza Postgres): percorsi, autenticazione, validazione ---
+
+class _CursoreFinto:
+    def __init__(self, righe):
+        self.righe, self.eseguite = list(righe), []
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, *a):
+        return False
+
+    def execute(self, sql, valori=None):
+        self.eseguite.append((sql, valori))
+
+    def fetchone(self):
+        return self.righe.pop(0) if self.righe else None
+
+
+class _ConnessioneFinta:
+    def __init__(self, righe):
+        self.cursore = _CursoreFinto(righe)
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, *a):
+        return False
+
+    def cursor(self):
+        return self.cursore
+
+    def commit(self):
+        pass
+
+
+@pytest.fixture
+def client_plancia(monkeypatch, tmp_path):
+    from fastapi.testclient import TestClient
+
+    from app.main import app
+
+    monkeypatch.setenv("BASIC_AUTH_USER", "prova")
+    monkeypatch.setenv("BASIC_AUTH_PASSWORD", "segreta")
+    monkeypatch.setenv("ALLEGATI_CARTELLA", str(tmp_path / "allegati"))
+    (tmp_path / "allegati" / "7").mkdir(parents=True)
+    (tmp_path / "allegati" / "7" / "abcdef123456_bando.pdf").write_bytes(b"%PDF-1.4 finto")
+    (tmp_path / "allegati" / "7" / "abcdef123456_faq.html").write_text("<script>alert(1)</script>FAQ")
+    (tmp_path / "fuori.txt").write_text("segreto")
+    return TestClient(app), ("prova", "segreta")
+
+
+def _db(monkeypatch, *righe):
+    from app.plancia import api
+
+    conn = _ConnessioneFinta(righe)
+    monkeypatch.setattr(api, "connetti", lambda: conn)
+    return conn
+
+
+def test_percorso_sicuro_resta_nella_cartella(tmp_path):
+    from app.plancia.api import percorso_sicuro
+
+    cartella = tmp_path / "allegati"
+    (cartella / "7").mkdir(parents=True)
+    (cartella / "7" / "a.pdf").write_bytes(b"x")
+    (tmp_path / "fuori.txt").write_text("segreto")
+    (cartella / "7" / "collegamento.pdf").symlink_to(tmp_path / "fuori.txt")
+    assert percorso_sicuro(cartella, "7/a.pdf") == cartella / "7" / "a.pdf"
+    for cattivo in ("../fuori.txt", "7/../../fuori.txt", str(tmp_path / "fuori.txt"), "7", "", None, "7/collegamento.pdf"):
+        assert percorso_sicuro(cartella, cattivo) is None, cattivo
+
+
+def test_file_allegato_servito_con_autenticazione(client_plancia, monkeypatch):
+    c, auth = client_plancia
+    assert c.get("/api/allegati/1/file").status_code == 401
+    _db(monkeypatch, {"tipo": "pdf", "percorso_locale": "7/abcdef123456_bando.pdf"})
+    r = c.get("/api/allegati/1/file", auth=auth)
+    assert r.status_code == 200 and r.content == b"%PDF-1.4 finto"
+    assert r.headers["content-type"] == "application/pdf" and 'filename="bando.pdf"' in r.headers["content-disposition"]
+
+
+def test_file_allegato_faq_in_sandbox(client_plancia, monkeypatch):
+    c, auth = client_plancia
+    _db(monkeypatch, {"tipo": "faq", "percorso_locale": "7/abcdef123456_faq.html"})
+    r = c.get("/api/allegati/2/file", auth=auth)
+    assert r.status_code == 200 and r.headers["content-security-policy"] == "sandbox"
+
+
+def test_file_allegato_rifiuta_percorsi_fuori_cartella(client_plancia, monkeypatch):
+    c, auth = client_plancia
+    _db(monkeypatch, {"tipo": "pdf", "percorso_locale": "../fuori.txt"})
+    assert c.get("/api/allegati/3/file", auth=auth).status_code == 404
+    _db(monkeypatch)   # allegato inesistente
+    assert c.get("/api/allegati/4/file", auth=auth).status_code == 404
+
+
+def test_correzione_smistamento(client_plancia, monkeypatch):
+    c, auth = client_plancia
+    assert c.post("/api/annunci/1/smistamento", json={"esito": "forse"}, auth=auth).status_code == 422
+    assert c.get("/api/annunci?esito=boh", auth=auth).status_code == 422
+    conn = _db(monkeypatch, {"?column?": 1},
+               {"esito": "rilevante", "deciso_da": "matteo", "proposta_esito": "non_rilevante", "proposta_da": "regole"})
+    r = c.post("/api/annunci/1/smistamento", json={"esito": "rilevante"}, auth=auth)
+    assert r.status_code == 200 and r.json()["deciso_da"] == "matteo" and r.json()["proposta_da"] == "regole"
+    sql, valori = conn.cursore.eseguite[-1]
+    assert "'matteo'" in sql and "proposta_esito" in sql and valori == (1, "rilevante")

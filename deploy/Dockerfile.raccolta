@@ -14,8 +14,10 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY app ./app
 COPY fonti ./fonti
 
-# Il browser non gira come root.
-RUN useradd --system --create-home appuser && chown -R appuser /srv/app
+# Il browser non gira come root. Numero utente fisso (10001, come nel Dockerfile dell'app) e cartella
+# degli allegati gia' sua: Docker copia proprietario e permessi nel volume quando lo crea.
+RUN useradd --system --create-home --uid 10001 appuser && chown -R appuser /srv/app \
+    && mkdir -p /srv/allegati && chown appuser /srv/allegati
 USER appuser
 
 CMD ["python", "-m", "app.raccolta.demone"]

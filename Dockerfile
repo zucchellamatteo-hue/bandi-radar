@@ -21,8 +21,10 @@ COPY app ./app
 COPY fonti ./fonti
 COPY --from=plancia /plancia/dist ./plancia/dist
 
-# L'applicazione non gira come root.
-RUN useradd --system --no-create-home appuser
+# L'applicazione non gira come root. Stesso numero utente (10001) della raccolta: il volume degli
+# allegati, creato dall'uno o dall'altro servizio, appartiene cosi' allo stesso utente.
+RUN useradd --system --no-create-home --uid 10001 appuser \
+    && mkdir -p /srv/allegati && chown appuser /srv/allegati
 USER appuser
 
 EXPOSE 8000
