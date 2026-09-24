@@ -439,16 +439,18 @@
   feed_url: https://www.provincia.tn.it/opendata/api/content/search/classes%20%5Bpublic_service%5D%20and%20q%20%3D%20%27bando%27%20limit%2050
   piattaforma: opencity
   frequenza: tre_a_settimana
-  stato: attiva
+  stato: da_verificare
   verificato_il: '2026-09-24'
-  note: 'Il sito è OpenCity/OpenPA: la pagina /Servizi è riempita via JavaScript ma l''API /opendata/api/content/search/
-    risponde JSON senza chiave (query nel percorso, es. "classes [public_service] and q = ''bando'' limit 50": 139
+  note: >
+    ROBOTS.TXT VIETA /opendata/api (verificato 24/09): la raccolta la salta. Alternative: i dataset CSV dei
+    calendari o la pagina /Servizi con browser. Il sito è OpenCity/OpenPA: la pagina /Servizi è riempita via JavaScript ma l'API /opendata/api/content/search/
+    risponde JSON senza chiave (query nel percorso, es. "classes [public_service] and q = 'bando' limit 50": 139
     risultati; senza q: 1213 servizi). Ogni risultato ha metadata.name, modified, published e link ("read/<id>"
-    = /opendata/api/content/read/<id>); la pagina web è /content/view/full/<mainNodeId>. Provare anche q = ''contributo''
-    e ''avviso''. Lenta (>25 s a volte): usare timeout alto. /Servizi/Bandi risponde 410. La pagina /Argomenti/Focus/Aiuti-alle-imprese
+    = /opendata/api/content/read/<id>); la pagina web è /content/view/full/<mainNodeId>. Provare anche q = 'contributo'
+    e 'avviso'. Lenta (>25 s a volte): usare timeout alto. /Servizi/Bandi risponde 410. La pagina /Argomenti/Focus/Aiuti-alle-imprese
     (200) linka solo 3 misure.
 
-    '
+    
 
 - id: trento_fesr_calendario_avvisi
   nome: Provincia autonoma di Trento - FESR 2021-2027, Calendario degli avvisi (art. 49, CSV)
