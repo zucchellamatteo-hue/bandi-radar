@@ -200,7 +200,7 @@ def catalogo(
             SELECT a.id, a.fonte_id, f.nome AS fonte, f.ente, f.tipo, f.territorio, a.url, a.titolo, a.riassunto,
                    a.pubblicato_il, a.trovato_il, data_sicura({SCADENZA_SQL}) AS scadenza,
                    s.esito AS smistamento, s.deciso_da AS smistamento_da, s.motivo AS smistamento_motivo,
-                   (SELECT count(*) FROM allegati al WHERE al.annuncio_id = a.id AND al.errore IS NULL) AS n_allegati
+                   (SELECT count(*) FROM allegati al WHERE al.annuncio_id = a.id AND al.errore IS NULL AND al.tipo <> 'pagina') AS n_allegati
             {unione} {dove}
             ORDER BY coalesce(a.pubblicato_il, a.trovato_il) DESC, a.id DESC
             LIMIT %s OFFSET %s
@@ -296,7 +296,7 @@ def file_allegato(allegato_id: int) -> FileResponse:
     nome = percorso.name.split("_", 1)[-1]   # sul disco: <impronta>_<nome>
     # Nessuno script delle pagine salvate deve girare dentro la plancia: le FAQ HTML si aprono "in una scatola chiusa".
     intestazioni = {"X-Content-Type-Options": "nosniff"}
-    if riga["tipo"] == "faq":
+    if riga["tipo"] in ("faq", "pagina"):
         intestazioni["Content-Security-Policy"] = "sandbox"
         return FileResponse(percorso, media_type="text/html; charset=utf-8", headers=intestazioni)
     if riga["tipo"] == "pdf":

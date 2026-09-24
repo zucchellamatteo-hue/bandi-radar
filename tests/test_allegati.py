@@ -134,6 +134,9 @@ def test_elabora_annuncio(tmp_path, monkeypatch):
                                  Pausa(client, minima=0, dormi=dormite.append))
     per_url = {r.url.rsplit("/", 1)[-1]: r for r in risultati}
 
+    copia = risultati[0]   # prima riga: la copia della pagina dell'annuncio
+    assert copia.tipo == "pagina" and copia.url == "https://ente.it/bandi/voucher" and "Tutto in un file" in copia.testo_estratto
+
     bando = per_url["bando.pdf"]
     assert bando.errore is None and bando.dimensione == len(PDF) and len(bando.impronta) == 64
     assert bando.percorso_locale == f"7/{bando.impronta[:12]}_bando.pdf"
@@ -151,7 +154,7 @@ def test_elabora_annuncio(tmp_path, monkeypatch):
     assert "/riservato/modulo.docx" not in client.richieste          # robots.txt rispettato: mai chiesto
     assert dormite and max(dormite) > 4                               # Crawl-delay di 5 secondi rispettato
     assert sorted(p.name for p in (tmp_path / "7").iterdir()) == sorted(
-        [bando.percorso_locale.split("/")[1], faq_r.percorso_locale.split("/")[1]])   # nessun file parziale
+        r.percorso_locale.split("/")[1] for r in (copia, bando, faq_r))   # nessun file parziale
 
 
 def test_limite_di_file_per_annuncio(tmp_path, monkeypatch):
@@ -161,7 +164,7 @@ def test_limite_di_file_per_annuncio(tmp_path, monkeypatch):
                            **{f"/d/{i}.pdf": httpx.Response(200, content=pdf_con_testo(f"doc {i}")) for i in range(4)}})
     risultati = elabora_annuncio(client, 1, "https://ente.it/b", tmp_path, Pausa(client, minima=0, dormi=lambda s: None),
                                  gia_scaricati=1)
-    assert [r.errore is None for r in risultati] == [True, False, False, False]
+    assert [r.errore is None for r in risultati] == [True, True, False, False, False]   # pagina + 1 file
     assert "/d/1.pdf" not in client.richieste
 
 
@@ -178,4 +181,4 @@ def test_ignora_robots_vale_solo_per_il_sito_della_fonte(tmp_path):
     client = httpx.Client(transport=httpx.MockTransport(risponde))
     risultati = elabora_annuncio(client, 2, "https://ente.it/b", tmp_path, Pausa(client, minima=0, dormi=lambda s: None),
                                  ignora_robots=True)
-    assert [r.errore for r in risultati] == [None, "robots.txt del sito vieta il file"]
+    assert [r.errore for r in risultati] == [None, None, "robots.txt del sito vieta il file"]   # pagina, a.pdf, b.pdf

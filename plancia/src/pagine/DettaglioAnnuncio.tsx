@@ -66,7 +66,7 @@ function TabellaAllegati({ allegati }: { allegati: Allegato[] }) {
         <tr key={a.id}>
           <td><a href={`/api/allegati/${a.id}/file`} target="_blank" rel="noreferrer">{a.nome}</a>
             <div className="piccolo"><a href={a.url} target="_blank" rel="noreferrer">originale ↗</a></div></td>
-          <td>{a.tipo === "faq" ? "FAQ" : a.tipo.toUpperCase()}</td>
+          <td>{a.tipo === "faq" ? "FAQ" : a.tipo === "pagina" ? "pagina web" : a.tipo.toUpperCase()}</td>
           <td>{dimensione(a.dimensione)}</td>
           <td>{data(a.scaricato_il, true)}</td>
           <td className="nascondi-mobile piccolo">{a.caratteri_testo ? `${a.caratteri_testo.toLocaleString("it-IT")} caratteri` : "nessun testo (scansione o formato non letto)"}</td>

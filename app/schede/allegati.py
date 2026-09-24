@@ -5,7 +5,8 @@ Per ogni annuncio con smistamento "rilevante" e non ancora cercato (o cambiato d
   2. trova i link a PDF, DOC, DOCX, XLS, XLSX, ODT, ZIP, P7M e le pagine di FAQ (link con testo "FAQ",
      "domande frequenti");
   3. li scarica in ALLEGATI_CARTELLA/<id annuncio>/, con limiti di dimensione per file e per annuncio;
-  4. calcola l'impronta (sha256), estrae il testo (PDF, DOCX, pagine FAQ) e salva una riga in `allegati`.
+  4. calcola l'impronta (sha256), estrae il testo (PDF, DOCX, pagine FAQ) e salva una riga in `allegati`;
+     conserva anche una copia della pagina stessa (tipo 'pagina'), il cui testo servira' alla scheda.
 I file non scaricati (troppo grandi, vietati da robots.txt, errori) hanno comunque una riga, con il motivo.
 
 Uso:
@@ -250,9 +251,29 @@ def estrai_testo(percorso: Path, tipo: str) -> str | None:
             testo = _SPAZI.sub(" ", re.sub(r"<[^>]+>", " ", xml.replace("</w:p>", "\n"))).strip() or None
         except (zipfile.BadZipFile, KeyError):
             testo = None
-    elif tipo == "faq":
+    elif tipo in ("faq", "pagina"):
         testo = testo_html(dati.decode("utf-8", "replace"))
     return testo[:MASSIMO_TESTO] if testo else None
+
+
+def _copia_pagina(risposta: httpx.Response, url: str, cartella: Path, cartella_annuncio: Path) -> Risultato:
+    """Copia della pagina dell'annuncio (tipo 'pagina'): il suo testo servira' alla scheda, e resta
+    leggibile anche se l'ente cambia o toglie la pagina. Si aggiorna a ogni ricerca, fuori dai limiti."""
+    r = Risultato(url, "Pagina dell'annuncio (copia)", "pagina")
+    temporaneo = cartella_annuncio / f".in_corso_{os.getpid()}"
+    try:
+        r.dimensione, r.impronta = _scrivi([risposta.content], temporaneo, MASSIMO_FILE)
+    except TroppoGrande as exc:
+        r.errore = f"troppo grande: {exc}"
+        return r
+    finale = cartella_annuncio / f"{r.impronta[:12]}_pagina.html"
+    for vecchia in cartella_annuncio.glob("*_pagina.html"):   # si tiene solo l'ultima copia
+        if vecchia != finale:
+            vecchia.unlink()
+    temporaneo.replace(finale)
+    r.percorso_locale = str(finale.relative_to(cartella))
+    r.testo_estratto = (testo_html(risposta.text) or "")[:MASSIMO_TESTO] or None
+    return r
 
 
 # --- un annuncio --------------------------------------------------------------------------------
@@ -273,6 +294,8 @@ def elabora_annuncio(client: httpx.Client, annuncio_id: int, url_annuncio: str, 
     def ignora(url: str) -> bool:
         return ignora_robots and urlsplit(url).netloc == sito
 
+    risultati: list[Risultato] = []
+    cartella_annuncio = cartella / str(annuncio_id)
     tipo_pagina = tipo_da_url(pagina)
     if tipo_pagina:   # l'annuncio punta direttamente a un documento
         candidati = [Candidato(pagina, _nome_da_url(pagina), tipo_pagina)]
@@ -281,10 +304,9 @@ def elabora_annuncio(client: httpx.Client, annuncio_id: int, url_annuncio: str, 
         risposta = scarica(client, pagina, accept="text/html,application/xhtml+xml", ignora_robots=ignora(pagina))
         risposta.raise_for_status()
         candidati = trova_allegati(risposta.text, str(risposta.url))
+        risultati.append(_copia_pagina(risposta, pagina, cartella, cartella_annuncio))
     candidati = [c for c in candidati if c.url not in gia_presenti]
 
-    risultati: list[Risultato] = []
-    cartella_annuncio = cartella / str(annuncio_id)
     usati, contati = 0, gia_scaricati
     for c in candidati:
         r = Risultato(c.url, c.nome[:300], c.tipo)
@@ -350,7 +372,7 @@ def annunci_da_elaborare(conn, annuncio_id: int | None, limite: int) -> list[dic
 
 def gia_scaricati(conn, annuncio_id: int) -> set[str]:
     with conn.cursor() as cur:
-        cur.execute("SELECT url FROM allegati WHERE annuncio_id = %s AND errore IS NULL", (annuncio_id,))
+        cur.execute("SELECT url FROM allegati WHERE annuncio_id = %s AND errore IS NULL AND tipo <> 'pagina'", (annuncio_id,))
         return {r["url"] for r in cur.fetchall()}
 
 

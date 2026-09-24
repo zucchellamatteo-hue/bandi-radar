@@ -41,7 +41,7 @@ CREATE TABLE IF NOT EXISTS allegati (
     bando_id        bigint REFERENCES bandi(id) ON DELETE SET NULL,
     url             text NOT NULL,
     nome            text NOT NULL,                     -- nome leggibile (testo del link o nome del file)
-    tipo            text NOT NULL,                     -- pdf | doc | docx | xls | xlsx | odt | zip | p7m | faq
+    tipo            text NOT NULL,                     -- pdf | doc | docx | xls | xlsx | odt | zip | p7m | faq | pagina (copia della pagina dell'annuncio)
     dimensione      bigint,                            -- byte
     impronta        text,                              -- sha256 del file: cambia se l'ente sostituisce il documento
     percorso_locale text,                              -- relativo alla cartella degli allegati (ALLEGATI_CARTELLA)
