@@ -16,7 +16,7 @@ import yaml
 CARTELLA_FONTI = Path(__file__).resolve().parents[2] / "fonti"
 
 TIPI = {"ue", "nazionale", "regione", "camera", "capoluogo", "provincia", "fondazione", "contesto"}
-MODALITA = {"html", "rss", "api", "browser"}
+MODALITA = {"html", "rss", "api", "browser", "sitemap"}
 FREQUENZE = {"giornaliera", "tre_a_settimana", "settimanale", "quindicinale", "mensile"}
 STATI = {"attiva", "da_verificare", "difficile", "esclusa"}
 

@@ -1,4 +1,4 @@
-"""Lettori: uno per modalita' (rss, api, html). La modalita' 'browser' arriva piu' avanti."""
+"""Lettori: uno per modalita' (rss, api, html, browser, sitemap)."""
 
 from __future__ import annotations
 
@@ -13,6 +13,6 @@ Lettore = Callable[[Fonte, httpx.Client], Lettura]
 
 
 def lettore_per(fonte: Fonte) -> Lettore | None:
-    from app.raccolta.lettori import api, html, rss
+    from app.raccolta.lettori import api, browser, html, rss, sitemap
 
-    return {"rss": rss.leggi, "api": api.leggi, "html": html.leggi}.get(fonte.modalita)
+    return {"rss": rss.leggi, "api": api.leggi, "html": html.leggi, "browser": browser.leggi, "sitemap": sitemap.leggi}.get(fonte.modalita)

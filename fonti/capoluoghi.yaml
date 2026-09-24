@@ -22,7 +22,7 @@
   tipo: capoluogo
   territorio: FVG
   url: https://www.comune.gorizia.it/sitemap.xml
-  modalita: browser
+  modalita: sitemap
   piattaforma: piattaforma_regionale_fvg
   frequenza: quindicinale
   stato: difficile
@@ -659,7 +659,7 @@
   tipo: capoluogo
   territorio: VEN
   url: https://www.comune.padova.it/sitemap.xml
-  modalita: browser
+  modalita: sitemap
   feed_url: null
   piattaforma: null
   frequenza: settimanale
@@ -797,7 +797,7 @@
   tipo: capoluogo
   territorio: EMR
   url: https://www.comune.bologna.it/sitemap.xml
-  modalita: browser
+  modalita: sitemap
   feed_url: null
   piattaforma: myportal_lepida
   frequenza: settimanale
@@ -994,7 +994,7 @@
   tipo: provincia
   territorio: EMR
   url: https://portale.cittametropolitana.bo.it/sitemap.xml
-  modalita: browser
+  modalita: sitemap
   feed_url: null
   piattaforma: myportal_lepida
   frequenza: quindicinale

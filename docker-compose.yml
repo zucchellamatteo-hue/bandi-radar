@@ -53,9 +53,12 @@ services:
   # Raccolta (Fase 1): ogni ora controlla le fonti in scadenza e salva gli annunci nel database.
   # Stessa immagine dell'app, comando diverso. Log: docker compose logs -f raccolta
   raccolta:
-    build: .
+    build:
+      context: .
+      dockerfile: deploy/Dockerfile.raccolta   # immagine con Chromium per le fonti JavaScript
     restart: unless-stopped
     command: sh -c "python -m app.db.migrazioni && python -m app.raccolta.demone"
+    shm_size: 512m                              # Chromium ne ha bisogno
     environment:
       PGHOST: db
       PGPORT: "5432"

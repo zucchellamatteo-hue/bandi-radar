@@ -20,7 +20,7 @@ Qui vive l'elenco delle fonti che Bandi Radar controlla. **Aggiungere una fonte 
   tipo: regione                        # ue | nazionale | regione | camera | capoluogo | provincia | fondazione | contesto
   territorio: LOM                      # sigla regione (LOM, FVG, ...), ITA per nazionali, UE per europee
   url: https://www.bandi.regione.lombardia.it/...   # pagina elenco da osservare (solo se aperta davvero)
-  modalita: html                       # html | rss | api | browser (elenco caricato via JavaScript)
+  modalita: html                       # html | rss | api | browser (elenco caricato via JavaScript) | sitemap (si leggono le pagine nuove dalla sitemap XML)
   feed_url:                            # indirizzo RSS o API, se modalita e' rss o api
   piattaforma:                         # famiglia del sito, se riconosciuta: municipium, wordpress_design_comuni, drupal, plone, liferay, opencity, ...
   frequenza: giornaliera               # giornaliera | tre_a_settimana | settimanale | quindicinale | mensile
