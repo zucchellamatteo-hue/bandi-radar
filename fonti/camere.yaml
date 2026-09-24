@@ -1,0 +1,1540 @@
+# Camere di Commercio e Unioni regionali. Formato in README.md.
+# Mappatura del 24/09/2026 con lettura diretta: docs/ricerche/2026-09-24_camere_capoluoghi.md
+
+- id: cciaa_torino_finanziamenti
+  nome: Camera di commercio di Torino - Finanziamenti, bandi e contributi
+  ente: Camera di commercio di Torino
+  tipo: camera
+  territorio: PIE
+  url: https://www.to.camcom.it/finanziamenti-bandi-e-contributi
+  modalita: html
+  feed_url: null
+  piattaforma: drupal
+  frequenza: settimanale
+  stato: attiva
+  verificato_il: '2026-09-24'
+  note: 'Pagina "hub" testuale (Drupal 9), non un elenco strutturato: paragrafi con titolo per ogni misura, camerale
+    e non (Unioncamere UNI/PdR 192, Transizione 5.0, Simest, Basket Bond Piemonte, Voucher digitalizzazione PMI
+    2026, voucher cloud/cyber MIMIT...). Da osservare il testo intero e passare all''IA i paragrafi nuovi. Pagine
+    collegate: /contributi (bandi formazione e orientamento), /bandi-e-incentivi-il-turismo (turismo), /contributi-promozione-economica.
+    Nessun RSS (/rss.xml risponde 404). Non filtrare "Bandi di gara" (/bandi-di-gara sono appalti, da ignorare).
+
+    '
+
+- id: cciaa_cuneo_bandi
+  nome: Camera di commercio di Cuneo - Contributi a favore delle imprese
+  ente: Camera di commercio di Cuneo
+  tipo: camera
+  territorio: PIE
+  url: https://www.cn.camcom.it/bandi
+  modalita: html
+  feed_url: null
+  piattaforma: drupal
+  frequenza: settimanale
+  stato: attiva
+  verificato_il: '2026-09-24'
+  note: 'Pagina "Contributi a favore delle imprese" (Drupal): elenca i bandi camerali con codice, es. "BANDO DIGITAL
+    MARKETING AI - ANNO 2026 (codice 2607)", "BANDO ESG E TRANSIZIONE ENERGETICA - ANNO 2026 (2606)", "AI MATCH
+    CUNEO 2026 (2605)". Pagina pesante (~500 KB) perché contiene anche l''archivio degli anni passati: osservare
+    solo i titoli/link nuovi. Utile anche la pagina riepilogo /bandi-camerali-2026-scadenze-partecipazione (cambia
+    ogni anno) e il "focus" /focus/finanziamenti-contributi. Il feed /rss.xml esiste (200) ma è generico (news,
+    verbali di Giunta, comunicazioni): non serve per i bandi.
+
+    '
+
+- id: cciaa_alessandria_asti_bandi
+  nome: Camera di Commercio di Alessandria-Asti - Bandi e contributi
+  ente: Camera di Commercio di Alessandria-Asti
+  tipo: camera
+  territorio: PIE
+  url: https://www.aa.camcom.it/bandi
+  modalita: html
+  feed_url: null
+  piattaforma: drupal
+  frequenza: settimanale
+  stato: attiva
+  verificato_il: '2026-09-24'
+  note: 'Elenco Drupal impaginato (5 per pagina, ?page=1...), schede /bandi/<slug>: al 24/09/2026 la prima pagina
+    mostra i bandi 2025 (IA e cybersicurezza, eventi fieristici, sostenibilità, PCTO, Ospitalità Italiana); i bandi
+    2026 a regia regionale (Voucher digitalizzazione PMI 2026) compaiono nelle /notizie e sul sito di Unioncamere
+    Piemonte. Osservare la prima pagina. Il feed /rss.xml (200) è generico e pieno di "Prenotazione appuntamento":
+    inutile. Il vecchio dominio al.camcom.it non è più raggiungibile (certificato debole / rifiuto).
+
+    '
+
+- id: cciaa_monte_rosa_laghi_bandi
+  nome: Camera di Commercio Monte Rosa Laghi Alto Piemonte (Biella, Vercelli, Novara, VCO) - Bandi e contributi
+    camerali
+  ente: Camera di Commercio Monte Rosa Laghi Alto Piemonte
+  tipo: camera
+  territorio: PIE
+  url: https://www.pno.camcom.it/promozione/bandi
+  modalita: html
+  feed_url: null
+  piattaforma: drupal
+  frequenza: settimanale
+  stato: attiva
+  verificato_il: '2026-09-24'
+  note: 'Unica Camera per Biella, Vercelli, Novara e Verbano-Cusio-Ossola (accorpamento 2020): copre le due voci
+    "Biella e Vercelli" e "Novara e VCO" dell''elenco. www.bv.camcom.gov.it reindirizza qui; www.no.camcom.it ha
+    un certificato non valido. Pagina Drupal con elenco dei bandi aperti (Internazionalizzazione 2026, Formazione-lavoro
+    2026, Transizione digitale 2025, Transizione ecologica...) e sotto-pagina /promozione/bandi/bandi-chiusi. I
+    contributi PID stanno in /digitale/pid/contributi-innovazione. Feed /rss.xml (200) generico e vecchio (2022):
+    inutile.
+
+    '
+
+- id: unioncamere_piemonte_bandi
+  nome: Unioncamere Piemonte - Bandi per imprese (Regione + Camere piemontesi)
+  ente: Unioncamere Piemonte
+  tipo: camera
+  territorio: PIE
+  url: https://pie.camcom.it/bandi-per-imprese
+  modalita: html
+  feed_url: null
+  piattaforma: drupal
+  frequenza: settimanale
+  stato: attiva
+  verificato_il: '2026-09-24'
+  note: 'Elenco Drupal 9 dei bandi gestiti da Unioncamere Piemonte per conto della Regione e delle Camere: Voucher
+    digitalizzazione PMI 2026 (FESR), Rinnovo flotte, Contributi fiere imprese artigiane, Voucher certificazioni
+    PMI. È qui che stanno i bandi "Regione + Camere" piemontesi. Usare l''indirizzo senza www: www.pie.camcom.it
+    ha un certificato TLS che non copre quel nome. Feed /rss.xml (200) generico (notizie ed eventi): non serve.
+
+    '
+
+- id: chambre_valdotaine_bandi
+  nome: Chambre valdôtaine - Bandi e avvisi della Chambre e della sua gestione
+  ente: Chambre valdôtaine des entreprises et des activités libérales
+  tipo: camera
+  territorio: VDA
+  url: https://www.ao.camcom.it/it/far-crescere-l-impresa/bandi-contributi-agevolazioni/bandi-avvisi-chambre-valdotaine-sua-gestione
+  modalita: html
+  feed_url: null
+  piattaforma: drupal
+  frequenza: settimanale
+  stato: attiva
+  verificato_il: '2026-09-24'
+  note: 'Pagina Drupal con i bandi e avvisi camerali: Voucher Doppia Transizione 2026, Voucher formazione scuola-lavoro,
+    avvisi partecipazione a fiere (Terra Madre, Artigiano in Fiera). Pagina madre /it/far-crescere-l-impresa/bandi-contributi-agevolazioni
+    rimanda anche a VDA Innovation e imprese.regione.vda.it (bandi regionali, da coprire con la voce Regione). Feed
+    /it/rss.xml (200) generico con prenotazioni appuntamenti: inutile.
+
+    '
+
+- id: cciaa_genova_finanziamenti
+  nome: Camera di Commercio di Genova - Finanziamenti e contributi per l'impresa
+  ente: Camera di Commercio di Genova
+  tipo: camera
+  territorio: LIG
+  url: https://www.ge.camcom.gov.it/it/gestisci/finanziamenti-e-contributi-per-limpresa
+  modalita: html
+  feed_url: null
+  piattaforma: plone
+  frequenza: settimanale
+  stato: attiva
+  verificato_il: '2026-09-24'
+  note: 'Sito Plone. Non esiste un elenco unico dei bandi camerali: questa pagina-cartella raccoglie le misure (Contributi
+    transizione digitale-ecologica 2026 = Bando PID 2026-2027, Green Tour, Nuova Sabatini, fondi di garanzia, FESR...).
+    I bandi PID stanno in /it/innovazione/pid-punto-impresa-digitale/finanziamenti-innovazione-1. In alternativa
+    osservare la ricerca Plone ordinata per data: /it/@@search?SearchableText=bando+contributi&sort_on=Date&sort_order=reverse
+    (200, HTML). Il link "feed RSS" della ricerca (/it/search_rss) risponde 404. La sezione /it/elementi-homepage/avvisi
+    contiene avvisi amministrativi, non bandi.
+
+    '
+
+- id: cciaa_riviere_liguria_contributi
+  nome: Camera di Commercio Riviere di Liguria (Imperia, La Spezia, Savona) - Contributi Camera di commercio
+  ente: Camera di Commercio Riviere di Liguria
+  tipo: camera
+  territorio: LIG
+  url: https://www.rivlig.camcom.gov.it/contributi-alle-imprese/contributi-camera-di-commercio
+  modalita: html
+  feed_url: null
+  piattaforma: drupal
+  frequenza: settimanale
+  stato: attiva
+  verificato_il: '2026-09-24'
+  note: 'Pagina Drupal con le sotto-pagine dei contributi camerali: al 24/09/2026 soprattutto indennizzi per eventi
+    calamitosi (2019-2025) e il bando ENTROTERRA (nuove attività nei comuni non costieri); i voucher (es. avvio
+    impresa) compaiono nelle /notizie. Pagina madre /contributi-alle-imprese; sotto-pagina /contributi-alle-imprese/agevolazioni-e-incentivi-le-imprese-promossi-da-altri-enti-avvisi
+    per le misure di altri enti. Feed /rss.xml (200) contiene solo prenotazioni appuntamenti: inutile.
+
+    '
+
+- id: cciaa_milano_monza_brianza_lodi_bandi
+  nome: Camera di commercio di Milano Monza Brianza Lodi - Bandi
+  ente: Camera di commercio di Milano Monza Brianza Lodi
+  tipo: camera
+  territorio: LOM
+  url: null
+  modalita: browser
+  feed_url: null
+  piattaforma: null
+  frequenza: giornaliera
+  stato: difficile
+  verificato_il: '2026-09-24'
+  note: 'Il sito www.milomb.camcom.it è protetto da Imperva/Incapsula: ogni richiesta dal server (anche con User-Agent
+    da browser) riceve 200 con una pagina di 200-800 byte che carica solo lo script di verifica (/_Incapsula_Resource...),
+    nessun contenuto. Tentati: /, /it/, /bandi, /bandi-aperti; anche WebFetch torna vuoto. Serve un browser senza
+    interfaccia (e forse comunque verrà bloccato) oppure osservare i bandi milanesi tramite Unioncamere Lombardia
+    (bandi di sistema: Voucher AI, Doppia transizione, Export su misura, SI4.0, fiere).
+
+    '
+
+- id: cciaa_bergamo_bandi
+  nome: Camera di commercio di Bergamo - Bandi e contributi
+  ente: Camera di commercio di Bergamo
+  tipo: camera
+  territorio: LOM
+  url: https://www.bg.camcom.it/bandi
+  modalita: html
+  feed_url: null
+  piattaforma: drupal
+  frequenza: settimanale
+  stato: attiva
+  verificato_il: '2026-09-24'
+  note: 'Elenco Drupal dei bandi aperti, schede /bandi/<slug> (al 24/09/2026: Accesso alla finanza 2026, SI4.0 2026,
+    Contributi FESR fiere internazionali in Lombardia 2° sportello, Voucher Doppia Transizione Misura A 2026). Il
+    feed /rss.xml (200) è quello della home (contenuti "in evidenza", misto video/news) e contiene alcune schede
+    /bandi/ ma non tutte: si può usare come complemento filtrando i link che contengono /bandi/, non come fonte
+    unica.
+
+    '
+
+- id: cciaa_brescia_bandi
+  nome: Camera di Commercio di Brescia - Bandi di contributo camerali
+  ente: Camera di Commercio di Brescia
+  tipo: camera
+  territorio: LOM
+  url: https://www.bs.camcom.it/bandi-e-contributi/bandi-di-contributo-camerali
+  modalita: html
+  feed_url: null
+  piattaforma: drupal
+  frequenza: settimanale
+  stato: attiva
+  verificato_il: '2026-09-24'
+  note: 'Pagina Drupal organizzata per tema, non per anno: sotto-pagine "Fiere e servizi all''estero Pro Brixia
+    2026", "Fiere in Lombardia", "Nuove imprese - Start Up", "Formazione professionale", "Sostenibilità ambientale",
+    "Accesso al credito", "Confidi"... Ogni pagina tematica viene aggiornata con l''edizione dell''anno: quindi
+    osservare anche il contenuto delle sotto-pagine, non solo l''elenco. Sezioni collegate: /bandi-e-contributi/bandi-di-contributo-non-camerali
+    e .../bandi-chiusi. Feed /rss.xml (200) generico, senza bandi.
+
+    '
+
+- id: cciaa_como_lecco_bandi_aperti
+  nome: Camera di Commercio Como-Lecco - Bandi ed opportunità aperti
+  ente: Camera di Commercio Como-Lecco
+  tipo: camera
+  territorio: LOM
+  url: https://www.comolecco.camcom.it/pagina478_bandi-aperti.html
+  modalita: html
+  feed_url: null
+  piattaforma: isweb
+  frequenza: settimanale
+  stato: attiva
+  verificato_il: '2026-09-24'
+  note: 'CMS ISWEB. Elenco HTML dei bandi aperti con link relativi archivio27_bandi-opportunita_0_<n>.html (al 24/09/2026:
+    Fiere internazionali all''estero 2026, Export su Misura 2026, Voucher AI 2026, Nuova Impresa 2026, due servizi
+    di accompagnamento). Pagine sorelle: pagina479_bandi-in-rendicontazione.html, pagina480_bandi-chiusi.html; indice
+    pagina258_bandi-ed-opportunit.html. La pagina "RSS" (index.php?azione=paginarss) è una pagina HTML di spiegazione
+    senza feed veri: nessun RSS trovato.
+
+    '
+
+- id: cciaa_cremona_bandi
+  nome: Camera di Commercio di Cremona - Bandi e contributi
+  ente: Camera di Commercio di Cremona
+  tipo: camera
+  territorio: LOM
+  url: null
+  modalita: html
+  feed_url: null
+  piattaforma: null
+  frequenza: settimanale
+  stato: difficile
+  verificato_il: '2026-09-24'
+  note: 'www.cr.camcom.it non risponde dal cloud: connessione chiusa senza risposta ("Empty reply from server")
+    in https e http, con qualunque User-Agent; WebFetch riceve 503. Tentati /, /bandi, www.cr.camcom.gov.it. Probabile
+    filtro sugli indirizzi dei data center dell''hosting camerale. Da riprovare dal server OVH; se anche lì fallisce,
+    i bandi di sistema si trovano su Unioncamere Lombardia.
+
+    '
+
+- id: cciaa_mantova_bandi
+  nome: Camera di Commercio di Mantova - Bandi e contributi
+  ente: Camera di Commercio di Mantova
+  tipo: camera
+  territorio: LOM
+  url: null
+  modalita: html
+  feed_url: null
+  piattaforma: null
+  frequenza: settimanale
+  stato: difficile
+  verificato_il: '2026-09-24'
+  note: 'www.mn.camcom.gov.it (e www.mn.camcom.it) non risponde dal cloud: connessione chiusa senza risposta in
+    https e http; WebFetch riceve 503. Tentati /, /bandi. Stesso comportamento di Cremona e Pavia (stesso hosting).
+    Da riprovare dal server OVH.
+
+    '
+
+- id: cciaa_pavia_bandi
+  nome: Camera di Commercio di Pavia - Bandi e contributi
+  ente: Camera di Commercio di Pavia
+  tipo: camera
+  territorio: LOM
+  url: null
+  modalita: html
+  feed_url: null
+  piattaforma: null
+  frequenza: settimanale
+  stato: difficile
+  verificato_il: '2026-09-24'
+  note: 'www.pv.camcom.gov.it (e www.pv.camcom.it) non risponde dal cloud: connessione chiusa senza risposta in
+    https e http; WebFetch riceve 503. Tentati /, /bandi. Stesso comportamento di Cremona e Mantova. Da riprovare
+    dal server OVH.
+
+    '
+
+- id: cciaa_sondrio_bandi
+  nome: Camera di Commercio di Sondrio - Bandi per contributi e finanziamenti
+  ente: Camera di Commercio di Sondrio
+  tipo: camera
+  territorio: LOM
+  url: https://www.so.camcom.it/bandi
+  modalita: html
+  feed_url: null
+  piattaforma: drupal
+  frequenza: settimanale
+  stato: attiva
+  verificato_il: '2026-09-24'
+  note: 'Elenco Drupal dei bandi con schede /bando/<anno>/<slug> (al 24/09/2026: Voucher Doppia Transizione 2026,
+    Fiere estere 2026, Incontri d''affari all''estero 2026, Servizi digitali a catalogo, Imprese storiche 2026,
+    Nuova Impresa 2026, Export su Misura, PEFC...). Elenco completo, comprende anche i bandi 2025 chiusi: filtrare
+    per anno nel percorso. Il feed /rss.xml (200) è quello della home: contiene qualche /bando/ ma non aggiornato
+    (ultimo bando nov. 2025): solo complemento.
+
+    '
+
+- id: cciaa_varese_contributi
+  nome: Camera di Commercio di Varese - Contributi e agevolazioni
+  ente: Camera di Commercio di Varese
+  tipo: camera
+  territorio: LOM
+  url: https://www.va.camcom.it/pagina737_contributi-ed-agevolazioni.html
+  modalita: html
+  feed_url: null
+  piattaforma: isweb
+  frequenza: settimanale
+  stato: attiva
+  verificato_il: '2026-09-24'
+  note: 'CMS ISWEB. Elenco HTML dei contributi aperti, schede archivio39_<slug>_0_<n>.html (al 24/09/2026: Voucher
+    formazione continua IV ed., Fiere internazionali in Lombardia 2° sportello, Voucher Doppia Transizione 2026,
+    Voucher Intelligenza Artificiale 2026, Hub turistico-sportivi outdoor 2026). Filtro per area con ?ar=<n> (4
+    Punto Impresa Digitale, 10 Turismo e cultura, 11 Nuove imprese, 23 Imprenditoria femminile...): osservare la
+    pagina senza filtro. L''indirizzo nel menu ha il refuso "aggevolazioni" e reindirizza a quello corretto. Pagina
+    "RSS" (index.php?azione=paginarss) è HTML senza feed veri.
+
+    '
+
+- id: unioncamere_lombardia_bandi_aperti
+  nome: Unioncamere Lombardia - Bandi e incentivi alle imprese, bandi aperti (Regione + Camere lombarde)
+  ente: Unioncamere Lombardia
+  tipo: camera
+  territorio: LOM
+  url: https://www.unioncamerelombardia.it/bandi-e-incentivi-alle-imprese?stato=2
+  modalita: html
+  feed_url: null
+  piattaforma: typo3
+  frequenza: settimanale
+  stato: attiva
+  verificato_il: '2026-09-24'
+  note: 'TYPO3 con estensione "modellobando": elenco filtrabile per stato nell''indirizzo (?stato=1 in apertura,
+    ?stato=2 aperti, /bandi-archivio?stato=3 chiusi) e per parola/argomento (?keyword=&argomento=). Schede /bandi-e-incentivi-alle-imprese/dettaglio-bando/<slug>.
+    Al 24/09/2026 aperti: Fiere internazionali in Lombardia 2° sportello, Export su Misura 2026, SI4.0 2026, Qualità
+    Artigiana 2026. È la fonte dei bandi "Regione Lombardia + Camere" e delle iniziative di sistema che le singole
+    Camere ripubblicano (Como-Lecco rimanda qui per il testo). Consigliata frequenza giornaliera visto che Milano
+    è bloccata. Nessun RSS trovato nel sito. Osservare anche ?stato=1 (in apertura) per anticipare le date.
+
+    '
+
+- id: cciaa_venezia_rovigo_bandi
+  nome: CCIAA Venezia Rovigo - Incentivi ed agevolazioni, Contributi (bandi per anno)
+  ente: Camera di Commercio di Venezia Rovigo
+  tipo: camera
+  territorio: VEN
+  url: https://www.dl.camcom.it/sonoimpresa/cosa-puo-servire-sono/incentivi-ed-agevolazioni/contributi
+  modalita: html
+  feed_url: null
+  piattaforma: null
+  frequenza: settimanale
+  stato: attiva
+  verificato_il: '2026-09-24'
+  note: 'Pagina HTML (non JavaScript) che elenca i bandi camerali raggruppati per anno (cartelle "Bandi 2026", "Bandi
+    2025", ...): oggi Voucher doppia transizione 2026, Transizione sostenibile e accessibilità turistica 2026, più
+    i bandi PID. La cartella dell''anno in corso è /sonoimpresa/cosa-puo-servire-sono/incentivi-ed-agevolazioni/bandi-2026
+    (aperta, 200). I bandi del Punto Impresa Digitale hanno una seconda vetrina in /azioni-e-progetti/punti-impresa-digitale-pid/pid-cosa-sono/bandi-attivi
+    (aperta, 200; oggi Voucher digitali 2026, PID-Next) ma compaiono anche nell''elenco principale. Nessun RSS trovato
+    nell''HTML. Il sito non dichiara il CMS; pagine molto pesanti (~700 KB) per il menu completo incorporato: confrontare
+    solo il blocco dei link ai bandi. La pagina "Bandi esterni e opportunità in evidenza" elenca solo bandi di altri
+    enti.
+
+    '
+
+- id: cciaa_padova_bandi_api
+  nome: CCIAA Padova - Bandi contributi e premi (API Plone)
+  ente: Camera di Commercio di Padova
+  tipo: camera
+  territorio: VEN
+  url: https://www.pd.camcom.it/it/amministrazione-trasparente/sovvenzioni-contributi-sussidi-vantaggi-economici/bandi-contributi-e-premi/bandi-contributi/bandi-contributi-e-premi-2026
+  modalita: api
+  feed_url: https://www.pd.camcom.it/++api++/@search?path=/it/amministrazione-trasparente/sovvenzioni-contributi-sussidi-vantaggi-economici&portal_type=Bando&sort_on=effective&sort_order=descending&metadata_fields=effective&b_size=30
+  piattaforma: plone
+  frequenza: settimanale
+  stato: attiva
+  verificato_il: '2026-09-24'
+  note: 'Plone 6 (Volto, tema Design Italia). Le pagine "Bandi in corso" (/it/la-camera/bandi-in-corso) e "Programma
+    incentivi alle imprese" (/it/incentivi-imprese) hanno gli elenchi caricati via JavaScript (nell''HTML restano
+    solo trattini), quindi si usa l''API REST ++api++: la ricerca sopra restituisce JSON con 132 contenuti di tipo
+    "Bando" ordinati per data di pubblicazione (effective), con titolo e @id (link alla scheda). Include anche avvisi
+    di selezione e premi: filtrare per titolo ("Bando ... contributi", "voucher"). Il campo scadenza_bando esiste
+    ma nell''API risulta spesso vuoto: non filtrare su quello. La pagina in url è la cartella dell''anno 2026, aperta
+    (200) e leggibile anche senza JavaScript. Nessun RSS (…/RSS risponde 404).
+
+    '
+
+- id: cciaa_treviso_belluno_bandi
+  nome: CCIAA Treviso-Belluno | Dolomiti - Bandi e concorsi
+  ente: Camera di Commercio di Treviso-Belluno | Dolomiti
+  tipo: camera
+  territorio: VEN
+  url: https://www.tb.camcom.gov.it/bandi.asp
+  modalita: html
+  feed_url: null
+  piattaforma: null
+  frequenza: settimanale
+  stato: attiva
+  verificato_il: '2026-09-24'
+  note: 'Attenzione al dominio: www.tb.camcom.it (senza .gov) chiude la connessione (reset TLS, http 503); il sito
+    vero è www.tb.camcom.gov.it. Sito ASP classico su IIS, HTML semplice: la pagina elenca i bandi con link CCIAA_bandi.asp?cod=NNNN,
+    breve descrizione e "Scadenza: gg/mm/aaaa". Elenco misto: bandi camerali (doppia transizione 2026, metalmeccanica
+    2026, distretti del commercio), bandi regionali (Veneto Artigiano, Veicoli aziendali) e opportunità esterne
+    (INAIL, MePA startup, Bandi europei). La sezione "Contributi alle singole imprese" (/content/11534/Bisogni/di-contrib/Contributi_Singole_Imprese.html)
+    è solo una pagina di orientamento. Nessun RSS (rss.asp 404).
+
+    '
+
+- id: cciaa_verona_contributi_api
+  nome: CCIAA Verona - Contributi e patrocini (API Plone)
+  ente: Camera di Commercio di Verona
+  tipo: camera
+  territorio: VEN
+  url: https://www.vr.camcom.it/promuovere-impresa-e-territorio/contributi-e-patrocini
+  modalita: api
+  feed_url: https://www.vr.camcom.it/++api++/@search?path=/promuovere-impresa-e-territorio/contributi-e-patrocini&sort_on=modified&sort_order=descending&metadata_fields=modified&b_size=30
+  piattaforma: plone
+  frequenza: settimanale
+  stato: attiva
+  verificato_il: '2026-09-24'
+  note: 'Plone 6 Volto: la pagina HTML è vuota senza JavaScript (solo il titolo). L''API ++api++ risponde JSON:
+    la ricerca sopra elenca i contenuti sotto "Contributi e patrocini" (oggi 10: schede "Servizio" Voucher doppia
+    transizione, Internazionalizzazione, Bando progetti enti terzi, Patrocini, più i PDF delle graduatorie) con
+    data di modifica. La Camera pubblica pochi bandi, ognuno come pagina fissa aggiornata di anno in anno: da osservare
+    la data "modified" e la comparsa di nuovi @id. Nessun RSS (…/RSS 404). Il sito ha anche "Bandi di gara e contratti"
+    (appalti, da ignorare).
+
+    '
+
+- id: cciaa_vicenza_bandi
+  nome: CCIAA Vicenza - Bandi contributivi Camera Vicenza
+  ente: Camera di Commercio di Vicenza
+  tipo: camera
+  territorio: VEN
+  url: https://www.vi.camcom.it/it/bandi-contributivi-e-bandi-di-gara/bandi-contributivi-camera-vicenza/
+  modalita: html
+  feed_url: null
+  piattaforma: null
+  frequenza: settimanale
+  stato: attiva
+  verificato_il: '2026-09-24'
+  note: 'Sito su misura (PHP), HTML statico. Elenco dei bandi camerali con link archivio-bandi?id=NNN e stato nel
+    titolo (termini, graduatorie, modulistica di rendicontazione): oggi Bando unico annuale 2026, Filiera turistica
+    2026, Internazionalizzazione 2026, Transizione digitale ed ecologica 2026, Fiere internazionali 2025. I bandi
+    con procedimento concluso passano in "archivio-bandi-1". Esiste un feed dedicato https://www.vi.camcom.it/it/in-contatto-con-noi/feed-rss/Feed-bandi-contributi.xml
+    (aperto, 200) ma è vuoto (canale senza item): non usarlo finché non si popola. La pagina di servizio /it/servizi/bandi-per-contributi-alle-imprese/
+    è solo di orientamento.
+
+    '
+
+- id: unioncamere_veneto_bandi_rss
+  nome: Unioncamere del Veneto - categoria Bandi (feed WordPress)
+  ente: Unioncamere del Veneto
+  tipo: camera
+  territorio: VEN
+  url: https://www.unioncamereveneto.it/attivita-e-servizi/attivita/gestione-bandi-regionali/
+  modalita: rss
+  feed_url: https://www.unioncamereveneto.it/category/bandi/feed/
+  piattaforma: wordpress
+  frequenza: settimanale
+  stato: attiva
+  verificato_il: '2026-09-24'
+  note: 'WordPress con REST API aperta (wp-json). La categoria "Bandi" (id 784, 25 articoli) ha feed RSS valido
+    con titolo, link, pubDate: bandi regionali gestiti da Unioncamere per la Regione Veneto (Veicoli aziendali 2026,
+    Imprenditoria femminile 2026, Efficienza energetica PMI, progetti sviluppo economico regionale) e rilanci di
+    bandi delle singole Camere venete (es. Padova mamme imprenditrici): possibili doppioni con le Camere, da deduplicare
+    per titolo. Nella categoria compaiono anche concorsi di personale (Venicepromex) da scartare. Alternativa JSON:
+    https://www.unioncamereveneto.it/wp-json/wp/v2/posts?categories=784. La pagina in url è l''elenco HTML "Gestione
+    bandi regionali".
+
+    '
+
+- id: cciaa_pordenone_udine_contributi
+  nome: CCIAA Pordenone-Udine - Contributi e rendicontazione
+  ente: Camera di Commercio di Pordenone-Udine
+  tipo: camera
+  territorio: FVG
+  url: https://www.pnud.camcom.it/contributi-e-rendicontazione
+  modalita: html
+  feed_url: null
+  piattaforma: drupal
+  frequenza: giornaliera
+  stato: attiva
+  verificato_il: '2026-09-24'
+  note: 'Drupal 10, HTML leggibile. Non c''è un elenco "bandi aperti" vero e proprio: i bandi in corso sono le voci
+    del menu laterale della sezione, raggruppate in "Contributi camerali", "Contributi regionali" (misure delegate
+    dalla Regione FVG, es. generatori di calore), "Contributi distretti del commercio"; quando un bando chiude passa
+    nelle voci "... in rendicontazione" per anno. Da osservare quindi l''insieme dei link /contributi-e-rendicontazione/...
+    escludendo quelli con "rendicontazione" nel percorso. Il feed generale /rss.xml è inutilizzabile (elenca solo
+    nodi tecnici "gruppo pulsanti"); i feed tematici della pagina /rss (feed/74,233 promozione, feed/93 studi) non
+    riguardano i bandi; /feedrss/notizie/rss.xml è vuoto. Un tempo la Camera era due enti (Pordenone e Udine), oggi
+    unica.
+
+    '
+
+- id: cciaa_pordenone_udine_news
+  nome: CCIAA Pordenone-Udine - Novità
+  ente: Camera di Commercio di Pordenone-Udine
+  tipo: camera
+  territorio: FVG
+  url: https://www.pnud.camcom.it/news
+  modalita: html
+  feed_url: null
+  piattaforma: drupal
+  frequenza: giornaliera
+  stato: attiva
+  verificato_il: '2026-09-24'
+  note: 'Elenco HTML delle notizie (link /news/...), dove la Camera annuncia anche l''apertura dei bandi e le proroghe;
+    oggi prevalgono fiere, concorsi di personale e avvisi registro imprese. Complementare alla sezione contributi.
+    Nessun RSS della sezione (/news/rss.xml 404).
+
+    '
+
+- id: cciaa_venezia_giulia_contributi
+  nome: CCIAA Venezia Giulia (Trieste e Gorizia) - Contributi e agevolazioni
+  ente: Camera di Commercio Venezia Giulia
+  tipo: camera
+  territorio: FVG
+  url: https://vg.camcom.it/contributi-e-agevolazioni
+  modalita: html
+  feed_url: null
+  piattaforma: drupal
+  frequenza: settimanale
+  stato: attiva
+  verificato_il: '2026-09-24'
+  note: 'Drupal 10, HTML leggibile (il sito risponde su vg.camcom.it senza www). Pagina indice con i link a tutte
+    le misure: Fondo Gorizia (contributi a realtà socio-economiche), misure delegate dalla Regione FVG (videosorveglianza
+    2026, imprese giovanili LR 3/2021, internazionalizzazione LR 2/1992, capacità manageriali LR 3/2015), bandi
+    PID (PID-Next, Voucher digitali I4.0), economia circolare. Contiene anche contributi ai privati cittadini (carburanti,
+    pompe di calore) da scartare. Le pagine dei singoli bandi riportano l''anno nel percorso: un nuovo anno = nuovo
+    link.
+
+    '
+
+- id: cciaa_venezia_giulia_notizie_rss
+  nome: CCIAA Venezia Giulia - Notizie (feed RSS)
+  ente: Camera di Commercio Venezia Giulia
+  tipo: camera
+  territorio: FVG
+  url: https://vg.camcom.it/notizie
+  modalita: rss
+  feed_url: https://vg.camcom.it/rss.xml
+  piattaforma: drupal
+  frequenza: settimanale
+  stato: attiva
+  verificato_il: '2026-09-24'
+  note: 'Feed RSS 2.0 valido di tutte le notizie del sito (titolo, link, descrizione HTML, data): annuncia riaperture
+    di bandi e premi ma anche eventi e comunicati (fiere, saloni). Da tenere come segnale di novità accanto alla
+    pagina contributi, filtrando per parole chiave (bando, contributi, voucher). La pagina /notizie in url è l''elenco
+    HTML corrispondente (aperta, 200).
+
+    '
+
+- id: cciaa_trento_bandi
+  nome: CCIAA Trento - Bandi per contributi (Punto Impresa Digitale)
+  ente: Camera di Commercio di Trento
+  tipo: camera
+  territorio: TN
+  url: https://www.tn.camcom.it/imprenditore/impresa-digitale-pid/bandi-contributi
+  modalita: html
+  feed_url: null
+  piattaforma: drupal
+  frequenza: settimanale
+  stato: attiva
+  verificato_il: '2026-09-24'
+  note: 'Drupal 9, HTML leggibile. Elenco dei bandi camerali per anno: oggi Bando sviluppo online 2026 e Bando ESG,
+    energia e digitale 2026, poi le edizioni 2022-2025. È l''unico elenco di contributi della Camera (in Trentino
+    gran parte degli incentivi passa dalla Provincia autonoma). Il menu della stessa pagina contiene voci estranee
+    (ruoli, esami NCC) da ignorare. La home ha un blocco "Altri bandi e avvisi" (/bandi-di-gara-e-concorsi/altri-bandi-e-avvisi/...)
+    con segnalazioni esterne (EUIPO, premi): la pagina indice di quel blocco rimanda alla home. Il feed /rss.xml
+    è valido ma elenca eventi e corsi, non i bandi.
+
+    '
+
+- id: cciaa_bolzano_contributi
+  nome: CCIAA Bolzano - Sovvenzioni, contributi, sussidi (voucher)
+  ente: Camera di commercio di Bolzano
+  tipo: camera
+  territorio: BZ
+  url: https://www.camcom.bz.it/it/amministrazione-trasparente/sovvenzioni-contributi-sussidi-vantaggi-economici
+  modalita: html
+  feed_url: null
+  piattaforma: drupal
+  frequenza: settimanale
+  stato: attiva
+  verificato_il: '2026-09-24'
+  note: 'Drupal 10 bilingue (handelskammer.bz.it reindirizza a camcom.bz.it/it). La Camera pubblica i propri voucher
+    nella sezione trasparenza: oggi Voucher Digitalizzazione 2026, Voucher Consulenza legale per l''internazionalizzazione
+    2026 e 2026/27 (II), Internazionalizzazione 2025 II; ogni voucher ha sottopagine presentazione domande / spese
+    ammissibili / rendicontazione. Pagina HTML leggibile; osservare i link di primo livello sotto /sovvenzioni-contributi-sussidi-vantaggi-economici/
+    escludendo atti-di-concessione e criteri. Il feed /it/rss.xml è valido ma misto (notizie, molte in tedesco).
+    Gli incentivi principali per le imprese altoatesine sono della Provincia autonoma, non della Camera.
+
+    '
+
+- id: cciaa_bologna_contributi
+  nome: CCIAA Bologna - Contributi della Camera di Bologna
+  ente: Camera di Commercio di Bologna
+  tipo: camera
+  territorio: EMR
+  url: https://www.bo.camcom.gov.it/it/promozione-interna/contributi-della-camera-di-bologna
+  modalita: html
+  feed_url: null
+  piattaforma: drupal
+  frequenza: settimanale
+  stato: attiva
+  verificato_il: '2026-09-24'
+  note: 'Drupal 7, HTML leggibile. Pagina unica a fisarmonica con tutti i bandi camerali e il loro stato nel titolo
+    ("bando chiuso"): Voucher doppia transizione 2026, Sicurezza 2026, Ristori grandi cantieri, Autoproduzione energia
+    2026, Rendicontazione ESG 2026, Rinnovamento tecnologico, Fiere internazionali in Italia 2026, Welfare neo-genitorialità,
+    incentivi ITS. Ogni bando ha link scheda + link rendicontazione: osservare solo i link che non contengono "rendicontazione".
+    La pagina sorella /promozione-interna/contributi-di-altri-enti elenca misure di altri enti. Il feed /rss.xml
+    è valido ma generale (previsioni PIL, eventi Progetto SEI), non filtrabile per contributi.
+
+    '
+
+- id: cciaa_modena_bandi_attivi_rss
+  nome: CCIAA Modena - Contributi camerali, Bandi attivi (feed RSS)
+  ente: Camera di Commercio di Modena
+  tipo: camera
+  territorio: EMR
+  url: https://www.mo.camcom.it/promozione/contributi-camerali/contributi-camerali-bandi-attivi
+  modalita: rss
+  feed_url: https://www.mo.camcom.it/promozione/contributi-camerali/contributi-camerali-bandi-attivi/RSS
+  piattaforma: plone
+  frequenza: settimanale
+  stato: attiva
+  verificato_il: '2026-09-24'
+  note: 'Plone classico con redturtle.bandi: la collezione "Bandi attivi" ha un feed RSS 1.0 (RDF) valido con titolo,
+    link e dc:date per ogni bando aperto (oggi 5: Neo-imprese 2026, UCER Digital Export 2026-2027, Voucher internazionalizzazione
+    2026, Occupazione giovanile 2026, Fondo sicurezza 2026). Quando un bando chiude sparisce dal feed e passa in
+    "contributi-camerali-archivio-bandi". Esiste anche il feed delle news di sezione (/promozione/contributi-camerali/news/RSS),
+    meno pulito. Le schede sono in /promozione/contributi-camerali/bandi/<slug>.
+
+    '
+
+- id: cciaa_emilia_contributi_api
+  nome: CCIAA dell'Emilia (Parma, Piacenza, Reggio Emilia) - Contributi alle imprese (API Plone)
+  ente: Camera di Commercio dell'Emilia
+  tipo: camera
+  territorio: EMR
+  url: https://www.emilia.camcom.it/promuovere-limpresa-e-il-territorio/contributi-alle-imprese
+  modalita: api
+  feed_url: https://www.emilia.camcom.it/++api++/@search?Subject=CONTRIBUTICAMERALI&sort_on=effective&sort_order=descending&metadata_fields=effective&b_size=30
+  piattaforma: plone
+  frequenza: settimanale
+  stato: attiva
+  verificato_il: '2026-09-24'
+  note: 'Cambio di assetto: le Camere di Parma, Piacenza e Reggio Emilia sono accorpate nella "Camera di Commercio
+    dell''Emilia" (pc.camcom.it e re.camcom.gov.it reindirizzano a emilia.camcom.it; pr.camcom.it risponde solo
+    in http e poi reindirizza). Una sola voce per i tre territori. Plone 6 Volto: la pagina "Contributi alle imprese"
+    ha il blocco "Bandi e avvisi - anno 2026" caricato via JavaScript (nel sorgente c''è la query Subject=CONTRIBUTICAMERALI).
+    La stessa ricerca via API REST ++api++ restituisce JSON con 17 bandi ordinati per data di pubblicazione: Accesso
+    al credito tramite Confidi (15/09/2026), Certificazioni ESG 2026, Efficienza energetica 2026, Innovazione digitale
+    2026, Piccole imprese per il territorio 2026, Internazionalizzazione 2026 (codici BC26, BE26, PI26, BT26, BI26).
+    I bandi chiusi stanno in /bandi-chiusi-e-bandi-anni-precedenti/bandi-emanati-nel-corso-del-2026. Il feed /RSS
+    del sito è generale (prezzi all''ingrosso, privacy), da non usare. Le domande passano dalla piattaforma Restart
+    di Infocamere.
+
+    '
+
+- id: cciaa_ferrara_ravenna_bandi_rss
+  nome: CCIAA Ferrara e Ravenna - Bandi e contributi (feed RSS)
+  ente: Camera di Commercio di Ferrara e Ravenna
+  tipo: camera
+  territorio: EMR
+  url: https://www.fera.camcom.it/bandi
+  modalita: rss
+  feed_url: https://www.fera.camcom.it/rss.xml
+  piattaforma: drupal
+  frequenza: settimanale
+  stato: attiva
+  verificato_il: '2026-09-24'
+  note: 'Drupal 9. Il feed /rss.xml (identico a /bandi/rss.xml) contiene solo contenuti /bandi/... con titolo, link,
+    data di creazione e descrizione HTML completa (per questo pesa ~300 KB): oggi 10 voci, tra cui Doppia transizione
+    2026, Accesso al credito 2026, Piano giovani 2026 (occupazione e competitività imprese giovanili), Comune di
+    Cento extra-hub. La pagina HTML /bandi è l''elenco per le persone e riporta la scadenza di ogni bando. Filtrare
+    le voci di enti terzi (Comuni) solo se fuori perimetro.
+
+    '
+
+- id: cciaa_romagna_finanziamenti
+  nome: CCIAA della Romagna (Forlì-Cesena e Rimini) - Opportunità, Finanziamenti
+  ente: Camera di commercio della Romagna
+  tipo: camera
+  territorio: EMR
+  url: https://www.romagna.camcom.it/it/opportunita/finanziamenti-1
+  modalita: html
+  feed_url: null
+  piattaforma: null
+  frequenza: settimanale
+  stato: attiva
+  verificato_il: '2026-09-24'
+  note: 'Portale su misura (framework Yii/AMOS con community e login), HTML leggibile. La pagina "Finanziamenti"
+    elenca con "Scopri di più" i bandi camerali di tutte le sezioni: Digital Export 2026-2027, Sistemi di sicurezza
+    antirapina 2026, Doppia transizione 2026, Fiere/internazionalizzazione, Accesso al credito, AccelerUp 2025,
+    borse ITS. Le stesse schede vivono in sottosezioni tematiche (/it/opportunita/internazionalizzazione/..., /it/opportunita/pid-punto-impresa-digitale/...).
+    Nessun RSS trovato (/bandi 404, /it/news/news/rss 404); l''elenco notizie /news/news/all-news è HTML.
+
+    '
+
+- id: unioncamere_emilia_romagna_bandi
+  nome: Unioncamere Emilia-Romagna - Bandi
+  ente: Unioncamere Emilia-Romagna
+  tipo: camera
+  territorio: EMR
+  url: https://www.ucer.camcom.it/internazionalizzazione-delle-imprese/bandi
+  modalita: html
+  feed_url: null
+  piattaforma: plone
+  frequenza: settimanale
+  stato: difficile
+  verificato_il: '2026-09-24'
+  note: 'Il server chiude la connessione TLS in modo intermittente (reset su https, 3 tentativi su 5 falliti; passando
+    da http con redirect alcune pagine si aprono con 200). Plone 6 Volto: la pagina /promozione-e-innovazione/bandi
+    (aperta una volta, 200) ha l''elenco caricato via JavaScript e l''unico contenuto visibile è "Bandi Ristori
+    3" del 2025; l''API ++api++ e il feed /rss-feed non hanno risposto. La pagina in url (aperta una volta, 200)
+    elenca in HTML i "Bandi Digital Export" fino all''edizione 2024-2025: l''edizione 2026-2027 è pubblicata dalle
+    singole Camere (es. Modena, Romagna), quindi Unioncamere ER non è indispensabile. Da riprovare più avanti dal
+    server; se resta instabile, esclusa.
+
+    '
+
+- id: cciaa_firenze_bandi_rss
+  nome: Camera di Commercio di Firenze - Bandi e contributi (feed)
+  ente: Camera di Commercio di Firenze
+  tipo: camera
+  territorio: TOS
+  url: https://www.fi.camcom.gov.it/bandi?cerca=&field_bando_stato_value=aperto
+  modalita: rss
+  feed_url: https://www.fi.camcom.gov.it/bandi/rss.xml
+  piattaforma: drupal_camcom
+  frequenza: settimanale
+  stato: attiva
+  verificato_il: '2026-09-24'
+  note: 'Sito Drupal 10 sul modello comune delle Camere (vista "bandi-page-archivio" con filtro di stato). Feed
+    RSS 2.0 dedicato ai soli bandi (8 voci, ultima del 22/06/2026: doppia transizione, internazionalizzazione, turismo,
+    start up, sicurezza sedi, MIDA). La pagina HTML /bandi elenca tutto; con field_bando_stato_value=aperto restano
+    i 4 bandi aperti (altri valori: di_prossima_apertura, in_rendicontazione, chiuso). Il feed generale /rss.xml
+    è di notizie istituzionali e non serve.
+
+    '
+
+- id: cciaa_arezzo_siena_contributi
+  nome: Camera di Commercio Arezzo-Siena - Notizie "Contributi e finanziamenti"
+  ente: Camera di Commercio Arezzo-Siena
+  tipo: camera
+  territorio: TOS
+  url: https://www.as.camcom.it/notizie?combine=&field_notizia_categoria_tid=195
+  modalita: html
+  feed_url: null
+  piattaforma: drupal
+  frequenza: settimanale
+  stato: attiva
+  verificato_il: '2026-09-24'
+  note: 'Drupal 7. Non esiste una pagina "bandi" separata: i bandi camerali (voucher doppia transizione 2026 Arezzo
+    e Siena, voucher digitali) escono come notizie nella categoria 195 "Contributi e finanziamenti", elenco HTML
+    con titolo e immagine. Il feed /notizie/rss.xml esiste ma ignora il filtro di categoria (10 notizie miste: fiere,
+    gare, eventi) e /rss.xml è il feed generico: per questo si osserva la pagina HTML filtrata.
+
+    '
+
+- id: cciaa_toscana_nord_ovest_bandi_aperti
+  nome: Camera di Commercio Toscana Nord-Ovest (Lucca, Massa-Carrara, Pisa) - Bandi aperti
+  ente: Camera di Commercio della Toscana Nord-Ovest
+  tipo: camera
+  territorio: TOS
+  url: https://tno.camcom.it/bandi/bandi-aperti
+  modalita: html
+  feed_url: null
+  piattaforma: drupal
+  frequenza: settimanale
+  stato: attiva
+  verificato_il: '2026-09-24'
+  note: 'Camera nata dall''accorpamento di Lucca, Massa-Carrara e Pisa: i siti lu.camcom.it, ms.camcom.it e pi.camcom.it
+    sono ancora online ma la pagina contributi di Pisa dice solo "visitare il sito della Camera di Commercio Toscana
+    Nord-Ovest" e gli altri due non hanno più sezioni bandi. Drupal 9 (generator "CCIAATNO CMS"). Pagina HTML con
+    i bandi aperti (3 il 24/09/2026: sistemi di gestione certificati/ESG, PCTO, Premio Eco-innovazione), schede
+    /bandi/ANNO/titolo. Sezioni sorelle: /bandi/bandi-rendicontazione e /bandi/bandi-archiviati; /bandi da solo
+    risponde 403, /rss.xml 404. Pagina di riferimento per le persone: /contributi-e-agevolazioni.
+
+    '
+
+- id: cciaa_pistoia_prato_contributi
+  nome: Camera di Commercio di Pistoia-Prato - Agevolazioni camerali
+  ente: Camera di Commercio di Pistoia-Prato
+  tipo: camera
+  territorio: TOS
+  url: https://www.ptpo.camcom.it/servizi/contributi/index
+  modalita: html
+  feed_url: null
+  piattaforma: null
+  frequenza: settimanale
+  stato: attiva
+  verificato_il: '2026-09-24'
+  note: 'Sito su misura (Bootstrap Italia, pagine statiche). La pagina "Agevolazioni camerali" elenca i bandi camerali
+    con link a /servizi/contributi/<tema>-<anno>/...: il 24/09/2026 digitalizzazione Impresa 4.0 e transizione energetica
+    2026, formazione scuola-lavoro 2026, internazionalizzazione 2026. Esiste un feed generale https://www.ptpo.camcom.it/rss/rss.xml
+    ma ha oltre 2.000 voci di ogni tipo (1,1 MB): sconsigliato. Utile per le persone la "NewsBandi" mensile (PDF)
+    in /news/newsletter/news-bandi con i bandi di altri enti.
+
+    '
+
+- id: cciaa_maremma_tirreno_bandi_rss
+  nome: Camera di Commercio Maremma e Tirreno (Grosseto, Livorno) - Bandi e contributi (feed)
+  ente: Camera di Commercio Maremma e Tirreno
+  tipo: camera
+  territorio: TOS
+  url: https://www.lg.camcom.it/bandi?cerca=&field_bando_stato_value=aperto
+  modalita: rss
+  feed_url: https://www.lg.camcom.it/bandi/rss.xml
+  piattaforma: drupal_camcom
+  frequenza: settimanale
+  stato: attiva
+  verificato_il: '2026-09-24'
+  note: 'Drupal 11, stesso modello di Firenze/Frosinone-Latina/Molise. Feed RSS dei soli bandi (10 voci, ultima
+    del 31/07/2026: voucher FRIHUB, Expogast, doppia transizione 2026, internazionalizzazione 2026, InBuyer Food).
+    La pagina HTML con filtro "aperto" mostrava 6 bandi. Il feed generale /rss.xml mescola notizie ed esami (mediatori,
+    raccomandatari): non usarlo.
+
+    '
+
+- id: unioncamere_toscana_news
+  nome: Unioncamere Toscana - News (feed WordPress)
+  ente: Unioncamere Toscana
+  tipo: camera
+  territorio: TOS
+  url: https://www.unioncamere-toscana.it/news/
+  modalita: rss
+  feed_url: https://www.unioncamere-toscana.it/feed/
+  piattaforma: wordpress
+  frequenza: settimanale
+  stato: da_verificare
+  verificato_il: '2026-09-24'
+  note: 'Il vecchio dominio tos.camcom.it rimanda a unioncamere-toscana.it (WordPress con wp-json aperta). Non ha
+    una sezione bandi propria: la categoria "bandi" esiste ma è vuota (0 articoli); i bandi passano dalle news (10
+    voci nel feed, ultima 15/09/2026: BuyFood Toscana, marchi collettivi all''estero, seminari). Da tenere a bassa
+    priorità: quasi tutto è già sui siti delle singole Camere. In alternativa /wp-json/wp/v2/posts?search=bando.
+
+    '
+
+- id: cciaa_umbria_bandi_api
+  nome: Camera di Commercio dell'Umbria - Bandi e contributi (API Plone)
+  ente: Camera di Commercio dell'Umbria
+  tipo: camera
+  territorio: UMB
+  url: https://www.umbria.camcom.it/promuovere-limpresa-e-il-territorio/bandi-e-contributi
+  modalita: api
+  feed_url: https://www.umbria.camcom.it/++api++/@search?portal_type=Bando&path.query=/promuovere-limpresa-e-il-territorio/bandi-e-contributi&sort_on=effective&sort_order=descending&b_size=30&metadata_fields=effective&metadata_fields=scadenza_bando
+  piattaforma: plone
+  frequenza: settimanale
+  stato: attiva
+  verificato_il: '2026-09-24'
+  note: 'Camera unica per Perugia e Terni. Plone 6 con REST API aperta (header Accept: application/json): la ricerca
+    restituisce 53 contenuti di tipo "Bando" con titolo, @id, effective (pubblicazione) e scadenza_bando (ultimo
+    del 03/08/2026; Doppia Transizione 2026, fiere 2026, promozione economica). La pagina HTML ha le sezioni "Bandi
+    attivi"/"Bandi scaduti" ma i riquadri dei bandi non sono nel codice scaricato (renderizzati lato client), quindi
+    la pagina serve solo come riferimento. Esiste anche un RSS 1.0 della cartella (.../bandi-e-contributi/RSS, 16
+    voci) ma non ordinato per data e con PDF mescolati: preferire l''API.
+
+    '
+
+- id: cciaa_marche_bandi_rss
+  nome: Camera di Commercio delle Marche - Bandi e contributi (feed)
+  ente: Camera di Commercio delle Marche
+  tipo: camera
+  territorio: MAR
+  url: https://www.marche.camcom.it/fai-crescere-la-tua-impresa/bandi-e-contributi
+  modalita: rss
+  feed_url: https://www.marche.camcom.it/fai-crescere-la-tua-impresa/bandi-e-contributi/bandi-e-contributi/rss.xml
+  piattaforma: plone
+  frequenza: settimanale
+  stato: attiva
+  verificato_il: '2026-09-24'
+  note: 'Camera unica regionale. Plone con modulo redturtle.bandi: la pagina elenca 30 bandi (classi bando-item,
+    bandoTitle, bandoDates, bandoType) senza filtro di stato nell''URL; l''archivio è in .../bandi-e-contributi/archivio-bandi-contributi.
+    Feed RSS 2.0 dedicato (15 voci, ultima 07/07/2026: voucher doppia transizione 2026 dal 30/09, internazionalizzazione
+    2026, B2B New York). Il vecchio indirizzo /strumenti-e-servizi/bandi-e-contributi reindirizza a quello nuovo;
+    esistono anche le varianti /RSS (1.0) e /atom.xml.
+
+    '
+
+- id: cciaa_roma_bandi
+  nome: Camera di Commercio di Roma - Avvisi pubblici e bandi per contributi
+  ente: Camera di Commercio di Roma
+  tipo: camera
+  territorio: LAZ
+  url: https://www.rm.camcom.it/pagina82_avvisi-pubblici-bandi-per-contributi-e-attivit-promozionali-altre-opportunit.html
+  modalita: html
+  feed_url: null
+  piattaforma: isweb
+  frequenza: settimanale
+  stato: attiva
+  verificato_il: '2026-09-24'
+  note: 'CMS IsWeb. Pagina HTML con circa 20 voci (archivio43_bandi-altri-bandi_0_N_82_12.html): Nuove Imprese 2026,
+    Sviluppo Impresa 2026, Voucher Doppia Transizione 2026, ITS Academy 2026, competitività; contiene anche avvisi
+    non per imprese (elenchi mediatori, esami conducenti) da filtrare. L''archivio è pagina381. I feed RSS (rss.php?id=2..5:
+    Eventi, Novità, Focus, Notizie) sono generici; il canale "Focus" (id=4) riporta i bandi principali ma non tutti,
+    quindi si osserva la pagina.
+
+    '
+
+- id: cciaa_frosinone_latina_bandi_rss
+  nome: Camera di Commercio di Frosinone-Latina - Bandi contributi (feed)
+  ente: Camera di Commercio di Frosinone-Latina
+  tipo: camera
+  territorio: LAZ
+  url: https://www.frlt.camcom.it/bandi?cerca=&field_bando_stato_value=aperto
+  modalita: rss
+  feed_url: https://www.frlt.camcom.it/bandi/rss.xml
+  piattaforma: drupal_camcom
+  frequenza: settimanale
+  stato: attiva
+  verificato_il: '2026-09-24'
+  note: 'Drupal 9, modello comune. Feed dei soli bandi (10 voci, ultima 08/07/2026: voucher doppia transizione 2026,
+    agriturismo 2026, internazionalizzazione 2025, turismo 2025). Pagina HTML con filtro "aperto" (1 bando aperto
+    il 24/09/2026). La pagina /rss del sito è una pagina informativa, non un feed.
+
+    '
+
+- id: cciaa_rieti_viterbo_supporto_imprese
+  nome: Camera di Commercio Rieti-Viterbo - Supporto alle imprese (bandi)
+  ente: Camera di Commercio Rieti-Viterbo
+  tipo: camera
+  territorio: LAZ
+  url: https://www.rivt.camcom.it/it/attivita_34/supporto-alle-imprese_433/
+  modalita: html
+  feed_url: null
+  piattaforma: null
+  frequenza: settimanale
+  stato: difficile
+  verificato_il: '2026-09-24'
+  note: 'Il server chiude la connessione (reset) con User-Agent che contiene "Linux" o solo "BandiRadar"; risponde
+    200 con User-Agent da browser Windows (verificato con "Mozilla/5.0 (Windows NT 10.0; Win64; x64) BandiRadar/0.1").
+    L''osservatore deve usare quello per questa fonte. Pagina HTML con pochi link (bando contributi fiere, bando
+    competitività; bando temporary shop in /it/attivita_34/internazionalizzazione-e-marketing_53/). CMS proprietario,
+    nessun RSS visto. Il voucher doppia transizione 2026 risulta su incentivi.gov.it ma non in questa pagina: copertura
+    parziale.
+
+    '
+
+- id: unioncamere_lazio
+  nome: Unioncamere Lazio
+  ente: Unioncamere Lazio
+  tipo: camera
+  territorio: LAZ
+  url: null
+  modalita: browser
+  feed_url: null
+  piattaforma: null
+  frequenza: settimanale
+  stato: difficile
+  verificato_il: '2026-09-24'
+  note: 'https://www.unioncamerelazio.it/ risponde 202 con sfida captcha SiteGround/Cloudflare ("sg-captcha: challenge")
+    e non mostra contenuti a un server; un secondo strumento ha ricevuto un 301 verso un dominio estraneo (piscinamirabilisbacoli.it),
+    segnale di configurazione anomala. Non verificato se pubblichi un elenco proprio di bandi: i bandi del Lazio
+    sono comunque sui siti delle tre Camere. Da riprovare a mano.
+
+    '
+
+- id: cciaa_chieti_pescara_bandi
+  nome: Camera di Commercio Chieti Pescara - Bandi
+  ente: Camera di Commercio Chieti Pescara
+  tipo: camera
+  territorio: ABR
+  url: https://www.chpe.camcom.it/pagina189754_bandi.html
+  modalita: html
+  feed_url: null
+  piattaforma: eportal
+  frequenza: settimanale
+  stato: attiva
+  verificato_il: '2026-09-24'
+  note: 'CMS ePORTAL. Pagina HTML con i bandi camerali dell''anno (voucher doppia transizione 2026, internazionalizzazione
+    2026, turismo 2026, associazioni di categoria 2026) più le annate precedenti (pagina198972_bandi-2025) e l''archivio
+    (pagina189763). Le novità escono anche come notizie (area_letturaNotizia/ID). Nessun RSS trovato (/rss.xml 404,
+    nessun link feed in home). Rimanda al "Portale Agevolazioni" (portaleagevolazioni.eu) per i bandi di altri enti.
+
+    '
+
+- id: cciaa_gran_sasso_bandi
+  nome: Camera di Commercio Gran Sasso d'Italia (L'Aquila, Teramo) - Bandi
+  ente: Camera di Commercio del Gran Sasso d'Italia
+  tipo: camera
+  territorio: ABR
+  url: https://www.cameragransasso.camcom.it/it/la-camera/promozione-economica/bandi/
+  modalita: html
+  feed_url: null
+  piattaforma: isweb
+  frequenza: settimanale
+  stato: attiva
+  verificato_il: '2026-09-24'
+  note: 'Dominio corretto cameragransasso.camcom.it (gransasso.camcom.it e cciaagransasso.camcom.it non risolvono).
+    CMS IsWeb (come Roma). Pagina HTML con i bandi camerali di più annate: accesso al credito 2026, valorizzazione
+    del territorio 2026, internazionalizzazione 2025, nuove imprese giovanili e femminili 2025, eccellenze territoriali,
+    flussi turistici. Le voci nuove hanno sia URL parlante sia index.php?id_sezione=N. Pagina RSS (index.php?azione=paginarss)
+    senza canali attivi: rss.php?id=1..4 rispondono vuoti (4 byte).
+
+    '
+
+- id: cciaa_molise_bandi_rss
+  nome: Camera di Commercio del Molise - Bandi e contributi (feed)
+  ente: Camera di Commercio del Molise
+  tipo: camera
+  territorio: MOL
+  url: https://www.molise.camcom.gov.it/bandi?cerca=&field_bando_stato_value=aperto
+  modalita: rss
+  feed_url: https://www.molise.camcom.gov.it/bandi/rss.xml
+  piattaforma: drupal_camcom
+  frequenza: settimanale
+  stato: attiva
+  verificato_il: '2026-09-24'
+  note: 'Dominio corretto molise.camcom.gov.it (molise.camcom.it ha un certificato che non corrisponde e fallisce).
+    Drupal 9, modello comune. Feed dei soli bandi (10 voci, ultima 17/07/2026: Voucher Doppia Transizione 2026,
+    poi fiere collettive Golosaria, Mirabilia, premio Giuditta). Pagina HTML con filtro "aperto". Pagina descrittiva
+    per le persone: /promuovi-la-tua-impresa-e-il-tuo-territorio/bandi-il-sostegno-alle-imprese.
+
+    '
+
+- id: cciaa_napoli_rss
+  nome: Camera di Commercio di Napoli - Notizie (RSS)
+  ente: Camera di Commercio di Napoli
+  tipo: camera
+  territorio: CAM
+  url: https://na.camcom.it/notizie
+  modalita: rss
+  feed_url: https://na.camcom.it/rss.xml
+  piattaforma: drupal_camcom
+  frequenza: settimanale
+  stato: attiva
+  verificato_il: '2026-09-24'
+  note: 'Sito Drupal 9 della distribuzione Infocamere ("camcom"). La sezione /bandi esiste ma la vista è vuota (nessuna
+    scheda, solo il filtro Stato): Napoli pubblica i bandi come notizie in home e in /notizie (es. "Bando a sportello
+    Voucher Transizione Digitale (PID) 2025", "Bando Ammodernamento macchine e attrezzature Area flegrea"). Il feed
+    /rss.xml (10 voci, ultima 17/09/2026) mescola bandi, avvisi ed eventi: filtrare i titoli per "bando", "voucher",
+    "contributi". Usare l''host senza www: https://www.na.camcom.it ha un certificato TLS non valido (nome non corrispondente);
+    www.na.camcom.gov.it funziona ma è un doppione. /notizie/rss.xml non esiste (404).
+
+    '
+
+- id: cciaa_salerno_notizie
+  nome: Camera di Commercio di Salerno - Notizie, categoria Contributi e finanziamenti
+  ente: Camera di Commercio di Salerno
+  tipo: camera
+  territorio: CAM
+  url: null
+  modalita: html
+  feed_url: null
+  piattaforma: drupal_camcom
+  frequenza: settimanale
+  stato: difficile
+  verificato_il: '2026-09-24'
+  note: 'Sito Drupal 10 (distribuzione Infocamere). Le pagine rispondono 200 ma ai server mostrano solo il guscio:
+    il menu è vuoto, la mappa del sito è vuota, /bandi ha la vista senza schede, /notizie?field_notizia_categoria_tid=195
+    (categoria "Contributi e finanziamenti", 200) non contiene nessuna notizia, e le singole schede (es. /notizie/bando-pid-voucher-doppia-transizione-anno-2026-0,
+    trovata via motore di ricerca) rispondono 403 "Accesso negato" sia con curl sia con un secondo strumento. /rss.xml
+    e /bandi/rss.xml sono feed validi ma senza voci. Probabile protezione anti-bot o contenuti riservati: da riprovare
+    dal server di produzione o con browser senza interfaccia. Indirizzi tentati: https://www.sa.camcom.it/bandi,
+    .../notizie?field_notizia_categoria_tid=195, .../ricerca-per-argomenti?tid=431.
+
+    '
+
+- id: cciaa_caserta_bandi
+  nome: Camera di Commercio di Caserta - Bandi e incentivi
+  ente: Camera di Commercio di Caserta
+  tipo: camera
+  territorio: CAM
+  url: https://www.ce.camcom.it/bandi-incentivi
+  modalita: html
+  feed_url: null
+  piattaforma: drupal_camcom
+  frequenza: settimanale
+  stato: attiva
+  verificato_il: '2026-09-24'
+  note: 'Drupal 7 (distribuzione Infocamere). Pagina "Bandi e Incentivi" statica con elenco di bandi camerali e
+    relativi PDF (Digital 4 Business, Attestazione SOA, agricoltura, B2B filiera turistica...): da osservare le
+    variazioni dei link ai PDF in /sites/default/files/contenuto_redazione/. Non ha stato aperto/chiuso. Le novità
+    passano anche dal feed generale (voce separata cciaa_caserta_rss).
+
+    '
+
+- id: cciaa_caserta_rss
+  nome: Camera di Commercio di Caserta - Notizie (RSS)
+  ente: Camera di Commercio di Caserta
+  tipo: camera
+  territorio: CAM
+  url: https://www.ce.camcom.it/
+  modalita: rss
+  feed_url: https://www.ce.camcom.it/rss.xml
+  piattaforma: drupal_camcom
+  frequenza: settimanale
+  stato: attiva
+  verificato_il: '2026-09-24'
+  note: 'Feed generale delle notizie (10 voci, ultima 28/08/2026), con descrizione completa in HTML. Contiene avvisi
+    di ogni tipo: filtrare per "bando", "voucher", "contributi". Complementare alla pagina /bandi-incentivi.
+
+    '
+
+- id: cciaa_irpiniasannio_bandi
+  nome: Camera di Commercio Irpinia Sannio - Bandi e contributi (RSS)
+  ente: Camera di Commercio Irpinia Sannio
+  tipo: camera
+  territorio: CAM
+  url: https://www.irpiniasannio.camcom.it/bandi
+  modalita: rss
+  feed_url: https://www.irpiniasannio.camcom.it/bandi/rss.xml
+  piattaforma: drupal_camcom
+  frequenza: settimanale
+  stato: attiva
+  verificato_il: '2026-09-24'
+  note: 'Drupal 9 (distribuzione Infocamere) con il tipo di contenuto "bando" usato davvero: /bandi elenca le schede
+    con etichetta Aperto/Chiuso (oggi 3 aperti: Doppia Transizione 2026, Voucher fieristico I e II semestre 2026)
+    e /bandi/rss.xml le restituisce come feed (3 voci, ultima 03/07/2026). Il feed generale /rss.xml (10 voci) copre
+    le notizie, incluse proroghe ed elenchi ammessi. Copre Avellino e Benevento.
+
+    '
+
+- id: cciaa_bari_bandi
+  nome: Camera di Commercio di Bari - Bandi per sostegno alle imprese
+  ente: Camera di Commercio di Bari
+  tipo: camera
+  territorio: PUG
+  url: http://www.ba.camcom.it/info/bandi
+  modalita: html
+  feed_url: null
+  piattaforma: null
+  frequenza: settimanale
+  stato: difficile
+  verificato_il: '2026-09-24'
+  note: 'Il sito in HTTPS chiude la connessione ai nostri server (connection reset su https://www.ba.camcom.it/,
+    ripetuto in 4 tentativi; www.ba.camcom.gov.it non passa il proxy). In HTTP semplice la pagina indice http://www.ba.camcom.it/info/bandi
+    risponde 200 e rimanda a "BANDI PER SOSTEGNO ALLE IMPRESE" (/bari/bandi-per-sostegno-alle-imprese), "BANDI IMPRESE
+    STORICHE" e "BANDI DI ALTRI ENTI", ma quelle pagine reindirizzano (301) in HTTPS e quindi falliscono. In home
+    (sempre via HTTP) compaiono /info/bando-start-up-2026 e /info/bando-giovani-laureati-per-le-imprese-anno-2026.
+    CMS proprietario (pagine .php, nessun feed trovato). Da riprovare dal server di produzione: potrebbe essere
+    un blocco geografico o del proxy.
+
+    '
+
+- id: cciaa_brindisitaranto_bandi
+  nome: Camera di Commercio di Brindisi-Taranto - Bandi (RSS)
+  ente: Camera di Commercio di Brindisi - Taranto
+  tipo: camera
+  territorio: PUG
+  url: https://www.brta.camcom.it/taxonomy/term/589
+  modalita: rss
+  feed_url: https://www.brta.camcom.it/taxonomy/term/589/feed
+  piattaforma: drupal_camcom
+  frequenza: settimanale
+  stato: attiva
+  verificato_il: '2026-09-24'
+  note: 'Dominio brta.camcom.it (brindisitaranto.camcom.it non risolve). Drupal 10: le notizie con argomento "Bandi"
+    sono raccolte nel termine di tassonomia 589 (10 per pagina) e il feed corrispondente ha 10 voci, ultima 22/09/2026
+    (Bando Multintervento GAL, Bando Certificazione competenze 2025, Borse ITS Academy, Internazionalizzazione,
+    Start-up). Contiene anche liquidazioni e graduatorie: distinguere dal titolo. Feed generale: /rss.xml.
+
+    '
+
+- id: cciaa_foggia_bandi
+  nome: Camera di Commercio di Foggia - Bandi a sostegno delle imprese
+  ente: Camera di Commercio di Foggia
+  tipo: camera
+  territorio: PUG
+  url: https://www.fg.camcom.it/bandi-contributi/bandi-sostegno-imprese
+  modalita: html
+  feed_url: null
+  piattaforma: drupal
+  frequenza: settimanale
+  stato: attiva
+  verificato_il: '2026-09-24'
+  note: 'Drupal 9 con tema proprio. La pagina elenca i bandi per anno (Doppia Transizione 2023-2026, Internazionalizzazione
+    2023-2026, Turismo 2026, ITS Academy, Certificazione Ospitalità Italiana 2025-2026) con link a schede /bandi-contributi/<nome>;
+    l''indice /bandi-contributi separa "Avvisi" e "Concorsi e assunzioni". Nessun feed dedicato (/bandi-contributi/rss.xml
+    404); /rss.xml esiste ma ha una sola voce. www.fg.camcom.gov.it reindirizza qui.
+
+    '
+
+- id: cciaa_lecce_bandi
+  nome: Camera di Commercio di Lecce - Bandi e contributi
+  ente: Camera di Commercio di Lecce
+  tipo: camera
+  territorio: PUG
+  url: https://www.le.camcom.it/promozione-e-sviluppo-del-territorio/bandi-e-contributi
+  modalita: html
+  feed_url: null
+  piattaforma: drupal_camcom
+  frequenza: settimanale
+  stato: attiva
+  verificato_il: '2026-09-24'
+  note: 'Drupal 10 (distribuzione Infocamere). Pagina statica nella sezione Promozione con i bandi camerali (Voucher
+    Internazionalizzazione 2025, Sicurezza 2025, Transizione energetica 2025) e i PDF/modulistica; la vista /bandi
+    contiene solo "TEST bando" e /bandi/rss.xml una voce di prova. Il feed generale /rss.xml (10 voci, ultima 24/09/2026)
+    porta le notizie, incluse misure nazionali rilanciate. www.le.camcom.gov.it ha certificato scaduto.
+
+    '
+
+- id: cciaa_basilicata_promozione
+  nome: Camera di Commercio della Basilicata - Promozione (bandi)
+  ente: Camera di Commercio della Basilicata
+  tipo: camera
+  territorio: BAS
+  url: https://www.basilicata.camcom.it/promozione
+  modalita: html
+  feed_url: null
+  piattaforma: drupal_camcom
+  frequenza: settimanale
+  stato: attiva
+  verificato_il: '2026-09-24'
+  note: 'Drupal 10 (distribuzione Infocamere), sede Potenza e Matera. I bandi camerali sono pagine sotto /promozione/
+    (Bando Turismo 2024, Voucher Videoallarme Antirapina, Restart MPMI, accesso al credito, voucher digitali 4.0
+    in /promozione/innovazione-digitale/voucher-digitali-40) con "(Scaduto)" nel titolo quando chiusi; /avvisi-bandi
+    e /bandi mostrano solo bandi scaduti e avvisi d''esame. Il feed generale /rss.xml (10 voci, ultima 21/05/2026)
+    annuncia i nuovi bandi (es. "presentazione del Bando Voucher Videoallarme Antirapina 2026").
+
+    '
+
+- id: cciaa_cosenza_bandi
+  nome: Camera di Commercio di Cosenza -
+  ente: Camera di Commercio di Cosenza
+  tipo: camera
+  territorio: CAL
+  url: https://www.cs.camcom.it/it/content/service/versoleimprese-bandi-2026
+  modalita: html
+  feed_url: null
+  piattaforma: drupal_camcom
+  frequenza: settimanale
+  stato: attiva
+  verificato_il: '2026-09-24'
+  note: 'Drupal 10 (distribuzione Infocamere). Pagina annuale con tabella dei bandi camerali (codice, apertura,
+    chiusura, stanziamento, determine di concessione): nel 2026 AI Lab Cosenza, Attestazione SOA VI, Contributi
+    eventi alluvionali, Doppia Transizione, Filiera agroalimentare, Competitività imprese commerciali e turistiche.
+    Ogni anno l''indirizzo cambia (…/versoleimprese-bandi-2025 esiste): a gennaio aggiungere la pagina del nuovo
+    anno. Pagine collegate: /it/content/service/contributi-alle-imprese (istruzioni) e /it/content/service/avvisi-e-bandi-della-camera
+    (avvisi misti). Il feed /it/rss.xml è fermo a maggio 2024. www.cs.camcom.gov.it reindirizza qui.
+
+    '
+
+- id: cciaa_czkrvv_bandi
+  nome: Camera di Commercio di Catanzaro Crotone Vibo Valentia - Bandi promozione (RSS)
+  ente: Camera di Commercio di Catanzaro, Crotone e Vibo Valentia
+  tipo: camera
+  territorio: CAL
+  url: https://czkrvv.camcom.it/promuovi-limpresa/bandi-e-contributi/
+  modalita: rss
+  feed_url: https://czkrvv.camcom.it/category/bandi/bandi-promozione/feed/
+  piattaforma: wordpress
+  frequenza: settimanale
+  stato: attiva
+  verificato_il: '2026-09-24'
+  note: 'Dominio czkrvv.camcom.it (cz.camcom.it e cz.camcom.gov.it chiudono la connessione). WordPress: la pagina
+    "Bandi" elenca i bandi 2026 (Voucher Doppia Transizione, IA Impresa, eventi meteorologici, Mirabilia, tipicità
+    mediterranee) e la categoria "Bandi promozione" ha un feed con 10 voci (ultima 11/09/2026). La home, /feed/
+    e /category/bandi/ hanno rifiutato la connessione in 3 tentativi su 3 mentre le altre pagine rispondevano: se
+    il feed smette di rispondere, ripiegare sulla pagina HTML.
+
+    '
+
+- id: cciaa_reggiocalabria_opportunita
+  nome: Camera di Commercio di Reggio Calabria - Opportunità, contributi e premi
+  ente: Camera di Commercio di Reggio Calabria
+  tipo: camera
+  territorio: CAL
+  url: https://www.rc.camcom.gov.it/opportunita
+  modalita: html
+  feed_url: null
+  piattaforma: drupal_camcom
+  frequenza: settimanale
+  stato: attiva
+  verificato_il: '2026-09-24'
+  note: 'Drupal 10 (distribuzione Infocamere). Elenco paginato (?page=0..3) delle schede /bandi-e-avvisi/<nome>:
+    Bando efficientamento energetico e/o idrico 2026, Premi per l''innovazione 2026, Internazionalizzazione 2025,
+    progetto SEI, manifestazioni di interesse (Bergarè, MediterraNexus). Niente etichetta aperto/chiuso. La pagina
+    /bandi-e-avvisi e /opportunita/rss.xml non esistono; il feed generale /rss.xml (10 voci, ultima 24/09/2026)
+    riporta le stesse schede insieme alle notizie e può servire come secondo canale.
+
+    '
+
+- id: cciaa_palermoenna_home
+  nome: Camera di Commercio di Palermo Enna - Avvisi in home
+  ente: Camera di Commercio di Palermo Enna
+  tipo: camera
+  territorio: SIC
+  url: https://www.paen.camcom.it/it
+  modalita: html
+  feed_url: null
+  piattaforma: drupal_camcom
+  frequenza: settimanale
+  stato: da_verificare
+  verificato_il: '2026-09-24'
+  note: 'Drupal 9 (distribuzione Infocamere). La vista /it/bandi è vuota e il feed /it/rss.xml è fermo a novembre
+    2024, mentre la home pubblica avvisi datati 2026 (es. "<<04.08.2026>> Elenco dei fornitori abilitati al voucher
+    cloud computing e cybersecurity"). Pagina /it/promozione-internazionalizzazione senza elenco bandi; /it/notizie
+    reindirizza alle notizie del Comitato imprenditoria femminile. Da osservare la home e cercare, con un browser,
+    la pagina dei bandi PID (voucher digitali) che non è raggiungibile dal menu servito ai server.
+
+    '
+
+- id: cciaa_sudestsicilia_notizie
+  nome: Camera di Commercio del Sud Est Sicilia - Notizie (RSS)
+  ente: Camera di Commercio del Sud Est Sicilia (Catania, Ragusa, Siracusa)
+  tipo: camera
+  territorio: SIC
+  url: https://ctrgsr.camcom.gov.it/it/blog
+  modalita: rss
+  feed_url: https://ctrgsr.camcom.gov.it/it/rss.xml
+  piattaforma: drupal_camcom
+  frequenza: settimanale
+  stato: attiva
+  verificato_il: '2026-09-24'
+  note: 'Dominio ctrgsr.camcom.gov.it (www.ctrgsr.camcom.it non risolve). Drupal 7: i bandi sono notizie del "blog"
+    (elenco paginato /it/blog, 2 voci "Bando per la concessione di voucher alle MPMI del settore turismo" in prima
+    pagina) e il feed /it/rss.xml ha 10 voci, ultima 23/09/2026. Pagina tematica /it/voucher-digitali (Doppia Transizione).
+    /it/bandi non esiste; /it/blog/feed risponde senza voci.
+
+    '
+
+- id: cciaa_messina_notizie
+  nome: Camera di Commercio di Messina - Notizie (RSS)
+  ente: Camera di Commercio di Messina
+  tipo: camera
+  territorio: SIC
+  url: https://www.me.camcom.it/notizie
+  modalita: rss
+  feed_url: https://www.me.camcom.it/rss.xml
+  piattaforma: drupal_camcom
+  frequenza: settimanale
+  stato: attiva
+  verificato_il: '2026-09-24'
+  note: 'Drupal 7 (distribuzione Infocamere). La sezione /bandi (con feed /bandi/rss.xml, 4 voci) contiene gare,
+    avvisi CTU e bandi di altri enti, non i contributi; le agevolazioni per le imprese (Voucher 3 brevetti, bandi
+    Brevetti+ Marchi+ Disegni+, portale agevolazioni) sono pubblicate come notizie. Feed generale con 10 voci (ultima
+    27/07/2026): filtrare per "bando", "voucher", "contributi". Pochi bandi camerali propri.
+
+    '
+
+- id: cciaa_agrigento_voucher
+  nome: Camera di Commercio di Agrigento - Servizi con etichetta "voucher" (RSS)
+  ente: Camera di Commercio di Agrigento
+  tipo: camera
+  territorio: SIC
+  url: https://www.ag.camcom.it/tag_servizio/voucher/
+  modalita: rss
+  feed_url: https://www.ag.camcom.it/tag_servizio/voucher/feed/
+  piattaforma: wordpress
+  frequenza: settimanale
+  stato: attiva
+  verificato_il: '2026-09-24'
+  note: 'Assetto reale: l''accorpamento Agrigento-Caltanissetta-Trapani (decreto 2015) non è operativo, le tre Camere
+    hanno ancora siti e bandi propri. WordPress su www.ag.camcom.it (www.ag.camcom.gov.it non risponde). I bandi
+    sono "servizi" con etichetta voucher: feed di 8 voci, ultima 11/07/2026 ("Bando voucher PiD 2026 - scadenza
+    30/09/2026"). Feed generale /feed/ (10 voci) con avvisi di sede. Pagina tematica /servizio/promozione/punto-impresa-digitale/.
+
+    '
+
+- id: cciaa_caltanissetta_bandi
+  nome: Camera di Commercio di Caltanissetta - Bandi in corso
+  ente: Camera di Commercio di Caltanissetta
+  tipo: camera
+  territorio: SIC
+  url: https://www.cameracommercio.cl.it/amministrazione-trasparente-main/bandi-in-corso/bandi-in-corso/
+  modalita: html
+  feed_url: null
+  piattaforma: null
+  frequenza: settimanale
+  stato: attiva
+  verificato_il: '2026-09-24'
+  note: 'Dominio cameracommercio.cl.it (www.cl.camcom.it non risponde). CMS proprietario su IIS (le pagine mancanti
+    rispondono "Impossibile trovare il file o la directory"), nessun feed (/feed/ e /rss.xml 404). La pagina "Bandi
+    in corso" ha un elenco laterale con i bandi attivi (oggi solo "Bando Doppia Transizione 2026"); la home rilancia
+    le novità in /homenews/posts/. Camera ancora autonoma (vedi nota su Agrigento).
+
+    '
+
+- id: cciaa_trapani_notizie
+  nome: Camera di Commercio di Trapani - Archivio notizie
+  ente: Camera di Commercio di Trapani
+  tipo: camera
+  territorio: SIC
+  url: https://www.tp.camcom.it/notizie
+  modalita: html
+  feed_url: null
+  piattaforma: drupal_camcom
+  frequenza: settimanale
+  stato: attiva
+  verificato_il: '2026-09-24'
+  note: 'Drupal 9 (distribuzione Infocamere). La vista /bandi contiene solo schede "bando-test-1..4"; i bandi veri
+    sono notizie (es. "Progetto Doppia Transizione digitale ed ecologica - Bando Doppia Transizione anno 2026",
+    "Esiti procedimento contributi a fondo perduto alle associazioni"). L''archivio /notizie è paginato (?page=N).
+    Il feed /rss.xml è fermo a settembre 2022: non usarlo. Camera ancora autonoma (vedi nota su Agrigento); la pagina
+    /la-cciaa-di-trapani/cciaa-di-ag-cl-tp descrive solo il decreto di accorpamento del 2015.
+
+    '
+
+- id: cciaa_cagliarioristano_bandi
+  nome: Camera di Commercio di Cagliari-Oristano - Bandi e avvisi (RSS)
+  ente: Camera di Commercio di Cagliari-Oristano
+  tipo: camera
+  territorio: SAR
+  url: https://www.caor.camcom.it/bandi
+  modalita: rss
+  feed_url: https://www.caor.camcom.it/bandi/rss.xml
+  piattaforma: drupal_camcom
+  frequenza: settimanale
+  stato: attiva
+  verificato_il: '2026-09-24'
+  note: 'Drupal 9 (distribuzione Infocamere) con il tipo "bando" usato davvero: /bandi mostra le schede con etichetta
+    Aperto/Chiuso (6 aperte: Bando Doppia Transizione 2026, B2B Green Energy Istanbul, corsi apicoltori, avvisi
+    esami) e il feed ha 10 voci, ultima 26/08/2026. Contiene anche manifestazioni di interesse per sponsorizzazioni
+    e avvisi d''esame: filtrare per "bando", "voucher", "contributi".
+
+    '
+
+- id: cciaa_nordsardegna_contributi
+  nome: Camera di Commercio Nord Sardegna (Sassari) - Contributi
+  ente: Camera di Commercio Nord Sardegna
+  tipo: camera
+  territorio: SAR
+  url: https://www.ss.camcom.it/promozione-del-territorio/contributi
+  modalita: html
+  feed_url: null
+  piattaforma: drupal_camcom
+  frequenza: settimanale
+  stato: attiva
+  verificato_il: '2026-09-24'
+  note: 'Drupal 10 (distribuzione Infocamere). Pagina "Contributi" con i bandi in corso (Voucher Doppia Transizione
+    2026, Voucher Operatori Balneari 2025, Certificazione Competenze 2025/26, incentivi nuove attività nei piccoli
+    Comuni) e sezione /promozione-del-territorio/voucher-conclusi per quelli chiusi; la vista /bandi ha solo "test-bando".
+    Il feed generale /rss.xml (10 voci, ultima 22/09/2026) annuncia le novità sui bandi (es. incremento stanziamento
+    Doppia Transizione 2026); /notizie/rss.xml non esiste.
+
+    '
+
+- id: cciaa_nuoro_bandi
+  nome: Camera di Commercio di Nuoro - Bandi, avvisi e selezioni
+  ente: Camera di Commercio di Nuoro
+  tipo: camera
+  territorio: SAR
+  url: https://nu.camcom.it/it/camera/bandi/
+  modalita: html
+  feed_url: null
+  piattaforma: null
+  frequenza: settimanale
+  stato: da_verificare
+  verificato_il: '2026-09-24'
+  note: 'Con curl dal nostro proxy il sito non risponde (tunnel chiuso, 6 tentativi su nu.camcom.it e www.nu.camcom.it);
+    un secondo strumento ha aperto la pagina e letto l''elenco (contributi fiere e mostre 2° semestre 2026, iniziative
+    promozionali, selezioni Interreg, coworking) e un link "RSS" nel menu a /it/camera/informazione/rss/ (non verificato).
+    CMS proprietario (indirizzi /it/camera/bandi/bando/<nome>, allegati in /.galleries/): da riprovare dal server
+    di produzione e provare il feed. Pagina collegata: /it/servizi/creare-e-far-crescere-la-tua-impresa/contributi-e-compartecipazioni/.
+
+    '
+
+- id: unioncamere_puglia_bandi
+  nome: Unioncamere Puglia - Bandi, finanziamenti e gare (RSS)
+  ente: Unioncamere Puglia
+  tipo: camera
+  territorio: PUG
+  url: https://www.unioncamerepuglia.it/category/eventi-ed-iniziative/bandi-e-finanziamenti/
+  modalita: rss
+  feed_url: https://www.unioncamerepuglia.it/category/eventi-ed-iniziative/bandi-e-finanziamenti/feed/
+  piattaforma: wordpress
+  frequenza: settimanale
+  stato: attiva
+  verificato_il: '2026-09-24'
+  note: 'WordPress 6.8. Categoria "Bandi Finanziamenti e Gare" con feed di 12 voci (ultima 17/04/2026): avvisi propri
+    (contributi per sagre, fiere e manifestazioni) e call di terzi (HISTEK). Pubblica poco e mescola gare: bassa
+    priorità, ma il feed è pulito. Il feed generale /feed/ è aggiornato al 24/09/2026.
+
+    '
+
+- id: unioncamere_sicilia_bandi
+  nome: Unioncamere Sicilia - Bandi (RSS)
+  ente: Unioncamere Sicilia
+  tipo: camera
+  territorio: SIC
+  url: https://unioncameresicilia.it/c/bandi/
+  modalita: rss
+  feed_url: https://unioncameresicilia.it/c/bandi/feed/
+  piattaforma: wordpress
+  frequenza: settimanale
+  stato: attiva
+  verificato_il: '2026-09-24'
+  note: 'WordPress (senza meta generator). Categoria "Bandi" con feed di 10 voci (ultima 07/07/2026), in gran parte
+    gare e avvisi di selezione dell''Unione (vendita lotti industriali, DSS per le PMI): pochi contributi alle imprese.
+    Tenere con priorità bassa; non filtrare per la parola "gara" a priori, ma sulla scheda.
+
+    '
+
+- id: unioncamere_campania_sito
+  nome: Unioncamere Campania - Sito
+  ente: Unioncamere Campania
+  tipo: camera
+  territorio: CAM
+  url: https://www.unioncamere.campania.it/
+  modalita: html
+  feed_url: null
+  piattaforma: drupal
+  frequenza: mensile
+  stato: esclusa
+  verificato_il: '2026-09-24'
+  note: 'Drupal 7 senza sezione bandi: un solo "Avviso alle imprese: contributi assistenza tecnica" in home, feed
+    /rss.xml con 7 voci ferme a gennaio 2023. Sito non aggiornato: escluso. www.unioncamerecampania.it non risponde.
+
+    '
+
+- id: unioncamere_sardegna_sito
+  nome: Unioncamere Sardegna - Sito
+  ente: Unioncamere Sardegna
+  tipo: camera
+  territorio: SAR
+  url: https://unioncameresardegna.it/
+  modalita: html
+  feed_url: null
+  piattaforma: wordpress
+  frequenza: mensile
+  stato: esclusa
+  verificato_il: '2026-09-24'
+  note: 'WordPress 7.1 istituzionale (chi siamo, attività, trasparenza) senza pagina bandi né notizie sui contributi;
+    esiste solo il feed generale /feed/. Escluso: i bandi sardi sono sui siti delle tre Camere.
+
+    '
+

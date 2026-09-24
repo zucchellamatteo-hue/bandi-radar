@@ -1,0 +1,1918 @@
+# Comuni capoluogo e Province eccezione. Formato in README.md.
+# Voci verificate il 23/09/2026 con lettura diretta (docs/ricerche/2026-09-23_province_capoluoghi_parte2.md).
+# Gli elenchi comunali sono sempre misti (gare, concorsi, contributi a cittadini): filtrare per parole chiave
+# (imprese, attivita' produttive, commercio, contributo, voucher, bando) e far smistare il resto all'IA.
+
+- id: comune_trieste_bandi_contributi
+  nome: Comune di Trieste - Bandi per concessioni contributi
+  ente: Comune di Trieste
+  tipo: capoluogo
+  territorio: FVG
+  url: https://bandieconcorsi.comune.trieste.it/p/index/tipo/Bandi%20per%20Concessioni%20Contributi/
+  modalita: html
+  piattaforma: piattaforma_regionale_fvg
+  frequenza: settimanale
+  stato: attiva
+  verificato_il: 2026-09-23
+  note: Tabella HTML dei bandi per contributi; storico 2022-24, niente per imprese nel 2026. Filtro parole chiave.
+
+- id: comune_gorizia_sitemap
+  nome: Comune di Gorizia - sitemap del sito
+  ente: Comune di Gorizia
+  tipo: capoluogo
+  territorio: FVG
+  url: https://www.comune.gorizia.it/sitemap.xml
+  modalita: browser
+  piattaforma: piattaforma_regionale_fvg
+  frequenza: quindicinale
+  stato: difficile
+  verificato_il: 2026-09-23
+  note: Sito a pagina singola (Angular). Si osservano le URL nuove nella sitemap, il dettaglio richiede il browser.
+
+- id: comune_udine_avvisi
+  nome: Comune di Udine - Novita' > Avvisi
+  ente: Comune di Udine
+  tipo: capoluogo
+  territorio: FVG
+  url: https://www.comune.udine.it/Novita/Avvisi
+  modalita: html
+  piattaforma: opencity
+  frequenza: settimanale
+  stato: attiva
+  verificato_il: 2026-09-23
+  note: Tra i capoluoghi piu' attivi d'Italia per bandi alle imprese. Osservare anche /Novita/Comunicati.
+
+- id: comune_pordenone_bandi_api
+  nome: Comune di Pordenone - Altri bandi e avvisi pubblici (API JSON)
+  ente: Comune di Pordenone
+  tipo: capoluogo
+  territorio: FVG
+  url: https://www.comune.pordenone.it/it/amministrazione/bandi-di-gara-e-avvisi-pubblici/altri-bandi-e-avvisi-pubblici
+  modalita: api
+  feed_url: https://www.comune.pordenone.it/api/it/amministrazione/bandi-di-gara-e-avvisi-pubblici/altri-bandi-e-avvisi-pubblici
+  piattaforma: plone
+  frequenza: settimanale
+  stato: attiva
+  verificato_il: 2026-09-23
+  note: >
+    Plone 6: HTML vuoto, API JSON con header Accept: application/json. Anche gli avvisi:
+    https://www.comune.pordenone.it/api/@search?tipologia_notizia=Avviso&sort_on=effective&sort_order=descending&b_size=20
+
+- id: comune_milano_impresa
+  nome: Comune di Milano - Argomento Impresa e portale Economia e Lavoro
+  ente: Comune di Milano
+  tipo: capoluogo
+  territorio: LOM
+  url: https://www.comune.milano.it/argomenti/impresa
+  modalita: browser
+  frequenza: settimanale
+  stato: difficile
+  verificato_il: 2026-09-23
+  note: >
+    Da server risponde 403 (firewall applicativo) sia comune.milano.it sia economiaelavoro.comune.milano.it;
+    Matteo ha verificato a mano che i bandi per imprese ci sono. Dal VPS il sito risponde (24/09): provare
+    prima in html, poi browser. Non esiste open data sui bandi (dati.comune.milano.it ha solo i perimetri DUC).
+
+- id: comune_bergamo_avvisi
+  nome: Comune di Bergamo - Avvisi pubblici con procedura in corso
+  ente: Comune di Bergamo
+  tipo: capoluogo
+  territorio: LOM
+  url: https://www.comune.bergamo.it/avvisi-pubblici
+  modalita: html
+  piattaforma: drupal
+  frequenza: settimanale
+  stato: attiva
+  verificato_il: 2026-09-23
+  note: Tabella con scadenze; seconda pagina con ?page=1. Bandi per imprese ricorrenti.
+
+- id: comune_brescia_contributi
+  nome: Comune di Brescia - Contributi e agevolazioni sviluppo economico e turismo
+  ente: Comune di Brescia
+  tipo: capoluogo
+  territorio: LOM
+  url: https://www.comune.brescia.it/it/servizi/contributi-e-agevolazioni-tramite-bandi-relativi-all-area-sviluppo-economico-e-turismo
+  modalita: rss
+  feed_url: https://www.comune.brescia.it/it/news/feed
+  piattaforma: municipium
+  frequenza: settimanale
+  stato: attiva
+  verificato_il: 2026-09-23
+  note: Pagina dedicata ai contributi per imprese piu' il feed delle news (5 voci, filtrare per parole chiave).
+
+- id: comune_como_avvisi
+  nome: Comune di Como - Novita' > Avvisi
+  ente: Comune di Como
+  tipo: capoluogo
+  territorio: LOM
+  url: https://www.comune.como.it/novita/avvisi/
+  modalita: html
+  frequenza: quindicinale
+  stato: attiva
+  verificato_il: 2026-09-23
+  note: Elenco misto, bandi per imprese rari. L'RSS del sito copre solo eventi e notizie.
+
+- id: comune_cremona_avvisi
+  nome: Comune di Cremona - Novita' > Avvisi
+  ente: Comune di Cremona
+  tipo: capoluogo
+  territorio: LOM
+  url: https://www.comune.cremona.it/novita/avvisi
+  modalita: html
+  piattaforma: drupal
+  frequenza: quindicinale
+  stato: attiva
+  verificato_il: 2026-09-23
+  note: Elenco misto; rss.xml esiste ma e' vuoto.
+
+- id: comune_lecco_avvisi
+  nome: Comune di Lecco - Novita' > Avvisi
+  ente: Comune di Lecco
+  tipo: capoluogo
+  territorio: LOM
+  url: https://www.comune.lecco.it/Novita/Avvisi
+  modalita: html
+  piattaforma: opencity
+  frequenza: quindicinale
+  stato: attiva
+  verificato_il: 2026-09-23
+  note: Elenco misto, bandi per imprese rari.
+
+- id: comune_lodi_imprese
+  nome: Comune di Lodi - Servizi per enti e imprese
+  ente: Comune di Lodi
+  tipo: capoluogo
+  territorio: LOM
+  url: https://www.comune.lodi.it/flex/cm/pages/ServeBLOB.php/L/IT/IDPagina/11667
+  modalita: browser
+  piattaforma: flexcmp
+  frequenza: mensile
+  stato: difficile
+  verificato_il: 2026-09-23
+  note: Bassa priorita'; serve il browser.
+
+- id: comune_mantova_avvisi_rss
+  nome: Comune di Mantova - Avvisi
+  ente: Comune di Mantova
+  tipo: capoluogo
+  territorio: LOM
+  url: https://www.comune.mantova.it/it/news?type=1
+  modalita: rss
+  feed_url: https://www.comune.mantova.it/it/news/feed
+  piattaforma: municipium
+  frequenza: quindicinale
+  stato: attiva
+  verificato_il: 2026-09-23
+  note: Feed di 5 voci, filtrare per parole chiave.
+
+- id: comune_monza_avvisi_rss
+  nome: Comune di Monza - Avvisi
+  ente: Comune di Monza
+  tipo: capoluogo
+  territorio: LOM
+  url: https://www.comune.monza.it/it/news?type=1
+  modalita: rss
+  feed_url: https://www.comune.monza.it/it/news/feed
+  piattaforma: municipium
+  frequenza: quindicinale
+  stato: attiva
+  verificato_il: 2026-09-23
+  note: Feed di 5 voci, filtrare per parole chiave.
+
+- id: comune_pavia_avvisi_rss
+  nome: Comune di Pavia - Novita' > Avvisi
+  ente: Comune di Pavia
+  tipo: capoluogo
+  territorio: LOM
+  url: https://www.comune.pavia.it/novita/avvisi
+  modalita: rss
+  feed_url: https://www.comune.pavia.it/rss.xml
+  piattaforma: drupal
+  frequenza: settimanale
+  stato: attiva
+  verificato_il: 2026-09-23
+  note: RSS globale del sito, filtrare per parole chiave.
+
+- id: comune_sondrio_avvisi_rss
+  nome: Comune di Sondrio - Avvisi
+  ente: Comune di Sondrio
+  tipo: capoluogo
+  territorio: LOM
+  url: https://comune.sondrio.it/tipi_notizia/avvisi/
+  modalita: rss
+  feed_url: https://comune.sondrio.it/tipi_notizia/avvisi/feed/
+  piattaforma: wordpress_design_comuni
+  frequenza: settimanale
+  stato: attiva
+  verificato_il: 2026-09-23
+  note: Feed pulito degli avvisi; bandi per imprese nel 2025-26.
+
+- id: comune_varese_home
+  nome: Comune di Varese - home (avvisi)
+  ente: Comune di Varese
+  tipo: capoluogo
+  territorio: LOM
+  url: https://www.comune.varese.it/
+  modalita: browser
+  piattaforma: halley
+  frequenza: quindicinale
+  stato: difficile
+  verificato_il: 2026-09-23
+  note: Redirect via JavaScript, serve il browser. Link avvisi del tipo novita_NNN.html.
+
+- id: roma_capitale_bandi_sviluppo_economico
+  nome: Roma Capitale - Bandi Dipartimento Sviluppo Economico e Attivita' Produttive
+  ente: Roma Capitale
+  tipo: capoluogo
+  territorio: LAZ
+  url: https://www.comune.roma.it/web/it/bandi-e-concorsi.page?struttura=dip_ln
+  modalita: html
+  piattaforma: liferay
+  frequenza: settimanale
+  stato: attiva
+  verificato_il: 2026-09-23
+  note: HTML paginato, blocchi bando-concorso.page?contentId=BEC...; bandi per imprese ricorrenti.
+
+- id: comune_pesaro_nuove_imprese
+  nome: Comune di Pesaro - Contributi nuove imprese
+  ente: Comune di Pesaro
+  tipo: capoluogo
+  territorio: MAR
+  url: https://www.comune.pesaro.pu.it/contributinuoveimprese/notizie-contributi-nuove-imprese/archivio-notizie/
+  modalita: rss
+  feed_url: https://www.comune.pesaro.pu.it/novita-in-comune/rss/
+  piattaforma: typo3
+  frequenza: mensile
+  stato: attiva
+  verificato_il: 2026-09-23
+  note: Sezione dedicata; RSS generale del Comune da filtrare per "imprese" e "attivita' produttive".
+
+- id: comune_la_spezia_avvisi_api
+  nome: Comune della Spezia - Avvisi (API Plone)
+  ente: Comune della Spezia
+  tipo: capoluogo
+  territorio: LIG
+  url: https://www.comune.laspezia.it/novita/avvisi
+  modalita: api
+  feed_url: https://www.comune.laspezia.it/++api++/@search?path.query=/novita/avvisi&path.depth=1&sort_on=effective&sort_order=descending&b_size=30&metadata_fields=effective
+  piattaforma: plone
+  frequenza: settimanale
+  stato: attiva
+  verificato_il: 2026-09-23
+  note: "Header Accept: application/json. Bandi per botteghe e imprese ricorrenti. La piattaforma bandispezia (SPID) non e' osservabile."
+
+- id: provincia_lecco_bandi_contributi
+  nome: Provincia di Lecco - Bandi per contributi
+  ente: Provincia di Lecco
+  tipo: provincia
+  territorio: LOM
+  url: https://www.provincia.lecco.it/documenti-e-dati/bandi/bandi-per-contributi/
+  modalita: html
+  frequenza: mensile
+  stato: da_verificare
+  verificato_il: 2026-09-23
+  note: Non chiaro se i contributi sono per imprese o per Comuni; c'e' anche la rassegna mensile InformaBandi.
+
+- id: comune_taranto_avvisi_rss
+  nome: Comune di Taranto - Avvisi (economia, commercio, artigianato)
+  ente: Comune di Taranto
+  tipo: capoluogo
+  territorio: PUG
+  url: https://www.comune.taranto.it/it/news?type=3
+  modalita: rss
+  feed_url: https://www.comune.taranto.it/it/feeds
+  piattaforma: municipium
+  frequenza: settimanale
+  stato: attiva
+  verificato_il: 2026-09-23
+  note: "Filtro economia in html: /it/news-category/100269?type=3. Parole chiave contributo, imprese, voucher."
+
+- id: comune_bari_avvisi
+  nome: Comune di Bari - Avvisi, argomento imprese
+  ente: Comune di Bari
+  tipo: capoluogo
+  territorio: PUG
+  url: https://www.comune.bari.it/avvisi
+  modalita: html
+  piattaforma: liferay
+  frequenza: settimanale
+  stato: attiva
+  verificato_il: 2026-09-23
+  note: Priorita' bassa; filtrare i tag Imprese e Commercio. Anche /argomenti/imprese-e-attivita-economiche/imprese.
+
+- id: comune_ragusa_avvisi_rss
+  nome: Comune di Ragusa - Avvisi pubblici (sviluppo economico)
+  ente: Comune di Ragusa
+  tipo: capoluogo
+  territorio: SIC
+  url: https://www.comune.ragusa.it/it/news?type=3
+  modalita: rss
+  feed_url: https://www.comune.ragusa.it/it/feeds
+  piattaforma: municipium
+  frequenza: settimanale
+  stato: attiva
+  verificato_il: 2026-09-23
+  note: Bandi per imprese ricorrenti.
+
+- id: comune_messina_avvisi_rss
+  nome: Comune di Messina - Avvisi e comunicati
+  ente: Comune di Messina
+  tipo: capoluogo
+  territorio: SIC
+  url: https://www.comune.messina.it/it/news?type=3
+  modalita: rss
+  feed_url: https://www.comune.messina.it/it/feeds
+  piattaforma: municipium
+  frequenza: settimanale
+  stato: attiva
+  verificato_il: 2026-09-23
+  note: PON Metro Plus, imprese sociali. Anche /it/news?type=0.
+
+- id: comune_cagliari_bandi_contributi
+  nome: Comune di Cagliari - Bandi per contributi
+  ente: Comune di Cagliari
+  tipo: capoluogo
+  territorio: SAR
+  url: https://www.comune.cagliari.it/portale/page/it/bandi_contributi
+  modalita: browser
+  piattaforma: entando
+  frequenza: mensile
+  stato: difficile
+  verificato_il: 2026-09-23
+  note: Elenco caricato via JavaScript; RSS dinamico su /portale/page/it/rss.
+
+- id: comune_agrigento_avvisi_rss
+  nome: Comune di Agrigento - Avvisi
+  ente: Comune di Agrigento
+  tipo: capoluogo
+  territorio: SIC
+  url: https://comune.agrigento.it/tipi_notizia/avvisi/
+  modalita: rss
+  feed_url: https://comune.agrigento.it/tipi_notizia/avvisi/feed/
+  piattaforma: wordpress_design_comuni
+  frequenza: quindicinale
+  stato: attiva
+  verificato_il: 2026-09-23
+  note: Non chiaro se pubblica bandi per imprese; filtro parole chiave.
+
+- id: comune_sassari_novita_rss
+  nome: Comune di Sassari - Novita' (RSS)
+  ente: Comune di Sassari
+  tipo: capoluogo
+  territorio: SAR
+  url: https://www.comune.sassari.it/
+  modalita: rss
+  feed_url: https://www.comune.sassari.it/it/service/rss/rss_novita.xml
+  frequenza: quindicinale
+  stato: attiva
+  verificato_il: 2026-09-23
+  note: Elenco via JavaScript, ma il feed delle novita' funziona; filtro parole chiave.
+
+- id: provincia_sulcis_iglesiente_avvisi_rss
+  nome: Provincia del Sulcis Iglesiente - Avvisi
+  ente: Provincia del Sulcis Iglesiente
+  tipo: provincia
+  territorio: SAR
+  url: https://www.provinciasulcisiglesiente.it/it/news?type=3
+  modalita: rss
+  feed_url: https://www.provinciasulcisiglesiente.it/it/feeds
+  piattaforma: municipium
+  frequenza: mensile
+  stato: attiva
+  verificato_il: 2026-09-23
+  note: Bassa priorita'.
+
+- id: comune_lecce
+  nome: Comune di Lecce
+  ente: Comune di Lecce
+  tipo: capoluogo
+  territorio: PUG
+  url:
+  modalita: browser
+  frequenza: quindicinale
+  stato: da_verificare
+  verificato_il: 2026-09-23
+  note: Rifiuta le connessioni da server (https://www.comune.lecce.it). Da provare dal VPS o dal PC di Matteo.
+
+- id: comune_potenza
+  nome: Comune di Potenza
+  ente: Comune di Potenza
+  tipo: capoluogo
+  territorio: BAS
+  url:
+  modalita: browser
+  frequenza: quindicinale
+  stato: da_verificare
+  verificato_il: 2026-09-23
+  note: Rifiuta le connessioni da server (https://www.comune.potenza.it). Da provare dal VPS.
+
+- id: comune_barletta
+  nome: Comune di Barletta
+  ente: Comune di Barletta
+  tipo: capoluogo
+  territorio: PUG
+  url:
+  modalita: browser
+  piattaforma: publisys
+  frequenza: quindicinale
+  stato: da_verificare
+  verificato_il: 2026-09-23
+  note: Sito Angular (https://www.comune.barletta.bt.it/sito/), non leggibile da server. Da provare con browser dal VPS.
+
+# Voci verificate il 24/09/2026 con lettura diretta (docs/ricerche/2026-09-24_camere_capoluoghi.md).
+
+- id: comune_torino_avvisi
+  nome: Comune di Torino - Novita' > Avvisi
+  ente: Comune di Torino
+  tipo: capoluogo
+  territorio: PIE
+  url: https://www.comune.torino.it/novita/avvisi
+  modalita: html
+  feed_url: null
+  piattaforma: drupal
+  frequenza: settimanale
+  stato: attiva
+  verificato_il: '2026-09-24'
+  note: 'Drupal 9 (modello Design Comuni). Elenco ricco di avvisi per attivita'' economiche: nel 2026 "Agevolazioni
+    Canone Unico per attivita'' interessate da cantieri di lunga durata", "Rinnovo assegnazione immobile ad uso
+    commerciale", dehors, mercati. Il feed /rss.xml (200) contiene solo concessioni temporanee di suolo pubblico
+    per eventi, non gli avvisi; /novita/avvisi/rss risponde 404. La pagina /servizi/imprese-commercio e'' un catalogo
+    di servizi, senza bandi.
+
+    '
+
+- id: comune_cuneo_avvisi_rss
+  nome: Comune di Cuneo - Avvisi (feed RSS)
+  ente: Comune di Cuneo
+  tipo: capoluogo
+  territorio: PIE
+  url: https://www.comune.cuneo.it/notizie-tipi/avvisi/
+  modalita: rss
+  feed_url: https://www.comune.cuneo.it/notizie-tipi/avvisi/feed/
+  piattaforma: wordpress_design_comuni
+  frequenza: quindicinale
+  stato: attiva
+  verificato_il: '2026-09-24'
+  note: 'WordPress 7 con tema Design Comuni; le categorie stanno sotto /notizie-tipi/ (non /tipi_notizia/). Il server
+    chiude la connessione a intermittenza (2 tentativi su 4 falliti con "connection reset"): prevedere un nuovo
+    tentativo. Il feed (200) elenca avvisi misti; per le imprese nel 2026 solo "Fiera Nazionale del Marrone - adesioni",
+    "Saldi", "Albo operatori economici", "Mercati straordinari". Nessun contributo diretto visto.
+
+    '
+
+- id: comune_asti_avvisi
+  nome: Comune di Asti - Novita' > Avvisi
+  ente: Comune di Asti
+  tipo: capoluogo
+  territorio: PIE
+  url: https://www.comune.asti.it/novita/avvisi
+  modalita: html
+  feed_url: null
+  piattaforma: drupal
+  frequenza: quindicinale
+  stato: attiva
+  verificato_il: '2026-09-24'
+  note: 'Drupal 9 (Design Comuni). Nel 2026 avvisi per sponsorizzazioni Palio, manifestazioni d''interesse, mobilita'',
+    convenzioni; nessun contributo a imprese visto in prima pagina.
+
+    '
+
+- id: comune_alessandria_avvisi
+  nome: Comune di Alessandria - Novita' > Avvisi
+  ente: Comune di Alessandria
+  tipo: capoluogo
+  territorio: PIE
+  url: https://www.comune.alessandria.it/novita/avvisi
+  modalita: html
+  feed_url: null
+  piattaforma: drupal
+  frequenza: mensile
+  stato: attiva
+  verificato_il: '2026-09-24'
+  note: 'Drupal 9 (Design Comuni). Elenco corto: aste immobiliari, selezioni, servizio civile. Nessun bando per
+    imprese visto nel 2026.
+
+    '
+
+- id: comune_novara_avvisi
+  nome: Comune di Novara - Novita' > Avvisi
+  ente: Comune di Novara
+  tipo: capoluogo
+  territorio: PIE
+  url: https://www.comune.novara.it/novita/avvisi
+  modalita: html
+  feed_url: null
+  piattaforma: drupal
+  frequenza: mensile
+  stato: attiva
+  verificato_il: '2026-09-24'
+  note: 'Drupal 9 (Design Comuni). La sezione Avvisi contiene quasi solo ordinanze di viabilita''; le notizie (/novita/notizie)
+    sono eventi e cantieri. Nessun bando per imprese visto nel 2026; osservare comunque per parole chiave.
+
+    '
+
+- id: comune_vercelli_avvisi
+  nome: Comune di Vercelli - Novita' > Avvisi
+  ente: Comune di Vercelli
+  tipo: capoluogo
+  territorio: PIE
+  url: https://www.comune.vercelli.it/novita/avvisi
+  modalita: html
+  feed_url: null
+  piattaforma: drupal
+  frequenza: mensile
+  stato: attiva
+  verificato_il: '2026-09-24'
+  note: 'Drupal 9 (Design Comuni). Avvisi a cittadini (assegno natalita'', servizi scolastici, corsi OSS). Nessun
+    bando per imprese visto nel 2026.
+
+    '
+
+- id: comune_biella_avvisi_rss
+  nome: Comune di Biella - Avvisi (feed RSS)
+  ente: Comune di Biella
+  tipo: capoluogo
+  territorio: PIE
+  url: https://comune.biella.it/tipi_notizia/avvisi/
+  modalita: rss
+  feed_url: https://comune.biella.it/tipi_notizia/avvisi/feed/
+  piattaforma: wordpress_design_comuni
+  frequenza: quindicinale
+  stato: attiva
+  verificato_il: '2026-09-24'
+  note: 'WordPress 7 con tema Design Comuni, feed RSS standard. Visto "Contributi straordinari - attivita'' economiche
+    in quartieri collinari" (2026): il Comune pubblica bandi per imprese, anche se di rado. Il resto sono avvisi
+    generali.
+
+    '
+
+- id: comune_verbania_avvisi
+  nome: Comune di Verbania - Novita' > Avvisi
+  ente: Comune di Verbania
+  tipo: capoluogo
+  territorio: PIE
+  url: https://www.comune.verbania.it/Novita/Avvisi
+  modalita: html
+  feed_url: null
+  piattaforma: opencity
+  frequenza: mensile
+  stato: attiva
+  verificato_il: '2026-09-24'
+  note: 'OpenCity con paginazione /Novita/Avvisi/(offset)/24. /opendata/api risponde 410 (API dismessa). Il primo
+    tentativo e'' andato in timeout (25 s), il secondo ha risposto. Contenuti 2026 su cantieri, concorsi, contributi
+    a studenti e famiglie; nessun bando per imprese visto.
+
+    '
+
+- id: comune_aosta_avvisi_rss
+  nome: Comune di Aosta - Avvisi (Municipium, feed news)
+  ente: Comune di Aosta
+  tipo: capoluogo
+  territorio: VDA
+  url: https://www.comune.aosta.it/it/news?type=3
+  modalita: rss
+  feed_url: https://www.comune.aosta.it/it/news/feed
+  piattaforma: municipium
+  frequenza: mensile
+  stato: attiva
+  verificato_il: '2026-09-24'
+  note: 'Municipium. Il feed /it/news/feed e'' unico e il parametro type sembra ignorato (con ?type=3 restituisce
+    le stesse notizie generali), quindi filtrare per parole chiave. Avvisi 2026 su istruttoria pubblica, carte d''identita'',
+    selezioni CELVA; nessun bando per imprese visto.
+
+    '
+
+- id: comune_genova_avvisi
+  nome: Comune di Genova - Novita' > Avvisi
+  ente: Comune di Genova
+  tipo: capoluogo
+  territorio: LIG
+  url: https://www.comune.genova.it/novita/avvisi
+  modalita: html
+  feed_url: null
+  piattaforma: drupal
+  frequenza: settimanale
+  stato: attiva
+  verificato_il: '2026-09-24'
+  note: 'Drupal 11 (Design Comuni). Avvisi 2026 rivolti a operatori commerciali (fiere, graduatorie spuntisti) e
+    "Bando 2026B patrocini con partecipazione finanziaria"; nessun contributo diretto a imprese visto in prima pagina.
+    /novita/avvisi/rss e /servizi/imprese-commercio rispondono 404 (esiste /servizi/imprese-e-commercio, catalogo
+    servizi).
+
+    '
+
+- id: comune_savona_avvisi_rss
+  nome: Comune di Savona - Avvisi (Municipium, feed news)
+  ente: Comune di Savona
+  tipo: capoluogo
+  territorio: LIG
+  url: https://www.comune.savona.it/it/news?type=3
+  modalita: rss
+  feed_url: https://www.comune.savona.it/it/news/feed
+  piattaforma: municipium
+  frequenza: quindicinale
+  stato: attiva
+  verificato_il: '2026-09-24'
+  note: 'Municipium, stesso feed unico di Aosta (type ignorato). Avvisi 2026: "operatori economici interessati a
+    installazione e gestione di infrastrutture di ricarica", contributi a persone. Nessun contributo a imprese visto.
+
+    '
+
+- id: comune_imperia_avvisi_rss
+  nome: Comune di Imperia - Avvisi (Municipium, feed news)
+  ente: Comune di Imperia
+  tipo: capoluogo
+  territorio: LIG
+  url: https://www.comune.imperia.it/it/news?type=3
+  modalita: rss
+  feed_url: https://www.comune.imperia.it/it/news/feed
+  piattaforma: municipium
+  frequenza: mensile
+  stato: attiva
+  verificato_il: '2026-09-24'
+  note: 'Municipium, feed unico. Avvisi 2026 su garante anziani, borse di studio, manifestazioni commerciali temporanee.
+    Nessun bando per imprese visto. Esiste anche trasparenza.comune.imperia.it/page/77/avvisi (non aperta).
+
+    '
+
+- id: comune_venezia_sito
+  nome: Comune di Venezia - sito istituzionale
+  ente: Comune di Venezia
+  tipo: capoluogo
+  territorio: VEN
+  url: null
+  modalita: browser
+  feed_url: null
+  piattaforma: null
+  frequenza: settimanale
+  stato: difficile
+  verificato_il: '2026-09-24'
+  note: 'https://www.comune.venezia.it/ e https://live.comune.venezia.it/ rispondono 403 con pagina Incapsula (firewall
+    applicativo) anche con User-Agent da browser. Da riprovare dal VPS o col browser senza interfaccia; Venezia
+    pubblica di norma bandi per il commercio (centro storico, locali sfitti), quindi vale la pena insistere.
+
+    '
+
+- id: comune_padova_sitemap
+  nome: Comune di Padova - sitemap del sito
+  ente: Comune di Padova
+  tipo: capoluogo
+  territorio: VEN
+  url: https://www.comune.padova.it/sitemap.xml
+  modalita: browser
+  feed_url: null
+  piattaforma: null
+  frequenza: settimanale
+  stato: difficile
+  verificato_il: '2026-09-24'
+  note: 'padovanet.it non risponde (empty reply); il nuovo sito www.comune.padova.it e'' un''applicazione Angular
+    a pagina singola: /novita/avvisi risponde 200 ma senza contenuto. La sitemap (indice con ?page=1 e ?page=2)
+    elenca gli avvisi, es. "L''Italia delle donne - bando nazionale", manifestazioni d''interesse; si osservano
+    le URL nuove sotto /novita/avvisi/ e il dettaglio richiede il browser.
+
+    '
+
+- id: comune_verona_avvisi
+  nome: Comune di Verona - Novita' > Avvisi
+  ente: Comune di Verona
+  tipo: capoluogo
+  territorio: VEN
+  url: https://www.comune.verona.it/Novita/Avvisi
+  modalita: html
+  feed_url: null
+  piattaforma: opencity
+  frequenza: quindicinale
+  stato: attiva
+  verificato_il: '2026-09-24'
+  note: 'OpenCity, HTML completo. /opendata/api risponde 410. Molti avvisi di contributi ma a famiglie, associazioni,
+    centri estivi, politiche giovanili; per le imprese nel 2026 solo sponsorizzazioni e concessioni. Filtrare bene.
+
+    '
+
+- id: comune_vicenza_avvisi
+  nome: Comune di Vicenza - Novita' > Avvisi
+  ente: Comune di Vicenza
+  tipo: capoluogo
+  territorio: VEN
+  url: https://www.comune.vicenza.it/Novita/Avvisi
+  modalita: html
+  feed_url: null
+  piattaforma: opencity
+  frequenza: mensile
+  stato: attiva
+  verificato_il: '2026-09-24'
+  note: 'OpenCity. Avvisi 2026 su convocazioni, libri di testo, TARI, aste. Nessun bando per imprese visto; il comunicato
+    "Fuori Mostra Diffuso" coinvolge le attivita'' del centro ma non e'' un contributo.
+
+    '
+
+- id: comune_treviso_sito
+  nome: Comune di Treviso - sito myPortal
+  ente: Comune di Treviso
+  tipo: capoluogo
+  territorio: VEN
+  url: null
+  modalita: browser
+  feed_url: null
+  piattaforma: myportal
+  frequenza: quindicinale
+  stato: difficile
+  verificato_il: '2026-09-24'
+  note: 'myPortal (Regione Veneto, Angular): la home, /sitemap.xml, /robots.txt e /api/ restituiscono tutti la stessa
+    pagina vuota di 13 KB; /myportal/ chiude la connessione. Serve il browser senza interfaccia o la scoperta dell''API
+    interna. Indirizzo tentato https://www.comune.treviso.it/home
+
+    '
+
+- id: comune_belluno_sito
+  nome: Comune di Belluno - sito myPortal
+  ente: Comune di Belluno
+  tipo: capoluogo
+  territorio: VEN
+  url: null
+  modalita: browser
+  feed_url: null
+  piattaforma: myportal
+  frequenza: mensile
+  stato: difficile
+  verificato_il: '2026-09-24'
+  note: 'myPortal identico a Treviso (pagina vuota di 13 KB, anche /sitemap.xml). Indirizzo tentato https://www.comune.belluno.it/home
+
+    '
+
+- id: comune_rovigo_sito
+  nome: Comune di Rovigo - sito myPortal
+  ente: Comune di Rovigo
+  tipo: capoluogo
+  territorio: VEN
+  url: null
+  modalita: browser
+  feed_url: null
+  piattaforma: myportal
+  frequenza: mensile
+  stato: difficile
+  verificato_il: '2026-09-24'
+  note: 'myPortal identico a Treviso (pagina vuota di 13 KB, anche /sitemap.xml). Indirizzo tentato https://www.comune.rovigo.it/home
+
+    '
+
+- id: comune_trento_avvisi
+  nome: Comune di Trento - Novita' > Avvisi
+  ente: Comune di Trento
+  tipo: capoluogo
+  territorio: TN
+  url: https://www.comune.trento.it/Novita/Avvisi
+  modalita: html
+  feed_url: null
+  piattaforma: opencity
+  frequenza: quindicinale
+  stato: attiva
+  verificato_il: '2026-09-24'
+  note: 'OpenCity, HTML completo. Avvisi 2026 dominati da concorsi e selezioni; contributi solo straordinari (Palestina)
+    e alloggi. Nessun bando per imprese visto.
+
+    '
+
+- id: comune_bolzano_avvisi
+  nome: Comune di Bolzano - Novita' > Avvisi
+  ente: Comune di Bolzano
+  tipo: capoluogo
+  territorio: BZ
+  url: https://www.comune.bolzano.bz.it/Novita/Avvisi
+  modalita: html
+  feed_url: null
+  piattaforma: opencity
+  frequenza: quindicinale
+  stato: attiva
+  verificato_il: '2026-09-24'
+  note: 'OpenCity, HTML completo. Pubblica bandi propri (WE Women Empowerment 2027-2030, Youth In Action, contributi
+    ordinari associazioni, indagini di mercato per concessione immobili comunali). Nessun contributo diretto a imprese
+    visto, ma l''ente e'' attivo.
+
+    '
+
+- id: comune_bologna_sitemap
+  nome: Comune di Bologna - sitemap del sito
+  ente: Comune di Bologna
+  tipo: capoluogo
+  territorio: EMR
+  url: https://www.comune.bologna.it/sitemap.xml
+  modalita: browser
+  feed_url: null
+  piattaforma: myportal_lepida
+  frequenza: settimanale
+  stato: difficile
+  verificato_il: '2026-09-24'
+  note: 'Sito a pagina singola (my-render-library, stessa famiglia di portale.cittametropolitana.bo.it): /novita/avvisi
+    risponde 200 ma vuota. La sitemap (1,6 MB) e'' completa ed elenca /novita/avvisi, /argomenti/economia/imprese
+    e /servizi/imprese-commercio; si osservano le URL nuove, il dettaglio richiede il browser. Bologna pubblica
+    bandi per il commercio con regolarita'', quindi vale la pena investire.
+
+    '
+
+- id: comune_modena_avvisi_api
+  nome: Comune di Modena - Novita' > Avvisi (API Plone)
+  ente: Comune di Modena
+  tipo: capoluogo
+  territorio: EMR
+  url: https://www.comune.modena.it/novita/avvisi
+  modalita: api
+  feed_url: https://www.comune.modena.it/++api++/@search?portal_type=News%20Item&path=/novita/avvisi&sort_on=effective&sort_order=descending&b_size=20
+  piattaforma: plone
+  frequenza: settimanale
+  stato: attiva
+  verificato_il: '2026-09-24'
+  note: 'Plone 6 (Volto, io-Comune): l''HTML e'' vuoto, l''API JSON risponde senza header speciali (24 avvisi, con
+    date). Esiste anche /novita/avvisi/RSS ma elenca solo le cartelle per anno. Avvisi 2026 su spettacolo viaggiante,
+    fiere e graduatorie di spunta, aste; per le imprese cercare anche in /novita/notizie.
+
+    '
+
+- id: comune_parma_sito
+  nome: Comune di Parma - sito istituzionale
+  ente: Comune di Parma
+  tipo: capoluogo
+  territorio: EMR
+  url: null
+  modalita: html
+  feed_url: null
+  piattaforma: null
+  frequenza: settimanale
+  stato: difficile
+  verificato_il: '2026-09-24'
+  note: 'http://www.comune.parma.it/ reindirizza a https ma la connessione TLS fallisce (SSL_ERROR_SYSCALL) in 2
+    tentativi dal cloud; probabile blocco del proxy o del firewall dell''ente. Da riprovare dal VPS. Indirizzo tentato
+    https://www.comune.parma.it/
+
+    '
+
+- id: comune_reggio_emilia_avvisi_api
+  nome: Comune di Reggio Emilia - Novita' > Avvisi (API Plone)
+  ente: Comune di Reggio Emilia
+  tipo: capoluogo
+  territorio: EMR
+  url: https://www.comune.reggioemilia.it/novita/avvisi
+  modalita: api
+  feed_url: https://www.comune.reggioemilia.it/++api++/@search?portal_type=News%20Item&path=/novita/avvisi&sort_on=effective&sort_order=descending&b_size=20
+  piattaforma: plone
+  frequenza: quindicinale
+  stato: attiva
+  verificato_il: '2026-09-24'
+  note: 'Plone 6 (Volto): HTML vuoto, API JSON valida (162 avvisi) e anche RSS a /novita/avvisi/RSS (200, con titoli).
+    Nel campo effective l''API restituisce vuoto, usare l''ordine. Avvisi 2026 quasi tutti su viabilita'', nidi,
+    Fondo Affitto; nessun bando per imprese visto. Esiste /servizi/attivita-produttive-e-commercio (catalogo).
+
+    '
+
+- id: comune_ferrara_avvisi
+  nome: Comune di Ferrara - Novita' > Avvisi
+  ente: Comune di Ferrara
+  tipo: capoluogo
+  territorio: EMR
+  url: https://www.comune.ferrara.it/it/novit%C3%A0/avvisi
+  modalita: browser
+  feed_url: null
+  piattaforma: nextjs
+  frequenza: quindicinale
+  stato: difficile
+  verificato_il: '2026-09-24'
+  note: 'Sito Next.js: la pagina risponde 200 con il titolo "Tutti gli avvisi" ma l''elenco viene caricato via JavaScript
+    (nessun link agli avvisi nell''HTML, nessun endpoint API individuato). Serve il browser. In home rimandano a
+    appalti.comune.ferrara.it (PortaleAppalti, solo gare).
+
+    '
+
+- id: comune_ravenna_novita
+  nome: Comune di Ravenna - Novita'
+  ente: Comune di Ravenna
+  tipo: capoluogo
+  territorio: EMR
+  url: https://comune.ravenna.it/novita/
+  modalita: html
+  feed_url: null
+  piattaforma: wordpress_design_comuni
+  frequenza: quindicinale
+  stato: attiva
+  verificato_il: '2026-09-24'
+  note: 'WordPress 6.9 con tema Design Comuni. La categoria /novita/avviso/ e'' quasi vuota (solo "oggetti rinvenuti");
+    i bandi escono come comunicati stampa (es. "Bando affitto 2026", "Casa Melandri - asta per concessione d''uso").
+    Il feed di categoria risponde 404 e il feed generale /feed/ e'' vuoto; osservare la pagina HTML.
+
+    '
+
+- id: comune_forli_avvisi_rss
+  nome: Comune di Forli' - Avvisi (Municipium, feed news)
+  ente: Comune di Forli'
+  tipo: capoluogo
+  territorio: EMR
+  url: https://www.comune.forli.fc.it/it/news?type=3
+  modalita: rss
+  feed_url: https://www.comune.forli.fc.it/it/news/feed
+  piattaforma: municipium
+  frequenza: quindicinale
+  stato: attiva
+  verificato_il: '2026-09-24'
+  note: 'Municipium, feed unico (type ignorato). 2026: "Forli'' che Brilla - ricerca sponsorizzazioni", contributi
+    affitto, graduatorie ERP. Nessun contributo a imprese visto.
+
+    '
+
+- id: comune_rimini_bandi_contributi
+  nome: Comune di Rimini - Amministrazione > Bandi > Bandi per contributi
+  ente: Comune di Rimini
+  tipo: capoluogo
+  territorio: EMR
+  url: https://www.comune.rimini.it/amministrazione/bandi/bandi-contributi
+  modalita: html
+  feed_url: null
+  piattaforma: drupal
+  frequenza: quindicinale
+  stato: attiva
+  verificato_il: '2026-09-24'
+  note: 'Drupal 10 (Design Comuni) con una sezione dedicata ai bandi per contributi (oltre a /amministrazione/bandi/altri-bandi
+    e /novita/avvisi, che contiene allerte meteo). Nel 2026: contributi per manifestazioni e grandi eventi, progetti
+    turistici, festival cinematografici, presepe di sabbia. Utile per imprese del turismo e degli eventi.
+
+    '
+
+- id: comune_piacenza_avvisi_rss
+  nome: Comune di Piacenza - Avvisi (Municipium, feed news)
+  ente: Comune di Piacenza
+  tipo: capoluogo
+  territorio: EMR
+  url: https://www.comune.piacenza.it/it/news?type=3
+  modalita: rss
+  feed_url: https://www.comune.piacenza.it/it/news/feed
+  piattaforma: municipium
+  frequenza: quindicinale
+  stato: attiva
+  verificato_il: '2026-09-24'
+  note: 'Municipium, feed unico. La pagina ?type=3 ha risposto 404 al primo tentativo e 200 al secondo. Avvisi 2026
+    su bonus sociali, borse di studio, "istanza per installazione infrastrutture di ricarica su suolo pubblico",
+    project financing. Nessun contributo a imprese visto. Esiste /it/page/imprese-e-commercio-139 (catalogo servizi).
+
+    '
+
+- id: provincia_belluno_sito
+  nome: Provincia di Belluno - sito myPortal
+  ente: Provincia di Belluno
+  tipo: provincia
+  territorio: VEN
+  url: null
+  modalita: browser
+  feed_url: null
+  piattaforma: myportal
+  frequenza: mensile
+  stato: difficile
+  verificato_il: '2026-09-24'
+  note: 'myPortal (Angular): home e /sitemap.xml restituiscono la stessa pagina vuota di 6 KB, impossibile verificare
+    dal cloud se esistano contributi per imprese. Da riprovare col browser. Indirizzo tentato https://www.provincia.belluno.it/home
+
+    '
+
+- id: provincia_treviso_avvisi
+  nome: Provincia di Treviso - Bandi, concorsi e avvisi > Avvisi
+  ente: Provincia di Treviso
+  tipo: provincia
+  territorio: VEN
+  url: https://www.provincia.treviso.it/index.php/it/bandi-concorsi-e-avvisi/avvisi
+  modalita: html
+  feed_url: null
+  piattaforma: joomla
+  frequenza: mensile
+  stato: esclusa
+  verificato_il: '2026-09-24'
+  note: 'Joomla, pagina aperta e leggibile. Gli avvisi 2026 sono lavori stradali, vendita mezzi, nomine, "Reteventi
+    Cultura Veneto - concessione contributi" (enti culturali) e "contributi ai Comuni per recupero valori paesaggistici".
+    Nessun contributo per imprese: esclusa, da rivalutare solo se segnalato.
+
+    '
+
+- id: citta_metropolitana_bologna_sitemap
+  nome: Citta' metropolitana di Bologna - sitemap del portale
+  ente: Citta' metropolitana di Bologna
+  tipo: provincia
+  territorio: EMR
+  url: https://portale.cittametropolitana.bo.it/sitemap.xml
+  modalita: browser
+  feed_url: null
+  piattaforma: myportal_lepida
+  frequenza: quindicinale
+  stato: difficile
+  verificato_il: '2026-09-24'
+  note: 'Portale a pagina singola (my-render-library Lepida): /novita/avvisi e /amministrazione/documenti-e-dati/avvisi-bandi
+    rispondono 200 ma vuote. La sitemap (1 MB) conferma pagine "argomenti/imprese", "argomenti/contributi" e comunicati
+    tipo "Vetrina - spazi che diventano impresa, aperta la call" e "graduatoria progetti beneficiari": pubblica
+    davvero bandi per imprese. Osservare le URL nuove della sitemap, dettaglio col browser.
+
+    '
+
+- id: citta_metropolitana_milano_novita
+  nome: Citta' metropolitana di Milano - Novita'
+  ente: Citta' metropolitana di Milano
+  tipo: provincia
+  territorio: LOM
+  url: https://www.cittametropolitana.mi.it/novita/
+  modalita: html
+  feed_url: null
+  piattaforma: null
+  frequenza: mensile
+  stato: attiva
+  verificato_il: '2026-09-24'
+  note: 'CMS proprietario, HTML completo. Non esiste una pagina "bandi per imprese" (/bandi/ e /novita/avviso/ rispondono
+    404; /servizi/Bandi-di-gara-e-contratti-00001/ sono gare). Le opportunita'' escono come notizie: settembre 2026
+    "Metrotranvia Milano-Seregno, contributi ai commercianti, domande fino al 5 ottobre". Filtrare per parole chiave.
+
+    '
+
+- id: citta_metropolitana_torino_sviluppo_economico
+  nome: Citta' metropolitana di Torino - Sviluppo economico
+  ente: Citta' metropolitana di Torino
+  tipo: provincia
+  territorio: PIE
+  url: https://www.cittametropolitana.torino.it/sviluppo-economico/attivita-produttive-e-innovazione
+  modalita: html
+  feed_url: null
+  piattaforma: drupal
+  frequenza: mensile
+  stato: attiva
+  verificato_il: '2026-09-24'
+  note: 'Drupal 10. Nessun elenco unico di bandi: la sezione Appalti ha solo manifestazioni d''interesse. L''unica
+    misura per imprese trovata e'' "InnoSocialMetro" (imprese sociali, seconda edizione) in /sviluppo-economico/economia-sociale/
+    misura-innosocialmetro. Osservare la pagina Attivita'' produttive e innovazione per nuove misure; resa bassa.
+
+    '
+
+- id: comune_firenze_avvisi
+  nome: Comune di Firenze - Novita' > Avvisi
+  ente: Comune di Firenze
+  tipo: capoluogo
+  territorio: TOS
+  url: https://www.comune.firenze.it/novita/avvisi
+  modalita: html
+  feed_url: null
+  piattaforma: drupal
+  frequenza: settimanale
+  stato: attiva
+  verificato_il: '2026-09-24'
+  note: 'Drupal (modello Design Comuni). Nessun feed trovato (/rss.xml e /novita/avvisi/feed danno 404). Bandi per
+    imprese visti il 24/09: "Contributi per la valorizzazione delle attivita'' storiche e commerciali, domande fino
+    al 25 settembre 2026". Esiste anche la pagina argomento https://www.comune.firenze.it/argomenti/imprese (aperta,
+    200).
+
+    '
+
+- id: comune_pisa_avvisi
+  nome: Comune di Pisa - Novita' > Avvisi
+  ente: Comune di Pisa
+  tipo: capoluogo
+  territorio: TOS
+  url: https://www.comune.pisa.it/Novita/Avvisi
+  modalita: html
+  feed_url: null
+  piattaforma: opencity
+  frequenza: settimanale
+  stato: attiva
+  verificato_il: '2026-09-24'
+  note: 'OpenCity con percorsi maiuscoli (/Novita/Avvisi; il vecchio /it/novita/avvisi risponde 410). Paginazione
+    /Novita/Avvisi/(offset)/24. L''API /opendata/api risponde ma la classe "avviso" non esiste, nome della classe
+    da scoprire. Bandi per imprese visti: "Pisa is much more - botteghe, idee e futuro" (manifestazione di interesse
+    per fondi sfitti nelle aree bersaglio, rigenerazione commerciale), "Riconoscimento bottega storica o EPIC",
+    convenzione riduzione tariffaria per alberghi e ristoranti.
+
+    '
+
+- id: comune_livorno_avvisi
+  nome: Comune di Livorno - Novita' > Avvisi
+  ente: Comune di Livorno
+  tipo: capoluogo
+  territorio: TOS
+  url: https://www.comune.livorno.it/it/news?type=3
+  modalita: rss
+  feed_url: https://www.comune.livorno.it/it/news/feed
+  piattaforma: municipium
+  frequenza: quindicinale
+  stato: attiva
+  verificato_il: '2026-09-24'
+  note: 'Municipium. Feed di 5 voci su tutte le news, filtrare per parole chiave. Nessun contributo alle imprese
+    visto il 24/09: avvisi per locali del Mercato Centrale al terzo settore, gestori di residenze universitarie,
+    servizio DMC turistica.
+
+    '
+
+- id: comune_lucca_novita
+  nome: Comune di Lucca - Novita'
+  ente: Comune di Lucca
+  tipo: capoluogo
+  territorio: TOS
+  url: https://www.comune.lucca.it/novita/
+  modalita: html
+  feed_url: null
+  piattaforma: wordpress_design_comuni
+  frequenza: quindicinale
+  stato: attiva
+  verificato_il: '2026-09-24'
+  note: 'WordPress Design Comuni ma l''archivio /tipi_notizia/avvisi/ restituisce la home e i feed (/feed/, /tipi_notizia/avvisi/feed/)
+    sono vuoti, come /wp-json/wp/v2/posts. Si osserva l''elenco generale /novita/ (paginato, 113 pagine). Nessun
+    contributo alle imprese visto il 24/09 (licenza taxi, partenariati pubblico-privato, buoni scuola).
+
+    '
+
+- id: comune_prato_avvisi
+  nome: Comune di Prato - Novita' > Avvisi
+  ente: Comune di Prato
+  tipo: capoluogo
+  territorio: TOS
+  url: https://www.comune.prato.it/it/novita/avvisi/pagina4211.html
+  modalita: html
+  feed_url: null
+  piattaforma: sito_proprio
+  frequenza: quindicinale
+  stato: attiva
+  verificato_il: '2026-09-24'
+  note: 'Sito proprio con kit Bootstrap Italia. Elenco corto (6 elementi), il link RSS in pagina (index.php?pagsistema=rsskit)
+    da'' 404. Il 24/09 nessun contributo alle imprese: avviso per progetti di animazione natalizia (luminarie nelle
+    frazioni), contributi pari opportunita'', Nidi gratis per gestori privati. Esiste la categoria di servizio "Imprese
+    e commercio" da esplorare.
+
+    '
+
+- id: comune_pistoia_avvisi
+  nome: Comune di Pistoia - Novita' > Avvisi
+  ente: Comune di Pistoia
+  tipo: capoluogo
+  territorio: TOS
+  url: https://www.comune.pistoia.it/it/news?type=3
+  modalita: rss
+  feed_url: https://www.comune.pistoia.it/it/news/feed
+  piattaforma: municipium
+  frequenza: quindicinale
+  stato: attiva
+  verificato_il: '2026-09-24'
+  note: 'Municipium. Feed di 5 voci su tutte le news. Il 24/09 solo "Allestimenti natalizi, manifestazione di interesse
+    prorogata"; il resto e'' urbanistica, elettorale, terzo settore. Pagina tematica /it/page/imprese-e-commercio.
+
+    '
+
+- id: comune_arezzo_avvisi
+  nome: Comune di Arezzo - Novita' > Avvisi
+  ente: Comune di Arezzo
+  tipo: capoluogo
+  territorio: TOS
+  url: https://www.comune.arezzo.it/novita/avvisi
+  modalita: rss
+  feed_url: https://www.comune.arezzo.it/taxonomy/term/834/feed/all
+  piattaforma: drupal
+  frequenza: quindicinale
+  stato: attiva
+  verificato_il: '2026-09-24'
+  note: 'Drupal Design Comuni con feed RSS della tassonomia Avvisi (aperto, 80 KB). Il 24/09 nessun contributo alle
+    imprese: viabilita'', albo cooperative sociali, rimborsi centri estivi. Osservare anche /novita/notizie.
+
+    '
+
+- id: comune_siena_avvisi
+  nome: Comune di Siena - Avvisi
+  ente: Comune di Siena
+  tipo: capoluogo
+  territorio: TOS
+  url: https://www.comune.siena.it/tipi-di-notizia/avvisi
+  modalita: rss
+  feed_url: https://www.comune.siena.it/taxonomy/term/409/feed
+  piattaforma: drupal
+  frequenza: settimanale
+  stato: attiva
+  verificato_il: '2026-09-24'
+  note: 'Drupal Design Comuni con feed RSS completo. Tra i piu'' interessanti del Centro: "Avviso pubblico per la
+    concessione di benefici economici e contributi a sostegno delle attivita'' economiche ubicate nel centro storico
+    di Siena - anno 2026", manifestazione di interesse per esercenti enogastronomia e artigianato, posteggi per
+    il Palio. Categoria servizi /categorie-dei-servizi/imprese-e-commercio.
+
+    '
+
+- id: comune_grosseto_sito
+  nome: Comune di Grosseto - sito istituzionale
+  ente: Comune di Grosseto
+  tipo: capoluogo
+  territorio: TOS
+  url: null
+  modalita: browser
+  feed_url: null
+  piattaforma: null
+  frequenza: quindicinale
+  stato: difficile
+  verificato_il: '2026-09-24'
+  note: 'www.comune.grosseto.it risponde 403 Forbidden a tutto (home, robots.txt), anche con User-Agent da browser;
+    new.comune.grosseto.it chiude la connessione TLS. Da provare dal VPS o con browser.
+
+    '
+
+- id: comune_massa_avvisi
+  nome: Comune di Massa - Avvisi
+  ente: Comune di Massa
+  tipo: capoluogo
+  territorio: TOS
+  url: https://www.comune.massa.ms.it/tipi-di-notizia/avvisi
+  modalita: rss
+  feed_url: https://www.comune.massa.ms.it/taxonomy/term/409/feed
+  piattaforma: drupal
+  frequenza: quindicinale
+  stato: attiva
+  verificato_il: '2026-09-24'
+  note: 'Il dominio giusto e'' comune.massa.ms.it (www.comune.massa.it ha un certificato non valido e in http rimanda
+    a un server terzo). Drupal Design Comuni con feed RSS completo. Il 24/09 nessun contributo alle imprese (contributo
+    affitto, bando libri, asta immobili, gestione parco). Categoria servizi /categorie-dei-servizi/imprese-e-commercio.
+
+    '
+
+- id: comune_perugia_avvisi
+  nome: Comune di Perugia - Avvisi
+  ente: Comune di Perugia
+  tipo: capoluogo
+  territorio: UMB
+  url: https://www.comune.perugia.it/tipi_notizia/avvisi/
+  modalita: html
+  feed_url: null
+  piattaforma: wordpress_design_comuni
+  frequenza: quindicinale
+  stato: attiva
+  verificato_il: '2026-09-24'
+  note: 'WordPress Design Comuni, elenco lungo e paginato. I feed (/tipi_notizia/avvisi/feed/, /novita/feed/) rimandano
+    alla home o danno 404. Il 24/09 nessun contributo alle imprese in prima pagina (posteggi Fiera dei Morti, voucher
+    sport per giovani, incarichi, immobili al terzo settore).
+
+    '
+
+- id: comune_terni_avvisi
+  nome: Comune di Terni - Novita' > Avvisi
+  ente: Comune di Terni
+  tipo: capoluogo
+  territorio: UMB
+  url: https://www.comune.terni.it/novita/avvisi
+  modalita: html
+  feed_url: null
+  piattaforma: drupal
+  frequenza: mensile
+  stato: attiva
+  verificato_il: '2026-09-24'
+  note: 'Drupal. Elenco quasi vuoto (2-3 voci, es. Consulta del turismo); /rss.xml esiste ma e'' il feed delle segnalazioni
+    di disservizio, inutile. Osservare anche /novita/notizie. Nessun bando per imprese visto.
+
+    '
+
+- id: comune_ancona_avvisi
+  nome: Comune di Ancona - Novita' > Avvisi
+  ente: Comune di Ancona
+  tipo: capoluogo
+  territorio: MAR
+  url: https://www.comune.ancona.it/it/news?type=3
+  modalita: rss
+  feed_url: https://www.comune.ancona.it/it/news/feed
+  piattaforma: municipium
+  frequenza: quindicinale
+  stato: attiva
+  verificato_il: '2026-09-24'
+  note: 'Municipium. Feed di 5 voci su tutte le news. Il 24/09 voci per operatori economici ma non contributi (elenco
+    operatori "Teen Factory Lab", segnalazione danni maltempo imprese agricole via SIAR, gestione impianti). Filtrare
+    per parole chiave.
+
+    '
+
+- id: comune_macerata_sito
+  nome: Comune di Macerata - sito istituzionale
+  ente: Comune di Macerata
+  tipo: capoluogo
+  territorio: MAR
+  url: null
+  modalita: browser
+  feed_url: null
+  piattaforma: null
+  frequenza: quindicinale
+  stato: difficile
+  verificato_il: '2026-09-24'
+  note: 'www.comune.macerata.it e comune.macerata.it chiudono la connessione (connection reset) in https; in http
+    risponde 503. Indirizzo tentato https://www.comune.macerata.it/. Da provare dal VPS.
+
+    '
+
+- id: comune_fermo_avvisi
+  nome: Comune di Fermo - Novita' > Avvisi
+  ente: Comune di Fermo
+  tipo: capoluogo
+  territorio: MAR
+  url: https://www.comune.fermo.it/Novita/Avvisi
+  modalita: html
+  feed_url: null
+  piattaforma: opencity
+  frequenza: mensile
+  stato: attiva
+  verificato_il: '2026-09-24'
+  note: 'OpenCity (stessa famiglia di Pisa). Il 24/09 solo avvisi per cittadini (orti urbani, borse di studio, trasporto
+    scolastico, viabilita''); nessun bando per imprese. API opendata non provata.
+
+    '
+
+- id: comune_ascoli_piceno_avvisi
+  nome: Comune di Ascoli Piceno - Avvisi
+  ente: Comune di Ascoli Piceno
+  tipo: capoluogo
+  territorio: MAR
+  url: https://www.comune.ap.it/avvisi
+  modalita: html
+  feed_url: null
+  piattaforma: flexcmp
+  frequenza: mensile
+  stato: attiva
+  verificato_il: '2026-09-24'
+  note: 'Sito proprio (FlexCMP, pagine ServeBLOB.php/L/IT/IDPagina/N). Elenco HTML con data e titolo, misto: gare
+    per conto di altri comuni, sociale, nomine. Nessun bando per imprese visto. Esiste anche /bandigaraecontratti
+    (non aperto).
+
+    '
+
+- id: comune_latina_avvisi
+  nome: Comune di Latina - Novita' > Avvisi (RSS)
+  ente: Comune di Latina
+  tipo: capoluogo
+  territorio: LAZ
+  url: https://www.comune.latina.it/home/novita.html?categoria=/TipiNotizia/003
+  modalita: rss
+  feed_url: https://www.comune.latina.it/home/novita.rss?q=&categoria=/TipiNotizia/003
+  piattaforma: magnolia_kibernetes
+  frequenza: quindicinale
+  stato: attiva
+  verificato_il: '2026-09-24'
+  note: 'Sito proprio (Magnolia/Kibernetes) con RSS per categoria: 001 notizie, 002 comunicati, 003 avvisi. Il feed
+    avvisi e'' completo (300 KB), titoli su piu'' righe da ripulire. Il 24/09: "Avviso pubblico per il censimento
+    delle botteghe e delle attivita'' storiche", "Latina si illumina 2026", avvisi Villaggio di Natale per spettacoli
+    viaggianti.
+
+    '
+
+- id: comune_frosinone_avvisi
+  nome: Comune di Frosinone - Avvisi
+  ente: Comune di Frosinone
+  tipo: capoluogo
+  territorio: LAZ
+  url: https://comune.frosinone.it/tipi_notizia/avvisi/
+  modalita: html
+  feed_url: null
+  piattaforma: wordpress_design_comuni
+  frequenza: quindicinale
+  stato: attiva
+  verificato_il: '2026-09-24'
+  note: 'Il 23/09 rifiutava, il 24/09 risponde (dominio senza www). WordPress Design Comuni, ma l''archivio Avvisi
+    contiene soprattutto comunicati e il feed rimanda alla home. Nessun bando per imprese visto (censimento, viabilita'',
+    premio letterario).
+
+    '
+
+- id: comune_rieti_sito
+  nome: Comune di Rieti - sito istituzionale
+  ente: Comune di Rieti
+  tipo: capoluogo
+  territorio: LAZ
+  url: null
+  modalita: browser
+  feed_url: null
+  piattaforma: null
+  frequenza: quindicinale
+  stato: difficile
+  verificato_il: '2026-09-24'
+  note: 'Ancora bloccato il 24/09: www.comune.rieti.it e comune.rieti.it chiudono la connessione (connection reset).
+    Da provare dal VPS.
+
+    '
+
+- id: comune_viterbo_sito
+  nome: Comune di Viterbo - sito istituzionale
+  ente: Comune di Viterbo
+  tipo: capoluogo
+  territorio: LAZ
+  url: null
+  modalita: browser
+  feed_url: null
+  piattaforma: null
+  frequenza: quindicinale
+  stato: difficile
+  verificato_il: '2026-09-24'
+  note: 'Ancora bloccato il 24/09: www.comune.viterbo.it e comune.viterbo.it chiudono la connessione (connection
+    reset). Da provare dal VPS.
+
+    '
+
+- id: comune_laquila_sito
+  nome: Comune dell'Aquila - sito istituzionale
+  ente: Comune dell'Aquila
+  tipo: capoluogo
+  territorio: ABR
+  url: https://www.comune.laquila.it/
+  modalita: browser
+  feed_url: null
+  piattaforma: angular_strapi
+  frequenza: quindicinale
+  stato: difficile
+  verificato_il: '2026-09-24'
+  note: 'Applicazione a pagina singola (Angular) con backend Strapi sullo stesso dominio (/api, token pubblico nel
+    bundle JS); l''HTML e la sitemap sono vuoti e /api/avvisi, /api/notizie, /api/pages danno 404. Serve il browser
+    o scoprire i nomi delle collezioni.
+
+    '
+
+- id: comune_pescara_avvisi
+  nome: Comune di Pescara - Avvisi
+  ente: Comune di Pescara
+  tipo: capoluogo
+  territorio: ABR
+  url: https://www.comune.pescara.it/tipi_notizia/avvisi/
+  modalita: html
+  feed_url: null
+  piattaforma: wordpress_design_comuni
+  frequenza: quindicinale
+  stato: attiva
+  verificato_il: '2026-09-24'
+  note: 'WordPress Design Comuni; il feed /tipi_notizia/avvisi/feed/ rimanda alla pagina HTML. Il 24/09 voci per
+    operatori ("Avviso spunta 2027" per ambulanti, avvisi ARAP per immobili) ma nessun contributo alle imprese.
+
+    '
+
+- id: comune_chieti_sito
+  nome: Comune di Chieti - sito istituzionale
+  ente: Comune di Chieti
+  tipo: capoluogo
+  territorio: ABR
+  url: null
+  modalita: browser
+  feed_url: null
+  piattaforma: null
+  frequenza: quindicinale
+  stato: difficile
+  verificato_il: '2026-09-24'
+  note: 'www.comune.chieti.it e comune.chieti.it chiudono la connessione (connection reset) il 24/09. Da provare
+    dal VPS.
+
+    '
+
+- id: comune_teramo_avvisi
+  nome: Comune di Teramo - Novita' > Avvisi
+  ente: Comune di Teramo
+  tipo: capoluogo
+  territorio: ABR
+  url: https://www.comune.teramo.it/it/news?type=3
+  modalita: rss
+  feed_url: https://www.comune.teramo.it/it/news/feed
+  piattaforma: municipium
+  frequenza: quindicinale
+  stato: attiva
+  verificato_il: '2026-09-24'
+  note: 'Municipium. Feed di 5 voci su tutte le news. Il 24/09 solo sociale, scuola, asta immobili, contributi affitto;
+    nessun bando per imprese.
+
+    '
+
+- id: comune_campobasso_sito
+  nome: Comune di Campobasso - sito istituzionale
+  ente: Comune di Campobasso
+  tipo: capoluogo
+  territorio: MOL
+  url: null
+  modalita: browser
+  feed_url: null
+  piattaforma: null
+  frequenza: quindicinale
+  stato: difficile
+  verificato_il: '2026-09-24'
+  note: 'www.comune.campobasso.it risponde 403 con una pagina di cortesia sia in https sia in http (anche /it).
+    Da provare dal VPS.
+
+    '
+
+- id: comune_isernia_sito
+  nome: Comune di Isernia - sito istituzionale
+  ente: Comune di Isernia
+  tipo: capoluogo
+  territorio: MOL
+  url: null
+  modalita: browser
+  feed_url: null
+  piattaforma: null
+  frequenza: mensile
+  stato: difficile
+  verificato_il: '2026-09-24'
+  note: 'www.comune.isernia.it e comune.isernia.it chiudono la connessione (connection reset) il 24/09. Da provare
+    dal VPS.
+
+    '
+
+- id: comune_napoli_avvisi
+  nome: Comune di Napoli - Novita' > Avvisi (feed RSS)
+  ente: Comune di Napoli
+  tipo: capoluogo
+  territorio: CAM
+  url: https://www.comune.napoli.it/tipi_notizia/avviso/
+  modalita: rss
+  feed_url: https://www.comune.napoli.it/tipi_notizia/avviso/feed/
+  piattaforma: wordpress_design_comuni
+  frequenza: settimanale
+  stato: attiva
+  verificato_il: '2026-09-24'
+  note: 'Feed RSS con 9 voci in 8 giorni (14-22/09/2026), tutte "Avviso Pubblico". Nel campione niente contributi
+    a imprese; visti un avviso per la locazione di un locale comunale ad uso commerciale e avvisi per l''inclusione
+    lavorativa. Il tipo notizia si chiama "avviso" al singolare; /notizie/avvisi/ rimanda alla pagina avvisi del
+    Servizio mercati (commercio e artigianato), utile come seconda pagina da osservare.
+
+    '
+
+- id: comune_salerno_avvisi
+  nome: Comune di Salerno - Tipi di notizia > Avvisi (feed RSS)
+  ente: Comune di Salerno
+  tipo: capoluogo
+  territorio: CAM
+  url: https://www.comune.salerno.it/tipi-di-notizia/avvisi
+  modalita: rss
+  feed_url: https://www.comune.salerno.it/taxonomy/term/409/feed
+  piattaforma: drupal
+  frequenza: quindicinale
+  stato: attiva
+  verificato_il: '2026-09-24'
+  note: 'Drupal 10 con tema Design Comuni. Feed della tassonomia "avvisi" (10 voci, luglio-settembre 2026). Nel
+    campione niente per imprese (posti auto in autorimessa, concessioni cimiteriali, scuole, asili). Le gare stanno
+    sul portale appalti separato (albofornitori.comune.salerno.it).
+
+    '
+
+- id: comune_caserta_avvisi_json
+  nome: Comune di Caserta - Avvisi (API JSON del sito)
+  ente: Comune di Caserta
+  tipo: capoluogo
+  territorio: CAM
+  url: https://www.comune.caserta.it/pagina133704_avvisi.html
+  modalita: api
+  feed_url: https://www.comune.caserta.it/news.json.php?page=1&tipologia=avvisi&notizieScadute=false&limit=12
+  piattaforma: isweb_ecomune
+  frequenza: quindicinale
+  stato: attiva
+  verificato_il: '2026-09-24'
+  note: 'ISWEB eCOMUNE (pacchetto PNRR). La pagina HTML carica l''elenco via JavaScript dallo stesso JSON (chiave
+    "notizie", 66 avvisi in 6 pagine, campo "url" relativo). Nel campione niente contributi a imprese; visti avvisi
+    SUAP (orari, modalita'' di invio istanze), voucher alle famiglie, refezione, buoni libro.
+
+    '
+
+- id: comune_avellino_sito
+  nome: Comune di Avellino - sito istituzionale (applicazione Angular)
+  ente: Comune di Avellino
+  tipo: capoluogo
+  territorio: CAM
+  url: null
+  modalita: browser
+  feed_url: null
+  piattaforma: null
+  frequenza: mensile
+  stato: difficile
+  verificato_il: '2026-09-24'
+  note: 'La home rimanda a https://www.comune.avellino.it/sito/ che risponde 200 ma e'' un guscio Angular vuoto
+    (18 KB); /sitemap.xml e /api/ danno 404 e nel JavaScript principale non compare un indirizzo API riconoscibile.
+    Serve il browser senza interfaccia per vedere gli avvisi. Nessun bando per imprese verificabile da server.
+
+    '
+
+- id: comune_benevento_sito
+  nome: Comune di Benevento - sito istituzionale
+  ente: Comune di Benevento
+  tipo: capoluogo
+  territorio: CAM
+  url: null
+  modalita: browser
+  feed_url: null
+  piattaforma: null
+  frequenza: quindicinale
+  stato: difficile
+  verificato_il: '2026-09-24'
+  note: 'Tentati https://www.comune.benevento.it/ e https://comune.benevento.it/ (3 prove): la connessione viene
+    chiusa dal server dopo pochi byte (probabile firewall geografico o anti-bot). Da riprovare dal VPS OVH.
+
+    '
+
+- id: comune_foggia_avvisi
+  nome: Comune di Foggia - Novita' > Avvisi
+  ente: Comune di Foggia
+  tipo: capoluogo
+  territorio: PUG
+  url: https://www.comune.foggia.it/it/news?type=3
+  modalita: html
+  feed_url: null
+  piattaforma: municipium
+  frequenza: settimanale
+  stato: attiva
+  verificato_il: '2026-09-24'
+  note: 'Elenco HTML di 15 avvisi per pagina, aggiornato a settembre 2026. Il feed /it/news/feed esiste ma ignora
+    il parametro type (5 notizie miste), quindi meglio la pagina. Visti "raccolta firme per la rigenerazione del
+    commercio di prossimita''" e accreditamento librerie per buoni libro; nessun contributo diretto a imprese nel
+    campione, ma il Comune tratta il tema commercio.
+
+    '
+
+- id: comune_brindisi_avvisi
+  nome: Comune di Brindisi - Notizie > Avvisi (feed RSS)
+  ente: Comune di Brindisi
+  tipo: capoluogo
+  territorio: PUG
+  url: https://www.comune.brindisi.it/notizie/avvisi/
+  modalita: rss
+  feed_url: https://www.comune.brindisi.it/feed/?tipi_notizia=avvisi
+  piattaforma: wordpress_design_comuni
+  frequenza: settimanale
+  stato: attiva
+  verificato_il: '2026-09-24'
+  note: 'Attenzione, /notizie/avvisi/feed/ e'' il feed dei commenti (vuoto); quello giusto e'' /feed/?tipi_notizia=avvisi
+    (10 voci, 2-24/09/2026). Nel campione niente contributi a imprese; visti concessione beni confiscati, alienazione
+    immobili, locazioni turistiche (CIA), mercatino artigianale per le crociere.
+
+    '
+
+- id: comune_andria_avvisi
+  nome: Comune di Andria - Novita' > Avvisi
+  ente: Comune di Andria
+  tipo: capoluogo
+  territorio: PUG
+  url: https://www.comune.andria.bt.it/it/news?type=3
+  modalita: html
+  feed_url: null
+  piattaforma: municipium
+  frequenza: quindicinale
+  stato: attiva
+  verificato_il: '2026-09-24'
+  note: 'Elenco HTML di 15 avvisi, quasi tutti viabilita'', trasporto scolastico, TARI. Nessun bando per imprese
+    nel campione (settembre 2026). Feed /it/news/feed misto e senza filtro per tipo.
+
+    '
+
+- id: comune_trani_avvisi
+  nome: Comune di Trani - Novita' > Avvisi
+  ente: Comune di Trani
+  tipo: capoluogo
+  territorio: PUG
+  url: https://www.comune.trani.bt.it/it/news?type=3
+  modalita: html
+  feed_url: null
+  piattaforma: municipium
+  frequenza: quindicinale
+  stato: attiva
+  verificato_il: '2026-09-24'
+  note: 'Elenco HTML di 15 avvisi (giugno-settembre 2026), in prevalenza sociale e scuola. Visto un avviso di accreditamento
+    esercenti per cedole librarie e la gestione dell''hub Porta Nova; nessun contributo a imprese. Feed /it/news/feed
+    misto e senza filtro per tipo.
+
+    '
+
+- id: comune_matera_avvisi
+  nome: Comune di Matera - Avvisi (feed RSS)
+  ente: Comune di Matera
+  tipo: capoluogo
+  territorio: BAS
+  url: https://comune.matera.it/tipi_notizia/avvisi/
+  modalita: rss
+  feed_url: https://comune.matera.it/tipi_notizia/avvisi/feed/
+  piattaforma: wordpress_design_comuni
+  frequenza: quindicinale
+  stato: attiva
+  verificato_il: '2026-09-24'
+  note: 'Feed con 10 voci (agosto-settembre 2026). Nel campione niente contributi a imprese; vista una procedura
+    per la concessione di locali comunali e contributi a cittadini (cure termali, cedole librarie).
+
+    '
+
+- id: comune_cosenza_avvisi
+  nome: Comune di Cosenza - Novita' > Avvisi
+  ente: Comune di Cosenza
+  tipo: capoluogo
+  territorio: CAL
+  url: https://www.comune.cosenza.it/it/novita/avvisi
+  modalita: html
+  feed_url: null
+  piattaforma: agidv2
+  frequenza: quindicinale
+  stato: attiva
+  verificato_il: '2026-09-24'
+  note: 'Piattaforma non riconosciuta (tema "agidv2", stesso fornitore di Nuoro; niente RSS, /rss da'' 404). Solo
+    4 avvisi in elenco (ZTL, mensa, parking card). I temi impresa passano dalle notizie (/it/novita/notizie, viste
+    "Adotta una via" con le imprese e il progetto COSimpresa per l''imprenditoria giovanile), quindi osservare anche
+    quella pagina.
+
+    '
+
+- id: comune_catanzaro_avvisi
+  nome: Comune di Catanzaro - Categoria notizia > Avvisi
+  ente: Comune di Catanzaro
+  tipo: capoluogo
+  territorio: CAL
+  url: https://www.comune.catanzaro.it/categoria-notizia/avvisi/
+  modalita: html
+  feed_url: null
+  piattaforma: wordpress
+  frequenza: quindicinale
+  stato: attiva
+  verificato_il: '2026-09-24'
+  note: 'WordPress con tema proprio (non Design Comuni): /tipi_notizia/ e /tipo_notizia/ danno 404, i feed /feed/
+    rispondono 403. La pagina mostra solo 3 avvisi (graduatorie buono pasto, ordinanze). Esiste la sezione servizi
+    /servizi-categoria/imprese-e-commercio/ e la pagina /novita/ generale; nessun bando per imprese nel campione.
+
+    '
+
+- id: comune_reggio_calabria_notizie
+  nome: Comune di Reggio Calabria - Notizie > Avvisi (feed RSS)
+  ente: Comune di Reggio Calabria
+  tipo: capoluogo
+  territorio: CAL
+  url: https://www.comune.reggio-calabria.it/Notizie?tipologia=3
+  modalita: rss
+  feed_url: https://www.comune.reggio-calabria.it/rss.xml
+  piattaforma: portale_custom_aspnet
+  frequenza: settimanale
+  stato: attiva
+  verificato_il: '2026-09-24'
+  note: 'reggiocal.it rimanda a comune.reggio-calabria.it (ASP.NET Core, IIS). tipologia=3 sono gli avvisi, tipologia=2
+    i comunicati; il feed rss.xml e'' unico e misto, aggiornato al 24/09/2026. Nel campione niente contributi a
+    imprese (chiusure uffici, censimento, buono servizio poverta''). I bandi di gara sono su trasparenza.reggiocal.it.
+
+    '
+
+- id: comune_crotone_sito
+  nome: Comune di Crotone - sito istituzionale
+  ente: Comune di Crotone
+  tipo: capoluogo
+  territorio: CAL
+  url: null
+  modalita: browser
+  feed_url: null
+  piattaforma: null
+  frequenza: quindicinale
+  stato: difficile
+  verificato_il: '2026-09-24'
+  note: 'Tentati https://www.comune.crotone.it/ e https://comune.crotone.it/ (4 prove): connessione chiusa dal server
+    dopo pochi byte (probabile firewall geografico o anti-bot). Da riprovare dal VPS OVH.
+
+    '
+
+- id: comune_vibo_valentia_novita_api
+  nome: Comune di Vibo Valentia - Novita' (API Plone)
+  ente: Comune di Vibo Valentia
+  tipo: capoluogo
+  territorio: CAL
+  url: https://www.comune.vibovalentia.vv.it/novita/avvisi
+  modalita: api
+  feed_url: https://www.comune.vibovalentia.vv.it/++api++/@search?portal_type=News%20Item&sort_on=effective&sort_order=descending&b_size=20&metadata_fields=effective
+  piattaforma: plone
+  frequenza: quindicinale
+  stato: attiva
+  verificato_il: '2026-09-24'
+  note: 'Plone 6: la pagina HTML degli avvisi e'' vuota (elenco via JavaScript), l''API JSON risponde con 499 notizie
+    ordinate per data (ultima 24/09/2026). Nel campione niente contributi a imprese (museo della Tonnara, mensa,
+    alloggi ERP, voucher sociali).
+
+    '
+
+- id: comune_palermo_avvisi
+  nome: Comune di Palermo - Avvisi (feed RSS)
+  ente: Comune di Palermo
+  tipo: capoluogo
+  territorio: SIC
+  url: https://www.comune.palermo.it/tipi_notizia/avvisi/
+  modalita: rss
+  feed_url: https://www.comune.palermo.it/tipi_notizia/avvisi/feed/
+  piattaforma: wordpress_design_comuni
+  frequenza: settimanale
+  stato: attiva
+  verificato_il: '2026-09-24'
+  note: 'Fonte molto prolifica (8.508 avvisi in archivio, piu'' voci al giorno, feed aggiornato al 24/09/2026).
+    Il feed mostra le ultime ~20 voci, quindi va letto almeno ogni settimana. Nel campione niente contributi a imprese
+    (ordinanze traffico, incarichi, borse di studio). Esiste anche il tipo "Scadenze" (/tipi_notizia/scadenze/,
+    non aperto in questa verifica).
+
+    '
+
+- id: comune_catania_sito
+  nome: Comune di Catania - sito istituzionale
+  ente: Comune di Catania
+  tipo: capoluogo
+  territorio: SIC
+  url: null
+  modalita: browser
+  feed_url: null
+  piattaforma: null
+  frequenza: quindicinale
+  stato: difficile
+  verificato_il: '2026-09-24'
+  note: 'Tentati https://www.comune.catania.it/ e https://comune.catania.it/ (4 prove): il proxy risponde 502 al
+    CONNECT oppure il server chiude la connessione. Da riprovare dal VPS OVH.
+
+    '
+
+- id: comune_siracusa_avvisi
+  nome: Comune di Siracusa - Avvisi (feed RSS)
+  ente: Comune di Siracusa
+  tipo: capoluogo
+  territorio: SIC
+  url: https://www.comune.siracusa.it/tipi_notizia/avvisi
+  modalita: rss
+  feed_url: https://www.comune.siracusa.it/tipi_notizia/avvisi/feed
+  piattaforma: wordpress_design_comuni
+  frequenza: quindicinale
+  stato: attiva
+  verificato_il: '2026-09-24'
+  note: 'Feed con 9 voci (settembre 2026): democrazia partecipata, indagini di mercato, gare. Nessun contributo
+    a imprese nel campione.
+
+    '
+
+- id: comune_trapani_avvisi
+  nome: Comune di Trapani - Avvisi (feed RSS)
+  ente: Comune di Trapani
+  tipo: capoluogo
+  territorio: SIC
+  url: https://comune.trapani.it/tipo_notizia/avvisi/
+  modalita: rss
+  feed_url: https://comune.trapani.it/tipo_notizia/avvisi/feed/
+  piattaforma: wordpress
+  frequenza: quindicinale
+  stato: attiva
+  verificato_il: '2026-09-24'
+  note: 'Usare il dominio senza www (www.comune.trapani.it ha un certificato non valido). Feed con 10 voci (7-24/09/2026).
+    Nel campione niente contributi a imprese; visti "disposizioni per ottenere contributi e patrocini per eventi",
+    il registro De.C.O. e una co-progettazione (Borgo Livio Bassi).
+
+    '
+
+- id: comune_caltanissetta_avvisi
+  nome: Comune di Caltanissetta - Novita' > Avvisi
+  ente: Comune di Caltanissetta
+  tipo: capoluogo
+  territorio: SIC
+  url: https://www.comune.caltanissetta.it/it/news?type=3
+  modalita: html
+  feed_url: null
+  piattaforma: municipium
+  frequenza: mensile
+  stato: attiva
+  verificato_il: '2026-09-24'
+  note: 'Elenco HTML di 15 avvisi (luglio-settembre 2026), tutti su acqua non potabile, asili nido, consiglio comunale.
+    Nessun bando per imprese. Feed /it/news/feed misto e senza filtro per tipo.
+
+    '
+
+- id: comune_enna_avvisi
+  nome: Comune di Enna - Novita' > Avvisi (applicazione Maggioli)
+  ente: Comune di Enna
+  tipo: capoluogo
+  territorio: SIC
+  url: https://www.comune.enna.it/novita/avvisi
+  modalita: browser
+  feed_url: null
+  piattaforma: maggioli_cloud
+  frequenza: mensile
+  stato: difficile
+  verificato_il: '2026-09-24'
+  note: 'La pagina risponde 200 ma l''elenco e'' caricato via JavaScript dall''API https://api.comune.enna.it/api/Content
+    seguita da un filtro JSON in base64 (visibile nel sorgente). Dal cloud quell''host e'' rifiutato dal proxy (502
+    al CONNECT): riprovare l''API dal VPS con il filtro avvisi=true, altrimenti browser.
+
+    '
+
+- id: comune_nuoro_avvisi
+  nome: Comune di Nuoro - Novita' > Avvisi
+  ente: Comune di Nuoro
+  tipo: capoluogo
+  territorio: SAR
+  url: https://www.comune.nuoro.it/it/novita/avvisi
+  modalita: html
+  feed_url: null
+  piattaforma: agidv2
+  frequenza: settimanale
+  stato: attiva
+  verificato_il: '2026-09-24'
+  note: 'Stessa piattaforma di Cosenza (tema "agidv2", niente RSS). Elenco HTML con 10 avvisi aggiornati al 22/09/2026.
+    Visto un bando per imprese, "Avviso pubblico per la concessione di contributi in conto capitale alle attivita''
+    commerciali" (settembre 2026). Esiste anche la sezione albo /it/amministrazione/documenti/albo/bandi/ bando-di-contributi-e-vantaggi-economici,
+    al momento senza documenti.
+
+    '
+
+- id: comune_oristano_novita
+  nome: Comune di Oristano - Novita' (feed RSS)
+  ente: Comune di Oristano
+  tipo: capoluogo
+  territorio: SAR
+  url: https://comune.oristano.it/it/novita/avvisi/
+  modalita: rss
+  feed_url: https://comune.oristano.it/it/service/rss/rss_novita.xml
+  piattaforma: opencms_consulmedia
+  frequenza: quindicinale
+  stato: attiva
+  verificato_il: '2026-09-24'
+  note: 'Non e'' Municipium (/it/news da'' 404) ma OpenCms del fornitore Consulmedia. La pagina avvisi risponde
+    200 ma l''elenco e'' vuoto; il feed novita'' e'' unico e misto (aggiornato al 24/09/2026). Nel campione niente
+    contributi a imprese (graduatorie ludoteche, eventi, mercato di via Costa).
+
+    '
+

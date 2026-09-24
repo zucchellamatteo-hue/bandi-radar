@@ -87,7 +87,7 @@ Requisiti di Matteo:
 
 ## 3b. Stato del registro delle fonti (al 24/09/2026)
 
-Il registro vive nella cartella `fonti/` (un file YAML per gruppo, formato in `fonti/README.md`) e si controlla con `python -m app.fonti.verifica`. Al 24/09 contiene **95 voci**: Regioni e Province autonome (70, comprese agenzie regionali e calendari art. 49), enti nazionali e UE (16), fondazioni (7, quasi tutte escluse perché solo per non profit), dati di contesto (2). Stati: 60 attive, 17 difficili (siti che bloccano i server o caricano tutto via JavaScript), 11 da verificare dal server, 7 escluse. Modalità: 26 feed RSS, 12 API, 45 pagine HTML, 12 da browser. Verifica automatica del 24/09 dalla sessione cloud: 77 indirizzi su 85 rispondono. Mancano Camere di Commercio e capoluoghi (prossime mappature). Dettagli in `docs/ricerche/2026-09-24_regioni_nazionali.md`.
+Il registro vive nella cartella `fonti/` (un file YAML per gruppo, formato in `fonti/README.md`) e si controlla con `python -m app.fonti.verifica`. Al 24/09 sera è **completo: 287 voci**. Regioni e Province autonome 70 (con agenzie regionali e calendari art. 49), enti nazionali e UE 16, Camere di Commercio e Unioni regionali 77, Comuni capoluogo e Province eccezione 115, fondazioni 7 (quasi tutte escluse perché solo per non profit), dati di contesto 2. Stati: 205 attive, 54 difficili (siti che bloccano i server o caricano tutto via JavaScript), 18 da verificare dal server, 10 escluse. Modalità: 83 feed RSS, 22 API, 138 pagine HTML, 44 da browser. Verifica automatica del 24/09 dalla sessione cloud: 228 indirizzi su 243 rispondono. Dettagli in `docs/ricerche/2026-09-24_regioni_nazionali.md` e `docs/ricerche/2026-09-24_camere_capoluoghi.md`. Il registro si arricchisce di voci nuove solo dalla plancia o dalle rimappature semestrali.
 
 Stima complessiva a registro completo, circa 180 voci, divise per modo di lettura:
 
@@ -168,7 +168,17 @@ Altre sezioni della plancia: **coda di approvazione dei match** (vedi §7), **ba
 
 ### 5b. Catalogo dei bandi e scheda (richiesto da Matteo il 24/09)
 
-Oltre alla salute delle fonti, la plancia ha un **catalogo dei bandi** consultabile e filtrabile (ente, territorio, stato aperto/chiuso, scadenza, settore, parola cercata). Ogni bando apre una **scheda** con:
+Oltre alla salute delle fonti, la plancia ha un **catalogo dei bandi** consultabile e filtrabile. Filtri (richiesti da Matteo il 24/09):
+
+- **Chi può partecipare**: codici ATECO ammessi (per sezione, divisione o codice completo), dimensione d'impresa (micro, piccola, media, grande), forma giuridica, età dell'impresa (start-up, nuove imprese), altri requisiti (femminile, giovanile, export).
+- **Dove**: ente, livello (UE, nazionale, regione, camera, comune), regione, provincia, comune.
+- **Cosa e quanto**: tipo di agevolazione (fondo perduto, credito d'imposta, finanziamento agevolato, garanzia, voucher), tema (digitale, green, internazionalizzazione, investimenti, formazione, ricerca), importo massimo, percentuale di contributo.
+- **Quando**: stato (in arrivo, aperto, chiuso, prorogato), data di apertura, scadenza entro N giorni.
+- **Testo libero** su titolo e sintesi.
+
+I filtri su ATECO, dimensione e requisiti funzionano appena la scheda li contiene (Fase 3, l'IA li estrae dal bando); ente, territorio, date e testo già dalla Fase 2. Gli stessi campi sono quelli che il motore di abbinamento (Fase 4) confronta con il profilo del cliente: filtrare il catalogo per "ATECO 62, piccola impresa, Lombardia" equivale a chiedere i bandi adatti a un cliente con quel profilo.
+
+Ogni bando apre una **scheda** con:
 
 | Parte della scheda | Contenuto | Da quale fase |
 |---|---|---|
@@ -178,7 +188,7 @@ Oltre alla salute delle fonti, la plancia ha un **catalogo dei bandi** consultab
 | FAQ | se l'ente pubblica una pagina o un PDF di FAQ, viene collegata e conservata come gli allegati, e le risposte utili entrano nella scheda | Fase 3 |
 | Storico | cosa è cambiato nel tempo (proroghe, riaperture, chiusure anticipate) | Fase 3 |
 
-**Quando la vedi.** Una prima versione del catalogo arriva con la plancia in **Fase 2 (entro il 01/11)**: elenco filtrabile dei bandi trovati con titolo, ente, date, link originale e allegati scaricati, senza ancora la sintesi scritta dall'IA. Le schede complete arrivano in **Fase 3 (entro il 15/11)**. Prima ancora, dalla Fase 1, arriva ogni lunedì l'email con le novità della settimana.
+**Quando la vedi.** Con il calendario compresso di §9: catalogo con titolo, ente, date, link originale e allegati entro la prima settimana di ottobre; schede complete con filtri ATECO e dimensione entro la seconda.
 
 ---
 
@@ -216,7 +226,21 @@ Ogni scheda riporta **"Informazione indicativa, verificare il bando ufficiale"**
 
 ## 9. Piano d'azione e cronoprogramma
 
-Partenza ipotizzata **lunedì 28/09/2026**, con 2–3 sessioni di lavoro a settimana. Ogni fase termina con **qualcosa che Matteo può provare**.
+**Rivisto il 24/09 su richiesta di Matteo: si lavora a giorni, non a settimane**, con più sessioni al giorno e agenti in parallelo. La tabella sotto tiene i contenuti delle fasi; i tempi nuovi sono questi:
+
+| Fase | Quando | Nota |
+|---|---|---|
+| 0 Fondamenta | chiusa il **24/09** | registro completo (287 voci); restano le tabelle del database, che nascono con la Fase 1 |
+| 1 Raccolta | **27/09–01/10** | connettori API/RSS prima (sono la metà delle fonti), poi osservatore HTML, poi browser |
+| 2 Plancia e catalogo | **02/10–06/10** | semafori, catalogo con link e allegati |
+| 3 Schede | **07/10–11/10** | serve la chiave API Anthropic con tetto di spesa (Matteo la crea il 06/10) |
+| 4 Profili e match | **12/10–16/10** | serve lo schema delle anagrafiche di Matteo (punto aperto 1) |
+| 5 Cruscotto ed email | **17/10–23/10** | serve il dominio verificato su Resend |
+| 6 Pilota | **dal 24/10** | primi clienti reali |
+
+Cosa **non** si comprime, perché dipende dal calendario e non dal lavoro: la misura delle frequenze reali delle fonti (servono 3–4 settimane di raccolta: gira in sottofondo dalla Fase 1 e si tara quando i dati ci sono); il controllo di qualità di 30 schede da parte di Matteo; la revisione dei documenti privacy da parte di un professionista prima dei clienti reali; le fonti che rispondono solo dal server o con browser, che si sistemano man mano.
+
+Tabella originale (contenuti e cosa provi tu alla fine di ogni fase):
 
 | Fase | Settimane | Contenuto | Cosa provi tu alla fine |
 |---|---|---|---|
