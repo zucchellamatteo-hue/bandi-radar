@@ -177,7 +177,7 @@ Una schermata con **una riga per fonte** e un semaforo:
 - **Errori ripetuti**: sito irraggiungibile per 3 controlli di fila.
 - **Budget**: la spesa IA del mese supera la soglia impostata (es. 80 €). Le schede non urgenti si fermano da sole.
 
-Altre sezioni della plancia: **coda di approvazione dei match** (vedi §7), **bandi in scadenza**, **resoconto settimanale** (cosa è arrivato, cosa si è rotto, quanto si è speso).
+Altre sezioni della plancia: **coda di approvazione dei match** (vedi §7), **bandi in scadenza** (dal 24/09: filtro "scade entro N giorni" nel catalogo), **Novità** (dal 24/09, chiesto da Matteo: una pagina per settimana, stile blog, con le stesse novità dell'email del lunedì; dalla Fase 5 potrà diventare pubblica per i clienti).
 
 ### 5b. Catalogo dei bandi e scheda (richiesto da Matteo il 24/09)
 
@@ -245,7 +245,7 @@ Ogni scheda riporta **"Informazione indicativa, verificare il bando ufficiale"**
 |---|---|---|
 | 0 Fondamenta | chiusa il **24/09** | registro completo (287 voci); restano le tabelle del database, che nascono con la Fase 1 |
 | 1 Raccolta | **24/09–28/09** | fatto il 24/09: tabelle, lettori feed/API/HTML/browser/sitemap, API interne dei siti JavaScript, email del lunedì, servizio in Docker. Restano: prova dal server delle fonti bloccate dal cloud, ritocchi ai lettori man mano |
-| 2 Plancia e catalogo | **02/10–06/10** | semafori, catalogo con link e allegati |
+| 2 Plancia e catalogo | **24/09–28/09** | fatto il 24/09: semafori, rilancio e pausa, catalogo con filtri e scadenze, pagina Novità settimanali stile blog. Restano: allegati scaricati e conservati (con la Fase 3), allarmi via email, costi IA (dalla Fase 3) |
 | 3 Schede | **07/10–11/10** | serve la chiave API Anthropic con tetto di spesa (Matteo la crea il 06/10) |
 | 4 Profili e match | **12/10–16/10** | serve lo schema delle anagrafiche di Matteo (punto aperto 1) |
 | 5 Cruscotto ed email | **17/10–23/10** | serve il dominio verificato su Resend |

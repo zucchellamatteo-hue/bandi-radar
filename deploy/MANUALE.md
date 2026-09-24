@@ -1,6 +1,6 @@
 # Bandi Radar: manuale del server
 
-*Aggiornato al 24/09/2026, inizio della Fase 1 (raccolta). Per i dettagli passo-passo vedi `deploy/README.md`.*
+*Aggiornato al 24/09/2026, Fase 2 (plancia). Per i dettagli passo-passo vedi `deploy/README.md`.*
 
 ## 1. Cosa c'è sul server
 
@@ -9,7 +9,7 @@ Un VPS OVH (Ubuntu 24.04, IP 146.59.145.138) che ospita il sito https://finanzag
 | Nome | Cosa fa | Se si rompe |
 |---|---|---|
 | `caddy` | Riceve le richieste dal browser, tiene il certificato HTTPS (Let's Encrypt, si rinnova da solo) | il sito non si apre o manca il lucchetto |
-| `app` | L'applicazione Python: oggi la pagina "in costruzione" e l'indirizzo `/health`; in futuro raccolta, schede, plancia | il sito risponde con un errore |
+| `app` | L'applicazione Python: la plancia (pagine Fonti, Catalogo, Novità) e la sua API, più `/health` | il sito risponde con un errore |
 | `db` | Il database Postgres, con i dati in un volume che sopravvive ai riavvii | l'applicazione risulta "unhealthy" |
 | `raccolta` | Il raccoglitore: ogni ora guarda quali fonti del registro sono da controllare, le legge (feed, API o pagina) e salva i controlli e gli annunci nel database | i bandi nuovi non arrivano; la plancia (Fase 2) lo mostrerà |
 
@@ -75,7 +75,14 @@ Per provare una fonte a mano, senza scrivere nel database (utile quando si corre
 ```
 cd /srv/bandi-radar && sudo -u deploy docker compose run --rm raccolta python -m app.raccolta.esegui --prova ID_FONTE
 ```
-Per controllare subito una fonte: lo stesso comando con `--fonte ID_FONTE`. Finché la plancia non c'è (Fase 2), questi comandi sono l'unico modo di vedere la raccolta.
+Per controllare subito una fonte: lo stesso comando con `--fonte ID_FONTE`.
+
+### La plancia
+
+Su https://finanzagevolata.qiaro.it (utente e password del `.env`) ci sono tre pagine:
+- **Fonti**: una riga per fonte con il semaforo (verde regolare; giallo da guardare: un errore, silenzio sospetto, mai controllata; rosso: tre errori di fila o struttura cambiata; grigio in pausa), ultimo controllo, ultima novità, giorni di silenzio rispetto alla soglia della fonte, novità negli ultimi 30 e 90 giorni. Con ▶ si controlla una fonte subito, con ⏸ si mette in pausa (la pausa resta finché non la togli, anche se il registro cambia). Cliccando il nome si vedono gli ultimi controlli e annunci.
+- **Catalogo**: tutti gli annunci trovati, con ricerca nel testo, filtri per tipo di fonte, territorio, date e "scade entro N giorni". Il link apre la pagina originale dell'ente.
+- **Novità**: una voce per settimana, come un blog: le stesse novità dell'email del lunedì.
 
 ## 6. Se qualcosa non va
 

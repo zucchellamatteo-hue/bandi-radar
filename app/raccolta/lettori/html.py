@@ -8,6 +8,7 @@ from __future__ import annotations
 
 import hashlib
 import re
+from datetime import datetime, timedelta, timezone
 from urllib.parse import urljoin, urlsplit
 
 import httpx
@@ -104,7 +105,12 @@ def _link_in(radice, url_pagina: str) -> list[Annuncio]:
         blocco = a.find_parent(["article", "li", "tr", "div"]) or a
         tempo = blocco.find("time")
         data = leggi_data(tempo.get("datetime") or tempo.get_text()) if tempo else leggi_data(blocco.get_text(" ")[:400])
-        annunci.append(Annuncio(url=url, titolo=testo[:300], pubblicato_il=data))
+        dati: dict = {}
+        if data is not None and data > datetime.now(timezone.utc) + timedelta(days=1):
+            # Una data nel futuro non e' la pubblicazione: quasi sempre e' la scadenza scritta accanto al titolo.
+            dati["scadenza"] = data.date().isoformat()
+            data = None
+        annunci.append(Annuncio(url=url, titolo=testo[:300], pubblicato_il=data, dati=dati))
     return annunci
 
 
