@@ -77,6 +77,8 @@ cd /srv/bandi-radar && sudo -u deploy docker compose run --rm raccolta python -m
 ```
 Per controllare subito una fonte: lo stesso comando con `--fonte ID_FONTE`.
 
+La raccolta è collegata anche a una seconda rete Docker, `ipv6`: alcuni siti (Napoli, Siracusa) rifiutano l'indirizzo IPv4 del server ma accettano l'IPv6. Le fonti che ne hanno bisogno hanno `richiesta: {ipv6: true}` nel registro. Database e app restano sulla rete di sempre.
+
 ### La plancia
 
 Su https://finanzagevolata.qiaro.it (utente e password del `.env`) ci sono tre pagine:
