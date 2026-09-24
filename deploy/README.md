@@ -1,5 +1,7 @@
 # Server: come si usa
 
+Per un riepilogo di cosa c'è sul server, come mantenerlo e cambiare le impostazioni, vedi [MANUALE.md](MANUALE.md).
+
 Il VPS (OVH VPS-2, Ubuntu 24.04, Gravelines) non si amministra a mano: **il server scarica da solo le novità da GitHub ogni 5 minuti** e riavvia i servizi quando cambiano. Tutto il lavoro di sviluppo passa dal repository, quindi si può fare da qualunque sessione di Claude Code (cloud o PC) senza accesso diretto al server.
 
 ## Prima accensione (una volta sola, 10 minuti)
