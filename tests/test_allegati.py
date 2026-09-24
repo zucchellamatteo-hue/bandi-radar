@@ -182,3 +182,12 @@ def test_ignora_robots_vale_solo_per_il_sito_della_fonte(tmp_path):
     risultati = elabora_annuncio(client, 2, "https://ente.it/b", tmp_path, Pausa(client, minima=0, dormi=lambda s: None),
                                  ignora_robots=True)
     assert [r.errore for r in risultati] == [None, None, "robots.txt del sito vieta il file"]   # pagina, a.pdf, b.pdf
+
+
+def test_non_prende_i_documenti_di_menu_e_pie_di_pagina_del_sito():
+    html = """<html><body>
+      <div class="cheeseburger-menu"><a href="/faq-generali">Domande frequenti</a></div>
+      <div class="articolo"><h1>Fondo competitivita'</h1><a href="/uploads/regolamento.pdf">Regolamento</a></div>
+      <section id="4-blocchi-footer"><a href="/documenti/codice univoco.PDF">Codice destinatario fatture</a></section>
+    </body></html>"""
+    assert [c.url for c in trova_allegati(html, "https://x.it/bando")] == ["https://x.it/uploads/regolamento.pdf"]

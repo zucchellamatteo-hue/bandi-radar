@@ -34,6 +34,7 @@ from urllib.parse import parse_qsl, unquote, unquote_plus, urldefrag, urljoin, u
 import httpx
 from bs4 import BeautifulSoup
 
+from app.raccolta.lettori.html import _e_cornice, _pulisci
 from app.raccolta.robots import permesso
 from app.raccolta.scarica import NonPermesso, nuovo_client, regole_robots, scarica
 
@@ -121,9 +122,26 @@ def _nome_da_url(url: str) -> str:
     return parti[-1] if parti else urlsplit(url).netloc
 
 
+_CORNICE = re.compile(r"footer|navbar|menu|cookie|breadcrumb", re.IGNORECASE)
+
+
+def _togli_cornice(zuppa: BeautifulSoup) -> None:
+    """Toglie menu, testata e pie' di pagina del sito, anche quando sono riconoscibili solo dal nome
+    (id o classe con footer, menu, navbar...): li' stanno documenti uguali per ogni pagina (fatturazione
+    elettronica, privacy, FAQ generali del sito) che non sono allegati del bando."""
+    _pulisci(zuppa)
+    for tag in list(zuppa.find_all(True)):
+        if tag.decomposed or tag.name in ("html", "body", "main", "article"):
+            continue
+        nome = " ".join([tag.get("id") or "", *(tag.get("class") or [])])
+        if nome.strip() and _CORNICE.search(nome) and _e_cornice(tag):
+            tag.decompose()
+
+
 def trova_allegati(html: str, base_url: str) -> list[Candidato]:
     """I link a documenti e pagine FAQ di una pagina, senza doppioni, nell'ordine in cui compaiono."""
     zuppa = BeautifulSoup(html, "html.parser")
+    _togli_cornice(zuppa)
     pagina = urldefrag(base_url).url
     visti: set[str] = set()
     candidati: list[Candidato] = []
@@ -370,6 +388,14 @@ def annunci_da_elaborare(conn, annuncio_id: int | None, limite: int) -> list[dic
         return list(cur.fetchall())
 
 
+def documenti_del_sito(conn) -> set[str]:
+    """I file gia' trovati in due o piu' annunci diversi: sono documenti del sito (moduli generali,
+    informative), non allegati di un bando. Non si scaricano di nuovo."""
+    with conn.cursor() as cur:
+        cur.execute("SELECT url FROM allegati WHERE tipo <> 'pagina' GROUP BY url HAVING count(DISTINCT annuncio_id) >= 2")
+        return {r["url"] for r in cur.fetchall()}
+
+
 def gia_scaricati(conn, annuncio_id: int) -> set[str]:
     with conn.cursor() as cur:
         cur.execute("SELECT url FROM allegati WHERE annuncio_id = %s AND errore IS NULL AND tipo <> 'pagina'", (annuncio_id,))
@@ -426,7 +452,8 @@ def esegui(annuncio_id: int | None = None, limite: int = LIMITE_PREDEFINITO, car
             presenti = gia_scaricati(conn, a["id"])
             try:
                 risultati = elabora_annuncio(client, a["id"], a["url"], cartella, pausa,
-                                             ignora_robots.get(a["fonte_id"], False), len(presenti), presenti)
+                                             ignora_robots.get(a["fonte_id"], False), len(presenti),
+                                             presenti | documenti_del_sito(conn))
             except NonPermesso:
                 segna_cercato(conn, a["id"])
                 print(f"saltato  [{a['id']}] robots.txt vieta la pagina {a['url']}")
