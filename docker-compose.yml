@@ -66,6 +66,10 @@ services:
       PGPASSWORD: ${POSTGRES_PASSWORD}
       PGDATABASE: ${POSTGRES_DB:-bandi_radar}
       RACCOLTA_INTERVALLO_SECONDI: ${RACCOLTA_INTERVALLO_SECONDI:-3600}
+      TZ: Europe/Rome
+      RESEND_API_KEY: ${RESEND_API_KEY:-}
+      EMAIL_MATTEO: ${EMAIL_MATTEO:-}
+      EMAIL_MITTENTE: ${EMAIL_MITTENTE:-}
     depends_on:
       db:
         condition: service_healthy
