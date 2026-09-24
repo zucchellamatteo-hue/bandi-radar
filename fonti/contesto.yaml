@@ -1,0 +1,42 @@
+# Dati di contesto (non bandi): cataloghi open data, Registro Nazionale Aiuti per il de minimis (Fase 7).
+# Formato in README.md.
+
+- id: dati_gov_it_ckan
+  nome: dati.gov.it - Catalogo nazionale open data (API CKAN)
+  ente: AgID
+  tipo: contesto
+  territorio: ITA
+  url: https://www.dati.gov.it/view-dataset
+  modalita: api
+  feed_url: https://www.dati.gov.it/opendata/api/3/action/package_search?q=bandi+imprese&rows=50
+  piattaforma: ckan
+  frequenza: mensile
+  stato: attiva
+  verificato_il: '2026-09-24'
+  note: 'API CKAN verificata (200, JSON success=true). La ricerca "bandi imprese" da'' solo 6 dataset (PSR Liguria,
+    Living Labs Puglia...), "incentivi" 25: il catalogo serve a scoprire dataset regionali di bandi, non a leggere
+    bandi. Non contiene un dataset del Registro Nazionale Aiuti ne'' di incentivi.gov.it. Uso: controllo mensile
+    con parole chiave (bandi, incentivi, agevolazioni) per trovare nuove fonti strutturate.
+
+    '
+
+- id: rna_open_data
+  nome: Registro Nazionale Aiuti di Stato - Open data
+  ente: Ministero delle Imprese e del Made in Italy (RNA)
+  tipo: contesto
+  territorio: ITA
+  url: https://www.rna.gov.it/open-data
+  modalita: api
+  feed_url: https://www.rna.gov.it/open-data/aiuti
+  piattaforma: null
+  frequenza: mensile
+  stato: da_verificare
+  verificato_il: '2026-09-24'
+  note: 'Non aperto da qui: rna.gov.it chiude la connessione (reset) e WebFetch riceve 503, come incentivi.gov.it.
+    Da ricerca web e da pnrr.datibenecomune.it/fonti/rna/: sezione Open data con due famiglie di file XML, "Misure"
+    e "Aiuti individuali", nominati OpenData_aaaa_mm.xml (mese e anno di avvio misura o di concessione), aggiornati
+    ogni settimana, licenza CC BY 4.0. Serve per la Fase 7 (de minimis per profilo). Verificare dal server la pagina
+    e il nome esatto dei file prima di scrivere il lettore.
+
+    '
+

@@ -21,3 +21,4 @@ In una sessione di Claude Code su questo repository, descrivere la domanda e chi
 | 2026-09-23 | `2026-09-23_province_capoluoghi.md` | Province e Comuni capoluogo pubblicano bandi di finanza agevolata per imprese? Parte 1, solo ricerca web |
 | 2026-09-23 | `2026-09-23_province_capoluoghi_parte2.md` | Parte 2: aree mancanti e verifica diretta dei capoluoghi di FVG e Lombardia, con lettura dei siti |
 | 2026-09-23 | `2026-09-23_open_data_comuni.md` | I Comuni e le Regioni pubblicano i bandi come open data? (catalogo nazionale, ~100 portali comunali, portali regionali) |
+| 2026-09-24 | `2026-09-24_regioni_nazionali.md` | Per Regioni, enti nazionali, Portale UE e fondazioni: quale pagina, feed o API osservare? Esiste il calendario art. 49? Lettura diretta dei siti, esito nel registro `fonti/` |

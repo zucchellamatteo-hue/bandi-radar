@@ -85,9 +85,11 @@ Requisiti di Matteo:
 
 ---
 
-## 3b. Stato del registro delle fonti (al 23/09/2026)
+## 3b. Stato del registro delle fonti (al 24/09/2026)
 
-Circa 180 voci, dopo le mappature in `docs/ricerche/`. Divise per modo di lettura:
+Il registro vive nella cartella `fonti/` (un file YAML per gruppo, formato in `fonti/README.md`) e si controlla con `python -m app.fonti.verifica`. Al 24/09 contiene **95 voci**: Regioni e Province autonome (70, comprese agenzie regionali e calendari art. 49), enti nazionali e UE (16), fondazioni (7, quasi tutte escluse perché solo per non profit), dati di contesto (2). Stati: 60 attive, 17 difficili (siti che bloccano i server o caricano tutto via JavaScript), 11 da verificare dal server, 7 escluse. Modalità: 26 feed RSS, 12 API, 45 pagine HTML, 12 da browser. Verifica automatica del 24/09 dalla sessione cloud: 77 indirizzi su 85 rispondono. Mancano Camere di Commercio e capoluoghi (prossime mappature). Dettagli in `docs/ricerche/2026-09-24_regioni_nazionali.md`.
+
+Stima complessiva a registro completo, circa 180 voci, divise per modo di lettura:
 
 | Tipo | Quante | Quali | Costo di ogni controllo |
 |---|---|---|---|
@@ -99,7 +101,7 @@ Circa 180 voci, dopo le mappature in `docs/ricerche/`. Divise per modo di lettur
 **L'osservatore non consuma token.** Scaricare una pagina e confrontarla con la versione precedente è un lavoro da script. L'IA entra solo in due momenti: quando un frammento è cambiato (smistamento con Haiku, pochi centesimi) e quando un bando nuovo va trasformato in scheda (Sonnet, qualche decina di centesimi con i PDF). **La frequenza dei controlli quindi non incide sul costo IA**: i bandi nuovi da leggere sono gli stessi, che li si scopra il giorno dopo o due settimane dopo. Incide solo sulla tempestività, e molti bandi restano aperti poche settimane (in Lombardia, "Fondo giovani agricoltori 2026" apre il 13/10 e chiude il 27/10). Per questo le frequenze restano quelle di §3; controllare ogni 10–15 giorni farebbe risparmiare solo banda, che costa nulla.
 
 **Quando rifare le mappature manuali** (sessioni di Claude Code con agenti, come quelle del 23/09):
-1. **Appena il VPS è attivo** (fatto in parte il 24/09: incentivi.gov.it, Milano e RNA raggiungibili; Basilicata no): completare con i 5 Comuni che rifiutano i server e gli 8 siti JavaScript.
+1. **Appena il VPS è attivo** (fatto in parte il 24/09: incentivi.gov.it, Milano e RNA raggiungibili; Basilicata no, ma il nuovo portalebandi.regione.basilicata.it risponde con API): completare con i 5 Comuni che rifiutano i server, gli 8 siti JavaScript e le voci `difficile` e `da_verificare` del registro.
 2. **A fine Fase 0**: verifica automatica di tutti i 180 indirizzi (la fa il sistema, non l'IA).
 3. **Ogni sei mesi**, a gennaio (bandi annuali delle Camere) e a luglio: rimappatura con gli agenti per fonti nuove e siti rifatti.
 4. **Quando la plancia lo chiede**: se in un mese più del 10% delle fonti segnala "struttura cambiata" o "silenzio sospetto".
@@ -164,6 +166,20 @@ Una schermata con **una riga per fonte** e un semaforo:
 
 Altre sezioni della plancia: **coda di approvazione dei match** (vedi §7), **bandi in scadenza**, **resoconto settimanale** (cosa è arrivato, cosa si è rotto, quanto si è speso).
 
+### 5b. Catalogo dei bandi e scheda (richiesto da Matteo il 24/09)
+
+Oltre alla salute delle fonti, la plancia ha un **catalogo dei bandi** consultabile e filtrabile (ente, territorio, stato aperto/chiuso, scadenza, settore, parola cercata). Ogni bando apre una **scheda** con:
+
+| Parte della scheda | Contenuto | Da quale fase |
+|---|---|---|
+| Elementi fondamentali | titolo, ente, territorio, a chi si rivolge, cosa finanzia, contributo (tipo e misura), spese ammesse, apertura e scadenza, stato (aperto, chiuso, prorogato) | titolo, ente, date e link già in Fase 2; il resto in Fase 3 con l'IA |
+| Link originale | indirizzo della pagina ufficiale del bando, sempre presente, per la consultazione | Fase 2 |
+| Allegati | i documenti ufficiali (bando, modulistica, decreti) scaricati e conservati da Bandi Radar, con data e versione, così restano leggibili anche se il sito li sposta | Fase 2 raccolta; Fase 3 lettura |
+| FAQ | se l'ente pubblica una pagina o un PDF di FAQ, viene collegata e conservata come gli allegati, e le risposte utili entrano nella scheda | Fase 3 |
+| Storico | cosa è cambiato nel tempo (proroghe, riaperture, chiusure anticipate) | Fase 3 |
+
+**Quando la vedi.** Una prima versione del catalogo arriva con la plancia in **Fase 2 (entro il 01/11)**: elenco filtrabile dei bandi trovati con titolo, ente, date, link originale e allegati scaricati, senza ancora la sintesi scritta dall'IA. Le schede complete arrivano in **Fase 3 (entro il 15/11)**. Prima ancora, dalla Fase 1, arriva ogni lunedì l'email con le novità della settimana.
+
 ---
 
 ## 6. Cruscotto clienti (dentro Contract to Cash)
@@ -206,8 +222,8 @@ Partenza ipotizzata **lunedì 28/09/2026**, con 2–3 sessioni di lavoro a setti
 |---|---|---|---|
 | **0 — Fondamenta** | 1 (28/09–04/10) | Repository e regole di lavoro (CLAUDE.md), VPS OVH preparato (Docker, firewall, backup notturno), Docker Compose avviabile con un comando, raccolta pianificata, database, **registro completo delle ~180 fonti con indirizzi verificati** | Il sistema che parte sul tuo PC e l'elenco delle fonti |
 | **1 — Raccolta** | 2–4 (05/10–25/10) | Connettori per incentivi.gov.it, Portale UE e dati aperti Lombardia; osservatore di pagine per Regioni, Camere ed enti nazionali; archivio; **inizio misurazione delle frequenze** | Ogni lunedì un'email "novità della settimana" |
-| **2 — Plancia di controllo v1** | 4–5 (19/10–01/11) | Semafori, silenzi, rilanci, log, costi, allarmi email. **Taratura delle frequenze** con 4 settimane di dati reali | La plancia nel browser |
-| **3 — Schede bando** | 5–7 (26/10–15/11) | Lettura dei PDF, scheda standard, doppioni, proroghe e chiusure. **Controllo qualità: Matteo verifica 30 schede** a campione | Schede leggibili, con i tuoi voti sulla qualità |
+| **2 — Plancia di controllo v1** | 4–5 (19/10–01/11) | Semafori, silenzi, rilanci, log, costi, allarmi email. **Catalogo dei bandi** filtrabile con link originale e allegati (§5b). **Taratura delle frequenze** con 4 settimane di dati reali | La plancia nel browser, con l'elenco dei bandi da sfogliare |
+| **3 — Schede bando** | 5–7 (26/10–15/11) | Lettura dei PDF e delle FAQ, scheda standard (§5b), doppioni, proroghe e chiusure. **Controllo qualità: Matteo verifica 30 schede** a campione | Schede complete nella plancia, con i tuoi voti sulla qualità |
 | **4 — Profili e match** | 7–9 (09/11–29/11) | Formato del profilo anonimo, script che legge le anagrafiche dal Postgres di Matteo, API (pronta per C2C), motore di abbinamento, spiegazioni, Comuni dei clienti aggiunti alle fonti. Test con 5 imprese di prova | Per ogni impresa di prova, i suoi bandi con il motivo |
 | **5 — Cruscotto clienti ed email** | 9–11 (23/11–13/12) | Pagine React dentro Bandi Radar con accesso per cliente, coda di approvazione, invio email con Resend, preferenze e disiscrizione | Il cruscotto e un'email di prova |
 | **6 — Pilota** | 11–12 (07/12–20/12) | Primi clienti reali, correzioni, bozze dei documenti privacy, messa online stabile | Il servizio acceso per i primi clienti |
@@ -240,5 +256,5 @@ Alcune fasi si sovrappongono di una settimana, apposta. Nella **Fase 0** e nella
 1. **Struttura delle anagrafiche in Postgres**: entro la Fase 4 serve lo schema delle tabelle (senza dati) e i campi disponibili per costruire il profilo anonimo (ATECO, comune, dimensione, fatturato, forma giuridica…).
 2. **Server**: OVH VPS-2 attivo dal 24/09 (Gravelines, Ubuntu 24.04, IP pubblico 146.59.145.138), preparato con `deploy/bootstrap.sh`: Docker, firewall, fail2ban, aggiornamento automatico da GitHub ogni 5 minuti, backup notturno. Claude Code installato sul server con l'abbonamento, per le sessioni "dal server". Da fare in Fase 0: accesso SSH con chiave e disattivazione della password (fail2ban ha già bloccato tentativi di intrusione nelle prime ore). Le sessioni cloud non possono usare SSH, quindi nessuna credenziale del server va nel cloud.
 4. **Dominio**: deciso, `finanzagevolata.qiaro.it`, record attivo.
-5. **Rete della sessione cloud**: da allargare nelle impostazioni dell'ambiente, altrimenti le mappature e la Fase 1 non raggiungono i siti delle fonti.
+5. **Rete della sessione cloud**: risolto. Il 24/09 la sessione cloud raggiunge i siti delle Regioni, delle Camere e dei Comuni (non incentivi.gov.it, che però risponde dal server).
 3. **Modello commerciale**: resta da decidere, non blocca lo sviluppo.
