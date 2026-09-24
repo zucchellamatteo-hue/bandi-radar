@@ -87,7 +87,7 @@ Requisiti di Matteo:
 
 ## 3b. Stato del registro delle fonti (al 24/09/2026)
 
-Il registro vive nella cartella `fonti/` (un file YAML per gruppo, formato in `fonti/README.md`) e si controlla con `python -m app.fonti.verifica`. Al 24/09 contiene **95 voci**: Regioni e Province autonome (70, comprese agenzie regionali e calendari art. 49), enti nazionali e UE (16), fondazioni (7, quasi tutte escluse perché solo per non profit), dati di contesto (2). Stati: 60 attive, 17 difficili (siti che bloccano i server o caricano tutto via JavaScript), 11 da verificare dal server, 7 escluse. Modalità: 26 feed RSS, 12 API, 45 pagine HTML, 12 da browser. Verifica automatica del 24/09 dalla sessione cloud: 77 indirizzi su 85 rispondono. Mancano Camere di Commercio e capoluoghi (prossime mappature). Dettagli in `docs/ricerche/2026-09-24_regioni_nazionali.md`.
+Il registro vive nella cartella `fonti/` (un file YAML per gruppo, formato in `fonti/README.md`) e si controlla con `python -m app.fonti.verifica`. Al 24/09 sera è **completo: 287 voci**. Regioni e Province autonome 70 (con agenzie regionali e calendari art. 49), enti nazionali e UE 16, Camere di Commercio e Unioni regionali 77, Comuni capoluogo e Province eccezione 115, fondazioni 7 (quasi tutte escluse perché solo per non profit), dati di contesto 2. Stati: 205 attive, 54 difficili (siti che bloccano i server o caricano tutto via JavaScript), 18 da verificare dal server, 10 escluse. Modalità: 83 feed RSS, 22 API, 138 pagine HTML, 44 da browser. Verifica automatica del 24/09 dalla sessione cloud: 228 indirizzi su 243 rispondono. Dettagli in `docs/ricerche/2026-09-24_regioni_nazionali.md` e `docs/ricerche/2026-09-24_camere_capoluoghi.md`. Il registro si arricchisce di voci nuove solo dalla plancia o dalle rimappature semestrali.
 
 Stima complessiva a registro completo, circa 180 voci, divise per modo di lettura:
 
@@ -230,7 +230,7 @@ Ogni scheda riporta **"Informazione indicativa, verificare il bando ufficiale"**
 
 | Fase | Quando | Nota |
 |---|---|---|
-| 0 Fondamenta | chiusa entro **26/09** | manca il registro di Camere e capoluoghi, in corso |
+| 0 Fondamenta | chiusa il **24/09** | registro completo (287 voci); restano le tabelle del database, che nascono con la Fase 1 |
 | 1 Raccolta | **27/09–01/10** | connettori API/RSS prima (sono la metà delle fonti), poi osservatore HTML, poi browser |
 | 2 Plancia e catalogo | **02/10–06/10** | semafori, catalogo con link e allegati |
 | 3 Schede | **07/10–11/10** | serve la chiave API Anthropic con tetto di spesa (Matteo la crea il 06/10) |
