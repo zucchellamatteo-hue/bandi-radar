@@ -246,7 +246,7 @@ Ogni scheda riporta **"Informazione indicativa, verificare il bando ufficiale"**
 | 0 Fondamenta | chiusa il **24/09** | registro completo (287 voci); restano le tabelle del database, che nascono con la Fase 1 |
 | 1 Raccolta | **24/09–28/09** | fatto il 24/09: tabelle, lettori feed/API/HTML/browser/sitemap, API interne dei siti JavaScript, email del lunedì, servizio in Docker. Restano: prova dal server delle fonti bloccate dal cloud, ritocchi ai lettori man mano |
 | 2 Plancia e catalogo | **24/09–28/09** | fatto il 24/09: semafori, rilancio e pausa, catalogo con filtri e scadenze, pagina Novità settimanali stile blog. Restano: allegati scaricati e conservati (con la Fase 3), allarmi via email, costi IA (dalla Fase 3) |
-| 3 Schede | **07/10–11/10** | serve la chiave API Anthropic con tetto di spesa (Matteo la crea il 06/10) |
+| 3 Schede | **24/09; 07/10–11/10** | fatta il 24/09 la parte senza IA (branch `claude/fase3-senza-ia`): tabelle `bandi`, `allegati`, `smistamenti`; smistamento a regole (`app.schede.smista`, parole in `app/schede/regole_smistamento.yaml`); scaricamento di allegati e FAQ con testo dei PDF (`app.schede.allegati`, volume `allegati`); nel catalogo esito dello smistamento, filtro e correzione a mano; pagina dell'annuncio con gli allegati; formato della scheda (`docs/SCHEDA_BANDO.md`) e prompt per Sonnet (`app/schede/prompt_scheda.md`). Restano, con la chiave API Anthropic con tetto di spesa (Matteo la crea il 06/10): Haiku per i "da rivedere", Sonnet per le schede, costi nella plancia, doppioni e proroghe, controllo di 30 schede da parte di Matteo |
 | 4 Profili e match | **12/10–16/10** | serve lo schema delle anagrafiche di Matteo (punto aperto 1) |
 | 5 Cruscotto ed email | **17/10–23/10** | serve il dominio verificato su Resend |
 | 6 Pilota | **dal 24/10** | primi clienti reali |
@@ -287,6 +287,15 @@ Alcune fasi si sovrappongono di una settimana, apposta. Nella **Fase 0** e nella
 | Clienti | Oggi 0, obiettivo 100 entro 6 mesi. Test con le anagrafiche del Postgres di Matteo. |
 | Servizio email | Resend (già usato da Sergio), regione europea. |
 | Consulente privacy | Nessuno. Bozze preparate in Fase 6, da far rivedere a un professionista prima dei clienti reali. |
+
+**Decise il 24/09/2026 (Fase 3, parte senza IA):**
+
+| Tema | Decisione |
+|---|---|
+| Smistamento | Prima le regole, gratis: parole chiave in `app/schede/regole_smistamento.yaml`, modificabili senza toccare il codice. Tre esiti: rilevante, non rilevante, da rivedere (questi ultimi a Haiku). Un segnale rilevante (contributo, voucher, incentivo...) vince sempre su gare e appalti, come vuole la regola sulla parola "gara"; vince invece chi indica che l'aiuto va a famiglie, cittadini, enti pubblici o associazioni (affitto, libri di testo, "ai Comuni"...), ma solo se nel testo non compaiono imprese, PMI, commercianti, artigiani ecc. |
+| Correzioni di Matteo | Dalla plancia, pulsanti ✓ ? ✗. La decisione di Matteo non viene mai sovrascritta dalle regole né dall'IA. Lo storico è minimo: resta la proposta automatica che Matteo ha corretto (colonne `proposta_*`), sufficiente per contare dove sbagliano le regole; `smista --prova` stampa quante correzioni le regole di adesso indovinerebbero. |
+| Allegati | Solo per gli annunci rilevanti. Limiti: 25 MB per file, 100 MB e 30 file per annuncio; 2 secondi tra le richieste allo stesso sito, di più se robots.txt lo chiede. Si conserva anche una copia della pagina dell'annuncio (il suo testo serve alla scheda). `ignora_robots` di una fonte vale solo per il sito di quella fonte, non per i siti esterni a cui rimanda. Le FAQ e le copie delle pagine si aprono dalla plancia "in una scatola chiusa" (nessuno script esterno gira dentro la plancia). |
+| Scheda | Campi in `docs/SCHEDA_BANDO.md`. Aggiunto `codici_ateco_esclusi`: molti bandi ammettono "tutti i settori tranne...", e il motore di abbinamento deve saperlo. Se pagina e bando ufficiale non coincidono, vale il bando. |
 
 **Ancora aperti:**
 

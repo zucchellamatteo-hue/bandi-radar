@@ -1,6 +1,6 @@
 # Bandi Radar: manuale del server
 
-*Aggiornato al 24/09/2026, Fase 2 (plancia). Per i dettagli passo-passo vedi `deploy/README.md`.*
+*Aggiornato al 24/09/2026, Fase 3 (smistamento e allegati, senza IA). Per i dettagli passo-passo vedi `deploy/README.md`.*
 
 ## 1. Cosa c'è sul server
 
@@ -11,7 +11,7 @@ Un VPS OVH (Ubuntu 24.04, IP 146.59.145.138) che ospita il sito https://finanzag
 | `caddy` | Riceve le richieste dal browser, tiene il certificato HTTPS (Let's Encrypt, si rinnova da solo) | il sito non si apre o manca il lucchetto |
 | `app` | L'applicazione Python: la plancia (pagine Fonti, Catalogo, Novità) e la sua API, più `/health` | il sito risponde con un errore |
 | `db` | Il database Postgres, con i dati in un volume che sopravvive ai riavvii | l'applicazione risulta "unhealthy" |
-| `raccolta` | Il raccoglitore: ogni ora guarda quali fonti del registro sono da controllare, le legge (feed, API o pagina) e salva i controlli e gli annunci nel database | i bandi nuovi non arrivano; la plancia (Fase 2) lo mostrerà |
+| `raccolta` | Il raccoglitore: ogni ora guarda quali fonti del registro sono da controllare, le legge (feed, API o pagina) e salva i controlli e gli annunci nel database. Con lo stesso contenitore si lanciano a mano lo smistamento e lo scaricamento degli allegati (§5) | i bandi nuovi non arrivano; la plancia lo mostra |
 
 Due cartelle da distinguere:
 
@@ -48,7 +48,7 @@ cd /srv/bandi-radar && sudo -u deploy docker compose up -d
 Bastano quattro comandi, tutti da lanciare come utente `ubuntu`:
 
 ```
-cd /srv/bandi-radar && sudo -u deploy docker compose ps      # tre righe Up, db e app "(healthy)"
+cd /srv/bandi-radar && sudo -u deploy docker compose ps      # quattro righe Up, db e app "(healthy)"
 curl -s https://finanzagevolata.qiaro.it/health               # {"status":"ok","database":"ok"}
 journalctl -u bandi-radar-deploy.service -n 20                # ultimi aggiornamenti da GitHub
 systemctl --user status claude-remote-control                 # "active (running)"
@@ -79,11 +79,39 @@ Per controllare subito una fonte: lo stesso comando con `--fonte ID_FONTE`.
 
 La raccolta è collegata anche a una seconda rete Docker, `ipv6`: alcuni siti (Napoli, Siracusa) rifiutano l'indirizzo IPv4 del server ma accettano l'IPv6. Le fonti che ne hanno bisogno hanno `richiesta: {ipv6: true}` nel registro. Database e app restano sulla rete di sempre.
 
+### Smistamento e allegati (Fase 3)
+
+Per ora si lanciano a mano; quando le regole saranno tarate entreranno nel giro orario della raccolta.
+
+**Smistamento**: decide per ogni annuncio nuovo se è rilevante (aiuti alle imprese), non rilevante o da rivedere, con le parole chiave di `app/schede/regole_smistamento.yaml`. Non usa l'IA e non costa nulla.
+```
+cd /srv/bandi-radar && sudo -u deploy docker compose run --rm raccolta python -m app.schede.smista --prova --esempi 20   # solo guardare: percentuali ed esempi
+cd /srv/bandi-radar && sudo -u deploy docker compose run --rm raccolta python -m app.schede.smista                      # smista e salva
+```
+Dopo aver cambiato le parole chiave (con una pull request, come ogni modifica), `--rifai` ricalcola gli annunci decisi dalle regole; le tue correzioni dalla plancia non vengono mai toccate. `--prova` dice anche quante delle tue correzioni le regole di adesso indovinerebbero.
+
+**Allegati**: per gli annunci rilevanti apre la pagina dell'ente e scarica bando, moduli, decreti e FAQ (al massimo 50 annunci per giro; 25 MB per file, 100 MB e 30 file per annuncio; 2 secondi tra una richiesta e l'altra). È lento apposta: un giro da 50 annunci può durare una ventina di minuti.
+```
+cd /srv/bandi-radar && sudo -u deploy docker compose run --rm raccolta python -m app.schede.allegati --limite 10     # i primi 10
+cd /srv/bandi-radar && sudo -u deploy docker compose run --rm raccolta python -m app.schede.allegati --annuncio 123  # un annuncio preciso
+```
+I file stanno nel volume Docker `allegati` (una cartella per annuncio), che sopravvive ai riavvii e agli aggiornamenti come il database. Per vedere quanto spazio occupa:
+```
+sudo du -sh /var/lib/docker/volumes/bandi-radar_allegati/_data     # totale
+df -h /                                                            # spazio libero sul disco (75 GB in tutto)
+```
+e, dentro `psql`:
+```
+SELECT count(*) AS file, pg_size_pretty(sum(dimensione)) AS spazio FROM allegati WHERE errore IS NULL;
+SELECT errore, count(*) FROM allegati WHERE errore IS NOT NULL GROUP BY errore ORDER BY 2 DESC;   -- cosa non si è scaricato e perché
+```
+Il volume non è nel backup notturno del database (lo è nel backup del disco di OVH): i documenti si possono comunque riscaricare dai siti degli enti.
+
 ### La plancia
 
 Su https://finanzagevolata.qiaro.it (utente e password del `.env`) ci sono tre pagine:
 - **Fonti**: una riga per fonte con il semaforo (verde regolare; giallo da guardare: un errore, silenzio sospetto, mai controllata; rosso: tre errori di fila o struttura cambiata; grigio in pausa), ultimo controllo, ultima novità, giorni di silenzio rispetto alla soglia della fonte, novità negli ultimi 30 e 90 giorni. Con ▶ si controlla una fonte subito, con ⏸ si mette in pausa (la pausa resta finché non la togli, anche se il registro cambia). Cliccando il nome si vedono gli ultimi controlli e annunci.
-- **Catalogo**: tutti gli annunci trovati, con ricerca nel testo, filtri per tipo di fonte, territorio, date e "scade entro N giorni". Il link apre la pagina originale dell'ente.
+- **Catalogo**: tutti gli annunci trovati, con ricerca nel testo, filtri per tipo di fonte, territorio, date, "scade entro N giorni" e smistamento (solo rilevanti, da rivedere, non rilevanti, non ancora smistati). Nella colonna Smistamento i pulsanti ✓ ? ✗ correggono l'esito: la tua scelta vale su tutto e serve a tarare le regole. Il titolo apre la pagina dell'annuncio (motivo dello smistamento, allegati scaricati da aprire direttamente dalla plancia, documenti non scaricati con il motivo); "originale ↗" apre la pagina dell'ente.
 - **Novità**: una voce per settimana, come un blog: le stesse novità dell'email del lunedì.
 
 ## 6. Se qualcosa non va
