@@ -2,10 +2,14 @@
 
 from __future__ import annotations
 
+import os
 import threading
 from datetime import date, datetime, timedelta, timezone
+from pathlib import Path
+from typing import Literal
 
 from fastapi import APIRouter, HTTPException, Query
+from fastapi.responses import FileResponse
 from pydantic import BaseModel
 
 from app.db.connessione import connetti
@@ -161,9 +165,10 @@ def rilancia(fonte_id: str) -> dict:
 def catalogo(
     q: str | None = None, tipo: str | None = None, territorio: str | None = None, fonte: str | None = None,
     da: date | None = None, a: date | None = None, scadenza_entro: int | None = Query(None, ge=1, le=365),
+    esito: Literal["rilevante", "non_rilevante", "da_rivedere", "non_smistato"] | None = None,
     pagina: int = Query(1, ge=1), per_pagina: int = Query(50, ge=1, le=200),
 ) -> dict:
-    """Catalogo degli annunci con filtri. I filtri su ATECO, dimensione ecc. arrivano con le schede (Fase 3)."""
+    """Catalogo degli annunci con filtri, compreso l'esito dello smistamento. ATECO, dimensione ecc. arrivano con le schede."""
     condizioni, valori = [], []
     if q:
         condizioni.append("(a.titolo ILIKE %s OR a.riassunto ILIKE %s OR f.ente ILIKE %s)")
@@ -181,15 +186,22 @@ def catalogo(
     if scadenza_entro:
         condizioni.append(f"data_sicura({SCADENZA_SQL}) BETWEEN current_date AND current_date + %s")
         valori.append(scadenza_entro)
+    if esito == "non_smistato":
+        condizioni.append("s.annuncio_id IS NULL")
+    elif esito:
+        condizioni.append("s.esito = %s"); valori.append(esito)
     dove = ("WHERE " + " AND ".join(condizioni)) if condizioni else ""
+    unione = "FROM annunci a JOIN fonti f ON f.id = a.fonte_id LEFT JOIN smistamenti s ON s.annuncio_id = a.id"
     with connetti() as conn, conn.cursor() as cur:
-        cur.execute(f"SELECT count(*) AS n FROM annunci a JOIN fonti f ON f.id = a.fonte_id {dove}", valori)
+        cur.execute(f"SELECT count(*) AS n {unione} {dove}", valori)
         totale = cur.fetchone()["n"]
         cur.execute(
             f"""
             SELECT a.id, a.fonte_id, f.nome AS fonte, f.ente, f.tipo, f.territorio, a.url, a.titolo, a.riassunto,
-                   a.pubblicato_il, a.trovato_il, data_sicura({SCADENZA_SQL}) AS scadenza
-            FROM annunci a JOIN fonti f ON f.id = a.fonte_id {dove}
+                   a.pubblicato_il, a.trovato_il, data_sicura({SCADENZA_SQL}) AS scadenza,
+                   s.esito AS smistamento, s.deciso_da AS smistamento_da, s.motivo AS smistamento_motivo,
+                   (SELECT count(*) FROM allegati al WHERE al.annuncio_id = a.id AND al.errore IS NULL) AS n_allegati
+            {unione} {dove}
             ORDER BY coalesce(a.pubblicato_il, a.trovato_il) DESC, a.id DESC
             LIMIT %s OFFSET %s
             """,
@@ -212,9 +224,85 @@ def dettaglio_annuncio(annuncio_id: int) -> dict:
             (annuncio_id,),
         )
         riga = cur.fetchone()
-    if not riga:
-        raise HTTPException(404, "annuncio non trovato")
-    return dict(riga)
+        if not riga:
+            raise HTTPException(404, "annuncio non trovato")
+        cur.execute("SELECT * FROM smistamenti WHERE annuncio_id = %s", (annuncio_id,))
+        smistamento = cur.fetchone()
+        cur.execute(
+            """
+            SELECT id, url, nome, tipo, dimensione, impronta, scaricato_il, errore,
+                   percorso_locale IS NOT NULL AS ha_file, length(testo_estratto) AS caratteri_testo
+            FROM allegati WHERE annuncio_id = %s ORDER BY errore IS NOT NULL, id
+            """,
+            (annuncio_id,),
+        )
+        allegati = _righe(cur)
+    return {**dict(riga), "smistamento": dict(smistamento) if smistamento else None, "allegati": allegati}
+
+
+class Correzione(BaseModel):
+    esito: Literal["rilevante", "non_rilevante", "da_rivedere"]
+
+
+@router.post("/annunci/{annuncio_id}/smistamento")
+def correggi_smistamento(annuncio_id: int, corpo: Correzione) -> dict:
+    """Matteo corregge a mano lo smistamento. La decisione automatica sostituita (regole o IA) resta nelle
+    colonne proposta_*, per tarare le regole; se Matteo corregge di nuovo, resta la prima proposta."""
+    with connetti() as conn, conn.cursor() as cur:
+        cur.execute("SELECT 1 FROM annunci WHERE id = %s", (annuncio_id,))
+        if not cur.fetchone():
+            raise HTTPException(404, "annuncio non trovato")
+        cur.execute(
+            """
+            INSERT INTO smistamenti (annuncio_id, esito, motivo, deciso_da, deciso_il)
+            VALUES (%s, %s, 'corretto a mano dalla plancia', 'matteo', now())
+            ON CONFLICT (annuncio_id) DO UPDATE SET
+                proposta_esito  = CASE WHEN smistamenti.deciso_da = 'matteo' THEN smistamenti.proposta_esito ELSE smistamenti.esito END,
+                proposta_motivo = CASE WHEN smistamenti.deciso_da = 'matteo' THEN smistamenti.proposta_motivo ELSE smistamenti.motivo END,
+                proposta_da     = CASE WHEN smistamenti.deciso_da = 'matteo' THEN smistamenti.proposta_da ELSE smistamenti.deciso_da END,
+                esito = EXCLUDED.esito, motivo = EXCLUDED.motivo, deciso_da = 'matteo', deciso_il = now()
+            RETURNING esito, deciso_da, proposta_esito, proposta_da
+            """,
+            (annuncio_id, corpo.esito),
+        )
+        riga = cur.fetchone()
+        conn.commit()
+    return {"annuncio_id": annuncio_id, **dict(riga)}
+
+
+def cartella_allegati() -> Path:
+    return Path(os.environ.get("ALLEGATI_CARTELLA", "/srv/allegati")).resolve()
+
+
+def percorso_sicuro(cartella: Path, relativo: str | None) -> Path | None:
+    """Il file dell'allegato, solo se sta davvero dentro la cartella degli allegati (niente ../ o percorsi assoluti)."""
+    if not relativo:
+        return None
+    candidato = (cartella / relativo).resolve()
+    if not candidato.is_relative_to(cartella) or candidato == cartella or not candidato.is_file():
+        return None
+    return candidato
+
+
+@router.get("/allegati/{allegato_id}/file")
+def file_allegato(allegato_id: int) -> FileResponse:
+    """Serve un allegato scaricato. Si usa solo il percorso salvato nel database, controllato dentro la cartella."""
+    with connetti() as conn, conn.cursor() as cur:
+        cur.execute("SELECT tipo, percorso_locale FROM allegati WHERE id = %s", (allegato_id,))
+        riga = cur.fetchone()
+    percorso = percorso_sicuro(cartella_allegati(), riga["percorso_locale"] if riga else None)
+    if not percorso:
+        raise HTTPException(404, "allegato non disponibile")
+    nome = percorso.name.split("_", 1)[-1]   # sul disco: <impronta>_<nome>
+    # Nessuno script delle pagine salvate deve girare dentro la plancia: le FAQ HTML si aprono "in una scatola chiusa".
+    intestazioni = {"X-Content-Type-Options": "nosniff"}
+    if riga["tipo"] == "faq":
+        intestazioni["Content-Security-Policy"] = "sandbox"
+        return FileResponse(percorso, media_type="text/html; charset=utf-8", headers=intestazioni)
+    if riga["tipo"] == "pdf":
+        return FileResponse(percorso, media_type="application/pdf", filename=nome, content_disposition_type="inline",
+                            headers=intestazioni)
+    return FileResponse(percorso, media_type="application/octet-stream", filename=nome, headers=intestazioni)
 
 
 @router.get("/novita/settimane")
