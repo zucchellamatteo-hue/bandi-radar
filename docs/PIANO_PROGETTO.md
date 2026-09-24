@@ -92,7 +92,9 @@ Un servizio Docker (`raccolta`) si sveglia ogni ora e chiede: quali fonti hanno 
 1. **Feed RSS/Atom** (83 fonti): legge le voci, titolo, link, data.
 2. **API** (22 fonti): un lettore per famiglia di piattaforma (Plone, WordPress, OpenCity, CKAN, Portale UE, CSV) più uno generico che trova da solo titolo, link e data in qualunque JSON.
 3. **Pagine HTML** (138 fonti): scarica la pagina elenco, estrae i link "sensati" (testo lungo, dentro il contenuto, non menu né piè di pagina), li confronta con quelli già visti e segna i nuovi. Se la pagina risponde ma non si legge più nessun link mentre prima se ne leggevano, segna **struttura cambiata**.
-4. **Browser** (44 fonti): non ancora, arriva dopo.
+4. **Browser** (Chromium senza interfaccia, dentro il container `raccolta`): per le poche fonti rimaste senza API. Prima di usarlo, si cerca l'API interna che la pagina chiama per riempirsi (fatto il 24/09 per Veneto, Sardegna, Bolzano, Bologna, Padova e altri: `docs/ricerche/2026-09-24_api_nascoste.md`).
+5. **Sitemap XML**: per i siti che non offrono altro, si leggono le pagine nuove dalla sitemap.
+6. **Email del lunedì**: dalle 7 di ogni lunedì il servizio manda a Matteo il riepilogo delle novità della settimana e lo stato delle fonti (con Resend; senza chiave, lo scrive nel log).
 
 Ogni visita è un **controllo** (esito, durata, quanti elementi, quante novità). Ogni elemento nuovo è un **annuncio**: non ancora un bando, solo "qualcosa di nuovo su quella fonte". Gli annunci sono l'ingresso della Fase 3, dove l'IA li smista e li trasforma in schede. Il tutto è senza IA e senza costi, come da §3b.
 
@@ -242,7 +244,7 @@ Ogni scheda riporta **"Informazione indicativa, verificare il bando ufficiale"**
 | Fase | Quando | Nota |
 |---|---|---|
 | 0 Fondamenta | chiusa il **24/09** | registro completo (287 voci); restano le tabelle del database, che nascono con la Fase 1 |
-| 1 Raccolta | **24/09–28/09** | fatto il 24/09: tabelle, lettori feed/API, osservatore HTML, servizio in Docker. Restano: browser senza interfaccia per le fonti `browser`, email del lunedì, ritocchi ai lettori sulle fonti che leggono male |
+| 1 Raccolta | **24/09–28/09** | fatto il 24/09: tabelle, lettori feed/API/HTML/browser/sitemap, API interne dei siti JavaScript, email del lunedì, servizio in Docker. Restano: prova dal server delle fonti bloccate dal cloud, ritocchi ai lettori man mano |
 | 2 Plancia e catalogo | **02/10–06/10** | semafori, catalogo con link e allegati |
 | 3 Schede | **07/10–11/10** | serve la chiave API Anthropic con tetto di spesa (Matteo la crea il 06/10) |
 | 4 Profili e match | **12/10–16/10** | serve lo schema delle anagrafiche di Matteo (punto aperto 1) |

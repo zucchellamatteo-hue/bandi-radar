@@ -16,14 +16,14 @@ import yaml
 CARTELLA_FONTI = Path(__file__).resolve().parents[2] / "fonti"
 
 TIPI = {"ue", "nazionale", "regione", "camera", "capoluogo", "provincia", "fondazione", "contesto"}
-MODALITA = {"html", "rss", "api", "browser"}
+MODALITA = {"html", "rss", "api", "browser", "sitemap"}
 FREQUENZE = {"giornaliera", "tre_a_settimana", "settimanale", "quindicinale", "mensile"}
 STATI = {"attiva", "da_verificare", "difficile", "esclusa"}
 
 _ID_VALIDO = re.compile(r"^[a-z0-9_]+$")
 _CAMPI_NOTI = {
     "id", "nome", "ente", "tipo", "territorio", "url", "modalita", "feed_url",
-    "piattaforma", "frequenza", "stato", "verificato_il", "note", "ignora_robots",
+    "piattaforma", "frequenza", "stato", "verificato_il", "note", "ignora_robots", "richiesta",
 }
 
 
@@ -43,6 +43,7 @@ class Fonte:
     verificato_il: date | None = None
     note: str = ""
     ignora_robots: bool = False  # solo per decisione esplicita di Matteo, fonte per fonte
+    richiesta: dict = field(default_factory=dict)  # per le API: metodo, intestazioni, corpo_json, corpo_form, url_modello
     file: str = ""  # nome del file YAML di provenienza
 
     @property
@@ -101,6 +102,9 @@ def _controlla_voce(voce: dict, file: str, posizione: int) -> tuple[Fonte | None
     ignora_robots = voce.get("ignora_robots", False)
     if not isinstance(ignora_robots, bool):
         errori.append(f"{dove}: ignora_robots deve essere true o false")
+    richiesta = voce.get("richiesta") or {}
+    if not isinstance(richiesta, dict) or set(richiesta) - {"metodo", "intestazioni", "corpo_json", "corpo_form", "url_modello"}:
+        errori.append(f"{dove}: richiesta ammette solo metodo, intestazioni, corpo_json, corpo_form, url_modello")
 
     if errori:
         return None, errori
@@ -120,6 +124,7 @@ def _controlla_voce(voce: dict, file: str, posizione: int) -> tuple[Fonte | None
             verificato_il=verificato_il,
             note=valori["note"],
             ignora_robots=ignora_robots,
+            richiesta=richiesta,
             file=file,
         ),
         [],

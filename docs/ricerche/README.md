@@ -23,3 +23,4 @@ In una sessione di Claude Code su questo repository, descrivere la domanda e chi
 | 2026-09-23 | `2026-09-23_open_data_comuni.md` | I Comuni e le Regioni pubblicano i bandi come open data? (catalogo nazionale, ~100 portali comunali, portali regionali) |
 | 2026-09-24 | `2026-09-24_regioni_nazionali.md` | Per Regioni, enti nazionali, Portale UE e fondazioni: quale pagina, feed o API osservare? Esiste il calendario art. 49? Lettura diretta dei siti, esito nel registro `fonti/` |
 | 2026-09-24 | `2026-09-24_camere_capoluoghi.md` | Per Camere di Commercio, Unioni regionali e Comuni capoluogo: quale pagina, feed o API osservare? Bandi per imprese recenti? Lettura diretta dei siti, esito nel registro `fonti/` |
+| 2026-09-24 | `2026-09-24_api_nascoste.md` | I siti a pagina singola (Veneto, Sardegna, Bolzano, Bologna...) hanno un'API interna leggibile senza browser? Osservazione delle chiamate di rete con Chromium |

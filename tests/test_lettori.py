@@ -112,3 +112,30 @@ def test_osservatore_prende_il_titolo_della_scheda_quando_il_link_dice_solo_scop
 def test_osservatore_non_butta_una_testata_che_contiene_il_contenuto():
     html = """<html><body><header><main><ul><li><a href="/bandi/bando-contributi-fiere-2026">Bando contributi fiere 2026</a></li></ul></main></header></body></html>"""
     assert len(estrai_link(html, "https://x.it/bandi")) == 1
+
+
+def test_browser_legge_una_pagina_riempita_da_javascript(tmp_path):
+    import os
+    import pytest
+    from app.raccolta.lettori.browser import _eseguibile, scarica_con_browser
+
+    if not _eseguibile() and not os.path.exists("/ms-playwright"):
+        pytest.skip("Chromium non disponibile")
+    pagina = tmp_path / "elenco.html"
+    pagina.write_text("""<html><body><main><ul id="elenco"></ul>
+    <script>document.getElementById('elenco').innerHTML =
+      '<li><a href="/bandi/voucher-innovazione-2026">Voucher innovazione digitale 2026</a></li>';</script>
+    </main></body></html>""")
+    html, _ = scarica_con_browser(pagina.as_uri())
+    annunci = estrai_link(html, "https://x.it/bandi")
+    assert [a.titolo for a in annunci] == ["Voucher innovazione digitale 2026"]
+
+
+def test_sitemap_tiene_solo_pagine_recenti_e_pertinenti():
+    from datetime import datetime, timezone
+    from app.raccolta.lettori.sitemap import analizza_sitemap
+
+    annunci, figli = analizza_sitemap((DATI / "sitemap.xml").read_bytes(), datetime(2026, 9, 24, tzinfo=timezone.utc))
+    assert figli == []
+    assert [a.url for a in annunci] == ["https://x.it/avvisi/bando-contributi-commercio-2026"]
+    assert annunci[0].titolo == "Bando contributi commercio 2026"

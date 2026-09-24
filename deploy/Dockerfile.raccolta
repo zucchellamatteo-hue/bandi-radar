@@ -1,0 +1,21 @@
+# Immagine del servizio di raccolta: come l'app, piu' Chromium (Playwright) per le fonti che
+# caricano l'elenco via JavaScript. Parte dall'immagine ufficiale Playwright per Python.
+FROM mcr.microsoft.com/playwright/python:v1.52.0-noble
+
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1 \
+    PLAYWRIGHT_BROWSERS_PATH=/ms-playwright
+
+WORKDIR /srv/app
+
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+COPY app ./app
+COPY fonti ./fonti
+
+# Il browser non gira come root.
+RUN useradd --system --create-home appuser && chown -R appuser /srv/app
+USER appuser
+
+CMD ["python", "-m", "app.raccolta.demone"]

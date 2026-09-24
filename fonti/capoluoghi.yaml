@@ -21,13 +21,17 @@
   ente: Comune di Gorizia
   tipo: capoluogo
   territorio: FVG
-  url: https://www.comune.gorizia.it/sitemap.xml
-  modalita: browser
-  piattaforma: piattaforma_regionale_fvg
+  url: https://www.comune.gorizia.it/it/novita-265178/avvisi-265181
+  modalita: api
+  feed_url: https://www.comune.gorizia.it/core/page/031007/265181/it/
+  piattaforma: generico
   frequenza: quindicinale
-  stato: difficile
-  verificato_il: 2026-09-23
-  note: Sito a pagina singola (Angular). Si osservano le URL nuove nella sitemap, il dettaglio richiede il browser.
+  stato: attiva
+  verificato_il: '2026-09-24'
+  note: 'API JSON del portale regionale FVG (GET senza header): modules[].articles[] con title, intro, published_date,
+    full_url. 48 avvisi. Trovata il 24/09.'
+  richiesta:
+    url_modello: https://www.comune.gorizia.it/it{full_url}
 
 - id: comune_udine_avvisi
   nome: Comune di Udine - Novita' > Avvisi
@@ -144,12 +148,12 @@
   tipo: capoluogo
   territorio: LOM
   url: https://www.comune.lodi.it/flex/cm/pages/ServeBLOB.php/L/IT/IDPagina/11667
-  modalita: browser
+  modalita: html
   piattaforma: flexcmp
   frequenza: mensile
-  stato: difficile
-  verificato_il: 2026-09-23
-  note: Bassa priorita'; serve il browser.
+  stato: attiva
+  verificato_il: '2026-09-24'
+  note: 'La pagina risponde con i titoli gia'' nell''HTML (verificato 24/09): non serve il browser. Nessun RSS.'
 
 - id: comune_mantova_avvisi_rss
   nome: Comune di Mantova - Avvisi
@@ -212,13 +216,15 @@
   ente: Comune di Varese
   tipo: capoluogo
   territorio: LOM
-  url: https://www.comune.varese.it/
-  modalita: browser
+  url: https://www.comune.varese.it/EG0/EGSCHTST6.HBL?en=eg403&MESSA=PUBBLICA
+  modalita: html
   piattaforma: halley
   frequenza: quindicinale
-  stato: difficile
-  verificato_il: 2026-09-23
-  note: Redirect via JavaScript, serve il browser. Link avvisi del tipo novita_NNN.html.
+  stato: attiva
+  verificato_il: '2026-09-24'
+  note: 'Elenco ''Tutte le novita'''' in HTML statico (link novita/avvisi/novita_NNN.html): non serve il browser.
+    Attenzione: /novita/avvisi/ risponde con una pagina vuota che apre la home. Verificato il 24/09.'
+  ignora_robots: true   # robots.txt vieta l'API interna del sito; Matteo ha deciso il 24/09 di leggerla lo stesso
 
 - id: roma_capitale_bandi_sviluppo_economico
   nome: Roma Capitale - Bandi Dipartimento Sviluppo Economico e Attivita' Produttive
@@ -334,12 +340,14 @@
   tipo: capoluogo
   territorio: SAR
   url: https://www.comune.cagliari.it/portale/page/it/bandi_contributi
-  modalita: browser
+  modalita: rss
+  feed_url: https://www.comune.cagliari.it/portale/do/jprss/Rss/Feed/show.action?id=15128&lang=it
   piattaforma: entando
   frequenza: mensile
-  stato: difficile
-  verificato_il: 2026-09-23
-  note: Elenco caricato via JavaScript; RSS dinamico su /portale/page/it/rss.
+  stato: attiva
+  verificato_il: '2026-09-24'
+  note: Feed RSS 'Bandi' del portale (20 voci, link documento.page?contentId=DOC...). Trovato il 24/09. In alternativa
+    la pagina si legge con il browser (39 elementi).
 
 - id: comune_agrigento_avvisi_rss
   nome: Comune di Agrigento - Avvisi
@@ -658,19 +666,18 @@
   ente: Comune di Padova
   tipo: capoluogo
   territorio: VEN
-  url: https://www.comune.padova.it/sitemap.xml
-  modalita: browser
-  feed_url: null
-  piattaforma: null
+  url: https://www.comune.padova.it/novita/avvisi
+  modalita: api
+  feed_url: https://www.comune.padova.it/api/news?filter[status][value]=1&filter[news_type.meta.drupal_internal__target_id]=3&jsonapi_include=1&sort=-changed&page[offset]=0&page[limit]=50
+  piattaforma: generico
   frequenza: settimanale
-  stato: difficile
+  stato: attiva
   verificato_il: '2026-09-24'
-  note: 'padovanet.it non risponde (empty reply); il nuovo sito www.comune.padova.it e'' un''applicazione Angular
-    a pagina singola: /novita/avvisi risponde 200 ma senza contenuto. La sitemap (indice con ?page=1 e ?page=2)
-    elenca gli avvisi, es. "L''Italia delle donne - bando nazionale", manifestazioni d''interesse; si osservano
-    le URL nuove sotto /novita/avvisi/ e il dettaglio richiede il browser.
-
-    '
+  note: 'Drupal JSON:API aperto dietro il sito Angular (GET senza header): data[] con title, changed, news_publication_date,
+    news_end_date, path.alias, news_description. news_type 3 = Avviso (142), 2 = Notizia, 1 = Comunicato. Trovata
+    il 24/09.'
+  richiesta:
+    url_modello: https://www.comune.padova.it{path.alias}
 
 - id: comune_verona_avvisi
   nome: Comune di Verona - Novita' > Avvisi
@@ -796,19 +803,24 @@
   ente: Comune di Bologna
   tipo: capoluogo
   territorio: EMR
-  url: https://www.comune.bologna.it/sitemap.xml
-  modalita: browser
-  feed_url: null
-  piattaforma: myportal_lepida
+  url: https://www.comune.bologna.it/amministrazione/concorsi-avvisi-bandi/avvisi-pubblici
+  modalita: api
+  feed_url: https://www.comune.bologna.it/myportal/C_A944/api/search-advanced?page=0&pageSize=50&sortBy=firstPublishedAt&desc=true
+  piattaforma: generico
   frequenza: settimanale
-  stato: difficile
+  stato: attiva
   verificato_il: '2026-09-24'
-  note: 'Sito a pagina singola (my-render-library, stessa famiglia di portale.cittametropolitana.bo.it): /novita/avvisi
-    risponde 200 ma vuota. La sitemap (1,6 MB) e'' completa ed elenca /novita/avvisi, /argomenti/economia/imprese
-    e /servizi/imprese-commercio; si osservano le URL nuove, il dettaglio richiede il browser. Bologna pubblica
-    bandi per il commercio con regolarita'', quindi vale la pena investire.
-
-    '
+  note: 'API di ricerca del portale myportal Lepida (POST JSON, senza cookie): page.entities[] con name, slug, firstPublishedAt,
+    modifiedAt, parent (cartella), attributes.sys_canonical_url. 1429 bandi e avvisi. Altri tipi: rer_news, rer_documento_pubblico.
+    Trovata il 24/09.'
+  richiesta:
+    metodo: POST
+    corpo_json:
+      preconditions:
+        type: rer_bando_avviso_pubblico
+      attributes: {}
+    url_modello: https://www.comune.bologna.it{attributes.sys_canonical_url}
+  ignora_robots: true   # robots.txt vieta l'API interna del sito; Matteo ha deciso il 24/09 di leggerla lo stesso
 
 - id: comune_modena_avvisi_api
   nome: Comune di Modena - Novita' > Avvisi (API Plone)
@@ -870,17 +882,14 @@
   tipo: capoluogo
   territorio: EMR
   url: https://www.comune.ferrara.it/it/novit%C3%A0/avvisi
-  modalita: browser
+  modalita: html
   feed_url: null
   piattaforma: nextjs
   frequenza: quindicinale
-  stato: difficile
+  stato: attiva
   verificato_il: '2026-09-24'
-  note: 'Sito Next.js: la pagina risponde 200 con il titolo "Tutti gli avvisi" ma l''elenco viene caricato via JavaScript
-    (nessun link agli avvisi nell''HTML, nessun endpoint API individuato). Serve il browser. In home rimandano a
-    appalti.comune.ferrara.it (PortaleAppalti, solo gare).
-
-    '
+  note: 'L''elenco e'' gia'' nell''HTML (rendering lato server): schede con link /it/b/<id>/<slug>, data e sommario.
+    Mostra solo gli ultimi 5 avvisi. Verificato il 24/09.'
 
 - id: comune_ravenna_novita
   nome: Comune di Ravenna - Novita'
@@ -993,19 +1002,23 @@
   ente: Citta' metropolitana di Bologna
   tipo: provincia
   territorio: EMR
-  url: https://portale.cittametropolitana.bo.it/sitemap.xml
-  modalita: browser
-  feed_url: null
-  piattaforma: myportal_lepida
+  url: https://portale.cittametropolitana.bo.it/amministrazione/documenti-e-dati/bandi-e-avvisi
+  modalita: api
+  feed_url: https://portale.cittametropolitana.bo.it/myportal/CMBO/api/search-advanced?page=0&pageSize=50&sortBy=firstPublishedAt&desc=true
+  piattaforma: generico
   frequenza: quindicinale
-  stato: difficile
+  stato: attiva
   verificato_il: '2026-09-24'
-  note: 'Portale a pagina singola (my-render-library Lepida): /novita/avvisi e /amministrazione/documenti-e-dati/avvisi-bandi
-    rispondono 200 ma vuote. La sitemap (1 MB) conferma pagine "argomenti/imprese", "argomenti/contributi" e comunicati
-    tipo "Vetrina - spazi che diventano impresa, aperta la call" e "graduatoria progetti beneficiari": pubblica
-    davvero bandi per imprese. Osservare le URL nuove della sitemap, dettaglio col browser.
-
-    '
+  note: 'Come il Comune di Bologna (myportal Lepida, POST JSON): 568 bandi e avvisi con name, firstPublishedAt,
+    attributes.sys_canonical_url. Trovata il 24/09.'
+  richiesta:
+    metodo: POST
+    corpo_json:
+      preconditions:
+        type: rer_bando_avviso_pubblico
+      attributes: {}
+    url_modello: https://portale.cittametropolitana.bo.it{attributes.sys_canonical_url}
+  ignora_robots: true   # robots.txt vieta l'API interna del sito; Matteo ha deciso il 24/09 di leggerla lo stesso
 
 - id: citta_metropolitana_milano_novita
   nome: Citta' metropolitana di Milano - Novita'
@@ -1407,17 +1420,16 @@
   tipo: capoluogo
   territorio: ABR
   url: https://www.comune.laquila.it/
-  modalita: browser
-  feed_url: null
+  modalita: api
+  feed_url: https://www.comune.laquila.it/api/pagine?sort=data:desc&pagination[pageSize]=50&filters[categoria][url][$eq]=avvisi&fields[0]=titolo&fields[1]=data&fields[2]=url&fields[3]=sommario&populate[categoria][fields][0]=url
   piattaforma: angular_strapi
   frequenza: quindicinale
-  stato: difficile
+  stato: attiva
   verificato_il: '2026-09-24'
-  note: 'Applicazione a pagina singola (Angular) con backend Strapi sullo stesso dominio (/api, token pubblico nel
-    bundle JS); l''HTML e la sitemap sono vuoti e /api/avvisi, /api/notizie, /api/pages danno 404. Serve il browser
-    o scoprire i nomi delle collezioni.
-
-    '
+  note: 'Sito Angular con backend Strapi: l''API vuole un token pubblico scritto nel file main.*.js del sito, che
+    il lettore rilegge a ogni giro. data[] con titolo, data, url, sommario. 42 avvisi. Trovata il 24/09.'
+  richiesta:
+    url_modello: https://www.comune.laquila.it/novita/avvisi/{url}
 
 - id: comune_pescara_avvisi
   nome: Comune di Pescara - Avvisi
