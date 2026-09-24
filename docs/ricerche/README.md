@@ -24,3 +24,4 @@ In una sessione di Claude Code su questo repository, descrivere la domanda e chi
 | 2026-09-24 | `2026-09-24_regioni_nazionali.md` | Per Regioni, enti nazionali, Portale UE e fondazioni: quale pagina, feed o API osservare? Esiste il calendario art. 49? Lettura diretta dei siti, esito nel registro `fonti/` |
 | 2026-09-24 | `2026-09-24_camere_capoluoghi.md` | Per Camere di Commercio, Unioni regionali e Comuni capoluogo: quale pagina, feed o API osservare? Bandi per imprese recenti? Lettura diretta dei siti, esito nel registro `fonti/` |
 | 2026-09-24 | `2026-09-24_api_nascoste.md` | I siti a pagina singola (Veneto, Sardegna, Bolzano, Bologna...) hanno un'API interna leggibile senza browser? Osservazione delle chiamate di rete con Chromium |
+| 2026-09-24 | `2026-09-24_verifica_dal_server.md` | Le fonti bloccate dal cloud e quelle difficili si leggono dal server? Prove con la raccolta, curl IPv4/IPv6 e Chromium |

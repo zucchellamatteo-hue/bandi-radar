@@ -1,23 +1,24 @@
 # Fonti nazionali ed europee. Formato in README.md. Mappatura: docs/ricerche/2026-09-24_regioni_nazionali.md
 
 - id: incentivi_gov_ricerca
-  nome: incentivi.gov.it - Cerca incentivi
+  nome: incentivi.gov.it - Catalogo incentivi (ricerca interna)
   ente: Ministero delle Imprese e del Made in Italy (portale incentivi.gov.it)
   tipo: nazionale
   territorio: ITA
   url: https://www.incentivi.gov.it/it/cerca-incentivi
-  modalita: browser
-  feed_url: null
+  modalita: api
+  feed_url: https://www.incentivi.gov.it/solr/coredrupal/select?q=*:*&fq=index_id:incentivi&sort=ds_last_update%20desc&rows=200&wt=json&fl=id:zs_nid,titolo:zs_title,url:zs_url,riassunto:zs_body,data:zs_field_open_date,scadenza:zs_field_close_date,aggiornato:ds_last_update,link_ente:zs_field_link,regioni:zm_field_regions_value,dimensioni:zm_field_dimensions_value,forma:zm_field_support_form_value,ambito:zm_field_scopes_value,soggetti:zm_field_subject_type_value,spese:zm_field_granted_costs_value,settori:zm_field_activity_sector_value,ateco:zs_field_ateco,costo_min:zs_field_cost_min,costo_max:zs_field_cost_max,dotazione:zs_field_budget_allocation,gestore:zs_field_subject_grant
   piattaforma: drupal
   frequenza: giornaliera
-  stato: da_verificare
+  stato: attiva
   verificato_il: '2026-09-24'
-  note: 'Da questa sessione cloud il sito chiude la connessione (reset) su tutte le pagine, come previsto; anche
-    il servizio WebFetch riceve 503. Indirizzi NON aperti davvero: vanno verificati dal server di produzione. La
-    pagina di ricerca e'' un''app JavaScript, quindi modalita browser. Fonte primaria di riferimento: preferire
-    i dati aperti (voce incentivi_gov_open_data).
-
-    '
+  note: >
+    Verificata dal VPS il 24/09: la pagina "Cerca incentivi" interroga un motore Solr interno
+    (/solr/coredrupal/select, non vietato da robots.txt) con l'intero catalogo: 5.904 misure nazionali,
+    regionali e locali. Si chiedono le 200 aggiornate piu' di recente (sort=ds_last_update desc); con fl=
+    i campi vengono rinominati (alias) nei nomi che il lettore generico conosce: titolo, url, data
+    (apertura), scadenza (chiusura), piu' dimensioni d'impresa, forma di agevolazione, spese ammesse,
+    ATECO, regioni, dotazione, che restano nei dati grezzi per le schede. Circa 1 MB per lettura.
 
 - id: incentivi_gov_open_data
   nome: incentivi.gov.it - Open data (registro incentivi)
@@ -26,20 +27,16 @@
   territorio: ITA
   url: https://www.incentivi.gov.it/it/open-data
   modalita: api
-  feed_url: https://www.incentivi.gov.it/sites/default/files/open-data/
+  feed_url: null
   piattaforma: drupal
   frequenza: giornaliera
-  stato: da_verificare
+  stato: esclusa
   verificato_il: '2026-09-24'
-  note: 'Non aperto da qui (connessione chiusa dal sito). Da ricerca web: la pagina open-data offre l''export dell''intero
-    registro incentivi in CSV compresso e JSON, licenza IODL 2.0, con campi ID_Incentivo, Titolo, Descrizione, Data_apertura,
-    Data_chiusura, Forma_agevolazione, Settore_Attivita, Codici_ATECO, ecc. Un file di esempio indicizzato dai motori:
-    /sites/default/files/open-data/2025-4-5_opendata-export.csv (nome con data, quindi cambia a ogni export: il
-    feed_url e'' la cartella, il file va scoperto dalla pagina). Da verificare dal server: nome del file corrente
-    e frequenza di aggiornamento. Su dati.gov.it non risulta un dataset dedicato (ricerca "incentivi.gov.it" senza
-    esito).
-
-    '
+  note: >
+    Verificata dal VPS il 24/09: la cartella /sites/default/files/open-data/ risponde 404 e la pagina non
+    contiene link a file. I pulsanti "Scarica JSON/CSV" generano l'export nel browser interrogando lo stesso
+    motore Solr (configurazione solrEndpoint /solr/coredrupal/select, solrExportFileName opendata-export):
+    i dati sono gli stessi della voce incentivi_gov_ricerca, che li legge gia'.
 
 - id: mimit_incentivi
   nome: MIMIT - Tutti gli incentivi
@@ -100,20 +97,22 @@
   ente: Gestore dei Servizi Energetici
   tipo: nazionale
   territorio: ITA
-  url: https://www.gse.it/
-  modalita: browser
+  url: https://www.gse.it/servizi-per-te/news
+  modalita: html
   feed_url: null
   piattaforma: null
   frequenza: tre_a_settimana
-  stato: difficile
+  stato: attiva
   verificato_il: '2026-09-24'
-  note: 'Tutto il sito risponde 403 "Access Denied" (protezione Akamai) sia con User-Agent BandiRadar sia con User-Agent
-    Chrome; anche WebFetch ottiene 404/403. Nessuna pagina elenco aperta davvero, quindi nessun URL di dettaglio
-    riportato. Da riprovare dal server di produzione con browser senza interfaccia; in alternativa seguire le novita''
-    GSE (Conto Termico, Transizione 5.0, CER) tramite MIMIT e incentivi.gov.it. Il portale appalti.gse.it riguarda
-    solo gare fornitori: non serve.
-
-    '
+  note: >
+    Tutto il sito risponde 403 "Access Denied" (protezione Akamai) sia con User-Agent BandiRadar sia con User-
+    Agent Chrome; anche WebFetch ottiene 404/403. Nessuna pagina elenco aperta davvero, quindi nessun URL di
+    dettaglio riportato. Da riprovare dal server di produzione con browser senza interfaccia; in alternativa
+    seguire le novita' GSE (Conto Termico, Transizione 5.0, CER) tramite MIMIT e incentivi.gov.it. Il portale
+    appalti.gse.it riguarda solo gare fornitori: non serve. Dal VPS il 24/09 il sito risponde 200 anche senza
+    browser (il blocco Akamai era solo verso il cloud). La home non e' un elenco: si osserva la pagina News,
+    dove escono aperture di sportelli e nuove misure (6 notizie lette). robots.txt vieta solo /_layouts/ e
+    simili.
 
 - id: simest_finanziamenti_agevolati
   nome: SIMEST - Finanziamenti agevolati per l'internazionalizzazione
@@ -183,16 +182,17 @@
   feed_url: null
   piattaforma: wordpress
   frequenza: settimanale
-  stato: da_verificare
+  stato: difficile
   verificato_il: '2026-09-24'
-  note: 'La pagina risponde 200 (118 KB) ma il sito e'' protetto da un bot manager Radware: la home ha rimandato
-    a una pagina di controllo e nel HTML della sezione non compaiono link leggibili (probabile caricamento via JavaScript).
-    Dalla home risultano le sezioni /fondo-per-il-turismo-sostenibile/ (avvisi pubblici n. 1, 2, 3 ed edizione 2024),
-    /fondo-unico-nazionale-per-il-turismo/, /strumenti-di-sostegno/fondo-accessibilita-turistica/. Il feed /feed/
-    (200, 10 voci) e'' quasi solo rassegna stampa: non usarlo come elenco bandi. Da riprovare dal server con browser
-    senza interfaccia.
-
-    '
+  note: >
+    La pagina risponde 200 (118 KB) ma il sito e' protetto da un bot manager Radware: la home ha rimandato a
+    una pagina di controllo e nel HTML della sezione non compaiono link leggibili (probabile caricamento via
+    JavaScript). Dalla home risultano le sezioni /fondo-per-il-turismo-sostenibile/ (avvisi pubblici n. 1, 2,
+    3 ed edizione 2024), /fondo-unico-nazionale-per-il-turismo/, /strumenti-di-sostegno/fondo-accessibilita-
+    turistica/. Il feed /feed/ (200, 10 voci) e' quasi solo rassegna stampa: non usarlo come elenco bandi. Da
+    riprovare dal server con browser senza interfaccia. Dal VPS il 24/09: bot manager Radware; con richiesta
+    semplice 118 KB senza testo, col browser una volta la pagina completa (senza elenco leggibile) e una volta
+    la pagina di controllo. Bloccata anche dal VPS il 24/09.
 
 - id: mase_bandi_avvisi
   nome: MASE - Bandi e avvisi

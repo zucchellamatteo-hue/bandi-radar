@@ -18,11 +18,14 @@ class NonPermesso(Exception):
     """robots.txt del sito vieta la pagina."""
 
 
-def nuovo_client() -> httpx.Client:
+def nuovo_client(ipv6: bool = False) -> httpx.Client:
+    """Con ipv6=True la connessione esce solo in IPv6: alcuni siti (Napoli, Siracusa) rifiutano l'IPv4 del server
+    ma accettano l'IPv6. Richiede che il container abbia l'IPv6 (rete `ipv6` in docker-compose.yml)."""
     return httpx.Client(
         headers={"User-Agent": USER_AGENT, "Accept-Language": "it"},
         follow_redirects=True,
         timeout=TIMEOUT,
+        transport=httpx.HTTPTransport(local_address="::") if ipv6 else None,
     )
 
 

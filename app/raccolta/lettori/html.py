@@ -27,6 +27,7 @@ _TESTI_GENERICI = re.compile(
 )
 _ESTENSIONI_FILE = (".pdf", ".doc", ".docx", ".xls", ".xlsx", ".zip", ".p7m", ".odt", ".jpg", ".png")
 _SPAZI = re.compile(r"\s+")
+_SESSIONE = re.compile(r";jsessionid=[^?#]*", re.IGNORECASE)
 
 
 _RUOLI_DI_CORNICE = re.compile("banner|contentinfo|navigation", re.I)
@@ -58,11 +59,25 @@ def _contenitori(pagina: BeautifulSoup) -> list:
     return [principale, corpo] if principale is not None and principale is not corpo else [corpo]
 
 
-def estrai_link(html: str, url_pagina: str) -> list[Annuncio]:
-    """Link candidati: dentro il contenuto, con testo lungo e non generico, non file, non ancore."""
+def estrai_link(html: str, url_pagina: str, selettore: str | None = None) -> list[Annuncio]:
+    """Link candidati: dentro il contenuto, con testo lungo e non generico, non file, non ancore.
+
+    Con `selettore` (CSS, dal campo richiesta.selettore del registro) si guardano solo le parti indicate:
+    serve per le pagine dove menu e servizi del sito si mescolano all'elenco dei bandi.
+    """
     pagina = BeautifulSoup(html, "lxml")
     _pulisci(pagina)
-    for radice in _contenitori(pagina):
+    radici = pagina.select(selettore) if selettore else _contenitori(pagina)
+    if selettore:
+        annunci: list[Annuncio] = []
+        visti: set[str] = set()
+        for radice in radici:
+            for a in _link_in(radice, url_pagina):
+                if a.url not in visti:
+                    visti.add(a.url)
+                    annunci.append(a)
+        return annunci
+    for radice in radici:
         annunci = _link_in(radice, url_pagina)
         if annunci:
             return annunci
@@ -70,6 +85,12 @@ def estrai_link(html: str, url_pagina: str) -> list[Annuncio]:
 
 
 def _titolo_della_scheda(a) -> str | None:
+    riga = a.find_parent("tr")
+    if riga is not None:
+        # Tabelle "Oggetto | Scadenza | Dettaglio": il titolo e' la cella piu' lunga della riga.
+        celle = [_SPAZI.sub(" ", c.get_text(" ")).strip() for c in riga.find_all(["td", "th"])]
+        if celle:
+            return max(celle, key=len)
     scheda = a.find_parent(["article", "li", "div", "tr", "section"])
     for _ in range(3):
         if scheda is None:
@@ -89,7 +110,8 @@ def _link_in(radice, url_pagina: str) -> list[Annuncio]:
         href = a["href"].strip()
         if not href or href.startswith(("#", "mailto:", "tel:", "javascript:")):
             continue
-        url = urljoin(url_pagina, href).split("#")[0]
+        # Il codice di sessione (;jsessionid=...) cambia a ogni visita: senza toglierlo ogni link sembrerebbe nuovo.
+        url = _SESSIONE.sub("", urljoin(url_pagina, href).split("#")[0])
         if url in visti or url.rstrip("/") == url_pagina.rstrip("/"):
             continue
         testo = _SPAZI.sub(" ", a.get_text(" ")).strip()
@@ -121,6 +143,6 @@ def leggi(fonte: Fonte, client: httpx.Client) -> Lettura:
     else:
         risposta = scarica(client, fonte.url, accept="text/html", ignora_robots=fonte.ignora_robots)
     risposta.raise_for_status()
-    annunci = estrai_link(risposta.text, str(risposta.url))
+    annunci = estrai_link(risposta.text, str(risposta.url), fonte.richiesta.get("selettore"))
     impronta = hashlib.sha256(risposta.content).hexdigest()[:32]
     return Lettura(annunci=annunci, codice_http=risposta.status_code, byte=len(risposta.content), impronta_pagina=impronta)

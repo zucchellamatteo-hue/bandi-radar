@@ -59,6 +59,7 @@ services:
     restart: unless-stopped
     command: sh -c "python -m app.db.migrazioni && python -m app.raccolta.demone"
     shm_size: 512m                              # Chromium ne ha bisogno
+    networks: [default, ipv6]                   # ipv6: per le fonti con richiesta.ipv6 (siti che rifiutano l'IPv4 del server)
     environment:
       PGHOST: db
       PGPORT: "5432"
@@ -92,6 +93,13 @@ services:
     depends_on:
       app:
         condition: service_healthy
+
+# Rete in piu', solo per la raccolta: esce anche in IPv6 (Docker assegna da solo gli indirizzi interni).
+# La rete "default" resta com'era, cosi' database e app non cambiano.
+networks:
+  default:
+  ipv6:
+    enable_ipv6: true
 
 volumes:
   pgdata:

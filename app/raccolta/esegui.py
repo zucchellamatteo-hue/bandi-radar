@@ -142,6 +142,9 @@ def leggi_fonte(fonte: Fonte, client: httpx.Client) -> Lettura:
     lettore = lettore_per(fonte)
     if lettore is None:
         raise NotImplementedError(f"modalita' '{fonte.modalita}' non ancora disponibile")
+    if fonte.richiesta.get("ipv6"):
+        with nuovo_client(ipv6=True) as client_ipv6:
+            return lettore(fonte, client_ipv6)
     return lettore(fonte, client)
 
 

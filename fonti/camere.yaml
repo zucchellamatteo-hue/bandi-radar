@@ -728,17 +728,17 @@
   feed_url: null
   piattaforma: plone
   frequenza: settimanale
-  stato: difficile
+  stato: attiva
   verificato_il: '2026-09-24'
-  note: 'Il server chiude la connessione TLS in modo intermittente (reset su https, 3 tentativi su 5 falliti; passando
-    da http con redirect alcune pagine si aprono con 200). Plone 6 Volto: la pagina /promozione-e-innovazione/bandi
-    (aperta una volta, 200) ha l''elenco caricato via JavaScript e l''unico contenuto visibile è "Bandi Ristori
-    3" del 2025; l''API ++api++ e il feed /rss-feed non hanno risposto. La pagina in url (aperta una volta, 200)
-    elenca in HTML i "Bandi Digital Export" fino all''edizione 2024-2025: l''edizione 2026-2027 è pubblicata dalle
-    singole Camere (es. Modena, Romagna), quindi Unioncamere ER non è indispensabile. Da riprovare più avanti dal
-    server; se resta instabile, esclusa.
-
-    '
+  note: >
+    Il server chiude la connessione TLS in modo intermittente (reset su https, 3 tentativi su 5 falliti;
+    passando da http con redirect alcune pagine si aprono con 200). Plone 6 Volto: la pagina /promozione-e-
+    innovazione/bandi (aperta una volta, 200) ha l'elenco caricato via JavaScript e l'unico contenuto visibile
+    è "Bandi Ristori 3" del 2025; l'API ++api++ e il feed /rss-feed non hanno risposto. La pagina in url
+    (aperta una volta, 200) elenca in HTML i "Bandi Digital Export" fino all'edizione 2024-2025: l'edizione
+    2026-2027 è pubblicata dalle singole Camere (es. Modena, Romagna), quindi Unioncamere ER non è
+    indispensabile. Da riprovare più avanti dal server; se resta instabile, esclusa. Dal VPS il 24/09: 8 bandi
+    letti (Digital Export 2021-2025 e simili).
 
 - id: cciaa_firenze_bandi_rss
   nome: Camera di Commercio di Firenze - Bandi e contributi (feed)
@@ -849,14 +849,15 @@
   feed_url: https://www.unioncamere-toscana.it/feed/
   piattaforma: wordpress
   frequenza: settimanale
-  stato: da_verificare
+  stato: attiva
   verificato_il: '2026-09-24'
-  note: 'Il vecchio dominio tos.camcom.it rimanda a unioncamere-toscana.it (WordPress con wp-json aperta). Non ha
-    una sezione bandi propria: la categoria "bandi" esiste ma è vuota (0 articoli); i bandi passano dalle news (10
-    voci nel feed, ultima 15/09/2026: BuyFood Toscana, marchi collettivi all''estero, seminari). Da tenere a bassa
-    priorità: quasi tutto è già sui siti delle singole Camere. In alternativa /wp-json/wp/v2/posts?search=bando.
-
-    '
+  note: >
+    Il vecchio dominio tos.camcom.it rimanda a unioncamere-toscana.it (WordPress con wp-json aperta). Non ha
+    una sezione bandi propria: la categoria "bandi" esiste ma è vuota (0 articoli); i bandi passano dalle news
+    (10 voci nel feed, ultima 15/09/2026: BuyFood Toscana, marchi collettivi all'estero, seminari). Da tenere
+    a bassa priorità: quasi tutto è già sui siti delle singole Camere. In alternativa /wp-
+    json/wp/v2/posts?search=bando. Dal VPS il 24/09: feed RSS con 10 voci, ultima 24/09 (webinar, export,
+    bandi).
 
 - id: cciaa_umbria_bandi_api
   nome: Camera di Commercio dell'Umbria - Bandi e contributi (API Plone)
@@ -949,14 +950,15 @@
   frequenza: settimanale
   stato: difficile
   verificato_il: '2026-09-24'
-  note: 'Il server chiude la connessione (reset) con User-Agent che contiene "Linux" o solo "BandiRadar"; risponde
-    200 con User-Agent da browser Windows (verificato con "Mozilla/5.0 (Windows NT 10.0; Win64; x64) BandiRadar/0.1").
-    L''osservatore deve usare quello per questa fonte. Pagina HTML con pochi link (bando contributi fiere, bando
-    competitività; bando temporary shop in /it/attivita_34/internazionalizzazione-e-marketing_53/). CMS proprietario,
-    nessun RSS visto. Il voucher doppia transizione 2026 risulta su incentivi.gov.it ma non in questa pagina: copertura
-    parziale.
-
-    '
+  note: >
+    Il server chiude la connessione (reset) con User-Agent che contiene "Linux" o solo "BandiRadar"; risponde
+    200 con User-Agent da browser Windows (verificato con "Mozilla/5.0 (Windows NT 10.0; Win64; x64)
+    BandiRadar/0.1"). L'osservatore deve usare quello per questa fonte. Pagina HTML con pochi link (bando
+    contributi fiere, bando competitività; bando temporary shop in /it/attivita_34/internazionalizzazione-e-
+    marketing_53/). CMS proprietario, nessun RSS visto. Il voucher doppia transizione 2026 risulta su
+    incentivi.gov.it ma non in questa pagina: copertura parziale. Dal VPS il 24/09: la pagina risponde ma i
+    bandi attivi (Temporary Shop, Fiere, Competitivita) compaiono solo nel menu di navigazione, che il lettore
+    scarta; nessuna pagina elenco trovata.
 
 - id: unioncamere_lazio
   nome: Unioncamere Lazio
@@ -1138,22 +1140,26 @@
   ente: Camera di Commercio di Bari
   tipo: camera
   territorio: PUG
-  url: http://www.ba.camcom.it/info/bandi
+  url: https://www.ba.camcom.it/bari/bandi-per-sostegno-alle-imprese
   modalita: html
   feed_url: null
   piattaforma: null
   frequenza: settimanale
-  stato: difficile
+  stato: attiva
   verificato_il: '2026-09-24'
-  note: 'Il sito in HTTPS chiude la connessione ai nostri server (connection reset su https://www.ba.camcom.it/,
-    ripetuto in 4 tentativi; www.ba.camcom.gov.it non passa il proxy). In HTTP semplice la pagina indice http://www.ba.camcom.it/info/bandi
-    risponde 200 e rimanda a "BANDI PER SOSTEGNO ALLE IMPRESE" (/bari/bandi-per-sostegno-alle-imprese), "BANDI IMPRESE
-    STORICHE" e "BANDI DI ALTRI ENTI", ma quelle pagine reindirizzano (301) in HTTPS e quindi falliscono. In home
-    (sempre via HTTP) compaiono /info/bando-start-up-2026 e /info/bando-giovani-laureati-per-le-imprese-anno-2026.
-    CMS proprietario (pagine .php, nessun feed trovato). Da riprovare dal server di produzione: potrebbe essere
-    un blocco geografico o del proxy.
-
-    '
+  note: >
+    Il sito in HTTPS chiude la connessione ai nostri server (connection reset su https://www.ba.camcom.it/,
+    ripetuto in 4 tentativi; www.ba.camcom.gov.it non passa il proxy). In HTTP semplice la pagina indice
+    http://www.ba.camcom.it/info/bandi risponde 200 e rimanda a "BANDI PER SOSTEGNO ALLE IMPRESE"
+    (/bari/bandi-per-sostegno-alle-imprese), "BANDI IMPRESE STORICHE" e "BANDI DI ALTRI ENTI", ma quelle
+    pagine reindirizzano (301) in HTTPS e quindi falliscono. In home (sempre via HTTP) compaiono /info/bando-
+    start-up-2026 e /info/bando-giovani-laureati-per-le-imprese-anno-2026. CMS proprietario (pagine .php,
+    nessun feed trovato). Da riprovare dal server di produzione: potrebbe essere un blocco geografico o del
+    proxy. Dal VPS il 24/09: la pagina /info/bandi era solo un indice; la pagina 'Bandi per sostegno alle
+    imprese' elenca i bandi in schede (div.insight.snippet): 11 bandi letti, tutti voucher e contributi
+    camerali.
+  richiesta:
+    selettore: div.insight.snippet
 
 - id: cciaa_brindisitaranto_bandi
   nome: Camera di Commercio di Brindisi-Taranto - Bandi (RSS)
@@ -1298,20 +1304,22 @@
   ente: Camera di Commercio di Palermo Enna
   tipo: camera
   territorio: SIC
-  url: https://www.paen.camcom.it/it
+  url: https://www.paen.camcom.gov.it/it/avvisi
   modalita: html
   feed_url: null
   piattaforma: drupal_camcom
   frequenza: settimanale
-  stato: da_verificare
+  stato: attiva
   verificato_il: '2026-09-24'
-  note: 'Drupal 9 (distribuzione Infocamere). La vista /it/bandi è vuota e il feed /it/rss.xml è fermo a novembre
-    2024, mentre la home pubblica avvisi datati 2026 (es. "<<04.08.2026>> Elenco dei fornitori abilitati al voucher
-    cloud computing e cybersecurity"). Pagina /it/promozione-internazionalizzazione senza elenco bandi; /it/notizie
-    reindirizza alle notizie del Comitato imprenditoria femminile. Da osservare la home e cercare, con un browser,
-    la pagina dei bandi PID (voucher digitali) che non è raggiungibile dal menu servito ai server.
-
-    '
+  note: >
+    Drupal 9 (distribuzione Infocamere). La vista /it/bandi è vuota e il feed /it/rss.xml è fermo a novembre
+    2024, mentre la home pubblica avvisi datati 2026 (es. "<<04.08.2026>> Elenco dei fornitori abilitati al
+    voucher cloud computing e cybersecurity"). Pagina /it/promozione-internazionalizzazione senza elenco
+    bandi; /it/notizie reindirizza alle notizie del Comitato imprenditoria femminile. Da osservare la home e
+    cercare, con un browser, la pagina dei bandi PID (voucher digitali) che non è raggiungibile dal menu
+    servito ai server. Dal VPS il 24/09: la home ha solo un carosello; si osserva la pagina Avvisi (dominio
+    .gov.it), 20 voci miste (avvisi a imprese, liste legali, organizzazione interna): lo smistamento separera'
+    quelle utili.
 
 - id: cciaa_sudestsicilia_notizie
   nome: Camera di Commercio del Sud Est Sicilia - Notizie (RSS)
@@ -1458,15 +1466,17 @@
   feed_url: null
   piattaforma: null
   frequenza: settimanale
-  stato: da_verificare
+  stato: attiva
   verificato_il: '2026-09-24'
-  note: 'Con curl dal nostro proxy il sito non risponde (tunnel chiuso, 6 tentativi su nu.camcom.it e www.nu.camcom.it);
-    un secondo strumento ha aperto la pagina e letto l''elenco (contributi fiere e mostre 2° semestre 2026, iniziative
-    promozionali, selezioni Interreg, coworking) e un link "RSS" nel menu a /it/camera/informazione/rss/ (non verificato).
-    CMS proprietario (indirizzi /it/camera/bandi/bando/<nome>, allegati in /.galleries/): da riprovare dal server
-    di produzione e provare il feed. Pagina collegata: /it/servizi/creare-e-far-crescere-la-tua-impresa/contributi-e-compartecipazioni/.
-
-    '
+  note: >
+    Con curl dal nostro proxy il sito non risponde (tunnel chiuso, 6 tentativi su nu.camcom.it e
+    www.nu.camcom.it); un secondo strumento ha aperto la pagina e letto l'elenco (contributi fiere e mostre 2°
+    semestre 2026, iniziative promozionali, selezioni Interreg, coworking) e un link "RSS" nel menu a
+    /it/camera/informazione/rss/ (non verificato). CMS proprietario (indirizzi /it/camera/bandi/bando/<nome>,
+    allegati in /.galleries/): da riprovare dal server di produzione e provare il feed. Pagina collegata:
+    /it/servizi/creare-e-far-crescere-la-tua-impresa/contributi-e-compartecipazioni/. Dal VPS il 24/09: 13
+    link letti, tra cui la sezione Contributi e attivita promozionali e selezioni del personale: elenco misto,
+    lo smistamento separera' quelle utili.
 
 - id: unioncamere_puglia_bandi
   nome: Unioncamere Puglia - Bandi, finanziamenti e gare (RSS)
