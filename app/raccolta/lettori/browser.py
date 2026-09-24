@@ -61,6 +61,6 @@ def leggi(fonte: Fonte, client: httpx.Client) -> Lettura:
     if not fonte.ignora_robots and not permesso(regole_robots(client, fonte.url), fonte.url):
         raise NonPermesso(f"robots.txt vieta {fonte.url}")
     html, url_finale = scarica_con_browser(fonte.url)
-    annunci = estrai_link(html, url_finale)
+    annunci = estrai_link(html, url_finale, fonte.richiesta.get("selettore"))
     return Lettura(annunci=annunci, codice_http=200, byte=len(html),
                    impronta_pagina=hashlib.sha256(html.encode("utf-8", "replace")).hexdigest()[:32])

@@ -114,6 +114,35 @@ def test_osservatore_non_butta_una_testata_che_contiene_il_contenuto():
     assert len(estrai_link(html, "https://x.it/bandi")) == 1
 
 
+def test_osservatore_con_selettore_legge_solo_le_parti_indicate():
+    html = """<html><body><main>
+      <div class="menu"><a href="/servizi/anagrafe">Anagrafe e stato civile del comune</a></div>
+      <div class="scheda"><h4><a href="/info/bando-voucher-2026">Bando voucher digitali 2026</a></h4></div>
+      <div class="scheda"><h4><a href="/info/bando-fiere-2026">Bando contributi fiere 2026</a></h4></div>
+    </main></body></html>"""
+    assert len(estrai_link(html, "https://x.it/bandi")) == 3
+    annunci = estrai_link(html, "https://x.it/bandi", "div.scheda")
+    assert [a.url for a in annunci] == ["https://x.it/info/bando-voucher-2026", "https://x.it/info/bando-fiere-2026"]
+
+
+def test_osservatore_tabella_con_link_dettaglio_e_sessione_nel_link():
+    html = """<html><body><main><table>
+      <tr><th>Oggetto</th><th>Scadenza</th><th></th></tr>
+      <tr><td>Contributi a fondo perduto per le imprese culturali e creative</td><td>30/11/2026</td>
+          <td><a href="/widget/bandi1;jsessionid=ABC123?codBando=7">Dettaglio</a></td></tr>
+    </table></main></body></html>"""
+    (a,) = estrai_link(html, "https://x.it/widget/bandi1")
+    assert a.titolo == "Contributi a fondo perduto per le imprese culturali e creative"
+    assert a.url == "https://x.it/widget/bandi1?codBando=7"
+
+
+def test_client_ipv6_esce_solo_in_ipv6():
+    from app.raccolta.scarica import nuovo_client
+
+    with nuovo_client(ipv6=True) as client:
+        assert client._transport._pool._local_address == "::"
+
+
 def test_browser_legge_una_pagina_riempita_da_javascript(tmp_path):
     import os
     import pytest
