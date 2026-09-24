@@ -92,6 +92,11 @@ rilevante:
     parole: [bando, bandi, misura, misure, fondo, sostegno, avviso]
     con: [impres*, pmi, microimpres*, startup, start up, start-up, artigian*, esercizi commerciali,
           attivita commerciali, attivita produttive, filiere, agricoltori, imprenditor*]
+  - gruppo: bando_su_temi_di_impresa
+    parole: [bando, bandi, avviso, avvisi, sostegno]
+    con: [fiera, fiere, internazionalizzazione, export, e-commerce, ecommerce, digitalizzazione, promozione economica,
+          innovazione, competitivita, ricerca e sviluppo, transizione ecologica, transizione digitale,
+          efficientamento energetico, videogiochi, audiovisiv*, produzione cinematografica]
 
 # Destinatari che rendono l'annuncio interessante anche se parla di contributi per l'affitto o simili
 # (es. "contributi per l'affitto dei locali delle attivita' commerciali").
@@ -134,6 +139,8 @@ contributi_non_per_imprese:
       - affitti
       - canone di locazione
       - morosita incolpevole
+      - morosi incolpevoli
+      - inquilini
       - libri di testo
       - borse di studio
       - borsa di studio
@@ -283,6 +290,16 @@ non_rilevante:
       - disinfestazione
       - allerta meteo
       - protezione civile
+      - circolazione stradale
+      - divieto di circolazione
+      - disciplina della circolazione
+      - sosta
+      - carreggiata
+      - al traffico
+      - parking
+      - acqua non potabile
+      - abbandono di rifiuti
+      - stagione di caccia
   - gruppo: elezioni_e_istituzioni
     parole:
       - elezioni
@@ -299,3 +316,25 @@ non_rilevante:
       - lutto cittadino
       - cordoglio
       - onorificenz*
+  - gruppo: pagine_e_menu_del_sito
+    parole:
+      - contatta il comune
+      - newsletter
+      - ulteriori dettagli
+      - amministrazione trasparente
+      - albo pretorio
+      - enti pubblici vigilati
+      - organi di tutela
+      - commissioni consiliari
+      - presenze dei consiglieri
+      - assemblea capitolina
+      - dichiarazione di accessibilita
+      - privacy
+      - cookie
+  - gruppo: corsi_ed_eventi_per_cittadini
+    parole:
+      - iscrizioni ai corsi
+      - scuola civica
+      - centri ricreativi
+      - comics
+      - recruiting day
