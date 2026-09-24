@@ -8,7 +8,7 @@
 ## Tre scoperte che valgono per più fonti
 
 1. **Alcuni siti rifiutano l'IPv4 del server ma non l'IPv6.** Napoli e Siracusa rispondono 403 a qualunque richiesta dall'IPv4 del VPS (probabilmente tutto il blocco di indirizzi OVH) e 200 dall'IPv6. I container Docker uscivano solo in IPv4. Nuova opzione del registro `richiesta.ipv6: true` e rete `ipv6` in `docker-compose.yml`, usata solo dalla raccolta.
-2. **Il firewall di Milano guarda lo User-Agent, non l'indirizzo.** `BandiRadar/0.1` riceve 403 (anche su robots.txt); lo stesso User-Agent con davanti la firma di un browser riceve 200. È la soluzione già usata per il MASE. Serve la decisione di Matteo.
+2. **Il firewall di Milano guarda lo User-Agent, non l'indirizzo.** `BandiRadar/0.1` riceve 403 (anche su robots.txt); lo stesso User-Agent con davanti la firma di un browser riceve 200. È la soluzione già usata per il MASE. Matteo ha approvato il 24/09.
 3. **Tabelle e codici di sessione.** Nelle tabelle "Oggetto | Scadenza | Dettaglio" il titolo ora si prende dalla cella più lunga della riga; il `;jsessionid=` si toglie dai link (altrimenti ogni visita sembrerebbe piena di novità). Nuova opzione `richiesta.selettore` (CSS) per leggere solo una parte della pagina.
 
 ## Esito fonte per fonte
@@ -22,7 +22,7 @@
 | umbria_avvisi_attivita_produttive | 200 ma solo menu, anche col browser | `esclusa` (coperta da umbria_bandi_imprese) | no |
 | comune_napoli_avvisi | 403 in IPv4, 200 in IPv6 | `richiesta.ipv6: true`: 9 avvisi | sì |
 | comune_siracusa_avvisi | 403 in IPv4, 200 in IPv6 | `richiesta.ipv6: true`: 9 avvisi | sì |
-| comune_milano_impresa | 403 al nostro User-Agent, 200 a User-Agent da browser + BandiRadar; economiaelavoro resta 403 | note; resta `difficile` in attesa di Matteo | non chiaro |
+| comune_milano_impresa | 403 al nostro User-Agent, 200 a User-Agent da browser + BandiRadar; economiaelavoro resta 403 | per decisione di Matteo User-Agent da browser + BandiRadar (come MASE), `html`, `attiva`: 35 link, per lo più servizi | sì |
 | comune_enna_avvisi | `api.comune.enna.it` non esiste; `hub-api.comune.enna.it` risponde 403 "Non abilitato"; la pagina contiene i 6 avvisi più recenti ma senza link | note; resta `difficile` | no |
 | fondazione_cariplo_bandi | 403 Cloudflare a richiesta semplice (anche IPv6); col browser si apre | `modalita: browser`, `attiva`: 4 bandi | sì |
 | fondazione_cariverona_bandi | come Cariplo | `modalita: browser`, `attiva`: 6 bandi | sì |
@@ -45,10 +45,10 @@
 
 - 20 fonti rilette dopo le modifiche, tutte con esito positivo; 18 passano da `difficile`/`da_verificare` ad `attiva`, 2 diventano `esclusa` perché coperte da altre voci.
 - La fonte più preziosa è il catalogo di incentivi.gov.it: tutte le misure nazionali, regionali e camerali con scadenze, dimensioni d'impresa, forme di agevolazione, spese ammesse e ATECO, già nei dati grezzi per le schede della Fase 3.
-- Restano bloccate dal server: Sviluppo Basilicata, Ministero del Turismo, Enna; Milano dipende da una decisione di Matteo.
+- Restano bloccate dal server: Sviluppo Basilicata, Ministero del Turismo, Enna; Milano si legge con lo User-Agent da browser approvato da Matteo.
 
 ## Conseguenze per il registro delle fonti
 
 - Nuove opzioni `richiesta.selettore` e `richiesta.ipv6` (documentate in `fonti/README.md`).
-- Milano: se Matteo approva, `richiesta.intestazioni.User-Agent` da browser con in coda BandiRadar e contatto, come per il MASE.
+- Milano: approvato da Matteo il 24/09, User-Agent da browser con in coda BandiRadar e contatto. Pista: la ricerca "Bandi e gare" di servizi.comune.milano.it (serve inviare il modulo).
 - Da ricontrollare fra qualche giorno: Latina, Pesaro (possibili problemi temporanei dei siti).

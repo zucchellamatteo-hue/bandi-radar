@@ -68,10 +68,13 @@
   tipo: capoluogo
   territorio: LOM
   url: https://www.comune.milano.it/argomenti/impresa
-  modalita: browser
+  modalita: html
   frequenza: settimanale
-  stato: difficile
+  stato: attiva
   verificato_il: '2026-09-24'
+  richiesta:
+    intestazioni:
+      User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0 Safari/537.36 BandiRadar/0.1 (+https://finanzagevolata.qiaro.it)
   note: >
     Da server risponde 403 (firewall applicativo) sia comune.milano.it sia economiaelavoro.comune.milano.it;
     Matteo ha verificato a mano che i bandi per imprese ci sono. Dal VPS il sito risponde (24/09): provare
@@ -79,7 +82,12 @@
     DUC). Dal VPS il 24/09: il firewall (Azure Application Gateway) rifiuta con 403 lo User-Agent BandiRadar
     anche su robots.txt, ma risponde 200 a uno User-Agent da browser con in coda BandiRadar e il contatto
     (stessa soluzione gia' usata per il MASE). economiaelavoro.comune.milano.it resta 403 anche cosi'.
-    Decisione di Matteo in sospeso.
+    Decisione di Matteo del 24/09: si usa lo User-Agent da browser con in coda BandiRadar e il contatto, come
+    per il MASE. robots.txt (letto a mano il 24/09) vieta solo /fascicolo-del- cittadino/, /accesso-civico/,
+    /scrivi/. La pagina Impresa elenca soprattutto servizi (35 link): utile ma rumorosa. Pista per dopo: la
+    ricerca 'Bandi e gare' su servizi.comune.milano.it/web/guest/ricerca-bandi-gara (robots.txt permette
+    tutto, risponde anche al nostro User-Agent) si riempie solo dopo l'invio del modulo di ricerca (portlet
+    RicercaPortlet, azione searchAssetsjson, asset-bando-di-gara).
 
 - id: comune_bergamo_avvisi
   nome: Comune di Bergamo - Avvisi pubblici con procedura in corso
