@@ -74,3 +74,41 @@ def test_date():
     assert leggi_data("scade il 3 ottobre 2026").month == 10
     assert leggi_data("22/09/26").year == 2026
     assert leggi_data("nessuna data") is None
+
+
+def test_feed_con_spazi_prima_della_dichiarazione():
+    grezzo = b"\n\n" + (DATI / "feed_rss2.xml").read_bytes()
+    assert len(analizza_feed(grezzo)) == 2
+
+
+def test_osservatore_ripiega_su_tutta_la_pagina_e_tiene_le_schede_con_header():
+    html = """<html><body><header><a href="/menu/voce-lunga-del-menu-principale">Voce lunga del menu principale</a></header>
+    <main id="content"></main>
+    <div class="elenco"><article><header><a href="/avvisi/bando-imprese-artigiane-2026">Bando imprese artigiane 2026</a></header></article></div>
+    <footer><a href="/note-legali-e-privacy-del-sito">Note legali e privacy del sito</a></footer></body></html>"""
+    annunci = estrai_link(html, "https://x.it/avvisi")
+    assert [a.url for a in annunci] == ["https://x.it/avvisi/bando-imprese-artigiane-2026"]
+
+
+def test_robots_con_jolly():
+    from app.raccolta.robots import analizza, permesso
+
+    regole = analizza("User-agent: *\nAllow: /kweb*/sito\nDisallow: /\n\nUser-agent: Googlebot\nAllow: /\n", "BandiRadar/0.1")
+    assert permesso(regole, "https://x.it/kweb-abc/sito/incentivi")
+    assert not permesso(regole, "https://x.it/altro")
+    tutto = analizza("User-agent: *\nDisallow: /api/\nDisallow: /content/search\n", "BandiRadar/0.1")
+    assert permesso(tutto, "https://x.it/opendata/api/content/search/x")
+    assert not permesso(tutto, "https://x.it/content/search?q=1")
+    assert permesso(analizza("", "BandiRadar/0.1"), "https://x.it/qualunque")
+
+
+def test_osservatore_prende_il_titolo_della_scheda_quando_il_link_dice_solo_scopri_di_piu():
+    html = """<html><body><main><div class="card"><h3>Finanziamento per la patrimonializzazione delle PMI</h3>
+    <p>testo</p><a href="/finanziamenti/patrimonializzazione">Scopri di più</a></div></main></body></html>"""
+    (a,) = estrai_link(html, "https://x.it/finanziamenti")
+    assert a.titolo == "Finanziamento per la patrimonializzazione delle PMI"
+
+
+def test_osservatore_non_butta_una_testata_che_contiene_il_contenuto():
+    html = """<html><body><header><main><ul><li><a href="/bandi/bando-contributi-fiere-2026">Bando contributi fiere 2026</a></li></ul></main></header></body></html>"""
+    assert len(estrai_link(html, "https://x.it/bandi")) == 1

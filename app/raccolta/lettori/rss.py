@@ -35,8 +35,22 @@ def _testo(el, *percorsi: str) -> str | None:
     return None
 
 
+def _radice(contenuto: bytes):
+    """Legge l'XML tollerando spazi o righe vuote prima della dichiarazione e piccoli errori (con lxml)."""
+    contenuto = contenuto.lstrip(b" \t\r\n").removeprefix(b"\xef\xbb\xbf")
+    try:
+        return ET.fromstring(contenuto)
+    except ET.ParseError:
+        from lxml import etree
+
+        radice = etree.fromstring(contenuto, etree.XMLParser(recover=True, huge_tree=True))
+        if radice is None:
+            raise
+        return ET.fromstring(etree.tostring(radice))
+
+
 def analizza_feed(contenuto: bytes) -> list[Annuncio]:
-    radice = ET.fromstring(contenuto)
+    radice = _radice(contenuto)
     tag = radice.tag.split("}")[-1].lower()
     annunci: list[Annuncio] = []
 
@@ -73,7 +87,7 @@ def analizza_feed(contenuto: bytes) -> list[Annuncio]:
 
 
 def leggi(fonte: Fonte, client: httpx.Client) -> Lettura:
-    risposta = scarica(client, fonte.indirizzo_da_controllare, accept="application/rss+xml, application/atom+xml, application/xml, text/xml")
+    risposta = scarica(client, fonte.indirizzo_da_controllare, accept="application/rss+xml, application/atom+xml, application/xml, text/xml", ignora_robots=fonte.ignora_robots)
     risposta.raise_for_status()
     annunci = analizza_feed(risposta.content)
     return Lettura(annunci=annunci, codice_http=risposta.status_code, byte=len(risposta.content),

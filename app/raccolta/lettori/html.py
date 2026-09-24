@@ -28,16 +28,59 @@ _ESTENSIONI_FILE = (".pdf", ".doc", ".docx", ".xls", ".xlsx", ".zip", ".p7m", ".
 _SPAZI = re.compile(r"\s+")
 
 
-def _contenitore(pagina: BeautifulSoup):
-    for tag in pagina(["script", "style", "noscript", "header", "footer", "nav", "aside", "form"]):
+_RUOLI_DI_CORNICE = re.compile("banner|contentinfo|navigation", re.I)
+
+
+def _e_cornice(tag) -> bool:
+    """Testata o pie' di pagina del sito: non contiene il contenuto principale."""
+    return tag.find(["main", "article"]) is None
+
+
+def _pulisci(pagina: BeautifulSoup) -> None:
+    """Toglie cio' che non e' contenuto: script, menu, testata e pie' di pagina del sito (non quelli dentro le schede)."""
+    for tag in pagina(["script", "style", "noscript", "nav"]):
         tag.decompose()
-    return pagina.find("main") or pagina.find(id=re.compile("content|main|contenuto", re.I)) or pagina.body or pagina
+    for tag in list(pagina.find_all(["header", "footer", "aside", "div"], role=_RUOLI_DI_CORNICE)):
+        if _e_cornice(tag):
+            tag.decompose()
+    corpo = pagina.body
+    if corpo is not None:
+        for figlio in list(corpo.find_all(["header", "footer"], recursive=False)):
+            if _e_cornice(figlio):
+                figlio.decompose()
+
+
+def _contenitori(pagina: BeautifulSoup) -> list:
+    """Prima il contenuto principale; se non da' nulla, tutta la pagina."""
+    principale = pagina.find("main") or pagina.find(id=re.compile("^(content|main|contenuto|main-content|mainContent)$", re.I))
+    corpo = pagina.body or pagina
+    return [principale, corpo] if principale is not None and principale is not corpo else [corpo]
 
 
 def estrai_link(html: str, url_pagina: str) -> list[Annuncio]:
     """Link candidati: dentro il contenuto, con testo lungo e non generico, non file, non ancore."""
     pagina = BeautifulSoup(html, "lxml")
-    radice = _contenitore(pagina)
+    _pulisci(pagina)
+    for radice in _contenitori(pagina):
+        annunci = _link_in(radice, url_pagina)
+        if annunci:
+            return annunci
+    return []
+
+
+def _titolo_della_scheda(a) -> str | None:
+    scheda = a.find_parent(["article", "li", "div", "tr", "section"])
+    for _ in range(3):
+        if scheda is None:
+            return None
+        titolo = scheda.find(["h1", "h2", "h3", "h4", "h5"])
+        if titolo is not None:
+            return _SPAZI.sub(" ", titolo.get_text(" ")).strip()
+        scheda = scheda.find_parent(["article", "li", "div", "tr", "section"])
+    return None
+
+
+def _link_in(radice, url_pagina: str) -> list[Annuncio]:
     host = urlsplit(url_pagina).netloc
     visti: set[str] = set()
     annunci: list[Annuncio] = []
@@ -50,7 +93,10 @@ def estrai_link(html: str, url_pagina: str) -> list[Annuncio]:
             continue
         testo = _SPAZI.sub(" ", a.get_text(" ")).strip()
         if len(testo) < LUNGHEZZA_MINIMA_TITOLO or _TESTI_GENERICI.match(testo):
-            continue
+            # "Scopri di piu'", "Vai": il titolo e' nel titolo della scheda che contiene il link.
+            testo = _titolo_della_scheda(a) or ""
+            if len(testo) < LUNGHEZZA_MINIMA_TITOLO:
+                continue
         if url.lower().endswith(_ESTENSIONI_FILE) and urlsplit(url).netloc != host:
             continue
         visti.add(url)
@@ -63,7 +109,7 @@ def estrai_link(html: str, url_pagina: str) -> list[Annuncio]:
 
 
 def leggi(fonte: Fonte, client: httpx.Client) -> Lettura:
-    risposta = scarica(client, fonte.url, accept="text/html")
+    risposta = scarica(client, fonte.url, accept="text/html", ignora_robots=fonte.ignora_robots)
     risposta.raise_for_status()
     annunci = estrai_link(risposta.text, str(risposta.url))
     impronta = hashlib.sha256(risposta.content).hexdigest()[:32]

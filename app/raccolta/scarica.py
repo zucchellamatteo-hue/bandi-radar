@@ -2,15 +2,16 @@
 
 from __future__ import annotations
 
-import urllib.robotparser
 from urllib.parse import urlsplit
 
 import httpx
 
+from app.raccolta.robots import Regole, analizza, permesso
+
 USER_AGENT = "BandiRadar/0.1 (+https://finanzagevolata.qiaro.it; raccolta bandi per imprese)"
 TIMEOUT = 30.0
 
-_robots: dict[str, urllib.robotparser.RobotFileParser | None] = {}
+_robots: dict[str, Regole] = {}
 
 
 class NonPermesso(Exception):
@@ -25,27 +26,21 @@ def nuovo_client() -> httpx.Client:
     )
 
 
-def permesso_da_robots(client: httpx.Client, url: str) -> bool:
-    """Legge (una volta per sito) robots.txt e dice se possiamo scaricare l'indirizzo."""
+def regole_robots(client: httpx.Client, url: str) -> Regole:
+    """Legge (una volta per sito) robots.txt. Senza file, o con errore, tutto e' permesso."""
     parti = urlsplit(url)
     base = f"{parti.scheme}://{parti.netloc}"
     if base not in _robots:
-        parser = urllib.robotparser.RobotFileParser()
         try:
             risposta = client.get(base + "/robots.txt")
-            if risposta.status_code == 200:
-                parser.parse(risposta.text.splitlines())
-                _robots[base] = parser
-            else:
-                _robots[base] = None   # niente robots.txt: tutto permesso
+            _robots[base] = analizza(risposta.text, USER_AGENT) if risposta.status_code == 200 else Regole()
         except httpx.HTTPError:
-            _robots[base] = None
-    parser = _robots[base]
-    return True if parser is None else parser.can_fetch(USER_AGENT, url)
+            _robots[base] = Regole()
+    return _robots[base]
 
 
-def scarica(client: httpx.Client, url: str, accept: str | None = None) -> httpx.Response:
-    if not permesso_da_robots(client, url):
+def scarica(client: httpx.Client, url: str, accept: str | None = None, ignora_robots: bool = False) -> httpx.Response:
+    if not ignora_robots and not permesso(regole_robots(client, url), url):
         raise NonPermesso(f"robots.txt vieta {url}")
     headers = {"Accept": accept} if accept else None
     return client.get(url, headers=headers)

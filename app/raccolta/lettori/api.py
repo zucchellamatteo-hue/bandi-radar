@@ -193,7 +193,7 @@ def leggi(fonte: Fonte, client: httpx.Client) -> Lettura:
     if fonte.piattaforma == "sedia":
         return sedia(fonte, client)
     indirizzo = fonte.indirizzo_da_controllare
-    risposta = scarica(client, indirizzo, accept="application/json, text/csv, */*")
+    risposta = scarica(client, indirizzo, accept="application/json", ignora_robots=fonte.ignora_robots)
     risposta.raise_for_status()
     tipo = risposta.headers.get("content-type", "")
     base = fonte.url or indirizzo
