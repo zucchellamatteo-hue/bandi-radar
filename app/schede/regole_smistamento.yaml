@@ -1,0 +1,301 @@
+# Regole dello smistamento senza IA (python -m app.schede.smista).
+#
+# Ogni annuncio (titolo + riassunto) finisce in una di tre caselle:
+#   rilevante      parla di aiuti alle imprese: contributi, voucher, incentivi, finanziamenti...
+#   non_rilevante  parla chiaramente d'altro: concorsi, gare d'appalto vere, cimiteri, mense...
+#   da_rivedere    tutto il resto: lo decidera' l'IA (Haiku) quando ci sara' la chiave API.
+#
+# Come si scrivono le parole:
+#   - maiuscole, minuscole e accenti non contano ("Bonus bebè" = "bonus bebe");
+#   - si cercano parole intere: "gara" non scatta dentro "garanzia";
+#   - una frase ("fondo perduto") scatta solo con le parole in quell'ordine, spazi qualsiasi;
+#   - l'asterisco in fondo vale "qualunque finale": "contribut*" prende contributo, contributi, contributiva;
+#   - un gruppo con "con:" scatta solo se c'e' una delle "parole" E una delle parole di "con"
+#     (es. "bando" da solo non basta, "bando" + "imprese" si').
+#
+# Come si decide, in quest'ordine:
+#   1. c'e' una parola di "rilevante" e una di "contributi_non_per_imprese" (affitto, libri di testo...)
+#      ma nessuna di "destinatari_imprese"                                   -> non_rilevante
+#   2. c'e' una parola di "rilevante"                                        -> rilevante
+#   3. c'e' una parola di "non_rilevante"                                    -> non_rilevante
+#   4. altrimenti                                                            -> da_rivedere
+# Quindi un segnale rilevante vince sempre sulle gare d'appalto: alcuni enti archiviano i contributi
+# sotto "Bandi di gara" (regola di CLAUDE.md). Per lo stesso motivo "gara" e "appalto" non possono
+# stare in "contributi_non_per_imprese": il programma si rifiuta di partire.
+#
+# Per aggiungere una parola basta una riga nel gruppo giusto; poi
+#   python -m app.schede.smista --prova --rifai
+# mostra, senza scrivere nulla, come cambierebbero le percentuali.
+
+rilevante:
+  - gruppo: contributi
+    parole:
+      - contribut*
+      - fondo perduto
+      - a fondo perduto
+      - sovvenzion*
+      - sostegno economico
+      - aiuti alle imprese
+      - aiuti de minimis
+      - de minimis
+  - gruppo: voucher
+    parole:
+      - voucher
+      - buono impresa
+  - gruppo: agevolazioni
+    parole:
+      - agevolazion*
+      - finanza agevolata
+      - incentiv*
+      - credito d'imposta
+      - crediti d'imposta
+      - tax credit
+      - finanziament*
+      - finanziamento agevolato
+      - prestito agevolato
+      - garanzia pubblica
+      - fondo di garanzia
+      - cofinanziament*
+  - gruppo: bandi_per_imprese
+    parole:
+      - bando per le imprese
+      - bando imprese
+      - bandi per le imprese
+      - bandi imprese
+      - bando pmi
+      - bando per le pmi
+      - bando per startup
+      - bando startup
+      - bando start up
+      - avviso per le imprese
+      - sostegno alle imprese
+      - sostegno delle imprese
+      - a favore delle imprese
+      - a favore delle pmi
+      - nuova impresa
+      - nuove imprese
+      - autoimprenditorialita
+      - imprenditoria femminile
+      - imprenditoria giovanile
+      - sostegno alle pmi
+      - startup innovative
+      - pr fesr
+      - fesr
+      - fse+
+      - feampa
+      - feasr
+      - sviluppo rurale
+      - pnrr imprese
+      - misura di aiuto
+      - regime di aiuto
+  - gruppo: bando_o_misura_per_imprese
+    parole: [bando, bandi, misura, misure, fondo, sostegno, avviso]
+    con: [impres*, pmi, microimpres*, startup, start up, start-up, artigian*, esercizi commerciali,
+          attivita commerciali, attivita produttive, filiere, agricoltori, imprenditor*]
+
+# Destinatari che rendono l'annuncio interessante anche se parla di contributi per l'affitto o simili
+# (es. "contributi per l'affitto dei locali delle attivita' commerciali").
+destinatari_imprese:
+  - gruppo: imprese
+    parole:
+      - impres*
+      - pmi
+      - micro imprese
+      - microimpres*
+      - aziend*
+      - startup
+      - start up
+      - start-up
+      - attivita commerciali
+      - attivita produttive
+      - attivita economiche
+      - esercizi commerciali
+      - esercenti
+      - commercianti
+      - artigian*
+      - professionisti
+      - lavoratori autonomi
+      - partite iva
+      - partita iva
+      - utenze non domestiche
+      - operatori economici del commercio
+      - filiera
+      - filiere
+      - cooperative
+      - agricoltori
+      - imprenditor*
+
+# Contributi e agevolazioni che vanno a famiglie, studenti o cittadini, non alle imprese.
+# Vincono su "rilevante" solo se non c'e' nessuna parola di "destinatari_imprese".
+contributi_non_per_imprese:
+  - gruppo: famiglie_e_cittadini
+    parole:
+      - affitto
+      - affitti
+      - canone di locazione
+      - morosita incolpevole
+      - libri di testo
+      - borse di studio
+      - borsa di studio
+      - buoni spesa
+      - buono spesa
+      - bonus bebe
+      - bonus nido
+      - assegno di maternita
+      - assegno unico
+      - bonus idrico
+      - bonus sociale
+      - famiglie
+      - nuclei familiari
+      - anziani
+      - disabili
+      - persone con disabilita
+      - caregiver
+      - trasporto scolastico
+      - centri estivi
+      - studenti
+      - contributo di soggiorno
+      - imposta di soggiorno
+      - contributo di costruzione
+      - contributi previdenziali
+      - associazioni sportive
+      - associazioni culturali
+  - gruppo: enti_pubblici_e_terzo_settore
+    parole:
+      - enti locali
+      - ai comuni
+      - comunita montane
+      - unioni di comuni
+      - istituzioni scolastiche
+      - odv
+      - organizzazioni di volontariato
+      - associazioni di promozione sociale
+
+non_rilevante:
+  - gruppo: concorsi_e_personale
+    parole:
+      - concorso pubblico
+      - concorsi pubblici
+      - bando di concorso
+      - concorso per titoli
+      - concorso per esami
+      - selezione pubblica
+      - selezione di personale
+      - selezione per l'assunzione
+      - assunzion*
+      - mobilita esterna
+      - mobilita volontaria
+      - tempo indeterminato
+      - tempo determinato
+      - progressioni verticali
+      - istruttore amministrativo
+      - istruttore tecnico
+      - agente di polizia locale
+      - agenti di polizia locale
+      - incarico dirigenziale
+      - profilo professionale
+      - calendario delle prove
+      - prova orale
+      - prova scritta
+      - ammessi alla prova
+      - tirocini extracurriculari
+      - servizio civile
+  - gruppo: gare_appalto
+    parole:
+      - affidamento dei lavori
+      - affidamento lavori
+      - affidamento del servizio
+      - affidamento dei servizi
+      - affidamento servizi
+      - affidamento della fornitura
+      - affidamento fornitura
+      - affidamento diretto
+      - procedura aperta
+      - procedura negoziata
+      - procedura ristretta
+      - gara d'appalto
+      - gara di appalto
+      - appalto
+      - appalti
+      - cig
+      - cup
+      - aggiudicazione
+      - aggiudicazione definitiva
+      - esito di gara
+      - esito gara
+      - determina a contrarre
+      - manifestazione di interesse per l'affidamento
+      - indagine di mercato
+      - albo fornitori
+      - elenco operatori economici
+      - lavori di manutenzione
+      - lavori di riqualificazione
+  - gruppo: stato_civile_e_cimiteri
+    parole:
+      - matrimoni
+      - matrimonio
+      - unioni civili
+      - cimiter*
+      - loculi
+      - loculo
+      - estumulazion*
+      - esumazion*
+      - lampade votive
+      - concessioni cimiteriali
+  - gruppo: scuola_e_servizi_ai_cittadini
+    parole:
+      - mensa scolastica
+      - mense scolastiche
+      - refezione scolastica
+      - asilo nido
+      - asili nido
+      - nidi d'infanzia
+      - scuola dell'infanzia
+      - iscrizioni scolastiche
+      - iscrizione al nido
+      - graduatoria nido
+      - pre scuola
+      - post scuola
+      - carta d'identita
+      - carta di identita
+      - anagrafe
+  - gruppo: servizi_e_viabilita
+    parole:
+      - interruzione idrica
+      - interruzioni idriche
+      - sospensione idrica
+      - sospensione dell'erogazione
+      - erogazione dell'acqua
+      - acqua potabile
+      - ordinanza viabilita
+      - ordinanza di viabilita
+      - modifiche alla viabilita
+      - modifica della viabilita
+      - chiusura al traffico
+      - divieto di sosta
+      - senso unico
+      - lavori stradali
+      - chiusura strada
+      - ztl
+      - raccolta rifiuti
+      - raccolta differenziata
+      - calendario raccolta
+      - disinfestazione
+      - allerta meteo
+      - protezione civile
+  - gruppo: elezioni_e_istituzioni
+    parole:
+      - elezioni
+      - elezione
+      - elettoral*
+      - referendum
+      - scrutatori
+      - presidenti di seggio
+      - consiglio comunale
+      - seduta del consiglio
+      - convocazione del consiglio
+  - gruppo: comunicazioni_istituzionali
+    parole:
+      - lutto cittadino
+      - cordoglio
+      - onorificenz*
