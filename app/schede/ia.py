@@ -565,6 +565,7 @@ def cmd_schede(conn, bando_id: int | None, limite: int) -> int:
     oggi = date.today()
     registra = registratore(conn)
     istr_pre, mod_pre = leggi_prompt("prompt_preliminare.md")
+    istr_pre = riempi(istr_pre, {"data_oggi": oggi.isoformat()})   # la data compare anche nelle istruzioni
     istr_scheda, mod_scheda = leggi_prompt("prompt_scheda.md")
     for b in bandi_da_schedare(conn, bando_id, limite):
         controlla_tetto(conn)

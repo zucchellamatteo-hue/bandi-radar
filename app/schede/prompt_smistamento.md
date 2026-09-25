@@ -26,7 +26,8 @@ Regole:
 4. **Non sono aiuti**, quindi `non_rilevante`, anche se riguardano imprese o "operatori":
    - assegnazione o graduatoria di **posteggi**, bancarelle, stand a pagamento in fiere, sagre, mercati cittadini;
    - accreditamento o elenchi di **fornitori** che erogano servizi per conto dell'ente (doposcuola, assistenza domiciliare, servizi sociali), anche se il servizio è pagato con voucher alle famiglie;
-   - sponsorizzazioni cercate dall'ente, aste e vendite di beni pubblici, concessione di impianti sportivi;
+   - sponsorizzazioni cercate dall'ente, aste e vendite di beni pubblici, concessione di impianti sportivi o di aree demaniali (spiagge, stabilimenti balneari);
+   - premi e concorsi riservati a scuole, studenti o enti pubblici, anche se li bandisce una Camera di Commercio;
    - chiarimenti su obblighi, autorizzazioni, tributi, SCIA o CIA senza un contributo.
 5. **Usa la fonte come indizio.**
    - Un "Bando..." o "Avviso..." di una Camera di Commercio, di Unioncamere, di una finanziaria regionale (Fincalabra, Sviluppumbria, Sviluppo Campania, Finlombarda, Finpiemonte, IRFIS...) o del catalogo incentivi.gov.it è quasi sempre per imprese: `rilevante`, salvo segni chiari del contrario (borse di studio per studenti, selezione di personale, sponsorizzazioni, acquisti dell'ente).

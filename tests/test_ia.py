@@ -28,7 +28,12 @@ def test_prompt_divisi_in_istruzioni_e_messaggio():
           "url": "https://y.it"}], date(2026, 9, 25))
     assert "sono 2." in istruzioni and '<annuncio id="1">' in modello and '<annuncio id="2">' in modello
     assert "Inizio della pagina (quando il riassunto manca): Contributo alle imprese" in modello
-    assert modello.count("Inizio della pagina") == 1 and "{{" not in modello
+    assert modello.count("Inizio della pagina") == 1 and "{{" not in modello and "{{" not in istruzioni
+    # tutti i segnaposto delle istruzioni sono tra quelli che il programma riempie
+    import re
+    for nome, noti in (("prompt_smistamento.md", {"numero_annunci"}), ("prompt_preliminare.md", {"data_oggi"}),
+                       ("prompt_scheda.md", set())):
+        assert set(re.findall(r"\{\{(\w+)\}\}", ia.leggi_prompt(nome)[0])) <= noti, nome
 
 
 def test_riempi():

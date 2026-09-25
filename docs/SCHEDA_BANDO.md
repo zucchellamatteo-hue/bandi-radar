@@ -12,7 +12,7 @@ Ogni scheda mostrata a un cliente porta la frase: **"Informazione indicativa, ve
 - **Il bando ufficiale vince sulla pagina web.** Se pagina e PDF non coincidono vale il PDF (o il decreto più recente), e la differenza va nelle avvertenze.
 - **Ogni campo ha la sua fonte**, conservata in `dati`: "annuncio", "pagina" oppure il nome dell'allegato con l'articolo. Serve a Matteo per controllare in fretta.
 - **Valori controllati** per tutto quello che serve a un filtro o all'abbinamento (elenchi fissi in `app/schede/campi.py`). Il testo libero resta per spiegare.
-- **Tre stati per ogni vincolo** (campo `vincoli`): `vincolo` (il bando pone un limite), `nessun_vincolo` (il bando dice che non ci sono limiti, per esempio "tutti i settori"), `non_noto` (i documenti non lo dicono, o non li abbiamo letti). Un elenco vuoto da solo non vuol dire niente: conta lo stato. **L'abbinamento non tratta mai `non_noto` come "va bene"**: al massimo "da verificare".
+- **Tre stati per ogni vincolo** (campo `vincoli`): `vincolo` (il bando pone un limite), `nessun_vincolo` (il bando dice che non ci sono limiti, per esempio "tutti i settori"), `non_noto` (non si può sapere: abbiamo solo una sintesi, il testo è tagliato o ambiguo). Se il bando ufficiale è stato letto per intero ed elenca i requisiti senza porre quel vincolo, il vincolo non c'è: `nessun_vincolo`. Un elenco vuoto da solo non vuol dire niente: conta lo stato. **L'abbinamento non tratta mai `non_noto` come "va bene"**: al massimo "da verificare".
 - **Completezza** della scheda: `bando_ufficiale` (letto il bando o il decreto), `solo_sintesi` (solo una pagina di riepilogo: catalogo, notizia), `nessun_documento`. Una scheda `solo_sintesi` non produce mai un abbinamento "compatibile", solo "da verificare".
 - **Linee.** Quando il bando ha più linee o misure con regole diverse (massimali, percentuali, beneficiari), le linee vanno nell'elenco `linee`, ciascuna con i suoi valori. I campi del bando riportano il caso più ampio (il massimale più alto, l'unione dei beneficiari) e servono al catalogo; l'abbinamento controlla prima il bando e poi dice quale linea è adatta al cliente.
 - **Lo stato lo calcola il sistema** ogni giorno dalle date (`app/schede/stato.py`), non lo scrive l'IA. "Prorogato" non è uno stato: è una nuova versione della scheda, che resta nello storico.
@@ -36,7 +36,7 @@ Ogni scheda mostrata a un cliente porta la frase: **"Informazione indicativa, ve
 | Campo | Cosa contiene | Formato |
 |---|---|---|
 | `territorio` | Il territorio con le parole del bando ("circoscrizione della Camera di Commercio di Bari") | testo |
-| `territorio_regioni` | Sigle delle regioni ammesse, come nel registro delle fonti: `LOM`, `FVG`, `EMR`, `BZ`, `TN`... | elenco |
+| `territorio_regioni` | Sigle delle regioni in cui deve stare **la sede dell'impresa** (non il luogo del progetto, che va in `cosa_finanzia`), come nel registro delle fonti: `LOM`, `FVG`, `EMR`, `BZ`, `TN`... | elenco |
 | `territorio_province` | Sigle delle province ammesse (`MI`, `BA`, `BT`), quando il bando si limita ad alcune province | elenco |
 | `territorio_comuni` | Nomi dei comuni ammessi, quando il bando si limita ad alcuni comuni (il codice ISTAT lo aggiunge il sistema) | elenco |
 | `sede_richiesta` | `legale`, `operativa`, `legale_o_operativa`, `da_attivare` (basta aprirla entro l'erogazione) | valore |
@@ -122,7 +122,7 @@ Il profilo anonimo del cliente arriva dalle anagrafiche di Matteo (`docs/RICHIES
 | `temi` | interessi del cliente (export sì/no, digitale, green...) | serve a ordinare |
 | `linee` | tutti i dati sopra | se il bando ha linee, la motivazione dice quali linee sono adatte al cliente |
 | `completezza` | — | `bando_ufficiale` permette "compatibile"; le altre al massimo "da verificare" |
-| `stato`, `scadenza`, `ora_scadenza`, `modalita_selezione` | — | si propongono solo bandi `aperto` o `in_arrivo`; `sportello` e `click_day` si segnalano come urgenti |
+| `stato`, `scadenza`, `ora_scadenza`, `modalita_selezione` | — | si propongono solo bandi `aperto` o `in_arrivo`; `sportello`, `sportello_valutativo` e `click_day` si segnalano come urgenti |
 
 ## Esempio compilato a mano
 

@@ -98,6 +98,23 @@ cd /srv/bandi-radar && sudo -u deploy docker compose run --rm raccolta python -m
 ```
 **Stato dei bandi**: aperto, chiuso o in arrivo lo calcola il sistema dalle date della scheda, da solo, una volta al giorno (nel servizio `raccolta`). Ogni cambio resta nello storico del bando. A mano: `cd /srv/bandi-radar && sudo -u deploy docker compose run --rm raccolta python -m app.schede.stato`.
 
+### L'IA (spenta finché non c'è la chiave)
+
+Smistamento dei "da rivedere" con Haiku, controllo preliminare e scheda con Sonnet: `app/schede/ia.py`. **Finché nel `.env` manca `ANTHROPIC_API_KEY` non chiama nulla** e lo dice. Quando avrai creato la chiave nella Console Anthropic (con il tetto di spesa impostato lì), aggiungi al `.env`:
+```
+ANTHROPIC_API_KEY=...        # la chiave della Console, mai quella dell'abbonamento
+IA_TETTO_MESE_USD=30         # tetto anche nel programma: oltre, si ferma da solo
+```
+riavvia (`cd /srv/bandi-radar && sudo -u deploy docker compose up -d`) e poi, a mano:
+```
+cd /srv/bandi-radar && sudo -u deploy docker compose run --rm raccolta python -m app.schede.ia stato             # accesa o spenta, spesa del mese
+cd /srv/bandi-radar && sudo -u deploy docker compose run --rm raccolta python -m app.schede.ia smista --limite 100
+cd /srv/bandi-radar && sudo -u deploy docker compose run --rm raccolta python -m app.schede.ia schede --limite 10
+cd /srv/bandi-radar && sudo -u deploy docker compose run --rm raccolta python -m app.schede.ia smista --batch     # arretrato: a metà prezzo, risposte entro 24 ore
+cd /srv/bandi-radar && sudo -u deploy docker compose run --rm raccolta python -m app.schede.ia raccogli          # legge le risposte del batch
+```
+Ogni chiamata resta nella tabella `chiamate_ia`, con token e costo. Le tue correzioni dello smistamento e i tuoi legami tra annunci e bandi non vengono mai sovrascritti dall'IA.
+
 I file stanno nel volume Docker `allegati` (una cartella per bando, `b<numero>`, e le vecchie per annuncio), che sopravvive ai riavvii e agli aggiornamenti come il database. Per vedere quanto spazio occupa:
 ```
 sudo du -sh /var/lib/docker/volumes/bandi-radar_allegati/_data     # totale
