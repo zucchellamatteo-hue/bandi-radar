@@ -472,9 +472,10 @@
   modalita: browser
   piattaforma: kapi
   frequenza: quindicinale
-  stato: difficile
+  stato: esclusa
   verificato_il: '2026-09-25'
-  note: 'Sito Angular sulla piattaforma "kapi" (come Avellino). 25/09/2026: col browser trovata l''API interna;
+  note: 'ESCLUSA per decisione di Matteo del 25/09/2026: robots.txt vieta l''API e gli avvisi sono quasi tutti sociali.
+    Sito Angular sulla piattaforma "kapi" (come Avellino). 25/09/2026: col browser trovata l''API interna;
     GET https://www.comune.barletta.bt.it/kapi/api/sito/avvisi?size=30&sort=cntDataPubblicazione,desc risponde a curl
     senza cookie (856 elementi, mescola avvisi, ordinanze e notizie; results[] con id, cntTitle, cntDataPubblicazione).
     Scheda: /sito/avviso/<id> (provato). MA robots.txt vieta /kapi: non attivata, serve decisione di Matteo; e il
@@ -1065,9 +1066,10 @@
   feed_url: https://www.provincia.belluno.it/myportal/P_BL/api/content?type=rve_avviso&pageIndex=1&onlyNotHidden=true&parent=/Avvisi&includeSubFolders=true&sortBy=lastUpdated&desc=true&pageSize=50
   piattaforma: myportal
   frequenza: mensile
-  stato: attiva
+  stato: esclusa
   verificato_il: '2026-09-25'
-  note: 'myPortal Regione Veneto, modello vecchio (non PNRR): 25/09/2026 trovata col browser l''API che riempie il
+  note: 'ESCLUSA il 25/09/2026: 78 avvisi dal 2020, solo aste, espropri, conferenze di servizi e incarichi, nessun bando per imprese (come la Provincia di Treviso).
+    myPortal Regione Veneto, modello vecchio (non PNRR): 25/09/2026 trovata col browser l''API che riempie il
     riquadro Avvisi della home (tipo rve_avviso, cartella /Avvisi), GET JSON senza cookie, 78 avvisi. Link alla scheda
     /avvisi-info/<slug> (provato; sys_canonical_url a volte e'' vuoto, per questo il modello usa slug). robots.txt non
     esiste (pagina Angular). Contenuto: aste immobili, conferenze di servizi, espropri, manifestazioni di interesse,
@@ -1713,9 +1715,10 @@
   feed_url: null
   piattaforma: kapi
   frequenza: mensile
-  stato: difficile
+  stato: esclusa
   verificato_il: '2026-09-25'
-  note: 'Sito Angular sulla piattaforma "kapi" (la stessa di Barletta). 25/09/2026: col browser trovata l''API che
+  note: 'ESCLUSA per decisione di Matteo del 25/09/2026: robots.txt vieta l''API e gli avvisi sono quasi tutti sociali.
+    Sito Angular sulla piattaforma "kapi" (la stessa di Barletta). 25/09/2026: col browser trovata l''API che
     riempie Novita'' > Avvisi: GET https://www.comune.avellino.it/kapi/api/sito/avvisi?size=30&sort=cntDataPubblicazione,desc
     risponde a curl senza cookie (170 avvisi; results[] con id, cntTitle, cntDescrizione, cntDataPubblicazione).
     Scheda: /sito/avviso/<id> (provato, funziona anche senza lo slug). MA robots.txt vieta /kapi: non attivata,

@@ -73,7 +73,8 @@
   frequenza: settimanale
   stato: attiva
   verificato_il: '2026-09-25'
-  note: 'Filtro AJAX del sito (GET con X-Requested-With): JSON con un frammento HTML di schede (link /it/prodotti-e-servizi/prodotti-servizi/<id>/<slug>,
+  note: 'Dominio senza www approvato da Matteo il 25/09/2026.
+    Filtro AJAX del sito (GET con X-Requested-With): JSON con un frammento HTML di schede (link /it/prodotti-e-servizi/prodotti-servizi/<id>/<slug>,
     titolo, stato Aperto, destinatari). Pagine page=1..18; le date sono solo nella scheda. Trovata il 24/09 dal cloud.
     25/09 dal VPS: www.finlombarda.it risponde 403 a tutto, anche a robots.txt (bilanciatore AWS con firewall che
     rifiuta l''indirizzo del server, non una pagina di verifica; nessun IPv6). Il dominio senza www (finlombarda.it)

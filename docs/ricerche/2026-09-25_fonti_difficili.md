@@ -68,6 +68,15 @@ Rilettura finale del 25/09 sera con il registro unito: elementi letti da `--prov
 - Delle 14: 10 bloccano l'indirizzo del server o hanno un anti-bot, 2 aspettano una decisione su robots.txt (Avellino, Barletta), 1 ha il certificato rotto (Lecce), 1 non risponde affatto (Sistema Puglia). La Camera di Milano è coperta da incentivi.gov.it.
 - La "fonte senza novità" che risponde con 0 elementi dal primo controllo oggi appare come fonte tranquilla (`app/raccolta/esegui.py`, `app/plancia/semaforo.py`): sarebbe utile un messaggio a parte "risponde ma non si legge nulla".
 
+## Decisioni di Matteo (25/09/2026 sera)
+
+- **Finlombarda** dal dominio senza www: approvato.
+- **Prova dal suo PC** (connessione italiana): comune.lodi.it, comune.campobasso.it, comune.latina.it, comune.rieti.it e sistema.puglia.it **si aprono**. Quindi il blocco riguarda gli indirizzi dei server esteri o dei datacenter, non tutti. Per leggerli servirebbe far uscire la raccolta, per queste sole fonti, da un indirizzo italiano: è una scelta da valutare più avanti (costo, affidabilità), non ancora presa.
+- **Avellino e Barletta**: lasciate perdere, `esclusa`.
+- **Provincia di Belluno**: `esclusa`. Su 78 avvisi dal 2020 solo aste, espropri, conferenze di servizi e incarichi, nessun bando per imprese.
+
+Conteggio dopo le decisioni: 24 si leggono, 8 escluse, 12 restano `difficile`.
+
 ## Conseguenze per il registro delle fonti
 
 - Nuova opzione `richiesta.elenco` (documentata in `fonti/README.md`); `url_modello` vale anche per i CSV.
