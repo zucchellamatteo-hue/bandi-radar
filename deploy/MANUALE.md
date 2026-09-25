@@ -90,19 +90,13 @@ cd /srv/bandi-radar && sudo -u deploy docker compose run --rm raccolta python -m
 ```
 Dopo aver cambiato le parole chiave (con una pull request, come ogni modifica), `--rifai` ricalcola gli annunci decisi dalle regole; le tue correzioni dalla plancia non vengono mai toccate. `--prova` dice anche quante delle tue correzioni le regole di adesso indovinerebbero.
 
-**Allegati**: per gli annunci rilevanti apre la pagina dell'ente e scarica bando, moduli, decreti e FAQ (al massimo 50 annunci per giro; 25 MB per file, 100 MB e 30 file per annuncio; 2 secondi tra una richiesta e l'altra). È lento apposta: un giro da 50 annunci può durare una ventina di minuti.
+**Allegati**: per i bandi con la pagina ufficiale trovata scarica bando, moduli, decreti e FAQ (al massimo 50 bandi per giro; 25 MB per file, 100 MB e 30 file per bando; 2 secondi tra una richiesta e l'altra). Ogni documento riceve una categoria (bando, FAQ, decreto, graduatoria, modulistica...): la scheda leggerà prima il bando e mai la modulistica. È lento apposta: un giro da 50 bandi può durare una ventina di minuti.
 ```
-cd /srv/bandi-radar && sudo -u deploy docker compose run --rm raccolta python -m app.schede.allegati --limite 10     # i primi 10
-cd /srv/bandi-radar && sudo -u deploy docker compose run --rm raccolta python -m app.schede.allegati --annuncio 123  # un annuncio preciso
+cd /srv/bandi-radar && sudo -u deploy docker compose run --rm raccolta python -m app.schede.allegati --limite 10     # i primi 10 bandi
+cd /srv/bandi-radar && sudo -u deploy docker compose run --rm raccolta python -m app.schede.allegati --bando 45      # un bando preciso
+cd /srv/bandi-radar && sudo -u deploy docker compose run --rm raccolta python -m app.schede.allegati --annuncio 123  # la pagina di un annuncio, come prima
 ```
-**Bandi (deduplica)**: collega ogni annuncio rilevante al suo bando, creandolo se non esiste. Lo stesso bando che arriva da più fonti (catalogo nazionale, Regione, Camera) diventa un bando solo; proroghe, rettifiche, graduatorie e FAQ si agganciano al bando esistente. Non usa l'IA. I casi dubbi restano senza bando finché non decidi tu dalla pagina **Doppioni** della plancia.
-```
-cd /srv/bandi-radar && sudo -u deploy docker compose run --rm raccolta python -m app.schede.bandi --prova   # solo guardare: quanti bandi, esempi di doppioni e di dubbi
-cd /srv/bandi-radar && sudo -u deploy docker compose run --rm raccolta python -m app.schede.bandi           # collega e salva
-```
-Si può rilanciare quando si vuole: tocca solo gli annunci non ancora collegati, e mai quelli che hai unito o separato tu. L'ordine giusto dopo una raccolta è: smistamento, poi bandi, poi allegati.
-
-I file stanno nel volume Docker `allegati` (una cartella per annuncio), che sopravvive ai riavvii e agli aggiornamenti come il database. Per vedere quanto spazio occupa:
+I file stanno nel volume Docker `allegati` (una cartella per bando, `b<numero>`, e le vecchie per annuncio), che sopravvive ai riavvii e agli aggiornamenti come il database. Per vedere quanto spazio occupa:
 ```
 sudo du -sh /var/lib/docker/volumes/bandi-radar_allegati/_data     # totale
 df -h /                                                            # spazio libero sul disco (75 GB in tutto)

@@ -280,7 +280,12 @@ def estrai_testo(percorso: Path, tipo: str) -> str | None:
             testo = None
     elif tipo in ("faq", "pagina"):
         testo = testo_html(dati.decode("utf-8", "replace"))
-    return testo[:MASSIMO_TESTO] if testo else None
+    return _senza_nul(testo)[:MASSIMO_TESTO] if testo else None
+
+
+def _senza_nul(testo: str) -> str:
+    """Postgres non accetta il carattere nullo nei testi: alcuni PDF della PA lo contengono."""
+    return testo.replace("\x00", "")
 
 
 def _copia_pagina(risposta: httpx.Response, url: str, cartella: Path, cartella_annuncio: Path) -> Risultato:
@@ -299,7 +304,7 @@ def _copia_pagina(risposta: httpx.Response, url: str, cartella: Path, cartella_a
             vecchia.unlink()
     temporaneo.replace(finale)
     r.percorso_locale = str(finale.relative_to(cartella))
-    r.testo_estratto = (testo_html(risposta.text) or "")[:MASSIMO_TESTO] or None
+    r.testo_estratto = _senza_nul(testo_html(risposta.text) or "")[:MASSIMO_TESTO] or None
     return r
 
 
@@ -404,7 +409,7 @@ def elabora_pagina(client: httpx.Client, sottocartella: str, url_pagina: str, ca
 
     usati, contati = 0, gia_scaricati
     for c in candidati:
-        r = Risultato(c.url, c.nome[:300], c.tipo)
+        r = Risultato(c.url, _senza_nul(c.nome)[:300], c.tipo)
         risultati.append(r)
         if contati >= MASSIMO_FILE_ANNUNCIO:
             r.errore = f"non scaricato: gia' {MASSIMO_FILE_ANNUNCIO} file per questo annuncio"
