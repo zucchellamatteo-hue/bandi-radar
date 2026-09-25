@@ -269,10 +269,12 @@ def strapi_con_token_nel_bundle(fonte: Fonte, client: httpx.Client) -> Lettura:
                    impronta_pagina=hashlib.sha256(risposta.content).hexdigest()[:32])
 
 
-def da_csv(testo: str, base_url: str) -> list[Annuncio]:
+def da_csv(testo: str, base_url: str, url_modello: str | None = None) -> list[Annuncio]:
+    """Intestazioni in minuscolo con _ al posto degli spazi: nel modello si scrivono cosi' (es. {informazioni})."""
     dialetto = csv.Sniffer().sniff(testo[:2000], delimiters=";,\t") if testo.strip() else csv.excel
     righe = list(csv.DictReader(io.StringIO(testo), dialect=dialetto))
-    return generico([{k.strip().lower().replace(" ", "_"): v for k, v in r.items() if k} for r in righe], base_url)
+    return generico([{k.strip().lower().replace(" ", "_"): v for k, v in r.items() if k} for r in righe], base_url,
+                    url_modello)
 
 
 FAMIGLIE = {"plone": plone, "wordpress": wordpress, "opencity": opencity, "ckan": ckan, "html_in_json": html_in_json}
@@ -307,10 +309,16 @@ def leggi(fonte: Fonte, client: httpx.Client) -> Lettura:
     base = fonte.url or indirizzo
     url_modello = fonte.richiesta.get("url_modello")
     if "csv" in tipo or indirizzo.endswith(".csv") or "csv" in indirizzo:
-        annunci = da_csv(risposta.text, base)
+        annunci = da_csv(risposta.text, base, url_modello)
     else:
         dati = json.loads(risposta.text)   # alcuni siti dichiarano text/html ma mandano JSON
         funzione = FAMIGLIE.get(fonte.piattaforma or "")
-        annunci = funzione(dati, base, url_modello) if funzione else generico(dati, base, url_modello)
+        if fonte.richiesta.get("elenco"):
+            # Dove sta l'elenco (es. page.entities): senza, si prende la lista piu' lunga, che in myPortal
+            # puo' essere una lista interna a ogni record quando gli elementi veri sono pochi.
+            record = _cerca(dati, fonte.richiesta["elenco"]) or []
+            annunci = [a for r in record if isinstance(r, dict) and (a := da_record(r, base, url_modello))]
+        else:
+            annunci = funzione(dati, base, url_modello) if funzione else generico(dati, base, url_modello)
     return Lettura(annunci=annunci, codice_http=risposta.status_code, byte=len(risposta.content),
                    impronta_pagina=hashlib.sha256(risposta.content).hexdigest()[:32])

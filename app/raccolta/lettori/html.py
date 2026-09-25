@@ -40,8 +40,12 @@ def _e_cornice(tag) -> bool:
 
 def _pulisci(pagina: BeautifulSoup) -> None:
     """Toglie cio' che non e' contenuto: script, menu, testata e pie' di pagina del sito (non quelli dentro le schede)."""
-    for tag in pagina(["script", "style", "noscript", "nav"]):
+    for tag in pagina(["script", "style", "noscript"]):
         tag.decompose()
+    # Un <nav> non chiuso bene (Camera di Torino) finisce per contenere tutta la pagina: si toglie solo se non ha dentro il contenuto.
+    for tag in list(pagina.find_all("nav")):
+        if not tag.decomposed and _e_cornice(tag):
+            tag.decompose()
     for tag in list(pagina.find_all(["header", "footer", "aside", "div"], role=_RUOLI_DI_CORNICE)):
         if _e_cornice(tag):
             tag.decompose()
