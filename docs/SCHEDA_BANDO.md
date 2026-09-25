@@ -104,7 +104,7 @@ Tutta Italia: elenchi vuoti e `vincoli.territorio = nessun_vincolo`.
 
 ## Campo della scheda ↔ dato del profilo ↔ regola di confronto
 
-Il profilo anonimo del cliente arriva dalle anagrafiche di Matteo (`docs/RICHIESTA_SCHEMA_ANAGRAFICHE.md`). Per ogni vincolo, l'abbinamento guarda **prima lo stato**: `nessun_vincolo` → va bene; `non_noto` → "da verificare"; `vincolo` → si applica la regola. Se al profilo manca il dato, il risultato è "da verificare", mai "compatibile".
+Il profilo anonimo del cliente arriva dalle anagrafiche di Matteo (`docs/RICHIESTA_SCHEMA_ANAGRAFICHE.md`). Per ogni vincolo, l'abbinamento guarda **prima lo stato**: `nessun_vincolo` → va bene; `non_noto` → "da verificare"; `vincolo` → si applica la regola. Se al profilo manca il dato, il risultato è "da verificare", mai "compatibile". Anche un `vincolo` con i campi vuoti (settore scritto a parole, solo alcuni comuni, PMI solo in cordata con una grande impresa) dà "da verificare": la verifica automatica (`app/schede/ia.py`, `verifica_scheda`) lo segnala e la condizione si legge in `requisiti`.
 
 | Campo della scheda | Dato del profilo | Regola di confronto |
 |---|---|---|
