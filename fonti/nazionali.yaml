@@ -178,12 +178,12 @@
   tipo: nazionale
   territorio: ITA
   url: https://www.ministeroturismo.gov.it/strumenti-di-sostegno/
-  modalita: html
-  feed_url: null
+  modalita: rss
+  feed_url: https://www.ministeroturismo.gov.it/feed/
   piattaforma: wordpress
-  frequenza: settimanale
-  stato: difficile
-  verificato_il: '2026-09-24'
+  frequenza: giornaliera
+  stato: attiva
+  verificato_il: '2026-09-25'
   note: >
     La pagina risponde 200 (118 KB) ma il sito e' protetto da un bot manager Radware: la home ha rimandato a
     una pagina di controllo e nel HTML della sezione non compaiono link leggibili (probabile caricamento via
@@ -193,6 +193,13 @@
     riprovare dal server con browser senza interfaccia. Dal VPS il 24/09: bot manager Radware; con richiesta
     semplice 118 KB senza testo, col browser una volta la pagina completa (senza elenco leggibile) e una volta
     la pagina di controllo. Bloccata anche dal VPS il 24/09.
+    Dal VPS il 25/09: robots.txt permette tutto; Radware serve normalmente al nostro User-Agent il feed
+    generale /feed/ (10 voci, circa 5 giorni) e la sitemap, mentre la pagina, l'API wp-json e il feed di
+    categoria /category/avvisi/feed/ ricevono la pagina di controllo o un captcha (non insistere). Il feed
+    generale mescola rassegna stampa e comunicati, ma contiene anche gli avvisi con categoria "Avvisi
+    pubblici" (es. 23/09/2026 "Staff House, Titolo III: secondo elenco", 21/09 consultazioni AIR/VIR): si
+    usa quello, lettura giornaliera perche' 10 voci coprono pochi giorni, e lo smistamento scarta la
+    rassegna stampa. incentivi.gov.it ha 5 misure del Ministero del Turismo (Staff house Titolo II 2026).
 
 - id: mase_bandi_avvisi
   nome: MASE - Bandi e avvisi

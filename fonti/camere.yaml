@@ -12,12 +12,19 @@
   piattaforma: drupal
   frequenza: settimanale
   stato: attiva
-  verificato_il: '2026-09-24'
+  verificato_il: '2026-09-25'
   note: 'Pagina "hub" testuale (Drupal 9), non un elenco strutturato: paragrafi con titolo per ogni misura, camerale
     e non (Unioncamere UNI/PdR 192, Transizione 5.0, Simest, Basket Bond Piemonte, Voucher digitalizzazione PMI
     2026, voucher cloud/cyber MIMIT...). Da osservare il testo intero e passare all''IA i paragrafi nuovi. Pagine
     collegate: /contributi (bandi formazione e orientamento), /bandi-e-incentivi-il-turismo (turismo), /contributi-promozione-economica.
     Nessun RSS (/rss.xml risponde 404). Non filtrare "Bandi di gara" (/bandi-di-gara sono appalti, da ignorare).
+    25/09/2026: in modalita'' html si leggevano 0 elementi perche'' l''HTML del sito e'' malformato (menu account
+    con "<div></nav></div>" dentro il menu della testata): il lettore vede tutta la pagina dentro il menu e la
+    scarta. Corretto il lettore HTML (un <nav> si toglie solo se non contiene il contenuto): in modalita'' html
+    si leggono 23 link. I titoli sono spesso il testo del link (es. "piano nazionale Transizione 5.0",
+    "prorogato fino al 30/04/2027") o il titolo del riquadro ("Portale Agevolazioni"), non il nome della misura.
+    Il link GSE contiene parametri di sessione e potrebbe risultare "nuovo" a ogni visita. /cameranews e
+    /contributi-promozione-economica non hanno elenchi.
 
     '
 
@@ -173,12 +180,17 @@
   piattaforma: null
   frequenza: giornaliera
   stato: difficile
-  verificato_il: '2026-09-24'
+  verificato_il: '2026-09-25'
   note: 'Il sito www.milomb.camcom.it è protetto da Imperva/Incapsula: ogni richiesta dal server (anche con User-Agent
     da browser) riceve 200 con una pagina di 200-800 byte che carica solo lo script di verifica (/_Incapsula_Resource...),
     nessun contenuto. Tentati: /, /it/, /bandi, /bandi-aperti; anche WebFetch torna vuoto. Serve un browser senza
     interfaccia (e forse comunque verrà bloccato) oppure osservare i bandi milanesi tramite Unioncamere Lombardia
     (bandi di sistema: Voucher AI, Doppia transizione, Export su misura, SI4.0, fiere).
+    25/09 dal VPS: /bandi-e-contributi riceve la stessa pagina Imperva di 212 byte (IPv4; nessun IPv6; anche
+    www.mi.camcom.it e'' dietro Imperva). Unioncamere Lombardia elenca solo i bandi di sistema, non quelli propri
+    di Milano. Alternativa proposta: coperta da incentivi_gov_ricerca, che ha 32 misure con gestore "Camera di
+    Commercio Metropolitana di Milano-Monza-Brianza-Lodi", 6 aperte nel 2026, aggiornate fino al 04/09/2026
+    (Bando Cantieri Metrotranvia, Impresa sostenibile 2026, Spidy 2026, CONneSSi 2026).
 
     '
 
@@ -243,21 +255,26 @@
     '
 
 - id: cciaa_cremona_bandi
-  nome: Camera di Commercio di Cremona - Bandi e contributi
-  ente: Camera di Commercio di Cremona
+  nome: Camera di Commercio di Cremona-Mantova-Pavia - Bandi e contributi
+  ente: Camera di Commercio di Cremona-Mantova-Pavia
   tipo: camera
   territorio: LOM
-  url: null
+  url: https://www.cmp.camcom.it/incentivi-alle-imprese/bandi-e-contributi
   modalita: html
   feed_url: null
-  piattaforma: null
+  piattaforma: drupal_camcom
   frequenza: settimanale
-  stato: difficile
-  verificato_il: '2026-09-24'
-  note: 'www.cr.camcom.it non risponde dal cloud: connessione chiusa senza risposta ("Empty reply from server")
-    in https e http, con qualunque User-Agent; WebFetch riceve 503. Tentati /, /bandi, www.cr.camcom.gov.it. Probabile
-    filtro sugli indirizzi dei data center dell''hosting camerale. Da riprovare dal server OVH; se anche lì fallisce,
-    i bandi di sistema si trovano su Unioncamere Lombardia.
+  stato: attiva
+  verificato_il: '2026-09-25'
+  note: 'Le Camere di Cremona, Mantova e Pavia si sono accorpate nella Camera di Commercio di Cremona-Mantova-Pavia,
+    sito unico www.cmp.camcom.it (Drupal). Questa voce copre tutte e tre le province; cciaa_mantova_bandi e cciaa_pavia_bandi
+    sono escluse come doppioni. Elenco HTML con schede /bandi/<slug>, paginato (?page=1..3): la prima pagina mostra
+    i più recenti (al 25/09/2026: DUC/DID, Tipicità locali 2026, Millenaria 2026, Voucher Doppia transizione 2026,
+    Turismo 2026, Cremona Musica 2026, Sicurezza 2026, Fiere internazionali 2026, CER). /bandi risponde 404. robots.txt
+    vieta tutto solo a ClaudeBot, bingbot e Amazonbot: il nostro User-Agent è ammesso. 25/09/2026: dal server i vecchi
+    siti www.cr.camcom.it, www.mn.camcom.gov.it, www.pv.camcom.gov.it/pv.camcom.it chiudono la connessione subito
+    dopo la richiesta (reset) anche col browser; il nuovo indirizzo trovato tramite incentivi.gov.it, che elenca
+    i bandi della Camera accorpata (gestore "CAMERA DI COMMERCIO ... DI CREMONA-MANTOVA-PAVIA").
 
     '
 
@@ -271,11 +288,12 @@
   feed_url: null
   piattaforma: null
   frequenza: settimanale
-  stato: difficile
-  verificato_il: '2026-09-24'
-  note: 'www.mn.camcom.gov.it (e www.mn.camcom.it) non risponde dal cloud: connessione chiusa senza risposta in
-    https e http; WebFetch riceve 503. Tentati /, /bandi. Stesso comportamento di Cremona e Pavia (stesso hosting).
-    Da riprovare dal server OVH.
+  stato: esclusa
+  verificato_il: '2026-09-25'
+  note: 'Esclusa come doppione il 25/09/2026: la Camera di Mantova è confluita nella Camera di Commercio di Cremona-Mantova-Pavia,
+    i cui bandi sono letti dalla voce cciaa_cremona_bandi (www.cmp.camcom.it/incentivi-alle-imprese/bandi-e-contributi).
+    Dal server il vecchio sito www.mn.camcom.gov.it (e www.mn.camcom.it) chiude la connessione dopo la richiesta
+    (reset), in https; http risponde solo col rinvio a https.
 
     '
 
@@ -289,11 +307,11 @@
   feed_url: null
   piattaforma: null
   frequenza: settimanale
-  stato: difficile
-  verificato_il: '2026-09-24'
-  note: 'www.pv.camcom.gov.it (e www.pv.camcom.it) non risponde dal cloud: connessione chiusa senza risposta in
-    https e http; WebFetch riceve 503. Tentati /, /bandi. Stesso comportamento di Cremona e Mantova. Da riprovare
-    dal server OVH.
+  stato: esclusa
+  verificato_il: '2026-09-25'
+  note: 'Esclusa come doppione il 25/09/2026: la Camera di Pavia è confluita nella Camera di Commercio di Cremona-Mantova-Pavia,
+    i cui bandi sono letti dalla voce cciaa_cremona_bandi (www.cmp.camcom.it/incentivi-alle-imprese/bandi-e-contributi).
+    Dal server i vecchi siti www.pv.camcom.gov.it e www.pv.camcom.it chiudono la connessione dopo la richiesta (reset).
 
     '
 
@@ -970,12 +988,17 @@
   feed_url: null
   piattaforma: null
   frequenza: settimanale
-  stato: difficile
-  verificato_il: '2026-09-24'
+  stato: esclusa
+  verificato_il: '2026-09-25'
   note: 'https://www.unioncamerelazio.it/ risponde 202 con sfida captcha SiteGround/Cloudflare ("sg-captcha: challenge")
     e non mostra contenuti a un server; un secondo strumento ha ricevuto un 301 verso un dominio estraneo (piscinamirabilisbacoli.it),
-    segnale di configurazione anomala. Non verificato se pubblichi un elenco proprio di bandi: i bandi del Lazio
-    sono comunque sui siti delle tre Camere. Da riprovare a mano.
+    segnale di configurazione anomala. Dal VPS il 25/09 (IPv4 e IPv6, anche http senza www): il dominio rimanda
+    a piscinamirabilisbacoli.it e poi a leboccerie.it, un sito di casino'' online. Il whois dice che il dominio e''
+    stato registrato di nuovo il 19/07/2025 da un privato tramite un registrar estero: non appartiene piu''
+    a Unioncamere Lazio (dominio scaduto e ripreso da altri). Nessun sito sostitutivo trovato (lazio.camcom.it
+    non esiste). Esclusa: i bandi camerali del Lazio restano coperti dalle voci delle Camere di Roma,
+    Frosinone-Latina e Rieti-Viterbo e da incentivi.gov.it (65 misure delle Camere laziali, 13 aperte nel 2026).
+    NON aprire il dominio dalla plancia.
 
     '
 
@@ -1063,20 +1086,21 @@
   ente: Camera di Commercio di Salerno
   tipo: camera
   territorio: CAM
-  url: null
+  url: https://www.sa.camcom.it/notizie?field_notizia_categoria_target_id=195
   modalita: html
   feed_url: null
   piattaforma: drupal_camcom
   frequenza: settimanale
-  stato: difficile
-  verificato_il: '2026-09-24'
-  note: 'Sito Drupal 10 (distribuzione Infocamere). Le pagine rispondono 200 ma ai server mostrano solo il guscio:
-    il menu è vuoto, la mappa del sito è vuota, /bandi ha la vista senza schede, /notizie?field_notizia_categoria_tid=195
-    (categoria "Contributi e finanziamenti", 200) non contiene nessuna notizia, e le singole schede (es. /notizie/bando-pid-voucher-doppia-transizione-anno-2026-0,
-    trovata via motore di ricerca) rispondono 403 "Accesso negato" sia con curl sia con un secondo strumento. /rss.xml
-    e /bandi/rss.xml sono feed validi ma senza voci. Probabile protezione anti-bot o contenuti riservati: da riprovare
-    dal server di produzione o con browser senza interfaccia. Indirizzi tentati: https://www.sa.camcom.it/bandi,
-    .../notizie?field_notizia_categoria_tid=195, .../ricerca-per-argomenti?tid=431.
+  stato: attiva
+  verificato_il: '2026-09-25'
+  note: 'Sito Drupal 10 (distribuzione Infocamere). 25/09/2026 dal server OVH le pagine sono complete (dal cloud
+    si vedeva solo il guscio e le schede davano 403). Il filtro giusto della categoria "Contributi e finanziamenti"
+    è field_notizia_categoria_target_id=195 (il vecchio field_notizia_categoria_tid viene ignorato e mostra tutte
+    le notizie): al 25/09/2026 Fiera Exposele 2026 voucher camerali, Voucher Doppia transizione 2026, Paestum Wine
+    Fest 2026, Contributi fiere 2026... La scheda /notizie/bando-pid-voucher-doppia-transizione-anno-2026-0 ora risponde
+    200. /bandi (200) ha un solo link a notizie, non serve. /rss.xml (200, 10 voci) è il feed della home con notizie
+    in evidenza, misto e con voci vecchie: solo complemento. /node?_format=json 406, /jsonapi 500, /sitemap.xml 500.
+    robots.txt non vieta /notizie.
 
     '
 
@@ -1442,17 +1466,21 @@
   tipo: camera
   territorio: SAR
   url: https://www.ss.camcom.it/promozione-del-territorio/contributi
-  modalita: html
-  feed_url: null
+  modalita: rss
+  feed_url: https://www.ss.camcom.it/rss.xml
   piattaforma: drupal_camcom
   frequenza: settimanale
   stato: attiva
-  verificato_il: '2026-09-24'
+  verificato_il: '2026-09-25'
   note: 'Drupal 10 (distribuzione Infocamere). Pagina "Contributi" con i bandi in corso (Voucher Doppia Transizione
     2026, Voucher Operatori Balneari 2025, Certificazione Competenze 2025/26, incentivi nuove attività nei piccoli
     Comuni) e sezione /promozione-del-territorio/voucher-conclusi per quelli chiusi; la vista /bandi ha solo "test-bando".
     Il feed generale /rss.xml (10 voci, ultima 22/09/2026) annuncia le novità sui bandi (es. incremento stanziamento
-    Doppia Transizione 2026); /notizie/rss.xml non esiste.
+    Doppia Transizione 2026); /notizie/rss.xml non esiste. 25/09/2026: la pagina "Contributi" e anche
+    /promozione-del-territorio/voucher-in-corso hanno il corpo vuoto (ultima modifica 06/10/2025): i bandi sono
+    elencati solo nel menu laterale, che il lettore HTML scarta (0 elementi). Si legge quindi il feed /rss.xml:
+    notizie miste (turismo, eventi) con dentro gli annunci dei bandi camerali (Voucher Doppia Transizione 2026,
+    Regolamento commercio di prossimità 2026-2028).
 
     '
 
