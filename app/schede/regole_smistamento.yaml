@@ -89,14 +89,23 @@ rilevante:
       - misura di aiuto
       - regime di aiuto
   - gruppo: bando_o_misura_per_imprese
-    parole: [bando, bandi, misura, misure, fondo, sostegno, avviso]
+    parole: [bando, bandi, misura, misure, fondo, sostegno, avviso, iniziative]
     con: [impres*, pmi, microimpres*, startup, start up, start-up, artigian*, esercizi commerciali,
-          attivita commerciali, attivita produttive, filiere, agricoltori, imprenditor*]
+          attivita commerciali, attivita produttive, filiere, agricoltori, imprenditor*,
+          attivita economiche, allevament*, allevatori, proprietari forestali]   # ultime 4: prova IA del 25/09
   - gruppo: bando_su_temi_di_impresa
     parole: [bando, bandi, avviso, avvisi, sostegno]
     con: [fiera, fiere, internazionalizzazione, export, e-commerce, ecommerce, digitalizzazione, promozione economica,
           innovazione, competitivita, ricerca e sviluppo, transizione ecologica, transizione digitale,
-          efficientamento energetico, videogiochi, audiovisiv*, produzione cinematografica]
+          efficientamento energetico, videogiochi, audiovisiv*, produzione cinematografica,
+          nuovi mercati, alternanza scuola]   # ultime 2: prova IA del 25/09 (bandi camerali persi da Haiku)
+  # Proposte della revisione dello smistamento del 25/09 (docs/ricerche/2026-09-25_prova_ia/revisione_smistamento.md).
+  - gruppo: aiuti_e_collettive
+    parole:
+      - partecipazione collettiva
+      - aiuti agli investimenti
+      - aiuti a favore
+      - comuni marginali
 
 # Destinatari che rendono l'annuncio interessante anche se parla di contributi per l'affitto o simili
 # (es. "contributi per l'affitto dei locali delle attivita' commerciali").
@@ -207,6 +216,10 @@ non_rilevante:
       - ammessi alla prova
       - tirocini extracurriculari
       - servizio civile
+      - career day*
+  - gruppo: nomine
+    parole: [direttore generale]
+    con: [selezione, nomina]
   - gruppo: gare_appalto
     parole:
       - affidamento dei lavori
@@ -300,6 +313,18 @@ non_rilevante:
       - acqua non potabile
       - abbandono di rifiuti
       - stagione di caccia
+      - viabilita
+      - rete idrica
+      - disservizi
+      - bus navetta
+  # Beni e spazi dell'ente: e' l'impresa che paga l'ente, non un aiuto (proposta della revisione del 25/09).
+  - gruppo: beni_e_spazi_pubblici
+    parole:
+      - asta pubblica
+      - alienazione
+      - impianti sportivi
+      - palestre
+      - sponsorizzazione
   - gruppo: elezioni_e_istituzioni
     parole:
       - elezioni
@@ -311,11 +336,16 @@ non_rilevante:
       - consiglio comunale
       - seduta del consiglio
       - convocazione del consiglio
+      - consiglio provinciale
+      - convocazione consiglio
+      - seduta di
   - gruppo: comunicazioni_istituzionali
     parole:
       - lutto cittadino
       - cordoglio
       - onorificenz*
+      - chiusura uffici
+      - auguri del sindaco
   - gruppo: pagine_e_menu_del_sito
     parole:
       - contatta il comune
@@ -331,6 +361,12 @@ non_rilevante:
       - dichiarazione di accessibilita
       - privacy
       - cookie
+      - cookie policy
+      - social media policy
+      - informazioni legali
+      - termini e condizioni
+      - prevenzione della corruzione
+      # "accesso agli atti" (proposta del 25/09) no: le graduatorie del Bando unico di Vicenza la citano nel testo.
   - gruppo: corsi_ed_eventi_per_cittadini
     parole:
       - iscrizioni ai corsi

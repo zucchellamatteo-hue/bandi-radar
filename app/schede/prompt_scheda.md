@@ -1,9 +1,9 @@
 <!--
 Prompt per la compilazione della scheda del bando (Fase 3, modello Sonnet).
-Non ancora usato: il programma che lo manda all'API arriva quando c'e' la chiave con il tetto di spesa.
-Il programma sostituisce i segnaposto {{...}} e manda il testo come messaggio dell'utente; la parte
-"ISTRUZIONI" puo' diventare il messaggio di sistema. Formato dei campi: docs/SCHEDA_BANDO.md;
-valori ammessi: app/schede/campi.py (se cambi qualcosa qui, cambialo anche li' e nella tabella bandi).
+Lo usa app/schede/ia.py (spento finche' manca la chiave): la parte "ISTRUZIONI" e' il messaggio di sistema,
+il resto, con i segnaposto {{...}} sostituiti, il messaggio dell'utente; la risposta e' vincolata da uno schema JSON.
+Rivisto il 25/09/2026 con le proposte di docs/ricerche/2026-09-25_prova_ia/revisione_schede_A.md e _B.md.
+Formato dei campi: docs/SCHEDA_BANDO.md; valori ammessi: app/schede/campi.py (se cambi qualcosa qui, cambialo anche li' e nella tabella bandi).
 I documenti arrivano gia' in ordine (app/schede/allegati.py, documenti_per_scheda): prima il bando, poi la
 pagina ufficiale, le FAQ, il decreto piu' recente; la modulistica non c'e'.
 -->
@@ -38,7 +38,17 @@ Regole, da rispettare tutte:
 12. **Italiano semplice** nei testi: frasi brevi, niente sigle non spiegate, nessun tono promozionale. La `sintesi` è di 3-5 righe: cosa finanzia, a chi, quanto, come e fino a quando si partecipa, chi gestisce il bando, se è a graduatoria o a sportello.
 13. **Non è un bando per imprese?** (concorso di personale, gara d'appalto, contributo solo per privati o enti pubblici): compila solo `titolo`, `ente`, `url`, `completezza`, lascia `null` o `[]` il resto e spiega il motivo in `avvertenze`, iniziando con `"NON PER IMPRESE:"`.
 14. La scheda sarà mostrata con la frase **"Informazione indicativa, verificare il bando ufficiale"**: non ripeterla nei campi, ma non scrivere mai nulla che la contraddica (niente "sicuramente ammesso", "garantito").
-15. Rispondi **solo con il JSON**, senza testo prima o dopo e senza blocchi di codice.
+Regole emerse dalla prova del 25/09/2026 (errori veri, da non ripetere):
+
+15. **Ente e gestore.** `ente` è **chi finanzia** (Regione, Camera di Commercio, Comune, Ministero). Se il bando è gestito da un altro soggetto (Unioncamere, Invitalia, Finpiemonte, IRFIS, Promos...), quello va in `gestore`, non in `ente`.
+16. **Ogni esclusione di settore** scritta nel bando (sezioni, divisioni, codici ATECO, "settori esclusi dal de minimis" quando il bando li elenca) va in `codici_ateco_esclusi`, **anche se la ripeti nei `requisiti`**: l'abbinamento legge solo l'elenco. Controlla che le lettere delle sezioni corrispondano alla versione ATECO dichiarata (le attività finanziarie sono la sezione K in ATECO 2007 e la L in ATECO 2025); se non tornano, `ateco_versione` è `"incoerente"` e lo spieghi in `avvertenze`.
+17. **Requisiti separati dal punteggio.** `requisiti` contiene solo le condizioni per essere ammessi. Criteri di valutazione, punteggi minimi, premi e maggiorazioni vanno nella `sintesi` (e, se riguardano un requisito speciale, in `requisiti_speciali_premiali`). Controlla sempre e riporta, se ci sono: regime di aiuto, DURC, polizza contro i rischi catastrofali, garanzie richieste (fideiussioni), numero massimo di domande per impresa, vincoli sui fornitori. Se il bando ammette più gruppi di beneficiari, elencali tutti in `a_chi_si_rivolge`.
+18. **Agevolazioni miste** (prestito più fondo perduto): `contributo_massimo` e `percentuale` riguardano **solo la quota a fondo perduto**, come `fondo_perduto_massimo` e `percentuale_fondo_perduto`; la parte a prestito va in `finanziamento_massimo`. Nella `sintesi` scrivi l'importo totale, la ripartizione e le condizioni del prestito (tasso, durata, preammortamento, garanzie). Non scrivere mai "100%" se il 100% somma prestito e fondo perduto.
+19. **Premi.** `contributo_massimo` è il contributo base più alto; i premi aggiuntivi (rating di legalità, parità di genere) vanno nella `sintesi` con il loro importo.
+20. **Tempi delle spese.** In `spese_ammesse` indica sempre da quando le spese sono ammissibili (per esempio "solo dopo la concessione", "dal 01/01/2026"), il termine per realizzare il progetto e quello per rendicontare. Se il testo non li dice, scrivilo in `avvertenze`: "Il testo non indica da quando le spese sono ammissibili".
+21. **Avvertenze senza supposizioni.** Nelle `avvertenze` metti solo differenze tra documenti, dubbi reali e informazioni importanti che mancano. Non ripetere la sintesi, non fare deduzioni che i documenti non scrivono, non scrivere "le risorse potrebbero esaurirsi" per un bando a graduatoria. Aggiungi, se presenti nei documenti: orario di chiusura diverso da fine giornata; spese o eventi che non devono essere già conclusi al momento della domanda; periodo in cui devono cadere assunzioni o investimenti.
+22. **Pagine di catalogo** (incentivi.gov.it e simili). Ignora il glossario e le etichette generiche ("Oneri diversi di gestione"). "Spesa ammessa (min-max)" è la spesa del progetto, non il contributo; "Agevolazione concedibile" è il contributo; 99.999.998.000 vuol dire "nessun limite indicato", non è un importo.
+23. Rispondi **solo con il JSON**, senza testo prima o dopo e senza blocchi di codice.
 
 Formato della risposta: un oggetto JSON con esattamente queste chiavi.
 
