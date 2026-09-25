@@ -32,9 +32,9 @@ Regole:
 5. **Usa la fonte come indizio.**
    - Un "Bando..." o "Avviso..." di una Camera di Commercio, di Unioncamere, di una finanziaria regionale (Fincalabra, Sviluppumbria, Sviluppo Campania, Finlombarda, Finpiemonte, IRFIS...) o del catalogo incentivi.gov.it è quasi sempre per imprese: `rilevante`, salvo segni chiari del contrario (borse di studio per studenti, selezione di personale, sponsorizzazioni, acquisti dell'ente).
    - Un bando di una fondazione bancaria senza cenni a imprese è di solito per enti non profit: `da_rivedere`.
-   - Bandi UE (Horizon, Digital Europe, EIC, SMP/COSME, LIFE, MSCA): `rilevante` se possono partecipare imprese, anche in consorzio; `non_rilevante` solo se riservati a enti pubblici o persone fisiche.
+   - Bandi UE (Horizon, Digital Europe, EIC, SMP/COSME, LIFE, MSCA): `rilevante` se possono partecipare imprese, anche in consorzio; `non_rilevante` solo se riservati a enti pubblici o persone fisiche. Horizon WIDERA ed ERA (accesso aperto, città della scienza, politiche degli istituti di ricerca) sono per istituti di ricerca ed enti pubblici: `non_rilevante` salvo imprese citate nel testo.
 6. **Prima di scegliere `non_rilevante` perché "i destinatari non sono imprese", rileggi titolo, riassunto, fonte e indirizzo.** Una parola come "scuola", "Comuni", "formazione", "ricercatori" non basta a escludere le imprese (esempi: contributi alle imprese che ospitano studenti in alternanza; contributi alle attività economiche dei Comuni marginali). Se un indizio dice imprese e un altro dice non imprese, scegli `da_rivedere`.
-7. Usa `da_rivedere` **solo** se il dubbio riguarda chi riceve i soldi. Eventi e convegni senza un bando indicato, home page, pagine di categoria o di elenco (per esempio "Assistenza sociale (6)"), pagine su privacy, trasparenza e accesso agli atti sono `non_rilevante` senza dubbio.
+7. Usa `da_rivedere` **solo** se il dubbio riguarda chi riceve i soldi. Eventi e convegni senza un bando indicato, home page, pagine di categoria o di elenco (per esempio "Assistenza sociale (6)"), pagine su privacy, trasparenza e accesso agli atti sono `non_rilevante` senza dubbio. Lo sono anche: corsi di formazione per persone (ITS, OSS, corsi per disoccupati); bandi riservati a enti pubblici ("edifici pubblici", "rivolto ai Comuni", "Unioni di Comuni"); ricerca di partner o co-progettazione con il terzo settore; presentazioni e slide di eventi.
 8. Annunci con la stessa formula (per esempio due avvisi dello stesso programma) devono avere lo stesso esito.
 9. Il `motivo` è una frase breve in italiano (massimo 15 parole) che dice **chi riceve i soldi e per cosa**, per esempio "contributo a fondo perduto ai negozi del centro storico".
 10. Devi restituire **esattamente un oggetto per ogni annuncio ricevuto**, con lo stesso `id`: sono {{numero_annunci}}. Controlla di non averne saltato nessuno.
@@ -50,6 +50,8 @@ Esempi (dalla prova del 25/09/2026):
 | Locazioni turistiche – chiarimenti sulla CIA | `non_rilevante` | chiarimento su un obbligo, nessun contributo |
 | Tavola rotonda sulla transizione energetica | `non_rilevante` | evento senza bando indicato |
 | Camera valdostana – Artigiano in Fiera, area ristorazione | `rilevante` | posto nella collettiva regionale con costi coperti per le imprese |
+| Domanda di concessione demaniale per uno stabilimento balneare | `non_rilevante` | concessione di un'area pubblica: l'impresa paga un canone |
+| Premio di una Camera di Commercio per le scuole (storie di alternanza) | `non_rilevante` | premio agli istituti scolastici, non alle imprese |
 
 # ANNUNCI
 
