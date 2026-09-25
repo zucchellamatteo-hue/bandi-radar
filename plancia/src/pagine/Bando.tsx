@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { api, Bando as TipoBando, data, dimensione, NOMI_DECISO_DA, NOMI_RUOLO } from "../api";
+import { api, Bando as TipoBando, data, dimensione, NOMI_CATEGORIA, NOMI_DECISO_DA, NOMI_RUOLO } from "../api";
 
 // Il bando: per ora la scheda minima senza IA (titolo, ente, indirizzo, chiavi), gli annunci che ne parlano,
 // gli allegati e le versioni precedenti. I campi della scheda completa arrivano con Sonnet.
@@ -18,6 +18,12 @@ export default function Bando() {
       <p className="piccolo">{b.ente} · {b.territorio}{b.codice_ufficiale ? ` · codice ${b.codice_ufficiale}` : ""}
         {b.scadenza ? ` · scade il ${data(b.scadenza)}` : ""} · versione {b.versione}</p>
       {b.url && <p><a href={b.url} target="_blank" rel="noreferrer">Pagina del bando ↗</a></p>}
+      {b.pagina_stato === "non_trovata" && (
+        <div className="allarme"><b>Bando ufficiale non trovato</b>: niente scheda finché non si trova la pagina del bando.
+          <div className="piccolo">{b.pagina_motivo}</div></div>
+      )}
+      {b.pagina_stato === "trovata" && <p className="piccolo">Pagina ufficiale trovata il {data(b.pagina_cercata_il)}: {b.pagina_motivo}</p>}
+      {!b.pagina_stato && <p className="piccolo">Pagina ufficiale non ancora cercata (<code>python -m app.schede.pagina_ufficiale</code>).</p>}
       {b.sintesi && <p className="testo-lungo">{b.sintesi}</p>}
 
       <h2>Annunci che parlano di questo bando</h2>
@@ -37,11 +43,12 @@ export default function Bando() {
       <h2>Allegati del bando</h2>
       {b.allegati.length === 0 ? <p className="piccolo">Nessun allegato ancora.</p> : (
         <table>
-          <thead><tr><th>Documento</th><th>Tipo</th><th>Dimensione</th><th className="nascondi-mobile">Note</th></tr></thead>
+          <thead><tr><th>Documento</th><th>Che cos'è</th><th>Tipo</th><th>Dimensione</th><th className="nascondi-mobile">Note</th></tr></thead>
           <tbody>{b.allegati.map((a) => (
             <tr key={a.id}>
               <td>{a.ha_file ? <a href={`/api/allegati/${a.id}/file`} target="_blank" rel="noreferrer">{a.nome}</a> : a.nome}
                 <div className="piccolo"><a href={a.url} target="_blank" rel="noreferrer">originale ↗</a></div></td>
+              <td className="piccolo">{a.categoria ? NOMI_CATEGORIA[a.categoria] || a.categoria : "–"}</td>
               <td>{a.tipo === "faq" ? "FAQ" : a.tipo === "pagina" ? "pagina web" : a.tipo.toUpperCase()}</td>
               <td>{dimensione(a.dimensione)}</td>
               <td className="nascondi-mobile piccolo">{a.errore ? <span className="errore-allegato">{a.errore}</span>

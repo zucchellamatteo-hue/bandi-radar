@@ -19,6 +19,8 @@
     i campi vengono rinominati (alias) nei nomi che il lettore generico conosce: titolo, url, data
     (apertura), scadenza (chiusura), piu' dimensioni d'impresa, forma di agevolazione, spese ammesse,
     ATECO, regioni, dotazione, che restano nei dati grezzi per le schede. Circa 1 MB per lettura.
+  pagina_ufficiale:                    # la scheda del catalogo rimanda al sito dell'ente
+    campo: link_ente
 
 - id: incentivi_gov_open_data
   nome: incentivi.gov.it - Open data (registro incentivi)
@@ -73,6 +75,8 @@
     graduatorie. E'' il feed piu'' tempestivo del MIMIT. Elenco di tutti i feed del sito: https://www.mimit.gov.it/it/rss.
 
     '
+  pagina_ufficiale:                    # notizie: si segue il link al bando sul sito dell'ente
+    segui_link: {testi: [bando, modulistica, avviso, "maggiori informazioni", "sito dell'ente"]}
 
 - id: invitalia_incentivi_imprese
   nome: Invitalia - Incentivi e strumenti per le imprese
@@ -152,6 +156,8 @@
     le misure gestite (Nuova Sabatini, Fare Lazio, Garanzia Campania Bond...) ma il feed www.mcc.it/feed/ e'' vuoto.
 
     '
+  pagina_ufficiale:                    # notizie: si segue il link al bando sul sito dell'ente
+    segui_link: {testi: [bando, modulistica, avviso, "maggiori informazioni", "sito dell'ente"]}
 
 - id: masaf_bandi_gare
   nome: MASAF - Gare e bandi

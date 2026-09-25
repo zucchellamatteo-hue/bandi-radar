@@ -1,18 +1,22 @@
-"""Allegati: per gli annunci rilevanti apre la pagina originale, scarica i documenti ufficiali e le FAQ.
+"""Allegati: per ogni bando apre la pagina ufficiale, scarica i documenti ufficiali e le FAQ.
 
-Per ogni annuncio con smistamento "rilevante" e non ancora cercato (o cambiato dopo l'ultima ricerca):
-  1. apre la pagina dell'annuncio (robots.txt, User-Agent dichiarato, pausa tra le richieste);
+Dal 25/09 (Parte 2) si lavora per bando: per ogni bando con la pagina ufficiale trovata
+(app/schede/pagina_ufficiale.py) e allegati non ancora cercati:
+  1. apre la pagina ufficiale (robots.txt, User-Agent dichiarato, pausa tra le richieste);
   2. trova i link a PDF, DOC, DOCX, XLS, XLSX, ODT, ZIP, P7M e le pagine di FAQ (link con testo "FAQ",
      "domande frequenti");
-  3. li scarica in ALLEGATI_CARTELLA/<id annuncio>/, con limiti di dimensione per file e per annuncio;
+  3. li scarica in ALLEGATI_CARTELLA/b<id bando>/, con limiti di dimensione per file e per bando;
   4. calcola l'impronta (sha256), estrae il testo (PDF, DOCX, pagine FAQ) e salva una riga in `allegati`;
-     conserva anche una copia della pagina stessa (tipo 'pagina'), il cui testo servira' alla scheda.
+     conserva anche una copia della pagina stessa (tipo 'pagina'), il cui testo servira' alla scheda;
+  5. classifica ogni documento (bando, FAQ, decreto, graduatoria, modulistica, altro): ordina_per_scheda e
+     documenti_per_scheda mettono il bando per primo e lasciano fuori la modulistica.
 I file non scaricati (troppo grandi, vietati da robots.txt, errori) hanno comunque una riga, con il motivo.
 
 Uso:
-  python -m app.schede.allegati               # tutti gli annunci rilevanti da cercare (al massimo 50 per giro)
+  python -m app.schede.allegati               # i bandi da cercare (al massimo 50 per giro)
   python -m app.schede.allegati --limite 10   # solo i primi 10
-  python -m app.schede.allegati --annuncio 123   # un annuncio preciso, anche se non e' ancora smistato
+  python -m app.schede.allegati --bando 45    # un bando preciso, anche se gia' cercato
+  python -m app.schede.allegati --annuncio 123   # la pagina di un annuncio preciso, anche se non e' smistato
 """
 
 from __future__ import annotations
@@ -59,6 +63,9 @@ TIPI_MIME = {
 }
 # L'estensione puo' stare in mezzo al percorso (Liferay: /documents/1/2/Bando.pdf/abc-123?t=...).
 _ESTENSIONE = re.compile(r"\.(" + "|".join(ESTENSIONI) + r")(?=/|$)")
+# Link di scaricamento senza estensione (Plone: .../allegati/bando-2026/download/file, .../@@download/file,
+# .../at_download/file): il tipo vero si legge dal Content-Type quando si scarica.
+_SCARICA = re.compile(r"/(?:@@download|at_download|download)(?:/[^/]+)?/?$")
 _FAQ = re.compile(r"(?<!\w)(faq|domande frequenti|domande e risposte)(?!\w)", re.IGNORECASE)
 _SPAZI = re.compile(r"\s+")
 # Testi dei link che non dicono nulla: meglio il nome del file.
@@ -156,6 +163,8 @@ def trova_allegati(html: str, base_url: str) -> list[Candidato]:
         tipo = tipo_da_url(url)
         if tipo is None and (_FAQ.search(testo) or _FAQ.search(unquote(urlsplit(url).path))):
             tipo = "faq"
+        if tipo is None and _SCARICA.search(urlsplit(url).path):
+            tipo = "file"
         if tipo is None:
             continue
         visti.add(url)
@@ -294,18 +303,82 @@ def _copia_pagina(risposta: httpx.Response, url: str, cartella: Path, cartella_a
     return r
 
 
-# --- un annuncio --------------------------------------------------------------------------------
+# --- documenti dei siti Plone/Volto -----------------------------------------------------------------
+
+def candidati_plone(client: httpx.Client, pausa: Pausa, url_pagina: str, massimo_pagine: int = 15) -> list[Candidato]:
+    """I siti Plone con interfaccia Volto (Regione Emilia-Romagna) costruiscono la pagina con JavaScript: nell'HTML
+    non c'e' nessun link ai documenti. Il bando e i moduli stanno nelle sottocartelle ("Presentazione domanda",
+    "Documenti"...), leggibili dall'API del sito (++api++). Si scende di tre livelli al massimo."""
+    parti = urlsplit(url_pagina)
+    base = f"{parti.scheme}://{parti.netloc}"
+    # Due modi di esporre l'API: /++api++/percorso (Emilia-Romagna) o /api/percorso (Comune di Pordenone).
+    prefisso = None
+    for p in ("/++api++", "/api"):
+        pausa.attendi(base + p + parti.path)
+        try:
+            prova = scarica(client, base + p + parti.path.rstrip("/"), accept="application/json")
+            if prova.status_code == 200 and "json" in prova.headers.get("content-type", ""):
+                prefisso = p
+                break
+        except (httpx.HTTPError, NonPermesso):
+            continue
+    if prefisso is None:
+        return []
+
+    def percorso_di(url: str) -> str:
+        percorso = urlsplit(url).path
+        return percorso[len(prefisso):] if percorso.startswith(prefisso + "/") else percorso
+
+    da_visitare = [(parti.path.rstrip("/"), 0)]
+    visitate: set[str] = set()
+    trovati: list[Candidato] = []
+    while da_visitare and len(visitate) < massimo_pagine:
+        percorso, livello = da_visitare.pop(0)
+        if percorso in visitate:
+            continue
+        visitate.add(percorso)
+        indirizzo = f"{base}{prefisso}{percorso}"
+        pausa.attendi(indirizzo)
+        try:
+            risposta = scarica(client, indirizzo, accept="application/json")
+            risposta.raise_for_status()
+            dati = risposta.json()
+        except (httpx.HTTPError, NonPermesso, ValueError):
+            continue
+        for item in dati.get("items") or []:
+            tipo, url = item.get("@type"), item.get("@id") or ""
+            if not url.startswith(base):
+                continue
+            url = base + percorso_di(url)
+            if tipo in ("File", "Image"):
+                file_url = url + "/@@download/file"
+                c = Candidato(file_url, (item.get("title") or _nome_da_url(url))[:200], tipo_da_url(url) or "file")
+                if all(x.url != c.url for x in trovati):
+                    trovati.append(c)
+            elif item.get("is_folderish") is not False and livello < 3:
+                da_visitare.append((percorso_di(url).rstrip("/"), livello + 1))
+    return trovati
+
+
+# --- una pagina: annuncio o bando ------------------------------------------------------------------
 
 def elabora_annuncio(client: httpx.Client, annuncio_id: int, url_annuncio: str, cartella: Path, pausa: Pausa,
                      ignora_robots: bool = False, gia_scaricati: int = 0, gia_presenti: set[str] | None = None,
                      ) -> list[Risultato]:
-    """Apre la pagina dell'annuncio, scarica documenti e FAQ. Non tocca il database.
+    """Apre la pagina dell'annuncio, scarica documenti e FAQ. Non tocca il database."""
+    return elabora_pagina(client, str(annuncio_id), url_annuncio, cartella, pausa, ignora_robots, gia_scaricati, gia_presenti)
 
-    `ignora_robots` (decisione di Matteo sulla fonte) vale solo per il sito della pagina dell'annuncio,
+
+def elabora_pagina(client: httpx.Client, sottocartella: str, url_pagina: str, cartella: Path, pausa: Pausa,
+                   ignora_robots: bool = False, gia_scaricati: int = 0, gia_presenti: set[str] | None = None,
+                   plone_api: bool = False, nome_copia: str = "Pagina dell'annuncio (copia)") -> list[Risultato]:
+    """Apre una pagina (dell'annuncio o ufficiale del bando), scarica documenti e FAQ. Non tocca il database.
+
+    `ignora_robots` (decisione di Matteo sulla fonte) vale solo per il sito della pagina,
     non per i siti esterni a cui la pagina rimanda. Solleva NonPermesso o errori HTTP se la pagina stessa
-    non si puo' aprire.
+    non si puo' aprire. Con `plone_api` i documenti si cercano anche nell'API del sito (candidati_plone).
     """
-    pagina = urldefrag(url_annuncio).url
+    pagina = urldefrag(url_pagina).url
     sito = urlsplit(pagina).netloc
     gia_presenti = gia_presenti or set()
 
@@ -313,16 +386,20 @@ def elabora_annuncio(client: httpx.Client, annuncio_id: int, url_annuncio: str, 
         return ignora_robots and urlsplit(url).netloc == sito
 
     risultati: list[Risultato] = []
-    cartella_annuncio = cartella / str(annuncio_id)
+    cartella_annuncio = cartella / sottocartella
     tipo_pagina = tipo_da_url(pagina)
-    if tipo_pagina:   # l'annuncio punta direttamente a un documento
+    if tipo_pagina:   # la pagina e' direttamente un documento
         candidati = [Candidato(pagina, _nome_da_url(pagina), tipo_pagina)]
     else:
         pausa.attendi(pagina)
         risposta = scarica(client, pagina, accept="text/html,application/xhtml+xml", ignora_robots=ignora(pagina))
         risposta.raise_for_status()
         candidati = trova_allegati(risposta.text, str(risposta.url))
-        risultati.append(_copia_pagina(risposta, pagina, cartella, cartella_annuncio))
+        copia = _copia_pagina(risposta, pagina, cartella, cartella_annuncio)
+        copia.nome = nome_copia
+        risultati.append(copia)
+        if plone_api:
+            candidati = candidati_plone(client, pausa, str(risposta.url)) + candidati
     candidati = [c for c in candidati if c.url not in gia_presenti]
 
     usati, contati = 0, gia_scaricati
@@ -352,8 +429,10 @@ def elabora_annuncio(client: httpx.Client, annuncio_id: int, url_annuncio: str, 
         except httpx.HTTPError as exc:
             r.errore = f"{type(exc).__name__}: {str(exc)[:200]}"
             continue
-        if c.tipo == "faq" and mime in TIPI_MIME:
-            r.tipo = TIPI_MIME[mime]          # la "FAQ" e' un documento (es. un PDF), non una pagina
+        if c.tipo in ("faq", "file") and mime in TIPI_MIME:
+            r.tipo = TIPI_MIME[mime]          # la "FAQ" o il link senza estensione e' un documento (es. un PDF)
+        elif c.tipo == "file" and mime not in ("text/html", "application/xhtml+xml"):
+            r.tipo = "altro"                  # formato non previsto: si conserva, ma non se ne legge il testo
         elif c.tipo != "faq" and mime in ("text/html", "application/xhtml+xml"):
             temporaneo.unlink(missing_ok=True)
             r.errore = "il link porta a una pagina web, non a un documento"
@@ -368,67 +447,195 @@ def elabora_annuncio(client: httpx.Client, annuncio_id: int, url_annuncio: str, 
     return risultati
 
 
+# --- che documento e', e in che ordine va alla scheda ---------------------------------------------
+
+def _regola(*parole: str) -> re.Pattern:
+    return re.compile(r"(?<![a-z])(" + "|".join(parole) + r")")
+
+
+# Dal nome (testo del link o nome del file) e dall'indirizzo. L'ordine conta: vince la prima che scatta.
+CATEGORIE = [
+    ("faq", _regola(r"faq", r"domande frequenti", r"domande e risposte", r"chiariment")),
+    ("modulistica", _regola(r"modul", r"modell", r"mod[ ._-]?\d", r"domanda di", r"schema di domanda", r"dichiaraz", r"f24",
+                            r"procura", r"whistleblow", r"informativa", r"privacy", r"delega", r"fac[ ._-]?simile",
+                            r"format\b", r"template", r"dsan", r"autocertific", r"istanza", r"allegato [b-z]\b",
+                            r"allegato_[b-z]\b", r"all[ ._-]?[b-z][ ._-]", r"relazione finale", r"rendicontazion",
+                            r"scheda anagrafica", r"piano finanziario", r"business plan", r"perizia", r"guida.*compilazion",
+                            r"manuale", r"istruzioni", r"guida")),
+    ("graduatoria", _regola(r"graduatori", r"esit[io]", r"elenco (?:delle )?(?:domande|imprese|ammess|benefic)",
+                            r"ammess[ie] a contributo", r"beneficiari")),
+    ("decreto", _regola(r"decreto", r"delibera", r"determin", r"d[ ._-]?g[ ._-]?r\b", r"dgr", r"ddg", r"ddpf",
+                        r"d[ ._-]?d[ ._-]", r"provvediment", r"atto")),
+    ("bando", _regola(r"bando", r"avviso", r"allegato a\b", r"allegato_a\b", r"all[ ._-]?a[ ._-]", r"disciplinare",
+                      r"regolamento", r"testo integrale", r"scheda (?:tecnica|prodotto|misura)", r"misura", r"criteri")),
+]
+ORDINE_CATEGORIE = {"bando": 0, "pagina": 1, "faq": 2, "decreto": 3, "graduatoria": 4, "altro": 5, "modulistica": 9}
+
+
+def categoria_allegato(nome: str, url: str, tipo: str) -> str:
+    if tipo == "pagina":
+        return "pagina"
+    if tipo == "faq":
+        return "faq"
+    testo = f"{nome} {_nome_da_url(url)}".lower().replace("_", " ")
+    for categoria, regola in CATEGORIE:
+        if regola.search(testo):
+            return categoria
+    return "altro"
+
+
+def _data_nel_nome(testo: str) -> str:
+    """Per mettere per primo il decreto piu' recente: la data (o almeno l'anno) scritta nel nome, se c'e'."""
+    m = re.search(r"(\d{1,2})[._/-](\d{1,2})[._/-](20\d{2})", testo)
+    if m:
+        return f"{m.group(3)}{int(m.group(2)):02d}{int(m.group(1)):02d}"
+    anni = re.findall(r"20\d{2}", testo)
+    return max(anni) + "0000" if anni else "00000000"
+
+
+def ordina_per_scheda(allegati: list[dict]) -> list[dict]:
+    """Allegati (righe con nome, url, tipo, categoria, testo_estratto) nell'ordine in cui vanno a Sonnet:
+    prima il bando, poi la pagina ufficiale, le FAQ, il decreto piu' recente, le graduatorie, il resto.
+    La modulistica resta fuori (si conserva per la plancia, ma non serve a compilare la scheda)."""
+    utili = []
+    for a in allegati:
+        if a.get("errore"):
+            continue
+        categoria = a.get("categoria") or categoria_allegato(a.get("nome") or "", a.get("url") or "", a.get("tipo") or "")
+        if categoria == "modulistica":
+            continue
+        utili.append({**a, "categoria": categoria})
+    return sorted(utili, key=lambda a: (ORDINE_CATEGORIE.get(a["categoria"], 5),
+                                        "" if a["categoria"] != "decreto" else _invertito(_data_nel_nome(f"{a.get('nome')} {a.get('url')}"))))
+
+
+def _invertito(data: str) -> str:
+    return "".join(str(9 - int(c)) for c in data)
+
+
+def documenti_per_scheda(allegati: list[dict], massimo: int = 150_000) -> tuple[list[dict], list[str]]:
+    """I documenti per la scheda, gia' in ordine, con il testo tagliato **dal fondo**: se non c'e' spazio si
+    accorciano gli ultimi documenti, mai il bando. Ritorna (documenti con 'testo', avvertenze da dire a Sonnet)."""
+    documenti, avvertenze, restano = [], [], massimo
+    for a in ordina_per_scheda(allegati):
+        testo = a.get("testo_estratto") or ""
+        if not testo and a["tipo"] not in ("pagina", "faq"):
+            avvertenze.append(f"{a.get('nome')}: nessun testo leggibile (scansione o formato non letto)")
+        if restano <= 0:
+            avvertenze.append(f"{a.get('nome')}: escluso per lunghezza")
+            continue
+        if len(testo) > restano:
+            avvertenze.append(f"{a.get('nome')}: tagliato dopo {restano} caratteri su {len(testo)}")
+            testo = testo[:restano]
+        restano -= len(testo)
+        documenti.append({**a, "testo": testo})
+    return documenti, avvertenze
+
+
 # --- database -----------------------------------------------------------------------------------
 
 def annunci_da_elaborare(conn, annuncio_id: int | None, limite: int) -> list[dict]:
     with conn.cursor() as cur:
-        if annuncio_id:
-            cur.execute("SELECT id, fonte_id, url, titolo FROM annunci WHERE id = %s", (annuncio_id,))
+        cur.execute("SELECT id, fonte_id, url, titolo FROM annunci WHERE id = %s", (annuncio_id,))
+        return list(cur.fetchall())
+
+
+def bandi_da_elaborare(conn, bando_id: int | None, limite: int) -> list[dict]:
+    """Bandi con la pagina ufficiale trovata e allegati mai cercati (o pagina cambiata dopo l'ultima ricerca)."""
+    with conn.cursor() as cur:
+        if bando_id:
+            cur.execute("SELECT b.id, b.url, b.titolo, b.pagina_stato FROM bandi b WHERE b.id = %s", (bando_id,))
         else:
-            # Rilevanti mai cercati, o cambiati dopo l'ultima ricerca (proroghe, nuovi allegati).
             cur.execute(
-                """
-                SELECT a.id, a.fonte_id, a.url, a.titolo FROM annunci a
-                JOIN smistamenti s ON s.annuncio_id = a.id AND s.esito = 'rilevante'
-                WHERE a.allegati_cercati_il IS NULL OR a.aggiornato_il > a.allegati_cercati_il
-                ORDER BY a.trovato_il DESC LIMIT %s
-                """,
+                """SELECT b.id, b.url, b.titolo, b.pagina_stato FROM bandi b
+                   WHERE b.pagina_stato = 'trovata' AND b.url IS NOT NULL AND b.allegati_cercati_il IS NULL
+                   ORDER BY b.id LIMIT %s""",
                 (limite,),
             )
         return list(cur.fetchall())
 
 
+def fonti_del_bando(conn, bando_id: int) -> list[str]:
+    with conn.cursor() as cur:
+        cur.execute("SELECT DISTINCT fonte_id FROM annunci WHERE bando_id = %s", (bando_id,))
+        return [r["fonte_id"] for r in cur.fetchall()]
+
+
 def documenti_del_sito(conn) -> set[str]:
-    """I file gia' trovati in due o piu' annunci diversi: sono documenti del sito (moduli generali,
+    """I file gia' trovati in due o piu' annunci o bandi diversi: sono documenti del sito (moduli generali,
     informative), non allegati di un bando. Non si scaricano di nuovo."""
     with conn.cursor() as cur:
-        cur.execute("SELECT url FROM allegati WHERE tipo <> 'pagina' GROUP BY url HAVING count(DISTINCT annuncio_id) >= 2")
+        cur.execute("""SELECT url FROM allegati WHERE tipo <> 'pagina'
+                       GROUP BY url HAVING count(DISTINCT coalesce('a' || annuncio_id, 'b' || bando_id)) >= 2""")
         return {r["url"] for r in cur.fetchall()}
 
 
-def gia_scaricati(conn, annuncio_id: int) -> set[str]:
+def gia_scaricati(conn, annuncio_id: int | None = None, bando_id: int | None = None) -> set[str]:
     with conn.cursor() as cur:
-        cur.execute("SELECT url FROM allegati WHERE annuncio_id = %s AND errore IS NULL AND tipo <> 'pagina'", (annuncio_id,))
+        if bando_id is not None:
+            cur.execute("SELECT url FROM allegati WHERE bando_id = %s AND annuncio_id IS NULL AND errore IS NULL "
+                        "AND tipo <> 'pagina'", (bando_id,))
+        else:
+            cur.execute("SELECT url FROM allegati WHERE annuncio_id = %s AND errore IS NULL AND tipo <> 'pagina'", (annuncio_id,))
         return {r["url"] for r in cur.fetchall()}
 
 
 def salva(conn, annuncio_id: int, risultati: list[Risultato]) -> None:
     with conn.cursor() as cur:
+        cur.execute("SELECT bando_id FROM annunci WHERE id = %s", (annuncio_id,))
+        riga = cur.fetchone()
+        bando = riga["bando_id"] if riga else None
         for r in risultati:
             cur.execute(
                 """
-                INSERT INTO allegati (annuncio_id, url, nome, tipo, dimensione, impronta, percorso_locale,
+                INSERT INTO allegati (annuncio_id, bando_id, url, nome, tipo, categoria, dimensione, impronta, percorso_locale,
                                       testo_estratto, errore, scaricato_il)
-                VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, now())
+                VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, now())
                 ON CONFLICT (annuncio_id, url) DO UPDATE SET
-                    nome = EXCLUDED.nome, tipo = EXCLUDED.tipo, dimensione = EXCLUDED.dimensione,
+                    nome = EXCLUDED.nome, tipo = EXCLUDED.tipo, categoria = EXCLUDED.categoria, dimensione = EXCLUDED.dimensione,
                     impronta = EXCLUDED.impronta, percorso_locale = EXCLUDED.percorso_locale,
                     testo_estratto = EXCLUDED.testo_estratto, errore = EXCLUDED.errore, scaricato_il = now()
                 """,
-                (annuncio_id, r.url, r.nome, r.tipo, r.dimensione, r.impronta, r.percorso_locale,
-                 r.testo_estratto, r.errore),
+                (annuncio_id, bando, r.url, r.nome, r.tipo, categoria_allegato(r.nome, r.url, r.tipo), r.dimensione,
+                 r.impronta, r.percorso_locale, r.testo_estratto, r.errore),
             )
         cur.execute("UPDATE annunci SET allegati_cercati_il = now() WHERE id = %s", (annuncio_id,))
     conn.commit()
 
 
-def segna_cercato(conn, annuncio_id: int) -> None:
+def salva_bando(conn, bando_id: int, risultati: list[Risultato]) -> None:
     with conn.cursor() as cur:
-        cur.execute("UPDATE annunci SET allegati_cercati_il = now() WHERE id = %s", (annuncio_id,))
+        for r in risultati:
+            cur.execute(
+                """
+                INSERT INTO allegati (annuncio_id, bando_id, url, nome, tipo, categoria, dimensione, impronta, percorso_locale,
+                                      testo_estratto, errore, scaricato_il)
+                VALUES (NULL, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, now())
+                ON CONFLICT (bando_id, url) WHERE annuncio_id IS NULL DO UPDATE SET
+                    nome = EXCLUDED.nome, tipo = EXCLUDED.tipo, categoria = EXCLUDED.categoria, dimensione = EXCLUDED.dimensione,
+                    impronta = EXCLUDED.impronta, percorso_locale = EXCLUDED.percorso_locale,
+                    testo_estratto = EXCLUDED.testo_estratto, errore = EXCLUDED.errore, scaricato_il = now()
+                """,
+                (bando_id, r.url, r.nome, r.tipo, categoria_allegato(r.nome, r.url, r.tipo), r.dimensione,
+                 r.impronta, r.percorso_locale, r.testo_estratto, r.errore),
+            )
+        cur.execute("UPDATE bandi SET allegati_cercati_il = now() WHERE id = %s", (bando_id,))
     conn.commit()
 
 
-def esegui(annuncio_id: int | None = None, limite: int = LIMITE_PREDEFINITO, cartella: Path = CARTELLA) -> int:
+def segna_cercato(conn, annuncio_id: int | None = None, bando_id: int | None = None) -> None:
+    with conn.cursor() as cur:
+        if bando_id is not None:
+            cur.execute("UPDATE bandi SET allegati_cercati_il = now() WHERE id = %s", (bando_id,))
+        else:
+            cur.execute("UPDATE annunci SET allegati_cercati_il = now() WHERE id = %s", (annuncio_id,))
+    conn.commit()
+
+
+def esegui(annuncio_id: int | None = None, limite: int = LIMITE_PREDEFINITO, cartella: Path = CARTELLA,
+           bando_id: int | None = None) -> int:
+    """Senza --annuncio: i bandi con la pagina ufficiale trovata (Parte 2 del 25/09). Con --annuncio: la pagina
+    di un annuncio preciso, come prima (utile per le prove)."""
     from app.db.connessione import connetti
     from app.db.migrazioni import applica_migrazioni
     from app.fonti.registro import CARTELLA_FONTI, carica_registro
@@ -441,53 +648,78 @@ def esegui(annuncio_id: int | None = None, limite: int = LIMITE_PREDEFINITO, car
     if not os.access(cartella, os.W_OK):
         print(f"La cartella degli allegati {cartella} non e' scrivibile.", file=sys.stderr)
         return 2
-    ignora_robots = {f.id: f.ignora_robots for f in carica_registro(CARTELLA_FONTI)}
+    registro = {f.id: f for f in carica_registro(CARTELLA_FONTI)}
     file_totali = byte_totali = errori_totali = 0
     with connetti() as conn, nuovo_client() as client:
         applica_migrazioni(conn)
-        annunci = annunci_da_elaborare(conn, annuncio_id, limite)
-        print(f"Annunci da elaborare: {len(annunci)}")
         pausa = Pausa(client)
-        for a in annunci:
-            presenti = gia_scaricati(conn, a["id"])
+        if annuncio_id:
+            lavori = [("annuncio", a) for a in annunci_da_elaborare(conn, annuncio_id, limite)]
+        else:
+            lavori = [("bando", b) for b in bandi_da_elaborare(conn, bando_id, limite)]
+        print(f"Da elaborare: {len(lavori)}")
+        for genere, x in lavori:
+            if genere == "bando":
+                if not x["url"]:
+                    print(f"saltato  [bando {x['id']}] nessuna pagina ufficiale")
+                    continue
+                fonti = [registro[f] for f in fonti_del_bando(conn, x["id"]) if f in registro]
+                sito = urlsplit(x["url"]).netloc
+                ignora = any(f.ignora_robots and urlsplit(f.url or "").netloc == sito for f in fonti)
+                plone = any(f.pagina_ufficiale.get("documenti") == "plone_api" for f in fonti)
+                presenti = gia_scaricati(conn, bando_id=x["id"])
+                chiamata = lambda: elabora_pagina(client, f"b{x['id']}", x["url"], cartella, pausa, ignora, len(presenti),
+                                                  presenti | documenti_del_sito(conn), plone, "Pagina del bando (copia)")
+                segna = lambda: segna_cercato(conn, bando_id=x["id"])
+                etichetta = f"bando {x['id']}"
+            else:
+                fonte = registro.get(x["fonte_id"])
+                presenti = gia_scaricati(conn, annuncio_id=x["id"])
+                chiamata = lambda: elabora_annuncio(client, x["id"], x["url"], cartella, pausa,
+                                                    bool(fonte and fonte.ignora_robots), len(presenti),
+                                                    presenti | documenti_del_sito(conn))
+                segna = lambda: segna_cercato(conn, annuncio_id=x["id"])
+                etichetta = f"annuncio {x['id']}"
             try:
-                risultati = elabora_annuncio(client, a["id"], a["url"], cartella, pausa,
-                                             ignora_robots.get(a["fonte_id"], False), len(presenti),
-                                             presenti | documenti_del_sito(conn))
+                risultati = chiamata()
             except NonPermesso:
-                segna_cercato(conn, a["id"])
-                print(f"saltato  [{a['id']}] robots.txt vieta la pagina {a['url']}")
+                segna()
+                print(f"saltato  [{etichetta}] robots.txt vieta la pagina {x['url']}")
                 continue
             except httpx.HTTPStatusError as exc:
                 if 400 <= exc.response.status_code < 500:   # pagina sparita: inutile riprovare al prossimo giro
-                    segna_cercato(conn, a["id"])
-                print(f"errore   [{a['id']}] HTTP {exc.response.status_code} su {a['url']}")
+                    segna()
+                print(f"errore   [{etichetta}] HTTP {exc.response.status_code} su {x['url']}")
                 continue
             except httpx.HTTPError as exc:                  # rete o timeout: si riprova al prossimo giro
-                print(f"errore   [{a['id']}] {type(exc).__name__}: {str(exc)[:120]}")
+                print(f"errore   [{etichetta}] {type(exc).__name__}: {str(exc)[:120]}")
                 continue
-            salva(conn, a["id"], risultati)
+            if genere == "bando":
+                salva_bando(conn, x["id"], risultati)
+            else:
+                salva(conn, x["id"], risultati)
             ok = [r for r in risultati if not r.errore]
             byte = sum(r.dimensione or 0 for r in ok)
             file_totali += len(ok)
             byte_totali += byte
             errori_totali += len(risultati) - len(ok)
-            print(f"ok       [{a['id']}] {a['titolo'][:70]}: {len(ok)} file ({byte / 1024 / 1024:.1f} MB), "
+            print(f"ok       [{etichetta}] {x['titolo'][:70]}: {len(ok)} file ({byte / 1024 / 1024:.1f} MB), "
                   f"{len(risultati) - len(ok)} non scaricati", flush=True)
             for r in risultati:
-                if r.errore:
-                    print(f"           - {r.nome[:60]}: {r.errore}")
+                stato = r.errore or categoria_allegato(r.nome, r.url, r.tipo)
+                print(f"           - {r.nome[:60]}: {stato}")
     print(f"Totale: {file_totali} file scaricati ({byte_totali / 1024 / 1024:.1f} MB), {errori_totali} non scaricati.")
     return 0
 
 
 def main(argv: list[str] | None = None) -> int:
-    parser = argparse.ArgumentParser(description="Scarica allegati e FAQ degli annunci rilevanti.")
-    parser.add_argument("--annuncio", type=int, metavar="ID", help="solo questo annuncio (anche se non smistato)")
+    parser = argparse.ArgumentParser(description="Scarica allegati e FAQ dalla pagina ufficiale dei bandi.")
+    parser.add_argument("--bando", type=int, metavar="ID", help="solo questo bando (anche se gia' cercato)")
+    parser.add_argument("--annuncio", type=int, metavar="ID", help="la pagina di un annuncio preciso, come prima")
     parser.add_argument("--limite", type=int, default=LIMITE_PREDEFINITO, metavar="N",
-                        help=f"al massimo N annunci per giro (default {LIMITE_PREDEFINITO})")
+                        help=f"al massimo N bandi per giro (default {LIMITE_PREDEFINITO})")
     args = parser.parse_args(argv)
-    return esegui(args.annuncio, args.limite)
+    return esegui(args.annuncio, args.limite, bando_id=args.bando)
 
 
 if __name__ == "__main__":
