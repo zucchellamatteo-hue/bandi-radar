@@ -1,0 +1,33 @@
+{
+  "titolo": "PR FESR 2021 - 2027 - AZIONE 1.3.1. “CONTRIBUTI PER LA PARTECIPAZIONE DE...",
+  "ente": "Regione Lombardia",
+  "territorio": "Lombardia",
+  "url": "https://www.bandi.regione.lombardia.it/bpm/web/la-mia-area/domande/faiDomanda?strumentoCod=RLO12026055023",
+  "stato": null,
+  "data_apertura": null,
+  "scadenza": null,
+  "sintesi": null,
+  "a_chi_si_rivolge": null,
+  "cosa_finanzia": null,
+  "tipo_agevolazione": null,
+  "contributo_massimo": null,
+  "percentuale": null,
+  "spese_ammesse": null,
+  "codici_ateco": [],
+  "codici_ateco_esclusi": [],
+  "dimensioni_ammesse": [],
+  "requisiti": null,
+  "tema": null,
+  "fonti": {
+    "titolo": "pagina",
+    "ente": "pagina",
+    "territorio": "pagina",
+    "url": "pagina"
+  },
+  "avvertenze": [
+    "La pagina del bando non era leggibile: ha restituito solo una richiesta di autenticazione Shibboleth, senza il contenuto del bando.",
+    "Non sono stati scaricati allegati per questo annuncio: nessun documento ufficiale era disponibile.",
+    "Titolo, ente e territorio riportati sono quelli registrati dalla raccolta al momento del ritrovamento dell'annuncio; il titolo risulta troncato nella fonte disponibile.",
+    "Tutti gli altri campi sono vuoti perche' non c'e' nessun testo su cui basarli: verificare il bando ufficiale sul sito di Regione Lombardia prima di usare questa scheda."
+  ]
+}
