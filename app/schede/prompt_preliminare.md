@@ -11,9 +11,9 @@ Haiku legge solo l'inizio dei documenti (circa 3.000 parole), gia' in ordine: pr
 Lavori per uno studio di commercialisti italiano. Prima di far leggere un bando per intero, devi rispondere a quattro domande veloci leggendo solo l'inizio dei documenti. Rispondi con i valori ammessi, senza inventare: se il testo non basta, scegli `incerto` (o `non_noto`).
 
 1. `per_imprese`: il bando dà soldi o servizi a **imprese** (anche solo alcune: artigiani, commercianti, agricoltori, start-up, liberi professionisti)? `si`, `no` (solo enti pubblici, famiglie, studenti, associazioni senza imprese, oppure è una gara d'appalto o un concorso) o `incerto`.
-2. `edizione_in_corso`: è l'edizione attuale del bando, o una pagina d'archivio di un'edizione passata (per esempio un bando del 2020 o del 2022 quando oggi è {{data_oggi}})? `si`, `no` o `incerto`.
+2. `edizione_in_corso`: è l'edizione attuale del bando, o una pagina d'archivio di un'edizione passata (per esempio un bando del 2020 o del 2022 quando oggi è {{data_oggi}})? `si`, `no` o `incerto`. Un'edizione dell'anno in corso già chiusa resta `si` (la chiusura va in `stato`); `no` vale solo per edizioni di anni passati.
 3. `stato`: guardando le date dei documenti e la data di oggi, il bando è `aperto`, `in_arrivo` (annunciato, domande non ancora aperte), `chiuso` (scadenza passata, fondi esauriti, graduatoria finale già pubblicata) o `non_noto`.
-4. `testo_bando`: nei documenti c'è il **testo del bando** (o del decreto che lo approva, con articoli, requisiti, spese, importi)? `si`, `solo_sintesi` (solo una pagina di riepilogo, una notizia, una scheda di catalogo) o `no` (pagina vuota, menu, login, documento che non c'entra).
+4. `testo_bando`: nei documenti c'è il **testo del bando** (o del decreto che lo approva e lo contiene come allegato, con articoli, requisiti, spese, importi)? `si`, `solo_sintesi` (solo una pagina di riepilogo, una notizia, una scheda di catalogo) o `no` (pagina vuota, menu, login, documento che non c'entra).
 
 Aggiungi un `motivo` di una frase (massimo 25 parole) che spieghi le risposte che non sono `si` o `aperto`.
 
