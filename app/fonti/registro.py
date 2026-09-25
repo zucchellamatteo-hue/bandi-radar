@@ -45,7 +45,7 @@ class Fonte:
     verificato_il: date | None = None
     note: str = ""
     ignora_robots: bool = False  # solo per decisione esplicita di Matteo, fonte per fonte
-    richiesta: dict = field(default_factory=dict)  # metodo, intestazioni, corpo_json, corpo_form, url_modello; selettore per html/browser; ipv6
+    richiesta: dict = field(default_factory=dict)  # metodo, intestazioni, corpo_json, corpo_form, url_modello; selettore per html/browser; ipv6; elenco per api
     pagina_ufficiale: dict = field(default_factory=dict)  # campo, escludi, cerca, segui_link, documenti (fonti/README.md)
     file: str = ""  # nome del file YAML di provenienza
 
@@ -106,8 +106,8 @@ def _controlla_voce(voce: dict, file: str, posizione: int) -> tuple[Fonte | None
     if not isinstance(ignora_robots, bool):
         errori.append(f"{dove}: ignora_robots deve essere true o false")
     richiesta = voce.get("richiesta") or {}
-    if not isinstance(richiesta, dict) or set(richiesta) - {"metodo", "intestazioni", "corpo_json", "corpo_form", "url_modello", "selettore", "ipv6"}:
-        errori.append(f"{dove}: richiesta ammette solo metodo, intestazioni, corpo_json, corpo_form, url_modello, selettore, ipv6")
+    if not isinstance(richiesta, dict) or set(richiesta) - {"metodo", "intestazioni", "corpo_json", "corpo_form", "url_modello", "selettore", "ipv6", "elenco"}:
+        errori.append(f"{dove}: richiesta ammette solo metodo, intestazioni, corpo_json, corpo_form, url_modello, selettore, ipv6, elenco")
 
     pagina_ufficiale = voce.get("pagina_ufficiale") or {}
     errori.extend(_controlla_pagina_ufficiale(pagina_ufficiale, dove))

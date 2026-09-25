@@ -62,6 +62,16 @@ I campi che servono ad abbinare un bando a un profilo anonimo oggi sono testo li
 4. **Lo stato del bando** (aperto, chiuso, in arrivo) lo calcola il sistema ogni giorno dalle date, non lo scrive l'IA.
 5. **Allinea con il profilo cliente:** aggiorna `docs/RICHIESTA_SCHEMA_ANAGRAFICHE.md` in modo che a ogni campo di abbinamento corrisponda un dato del profilo (aggiungi, se servono, libero professionista sì/no, ULA, categorie di investimento previste). Scrivi in `docs/SCHEDA_BANDO.md` una tabella "campo della scheda ↔ dato del profilo ↔ regola di confronto".
 6. **Riscrivi a mano la scheda di esempio** di `docs/SCHEDA_BANDO.md` (bando fiere Lombardia) con i campi nuovi.
+7. **Dettagli chiesti da Matteo il 25/09 sera** (sono quelli che un commercialista guarda per dire a un cliente se e quanto conviene). Aggiungili ai campi del punto 1, strutturati dove l'abbinamento o il calcolo li usano, testo con fonte dove bastano per la lettura. Valgono per il bando e, se diversi, per ogni linea:
+   - **Vincoli sulle spese**: sul fornitore (niente parti correlate, soci o parenti; fornitori accreditati o iscritti a elenchi), sul bene (nuovo di fabbrica, usato ammesso o no, origine UE o "made in", leasing o noleggio ammessi), sul pagamento (tracciabile, data da cui le spese valgono: prima o dopo la domanda), IVA ammessa o no, tetti per voce di spesa (es. consulenze al massimo il 20%), spese forfettarie.
+   - **Esclusioni**, separate per tipo: settori e ATECO, soggetti (imprese in difficoltà, procedure concorsuali, aiuti illegali da restituire, irregolarità contributive), spese escluse.
+   - **Intensità dell'aiuto**: percentuale base per dimensione d'impresa e maggiorazioni (zone assistite, impresa femminile o giovanile, rating di legalità, altro), con la percentuale massima risultante.
+   - **Fondo perduto e finanziamento distinti**: quota o importo di ciascuno sul totale (es. 30% fondo perduto + 70% prestito); per la parte finanziata **tasso** (zero, fisso, percentuale del tasso di riferimento), durata, preammortamento, garanzie richieste; se c'è una garanzia pubblica, la copertura.
+   - **Massimali**: spesa minima e massima del progetto, contributo minimo e massimo per impresa (e per linea), dotazione complessiva del bando o dello sportello.
+   - **Tempi e obblighi**: durata massima del progetto, anticipo / stati di avanzamento / saldo, obblighi dopo il contributo (mantenere beni, sede o occupati per N anni), cumulabilità con altri aiuti.
+   - **Domanda**: piattaforma, SPID o firma digitale, marca da bollo, documenti da allegare (preventivi, perizie, business plan), requisiti di regolarità (DURC, rating di legalità), criteri di punteggio.
+
+   Stessa regola dei tre stati (vincolo / nessun vincolo / non si sa) per ogni vincolo. Nella nuova prova (Parte 4) verifica quanti di questi campi Sonnet riesce a riempire con fonte, e quanto cresce il costo per scheda.
 
 ### Parte 4. Prompt corretti e nuova prova
 
