@@ -72,6 +72,74 @@ MODALITA_SELEZIONE = ("sportello", "sportello_valutativo", "graduatoria", "click
 
 STATI_BANDO = ("in_arrivo", "aperto", "chiuso")
 
+# --- Dettagli chiesti da Matteo il 25/09 sera: quelli che un commercialista guarda per dire se e quanto conviene.
+# Sei blocchi (colonne JSON della tabella bandi), per non moltiplicare i campi: servono alla lettura e ai calcoli,
+# l'abbinamento li usa solo per ordinare e per la lista "da controllare con il cliente".
+
+# Intensita' dell'aiuto: percentuale base, eventuale percentuale per dimensione, maggiorazioni.
+MOTIVI_MAGGIORAZIONE = (
+    "micro", "piccola", "zona_assistita", "area_interna_montana", "femminile", "giovanile", "nuova_impresa",
+    "startup_innovativa", "rating_legalita", "certificazione_parita_genere", "aggregazione", "assunzioni", "altro",
+)
+
+# Parte a prestito: tipo di tasso.
+TIPI_TASSO = ("zero", "fisso", "variabile", "riferimento_ue", "altro")
+
+# Vincoli sulle spese: ogni voce ha uno stato (STATI_VINCOLO) e il dettaglio a parole.
+VINCOLI_SPESA = (
+    "fornitore",              # niente parti correlate, soci, parenti; fornitori accreditati o iscritti a elenchi
+    "bene_nuovo",             # solo beni nuovi di fabbrica
+    "bene_usato",             # usato escluso o ammesso a condizioni
+    "origine_bene",           # origine UE, "made in", produzione nel territorio
+    "leasing_noleggio",       # leasing, noleggio, acquisto a rate
+    "pagamento",              # tracciabile, conto dedicato, niente contanti o compensazioni
+    "decorrenza",             # da quando le spese valgono (dopo la domanda, dopo la concessione, da una data)
+    "iva",                    # IVA ammessa o no
+    "tetti_per_voce",         # es. consulenze al massimo il 20% del progetto
+    "forfait",                # spese riconosciute a forfait
+)
+
+# Esclusioni per tipo di soggetto (i settori stanno in codici_ateco_esclusi, piu' il testo in esclusioni.settori).
+ESCLUSIONI_SOGGETTI = (
+    "impresa_difficolta", "procedure_concorsuali", "liquidazione", "aiuti_illegali_da_restituire",
+    "irregolarita_contributiva", "sanzioni_interdittive", "antimafia", "altri_aiuti_stesse_spese", "altro",
+)
+
+# Come arrivano i soldi.
+EROGAZIONE = ("anticipo", "stato_avanzamento", "saldo", "unica_soluzione", "compensazione_f24", "altro")
+
+# Cosa serve per presentare la domanda.
+REQUISITI_DOMANDA = (
+    "spid_cie_cns", "firma_digitale", "pec", "marca_da_bollo", "preventivi", "perizia", "business_plan",
+    "relazione_tecnica", "durc", "rating_legalita", "intermediario", "altro",
+)
+
+# Struttura dei sei blocchi: campi numerici, campi di testo, campi a valori ammessi (elenco o singolo).
+DETTAGLI: dict[str, dict[str, tuple]] = {
+    "intensita": {"numerici": ("percentuale_base",), "testi": ("note",)},
+    "finanziamento": {
+        "numerici": ("quota_fondo_perduto", "percentuale_finanziamento", "tasso_valore", "durata_mesi",
+                     "preammortamento_mesi", "garanzia_pubblica_copertura"),
+        "testi": ("tasso_note", "garanzie_richieste"),
+    },
+    "esclusioni": {"numerici": (), "testi": ("settori", "spese")},
+    "obblighi": {
+        "numerici": ("durata_progetto_mesi", "anticipo_percentuale", "mantenimento_anni"),
+        "testi": ("mantenimento_note", "cumulabilita", "rendicontazione"),
+    },
+    "domanda": {"numerici": (), "testi": ("piattaforma", "criteri_punteggio", "note")},
+}
+VALORI_AMMESSI_DETTAGLI: dict[str, tuple[str, ...]] = {
+    "intensita.maggiorazioni.motivo": MOTIVI_MAGGIORAZIONE,
+    "finanziamento.tasso_tipo": TIPI_TASSO,
+    "esclusioni.soggetti": ESCLUSIONI_SOGGETTI,
+    "obblighi.erogazione": EROGAZIONE,
+    "domanda.requisiti": REQUISITI_DOMANDA,
+}
+PERCENTUALI_DETTAGLI = ("intensita.percentuale_base", "finanziamento.quota_fondo_perduto",
+                        "finanziamento.percentuale_finanziamento", "finanziamento.garanzia_pubblica_copertura",
+                        "obblighi.anticipo_percentuale")
+
 
 # Valori ammessi per ogni campo a elenco o a valore singolo della scheda (e delle sue linee).
 VALORI_AMMESSI: dict[str, tuple[str, ...]] = {
@@ -96,7 +164,7 @@ VALORI_AMMESSI: dict[str, tuple[str, ...]] = {
 NUMERICI = (
     "contributo_massimo", "percentuale", "fondo_perduto_massimo", "percentuale_fondo_perduto", "finanziamento_massimo",
     "dotazione", "spesa_minima", "spesa_massima", "dipendenti_min", "dipendenti_max", "fatturato_min", "fatturato_max",
-    "eta_impresa_min_mesi", "eta_impresa_max_mesi",
+    "eta_impresa_min_mesi", "eta_impresa_max_mesi", "contributo_minimo",
 )
 PERCENTUALI = ("percentuale", "percentuale_fondo_perduto")
 

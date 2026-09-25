@@ -34,6 +34,22 @@ def test_ogni_campo_ha_la_sua_colonna_e_la_sua_chiave_nel_prompt():
         assert f'"{vincolo}"' in PROMPT and f"`{vincolo}`" in SCHEDA
 
 
+def test_dettagli_per_il_commercialista_allineati():
+    # I sei blocchi chiesti da Matteo il 25/09: colonna, chiave nel formato del prompt, campi e valori scritti ovunque.
+    for blocco in [*campi.DETTAGLI, "vincoli_spese", "contributo_minimo"]:
+        assert f"COLUMN IF NOT EXISTS {blocco} " in MIGRAZIONE, f"{blocco} manca nella migrazione 007"
+        assert f'"{blocco}"' in PROMPT and f"`{blocco}`" in SCHEDA, f"{blocco} manca nel prompt o nella scheda"
+    for blocco, parti in campi.DETTAGLI.items():
+        for campo in (*parti["numerici"], *parti["testi"]):
+            assert f'"{campo}"' in PROMPT, f"{blocco}.{campo} manca nel formato del prompt"
+    for percorso, valori in campi.VALORI_AMMESSI_DETTAGLI.items():
+        for valore in valori:
+            assert f'"{valore}"' in PROMPT, f"{percorso}: {valore} manca nel prompt"
+            assert f"`{valore}`" in SCHEDA, f"{percorso}: {valore} manca in docs/SCHEDA_BANDO.md"
+    for voce in campi.VINCOLI_SPESA:
+        assert f'"{voce}"' in PROMPT and f"`{voce}`" in PROMPT and f"`{voce}`" in SCHEDA, voce
+
+
 def test_stato_calcolato_dalle_date():
     oggi = date(2026, 9, 25)
     assert calcola_stato(date(2026, 7, 30), None, oggi) == "aperto"                    # sportello senza scadenza

@@ -35,10 +35,17 @@ Regole, da rispettare tutte:
     - `categorie_spesa`: `"macchinari_attrezzature"`, `"opere_edili_impianti"`, `"software_digitale"`, `"consulenze"`, `"formazione"`, `"personale"`, `"fiere_eventi"`, `"marketing_promozione"`, `"brevetti_certificazioni"`, `"veicoli"`, `"energia_efficienza"`, `"scorte_circolante"`, `"immobili"`, `"affitto_gestione"`, `"ricerca_sviluppo"`, `"altro"`;
     - `modalita_selezione`: `"sportello"` (ordine di arrivo), `"sportello_valutativo"` (ordine di arrivo con punteggio minimo), `"graduatoria"` (finestra fissa, poi classifica), `"click_day"`, `"automatica"`, `"negoziale"`, `"altro"`.
 11. **Linee.** Se il bando ha più linee o misure con regole diverse (massimali, percentuali, beneficiari, settori), elencale in `linee`, una per linea, con i soli campi che per quella linea cambiano. I campi del bando riportano il caso più ampio: il massimale più alto, l'unione dei beneficiari. Se il bando ha una sola linea, `linee` è `[]`.
-12. **Italiano semplice** nei testi: frasi brevi, niente sigle non spiegate, nessun tono promozionale. La `sintesi` è di 3-5 righe: cosa finanzia, a chi, quanto, come e fino a quando si partecipa, chi gestisce il bando, se è a graduatoria o a sportello.
-13. **Non è un bando per imprese?** (concorso di personale, gara d'appalto, contributo solo per privati o enti pubblici): compila solo `titolo`, `ente`, `url`, `completezza`, lascia `null` o `[]` il resto e spiega il motivo in `avvertenze`, iniziando con `"NON PER IMPRESE:"`.
-14. La scheda sarà mostrata con la frase **"Informazione indicativa, verificare il bando ufficiale"**: non ripeterla nei campi, ma non scrivere mai nulla che la contraddica (niente "sicuramente ammesso", "garantito").
-15. Rispondi **solo con il JSON**, senza testo prima o dopo e senza blocchi di codice.
+12. **I dettagli che servono al commercialista**, in sei blocchi. Stesse regole: niente invenzioni, fonte per ogni blocco compilato (in `fonti` con il nome del blocco, per esempio `"finanziamento"`), `null` o `[]` per quello che i documenti non dicono. Se una linea ha dettagli diversi, scrivili nelle `note` della linea.
+    - `intensita`: `percentuale_base` (la percentuale senza maggiorazioni), `per_dimensione` (percentuale base per `micro`, `piccola`, `media`, `grande`, se cambia con la dimensione), `maggiorazioni` (una per motivo, con `punti_percentuali` in più e `note`). Motivi ammessi: `"micro"`, `"piccola"`, `"zona_assistita"`, `"area_interna_montana"`, `"femminile"`, `"giovanile"`, `"nuova_impresa"`, `"startup_innovativa"`, `"rating_legalita"`, `"certificazione_parita_genere"`, `"aggregazione"`, `"assunzioni"`, `"altro"`. `percentuale` resta la massima possibile, maggiorazioni comprese.
+    - `finanziamento` (solo se c'è una parte a prestito o una garanzia): `quota_fondo_perduto` e `percentuale_finanziamento` (quanto dell'aiuto è a fondo perduto e quanto della spesa è coperto dal prestito, 0-100), `tasso_tipo` (`"zero"`, `"fisso"`, `"variabile"`, `"riferimento_ue"` cioè una percentuale del tasso di riferimento UE, `"altro"`), `tasso_valore` (percentuale annua, se scritta), `tasso_note`, `durata_mesi`, `preammortamento_mesi`, `garanzie_richieste` (a parole), `garanzia_pubblica_copertura` (0-100, se il prestito è coperto dal Fondo di garanzia o simili).
+    - `vincoli_spese`: per ogni voce uno stato (`"vincolo"`, `"nessun_vincolo"`, `"non_noto"`) e il `dettaglio` a parole. Voci: `fornitore` (niente parti correlate, soci o parenti; fornitori accreditati), `bene_nuovo`, `bene_usato`, `origine_bene` (origine UE, "made in", prodotto nel territorio), `leasing_noleggio`, `pagamento` (tracciabile, conto dedicato), `decorrenza` (da quando le spese valgono: dopo la domanda, dopo la concessione, da una data), `iva` (vincolo se l'IVA non è ammessa o lo è solo a condizioni), `tetti_per_voce` (es. consulenze al massimo il 20%), `forfait`.
+    - `esclusioni`: `soggetti` con valori ammessi `"impresa_difficolta"`, `"procedure_concorsuali"`, `"liquidazione"`, `"aiuti_illegali_da_restituire"`, `"irregolarita_contributiva"`, `"sanzioni_interdittive"`, `"antimafia"`, `"altri_aiuti_stesse_spese"`, `"altro"`; `settori` (le esclusioni di settore a parole, anche quelle già in `codici_ateco_esclusi`); `spese` (le spese escluse a parole).
+    - `obblighi`: `durata_progetto_mesi` (tempo massimo per realizzare il progetto), `erogazione` (`"anticipo"`, `"stato_avanzamento"`, `"saldo"`, `"unica_soluzione"`, `"compensazione_f24"`, `"altro"`), `anticipo_percentuale`, `rendicontazione` (termini e modi, a parole), `mantenimento_anni` e `mantenimento_note` (beni, sede, occupati da mantenere dopo il contributo), `cumulabilita` (con quali altri aiuti si può cumulare, a parole).
+    - `domanda`: `piattaforma` (dove si presenta), `requisiti` (`"spid_cie_cns"`, `"firma_digitale"`, `"pec"`, `"marca_da_bollo"`, `"preventivi"`, `"perizia"`, `"business_plan"`, `"relazione_tecnica"`, `"durc"`, `"rating_legalita"`, `"intermediario"` cioè domanda solo tramite un soggetto abilitato, `"altro"`), `criteri_punteggio` (a parole: i criteri di valutazione non sono requisiti), `note`.
+13. **Italiano semplice** nei testi: frasi brevi, niente sigle non spiegate, nessun tono promozionale. La `sintesi` è di 3-5 righe: cosa finanzia, a chi, quanto, come e fino a quando si partecipa, chi gestisce il bando, se è a graduatoria o a sportello.
+14. **Non è un bando per imprese?** (concorso di personale, gara d'appalto, contributo solo per privati o enti pubblici): compila solo `titolo`, `ente`, `url`, `completezza`, lascia `null` o `[]` il resto e spiega il motivo in `avvertenze`, iniziando con `"NON PER IMPRESE:"`.
+15. La scheda sarà mostrata con la frase **"Informazione indicativa, verificare il bando ufficiale"**: non ripeterla nei campi, ma non scrivere mai nulla che la contraddica (niente "sicuramente ammesso", "garantito").
+16. Rispondi **solo con il JSON**, senza testo prima o dopo e senza blocchi di codice.
 
 Formato della risposta: un oggetto JSON con esattamente queste chiavi.
 
@@ -93,6 +100,19 @@ Formato della risposta: un oggetto JSON con esattamente queste chiavi.
   "spesa_massima": numero o null,
   "dotazione": numero o null,
   "spese_ammesse": "testo o null",
+  "contributo_minimo": numero o null,
+  "intensita": {"percentuale_base": numero o null, "per_dimensione": {"micro": numero o null, "piccola": numero o null, "media": numero o null, "grande": numero o null},
+                "maggiorazioni": [{"motivo": "valore ammesso", "punti_percentuali": numero o null, "note": "testo o null"}], "note": "testo o null"},
+  "finanziamento": {"quota_fondo_perduto": numero o null, "percentuale_finanziamento": numero o null, "tasso_tipo": "valore ammesso o null",
+                    "tasso_valore": numero o null, "tasso_note": "testo o null", "durata_mesi": numero o null, "preammortamento_mesi": numero o null,
+                    "garanzie_richieste": "testo o null", "garanzia_pubblica_copertura": numero o null},
+  "vincoli_spese": {"fornitore": {"stato": "vincolo | nessun_vincolo | non_noto", "dettaglio": "testo o null"}, "bene_nuovo": {...}, "bene_usato": {...},
+                    "origine_bene": {...}, "leasing_noleggio": {...}, "pagamento": {...}, "decorrenza": {...}, "iva": {...},
+                    "tetti_per_voce": {...}, "forfait": {...}},
+  "esclusioni": {"soggetti": ["..."], "settori": "testo o null", "spese": "testo o null"},
+  "obblighi": {"durata_progetto_mesi": numero o null, "erogazione": ["..."], "anticipo_percentuale": numero o null, "rendicontazione": "testo o null",
+               "mantenimento_anni": numero o null, "mantenimento_note": "testo o null", "cumulabilita": "testo o null"},
+  "domanda": {"piattaforma": "testo o null", "requisiti": ["..."], "criteri_punteggio": "testo o null", "note": "testo o null"},
   "linee": [{"nome": "testo", "a_chi_si_rivolge": "testo", "...": "solo i campi che cambiano"}],
   "vincoli": {"territorio": "vincolo | nessun_vincolo | non_noto", "soggetti": "...", "forme_giuridiche": "...",
               "dimensioni": "...", "ateco": "...", "eta_impresa": "...", "requisiti_speciali": "...",
