@@ -365,6 +365,41 @@ def candidati_plone(client: httpx.Client, pausa: Pausa, url_pagina: str, massimo
     return trovati
 
 
+def testo_plone(client: httpx.Client, pausa: Pausa, url_pagina: str) -> str | None:
+    """Il testo di una pagina Plone/Volto letto dall'API: descrizione piu' i blocchi di testo. Nell'HTML delle
+    pagine Volto (Emilia-Romagna) spesso c'e' solo lo scheletro della pagina, costruita poi con JavaScript."""
+    parti = urlsplit(url_pagina)
+    base = f"{parti.scheme}://{parti.netloc}"
+    for prefisso in ("/++api++", "/api"):
+        indirizzo = base + prefisso + parti.path.rstrip("/")
+        try:
+            pausa.attendi(indirizzo)
+            risposta = scarica(client, indirizzo, accept="application/json")
+            if risposta.status_code != 200 or "json" not in risposta.headers.get("content-type", ""):
+                continue
+            dati = risposta.json()
+        except (httpx.HTTPError, NonPermesso, ValueError):
+            continue
+        righe = [str(dati.get("title") or ""), str(dati.get("description") or "")]
+
+        def raccogli(x):
+            if isinstance(x, dict):
+                if isinstance(x.get("plaintext"), str):
+                    righe.append(x["plaintext"])
+                if isinstance(x.get("data"), str) and "<" in x["data"]:
+                    righe.append(testo_html(x["data"]) or "")
+                for v in x.values():
+                    raccogli(v)
+            elif isinstance(x, list):
+                for v in x:
+                    raccogli(v)
+
+        raccogli({k: dati.get(k) for k in ("text", "blocks", "text_extended", "destinatari", "finanziato", "riferimenti_bando")})
+        testo = "\n".join(r.strip() for r in righe if r and r.strip())
+        return _senza_nul(testo)[:MASSIMO_TESTO] or None
+    return None
+
+
 # --- una pagina: annuncio o bando ------------------------------------------------------------------
 
 def elabora_annuncio(client: httpx.Client, annuncio_id: int, url_annuncio: str, cartella: Path, pausa: Pausa,
@@ -405,6 +440,9 @@ def elabora_pagina(client: httpx.Client, sottocartella: str, url_pagina: str, ca
         risultati.append(copia)
         if plone_api:
             candidati = candidati_plone(client, pausa, str(risposta.url)) + candidati
+            testo_api = testo_plone(client, pausa, str(risposta.url))
+            if testo_api and len(testo_api) > len(copia.testo_estratto or ""):
+                copia.testo_estratto = testo_api     # la pagina Volto ha il testo solo nell'API
     candidati = [c for c in candidati if c.url not in gia_presenti]
 
     usati, contati = 0, gia_scaricati

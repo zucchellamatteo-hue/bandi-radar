@@ -35,7 +35,7 @@ from bs4 import BeautifulSoup
 
 from app.raccolta.robots import permesso
 from app.raccolta.scarica import NonPermesso, regole_robots, scarica
-from app.schede.allegati import _SCARICA, Pausa, _togli_cornice, testo_html, tipo_da_url
+from app.schede.allegati import _SCARICA, Pausa, _togli_cornice, candidati_plone, testo_html, testo_plone, tipo_da_url
 from app.schede.bandi import _e_pagina_di_servizio, url_chiave
 from app.schede.smista import normalizza
 
@@ -206,6 +206,12 @@ def esegui_regole(client, pausa, annunci: list[AnnuncioDelBando], regole_fonti: 
                 if esito:
                     return esito
         ok, perche = valuta_pagina(risposta.text, str(risposta.url))
+        if not ok and regole.get("documenti") == "plone_api":
+            # Pagina Volto: testo e documenti stanno nell'API del sito, non nell'HTML.
+            testo = normalizza(testo_plone(client, pausa, str(risposta.url)) or "")
+            documenti = len(candidati_plone(client, pausa, str(risposta.url)))
+            if len(_SEGNI_BANDO.findall(testo)) >= 3 or documenti:
+                ok, perche = True, f"letta dall'API del sito: {len(_SEGNI_BANDO.findall(testo))} parole da bando, {documenti} documenti"
         if ok:
             return Esito(str(risposta.url), "trovata", f"{c.motivo} ({perche})", provati)
         provati.append(f"{c.url} ({c.motivo}): {perche}")
