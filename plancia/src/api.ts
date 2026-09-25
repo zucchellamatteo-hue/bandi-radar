@@ -17,6 +17,39 @@ export interface Annuncio {
   url: string; titolo: string; riassunto: string | null; pubblicato_il: string | null; trovato_il: string;
   scadenza?: string | null;
   smistamento?: Esito | null; smistamento_da?: string | null; smistamento_motivo?: string | null; n_allegati?: number;
+  bando_id?: number | null; ruolo?: Ruolo | null; collegato_da?: string | null; collegamento_motivo?: string | null;
+}
+
+export type Ruolo = "origine" | "doppione" | "proroga" | "rettifica" | "graduatoria" | "faq" | "chiusura";
+
+export const NOMI_RUOLO: Record<Ruolo, string> = {
+  origine: "origine", doppione: "stesso bando da un'altra pagina", proroga: "proroga", rettifica: "rettifica",
+  graduatoria: "graduatoria o esito", faq: "FAQ", chiusura: "chiusura",
+};
+
+// Un annuncio collegato a un bando (nella pagina dell'annuncio e in quella del bando).
+export interface AnnuncioDelBando {
+  id: number; titolo: string; url: string; ruolo: Ruolo | null; collegato_da: string | null;
+  collegamento_motivo: string | null; fonte: string; tipo: string; pubblicato_il?: string | null; trovato_il?: string;
+}
+
+export interface BandoBreve {
+  id: number; titolo: string; ente: string | null; territorio: string | null; url: string | null;
+  scadenza: string | null; codice_ufficiale: string | null; versione: number;
+}
+
+export interface DubbioAnnuncio { id: number; bando_id: number | null; somiglianza: number | null; motivo: string | null; bando_titolo: string | null }
+
+export interface Dubbio {
+  id: number; annuncio_id: number; bando_id: number | null; somiglianza: number | null; motivo: string | null;
+  titolo: string; url: string; fonte: string; ente: string;
+  bando_titolo: string | null; bando_ente: string | null; bando_url: string | null; bando_annunci: number;
+}
+
+export interface Bando extends BandoBreve {
+  stato: string | null; data_apertura: string | null; sintesi: string | null; url_chiave: string | null;
+  chiave_titolo: string | null; creato_il: string; aggiornato_il: string;
+  annunci: AnnuncioDelBando[]; allegati: Allegato[]; versioni: { versione: number; causa: string | null; salvata_il: string }[];
 }
 
 export interface Smistamento {
@@ -61,8 +94,17 @@ export const api = {
     chiama<{ totale: number; pagina: number; per_pagina: number; annunci: Annuncio[]; territori: string[] }>(
       "/api/annunci?" + new URLSearchParams(parametri).toString()),
   annuncio: (id: string) =>
-    chiama<Omit<Annuncio, "smistamento"> & { fonte_url: string | null; smistamento: Smistamento | null; allegati: Allegato[] }>(
-      `/api/annunci/${id}`),
+    chiama<Omit<Annuncio, "smistamento"> & {
+      fonte_url: string | null; smistamento: Smistamento | null; allegati: Allegato[];
+      bando: BandoBreve | null; stesso_bando: AnnuncioDelBando[]; dubbi: DubbioAnnuncio[];
+    }>(`/api/annunci/${id}`),
+  cambiaBando: (id: number, corpo: { azione: "unisci" | "separa"; con_annuncio?: number; bando_id?: number }) =>
+    chiama<{ bando_id: number }>(`/api/annunci/${id}/bando`, { method: "POST", body: JSON.stringify(corpo) }),
+  dubbi: (pagina: number) =>
+    chiama<{ totale: number; pagina: number; per_pagina: number; dubbi: Dubbio[] }>(`/api/dubbi?pagina=${pagina}`),
+  decidiDubbio: (id: number, decisione: "stesso" | "diverso") =>
+    chiama<{ bando_id: number }>(`/api/dubbi/${id}`, { method: "POST", body: JSON.stringify({ decisione }) }),
+  bando: (id: string) => chiama<Bando>(`/api/bandi/${id}`),
   correggiSmistamento: (id: number, esito: Esito) =>
     chiama<{ esito: Esito; deciso_da: string }>(`/api/annunci/${id}/smistamento`, { method: "POST", body: JSON.stringify({ esito }) }),
   settimane: () => chiama<Settimana[]>("/api/novita/settimane"),
