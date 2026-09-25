@@ -61,6 +61,42 @@ def test_csv():
     assert a.titolo == "Bando FESR" and a.url == "https://x.it/fesr" and a.pubblicato_il.month == 3
 
 
+def test_csv_con_modello_del_link():
+    # Trento FESR: il link sta nella colonna INFORMAZIONI, che il lettore non conosce da solo.
+    testo = "N.AVVISO;TITOLO;INFORMAZIONI\n1/2026;Aiuti per infrastrutture di prova;https://tn.it/Servizi/avviso-1-2026\n"
+    assert da_csv(testo, "https://tn.it") == []
+    (a,) = da_csv(testo, "https://tn.it", "{informazioni}")
+    assert a.titolo == "Aiuti per infrastrutture di prova" and a.url == "https://tn.it/Servizi/avviso-1-2026"
+
+
+def test_api_con_elenco_indicato_nel_registro():
+    # myPortal: con pochi elementi la lista piu' lunga e' quella dei campi interni di ogni record.
+    import json
+
+    import httpx
+
+    from app.fonti.registro import Fonte
+    from app.raccolta.lettori.api import leggi
+
+    campi = [{"name": f"campo {i}"} for i in range(31)]
+    dati = {"page": {"entities": [{"name": f"Avviso contributi numero {i}", "slug": f"avviso-{i}",
+                                   "attributes": {"sys_renderable_attributes": campi}} for i in range(3)]}}
+    client = httpx.Client(transport=httpx.MockTransport(lambda r: httpx.Response(200, text=json.dumps(dati))))
+    fonte = Fonte(id="x", nome="x", ente="x", tipo="capoluogo", territorio="VEN", url="https://x.it/avvisi", modalita="api",
+                  frequenza="mensile", stato="attiva", feed_url="https://x.it/myportal/api/content", ignora_robots=True,
+                  richiesta={"url_modello": "https://x.it/news/{slug}", "elenco": "page.entities"})
+    annunci = leggi(fonte, client).annunci
+    assert [a.url for a in annunci] == [f"https://x.it/news/avviso-{i}" for i in range(3)]
+
+
+def test_osservatore_con_nav_non_chiuso_che_contiene_la_pagina():
+    # Camera di Torino: un </nav> fuori posto fa finire tutta la pagina dentro il menu.
+    html = """<html><body><nav><a href="/">Home</a><div></nav></div>
+    <main><p><a href="/voucher-digitalizzazione-pmi-2026">Voucher digitalizzazione PMI 2026</a></p></main></nav></body></html>"""
+    (a,) = estrai_link(html, "https://to.camcom.it/finanziamenti")
+    assert a.url == "https://to.camcom.it/voucher-digitalizzazione-pmi-2026"
+
+
 def test_osservatore_html():
     annunci = estrai_link((DATI / "pagina_elenco.html").read_text(), "https://comune.esempio.it/avvisi")
     urls = [a.url for a in annunci]

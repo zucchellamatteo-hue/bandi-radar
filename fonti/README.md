@@ -33,7 +33,8 @@ Qui vive l'elenco delle fonti che Bandi Radar controlla. **Aggiungere una fonte 
     metodo: POST                       # GET (default) o POST
     intestazioni: {X-Requested-With: XMLHttpRequest}   # intestazioni HTTP in piu'
     corpo_json: {}                     # corpo della POST in JSON (oppure corpo_form: {} per un modulo)
-    url_modello: https://esempio.it/bandi/{slug}       # come costruire il link della scheda dai campi del record ({a.b} per campi annidati)
+    url_modello: https://esempio.it/bandi/{slug}       # come costruire il link della scheda dai campi del record ({a.b} per campi annidati; nei CSV le intestazioni in minuscolo con _ , es. {informazioni})
+    elenco: page.entities              # api: dove sta l'elenco dei record nel JSON, se il lettore sceglie la lista sbagliata (myPortal)
     selettore: "main .card-title"       # html e browser: leggi i link solo nelle parti indicate (selettore CSS), quando menu e servizi si mescolano ai bandi
     ipv6: true                         # esci in IPv6: per i siti che rifiutano l'IPv4 del server ma non l'IPv6 (Napoli, Siracusa)
   pagina_ufficiale:                    # facoltativo: come arrivare dalla pagina dell'annuncio alla pagina ufficiale del bando

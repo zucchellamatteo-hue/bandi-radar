@@ -30,13 +30,19 @@
   feed_url: https://www.rna.gov.it/open-data/aiuti
   piattaforma: null
   frequenza: mensile
-  stato: da_verificare
-  verificato_il: '2026-09-24'
-  note: 'Non aperto da qui: rna.gov.it chiude la connessione (reset) e WebFetch riceve 503, come incentivi.gov.it.
-    Da ricerca web e da pnrr.datibenecomune.it/fonti/rna/: sezione Open data con due famiglie di file XML, "Misure"
-    e "Aiuti individuali", nominati OpenData_aaaa_mm.xml (mese e anno di avvio misura o di concessione), aggiornati
-    ogni settimana, licenza CC BY 4.0. Serve per la Fase 7 (de minimis per profilo). Verificare dal server la pagina
-    e il nome esatto dei file prima di scrivere il lettore.
+  stato: esclusa
+  verificato_il: '2026-09-25'
+  note: 'ESCLUSA fino alla Fase 7 (25/09/2026): i dati ci sono ma serve un lettore dedicato; cosi'' non segna errore a ogni giro.
+    25/09/2026 dal VPS: www.rna.gov.it risponde in IPv4 (nessun IPv6); robots.txt non vieta le pagine open data.
+    Pagine aperte: https://www.rna.gov.it/open-data/aiuti (file OpenData_Aiuti_aaaa_mm.xml da 2016_09 a 2026_09) e
+    https://www.rna.gov.it/open-data/misure-agevolative (file OpenData_Misura_aaaa_mm.xml). I file non hanno un
+    link diretto: la pagina (Drupal) chiama in POST /opendata/misure-agevolative/download con corpo JSON
+    {"nids": "<data-nid della riga>", "file_extension": "xml" oppure "zip"}; la risposta e'' {"content": "/sites/rna.mise.gov.it/files/opendata/download_zips/Opendata-<hash>.zip"}
+    e quel file si scarica senza cookie (provato: settembre 2026 aiuti, nid 3035, zip da 3,9 MB, aggiornato il
+    19/09/2026). Non e'' una fonte di bandi: il lettore generico non serve, per la Fase 7 (de minimis per profilo)
+    servira'' un lettore dedicato che legga la tabella, prenda il data-nid del mese e chieda lo zip. prova.sh
+    fallisce (il lettore API riceve la pagina HTML, non JSON): va messa in pausa dalla plancia o esclusa fino
+    alla Fase 7, altrimenti segna errore a ogni giro.
 
     '
 
