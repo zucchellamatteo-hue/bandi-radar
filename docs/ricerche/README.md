@@ -27,3 +27,4 @@ In una sessione di Claude Code su questo repository, descrivere la domanda e chi
 | 2026-09-24 | `2026-09-24_verifica_dal_server.md` | Le fonti bloccate dal cloud e quelle difficili si leggono dal server? Prove con la raccolta, curl IPv4/IPv6 e Chromium |
 | 2026-09-25 | `2026-09-25_fonti_difficili.md` | Le ~44 fonti non verdi (bot manager, connessioni chiuse, myPortal, Camere, "senza novità") si leggono dal server? Raccolta, curl IPv4/IPv6, Chromium, altre porte |
 | 2026-09-25 | `2026-09-25_prova_ia.md` | Prima di collegare l'IA: Haiku (smistamento) e Sonnet (schede) su dati reali, rivisti da Opus. La struttura regge? |
+| 2026-09-26 | `2026-09-26_schede_in_produzione.md` | Catena senza IA accesa in produzione (deduplica, pagina ufficiale, allegati) e schede dell'arretrato compilate senza API: quanti bandi, quante schede, cosa non va |
