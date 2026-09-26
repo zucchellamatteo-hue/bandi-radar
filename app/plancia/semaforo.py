@@ -4,7 +4,8 @@ Regole (§5 del piano):
 - pausa: fonte messa in pausa dalla plancia, oppure esclusa dal registro.
 - rosso: ultimo controllo con struttura cambiata, oppure 3 errori di fila.
 - giallo: 1 o 2 errori di fila; oppure silenzio sospetto (nessuna novita' da piu' di 3 volte l'intervallo
-  normale della fonte, minimo 30 giorni); oppure mai controllata.
+  normale della fonte, minimo 30 giorni); oppure mai controllata; oppure risponde ma non se n'e' mai letto nulla
+  (voce del registro da controllare, da non confondere con una fonte tranquilla).
 - verde: tutto il resto.
 """
 
@@ -27,8 +28,9 @@ class Stato:
 
 
 def calcola(frequenza: str, stato_registro: str, in_pausa: bool, ultimi_esiti: list[str],
-            ultima_novita: datetime | None, adesso: datetime) -> Stato:
-    """ultimi_esiti: esiti degli ultimi controlli, dal piu' recente."""
+            ultima_novita: datetime | None, adesso: datetime, elementi_ultimo: int | None = None) -> Stato:
+    """ultimi_esiti: esiti degli ultimi controlli, dal piu' recente; elementi_ultimo: elementi letti dall'ultimo.
+    Una fonte che risponde ma da cui non si e' mai letto nulla non e' una fonte tranquilla: va guardata la voce."""
     soglia = max(MINIMO_SILENZIO_GIORNI, int(3 * INTERVALLO_GIORNI.get(frequenza, 7)))
     silenzio = (adesso - ultima_novita).days if ultima_novita else None
 
@@ -52,6 +54,8 @@ def calcola(frequenza: str, stato_registro: str, in_pausa: bool, ultimi_esiti: l
         return Stato("giallo", "saltata all'ultimo controllo (robots.txt o modalita' non disponibile)", silenzio, soglia)
     if silenzio is not None and silenzio > soglia:
         return Stato("giallo", f"silenzio sospetto: nessuna novita' da {silenzio} giorni (soglia {soglia})", silenzio, soglia)
+    if silenzio is None and elementi_ultimo == 0:
+        return Stato("giallo", "risponde ma non si legge nulla: controllare la voce del registro", silenzio, soglia)
     if silenzio is None:
         return Stato("giallo", "nessuna novita' trovata finora", silenzio, soglia)
     return Stato("verde", "regolare", silenzio, soglia)
