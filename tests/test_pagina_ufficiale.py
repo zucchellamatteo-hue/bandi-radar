@@ -145,3 +145,16 @@ def test_ordine_e_testo_per_la_scheda():
     assert documenti[1]["testo"] == "pagina"
     assert any("tagliato" in x for x in avvertenze) or any("escluso" in x for x in avvertenze)
     assert any("Scansione" in x and "nessun testo" in x for x in avvertenze)
+
+
+def test_testo_delle_pagine_volto_dall_api():
+    import json
+
+    from app.schede.allegati import testo_plone
+
+    base = "https://imprese.er.it"
+    c = client({f"{base}/++api++/bandi/x": (200, "application/json", json.dumps({
+        "title": "Digital Export", "description": "Contributi per le PMI",
+        "blocks": {"a": {"@type": "slate", "plaintext": "Il contributo massimo e' di 20.000 euro."}}}))})
+    testo = testo_plone(c, pausa(c), f"{base}/bandi/x")
+    assert "Contributi per le PMI" in testo and "20.000 euro" in testo

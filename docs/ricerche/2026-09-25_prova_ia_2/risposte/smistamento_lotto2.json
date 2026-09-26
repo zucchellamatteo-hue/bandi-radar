@@ -1,0 +1,104 @@
+{
+  "risposte": [
+    {
+      "id": 916,
+      "esito": "da_rivedere",
+      "motivo": "enti del terzo settore e soggetti privati: non chiaro se imprese ricevono aiuti"
+    },
+    {
+      "id": 380,
+      "esito": "non_rilevante",
+      "motivo": "pagina di rendicontazione: indice di contributi camerali precedenti"
+    },
+    {
+      "id": 1771,
+      "esito": "non_rilevante",
+      "motivo": "pagina informativa su strategia attrazione investimenti senza bando indicato"
+    },
+    {
+      "id": 503,
+      "esito": "rilevante",
+      "motivo": "graduatoria vincitori contributo camerale sostenibilità ESG per imprese"
+    },
+    {
+      "id": 3986,
+      "esito": "non_rilevante",
+      "motivo": "manifestazione di interesse per Comuni, non per imprese"
+    },
+    {
+      "id": 1677,
+      "esito": "non_rilevante",
+      "motivo": "censimento statistico della popolazione, servizio pubblico istituzionale"
+    },
+    {
+      "id": 2567,
+      "esito": "da_rivedere",
+      "motivo": "bando Horizon per ricerca e innovazione: non chiaro se imprese possono partecipare"
+    },
+    {
+      "id": 3597,
+      "esito": "rilevante",
+      "motivo": "finanziamento regionale per partecipazione imprese a fiera internazionale con costi coperti"
+    },
+    {
+      "id": 1341,
+      "esito": "non_rilevante",
+      "motivo": "notizia di cronaca su sequestro merce contraffatta, non bando"
+    },
+    {
+      "id": 2438,
+      "esito": "non_rilevante",
+      "motivo": "open data servizi Centri per l'Impiego rivolti a cittadini disoccupati"
+    },
+    {
+      "id": 641,
+      "esito": "rilevante",
+      "motivo": "manifestazione interesse imprese turistiche per B2B New York con costi coperti"
+    },
+    {
+      "id": 3357,
+      "esito": "da_rivedere",
+      "motivo": "bando verifiche edifici pubblici: non chiaro se gara d'appalto o contributo imprese"
+    },
+    {
+      "id": 2040,
+      "esito": "non_rilevante",
+      "motivo": "pagina navigazione struttura organizzativa comunale, voce di menu"
+    },
+    {
+      "id": 2516,
+      "esito": "rilevante",
+      "motivo": "finanziamento contratti distretto filiere agroalimentari da ministero agricoltura"
+    },
+    {
+      "id": 2563,
+      "esito": "da_rivedere",
+      "motivo": "bando Horizon WIDERA open access: non chiaro se imprese possono partecipare"
+    },
+    {
+      "id": 1698,
+      "esito": "non_rilevante",
+      "motivo": "contributo a privati cittadini per rimozione amianto da proprietà residenziali"
+    },
+    {
+      "id": 3905,
+      "esito": "non_rilevante",
+      "motivo": "home page piattaforma bandi Fincalabra: pagina accesso senza bando indicato"
+    },
+    {
+      "id": 3988,
+      "esito": "rilevante",
+      "motivo": "fondo regionale Calabria occupazione inclusione sviluppo per imprese"
+    },
+    {
+      "id": 286,
+      "esito": "rilevante",
+      "motivo": "premio Camera Commercio per imprese esperienze alternanza scuola-lavoro"
+    },
+    {
+      "id": 3732,
+      "esito": "non_rilevante",
+      "motivo": "concessioni posteggi demaniali a pagamento per chioschi commerciali"
+    }
+  ]
+}

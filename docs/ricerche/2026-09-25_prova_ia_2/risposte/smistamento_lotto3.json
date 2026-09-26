@@ -1,0 +1,104 @@
+{
+  "risposte": [
+    {
+      "id": 3215,
+      "esito": "da_rivedere",
+      "motivo": "Politiche di coesione UE: non chiaro se beneficiari sono imprese"
+    },
+    {
+      "id": 790,
+      "esito": "rilevante",
+      "motivo": "contributi alle imprese per formazione e lavoro"
+    },
+    {
+      "id": 315,
+      "esito": "non_rilevante",
+      "motivo": "pagina di categoria e menu della Camera di Commercio"
+    },
+    {
+      "id": 1225,
+      "esito": "non_rilevante",
+      "motivo": "selezione di nominativi per consiglio di fondazione, non aiuto alle imprese"
+    },
+    {
+      "id": 1479,
+      "esito": "non_rilevante",
+      "motivo": "corso di formazione per singoli, non contributo alle imprese"
+    },
+    {
+      "id": 1452,
+      "esito": "non_rilevante",
+      "motivo": "pagina di categoria su avvisi di servizio, viabilità e lavori pubblici"
+    },
+    {
+      "id": 4049,
+      "esito": "rilevante",
+      "motivo": "contributi a fondo perduto alle imprese turistiche che erogano servizi NCC"
+    },
+    {
+      "id": 3870,
+      "esito": "non_rilevante",
+      "motivo": "pagina di categoria su bandi di gara e contratti dell'ente"
+    },
+    {
+      "id": 3499,
+      "esito": "non_rilevante",
+      "motivo": "pagina di categoria sulla cooperazione internazionale della Regione"
+    },
+    {
+      "id": 896,
+      "esito": "rilevante",
+      "motivo": "bando per crescita e competitività delle imprese commerciali e turistiche"
+    },
+    {
+      "id": 3750,
+      "esito": "rilevante",
+      "motivo": "concessione demaniale marittima stagionale per stabilimenti balneari delle imprese ricettive"
+    },
+    {
+      "id": 876,
+      "esito": "rilevante",
+      "motivo": "contributi a MPMI per transizione energetica e sostenibilità"
+    },
+    {
+      "id": 3440,
+      "esito": "non_rilevante",
+      "motivo": "notizia su restauro di castello, progetto culturale senza contributi alle imprese"
+    },
+    {
+      "id": 2087,
+      "esito": "non_rilevante",
+      "motivo": "chiarimento su procedura di accesso agli atti amministrativi"
+    },
+    {
+      "id": 1276,
+      "esito": "da_rivedere",
+      "motivo": "corso ITS: non chiaro se rivolto a singoli o imprese/operatori"
+    },
+    {
+      "id": 465,
+      "esito": "non_rilevante",
+      "motivo": "pagina di categoria e menu di bandi della Camera di Commercio"
+    },
+    {
+      "id": 710,
+      "esito": "non_rilevante",
+      "motivo": "pagina tecnica del portale eCCIAA della Camera di Commercio"
+    },
+    {
+      "id": 3977,
+      "esito": "da_rivedere",
+      "motivo": "formulario allegato Fincalabra su spettacoli: non chiaro a quale bando appartiene"
+    },
+    {
+      "id": 3478,
+      "esito": "non_rilevante",
+      "motivo": "homepage del Consiglio Regionale della Molise, pagina istituzionale"
+    },
+    {
+      "id": 2771,
+      "esito": "da_rivedere",
+      "motivo": "dataset Lombardia su servizi integrativi: non chiaro chi riceve i soldi"
+    }
+  ]
+}

@@ -1,0 +1,104 @@
+{
+  "risposte": [
+    {
+      "id": 569,
+      "esito": "rilevante",
+      "motivo": "contributo alle MPMI per partecipazione a mostra internazionale dell'artigianato"
+    },
+    {
+      "id": 3540,
+      "esito": "non_rilevante",
+      "motivo": "elenco di accreditamento per fornitori di servizi, non un contributo"
+    },
+    {
+      "id": 1756,
+      "esito": "non_rilevante",
+      "motivo": "evento istituzionale senza bando per imprese indicato"
+    },
+    {
+      "id": 2555,
+      "esito": "rilevante",
+      "motivo": "open call Horizon EIT per innovazione in mobilità urbana"
+    },
+    {
+      "id": 1473,
+      "esito": "non_rilevante",
+      "motivo": "contributo a nuclei familiari per nascite, non per imprese"
+    },
+    {
+      "id": 115,
+      "esito": "rilevante",
+      "motivo": "progetto di business matching e internazionalizzazione per MPMI"
+    },
+    {
+      "id": 4115,
+      "esito": "non_rilevante",
+      "motivo": "vendita di beni pubblici, non un aiuto alle imprese"
+    },
+    {
+      "id": 3124,
+      "esito": "non_rilevante",
+      "motivo": "fondo per riqualificazione edilizia scolastica, non per imprese"
+    },
+    {
+      "id": 2668,
+      "esito": "non_rilevante",
+      "motivo": "concorso per selezione di personale, non un aiuto alle imprese"
+    },
+    {
+      "id": 4368,
+      "esito": "rilevante",
+      "motivo": "progetto di incoming e business matching per PMI agroalimentari"
+    },
+    {
+      "id": 1387,
+      "esito": "non_rilevante",
+      "motivo": "graduatorie per progetti di enti del terzo settore, non imprese"
+    },
+    {
+      "id": 4079,
+      "esito": "rilevante",
+      "motivo": "finanziamenti agevolati e contributi per imprese in tecnologie digitali"
+    },
+    {
+      "id": 2989,
+      "esito": "rilevante",
+      "motivo": "contributo per operatori del commercio per acquisto beni strumentali"
+    },
+    {
+      "id": 1534,
+      "esito": "non_rilevante",
+      "motivo": "comunicazione su orari museo, non un aiuto alle imprese"
+    },
+    {
+      "id": 3418,
+      "esito": "non_rilevante",
+      "motivo": "pagina di categoria FESR con descrizione procedure, non bando specifico"
+    },
+    {
+      "id": 1795,
+      "esito": "non_rilevante",
+      "motivo": "notizia su cantiere PNRR per library e centro anziani, non aiuto imprese"
+    },
+    {
+      "id": 2263,
+      "esito": "non_rilevante",
+      "motivo": "pagina di segnalazione disservizi, non un aiuto alle imprese"
+    },
+    {
+      "id": 2050,
+      "esito": "non_rilevante",
+      "motivo": "informazioni su servizio polizia locale, non un aiuto alle imprese"
+    },
+    {
+      "id": 2151,
+      "esito": "non_rilevante",
+      "motivo": "chiarimento su obblighi tributari, non un contributo pubblico"
+    },
+    {
+      "id": 2138,
+      "esito": "non_rilevante",
+      "motivo": "posti gratuiti in scuole comunali dello sport per bambini e ragazzi"
+    }
+  ]
+}
