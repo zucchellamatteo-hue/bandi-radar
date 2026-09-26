@@ -197,3 +197,24 @@ def test_scheda_salvata_nella_tabella_bandi():
             with conn.cursor() as cur:
                 cur.execute("DELETE FROM bandi WHERE id = %s", (bando,))
             conn.commit()
+
+
+def test_dettagli_per_il_commercialista_nello_schema_e_nei_controlli():
+    # I sei blocchi chiesti da Matteo il 25/09: nello schema della risposta e controllati come gli altri campi.
+    for blocco in ("intensita", "finanziamento", "vincoli_spese", "esclusioni", "obblighi", "domanda", "contributo_minimo"):
+        assert blocco in ia.SCHEMA_SCHEDA["required"]
+    assert set(ia.SCHEMA_SCHEDA["properties"]["vincoli_spese"]["properties"]) == set(campi.VINCOLI_SPESA)
+    scheda = {
+        "percentuale": 60,
+        "intensita": {"percentuale_base": 70, "maggiorazioni": [{"motivo": "simpatia", "punti_percentuali": 5}]},
+        "finanziamento": {"quota_fondo_perduto": 130, "tasso_tipo": "zero"},
+        "vincoli_spese": {"fornitore": {"stato": "vincolo", "dettaglio": None}, "iva": {"stato": "non_noto", "dettaglio": None}},
+        "esclusioni": {"soggetti": ["impresa_difficolta", "antipatia"]},
+    }
+    problemi = ia._verifica_dettagli(scheda)
+    assert "intensita.maggiorazioni.motivo: valore non ammesso 'simpatia'" in problemi
+    assert "esclusioni.soggetti: valore non ammesso 'antipatia'" in problemi
+    assert "finanziamento.quota_fondo_perduto: percentuale oltre 100 (130)" in problemi
+    assert "intensita.percentuale_base superiore alla percentuale massima" in problemi
+    assert "vincoli_spese.fornitore = vincolo, ma manca il dettaglio" in problemi
+    assert not ia._pieno({"iva": {"stato": "non_noto", "dettaglio": None}})

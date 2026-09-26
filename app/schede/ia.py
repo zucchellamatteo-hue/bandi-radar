@@ -142,6 +142,32 @@ _LINEA = {
                  "percentuale", "fondo_perduto_massimo", "spesa_minima", "spesa_massima", "note"],
     "additionalProperties": False,
 }
+def _oggetto(proprieta: dict) -> dict:
+    return {"type": "object", "properties": proprieta, "required": list(proprieta), "additionalProperties": False}
+
+
+def _blocco(nome: str, **altri) -> dict:
+    """Uno dei sei blocchi di dettagli (campi.DETTAGLI): numeri e testi facoltativi, piu' i campi particolari."""
+    parti = campi.DETTAGLI[nome]
+    return _oggetto({**{n: _o_null(_NUMERO) for n in parti["numerici"]}, **{t: _o_null(_TESTO) for t in parti["testi"]},
+                     **altri})
+
+
+_DETTAGLI_SCHEDA: dict[str, dict] = {
+    "intensita": _blocco(
+        "intensita",
+        per_dimensione=_oggetto({d: _o_null(_NUMERO) for d in campi.DIMENSIONI}),
+        maggiorazioni={"type": "array", "items": _oggetto({
+            "motivo": {"type": "string", "enum": list(campi.MOTIVI_MAGGIORAZIONE)},
+            "punti_percentuali": _o_null(_NUMERO), "note": _o_null(_TESTO)})},
+    ),
+    "finanziamento": _blocco("finanziamento", tasso_tipo=_o_null({"type": "string", "enum": list(campi.TIPI_TASSO)})),
+    "vincoli_spese": _oggetto({v: _oggetto({"stato": {"type": "string", "enum": list(campi.STATI_VINCOLO)},
+                                           "dettaglio": _o_null(_TESTO)}) for v in campi.VINCOLI_SPESA}),
+    "esclusioni": _blocco("esclusioni", soggetti=_elenco(campi.ESCLUSIONI_SOGGETTI)),
+    "obblighi": _blocco("obblighi", erogazione=_elenco(campi.EROGAZIONE)),
+    "domanda": _blocco("domanda", requisiti=_elenco(campi.REQUISITI_DOMANDA)),
+}
 _CAMPI_SCHEDA: dict[str, dict] = {
     "titolo": _TESTO, "ente": _o_null(_TESTO), "gestore": _o_null(_TESTO), "url": _TESTO, "territorio": _o_null(_TESTO),
     "territorio_regioni": _elenco(campi.REGIONI), "territorio_province": {"type": "array", "items": _TESTO},
@@ -163,6 +189,7 @@ _CAMPI_SCHEDA: dict[str, dict] = {
     "tema": _o_null({"type": "string", "enum": list(campi.TEMI)}), "temi": _elenco(campi.TEMI),
     "categorie_spesa": _elenco(campi.CATEGORIE_SPESA), "spese_ammesse": _o_null(_TESTO),
     **{n: _o_null(_NUMERO) for n in campi.NUMERICI},
+    **_DETTAGLI_SCHEDA,
     "linee": {"type": "array", "items": _LINEA},
     "vincoli": {"type": "object", "properties": {v: {"type": "string", "enum": list(campi.STATI_VINCOLO)} for v in campi.VINCOLI},
                 "required": list(campi.VINCOLI), "additionalProperties": False},
@@ -238,6 +265,45 @@ def _data(testo) -> date | None:
     return None
 
 
+def _pieno(v) -> bool:
+    """Un campo dice qualcosa? Un blocco di dettagli con tutti i valori vuoti (o "non_noto") non dice niente."""
+    if isinstance(v, dict):
+        return any(_pieno(x) for k, x in v.items() if not (k == "stato" and x == "non_noto"))
+    if isinstance(v, list):
+        return any(_pieno(x) for x in v)
+    return v not in (None, "", "non_noto")
+
+
+def _verifica_dettagli(s: dict) -> list[str]:
+    """I sei blocchi di dettagli: valori ammessi, numeri plausibili, percentuali entro 100."""
+    problemi: list[str] = []
+    for percorso, ammessi in campi.VALORI_AMMESSI_DETTAGLI.items():
+        blocco, *resto = percorso.split(".")
+        valori = [(s.get(blocco) or {}).get(resto[0])]
+        if len(resto) == 2:     # elenco di oggetti: intensita.maggiorazioni.motivo
+            valori = [m.get(resto[1]) for m in valori[0] or [] if isinstance(m, dict)]
+        for v in valori:
+            for x in (v if isinstance(v, list) else [v] if v is not None else []):
+                if x not in ammessi:
+                    problemi.append(f"{percorso}: valore non ammesso {x!r}")
+    for blocco, parti in campi.DETTAGLI.items():
+        for n in parti["numerici"]:
+            v = (s.get(blocco) or {}).get(n)
+            if v is None:
+                continue
+            if not isinstance(v, (int, float)) or v < 0 or v > _IMPORTO_MASSIMO:
+                problemi.append(f"{blocco}.{n}: numero non plausibile {v!r}")
+            elif f"{blocco}.{n}" in campi.PERCENTUALI_DETTAGLI and v > 100:
+                problemi.append(f"{blocco}.{n}: percentuale oltre 100 ({v})")
+    base, massima = (s.get("intensita") or {}).get("percentuale_base"), s.get("percentuale")
+    if isinstance(base, (int, float)) and isinstance(massima, (int, float)) and base > massima:
+        problemi.append("intensita.percentuale_base superiore alla percentuale massima")
+    for voce, v in (s.get("vincoli_spese") or {}).items():
+        if isinstance(v, dict) and v.get("stato") == "vincolo" and not v.get("dettaglio"):
+            problemi.append(f"vincoli_spese.{voce} = vincolo, ma manca il dettaglio")
+    return problemi
+
+
 def verifica_scheda(s: dict, documenti: list[dict] | None = None) -> list[str]:
     """Controlli automatici su una scheda di Sonnet. Ogni problema e' una frase; nessun problema = lista vuota.
     Una scheda con problemi si salva lo stesso, ma va in coda a Matteo (dati.problemi)."""
@@ -266,6 +332,7 @@ def verifica_scheda(s: dict, documenti: list[dict] | None = None) -> list[str]:
             problemi.append(f"{nome}: importo non plausibile {v!r}")
         elif nome in campi.PERCENTUALI and v > 100:
             problemi.append(f"{nome}: percentuale oltre 100 ({v})")
+    problemi += _verifica_dettagli(s)
     fp, cm = s.get("fondo_perduto_massimo"), s.get("contributo_massimo")
     if isinstance(fp, (int, float)) and isinstance(cm, (int, float)) and fp > cm:
         problemi.append("fondo perduto massimo superiore al contributo massimo")
@@ -280,7 +347,7 @@ def verifica_scheda(s: dict, documenti: list[dict] | None = None) -> list[str]:
             if not (v == "territorio" and s.get("territorio")):
                 problemi.append(f"vincoli.{v} = vincolo, ma i campi {', '.join(elenchi)} sono vuoti")
     fonti = {f.get("campo") for f in s.get("fonti") or [] if isinstance(f, dict)}
-    senza = [n for n, v in s.items() if n not in _SENZA_FONTE and v not in (None, [], "") and n not in fonti]
+    senza = [n for n, v in s.items() if n not in _SENZA_FONTE and _pieno(v) and n not in fonti]
     if senza:
         problemi.append("campi senza fonte: " + ", ".join(sorted(senza)))
     if documenti is not None and s.get("completezza") == "bando_ufficiale":
@@ -474,7 +541,7 @@ _COLONNE_SCHEDA = [c for c in _CAMPI_SCHEDA if c not in ("fonti", "avvertenze", 
 def salva_scheda(conn, bando_id: int, scheda: dict, problemi: list[str], costo_usd: float) -> None:
     """Scrive i campi nella tabella bandi (lo stato no: lo calcola il sistema) e la risposta intera in `dati`."""
     valori = {c: scheda.get(c) for c in _COLONNE_SCHEDA}
-    for c in ("vincoli", "linee"):
+    for c in ("vincoli", "linee", *_DETTAGLI_SCHEDA):
         valori[c] = json.dumps(valori[c]) if valori[c] is not None else None
     dati = {"risposta": scheda, "problemi": problemi, "costo_usd": round(costo_usd, 4), "modello": MODELLO_SCHEDA,
             "fonti": {f["campo"]: f["fonte"] for f in scheda.get("fonti") or [] if isinstance(f, dict) and "campo" in f},
