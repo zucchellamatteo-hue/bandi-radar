@@ -95,6 +95,13 @@ Dopo aver cambiato le parole chiave (con una pull request, come ogni modifica), 
 cd /srv/bandi-radar && sudo -u deploy docker compose run --rm raccolta python -m app.schede.allegati --limite 10     # i primi 10
 cd /srv/bandi-radar && sudo -u deploy docker compose run --rm raccolta python -m app.schede.allegati --annuncio 123  # un annuncio preciso
 ```
+**Bandi (deduplica)**: collega ogni annuncio rilevante al suo bando, creandolo se non esiste. Lo stesso bando che arriva da più fonti (catalogo nazionale, Regione, Camera) diventa un bando solo; proroghe, rettifiche, graduatorie e FAQ si agganciano al bando esistente. Non usa l'IA. I casi dubbi restano senza bando finché non decidi tu dalla pagina **Doppioni** della plancia.
+```
+cd /srv/bandi-radar && sudo -u deploy docker compose run --rm raccolta python -m app.schede.bandi --prova   # solo guardare: quanti bandi, esempi di doppioni e di dubbi
+cd /srv/bandi-radar && sudo -u deploy docker compose run --rm raccolta python -m app.schede.bandi           # collega e salva
+```
+Si può rilanciare quando si vuole: tocca solo gli annunci non ancora collegati, e mai quelli che hai unito o separato tu. L'ordine giusto dopo una raccolta è: smistamento, poi bandi, poi allegati.
+
 I file stanno nel volume Docker `allegati` (una cartella per annuncio), che sopravvive ai riavvii e agli aggiornamenti come il database. Per vedere quanto spazio occupa:
 ```
 sudo du -sh /var/lib/docker/volumes/bandi-radar_allegati/_data     # totale
@@ -109,8 +116,9 @@ Il volume non è nel backup notturno del database (lo è nel backup del disco di
 
 ### La plancia
 
-Su https://finanzagevolata.qiaro.it (utente e password del `.env`) ci sono tre pagine:
+Su https://finanzagevolata.qiaro.it (utente e password del `.env`) ci sono quattro pagine:
 - **Fonti**: una riga per fonte con il semaforo (verde regolare; giallo da guardare: un errore, silenzio sospetto, mai controllata; rosso: tre errori di fila o struttura cambiata; grigio in pausa), ultimo controllo, ultima novità, giorni di silenzio rispetto alla soglia della fonte, novità negli ultimi 30 e 90 giorni. Con ▶ si controlla una fonte subito, con ⏸ si mette in pausa (la pausa resta finché non la togli, anche se il registro cambia). Cliccando il nome si vedono gli ultimi controlli e annunci.
+- **Doppioni**: gli annunci che forse parlano di un bando già noto (titoli simili ma non uguali, proroghe e graduatorie di cui non si trova il bando). Per ognuno scegli "Stesso bando" o "Bando diverso". Nella pagina di un annuncio vedi il bando a cui è collegato e gli altri annunci dello stesso bando, e puoi unirlo a un altro annuncio (con il suo numero) o separarlo. Le tue scelte non vengono mai cambiate dalla deduplica automatica. Il titolo del bando apre la sua pagina: annunci, allegati e versioni precedenti.
 - **Catalogo**: tutti gli annunci trovati, con ricerca nel testo, filtri per tipo di fonte, territorio, date, "scade entro N giorni" e smistamento (solo rilevanti, da rivedere, non rilevanti, non ancora smistati). Nella colonna Smistamento i pulsanti ✓ ? ✗ correggono l'esito: la tua scelta vale su tutto e serve a tarare le regole. Il titolo apre la pagina dell'annuncio (motivo dello smistamento, allegati scaricati da aprire direttamente dalla plancia, documenti non scaricati con il motivo); "originale ↗" apre la pagina dell'ente.
 - **Novità**: una voce per settimana, come un blog: le stesse novità dell'email del lunedì.
 

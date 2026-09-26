@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { Allegato, api, data, dimensione, NOMI_DECISO_DA, NOMI_ESITO, NOMI_TIPO, Smistamento as RigaSmistamento } from "../api";
 import Smistamento from "../Smistamento";
+import BandoCollegato from "../BandoCollegato";
 
 type Dettaglio = Awaited<ReturnType<typeof api.annuncio>>;
 
@@ -9,7 +10,8 @@ export default function DettaglioAnnuncio() {
   const { id } = useParams();
   const [dati, setDati] = useState<Dettaglio | null>(null);
   const [errore, setErrore] = useState<string | null>(null);
-  useEffect(() => { if (id) api.annuncio(id).then(setDati).catch((e) => setErrore(String(e))); }, [id]);
+  const carica = () => { if (id) api.annuncio(id).then(setDati).catch((e) => setErrore(String(e))); };
+  useEffect(carica, [id]);
   if (errore) return <div className="allarme">{errore}</div>;
   if (!dati) return <div className="caricamento">Caricamento…</div>;
   const s: RigaSmistamento | null = dati.smistamento;
@@ -34,6 +36,10 @@ export default function DettaglioAnnuncio() {
         <p className="piccolo">Proposta originale ({NOMI_DECISO_DA[s.proposta_da || ""] || s.proposta_da}): {NOMI_ESITO[s.proposta_esito]}
           {s.proposta_motivo ? ` — ${s.proposta_motivo}` : ""}</p>
       )}
+
+      <BandoCollegato annuncioId={dati.id} bando={dati.bando} ruolo={dati.ruolo ?? null} collegatoDa={dati.collegato_da ?? null}
+        motivo={dati.collegamento_motivo ?? null}
+        altri={dati.stesso_bando} dubbi={dati.dubbi} aggiorna={carica} />
 
       <h2>Allegati scaricati</h2>
       {dati.allegati.length === 0 ? (

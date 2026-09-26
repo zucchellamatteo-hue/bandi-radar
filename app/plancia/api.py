@@ -200,6 +200,7 @@ def catalogo(
             SELECT a.id, a.fonte_id, f.nome AS fonte, f.ente, f.tipo, f.territorio, a.url, a.titolo, a.riassunto,
                    a.pubblicato_il, a.trovato_il, data_sicura({SCADENZA_SQL}) AS scadenza,
                    s.esito AS smistamento, s.deciso_da AS smistamento_da, s.motivo AS smistamento_motivo,
+                   a.bando_id, a.ruolo,
                    (SELECT count(*) FROM allegati al WHERE al.annuncio_id = a.id AND al.errore IS NULL AND al.tipo <> 'pagina') AS n_allegati
             {unione} {dove}
             ORDER BY coalesce(a.pubblicato_il, a.trovato_il) DESC, a.id DESC
@@ -237,7 +238,133 @@ def dettaglio_annuncio(annuncio_id: int) -> dict:
             (annuncio_id,),
         )
         allegati = _righe(cur)
-    return {**dict(riga), "smistamento": dict(smistamento) if smistamento else None, "allegati": allegati}
+        bando, stesso_bando = None, []
+        if riga["bando_id"]:
+            cur.execute("SELECT id, titolo, ente, territorio, url, scadenza, codice_ufficiale, versione FROM bandi WHERE id = %s",
+                        (riga["bando_id"],))
+            bando = cur.fetchone()
+            cur.execute(
+                """SELECT a.id, a.titolo, a.url, a.ruolo, a.collegato_da, a.collegamento_motivo, f.nome AS fonte, f.tipo
+                   FROM annunci a JOIN fonti f ON f.id = a.fonte_id WHERE a.bando_id = %s AND a.id <> %s
+                   ORDER BY coalesce(a.pubblicato_il, a.trovato_il)""",
+                (riga["bando_id"], annuncio_id),
+            )
+            stesso_bando = _righe(cur)
+        cur.execute(
+            """SELECT d.id, d.bando_id, d.somiglianza, d.motivo, b.titolo AS bando_titolo
+               FROM bandi_dubbi d LEFT JOIN bandi b ON b.id = d.bando_id
+               WHERE d.annuncio_id = %s AND d.decisione IS NULL ORDER BY d.somiglianza DESC NULLS LAST""",
+            (annuncio_id,),
+        )
+        dubbi = _righe(cur)
+    return {**dict(riga), "smistamento": dict(smistamento) if smistamento else None, "allegati": allegati,
+            "bando": dict(bando) if bando else None, "stesso_bando": stesso_bando, "dubbi": dubbi}
+
+
+class Collegamento(BaseModel):
+    """Unire: l'annuncio va nel bando dell'annuncio `con_annuncio` (o nel bando `bando_id`). Separare: bando a se'."""
+
+    azione: Literal["unisci", "separa"]
+    con_annuncio: int | None = None
+    bando_id: int | None = None
+
+
+@router.post("/annunci/{annuncio_id}/bando")
+def cambia_bando(annuncio_id: int, corpo: Collegamento) -> dict:
+    """Matteo unisce o separa a mano. La deduplica automatica non tocchera' piu' questo legame."""
+    from app.schede.bandi import decisione_matteo, leggi_annuncio
+
+    with connetti() as conn:
+        destinazione = None
+        if corpo.azione == "unisci":
+            destinazione = corpo.bando_id
+            if destinazione is None and corpo.con_annuncio is not None:
+                if corpo.con_annuncio == annuncio_id:
+                    raise HTTPException(400, "un annuncio non si unisce a se stesso")
+                with conn.cursor() as cur:
+                    altro = leggi_annuncio(cur, corpo.con_annuncio)
+                if altro is None:
+                    raise HTTPException(404, "annuncio da unire non trovato")
+                # Se l'altro annuncio non ha ancora un bando, lo si crea da lui.
+                destinazione = altro.bando_id or decisione_matteo(conn, altro.id, None)
+            if destinazione is None:
+                raise HTTPException(400, "per unire serve con_annuncio o bando_id")
+        try:
+            bando = decisione_matteo(conn, annuncio_id, destinazione)
+        except LookupError as exc:
+            raise HTTPException(404, str(exc))
+    return {"annuncio_id": annuncio_id, "bando_id": bando}
+
+
+@router.get("/dubbi")
+def dubbi_aperti(pagina: int = Query(1, ge=1), per_pagina: int = Query(50, ge=1, le=200)) -> dict:
+    """Doppioni dubbi da decidere: annuncio e bando candidato (con il suo annuncio di origine)."""
+    with connetti() as conn, conn.cursor() as cur:
+        cur.execute("SELECT count(*) AS n FROM bandi_dubbi WHERE decisione IS NULL")
+        totale = cur.fetchone()["n"]
+        cur.execute(
+            """
+            SELECT d.id, d.annuncio_id, d.bando_id, d.somiglianza, d.motivo,
+                   a.titolo, a.url, fa.nome AS fonte, fa.ente,
+                   b.titolo AS bando_titolo, b.ente AS bando_ente, b.url AS bando_url,
+                   (SELECT count(*) FROM annunci x WHERE x.bando_id = d.bando_id) AS bando_annunci
+            FROM bandi_dubbi d JOIN annunci a ON a.id = d.annuncio_id JOIN fonti fa ON fa.id = a.fonte_id
+            LEFT JOIN bandi b ON b.id = d.bando_id
+            WHERE d.decisione IS NULL
+            ORDER BY d.somiglianza DESC NULLS LAST, d.id
+            LIMIT %s OFFSET %s
+            """,
+            (per_pagina, (pagina - 1) * per_pagina),
+        )
+        return {"totale": totale, "pagina": pagina, "per_pagina": per_pagina, "dubbi": _righe(cur)}
+
+
+class Decisione(BaseModel):
+    decisione: Literal["stesso", "diverso"]
+
+
+@router.post("/dubbi/{dubbio_id}")
+def decidi_dubbio(dubbio_id: int, corpo: Decisione) -> dict:
+    from app.schede.bandi import decisione_matteo
+
+    with connetti() as conn:
+        with conn.cursor() as cur:
+            cur.execute("SELECT annuncio_id, bando_id FROM bandi_dubbi WHERE id = %s", (dubbio_id,))
+            dubbio = cur.fetchone()
+        if not dubbio:
+            raise HTTPException(404, "dubbio non trovato")
+        if corpo.decisione == "stesso" and dubbio["bando_id"] is None:
+            raise HTTPException(400, "questo dubbio non ha un bando candidato: si puo' solo creare un bando a se'")
+        bando = decisione_matteo(conn, dubbio["annuncio_id"], dubbio["bando_id"] if corpo.decisione == "stesso" else None)
+    return {"dubbio_id": dubbio_id, "annuncio_id": dubbio["annuncio_id"], "bando_id": bando}
+
+
+@router.get("/bandi/{bando_id}")
+def dettaglio_bando(bando_id: int) -> dict:
+    with connetti() as conn, conn.cursor() as cur:
+        cur.execute("SELECT * FROM bandi WHERE id = %s", (bando_id,))
+        bando = cur.fetchone()
+        if not bando:
+            raise HTTPException(404, "bando non trovato")
+        cur.execute(
+            """SELECT a.id, a.titolo, a.url, a.ruolo, a.collegato_da, a.collegamento_motivo, a.pubblicato_il, a.trovato_il,
+                      f.nome AS fonte, f.tipo
+               FROM annunci a JOIN fonti f ON f.id = a.fonte_id WHERE a.bando_id = %s
+               ORDER BY coalesce(a.pubblicato_il, a.trovato_il)""",
+            (bando_id,),
+        )
+        annunci = _righe(cur)
+        cur.execute(
+            """SELECT id, url, nome, tipo, dimensione, impronta, scaricato_il, errore,
+                      percorso_locale IS NOT NULL AS ha_file, length(testo_estratto) AS caratteri_testo
+               FROM allegati WHERE bando_id = %s ORDER BY errore IS NOT NULL, id""",
+            (bando_id,),
+        )
+        allegati = _righe(cur)
+        cur.execute("SELECT versione, causa, salvata_il FROM bandi_versioni WHERE bando_id = %s ORDER BY versione DESC",
+                    (bando_id,))
+        versioni = _righe(cur)
+    return {**dict(bando), "annunci": annunci, "allegati": allegati, "versioni": versioni}
 
 
 class Correzione(BaseModel):
