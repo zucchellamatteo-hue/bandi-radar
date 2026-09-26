@@ -61,6 +61,9 @@
   note: >
     Plone 6: HTML vuoto, API JSON con header Accept: application/json. Anche gli avvisi:
     https://www.comune.pordenone.it/api/@search?tipologia_notizia=Avviso&sort_on=effective&sort_order=descending&b_size=20
+  pagina_ufficiale:                    # l'API salva l'indirizzo /api/...: la pagina per le persone e' lo stesso senza /api
+    sostituisci: {"/api/it/": "/it/"}
+    documenti: plone_api
 
 - id: comune_milano_impresa
   nome: Comune di Milano - Argomento Impresa e portale Economia e Lavoro
@@ -1890,6 +1893,8 @@
     imprese (chiusure uffici, censimento, buono servizio poverta''). I bandi di gara sono su trasparenza.reggiocal.it.
 
     '
+  pagina_ufficiale:                    # notizie: si segue il link al bando sul sito dell'ente
+    segui_link: {testi: [bando, modulistica, avviso, "maggiori informazioni", "sito dell'ente"]}
 
 - id: comune_crotone_sito
   nome: Comune di Crotone - sito istituzionale

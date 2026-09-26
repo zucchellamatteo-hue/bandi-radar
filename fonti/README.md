@@ -37,7 +37,24 @@ Qui vive l'elenco delle fonti che Bandi Radar controlla. **Aggiungere una fonte 
     elenco: page.entities              # api: dove sta l'elenco dei record nel JSON, se il lettore sceglie la lista sbagliata (myPortal)
     selettore: "main .card-title"       # html e browser: leggi i link solo nelle parti indicate (selettore CSS), quando menu e servizi si mescolano ai bandi
     ipv6: true                         # esci in IPv6: per i siti che rifiutano l'IPv4 del server ma non l'IPv6 (Napoli, Siracusa)
+  pagina_ufficiale:                    # facoltativo: come arrivare dalla pagina dell'annuncio alla pagina ufficiale del bando
+    campo: link_ente                   # il link all'ente sta in questo campo dei dati grezzi (catalogo incentivi.gov.it)
+    escludi: ["faiDomanda"]            # pezzi di indirizzo che non sono mai la pagina del bando (domanda con login)
+    sostituisci: {"/api/it/": "/it/"}  # da indirizzo salvato a pagina per le persone (API del Comune di Pordenone)
+    cerca:                             # la ricerca del sito trova la pagina dal codice del bando ({codice})
+      url: https://www.bandi.regione.lombardia.it/servizi/servizio/bandi/ricerca
+      metodo: POST
+      corpo_form: {titolo: "{codice}", descrizione: "{codice}"}
+      link: "/servizi/servizio/bandi/dettaglio/.*{codice}$"   # quale link dei risultati e' la pagina giusta
+    segui_link: {testi: [bando, modulistica], stesso_sito: false}   # notizie: segui il link al bando ("Bando e modulistica")
+    documenti: plone_api               # siti Plone/Volto: i documenti si leggono dall'API del sito (Emilia-Romagna, Pordenone)
 ```
+
+### La pagina ufficiale del bando (`pagina_ufficiale`)
+
+Prima di scaricare gli allegati, `python -m app.schede.pagina_ufficiale` cerca per ogni bando la sua pagina ufficiale, provando nell'ordine: il link all'ente scritto nei dati grezzi (`campo`), la ricerca del sito per codice (`cerca`), poi le pagine degli annunci (seguendo i link se la fonte pubblica notizie, `segui_link`). Ogni pagina candidata viene aperta e controllata: una pagina di accesso, una pagina vuota o fatta solo di menu non vale. Se nessuna va bene il bando resta **"bando ufficiale non trovato"** e non avrà scheda.
+
+Senza il blocco `pagina_ufficiale` vale la pagina dell'annuncio, se contiene un bando. Il blocco si aggiunge quando la plancia mostra bandi non trovati di una fonte: come per gli indirizzi, le regole si scrivono solo dopo averle verificate su un caso vero (mai indirizzi ricostruiti a memoria). Regole in uso al 25/09/2026: incentivi.gov.it (`campo: link_ente`), Regione Lombardia (`escludi` + `cerca`), Emilia-Romagna e Comune di Pordenone (`documenti: plone_api`, Pordenone anche `sostituisci`), fonti di notizie di Unioncamere, Camere, Regioni e MIMIT (`segui_link`).
 
 Regole:
 - `url` e `feed_url` vanno scritti **solo se aperti davvero** durante una verifica: mai ricostruiti a memoria.

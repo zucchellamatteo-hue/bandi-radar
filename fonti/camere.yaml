@@ -506,6 +506,8 @@
     bandi regionali".
 
     '
+  pagina_ufficiale:                    # notizie: si segue il link al bando sul sito dell'ente
+    segui_link: {testi: [bando, modulistica, avviso, "maggiori informazioni", "sito dell'ente"]}
 
 - id: cciaa_pordenone_udine_contributi
   nome: CCIAA Pordenone-Udine - Contributi e rendicontazione
@@ -547,6 +549,8 @@
     Nessun RSS della sezione (/news/rss.xml 404).
 
     '
+  pagina_ufficiale:                    # notizie: si segue il link al bando, anche sullo stesso sito
+    segui_link: {testi: [bando, modulistica, avviso, "maggiori informazioni"], stesso_sito: true}
 
 - id: cciaa_venezia_giulia_contributi
   nome: CCIAA Venezia Giulia (Trieste e Gorizia) - Contributi e agevolazioni
@@ -587,6 +591,8 @@
     HTML corrispondente (aperta, 200).
 
     '
+  pagina_ufficiale:                    # notizie: si segue il link al bando, anche sullo stesso sito
+    segui_link: {testi: [bando, modulistica, avviso, "maggiori informazioni"], stesso_sito: true}
 
 - id: cciaa_trento_bandi
   nome: CCIAA Trento - Bandi per contributi (Punto Impresa Digitale)
@@ -876,6 +882,8 @@
     a bassa priorità: quasi tutto è già sui siti delle singole Camere. In alternativa /wp-
     json/wp/v2/posts?search=bando. Dal VPS il 24/09: feed RSS con 10 voci, ultima 24/09 (webinar, export,
     bandi).
+  pagina_ufficiale:                    # notizie: si segue il link al bando sul sito dell'ente
+    segui_link: {testi: [bando, modulistica, avviso, "maggiori informazioni", "sito dell'ente"]}
 
 - id: cciaa_umbria_bandi_api
   nome: Camera di Commercio dell'Umbria - Bandi e contributi (API Plone)
@@ -1103,6 +1111,8 @@
     robots.txt non vieta /notizie.
 
     '
+  pagina_ufficiale:                    # notizie: si segue il link al bando, anche sullo stesso sito
+    segui_link: {testi: [bando, modulistica, avviso, "maggiori informazioni"], stesso_sito: true}
 
 - id: cciaa_caserta_bandi
   nome: Camera di Commercio di Caserta - Bandi e incentivi
@@ -1344,6 +1354,8 @@
     servito ai server. Dal VPS il 24/09: la home ha solo un carosello; si osserva la pagina Avvisi (dominio
     .gov.it), 20 voci miste (avvisi a imprese, liste legali, organizzazione interna): lo smistamento separera'
     quelle utili.
+  pagina_ufficiale:                    # notizie: si segue il link al bando, anche sullo stesso sito
+    segui_link: {testi: [bando, modulistica, avviso, "maggiori informazioni"], stesso_sito: true}
 
 - id: cciaa_sudestsicilia_notizie
   nome: Camera di Commercio del Sud Est Sicilia - Notizie (RSS)
@@ -1363,6 +1375,8 @@
     /it/bandi non esiste; /it/blog/feed risponde senza voci.
 
     '
+  pagina_ufficiale:                    # notizie: si segue il link al bando, anche sullo stesso sito
+    segui_link: {testi: [bando, modulistica, avviso, "maggiori informazioni"], stesso_sito: true}
 
 - id: cciaa_messina_notizie
   nome: Camera di Commercio di Messina - Notizie (RSS)
@@ -1382,6 +1396,8 @@
     27/07/2026): filtrare per "bando", "voucher", "contributi". Pochi bandi camerali propri.
 
     '
+  pagina_ufficiale:                    # notizie: si segue il link al bando, anche sullo stesso sito
+    segui_link: {testi: [bando, modulistica, avviso, "maggiori informazioni"], stesso_sito: true}
 
 - id: cciaa_agrigento_voucher
   nome: Camera di Commercio di Agrigento - Servizi con etichetta "voucher" (RSS)
@@ -1440,6 +1456,8 @@
     /la-cciaa-di-trapani/cciaa-di-ag-cl-tp descrive solo il decreto di accorpamento del 2015.
 
     '
+  pagina_ufficiale:                    # notizie: si segue il link al bando, anche sullo stesso sito
+    segui_link: {testi: [bando, modulistica, avviso, "maggiori informazioni"], stesso_sito: true}
 
 - id: cciaa_cagliarioristano_bandi
   nome: Camera di Commercio di Cagliari-Oristano - Bandi e avvisi (RSS)

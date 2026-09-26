@@ -20,6 +20,13 @@
     all''indirizzo della scheda coincide con codice_bando dell''Anagrafica open data.
 
     '
+  pagina_ufficiale:                    # verificato il 25/09/2026: la ricerca del sito trova la pagina di dettaglio dal codice
+    escludi: ["/la-mia-area/", "faiDomanda"]   # pagine di domanda con login, non il bando
+    cerca:
+      url: https://www.bandi.regione.lombardia.it/servizi/servizio/bandi/ricerca
+      metodo: POST
+      corpo_form: {titolo: "{codice}", descrizione: "{codice}", ricercaAvanzata: "false", pageNum: "0"}
+      link: "/servizi/servizio/bandi/dettaglio/.*{codice}$"
 
 - id: lombardia_anagrafica_bandi_api
   nome: Regione Lombardia - Anagrafica dei bandi regionali (open data Socrata)
@@ -40,6 +47,13 @@
     il codice su Bandi Online. Il catalogo si interroga con /api/catalog/v1?q=bandi&domains=www.dati.lombardia.it.
 
     '
+  pagina_ufficiale:                    # verificato il 25/09/2026: la ricerca del sito trova la pagina di dettaglio dal codice
+    escludi: ["/la-mia-area/", "faiDomanda"]   # pagine di domanda con login, non il bando
+    cerca:
+      url: https://www.bandi.regione.lombardia.it/servizi/servizio/bandi/ricerca
+      metodo: POST
+      corpo_form: {titolo: "{codice}", descrizione: "{codice}", ricercaAvanzata: "false", pageNum: "0"}
+      link: "/servizi/servizio/bandi/dettaglio/.*{codice}$"
 
 - id: lombardia_fesr_calendario_inviti
   nome: Regione Lombardia - PR FESR 2021-2027, Calendario degli inviti (art. 49)
@@ -104,6 +118,8 @@
     elenca solo le sottosezioni, non i bandi.
 
     '
+  pagina_ufficiale:                    # sito Plone/Volto: i documenti stanno nelle sottocartelle, visibili solo dall'API
+    documenti: plone_api
 
 - id: emilia_romagna_bandi_regione_api
   nome: Regione Emilia-Romagna - Bandi, finanziamenti e contributi (sito istituzionale, API Plone)
@@ -122,6 +138,8 @@
     le imprese, da smistare per titolo.
 
     '
+  pagina_ufficiale:
+    documenti: plone_api
 
 - id: emilia_romagna_fesr_calendario_inviti
   nome: Regione Emilia-Romagna - PR FESR 2021-2027, Calendario dei bandi (art. 49)
@@ -285,6 +303,8 @@
     l''altro feed è "notizie dalla giunta".
 
     '
+  pagina_ufficiale:                    # notizie: si segue il link al bando sul sito dell'ente
+    segui_link: {testi: [bando, modulistica, avviso, "maggiori informazioni", "sito dell'ente"]}
 
 - id: fvg_fesr_calendario_inviti
   nome: Regione FVG - PR FESR 2021-2027, calendario degli inviti (art. 49)
@@ -911,6 +931,8 @@
     menu rimanda a www2.
 
     '
+  pagina_ufficiale:                    # notizie: si segue il link al bando sul sito dell'ente
+    segui_link: {testi: [bando, modulistica, avviso, "maggiori informazioni", "sito dell'ente"]}
 
 - id: fira_bandi_misure
   nome: FIRA - Bandi e misure
@@ -955,6 +977,8 @@
     dei link del menu.
   richiesta:
     selettore: div.Notizie
+  pagina_ufficiale:                    # notizie: si segue il link al bando sul sito dell'ente
+    segui_link: {testi: [bando, modulistica, avviso, "maggiori informazioni", "sito dell'ente"]}
 
 - id: sviluppo_italia_molise_bandi
   nome: Sviluppo Italia Molise - Bandi pubblici

@@ -23,8 +23,10 @@ STATI = {"attiva", "da_verificare", "difficile", "esclusa"}
 _ID_VALIDO = re.compile(r"^[a-z0-9_]+$")
 _CAMPI_NOTI = {
     "id", "nome", "ente", "tipo", "territorio", "url", "modalita", "feed_url",
-    "piattaforma", "frequenza", "stato", "verificato_il", "note", "ignora_robots", "richiesta",
+    "piattaforma", "frequenza", "stato", "verificato_il", "note", "ignora_robots", "richiesta", "pagina_ufficiale",
 }
+# Regole per trovare la pagina ufficiale del bando a partire dagli annunci della fonte (app/schede/pagina_ufficiale.py).
+_REGOLE_PAGINA = {"campo", "escludi", "cerca", "segui_link", "documenti", "sostituisci"}
 
 
 @dataclass
@@ -44,6 +46,7 @@ class Fonte:
     note: str = ""
     ignora_robots: bool = False  # solo per decisione esplicita di Matteo, fonte per fonte
     richiesta: dict = field(default_factory=dict)  # metodo, intestazioni, corpo_json, corpo_form, url_modello; selettore per html/browser; ipv6; elenco per api
+    pagina_ufficiale: dict = field(default_factory=dict)  # campo, escludi, cerca, segui_link, documenti (fonti/README.md)
     file: str = ""  # nome del file YAML di provenienza
 
     @property
@@ -106,6 +109,9 @@ def _controlla_voce(voce: dict, file: str, posizione: int) -> tuple[Fonte | None
     if not isinstance(richiesta, dict) or set(richiesta) - {"metodo", "intestazioni", "corpo_json", "corpo_form", "url_modello", "selettore", "ipv6", "elenco"}:
         errori.append(f"{dove}: richiesta ammette solo metodo, intestazioni, corpo_json, corpo_form, url_modello, selettore, ipv6, elenco")
 
+    pagina_ufficiale = voce.get("pagina_ufficiale") or {}
+    errori.extend(_controlla_pagina_ufficiale(pagina_ufficiale, dove))
+
     if errori:
         return None, errori
     return (
@@ -125,10 +131,41 @@ def _controlla_voce(voce: dict, file: str, posizione: int) -> tuple[Fonte | None
             note=valori["note"],
             ignora_robots=ignora_robots,
             richiesta=richiesta,
+            pagina_ufficiale=pagina_ufficiale,
             file=file,
         ),
         [],
     )
+
+
+def _controlla_pagina_ufficiale(regole: object, dove: str) -> list[str]:
+    if not isinstance(regole, dict):
+        return [f"{dove}: pagina_ufficiale deve essere un blocco di campi"]
+    errori = []
+    if set(regole) - _REGOLE_PAGINA:
+        errori.append(f"{dove}: pagina_ufficiale ammette solo {', '.join(sorted(_REGOLE_PAGINA))}")
+    if "campo" in regole and not isinstance(regole["campo"], str):
+        errori.append(f"{dove}: pagina_ufficiale.campo e' il nome di un campo dei dati grezzi (testo)")
+    for chiave in ("escludi",):
+        if chiave in regole and not (isinstance(regole[chiave], list) and all(isinstance(x, str) for x in regole[chiave])):
+            errori.append(f"{dove}: pagina_ufficiale.{chiave} e' un elenco di testi")
+    sostituisci = regole.get("sostituisci")
+    if sostituisci is not None and not (isinstance(sostituisci, dict) and all(isinstance(k, str) and isinstance(v, str)
+                                                                            for k, v in sostituisci.items())):
+        errori.append(f"{dove}: pagina_ufficiale.sostituisci e' un elenco di coppie testo: testo")
+    cerca = regole.get("cerca")
+    if cerca is not None:
+        if not isinstance(cerca, dict) or not str(cerca.get("url", "")).startswith("https://") or not cerca.get("link"):
+            errori.append(f"{dove}: pagina_ufficiale.cerca vuole almeno url (https://...) e link")
+        elif set(cerca) - {"url", "metodo", "corpo_form", "link"}:
+            errori.append(f"{dove}: pagina_ufficiale.cerca ammette solo url, metodo, corpo_form, link")
+    segui = regole.get("segui_link")
+    if segui is not None and not (isinstance(segui, dict) and isinstance(segui.get("testi"), list) and segui["testi"]
+                                  and not set(segui) - {"testi", "stesso_sito"}):
+        errori.append(f"{dove}: pagina_ufficiale.segui_link vuole un elenco testi (e, se serve, stesso_sito: true)")
+    if regole.get("documenti") not in (None, "plone_api"):
+        errori.append(f"{dove}: pagina_ufficiale.documenti ammette solo plone_api")
+    return errori
 
 
 def carica_registro(cartella: Path = CARTELLA_FONTI) -> list[Fonte]:

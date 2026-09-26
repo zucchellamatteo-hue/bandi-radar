@@ -231,7 +231,7 @@ def dettaglio_annuncio(annuncio_id: int) -> dict:
         smistamento = cur.fetchone()
         cur.execute(
             """
-            SELECT id, url, nome, tipo, dimensione, impronta, scaricato_il, errore,
+            SELECT id, url, nome, tipo, categoria, dimensione, impronta, scaricato_il, errore,
                    percorso_locale IS NOT NULL AS ha_file, length(testo_estratto) AS caratteri_testo
             FROM allegati WHERE annuncio_id = %s ORDER BY errore IS NOT NULL, id
             """,
@@ -355,9 +355,9 @@ def dettaglio_bando(bando_id: int) -> dict:
         )
         annunci = _righe(cur)
         cur.execute(
-            """SELECT id, url, nome, tipo, dimensione, impronta, scaricato_il, errore,
+            """SELECT id, url, nome, tipo, categoria, dimensione, impronta, scaricato_il, errore, annuncio_id,
                       percorso_locale IS NOT NULL AS ha_file, length(testo_estratto) AS caratteri_testo
-               FROM allegati WHERE bando_id = %s ORDER BY errore IS NOT NULL, id""",
+               FROM allegati WHERE bando_id = %s ORDER BY errore IS NOT NULL, annuncio_id IS NOT NULL, id""",
             (bando_id,),
         )
         allegati = _righe(cur)

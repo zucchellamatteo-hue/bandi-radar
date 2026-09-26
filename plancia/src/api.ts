@@ -48,6 +48,7 @@ export interface Dubbio {
 
 export interface Bando extends BandoBreve {
   stato: string | null; data_apertura: string | null; sintesi: string | null; url_chiave: string | null;
+  pagina_stato: "trovata" | "non_trovata" | null; pagina_motivo: string | null; pagina_cercata_il: string | null;
   chiave_titolo: string | null; creato_il: string; aggiornato_il: string;
   annunci: AnnuncioDelBando[]; allegati: Allegato[]; versioni: { versione: number; causa: string | null; salvata_il: string }[];
 }
@@ -60,7 +61,14 @@ export interface Smistamento {
 export interface Allegato {
   id: number; url: string; nome: string; tipo: string; dimensione: number | null; impronta: string | null;
   scaricato_il: string; errore: string | null; ha_file: boolean; caratteri_testo: number | null;
+  categoria?: string | null;
 }
+
+// Che documento e': decide l'ordine del testo per la scheda (la modulistica resta fuori).
+export const NOMI_CATEGORIA: Record<string, string> = {
+  bando: "bando", pagina: "pagina web", faq: "FAQ", decreto: "decreto o delibera", graduatoria: "graduatoria o esiti",
+  modulistica: "modulistica (non va alla scheda)", altro: "altro",
+};
 
 export interface Riepilogo {
   fonti: Record<Colore, number>; annunci_ultimi_7_giorni: number; annunci_totali: number;
