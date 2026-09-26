@@ -166,9 +166,15 @@
   modalita: html
   piattaforma: flexcmp
   frequenza: mensile
-  stato: attiva
-  verificato_il: '2026-09-24'
-  note: 'La pagina risponde con i titoli gia'' nell''HTML (verificato 24/09): non serve il browser. Nessun RSS.'
+  stato: difficile
+  verificato_il: '2026-09-25'
+  note: 'La pagina risponde con i titoli gia'' nell''HTML (verificato 24/09 dalla sessione cloud): non serve il browser.
+    Nessun RSS. 25/09 dal VPS: 403 "Request blocked" di Amazon CloudFront su tutto (pagina, home, robots.txt),
+    in https e http, con e senza www (comune.lodi.it rimanda a www); nessun IPv6. Non e'' un errore temporaneo
+    ne'' un cambio di indirizzo: il firewall del sito rifiuta l''indirizzo del server OVH, mentre dal cloud il 24/09
+    passava. Nessuna altra porta trovata. Alternativa: i bandi del Distretto del commercio di Lodi arrivano da
+    Regione Lombardia (Finlombarda "Bando Distretti del commercio 2026", open data regionale); incentivi.gov.it ha
+    solo 2 misure del Comune di Lodi (una del 2024). Da provare dal PC di Matteo.'
 
 - id: comune_mantova_avvisi_rss
   nome: Comune di Mantova - Avvisi
@@ -218,13 +224,21 @@
   tipo: capoluogo
   territorio: LOM
   url: https://comune.sondrio.it/tipi_notizia/avvisi/
-  modalita: rss
-  feed_url: https://comune.sondrio.it/tipi_notizia/avvisi/feed/
+  modalita: html
+  feed_url: null
   piattaforma: wordpress_design_comuni
   frequenza: settimanale
   stato: attiva
-  verificato_il: 2026-09-23
-  note: Feed pulito degli avvisi; bandi per imprese nel 2025-26.
+  verificato_il: '2026-09-25'
+  note: 'Feed pulito degli avvisi; bandi per imprese nel 2025-26. 25/09/2026: il feed /tipi_notizia/avvisi/feed/
+    risponde 200 ma e'' vuoto (canale senza voci), mentre la pagina elenca gli avvisi in schede: si legge la
+    pagina HTML con il selettore dei titoli delle schede (.card-body h4). Il feed generale /feed/ ha solo notizie
+    ed eventi. Avvisi misti (fiere, TARI, ordinanze): pochi per imprese (es. "Documentazione per contributi a
+    enti e imprese", "2026 Nuova impresa piccoli Comuni e frazioni").
+
+    '
+  richiesta:
+    selettore: .card-body h4
 
 - id: comune_varese_home
   nome: Comune di Varese - home (avvisi)
@@ -260,13 +274,20 @@
   tipo: capoluogo
   territorio: MAR
   url: https://www.comune.pesaro.pu.it/contributinuoveimprese/notizie-contributi-nuove-imprese/archivio-notizie/
-  modalita: rss
-  feed_url: https://www.comune.pesaro.pu.it/novita-in-comune/rss/
+  modalita: html
+  feed_url:
   piattaforma: typo3
   frequenza: mensile
   stato: attiva
-  verificato_il: 2026-09-23
-  note: Sezione dedicata; RSS generale del Comune da filtrare per "imprese" e "attivita' produttive".
+  verificato_il: 2026-09-25
+  richiesta:
+    selettore: "h2.news-list__title"
+  note: >
+    Sezione dedicata ai contributi per nuove imprese (elenco notizie TYPO3). 25/09/2026 dal VPS: la home e questa
+    pagina rispondono in IPv4 in meno di un secondo, ma il feed RSS generale /novita-in-comune/rss/ resta appeso
+    (timeout dopo 25 s, due prove); nessun indirizzo IPv6. Passata a lettura HTML della pagina archivio, solo i
+    titoli delle notizie (selettore h2.news-list__title). Pubblica poco (ultime voci dic. 2025: bonus giovani
+    imprenditori, contributi attivita' produttive, locali sfitti). Nessun robots.txt (404).
 
 - id: comune_la_spezia_avvisi_api
   nome: Comune della Spezia - Avvisi (API Plone)
@@ -417,9 +438,17 @@
   url:
   modalita: browser
   frequenza: quindicinale
-  stato: da_verificare
-  verificato_il: 2026-09-23
-  note: Rifiuta le connessioni da server (https://www.comune.lecce.it). Da provare dal VPS o dal PC di Matteo.
+  stato: difficile
+  verificato_il: 2026-09-25
+  note: >
+    25/09/2026 dal VPS: il sito risponde in IPv4 (nessun IPv6), ma il certificato HTTPS e' installato senza il
+    certificato intermedio (emittente "Telecom Italia Trust Technologies RSA OV SSL CA 2"): curl e il lettore
+    (httpx) rifiutano la connessione ("unable to get local issuer certificate"); http resta appeso. Home aperta
+    solo per diagnosi ignorando il certificato: sito Sitefinity 12, notizie nel codice della pagina (avvisi del
+    22-23/09/2026), link all'elenco /news e alla pagina "aree-tematiche/imprese" (non aperti). Il portale trasparenza
+    (amministrazionetrasparente.comune.lecce.it) ha il certificato giusto ma non contiene avvisi utili; l'albo
+    e' su lecce.trasparenza-valutazione-merito.it, caricato in JavaScript. Resta difficile finche' la raccolta
+    non sa gestire il certificato incompleto.
 
 - id: comune_potenza
   nome: Comune di Potenza
@@ -429,22 +458,35 @@
   url:
   modalita: browser
   frequenza: quindicinale
-  stato: da_verificare
-  verificato_il: 2026-09-23
-  note: Rifiuta le connessioni da server (https://www.comune.potenza.it). Da provare dal VPS.
+  stato: difficile
+  verificato_il: 2026-09-25
+  note: >
+    25/09/2026 dal VPS: www.comune.potenza.it e comune.potenza.it rispondono 403 con intestazione "server: rdwr"
+    (anti-bot Radware), anche sul feed WordPress della categoria Avvisi (?cat=215&feed=rss2); http rifiuta la
+    connessione; nessun IPv6. Non aggirato. Dalla ricerca web il sito e' WordPress con categorie Avvisi (?cat=215)
+    e Contributi economici (?cat=154): se il blocco cade, il feed da provare e' https://www.comune.potenza.it/?cat=215&feed=rss2.
 
 - id: comune_barletta
   nome: Comune di Barletta
   ente: Comune di Barletta
   tipo: capoluogo
   territorio: PUG
-  url:
+  url: https://www.comune.barletta.bt.it/sito/novita
   modalita: browser
-  piattaforma: publisys
+  piattaforma: kapi
   frequenza: quindicinale
-  stato: da_verificare
-  verificato_il: 2026-09-23
-  note: Sito Angular (https://www.comune.barletta.bt.it/sito/), non leggibile da server. Da provare con browser dal VPS.
+  stato: esclusa
+  verificato_il: '2026-09-25'
+  note: 'ESCLUSA per decisione di Matteo del 25/09/2026: robots.txt vieta l''API e gli avvisi sono quasi tutti sociali.
+    Sito Angular sulla piattaforma "kapi" (come Avellino). 25/09/2026: col browser trovata l''API interna;
+    GET https://www.comune.barletta.bt.it/kapi/api/sito/avvisi?size=30&sort=cntDataPubblicazione,desc risponde a curl
+    senza cookie (856 elementi, mescola avvisi, ordinanze e notizie; results[] con id, cntTitle, cntDataPubblicazione).
+    Scheda: /sito/avviso/<id> (provato). MA robots.txt vieta /kapi: non attivata, serve decisione di Matteo; e il
+    lettore API generico non riconosce cntTitle/cntDataPubblicazione (serve una piccola modifica al codice). La
+    sitemap /sito/sitemap.xml e'' ferma a 100 voci per tipo con id vecchi (avvisi fino a 208923, gli attuali sono
+    29xxxx): inutile. Avvisi 2025-2026 quasi tutti sociali (famiglie, parrocchie, trasporto scolastico).
+
+    '
 
 # Voci verificate il 24/09/2026 con lettura diretta (docs/ricerche/2026-09-24_camere_capoluoghi.md).
 
@@ -561,17 +603,20 @@
   tipo: capoluogo
   territorio: PIE
   url: https://comune.biella.it/tipi_notizia/avvisi/
-  modalita: rss
-  feed_url: https://comune.biella.it/tipi_notizia/avvisi/feed/
+  modalita: html
+  feed_url: null
   piattaforma: wordpress_design_comuni
   frequenza: quindicinale
   stato: attiva
-  verificato_il: '2026-09-24'
-  note: 'WordPress 7 con tema Design Comuni, feed RSS standard. Visto "Contributi straordinari - attivita'' economiche
-    in quartieri collinari" (2026): il Comune pubblica bandi per imprese, anche se di rado. Il resto sono avvisi
-    generali.
+  verificato_il: '2026-09-25'
+  note: 'WordPress 7 con tema Design Comuni. Visto "Contributi straordinari - attivita'' economiche in quartieri
+    collinari" (datato 20/06/2025): il Comune pubblica bandi per imprese, anche se di rado. Il resto sono avvisi
+    generali. 25/09/2026: il feed /tipi_notizia/avvisi/feed/ risponde 200 ma e'' vuoto (canale senza voci);
+    la pagina elenca gli avvisi in schede, quindi si legge la pagina HTML con il selettore dei titoli (.card-body h4).
 
     '
+  richiesta:
+    selettore: .card-body h4
 
 - id: comune_verbania_avvisi
   nome: Comune di Verbania - Novita' > Avvisi
@@ -673,10 +718,16 @@
   piattaforma: null
   frequenza: settimanale
   stato: difficile
-  verificato_il: '2026-09-24'
+  verificato_il: '2026-09-25'
   note: 'https://www.comune.venezia.it/ e https://live.comune.venezia.it/ rispondono 403 con pagina Incapsula (firewall
     applicativo) anche con User-Agent da browser. Da riprovare dal VPS o col browser senza interfaccia; Venezia
     pubblica di norma bandi per il commercio (centro storico, locali sfitti), quindi vale la pena insistere.
+    25/09 dal VPS: www.comune.venezia.it riceve la pagina di verifica Imperva (212 byte, solo script); nessun
+    IPv6. Dietro Imperva anche live., portale. e dime.comune.venezia.it. Fuori da Imperva c''e'' solo l''open data
+    dati.venezia.it (si apre, ma nessun dataset di bandi o contributi: opere pubbliche, popolazione, commercio
+    come licenze). incentivi.gov.it ha solo 2 misure del Comune di Venezia (crowdfunding civico 2023-2024):
+    copertura scarsa. Alternativa proposta: chiedere al Comune (ufficio web/URP) di lasciar passare il nostro
+    User-Agent dichiarato, oppure decisione di Matteo sul browser senza interfaccia.
 
     '
 
@@ -737,50 +788,69 @@
   ente: Comune di Treviso
   tipo: capoluogo
   territorio: VEN
-  url: null
-  modalita: browser
-  feed_url: null
+  url: https://www.comune.treviso.it/home/tassonomia?contentType=pnrr_news&firstTaxonomyLevel=avviso
+  modalita: api
+  feed_url: https://www.comune.treviso.it/myportal/C_L407/api/content?type=pnrr_news&pageIndex=1&onlyNotHidden=true&pnrrTaxonomyLevel1=avviso&sortBy=pubDate&desc=true&pageSize=50
   piattaforma: myportal
   frequenza: quindicinale
-  stato: difficile
-  verificato_il: '2026-09-24'
-  note: 'myPortal (Regione Veneto, Angular): la home, /sitemap.xml, /robots.txt e /api/ restituiscono tutti la stessa
-    pagina vuota di 13 KB; /myportal/ chiude la connessione. Serve il browser senza interfaccia o la scoperta dell''API
-    interna. Indirizzo tentato https://www.comune.treviso.it/home
+  stato: attiva
+  verificato_il: '2026-09-25'
+  note: 'myPortal Regione Veneto (Angular, modello PNRR comuni). 25/09/2026: trovata col browser l''API interna che
+    riempie la pagina Novita'' > Avvisi ("Bandi di gara, avvisi di concorso e tutte le opportunita'' per cittadini e
+    imprese"): GET JSON senza cookie, page.entities[] con name, slug, firstPublishedAt, parent. C_L407 = codice catastale.
+    Il link alla scheda e'' /home/dettaglio/news/<slug> (provato). robots.txt non esiste (il sito risponde con la pagina
+    Angular), quindi nessun divieto. 39 avvisi: contributi impianti termici, Adotta un albero, avvisi di mercato, nomine.
+    Stessa API per Belluno, Rovigo (cambia solo il codice).
 
     '
+  richiesta:
+    url_modello: https://www.comune.treviso.it/home/dettaglio/news/{slug}
+    elenco: page.entities
 
 - id: comune_belluno_sito
   nome: Comune di Belluno - sito myPortal
   ente: Comune di Belluno
   tipo: capoluogo
   territorio: VEN
-  url: null
-  modalita: browser
-  feed_url: null
+  url: https://www.comune.belluno.it/home/tassonomia?contentType=pnrr_news&firstTaxonomyLevel=avviso
+  modalita: api
+  feed_url: https://www.comune.belluno.it/myportal/C_A757/api/content?type=pnrr_news&pageIndex=1&onlyNotHidden=true&pnrrTaxonomyLevel1=avviso&sortBy=pubDate&desc=true&pageSize=50
   piattaforma: myportal
   frequenza: mensile
-  stato: difficile
-  verificato_il: '2026-09-24'
-  note: 'myPortal identico a Treviso (pagina vuota di 13 KB, anche /sitemap.xml). Indirizzo tentato https://www.comune.belluno.it/home
+  stato: attiva
+  verificato_il: '2026-09-25'
+  note: 'myPortal Regione Veneto come Treviso. 25/09/2026: API interna della pagina Novita'' > Avvisi (GET JSON senza
+    cookie, tipo pnrr_news con tassonomia avviso), link alla scheda /home/dettaglio/news/<slug> (provato). robots.txt
+    non esiste (pagina Angular). 40 avvisi dal 2024: contributi protezione civile ad associazioni, Dote Sport, mappatura
+    opportunita'' insediative Veneto, avvisi di mercato; pochi per imprese.
 
     '
+  richiesta:
+    url_modello: https://www.comune.belluno.it/home/dettaglio/news/{slug}
+    elenco: page.entities
 
 - id: comune_rovigo_sito
   nome: Comune di Rovigo - sito myPortal
   ente: Comune di Rovigo
   tipo: capoluogo
   territorio: VEN
-  url: null
-  modalita: browser
-  feed_url: null
+  url: https://www.comune.rovigo.it/home/tassonomia?contentType=pnrr_news&firstTaxonomyLevel=avviso
+  modalita: api
+  feed_url: https://www.comune.rovigo.it/myportal/C_H620/api/content?type=pnrr_news&pageIndex=1&onlyNotHidden=true&pnrrTaxonomyLevel1=avviso&sortBy=pubDate&desc=true&pageSize=50
   piattaforma: myportal
   frequenza: mensile
-  stato: difficile
-  verificato_il: '2026-09-24'
-  note: 'myPortal identico a Treviso (pagina vuota di 13 KB, anche /sitemap.xml). Indirizzo tentato https://www.comune.rovigo.it/home
+  stato: attiva
+  verificato_il: '2026-09-25'
+  note: 'myPortal Regione Veneto come Treviso. 25/09/2026: API interna di Novita'' (GET JSON senza cookie, tipo
+    pnrr_news), link alla scheda /home/dettaglio/news/<slug> (provato). robots.txt non esiste (pagina Angular).
+    Solo avvisi (&pnrrTaxonomyLevel1=avviso, 18 elementi): senza richiesta.elenco il lettore generico sceglieva
+    la lista dei 31 campi sys_renderable_attributes di ogni record e leggeva 0 elementi. Contenuti quasi tutti
+    per cittadini (voucher, bonus idrico, centri estivi, fiera).
 
     '
+  richiesta:
+    url_modello: https://www.comune.rovigo.it/home/dettaglio/news/{slug}
+    elenco: page.entities
 
 - id: comune_trento_avvisi
   nome: Comune di Trento - Novita' > Avvisi
@@ -860,20 +930,25 @@
     '
 
 - id: comune_parma_sito
-  nome: Comune di Parma - sito istituzionale
+  nome: Comune di Parma - Bandi e avvisi (API Plone)
   ente: Comune di Parma
   tipo: capoluogo
   territorio: EMR
-  url: null
-  modalita: html
-  feed_url: null
-  piattaforma: null
+  url: https://www.comune.parma.it/it/amministrazione/documenti-e-dati/bandi-e-avvisi
+  modalita: api
+  feed_url: https://www.comune.parma.it/++api++/@search?portal_type=Bando&sort_on=effective&sort_order=descending&b_size=30&metadata_fields=effective
+  piattaforma: plone
   frequenza: settimanale
-  stato: difficile
-  verificato_il: '2026-09-24'
-  note: 'http://www.comune.parma.it/ reindirizza a https ma la connessione TLS fallisce (SSL_ERROR_SYSCALL) in 2
-    tentativi dal cloud; probabile blocco del proxy o del firewall dell''ente. Da riprovare dal VPS. Indirizzo tentato
-    https://www.comune.parma.it/
+  stato: attiva
+  verificato_il: '2026-09-25'
+  note: 'Plone 6 (Volto): l''HTML delle pagine elenco non contiene le schede, l''API JSON sì. Tutti i contenuti di
+    tipo Bando (658 al 25/09/2026) in un unico elenco ordinato per data: sezioni avvisi-pubblici (anche contributi,
+    es. Parma Youth Climate Action Fund, bando affitto), bandi-di-gara, bandi-di-concorso, alienazioni. Non filtrare
+    per "gara". La sezione /it/novita/avvisi (News Item) è quasi solo viabilità: non serve. robots.txt limita solo
+    gigabot. 25/09/2026 dal server: la prima connessione a https://www.comune.parma.it/ è stata chiusa durante l''avvio
+    TLS (reset), le successive (anche https://comune.parma.it/ e http://www.comune.parma.it/, che rinviano a https://www.comune.parma.it/it)
+    hanno risposto 200 con certificato valido: problema intermittente, non di certificato. http://comune.parma.it/
+    risponde 504.
 
     '
 
@@ -906,9 +981,12 @@
   piattaforma: nextjs
   frequenza: quindicinale
   stato: attiva
-  verificato_il: '2026-09-24'
+  verificato_il: '2026-09-25'
   note: 'L''elenco e'' gia'' nell''HTML (rendering lato server): schede con link /it/b/<id>/<slug>, data e sommario.
-    Mostra solo gli ultimi 5 avvisi. Verificato il 24/09.'
+    Mostra solo gli ultimi 5 avvisi. Verificato il 24/09. 25/09/2026 dal server: tutto il sito (anche la home
+    https://www.comune.ferrara.it/ e /it/novita/avvisi) risponde 500 "No page found!" in curl e nel browser, in due
+    prove a 5 minuti di distanza: guasto del sito, non blocco del server (stessa risposta al browser). Voce lasciata
+    attiva con lo stesso indirizzo. Alla rilettura della sera il sito era tornato su: 200, 4 elementi.'
 
 - id: comune_ravenna_novita
   nome: Comune di Ravenna - Novita'
@@ -986,17 +1064,25 @@
   ente: Provincia di Belluno
   tipo: provincia
   territorio: VEN
-  url: null
-  modalita: browser
-  feed_url: null
+  url: https://www.provincia.belluno.it/home
+  modalita: api
+  feed_url: https://www.provincia.belluno.it/myportal/P_BL/api/content?type=rve_avviso&pageIndex=1&onlyNotHidden=true&parent=/Avvisi&includeSubFolders=true&sortBy=lastUpdated&desc=true&pageSize=50
   piattaforma: myportal
   frequenza: mensile
-  stato: difficile
-  verificato_il: '2026-09-24'
-  note: 'myPortal (Angular): home e /sitemap.xml restituiscono la stessa pagina vuota di 6 KB, impossibile verificare
-    dal cloud se esistano contributi per imprese. Da riprovare col browser. Indirizzo tentato https://www.provincia.belluno.it/home
+  stato: esclusa
+  verificato_il: '2026-09-25'
+  note: 'ESCLUSA il 25/09/2026: 78 avvisi dal 2020, solo aste, espropri, conferenze di servizi e incarichi, nessun bando per imprese (come la Provincia di Treviso).
+    myPortal Regione Veneto, modello vecchio (non PNRR): 25/09/2026 trovata col browser l''API che riempie il
+    riquadro Avvisi della home (tipo rve_avviso, cartella /Avvisi), GET JSON senza cookie, 78 avvisi. Link alla scheda
+    /avvisi-info/<slug> (provato; sys_canonical_url a volte e'' vuoto, per questo il modello usa slug). robots.txt non
+    esiste (pagina Angular). Contenuto: aste immobili, conferenze di servizi, espropri, manifestazioni di interesse,
+    contributi ad associazioni di protezione civile; quasi nulla per imprese, rendimento basso. Le notizie sono nel
+    tipo rve_news (cartella /News, 400 elementi) se servisse allargare.
 
     '
+  richiesta:
+    url_modello: https://www.provincia.belluno.it/avvisi-info/{slug}
+    elenco: page.entities
 
 - id: provincia_treviso_avvisi
   nome: Provincia di Treviso - Bandi, concorsi e avvisi > Avvisi
@@ -1227,17 +1313,22 @@
   ente: Comune di Grosseto
   tipo: capoluogo
   territorio: TOS
-  url: null
-  modalita: browser
+  url: https://www.comune.grosseto.it/novita/tipologia/avvisi/
+  modalita: html
   feed_url: null
-  piattaforma: null
+  piattaforma: wordpress
   frequenza: quindicinale
-  stato: difficile
-  verificato_il: '2026-09-24'
-  note: 'www.comune.grosseto.it risponde 403 Forbidden a tutto (home, robots.txt), anche con User-Agent da browser;
-    new.comune.grosseto.it chiude la connessione TLS. Da provare dal VPS o con browser.
+  stato: attiva
+  verificato_il: '2026-09-25'
+  note: 'Dal cloud il 24/09 rispondeva 403 a tutto. Dal VPS il 25/09 il sito (WordPress, tema Design Comuni) risponde
+    200 in IPv4 (niente IPv6), senza bot manager; robots.txt assente (404). Pagina "Novita'' > Avvisi" con 12 avvisi
+    (es. contributi a fondo perduto microimprese, bando nuove imprese di pesca); le notizie non hanno feed RSS
+    (/notizia/feed/ 404). In alternativa esiste il feed dei documenti /documento_pubblico/feed/ (12 voci, mescola
+    avvisi, determine e moduli). Selettore #load-more per leggere solo le schede degli avvisi.
 
     '
+  richiesta:
+    selettore: '#load-more'
 
 - id: comune_massa_avvisi
   nome: Comune di Massa - Avvisi
@@ -1315,15 +1406,17 @@
   ente: Comune di Macerata
   tipo: capoluogo
   territorio: MAR
-  url: null
-  modalita: browser
-  feed_url: null
-  piattaforma: null
+  url: https://www.comune.macerata.it/tipi_notizia/avvisi/
+  modalita: rss
+  feed_url: https://www.comune.macerata.it/tipi_notizia/avvisi/feed/
+  piattaforma: wordpress_design_comuni
   frequenza: quindicinale
-  stato: difficile
-  verificato_il: '2026-09-24'
-  note: 'www.comune.macerata.it e comune.macerata.it chiudono la connessione (connection reset) in https; in http
-    risponde 503. Indirizzo tentato https://www.comune.macerata.it/. Da provare dal VPS.
+  stato: attiva
+  verificato_il: '2026-09-25'
+  note: '25/09/2026 dal VPS: il sito risponde normalmente in IPv4 (il blocco del 24/09 era verso la rete della sessione
+    cloud); nessun indirizzo IPv6. WordPress "design comuni": feed RSS del tipo notizia "Avvisi" con 10 voci (15-24/09/2026:
+    graduatorie, interventi per famiglie, manifestazioni di interesse). Elenco misto, da filtrare per imprese; c''e''
+    anche la pagina argomento https://www.comune.macerata.it/argomento/imprese/. robots.txt vieta solo i file pdf/doc.
 
     '
 
@@ -1372,12 +1465,15 @@
   feed_url: https://www.comune.latina.it/home/novita.rss?q=&categoria=/TipiNotizia/003
   piattaforma: magnolia_kibernetes
   frequenza: quindicinale
-  stato: attiva
-  verificato_il: '2026-09-24'
+  stato: difficile
+  verificato_il: '2026-09-25'
   note: 'Sito proprio (Magnolia/Kibernetes) con RSS per categoria: 001 notizie, 002 comunicati, 003 avvisi. Il feed
-    avvisi e'' completo (300 KB), titoli su piu'' righe da ripulire. Il 24/09: "Avviso pubblico per il censimento
-    delle botteghe e delle attivita'' storiche", "Latina si illumina 2026", avvisi Villaggio di Natale per spettacoli
-    viaggianti.
+    avvisi e'' completo (300 KB), titoli su piu'' righe da ripulire. Il 24/09 (dalla sessione cloud): "Avviso pubblico
+    per il censimento delle botteghe e delle attivita'' storiche", "Latina si illumina 2026", avvisi Villaggio di
+    Natale per spettacoli viaggianti. 25/09/2026 dal VPS: www.comune.latina.it (IP 217.64.201.219, CNAME
+    latina-pnrr.web.kibernetes.net) non accetta la connessione TCP dall''IPv4 del server (timeout su feed, home,
+    robots.txt, https e http; prova.sh: ConnectTimeout); comune.latina.it risponde solo col rimando a www. Nessun
+    IPv6. Il feed funziona da altre reti: e'' un blocco verso il VPS OVH.
 
     '
 
@@ -1410,9 +1506,13 @@
   piattaforma: null
   frequenza: quindicinale
   stato: difficile
-  verificato_il: '2026-09-24'
-  note: 'Ancora bloccato il 24/09: www.comune.rieti.it e comune.rieti.it chiudono la connessione (connection reset).
-    Da provare dal VPS.
+  verificato_il: '2026-09-25'
+  note: 'Ancora bloccato il 24/09 dal cloud. 25/09/2026 dal VPS: www.comune.rieti.it e comune.rieti.it (IP
+    92.223.222.37, lo stesso di Viterbo) non accettano nemmeno la connessione TCP (timeout, https e http, 2 prove
+    ciascuno); nessun indirizzo IPv6. Il sito nuovo e'' WordPress "design comuni" (da ricerca web: comune.rieti.it/albo-pretorio/),
+    quindi se si sblocca il feed da provare e'' /tipi_notizia/avvisi/feed/. Il vecchio sito lnx.comune.rieti.it
+    risponde ma e'' fermo a dicembre 2024. L''albo su cloud.urbi.it (PA Digitale) risponde, ma e'' un modulo di
+    ricerca in JavaScript con tutti gli atti (matrimoni, determine): non adatto.
 
     '
 
@@ -1427,9 +1527,13 @@
   piattaforma: null
   frequenza: quindicinale
   stato: difficile
-  verificato_il: '2026-09-24'
-  note: 'Ancora bloccato il 24/09: www.comune.viterbo.it e comune.viterbo.it chiudono la connessione (connection
-    reset). Da provare dal VPS.
+  verificato_il: '2026-09-25'
+  note: 'Ancora bloccato il 24/09 dal cloud. 25/09/2026 dal VPS: www.comune.viterbo.it e comune.viterbo.it (IP
+    92.223.222.37, lo stesso di Rieti) non accettano la connessione TCP (timeout, https e http); nessun indirizzo
+    IPv6. Dalla ricerca web il sito e'' WordPress "design comuni" (comune.viterbo.it/tipi_documento/...): se si
+    sblocca, provare /tipi_notizia/avvisi/feed/. L''albo pretorio Urbi https://servizionline.comune.viterbo.it/urbi/progs/urp/ur1ME001.sto?DB_NAME=wt00033418
+    risponde dal VPS, ma l''elenco si apre solo con clic in JavaScript (categoria "AVVISI VARI", 5 atti) e
+    contiene soprattutto atti amministrativi: non adatto come fonte di bandi.
 
     '
 
@@ -1472,15 +1576,18 @@
   ente: Comune di Chieti
   tipo: capoluogo
   territorio: ABR
-  url: null
-  modalita: browser
-  feed_url: null
-  piattaforma: null
+  url: https://comune.chieti.it/tipi_notizia/avvisi/
+  modalita: rss
+  feed_url: https://comune.chieti.it/tipi_notizia/avvisi/feed/
+  piattaforma: wordpress_design_comuni
   frequenza: quindicinale
-  stato: difficile
-  verificato_il: '2026-09-24'
-  note: 'www.comune.chieti.it e comune.chieti.it chiudono la connessione (connection reset) il 24/09. Da provare
-    dal VPS.
+  stato: attiva
+  verificato_il: '2026-09-25'
+  note: '25/09/2026 dal VPS: il sito risponde in IPv4 (www rimanda a comune.chieti.it); nessun indirizzo IPv6.
+    WordPress "design comuni": feed RSS del tipo notizia "Avvisi" con 23 voci, pero'' aggiornato poco (ultima voce
+    15/06/2026, poi 2025); visto un avviso "alle attivita'' economiche" per il dissesto idrogeologico. Pagina
+    imprese: https://comune.chieti.it/servizi-categoria/imprese-e-commercio/. robots.txt vieta solo file e chiede
+    Crawl-delay 2.
 
     '
 
@@ -1512,9 +1619,16 @@
   piattaforma: null
   frequenza: quindicinale
   stato: difficile
-  verificato_il: '2026-09-24'
+  verificato_il: '2026-09-25'
   note: 'www.comune.campobasso.it risponde 403 con una pagina di cortesia sia in https sia in http (anche /it).
     Da provare dal VPS.
+    25/09 dal VPS: 403 anche da qui (https, http, con e senza www; nessun IPv6), pagina "Oops! Accesso negato! La
+    tua richiesta non soddisfa i requisiti minimi di sicurezza" di un bilanciatore AWS: e'' lo stesso ingresso
+    (stesso indirizzo 18.157.253.79) di www.sviluppobasilicata.it, quindi stesso fornitore e stesso filtro,
+    probabilmente sugli indirizzi dei server o esteri (il VPS e'' in Francia). Nessun'' altra porta trovata
+    (comune.campobasso.etrasparenza.it ha un certificato non valido). incentivi.gov.it ha solo 6 misure del Comune,
+    tutte del 2020 (esenzioni IMU): copertura nulla. Alternativa proposta: prova dal PC di Matteo (IP italiano) per
+    capire se il filtro e'' geografico; in quel caso serve una decisione (lasciarla fuori o chiedere al Comune).
 
     '
 
@@ -1523,15 +1637,16 @@
   ente: Comune di Isernia
   tipo: capoluogo
   territorio: MOL
-  url: null
-  modalita: browser
-  feed_url: null
-  piattaforma: null
+  url: https://comune.isernia.it/tipi_notizia/avvisi/
+  modalita: rss
+  feed_url: https://comune.isernia.it/tipi_notizia/avvisi/feed/
+  piattaforma: wordpress_design_comuni
   frequenza: mensile
-  stato: difficile
-  verificato_il: '2026-09-24'
-  note: 'www.comune.isernia.it e comune.isernia.it chiudono la connessione (connection reset) il 24/09. Da provare
-    dal VPS.
+  stato: attiva
+  verificato_il: '2026-09-25'
+  note: '25/09/2026 dal VPS: il sito risponde in IPv4 (www rimanda a comune.isernia.it); nessun indirizzo IPv6.
+    WordPress "design comuni": feed RSS del tipo notizia "Avvisi" con 10 voci recenti (19-25/09/2026: personale,
+    fiera, bonus libri, "Terre d''Isernia"). Elenco misto, da filtrare per imprese. robots.txt senza divieti.
 
     '
 
@@ -1598,16 +1713,22 @@
   ente: Comune di Avellino
   tipo: capoluogo
   territorio: CAM
-  url: null
+  url: https://www.comune.avellino.it/sito/avvisi
   modalita: browser
   feed_url: null
-  piattaforma: null
+  piattaforma: kapi
   frequenza: mensile
-  stato: difficile
-  verificato_il: '2026-09-24'
-  note: 'La home rimanda a https://www.comune.avellino.it/sito/ che risponde 200 ma e'' un guscio Angular vuoto
-    (18 KB); /sitemap.xml e /api/ danno 404 e nel JavaScript principale non compare un indirizzo API riconoscibile.
-    Serve il browser senza interfaccia per vedere gli avvisi. Nessun bando per imprese verificabile da server.
+  stato: esclusa
+  verificato_il: '2026-09-25'
+  note: 'ESCLUSA per decisione di Matteo del 25/09/2026: robots.txt vieta l''API e gli avvisi sono quasi tutti sociali.
+    Sito Angular sulla piattaforma "kapi" (la stessa di Barletta). 25/09/2026: col browser trovata l''API che
+    riempie Novita'' > Avvisi: GET https://www.comune.avellino.it/kapi/api/sito/avvisi?size=30&sort=cntDataPubblicazione,desc
+    risponde a curl senza cookie (170 avvisi; results[] con id, cntTitle, cntDescrizione, cntDataPubblicazione).
+    Scheda: /sito/avviso/<id> (provato, funziona anche senza lo slug). MA robots.txt vieta /kapi: non attivata,
+    serve decisione di Matteo. Inoltre il lettore API generico non riconosce i nomi cntTitle/cntDataPubblicazione:
+    servirebbe aggiungerli alle chiavi di app/raccolta/lettori/api.py. La sitemap /sito/sitemap.xml (permessa) e''
+    ferma: ultimi avvisi del 2025 (id 93xxxxx, gli attuali sono 128xxxxx), quindi non serve. Avvisi 2026: manifestazioni
+    di interesse per ETS, buono mobilita'', voucher nido, emergenza abitativa; pochi per imprese.
 
     '
 
@@ -1616,15 +1737,16 @@
   ente: Comune di Benevento
   tipo: capoluogo
   territorio: CAM
-  url: null
-  modalita: browser
-  feed_url: null
-  piattaforma: null
+  url: https://comune.benevento.it/tipi_notizia/avvisi/
+  modalita: rss
+  feed_url: https://comune.benevento.it/tipi_notizia/avvisi/feed/
+  piattaforma: wordpress_design_comuni
   frequenza: quindicinale
-  stato: difficile
-  verificato_il: '2026-09-24'
-  note: 'Tentati https://www.comune.benevento.it/ e https://comune.benevento.it/ (3 prove): la connessione viene
-    chiusa dal server dopo pochi byte (probabile firewall geografico o anti-bot). Da riprovare dal VPS OVH.
+  stato: attiva
+  verificato_il: '2026-09-25'
+  note: '25/09/2026 dal VPS: il sito risponde in IPv4 (www rimanda a comune.benevento.it); nessun indirizzo IPv6.
+    WordPress "design comuni": feed RSS del tipo notizia "Avvisi" con 21 voci (ultima 17/07/2026: TARI, contributi
+    scolastici, centri estivi). Elenco misto e poco frequente, da filtrare per imprese. robots.txt vieta solo file.
 
     '
 
@@ -1779,15 +1901,17 @@
   ente: Comune di Crotone
   tipo: capoluogo
   territorio: CAL
-  url: null
-  modalita: browser
-  feed_url: null
-  piattaforma: null
+  url: https://www.comune.crotone.it/tipi_notizia/avvisi/
+  modalita: rss
+  feed_url: https://www.comune.crotone.it/tipi_notizia/avvisi/feed/
+  piattaforma: wordpress_design_comuni
   frequenza: quindicinale
-  stato: difficile
-  verificato_il: '2026-09-24'
-  note: 'Tentati https://www.comune.crotone.it/ e https://comune.crotone.it/ (4 prove): connessione chiusa dal server
-    dopo pochi byte (probabile firewall geografico o anti-bot). Da riprovare dal VPS OVH.
+  stato: attiva
+  verificato_il: '2026-09-25'
+  note: '25/09/2026 dal VPS: il sito risponde in IPv4 (risposta lenta, ~5 s la home); nessun indirizzo IPv6.
+    WordPress con tema derivato da "design comuni": feed RSS del tipo notizia "Avvisi" con 10 voci recentissime
+    (23-25/09/2026), molte di servizio (servizio idrico, viabilita''), da filtrare per imprese. robots.txt vieta solo
+    /wp-admin/.
 
     '
 
@@ -1839,9 +1963,12 @@
   piattaforma: null
   frequenza: quindicinale
   stato: difficile
-  verificato_il: '2026-09-24'
-  note: 'Tentati https://www.comune.catania.it/ e https://comune.catania.it/ (4 prove): il proxy risponde 502 al
-    CONNECT oppure il server chiude la connessione. Da riprovare dal VPS OVH.
+  verificato_il: '2026-09-25'
+  note: 'Tentati il 24/09 dal cloud (502/reset). 25/09/2026 dal VPS: www.comune.catania.it (IP 81.126.137.47) non
+    accetta la connessione TCP (timeout, 2 prove); il DNS indica un servizio Radware (radwarecloud.net), cioe'' un
+    anti-bot: non va aggirato. Nessun indirizzo IPv6 utilizzabile. Dalla ricerca web la pagina giusta sarebbe
+    https://www.comune.catania.it/informazioni/avvisi/ (non aperta). argo.comune.catania.it risponde ma con
+    certificato incompleto ed e'' un portale servizi.
 
     '
 

@@ -59,7 +59,7 @@ Tutta Italia: elenchi vuoti e `vincoli.territorio = nessun_vincolo`.
 | `codici_ateco` / `codici_ateco_esclusi` | Codici o sezioni ATECO ammessi / esclusi, come li scrive il bando (`"62"`, `"25.62"`, `"C"`). Ogni esclusione di settore scritta nel bando va qui, anche se è ripetuta nei requisiti | elenchi |
 | `ateco_versione` | `2007`, `2025`, `incoerente` (il bando dichiara una versione ma usa le lettere dell'altra) | valore |
 | `regime_aiuto` | `de_minimis`, `de_minimis_agricolo`, `gber` (Reg. UE 651/2014), `aber` (Reg. UE 2022/2472), `temporary_framework`, `notificato`, `non_aiuto`, `altro` | elenco |
-| `requisiti` | Solo le **condizioni di ammissione** che restano a parole (DURC, polizza catastrofale, sede, garanzie...). Criteri di punteggio e premi non sono requisiti: vanno nella sintesi | testo |
+| `requisiti` | Solo le **condizioni di ammissione** che restano a parole (DURC, polizza catastrofale, sede, garanzie...). Criteri di punteggio e premi non sono requisiti: vanno in `domanda.criteri_punteggio` | testo |
 
 ### Cosa e quanto
 
@@ -75,6 +75,7 @@ Tutta Italia: elenchi vuoti e `vincoli.territorio = nessun_vincolo`.
 | `fondo_perduto_massimo`, `percentuale_fondo_perduto` | **Solo la quota a fondo perduto**, quando l'aiuto unisce prestito e fondo perduto | numero, 0-100 |
 | `finanziamento_massimo` | La parte a prestito, se c'è | numero |
 | `spesa_minima`, `spesa_massima` | Progetto minimo e massimo ammesso | numeri |
+| `contributo_minimo` | Contributo minimo per impresa, se il bando lo fissa | numero |
 | `dotazione` | Fondi totali del bando | numero |
 | `spese_ammesse` | Le spese a parole, con da quando sono ammissibili (per esempio "solo dopo la concessione") e i termini per realizzare e rendicontare | testo |
 
@@ -89,6 +90,19 @@ Tutta Italia: elenchi vuoti e `vincoli.territorio = nessun_vincolo`.
 | `stato` | `in_arrivo`, `aperto`, `chiuso`: **calcolato dal sistema** ogni giorno | valore |
 | `sintesi` | 3-5 righe in italiano semplice: cosa finanzia, a chi, quanto, come e fino a quando, chi gestisce, graduatoria o sportello | testo |
 
+### I dettagli per il commercialista
+
+*Chiesti da Matteo il 25/09/2026 sera.* Sono le informazioni che servono a dire a un cliente **se e quanto conviene** un bando. Stanno in sei blocchi (colonne JSON, struttura in `app/schede/campi.py`, `DETTAGLI`): valori controllati dove servono a un calcolo o a un filtro, testo con fonte dove basta leggerli. Se una linea ha dettagli diversi, stanno nelle `note` della linea.
+
+| Blocco | Cosa contiene |
+|---|---|
+| `intensita` | `percentuale_base` (senza maggiorazioni); `per_dimensione` (percentuale base per `micro`, `piccola`, `media`, `grande`, quando cambia con la dimensione); `maggiorazioni`, una per motivo con i punti percentuali in più. Motivi: `micro`, `piccola`, `zona_assistita`, `area_interna_montana`, `femminile`, `giovanile`, `nuova_impresa`, `startup_innovativa`, `rating_legalita`, `certificazione_parita_genere`, `aggregazione`, `assunzioni`, `altro`. `percentuale` resta la massima possibile |
+| `finanziamento` | Quando c'è una parte a prestito o una garanzia: `quota_fondo_perduto` (quanto dell'aiuto è a fondo perduto, 0-100) e `percentuale_finanziamento` (quanto della spesa copre il prestito); `tasso_tipo` (`zero`, `fisso`, `variabile`, `riferimento_ue`, `altro`), `tasso_valore` (percentuale annua), `tasso_note`; `durata_mesi`, `preammortamento_mesi`; `garanzie_richieste` a parole; `garanzia_pubblica_copertura` (0-100) |
+| `vincoli_spese` | Per ogni voce uno stato (`vincolo`, `nessun_vincolo`, `non_noto`) e il dettaglio a parole: `fornitore` (niente parti correlate, soci o parenti; fornitori accreditati), `bene_nuovo`, `bene_usato`, `origine_bene` (origine UE, "made in", prodotto nel territorio), `leasing_noleggio`, `pagamento` (tracciabile, conto dedicato), `decorrenza` (da quando valgono le spese), `iva`, `tetti_per_voce` (es. consulenze al massimo il 20%), `forfait` |
+| `esclusioni` | `soggetti`: `impresa_difficolta`, `procedure_concorsuali`, `liquidazione`, `aiuti_illegali_da_restituire`, `irregolarita_contributiva`, `sanzioni_interdittive`, `antimafia`, `altri_aiuti_stesse_spese`, `altro`; `settori` a parole (i codici restano in `codici_ateco_esclusi`); `spese` escluse a parole |
+| `obblighi` | `durata_progetto_mesi`; `erogazione`: `anticipo`, `stato_avanzamento`, `saldo`, `unica_soluzione`, `compensazione_f24`, `altro`; `anticipo_percentuale`; `rendicontazione` a parole; `mantenimento_anni` e `mantenimento_note` (beni, sede, occupati da mantenere); `cumulabilita` con altri aiuti |
+| `domanda` | `piattaforma`; `requisiti`: `spid_cie_cns`, `firma_digitale`, `pec`, `marca_da_bollo`, `preventivi`, `perizia`, `business_plan`, `relazione_tecnica`, `durc`, `rating_legalita`, `intermediario` (domanda solo tramite un soggetto abilitato), `altro`; `criteri_punteggio` a parole; `note` |
+
 ### Affidabilità e controllo
 
 | Campo | Cosa contiene | Formato |
@@ -100,7 +114,7 @@ Tutta Italia: elenchi vuoti e `vincoli.territorio = nessun_vincolo`.
 | `dati` | La risposta completa dell'IA: fonti di ogni campo, avvertenze, costo | JSON |
 | `versione` | Numero della versione; le precedenti stanno in `bandi_versioni` | numero |
 
-**Una linea** (elemento di `linee`) ha: `nome`, `a_chi_si_rivolge` (testo breve), e solo i campi che per quella linea sono diversi dal bando: `soggetti_ammessi`, `dimensioni_ammesse`, `requisiti_speciali_obbligatori`, `eta_impresa_max_mesi`, `codici_ateco`, `codici_ateco_esclusi`, `tipi_agevolazione`, `contributo_massimo`, `percentuale`, `fondo_perduto_massimo`, `spesa_minima`, `spesa_massima`, `note`.
+**Una linea** (elemento di `linee`) ha: `nome`, `a_chi_si_rivolge` (testo breve), e solo i campi che per quella linea sono diversi dal bando: `soggetti_ammessi`, `dimensioni_ammesse`, `requisiti_speciali_obbligatori`, `eta_impresa_max_mesi`, `codici_ateco`, `codici_ateco_esclusi`, `tipi_agevolazione`, `contributo_massimo`, `percentuale`, `fondo_perduto_massimo`, `spesa_minima`, `spesa_massima`, `note` (qui anche i dettagli dei sei blocchi quando per la linea sono diversi).
 
 ## Campo della scheda ↔ dato del profilo ↔ regola di confronto
 
@@ -121,6 +135,9 @@ Il profilo anonimo del cliente arriva dalle anagrafiche di Matteo (`docs/RICHIES
 | `spesa_minima` / `_massima`, `categorie_spesa` | investimenti previsti (categorie, importo indicativo) | categorie in comune e importo dentro l'intervallo. Serve a ordinare, non a escludere |
 | `temi` | interessi del cliente (export sì/no, digitale, green...) | serve a ordinare |
 | `linee` | tutti i dati sopra | se il bando ha linee, la motivazione dice quali linee sono adatte al cliente |
+| `intensita` (per dimensione, maggiorazioni) | classe dimensionale, requisiti speciali, comune della sede (zone assistite, aree interne) | stima della percentuale che il cliente può ottenere. Serve a ordinare e alla motivazione |
+| `finanziamento` | — | nella motivazione: "30% a fondo perduto, 70% prestito a tasso zero in 7 anni" |
+| `esclusioni.soggetti`, `vincoli_spese`, `obblighi`, `domanda` | — | non escludono in automatico (il profilo non ha questi dati): vanno nella lista **"da controllare con il cliente"** che accompagna ogni abbinamento |
 | `completezza` | — | `bando_ufficiale` permette "compatibile"; le altre al massimo "da verificare" |
 | `stato`, `scadenza`, `ora_scadenza`, `modalita_selezione` | — | si propongono solo bandi `aperto` o `in_arrivo`; `sportello`, `sportello_valutativo` e `click_day` si segnalano come urgenti |
 
@@ -171,6 +188,13 @@ Il profilo anonimo del cliente arriva dalle anagrafiche di Matteo (`docs/RICHIES
 | `vincoli` | territorio `vincolo`, soggetti `vincolo`, forme_giuridiche `nessun_vincolo`, dimensioni `vincolo`, ateco `vincolo`, eta_impresa `nessun_vincolo`, requisiti_speciali `nessun_vincolo`, dipendenti `nessun_vincolo`, fatturato `nessun_vincolo`, spesa `vincolo`, regime_aiuto `vincolo` | |
 | `completezza` | `bando_ufficiale` | |
 | `linee` | vedi sotto | bando, art. B.1.b.1-3 |
+| `contributo_minimo` | non riportato in questa revisione: da leggere sul bando | |
+| `intensita` | `percentuale_base` 50; `maggiorazioni`: `micro` +5, `nuova_impresa` +5 (attive da non più di 24 mesi) | bando, art. B.1.b.5-6 |
+| `finanziamento` | `null` (solo fondo perduto) | |
+| `vincoli_spese` | `forfait` `vincolo`: 440 € al metro quadro, più 20% per il personale, più 7% di costi indiretti; le altre voci non sono state rilette per questa revisione dell'esempio (`non_noto` finché non si legge il bando) | bando, artt. B.2.b, B.3 |
+| `esclusioni` | `soggetti`: `liquidazione`, `procedure_concorsuali`, `irregolarita_contributiva`, `sanzioni_interdittive`; `settori`: agricoltura, silvicoltura e pesca (salvo le imprese agromeccaniche iscritte all'albo regionale), attività finanziarie e assicurative, tabacco | bando, artt. A.3, C.1 |
+| `obblighi` | `rendicontazione`: entro il 29/02/2028, con l'attestato dell'organizzatore della fiera; durata, erogazione e mantenimento da leggere sul bando | bando, artt. B.2.b, B.3 |
+| `domanda` | `criteri_punteggio`: valutazione con almeno 50 punti su 100, poi ordine di arrivo; piattaforma e documenti da leggere sul bando | bando, art. C.2 |
 
 `linee`:
 

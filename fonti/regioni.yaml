@@ -80,15 +80,21 @@
   ente: Finlombarda S.p.A.
   tipo: regione
   territorio: LOM
-  url: https://www.finlombarda.it/it/prodotti-e-servizi/prodotti-servizi/index?ProdottiServiziSearch%5Bscope%5D=1
+  url: https://finlombarda.it/it/prodotti-e-servizi/prodotti-servizi/index?ProdottiServiziSearch%5Bscope%5D=1
   modalita: api
-  feed_url: https://www.finlombarda.it/prodotti-e-servizi/prodotti-servizi/ajax-filter-prodotti?ProdottiServiziSearch%5Bscope%5D=1&page=1
+  feed_url: https://finlombarda.it/prodotti-e-servizi/prodotti-servizi/ajax-filter-prodotti?ProdottiServiziSearch%5Bscope%5D=1&page=1
   piattaforma: html_in_json
   frequenza: settimanale
   stato: attiva
-  verificato_il: '2026-09-24'
-  note: 'Filtro AJAX del sito (GET con X-Requested-With): JSON con un frammento HTML di schede (link /it/prodotti-e-servizi/prodotti-servizi/<id>/<slug>,
-    titolo, stato Aperto, destinatari). Pagine page=1..18; le date sono solo nella scheda. Trovata il 24/09.'
+  verificato_il: '2026-09-25'
+  note: 'Dominio senza www approvato da Matteo il 25/09/2026.
+    Filtro AJAX del sito (GET con X-Requested-With): JSON con un frammento HTML di schede (link /it/prodotti-e-servizi/prodotti-servizi/<id>/<slug>,
+    titolo, stato Aperto, destinatari). Pagine page=1..18; le date sono solo nella scheda. Trovata il 24/09 dal cloud.
+    25/09 dal VPS: www.finlombarda.it risponde 403 a tutto, anche a robots.txt (bilanciatore AWS con firewall che
+    rifiuta l''indirizzo del server, non una pagina di verifica; nessun IPv6). Il dominio senza www (finlombarda.it)
+    passa da un altro ingresso AWS e risponde 200 allo stesso indirizzo, stesso User-Agent, robots.txt "Allow: /":
+    si usa quello. Se anche questo venisse chiuso, i bandi gestiti da Finlombarda sono comunque nell''open data
+    regionale (lombardia_anagrafica_bandi_api, es. "promossa da Finlombarda S.p.A.").'
   richiesta:
     intestazioni:
       X-Requested-With: XMLHttpRequest
@@ -507,14 +513,18 @@
   modalita: api
   feed_url: https://www.provincia.tn.it/customexport/dataset-csv_resource-27837
   piattaforma: opencity
+  richiesta:
+    url_modello: '{informazioni}'
   frequenza: settimanale
   stato: attiva
-  verificato_il: '2026-09-24'
+  verificato_il: '2026-09-25'
   note: 'Dataset "FESR - Calendario degli avvisi e degli inviti a partecipare" (modificato 2026-08-07; indirizzo
     canonico /Dati-e-statistiche/Dataset/FESR-Calendario-degli-avvisi-e-degli-inviti-a-partecipare). L''export CSV
     è pulito: N.AVVISO, TITOLO, DATA APERTURA, DATA CHIUSURA, IMPORTO, BENEFICIARI, INFORMAZIONI (link alla scheda
     /Servizi/...), AREA GEOGRAFICA, OBIETTIVO SPECIFICO. Il sito fesr.provincia.tn.it è fermo al 2014-2020 (RSS
-    404).
+    404). 25/09/2026: la raccolta leggeva 0 elementi perche'' il link sta nella colonna INFORMAZIONI, che il
+    lettore non conosceva; ora il lettore CSV applica richiesta.url_modello ({informazioni}): 9 avvisi dal 2022-1
+    al 2026-2, quasi tutti per imprese. La pagina del dataset non ha una tabella HTML.
 
     '
 
@@ -694,7 +704,9 @@
     RSS. Il portale dati.umbria.it non era raggiungibile dalla sessione. Dal VPS il 24/09: 20 bandi letti
     dalla tabella (Oggetto, date, link 'Dettaglio'). Il lettore ora prende il titolo dalla cella piu' lunga
     della riga e toglie il ;jsessionid dai link, che altrimenti cambierebbero a ogni visita. Il filtro Imprese
-    dell'indirizzo non filtra davvero: arrivano anche avvisi per Comuni e premi di laurea.
+    dell'indirizzo non filtra davvero: arrivano anche avvisi per Comuni e premi di laurea. 25/09/2026: la
+    voce e' giusta (20 bandi letti, del 2026). Lo "0 elementi" in plancia viene dall'unico controllo di
+    produzione, del 24/09 alle 18:20, fatto prima che la correzione del lettore arrivasse in main (23:33).
 
 - id: umbria_avvisi_attivita_produttive
   nome: Regione Umbria - Avvisi attivita' produttive
@@ -775,7 +787,10 @@
     stata bloccata dal bot manager. feed_url resta vuoto finche' non si verifica. Dal VPS il 24/09: /rss e'
     l'indice dei feed, non un feed. Si legge il feed tematico 'Fondi Europei e Attivita Internazionali'
     (blog=10, 30 voci, ultima 18/09). 'Attivita Produttive' (blog=13) e' fermo a maggio 2026, 'Opportunita per
-    il territorio' (blog=05) al 2021; il feed di tutte le news e' il parametro senza blog=.
+    il territorio' (blog=05) al 2021; il feed di tutte le news e' il parametro senza blog=. 25/09/2026: la
+    voce e' giusta (30 voci lette, ultima 18/09/2026: notizie miste con bandi FESR, CER, commercio). Lo "0
+    elementi" in plancia viene dall'unico controllo di produzione, del 24/09 alle 18:21, fatto quando il
+    feed_url non era ancora nel registro di main.
 
 - id: lazio_avvisi_e_bandi
   nome: Regione Lazio - Avvisi e bandi (hub)
@@ -991,20 +1006,26 @@
   ente: Regione Campania
   tipo: regione
   territorio: CAM
-  url: null
+  url: https://www.regione.campania.it/regione-informa/notizie
   modalita: html
   feed_url: null
-  piattaforma: null
+  piattaforma: drupal
   frequenza: giornaliera
-  stato: difficile
-  verificato_il: '2026-09-24'
-  note: 'Il sito www.regione.campania.it (sezione /regione/it/bandi-e-avvisi) risponde 403 "Access Denied" (Akamai)
-    sia con User-Agent BandiRadar sia con uno Chrome puro, anche sulla home page. Da rete cloud non si apre nulla;
-    riprovare dal VPS. Nessun RSS e nessun calendario art. 49 verificabile: anche fesr.regione.campania.it, bandi.regione.campania.it
-    non rispondono. Il portale open data (dati.regione.campania.it) risponde ma e'' solo una pagina di rimando,
-    non cercato dentro.
+  stato: attiva
+  verificato_il: '2026-09-25'
+  note: 'Dal cloud il 24/09 tutto 403 (Akamai). Dal VPS il 25/09 il sito, rifatto in Drupal, risponde 200 in IPv4
+    (niente IPv6) al nostro User-Agent; robots.txt non vieta le pagine. La vecchia sezione /regione/it/bandi-e-avvisi
+    non esiste piu'' (404) e il nuovo portale non ha un elenco bandi: gli avvisi sono pubblicati come notizie.
+    Si legge quindi "Regione informa > Notizie" (10 per pagina, 871 in tutto, tutti i temi: serve lo smistamento).
+    Il filtro per tema (?f[0]=tematica_news:981, Attivita'' produttive) riceve 403 da Akamai: non usarlo.
+    /rss.xml esiste ma ha 10 voci scelte a mano, non in ordine di data. Amministrazione trasparente
+    (amministrazionetrasparente.regione.campania.it, app con API /api/website/resource) elenca le concessioni
+    gia'' fatte, non i bandi aperti. I bandi FESR restano su campania_porfesr_opportunita; incentivi.gov.it ha 74
+    misure della Regione Campania (14 aperte nel 2026). Selettore sulle schede delle notizie.
 
     '
+  richiesta:
+    selettore: div.view--res-news h5.card-title
 
 - id: campania_sviluppo_campania_bandi_aperti
   nome: Sviluppo Campania - Bandi aperti
@@ -1101,10 +1122,13 @@
   piattaforma: null
   frequenza: giornaliera
   stato: difficile
-  verificato_il: '2026-09-24'
+  verificato_il: '2026-09-25'
   note: 'www.sistema.puglia.it (portale dove si presentano le domande e dove compaiono gli avvisi del Dipartimento
     Sviluppo economico) chiude la connessione (reset) su https e risponde 503 su http: non raggiungibile da rete
-    cloud. Riprovare dal VPS.
+    cloud. 25/09/2026 dal server: timeout di connessione su https e http, con e senza www (IP 138.66.35.73, niente
+    IPv6), anche col browser senza interfaccia: il sito non accetta connessioni dal server. Gli stessi avvisi
+    compaiono in parte nel feed Bandi della Regione (puglia_regione_bandi_avvisi_rss), nel portale POR e su Puglia
+    Sviluppo, gia'' attivi. Da provare dal PC di Matteo; se si apre solo da lui, proporre di escluderla come coperta.
 
     '
 
@@ -1158,13 +1182,17 @@
   feed_url: null
   piattaforma: null
   frequenza: tre_a_settimana
-  stato: difficile
-  verificato_il: '2026-09-24'
-  note: 'Riprovato il 24/09 come chiesto: www.regione.basilicata.it (https e giunta/site/giunta/home.jsp) chiude
+  stato: esclusa
+  verificato_il: '2026-09-25'
+  note: 'ESCLUSA il 25/09/2026: doppione di basilicata_portale_bandi_api e non raggiungibile dal server.
+    Riprovato il 24/09 come chiesto: www.regione.basilicata.it (https e giunta/site/giunta/home.jsp) chiude
     la connessione (reset), http risponde 503 "upstream connect error"; il JSON open data https://opservice.regione.basilicata.it/opendata/files/AvvisiBandi.json
     e dati.regione.basilicata.it danno reset; anche pr-fesr.basilicata.it ed europa.basilicata.it non rispondono.
-    Sembra un blocco verso questa rete, non un guasto: riprovare dal VPS. Nel frattempo il Portale Bandi (voce basilicata_portale_bandi_api)
-    copre l''elenco. Calendario art. 49 non verificabile.
+    25/09/2026 dal VPS: www.regione.basilicata.it (78.40.170.201), opservice.regione.basilicata.it (78.40.170.153)
+    e dati.regione.basilicata.it (78.40.170.183) non accettano la connessione TCP (timeout); nessun IPv6. Invece
+    portalebandi.regione.basilicata.it (78.40.171.137) risponde dal VPS: il Portale Bandi (voce basilicata_portale_bandi_api)
+    copre gia'' l''elenco degli avvisi regionali. Proposta: escludere questa voce come doppione. Calendario art.
+    49 non verificabile.
 
     '
 
@@ -1179,7 +1207,7 @@
   piattaforma: null
   frequenza: settimanale
   stato: difficile
-  verificato_il: '2026-09-24'
+  verificato_il: '2026-09-25'
   ignora_robots: true
   note: >
     ROBOTS.TXT VIETA questo indirizzo a tutti i robot (verificato 24/09): Matteo ha deciso il 24/09 di
@@ -1188,6 +1216,13 @@
     artigiane, Imprese costituite/costituende, Microcredito, Mobilita'' elettrica...). Pagina semplice, titoli
     in h4 con link; nessun RSS. ' Bloccata anche dal VPS il 24/09: 403 in IPv4 (nessun IPv6), con qualunque
     User-Agent; col browser pagina di blocco di 2 KB.
+    25/09 dal VPS: sempre 403 (https, http, con e senza www), pagina "Oops! Accesso negato! La tua richiesta non
+    soddisfa i requisiti minimi di sicurezza" di un bilanciatore AWS; stesso ingresso (18.157.253.79) e stessa
+    pagina del Comune di Campobasso: filtro del fornitore sugli indirizzi, non un bot manager aggirabile con
+    pazienza. Alternativa proposta: la misura principale di Sviluppo Basilicata (Fondo Microfinanza FSE+ 2021-27)
+    e' pubblicata anche su portalebandi.regione.basilicata.it, gia' letto da basilicata_portale_bandi_api, e su
+    incentivi.gov.it (2 misure con gestore Sviluppo Basilicata, una aperta fino al 2029). Proposta: lasciarla
+    difficile e affidarsi a quelle due voci; prova dal PC di Matteo per capire se il blocco e' geografico.
 
 - id: calabria_europa_bandi_api
   nome: Calabria Europa - Bandi e avvisi PR 2021-27 (API)

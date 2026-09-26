@@ -54,5 +54,15 @@ ALTER TABLE bandi ADD COLUMN IF NOT EXISTS completezza text
     CHECK (completezza IN ('bando_ufficiale', 'solo_sintesi', 'nessun_documento'));
 ALTER TABLE bandi ADD COLUMN IF NOT EXISTS linee jsonb;
 
+-- Dettagli chiesti da Matteo il 25/09 sera (struttura in app/schede/campi.py, DETTAGLI e VINCOLI_SPESA):
+-- servono alla lettura e ai calcoli; l'abbinamento li usa per ordinare e per la lista "da controllare con il cliente".
+ALTER TABLE bandi ADD COLUMN IF NOT EXISTS contributo_minimo numeric;          -- euro, per impresa
+ALTER TABLE bandi ADD COLUMN IF NOT EXISTS intensita jsonb;                    -- percentuale base, per dimensione, maggiorazioni
+ALTER TABLE bandi ADD COLUMN IF NOT EXISTS finanziamento jsonb;                -- quota fondo perduto/prestito, tasso, durata, preammortamento, garanzie
+ALTER TABLE bandi ADD COLUMN IF NOT EXISTS vincoli_spese jsonb;                -- fornitore, bene nuovo/usato, origine, leasing, pagamento, decorrenza, IVA...
+ALTER TABLE bandi ADD COLUMN IF NOT EXISTS esclusioni jsonb;                   -- soggetti (valori controllati), settori e spese a parole
+ALTER TABLE bandi ADD COLUMN IF NOT EXISTS obblighi jsonb;                     -- durata progetto, erogazione, mantenimento, cumulabilita'
+ALTER TABLE bandi ADD COLUMN IF NOT EXISTS domanda jsonb;                      -- piattaforma, cosa serve, criteri di punteggio
+
 CREATE INDEX IF NOT EXISTS bandi_regioni ON bandi USING gin (territorio_regioni);
 CREATE INDEX IF NOT EXISTS bandi_stato ON bandi (stato);
