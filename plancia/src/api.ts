@@ -49,6 +49,9 @@ export interface Dubbio {
 export interface Bando extends BandoBreve {
   stato: string | null; data_apertura: string | null; sintesi: string | null; url_chiave: string | null;
   pagina_stato: "trovata" | "non_trovata" | null; pagina_motivo: string | null; pagina_cercata_il: string | null;
+  completezza: "bando_ufficiale" | "solo_sintesi" | "nessun_documento" | null; vincoli: Record<string, string> | null;
+  linee: { nome: string; a_chi_si_rivolge?: string; contributo_massimo?: number | null }[] | null;
+  [campo: string]: unknown;
   chiave_titolo: string | null; creato_il: string; aggiornato_il: string;
   annunci: AnnuncioDelBando[]; allegati: Allegato[]; versioni: { versione: number; causa: string | null; salvata_il: string }[];
 }
