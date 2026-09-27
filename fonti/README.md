@@ -35,7 +35,7 @@ Qui vive l'elenco delle fonti che Bandi Radar controlla. **Aggiungere una fonte 
     corpo_json: {}                     # corpo della POST in JSON (oppure corpo_form: {} per un modulo)
     url_modello: https://esempio.it/bandi/{slug}       # come costruire il link della scheda dai campi del record ({a.b} per campi annidati; nei CSV le intestazioni in minuscolo con _ , es. {informazioni})
     elenco: page.entities              # api: dove sta l'elenco dei record nel JSON, se il lettore sceglie la lista sbagliata (myPortal)
-    selettore: "main .card-title"       # html e browser: leggi i link solo nelle parti indicate (selettore CSS), quando menu e servizi si mescolano ai bandi
+    selettore: "main .card-title"       # html e browser (e api html_in_json): leggi i link solo nelle parti indicate (selettore CSS), quando menu e servizi si mescolano ai bandi; con il selettore valgono anche i titoli corti ("Legge 181")
     ipv6: true                         # esci in IPv6: per i siti che rifiutano l'IPv4 del server ma non l'IPv6 (Napoli, Siracusa)
   pagina_ufficiale:                    # facoltativo: come arrivare dalla pagina dell'annuncio alla pagina ufficiale del bando
     campo: link_ente                   # il link all'ente sta in questo campo dei dati grezzi (catalogo incentivi.gov.it)
@@ -48,13 +48,32 @@ Qui vive l'elenco delle fonti che Bandi Radar controlla. **Aggiungere una fonte 
       link: "/servizi/servizio/bandi/dettaglio/.*{codice}$"   # quale link dei risultati e' la pagina giusta
     segui_link: {testi: [bando, modulistica], stesso_sito: false}   # notizie: segui il link al bando ("Bando e modulistica")
     documenti: plone_api               # siti Plone/Volto: i documenti si leggono dall'API del sito (Emilia-Romagna, Pordenone)
+  scorta:                              # facoltativo: lettura completa di tutti i bandi ancora aperti (vedi sotto)
+    url: https://esempio.it/bandi?pagina={pagina}   # indirizzo della lettura completa ({anno} = anno in corso); senza, quello normale
+    parametro: page                    # oppure: il numero di pagina va in questo parametro dell'indirizzo
+    inizio: 1                          # numero della prima pagina (0 per chi conta da zero)
+    passo: 1                           # di quanto cresce (10 per start=0,10,20...)
+    pagine: 10                         # al massimo quante pagine
+    corpo_json: {}                     # corpo della POST della scorta, con "{pagina}" dove va il numero
+    modalita: html                     # se la scorta si legge in un altro modo (feed di 10 voci -> pagine dell'elenco)
+    selettore: "article.card"          # con modalita html: dove stanno i link dei bandi
+    scadenza: scadenza                 # campo dei dati grezzi con la scadenza: si scartano i record gia' scaduti
+    senza_scadenza_mesi: 12            # i record senza scadenza si tengono solo se pubblicati negli ultimi N mesi
+    tutte_le_pagine: true              # non fermarsi alla prima pagina senza link nuovi (archivi mese per mese)
+    frequenza: mensile                 # ogni quanto rileggere la scorta (predefinito: mensile)
 ```
+
+### La scorta: tutti i bandi aperti, non solo le novita' (`scorta`)
+
+Il controllo normale legge la prima pagina di un elenco: le ultime 10 voci di un feed, le ultime 30 di un'API. Basta per vedere cosa esce di nuovo, ma i bandi pubblicati prima e ancora aperti non entrano mai (valutazione del 27/09: il 45% dei bandi aperti del campione non era raccolto da nessuna fonte). Il blocco `scorta` dice come leggere **tutto l'elenco**: la raccolta lo fa alla prima occasione e poi alla frequenza della scorta (di solito una volta al mese), prima dei controlli normali; si ferma alla prima pagina che non porta link nuovi, con una pausa tra le pagine. Gli annunci trovati cosi' sono segnati come "scorta": non compaiono tra le novita' (email del lunedi', pagina Novita', conteggi e silenzi della plancia). Lo stesso vale per la prima lettura di una fonte appena aggiunta.
+
+Per provarla senza database: `python -m app.raccolta.esegui --prova ID --scorta`; per leggerla subito: `python -m app.raccolta.esegui --scorta ID`. Come per gli indirizzi, il blocco si scrive dopo averlo provato su casi veri.
 
 ### La pagina ufficiale del bando (`pagina_ufficiale`)
 
 Prima di scaricare gli allegati, `python -m app.schede.pagina_ufficiale` cerca per ogni bando la sua pagina ufficiale, provando nell'ordine: il link all'ente scritto nei dati grezzi (`campo`), la ricerca del sito per codice (`cerca`), poi le pagine degli annunci (seguendo i link se la fonte pubblica notizie, `segui_link`). Ogni pagina candidata viene aperta e controllata: una pagina di accesso, una pagina vuota o fatta solo di menu non vale. Se nessuna va bene il bando resta **"bando ufficiale non trovato"** e non avrà scheda.
 
-Senza il blocco `pagina_ufficiale` vale la pagina dell'annuncio, se contiene un bando. Il blocco si aggiunge quando la plancia mostra bandi non trovati di una fonte: come per gli indirizzi, le regole si scrivono solo dopo averle verificate su un caso vero (mai indirizzi ricostruiti a memoria). Regole in uso al 25/09/2026: incentivi.gov.it (`campo: link_ente`), Regione Lombardia (`escludi` + `cerca`), Emilia-Romagna e Comune di Pordenone (`documenti: plone_api`, Pordenone anche `sostituisci`), fonti di notizie di Unioncamere, Camere, Regioni e MIMIT (`segui_link`).
+Senza il blocco `pagina_ufficiale` vale la pagina dell'annuncio, se contiene un bando. Il blocco si aggiunge quando la plancia mostra bandi non trovati di una fonte: come per gli indirizzi, le regole si scrivono solo dopo averle verificate su un caso vero (mai indirizzi ricostruiti a memoria). Regole in uso al 25/09/2026: incentivi.gov.it (`campo: link_ente`), Regione Lombardia (`escludi` + `cerca`), Emilia-Romagna e Comune di Pordenone (`documenti: plone_api`, Pordenone anche `sostituisci`), fonti di notizie di Unioncamere, Camere, Regioni e MIMIT (`segui_link`). Dal 28/09 tutte le fonti con `piattaforma: plone` leggono pagina e documenti dall'API del sito, come con `documenti: plone_api` (Verona, La Spezia, Parma: l'HTML delle pagine Volto e' vuoto).
 
 Regole:
 - `url` e `feed_url` vanno scritti **solo se aperti davvero** durante una verifica: mai ricostruiti a memoria.

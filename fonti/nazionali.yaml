@@ -5,9 +5,9 @@
   ente: Ministero delle Imprese e del Made in Italy (portale incentivi.gov.it)
   tipo: nazionale
   territorio: ITA
-  url: https://www.incentivi.gov.it/it/cerca-incentivi
+  url: https://www.incentivi.gov.it/it/catalogo
   modalita: api
-  feed_url: https://www.incentivi.gov.it/solr/coredrupal/select?q=*:*&fq=index_id:incentivi&sort=ds_last_update%20desc&rows=200&wt=json&fl=id:zs_nid,titolo:zs_title,url:zs_url,riassunto:zs_body,data:zs_field_open_date,scadenza:zs_field_close_date,aggiornato:ds_last_update,link_ente:zs_field_link,regioni:zm_field_regions_value,dimensioni:zm_field_dimensions_value,forma:zm_field_support_form_value,ambito:zm_field_scopes_value,soggetti:zm_field_subject_type_value,spese:zm_field_granted_costs_value,settori:zm_field_activity_sector_value,ateco:zs_field_ateco,costo_min:zs_field_cost_min,costo_max:zs_field_cost_max,dotazione:zs_field_budget_allocation,gestore:zs_field_subject_grant
+  feed_url: https://www.incentivi.gov.it/solr/coredrupal/select?q=*:*&fq=index_id:incentivi&sort=ds_last_update%20desc&rows=200&wt=json&fl=id:zs_nid,titolo:zs_title,url:zs_url,riassunto:zs_body,data:ds_last_update,apertura:zs_field_open_date,scadenza:zs_field_close_date,link_ente:zs_field_link,regioni:zm_field_regions_value,dimensioni:zm_field_dimensions_value,forma:zm_field_support_form_value,ambito:zm_field_scopes_value,soggetti:zm_field_subject_type_value,spese:zm_field_granted_costs_value,settori:zm_field_activity_sector_value,ateco:zs_field_ateco,costo_min:zs_field_cost_min,costo_max:zs_field_cost_max,dotazione:zs_field_budget_allocation,gestore:zs_field_subject_grant
   piattaforma: drupal
   frequenza: giornaliera
   stato: attiva
@@ -19,8 +19,18 @@
     i campi vengono rinominati (alias) nei nomi che il lettore generico conosce: titolo, url, data
     (apertura), scadenza (chiusura), piu' dimensioni d'impresa, forma di agevolazione, spese ammesse,
     ATECO, regioni, dotazione, che restano nei dati grezzi per le schede. Circa 1 MB per lettura.
+    Il 27/09 (valutazione dell'efficacia): /it/cerca-incentivi risponde 404, la pagina del catalogo e'
+    /it/catalogo. "data" e' l'ultimo aggiornamento della scheda (ds_last_update), "apertura" la data di
+    apertura (prima era "data": una data futura sembrava una pubblicazione). La scorta legge in una sola
+    richiesta tutte le 5.909 misure (3,9 MB, meno di un secondo) e tiene quelle senza chiusura o con
+    chiusura da oggi in poi: 823 al 27/09 (618 con scadenza futura, 205 senza). I campi zs_ sono testo e
+    Solr non li filtra per data: il filtro lo fa la raccolta.
   pagina_ufficiale:                    # la scheda del catalogo rimanda al sito dell'ente
     campo: link_ente
+  scorta:
+    url: https://www.incentivi.gov.it/solr/coredrupal/select?q=*:*&fq=index_id:incentivi&rows=10000&wt=json&fl=id:zs_nid,titolo:zs_title,url:zs_url,riassunto:zs_body,data:ds_last_update,apertura:zs_field_open_date,scadenza:zs_field_close_date,link_ente:zs_field_link,regioni:zm_field_regions_value,dimensioni:zm_field_dimensions_value,forma:zm_field_support_form_value,ambito:zm_field_scopes_value,soggetti:zm_field_subject_type_value,spese:zm_field_granted_costs_value,settori:zm_field_activity_sector_value,ateco:zs_field_ateco,costo_min:zs_field_cost_min,costo_max:zs_field_cost_max,dotazione:zs_field_budget_allocation,gestore:zs_field_subject_grant
+    scadenza: scadenza
+    frequenza: settimanale
 
 - id: incentivi_gov_open_data
   nome: incentivi.gov.it - Open data (registro incentivi)
@@ -58,6 +68,11 @@
     su decreti, proroghe e sportelli usare la voce mimit_incentivi_aggiornamenti.
 
     '
+  scorta:                              # 27/09: il feed da 10 voci si pagina con start=10, 20...; circa 290 schede
+    parametro: start
+    inizio: 0
+    passo: 10
+    pagine: 40
 
 - id: mimit_incentivi_aggiornamenti
   nome: MIMIT - Incentivi, novita' e aggiornamenti
@@ -79,22 +94,59 @@
     segui_link: {testi: [bando, modulistica, avviso, "maggiori informazioni", "sito dell'ente"]}
 
 - id: invitalia_incentivi_imprese
-  nome: Invitalia - Incentivi e strumenti per le imprese
+  nome: Invitalia - Incentivi e strumenti per le imprese (attivi)
   ente: Invitalia
   tipo: nazionale
   territorio: ITA
-  url: https://www.invitalia.it/per-le-imprese/incentivi-e-strumenti
+  url: https://www.invitalia.it/per-le-imprese/incentivi-e-strumenti?stato_incentivo=129&items_per_page=60
   modalita: html
   feed_url: null
   piattaforma: null
   frequenza: tre_a_settimana
   stato: attiva
-  verificato_il: '2026-09-24'
+  verificato_il: '2026-09-27'
   note: 'Pagina HTML aperta (200, 600 KB): 16 schede con etichetta di stato nel markup ("Attivo", "In apertura",
     "Chiuso"), es. Contratto di sviluppo, Investimenti sostenibili 4.0 bando 2026, Smart&Start, Resto al Sud 2.0.
     Nessun RSS (/rss da'' 404). Osservare anche /per-chi-vuole-fare-impresa/incentivi-e-strumenti (nuove imprese).
 
+    27/09 (valutazione dell''efficacia): la pagina senza filtro mostrava 10 schede su circa 106 e i titoli corti
+    (GreenTour, Legge 181, Cultura Cresce) sparivano. Ora il filtro "Attivo" (stato_incentivo=129) con 60 schede
+    per pagina: tutti i 29 strumenti attivi in una lettura, letti solo dentro le schede (article.card--incentivi).
+    "In apertura" e "per chi vuole fare impresa" sono due voci a parte.
+
     '
+  richiesta:
+    selettore: article.card--incentivi
+
+- id: invitalia_incentivi_in_apertura
+  nome: Invitalia - Incentivi e strumenti in apertura
+  ente: Invitalia
+  tipo: nazionale
+  territorio: ITA
+  url: https://www.invitalia.it/per-le-imprese/incentivi-e-strumenti?stato_incentivo=130&items_per_page=60
+  modalita: html
+  frequenza: tre_a_settimana
+  stato: attiva
+  verificato_il: '2026-09-27'
+  note: 'Filtro "In apertura" (stato_incentivo=130) del catalogo Invitalia: al 27/09 una scheda (Fondo di contrasto
+    alla deindustrializzazione 2026).'
+  richiesta:
+    selettore: article.card--incentivi
+
+- id: invitalia_fare_impresa
+  nome: Invitalia - Incentivi per chi vuole fare impresa
+  ente: Invitalia
+  tipo: nazionale
+  territorio: ITA
+  url: https://www.invitalia.it/per-chi-vuole-fare-impresa/incentivi-e-strumenti
+  modalita: html
+  frequenza: tre_a_settimana
+  stato: attiva
+  verificato_il: '2026-09-27'
+  note: 'Strumenti per le nuove imprese, in un blocco separato dal catalogo: Resto al Sud 2.0, Autoimpiego
+    Centro-Nord, ON, Smart&Start (12 schede al 27/09). Persi nella valutazione del 27/09.'
+  richiesta:
+    selettore: article.card--incentivi
 
 - id: gse_bandi_avvisi
   nome: GSE - Bandi e avvisi, meccanismi di incentivazione
@@ -138,6 +190,38 @@
 
     '
 
+
+- id: simest_internazionalizzazione_strumenti
+  nome: SIMEST - Finanziamenti agevolati per l'internazionalizzazione, strumenti aperti
+  ente: SIMEST (gruppo CDP)
+  tipo: nazionale
+  territorio: ITA
+  url: https://www.simest.it/per-le-imprese/finanziamenti-agevolati/finanziamenti-agevolati-internazionalizzazione/
+  modalita: html
+  piattaforma: wordpress
+  frequenza: tre_a_settimana
+  stato: attiva
+  verificato_il: '2026-09-27'
+  note: 'Aggiunta il 27/09 (valutazione dell''efficacia): la voce simest_finanziamenti_agevolati legge solo
+    l''indice delle 6 macro-voci; i 9 strumenti aperti (Transizione digitale o ecologica, riserve Africa, India,
+    America Latina, Certificazioni, Temporary Manager, Inserimento mercati, E-commerce, Fiere) sono un livello
+    sotto, nelle schede div.box-link di questa pagina. Strumenti a sportello senza scadenza.'
+  richiesta:
+    selettore: div.box-link
+
+- id: simest_comunicati_stampa
+  nome: SIMEST - Comunicati stampa
+  ente: SIMEST (gruppo CDP)
+  tipo: nazionale
+  territorio: ITA
+  url: https://www.simest.it/media/comunicati-stampa/
+  modalita: html
+  piattaforma: wordpress
+  frequenza: settimanale
+  stato: attiva
+  verificato_il: '2026-09-27'
+  note: 'Aggiunta il 27/09: le misure trasversali (Energia per la competitivita'' internazionale, Nuova misura USA,
+    IA e quantum computing) sono annunciate nei comunicati, fuori dal catalogo. 12 comunicati per pagina.'
 - id: mcc_fondo_garanzia_news
   nome: Fondo di garanzia PMI - News e circolari
   ente: Mediocredito Centrale (gestore Fondo di garanzia)
@@ -206,6 +290,9 @@
     pubblici" (es. 23/09/2026 "Staff House, Titolo III: secondo elenco", 21/09 consultazioni AIR/VIR): si
     usa quello, lettura giornaliera perche' 10 voci coprono pochi giorni, e lo smistamento scarta la
     rassegna stampa. incentivi.gov.it ha 5 misure del Ministero del Turismo (Staff house Titolo II 2026).
+  scorta:                              # 27/09: il feed ha 10 articoli (pochi giorni); la sitemap dei post ha tutti gli articoli recenti
+    url: https://www.ministeroturismo.gov.it/sitemap_index.xml
+    modalita: sitemap
 
 - id: mase_bandi_avvisi
   nome: MASE - Bandi e avvisi
@@ -266,7 +353,17 @@
     status, startDate, deadlineDate, deadlineModel, frameworkProgramme, programmePeriod e url della scheda. GET
     non ammesso (405). Il portale HTML e'' un''app JavaScript: serve solo come riferimento umano.
 
+    Il 27/09 (valutazione dell''efficacia): la prima pagina da 50 lasciava fuori 39 bandi su 40 del campione
+    (EIC Accelerator, EIC STEP, I3, Eurostars...). Il lettore ora ordina per startDate e legge anche le
+    sovvenzioni a cascata (tipo 8, spesso per PMI) con titolo e pagina propri; la scorta legge tutte le pagine
+    da 100 e scarta le voci con scadenza (deadlineDate) gia'' passata.
+
     '
+  scorta:
+    url: https://api.tech.ec.europa.eu/search-api/prod/rest/search?apiKey=SEDIA&text=***&pageSize=100&pageNumber={pagina}
+    pagine: 40
+    scadenza: scadenza
+    frequenza: settimanale
 
 - id: ue_eismea_calls
   nome: EISMEA - Calls for proposals

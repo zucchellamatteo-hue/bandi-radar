@@ -47,6 +47,9 @@
     il codice su Bandi Online. Il catalogo si interroga con /api/catalog/v1?q=bandi&domains=www.dati.lombardia.it.
 
     '
+  scorta:                              # 27/09: tutte le 1.912 righe (0,7 MB), si tengono quelle senza chiusura o con chiusura futura (241)
+    url: https://www.dati.lombardia.it/resource/bukx-h2uy.json?$limit=10000
+    scadenza: chiusura_adesione
   pagina_ufficiale:                    # verificato il 25/09/2026: la ricerca del sito trova la pagina di dettaglio dal codice
     escludi: ["/la-mia-area/", "faiDomanda"]   # pagine di domanda con login, non il bando
     cerca:
@@ -98,6 +101,10 @@
   richiesta:
     intestazioni:
       X-Requested-With: XMLHttpRequest
+    selettore: div.container-title       # 27/09: titoli brevi (PLAIN VANILLA, Microcredito) sotto i 18 caratteri
+  scorta:                              # 27/09: 7 pagine da 18 schede; i prodotti aperti di pagina 2 non entravano mai
+    parametro: page
+    pagine: 12
 
 - id: emilia_romagna_imprese_bandi_api
   nome: Regione Emilia-Romagna - Portale Imprese, tutti i bandi (API Plone)
@@ -165,18 +172,30 @@
   ente: Regione Piemonte
   tipo: regione
   territorio: PIE
-  url: https://bandi.regione.piemonte.it/contributi-finanziamenti?destinatari=imprese&stato=aperto
+  url: https://bandi.regione.piemonte.it/contributi-finanziamenti?field_target_target_id=2&field_stato_target_id=19
   modalita: html
   feed_url: null
   piattaforma: drupal
   frequenza: giornaliera
   stato: attiva
-  verificato_il: '2026-09-24'
+  verificato_il: '2026-09-28'
   note: 'Portale bandi.regione.piemonte.it (Drupal), sezione "Contributi e finanziamenti" già filtrata per destinatario
     "Imprese e liberi professionisti" e stato "Aperto": 20 voci per pagina, 8 pagine (&page=N). Altri stati: pre-informazione,
     scaduto, esito. Le procedure gestite da Finpiemonte compaiono qui con tipo "Avviso di procedura presso Finpiemonte".
 
+    28/09 (valutazione dell''efficacia): i parametri destinatari=imprese&stato=aperto non filtravano nulla (si
+    leggeva la prima pagina di tutto il catalogo, 3 link). I filtri veri del modulo sono field_target_target_id=2
+    (Imprese e liberi professionisti) e field_stato_target_id=19 (Aperto): 33 bandi su 5 pagine al 27/09. I link
+    "Per saperne di piu''" stanno in un <nav> dentro ogni scheda (article.node--view-mode-teaser).
+
     '
+  richiesta:
+    selettore: article.node--view-mode-teaser
+  scorta:                              # tutte le pagine del filtro: dei 33 bandi aperti per imprese ne entrava 1
+    parametro: page
+    inizio: 0
+    pagine: 15
+    frequenza: settimanale
 
 - id: piemonte_bandi_rss
   nome: Regione Piemonte - RSS di tutti i bandi
@@ -194,7 +213,22 @@
     bandi per enti locali, ecc.): serve come segnale di novità, il dettaglio si legge dalla pagina filtrata.
 
     '
-
+- id: piemonte_bandi_preinformazione_imprese
+  nome: Regione Piemonte - Contributi e finanziamenti in pre-informazione, rivolti alle imprese
+  ente: Regione Piemonte
+  tipo: regione
+  territorio: PIE
+  url: https://bandi.regione.piemonte.it/contributi-finanziamenti?field_target_target_id=2&field_stato_target_id=87
+  modalita: html
+  piattaforma: drupal
+  frequenza: tre_a_settimana
+  stato: attiva
+  verificato_il: '2026-09-27'
+  note: 'Aggiunta il 27/09 (valutazione dell''efficacia): i bandi annunciati prima dell''apertura (filtro "Rivolto a:
+    Imprese e liberi professionisti" e stato "Pre-informazione"). Al 27/09 una voce (Voucher digitalizzazione PMI
+    2026). I link "Per saperne di piu''" stanno dentro le schede (article.node--view-mode-teaser).'
+  richiesta:
+    selettore: article.node--view-mode-teaser
 - id: piemonte_fesr_calendario_inviti
   nome: Regione Piemonte - PR FESR 2021-2027, Calendario inviti a presentare proposte (art. 49)
   ente: Regione Piemonte
@@ -267,17 +301,17 @@
     '
 
 - id: fvg_bandi_avvisi
-  nome: Regione FVG - Bandi e avvisi in corso (modulo bandi_avvisi)
+  nome: Regione FVG - Bandi e avvisi con misure contributive (modulo bandi_avvisi)
   ente: Regione Autonoma Friuli Venezia Giulia
   tipo: regione
   territorio: FVG
-  url: https://www.regione.fvg.it/rafvg/cms/RAFVG/MODULI/bandi_avvisi/
+  url: https://www.regione.fvg.it/rafvg/cms/RAFVG/MODULI/bandi_avvisi/ricerca.jsp?txtChiave=&onlyTagServizio=1
   modalita: html
   feed_url: null
   piattaforma: null
   frequenza: giornaliera
   stato: attiva
-  verificato_il: '2026-09-24'
+  verificato_il: '2026-09-27'
   note: 'Elenco HTML unico di tutti i bandi e avvisi regionali in corso (data pubblicazione, scadenza, titolo, struttura
     competente), 13 pagine (?pag=N). Molto misto: avvisi ambientali, collocamento mirato (?p=cm), centri per l''impiego
     (?p=cpi): filtrare per struttura (es. "Direzione centrale attività produttive") o parole chiave (contributo,
@@ -285,7 +319,17 @@
     artigianato, commercio, accesso al credito, turismo) hanno schede FOGLIA per singola misura, senza elenco datato.
     Open data FVG (dati.friuliveneziagiulia.it, Socrata): nessun dataset con "bandi".
 
+    27/09 (valutazione dell''efficacia): la prima pagina dell''elenco generale ha circa 15 voci, quasi tutte centri
+    per l''impiego e concessioni idriche; i 6 avvisi per imprese del campione stavano nelle pagine successive e i
+    link di paginazione diventavano annunci. Ora si osserva il filtro "Bandi contenenti misure contributive"
+    (onlyTagServizio=1, circa 11 voci per pagina, 2 pagine), solo dentro le schede (div.box-bando).
+
     '
+  richiesta:
+    selettore: div.box-bando
+  scorta:
+    parametro: pag
+    pagine: 10
 
 - id: fvg_notizie_rss
   nome: Regione FVG - RSS notizie in evidenza
@@ -767,6 +811,8 @@
     (aperta, 200) con tre sottopagine: Bandi-attivi, Bandi-in-uscita (pianificazione dei vantaggi economici =
     calendario avvisi), Bandi-scaduti; le sottopagine sono state bloccate dal bot manager. Dal VPS il 24/09:
     16 link letti, bandi (?idb=...) misti a link di categoria (?t=...): lo smistamento separera' quelli utili.
+  richiesta:                           # 27/09: solo i titoli dei bandi (le etichette di categoria ?p=1&t=... diventavano annunci e bandi fantasma)
+    selettore: div.table-hover h4
 
 - id: marche_rss_tematici
   nome: Regione Marche - Feed RSS per tema
@@ -955,11 +1001,11 @@
     '
 
 - id: molise_home_notizie
-  nome: Regione Molise - Home (notizie e avvisi)
+  nome: Regione Molise - Archivio notizie
   ente: Regione Molise
   tipo: regione
   territorio: MOL
-  url: https://www.regione.molise.it/flex/cm/pages/ServeBLOB.php/L/IT/IDPagina/1
+  url: https://www.regione.molise.it/flex/cm/pages/ServeBLOB.php/L/IT/IDPagina/6867
   modalita: html
   feed_url: null
   piattaforma: flexcmp
@@ -975,8 +1021,13 @@
     "Presentato l'Avviso STEP Molise"). moliseeuropa.regione.molise.it non raggiungibile (502 dal proxy).
     Nessun RSS trovato. Dal VPS il 24/09: con il selettore div.Notizie si leggono le notizie della home invece
     dei link del menu.
-  richiesta:
-    selettore: div.Notizie
+  richiesta:                           # 27/09: dalla home (5 notizie) all'archivio notizie (15), solo l'elenco
+    selettore: div.TitoloFotoDesc
+  scorta:                              # 27/09: notizie dell'anno mese per mese (start-up innovative e CSR SRD03 erano usciti dalla home)
+    url: https://www.regione.molise.it/flex/cm/pages/ServeBLOB.php/L/IT/IDPagina/6867?YY={anno}
+    parametro: MM
+    pagine: 12
+    tutte_le_pagine: true              # un mese senza notizie non vuol dire fine dell'archivio
   pagina_ufficiale:                    # notizie: si segue il link al bando sul sito dell'ente
     segui_link: {testi: [bando, modulistica, avviso, "maggiori informazioni", "sito dell'ente"]}
 
@@ -1243,6 +1294,10 @@
     formazione): smistare per titolo.
 
     '
+  scorta:                              # 27/09: il sito aggiorna i vecchi articoli invece di pubblicarne di nuovi: bandi aperti fuori dai primi 50
+    url: https://calabriaeuropa.regione.calabria.it/wp-json/wp/v2/bando?per_page=100
+    parametro: page
+    pagine: 10
 
 - id: calabria_europa_calendario_inviti
   nome: Calabria Europa - Calendario avvisi 21-27 (art. 49)
@@ -1449,6 +1504,27 @@
           values:
           - BANDO
     url_modello: https://www.regione.sardegna.it/atti-bandi-archivi/atti-amministrativi/bandi/{slug}
+  scorta:                              # 27/09: la prima pagina da 50 lasciava fuori 62 bandi aperti pubblicati prima
+    corpo_json:
+      state:
+        current: "{pagina}"
+        resultsPerPage: 100
+        searchTerm: ""
+        sortList: [{field: dataPubblicazione, direction: desc}]
+        filters:
+          - {field: stato.keyword, type: any, values: [PUBBLICATO]}
+          - {field: esterno, type: any, values: ["false"]}
+          - {field: tipoContenuto.keyword, type: any, values: [BANDO]}
+      config:
+        result_fields: {}
+        facets: {}
+        filters:
+          - {field: stato.keyword, type: any, values: [PUBBLICATO]}
+          - {field: esterno, type: any, values: ["false"]}
+          - {field: tipoContenuto.keyword, type: any, values: [BANDO]}
+    pagine: 30
+    scadenza: dataScadenza
+    senza_scadenza_mesi: 12            # gare e affidamenti senza scadenza di anni fa: fuori
 
 - id: sardegna_sardegnaimpresa_agevolazioni
   nome: SardegnaImpresa - Agevolazioni per le imprese
