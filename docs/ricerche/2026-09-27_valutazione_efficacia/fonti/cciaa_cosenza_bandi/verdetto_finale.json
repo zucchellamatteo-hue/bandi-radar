@@ -1,0 +1,387 @@
+{
+ "fonte": "cciaa_cosenza_bandi",
+ "perimetro": [
+  {
+   "titolo": "01 Bando Sostenibilita' e Risparmio Energetico IX (ERM9)",
+   "url": "https://www.cs.camcom.gov.it/it/content/service/01-bando-sostenibilt%C3%A0-e-risparmio-energetico-ix",
+   "esito": "fermato_giustamente",
+   "annuncio": 876,
+   "bando": null,
+   "spiegazione": "L'esploratore lo dava aperto al 30/09, ma la tabella della pagina Bandi 2026 (verificata il 27/09) porta come data di chiusura 08/04/2026 al posto del 30/09: chiuso in anticipo. Le regole lo hanno lasciato da_rivedere e non e' diventato un bando: esito finale corretto, per caso. Confermato il 27/09: nel codice HTML della pagina 2026 la data 30/09/2026 e' dentro un tag di barratura e accanto c'e' 08/04/2026."
+  },
+  {
+   "titolo": "02 Bando Attestazione SOA e Certificazioni di Qualita' VI (SOA6)",
+   "url": "https://www.cs.camcom.gov.it/it/content/service/02-bando-attestazione-soa-e-certificazioni-di-qualit%C3%A0-vi",
+   "esito": "fermato_giustamente",
+   "annuncio": 877,
+   "bando": null,
+   "spiegazione": "Chiuso in anticipo l'08/04/2026 secondo la tabella della pagina 2026 (restano graduatorie fino al 22/09). Annuncio da_rivedere, nessun bando: nessuna perdita reale. Confermato il 27/09: nel codice HTML della pagina 2026 la data 30/09/2026 e' dentro un tag di barratura e accanto c'e' 08/04/2026."
+  },
+  {
+   "titolo": "03 Bando Video Sorveglianza Digitale IV (VSD4)",
+   "url": "https://www.cs.camcom.gov.it/it/content/service/03-bando-video-sorveglianza-digitale-iv",
+   "esito": "fermato_giustamente",
+   "annuncio": 878,
+   "bando": null,
+   "spiegazione": "Chiuso in anticipo l'08/04/2026 secondo la tabella della pagina 2026. Annuncio da_rivedere, nessun bando. Confermato il 27/09: nel codice HTML della pagina 2026 la data 30/09/2026 e' dentro un tag di barratura e accanto c'e' 08/04/2026."
+  },
+  {
+   "titolo": "04 Bando Crescita e sviluppo della competitivita' delle imprese commerciali e turistiche (CSC1)",
+   "url": "https://www.cs.camcom.gov.it/it/content/service/04-bando-crescita-e-sviluppo-della-competitivit%C3%A0-delle-imprese-commerciali-e",
+   "esito": "trovato_con_scheda",
+   "annuncio": 879,
+   "bando": 243,
+   "spiegazione": "Catena completa (rilevante, bando 243, pagina trovata, scheda), ma il bando e' chiuso in anticipo l'08/04/2026: la scheda non doveva esserci. Errore del preliminare di produzione (stato non_noto). Confermato il 27/09: nel codice HTML della pagina 2026 la data 30/09/2026 e' dentro un tag di barratura e accanto c'e' 08/04/2026."
+  },
+  {
+   "titolo": "05 Bando Nuove Imprese IV (SNI4)",
+   "url": "https://www.cs.camcom.gov.it/it/content/service/05-bando-nuove-imprese-iv",
+   "esito": "trovato_con_scheda",
+   "annuncio": 880,
+   "bando": 244,
+   "spiegazione": "Catena completa fino alla scheda, ma la pagina del bando (verificata) mostra stato CHIUSO: 150.000 euro concessi su 150.000 (agg. 24/06/2026). Radar lo tiene come aperto fino al 30/09: scheda superflua, errore del preliminare di produzione."
+  },
+  {
+   "titolo": "06 Bando Filiera Agroalimentare II (FAM2) - REVOCATO",
+   "url": "https://www.cs.camcom.it/it/content/service/versoleimprese-bandi-2026",
+   "esito": "fermato_giustamente",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Revocato, senza pagina di dettaglio: non raccolto, ed e' giusto cosi'."
+  },
+  {
+   "titolo": "07 Bando Voucher Digitali I4.0 XII (P12)",
+   "url": "https://www.cs.camcom.gov.it/it/content/service/07-bando-voucher-digitali-i40",
+   "esito": "trovato_con_scheda",
+   "annuncio": 881,
+   "bando": 245,
+   "spiegazione": "Catena completa fino alla scheda, ma chiuso in anticipo l'08/04/2026 (tabella della pagina 2026). Radar lo da' aperto al 30/09: scheda superflua, errore del preliminare di produzione. Confermato il 27/09: nel codice HTML della pagina 2026 la data 30/09/2026 e' dentro un tag di barratura e accanto c'e' 08/04/2026."
+  },
+  {
+   "titolo": "09 Bando Reti di Impresa (RTI1)",
+   "url": "https://www.cs.camcom.gov.it/it/content/service/09-bando-reti-di-impresa",
+   "esito": "trovato_con_scheda",
+   "annuncio": 883,
+   "bando": 247,
+   "spiegazione": "Aperto fino al 30/09/2026; rilevante, bando 247, pagina trovata, preliminare passa, scheda presente. Corretto."
+  },
+  {
+   "titolo": "10 Bando Sicurezza sui luoghi di lavoro IV (SLL4)",
+   "url": "https://www.cs.camcom.gov.it/it/content/service/10-bando-sicurezza-sui-luoghi-di-lavoro-iv",
+   "esito": "fermato_giustamente",
+   "annuncio": 884,
+   "bando": null,
+   "spiegazione": "Chiuso in anticipo l'08/04/2026 secondo la tabella della pagina 2026. Annuncio da_rivedere, nessun bando. Confermato il 27/09: nel codice HTML della pagina 2026 la data 30/09/2026 e' dentro un tag di barratura e accanto c'e' 08/04/2026."
+  },
+  {
+   "titolo": "11 Bando Impresa in Fiera (INF1)",
+   "url": "https://www.cs.camcom.gov.it/it/content/service/11-bando-impresa-fiera",
+   "esito": "trovato_con_scheda",
+   "annuncio": 885,
+   "bando": 248,
+   "spiegazione": "Aperto fino al 30/09/2026; catena completa con scheda. Corretto."
+  },
+  {
+   "titolo": "12 Bando Turismo congressuale, religioso e sportivo V (TUC5)",
+   "url": "https://www.cs.camcom.gov.it/it/content/service/12-bando-turismo-congressuale-religioso-e-sportivo-v",
+   "esito": "fermato_giustamente",
+   "annuncio": 886,
+   "bando": null,
+   "spiegazione": "Aperto, ma la pagina (verificata) indica come destinatari 'Ordini professionali e Associazioni collegate ad organismi che operano a livello nazionale': non e' per imprese. Annuncio da_rivedere, nessun bando: nessuna perdita."
+  },
+  {
+   "titolo": "013 Bando Contributi Eventi Alluvionali (CEA1)",
+   "url": "https://www.cs.camcom.gov.it/it/content/service/013-bando-contributi-eventi-alluvionali",
+   "esito": "trovato_con_scheda",
+   "annuncio": 887,
+   "bando": 408,
+   "spiegazione": "Aperto fino al 30-31/10/2026; catena completa con scheda. Corretto."
+  },
+  {
+   "titolo": "014 Bando Doppia Transizione anno 2026 I edizione (BDT1)",
+   "url": "https://www.cs.camcom.gov.it/it/content/service/014-bando-doppia-transizione-anno-2026-i-edizione",
+   "esito": "perso_smistamento",
+   "annuncio": 888,
+   "bando": null,
+   "spiegazione": "Aperto (pagina verificata: stato ATTIVO, 100.000 euro per MPMI, scadenza 30/09/2026). Raccolto, ma le regole lo hanno lasciato da_rivedere ('nessuna parola chiave') e l'annuncio e' rimasto li': nessun bando, nessuna scheda. Haiku e Opus lo avrebbero dato rilevante. Riverificato il 27/09: pagina ATTIVO, 30 domande per 262.371,45 euro richiesti contro 100.000 stanziati, invio domande fino alle 21:00 del 30/09/2026. Perdita confermata."
+  },
+  {
+   "titolo": "15 AI Lab Cosenza 2026 (AIL1)",
+   "url": "https://www.cs.camcom.it/it/content/service/15-ai-lab-cosenza-2026",
+   "esito": "perso_smistamento",
+   "annuncio": 889,
+   "bando": null,
+   "spiegazione": "Aperto fino al 12/10/2026 (pagina verificata: APERTO, 75.000 euro a MPMI della provincia per consulenze e licenze IA). Le regole lo lasciano da_rivedere e non diventa bando. Perdita piu' grave della fonte: e' l'unico bando con tempo utile oltre il 30/09 insieme al CEA1."
+  },
+  {
+   "titolo": "Manifestazione di interesse - Fiera Goodlife-Biolife Bolzano 13-15 novembre 2026",
+   "url": "https://www.cs.camcom.it/it/content/service/fiera-goodlife-biolife-bolzano-13-15-novembre-2026",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "News di Promocosenza (adesioni entro il 30/09/2026), non elencata nella pagina Bandi 2026 osservata dalla fonte: non poteva essere raccolta qui (serve una fonte sulle News della Camera/Promocosenza). Il PDF dell'avviso (verificato il 27/09) dice che stand, postazione e supporto logistico sono 'interamente sostenuti dal contributo della Camera di Commercio di Cosenza' per 8 imprese: e' nel perimetro (regola 3, collettiva a costi coperti), non dubbio. Perdita reale ma di valore limitato (8 posti, viaggio e alloggio esclusi) e non imputabile a questa fonte."
+  }
+ ],
+ "smistamento": [
+  {
+   "annuncio": 879,
+   "regole": "rilevante",
+   "haiku": "rilevante",
+   "opus": "rilevante",
+   "giusto": "rilevante",
+   "errore_regole": "nessuno",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Bando camerale per imprese commerciali e turistiche; la chiusura si decide al preliminare."
+  },
+  {
+   "annuncio": 880,
+   "regole": "rilevante",
+   "haiku": "rilevante",
+   "opus": "rilevante",
+   "giusto": "rilevante",
+   "errore_regole": "nessuno",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Bando per nuove imprese."
+  },
+  {
+   "annuncio": 881,
+   "regole": "rilevante",
+   "haiku": "rilevante",
+   "opus": "rilevante",
+   "giusto": "rilevante",
+   "errore_regole": "nessuno",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Voucher digitali alle PMI."
+  },
+  {
+   "annuncio": 883,
+   "regole": "rilevante",
+   "haiku": "rilevante",
+   "opus": "rilevante",
+   "giusto": "rilevante",
+   "errore_regole": "nessuno",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Contributi a reti di impresa."
+  },
+  {
+   "annuncio": 885,
+   "regole": "rilevante",
+   "haiku": "rilevante",
+   "opus": "rilevante",
+   "giusto": "rilevante",
+   "errore_regole": "nessuno",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Contributi alle PMI per fiere."
+  },
+  {
+   "annuncio": 887,
+   "regole": "rilevante",
+   "haiku": "rilevante",
+   "opus": "rilevante",
+   "giusto": "rilevante",
+   "errore_regole": "nessuno",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Contributi alle imprese alluvionate."
+  },
+  {
+   "annuncio": 888,
+   "regole": "da_rivedere",
+   "haiku": "rilevante",
+   "opus": "rilevante",
+   "giusto": "rilevante",
+   "errore_regole": "lieve",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "'Bando Doppia Transizione' di una Camera di Commercio: per il prompt (regola 5) e' quasi sempre per imprese. Da_rivedere su caso chiaro e' lieve per definizione, ma in pratica ha fatto perdere un bando aperto perche' il da_rivedere non e' stato ripreso."
+  },
+  {
+   "annuncio": 889,
+   "regole": "da_rivedere",
+   "haiku": "rilevante",
+   "opus": "rilevante",
+   "giusto": "rilevante",
+   "errore_regole": "lieve",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Bando AI Lab per MPMI, aperto fino al 12/10. Stesso difetto: nessuna parola chiave nel titolo, rimasto da_rivedere e perso."
+  },
+  {
+   "annuncio": 899,
+   "regole": "da_rivedere",
+   "haiku": "non_rilevante",
+   "opus": "rilevante",
+   "giusto": "rilevante",
+   "errore_regole": "lieve",
+   "errore_haiku": "lieve",
+   "errore_opus": "nessuno",
+   "spiegazione": "Graduatoria di concessione (P12 voucher digitali). Il prompt dice esplicitamente che graduatorie ed esiti di bandi per imprese sono rilevanti: Haiku va contro l'istruzione. Impatto pratico nullo (il bando ha la sua pagina e la sua scheda), quindi lieve."
+  },
+  {
+   "annuncio": 901,
+   "regole": "da_rivedere",
+   "haiku": "non_rilevante",
+   "opus": "rilevante",
+   "giusto": "rilevante",
+   "errore_regole": "lieve",
+   "errore_haiku": "lieve",
+   "errore_opus": "nessuno",
+   "spiegazione": "Graduatoria di concessione del bando Reti di impresa: rilevante per il prompt; nessuna perdita di bando."
+  },
+  {
+   "annuncio": 905,
+   "regole": "da_rivedere",
+   "haiku": "non_rilevante",
+   "opus": "rilevante",
+   "giusto": "non_rilevante",
+   "errore_regole": "nessuno",
+   "errore_haiku": "nessuno",
+   "errore_opus": "lieve",
+   "spiegazione": "Graduatoria di concessione TUC5. La pagina del bando (verificata il 27/09) indica come destinatari 'Ordini professionali e Associazioni collegate ad organismi che operano a livello nazionale': non e' un bando per imprese, quindi la graduatoria e' non_rilevante. Haiku ha ragione (anche se per un motivo sbagliato), Opus sbaglia in modo scusabile (dal solo titolo non si capiva); da_rivedere delle regole e' legittimo. Impatto nullo."
+  },
+  {
+   "annuncio": 907,
+   "regole": "da_rivedere",
+   "haiku": "non_rilevante",
+   "opus": "rilevante",
+   "giusto": "rilevante",
+   "errore_regole": "lieve",
+   "errore_haiku": "lieve",
+   "errore_opus": "nessuno",
+   "spiegazione": "Graduatoria di rendicontazione di un bando camerale per imprese: rilevante per il prompt, impatto nullo."
+  },
+  {
+   "annuncio": 908,
+   "regole": "da_rivedere",
+   "haiku": "non_rilevante",
+   "opus": "rilevante",
+   "giusto": "rilevante",
+   "errore_regole": "lieve",
+   "errore_haiku": "lieve",
+   "errore_opus": "nessuno",
+   "spiegazione": "Graduatoria di rendicontazione SNI IV: rilevante per il prompt, impatto nullo."
+  },
+  {
+   "annuncio": 909,
+   "regole": "da_rivedere",
+   "haiku": "non_rilevante",
+   "opus": "rilevante",
+   "giusto": "rilevante",
+   "errore_regole": "lieve",
+   "errore_haiku": "lieve",
+   "errore_opus": "nessuno",
+   "spiegazione": "Graduatoria di rendicontazione Impresa in Fiera: rilevante per il prompt, impatto nullo."
+  }
+ ],
+ "preliminare": [
+  {
+   "bando": 243,
+   "produzione": "passa",
+   "haiku_nuovo": "ferma",
+   "opus": "ferma",
+   "giusto": "ferma",
+   "errore_produzione": "medio",
+   "errore_haiku_nuovo": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "CSC1 chiuso in anticipo l'08/04/2026 (tabella della pagina Bandi 2026, verificata). Produzione con stato non_noto lo fa passare e produce una scheda inutile."
+  },
+  {
+   "bando": 244,
+   "produzione": "passa",
+   "haiku_nuovo": "ferma",
+   "opus": "ferma",
+   "giusto": "ferma",
+   "errore_produzione": "medio",
+   "errore_haiku_nuovo": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "SNI4: la pagina del bando indica stato CHIUSO, fondi esauriti (agg. 24/06/2026), nonostante la scadenza nominale 30/09. Radar lo registra come aperto."
+  },
+  {
+   "bando": 245,
+   "produzione": "passa",
+   "haiku_nuovo": "ferma",
+   "opus": "ferma",
+   "giusto": "ferma",
+   "errore_produzione": "medio",
+   "errore_haiku_nuovo": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "P12 chiuso in anticipo l'08/04/2026 secondo la tabella della pagina 2026. Radar lo registra come aperto fino al 30/09."
+  },
+  {
+   "bando": 247,
+   "produzione": "passa",
+   "haiku_nuovo": "passa",
+   "opus": "passa",
+   "giusto": "passa",
+   "errore_produzione": "nessuno",
+   "errore_haiku_nuovo": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "RTI1 aperto fino al 30/09/2026."
+  },
+  {
+   "bando": 248,
+   "produzione": "passa",
+   "haiku_nuovo": "passa",
+   "opus": "passa",
+   "giusto": "passa",
+   "errore_produzione": "nessuno",
+   "errore_haiku_nuovo": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "INF1 aperto fino al 30/09/2026."
+  },
+  {
+   "bando": 408,
+   "produzione": "passa",
+   "haiku_nuovo": "passa",
+   "opus": "passa",
+   "giusto": "passa",
+   "errore_produzione": "nessuno",
+   "errore_haiku_nuovo": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "CEA1 aperto fino al 30/10/2026 (la pagina dice 31/10)."
+  }
+ ],
+ "osservazioni": [
+  "Le regole di smistamento lasciano da_rivedere 28 annunci su 34, tutti di una Camera di Commercio: i titoli 'NN BANDO ...' senza parole come 'impres*', 'contribut*', 'voucher' non scattano. Il prompt stesso dice che un 'Bando' di una Camera e' quasi sempre per imprese: le regole dovrebbero usare il tipo di fonte (camera) come indizio.",
+  "Gli annunci da_rivedere non vengono ripresi da nessuno (nessun bando collegato): cosi' si perdono due bandi aperti (BDT1 e AI Lab, quest'ultimo fino al 12/10). Serve che i da_rivedere passino davvero a Haiku.",
+  "Sulla pagina Bandi 2026 la chiusura anticipata e' indicata sostituendo la data 30/09/2026 con 08/04/2026 nella colonna chiusura (probabilmente testo barrato): sia l'esploratore sia il radar leggono 30/09 e danno per aperti bandi chiusi da mesi. Anche lo stato CHIUSO/APERTO/ATTIVO in testa a ogni pagina di bando (tabella Stato/Stanziamento/Importo concesso) va passato al preliminare: e' l'indizio piu' affidabile.",
+  "Il preliminare di produzione dei 6 bandi ha stato non_noto per tutti (compilato a mano senza API): passa tutto, incluse 3 schede di bandi chiusi (243, 244, 245). Haiku a piccoli lotti e Opus li fermano correttamente.",
+  "Istruzione del prompt di smistamento non seguita da Haiku: le graduatorie di bandi per imprese vanno 'rilevante', Haiku le scarta sistematicamente. Impatto pratico nullo qui, ma e' una divergenza da tenere d'occhio (o da togliere dal prompt se le graduatorie non servono).",
+  "La fonte elenca anche 23 PDF di graduatorie come annunci separati: molto rumore. Conviene collegarli al bando di riferimento (codice ERM9, SOA6, P12...) invece di trattarli come annunci autonomi.",
+  "Il dominio cs.camcom.gov.it reindirizza a cs.camcom.it: gli indirizzi degli annunci e dei bandi differiscono solo per il dominio (e per accenti nello slug, es. bando 243), cosa da considerare nella deduplica.",
+  "L'esploratore ha sbagliato lo stato di 7 bandi (6 chiusi l'08/04 e SNI4 esaurito) e ha messo TUC5 come 'incerto' mentre e' per ordini e associazioni: il riferimento del perimetro va letto con cautela.",
+  "Verifica di riserva (27/09): la Manifestazione di interesse Goodlife-Biolife e' un'agevolazione vera (stand pagato dalla Camera per 8 imprese); le iniziative di Promocosenza escono nelle News, non nella pagina Bandi: valutare una fonte dedicata alle News della Camera. Nessun'altra sezione dimenticata dall'esploratore nella pagina Bandi 2026: oltre ai 15 bandi e alle tabelle graduatorie ci sono solo voci di menu; l'avviso INAIL formazione sicurezza linkato nel menu e' chiuso dal 18/03/2025."
+ ],
+ "correzioni": [
+  {
+   "caso": "Manifestazione di interesse Fiera Goodlife-Biolife Bolzano",
+   "prima": "perso_non_raccolto, perimetro dubbio (non si sa se lo spazio e' gratuito)",
+   "dopo": "perso_non_raccolto, nel perimetro senza dubbi",
+   "perche": "Il PDF allegato alla news dice che stand, postazione e supporto logistico sono interamente sostenuti dal contributo della Camera per 8 imprese (viaggio e alloggio esclusi): e' una collettiva a costi coperti, regola 3 del prompt. Resta non imputabile a questa fonte, che osserva solo la pagina Bandi 2026."
+  },
+  {
+   "caso": "Smistamento annuncio 905 (graduatoria TUC5)",
+   "prima": "giusto rilevante; regole lieve, Haiku lieve, Opus nessuno",
+   "dopo": "giusto non_rilevante; regole nessuno, Haiku nessuno, Opus lieve",
+   "perche": "TUC5 e' destinato a ordini professionali e associazioni, non a imprese (pagina verificata): la sua graduatoria non riguarda un bando per imprese. Lo stesso controllore lo aveva notato ma non aveva cambiato il giudizio. Tutti errori lievi, nessun effetto sui conteggi."
+  },
+  {
+   "caso": "Bandi ERM9, SOA6, VSD4, CSC1, P12, SLL4 e SNI4 (chiusi)",
+   "prima": "chiusi in anticipo / fondi esauriti",
+   "dopo": "confermato",
+   "perche": "Nell'HTML della pagina Bandi 2026 la data 30/09/2026 e' barrata e sostituita da 08/04/2026 per questi sei; le pagine di CSC1, P12 e SNI4 mostrano CHIUSO. Confermati i 3 errori medi del preliminare di produzione (243, 244, 245)."
+  },
+  {
+   "caso": "BDT1 e AIL1",
+   "prima": "perso_smistamento",
+   "dopo": "confermato",
+   "perche": "BDT1 riverificato: ATTIVO, domande fino al 30/09/2026 ore 21. AIL1: la tabella della pagina 2026 riporta 11/09-12/10/2026 e la pagina dice APERTO. Entrambi rimasti da_rivedere senza bando."
+  }
+ ],
+ "fiducia": "alta"
+}

@@ -1,0 +1,260 @@
+{
+ "fonte": "citta_metropolitana_milano_novita",
+ "perimetro": [
+  {
+   "titolo": "Metrotranvia Milano-Seregno, contributi ai commercianti (Bando Cantieri Metrotranvia 2026)",
+   "url": "https://www.cittametropolitana.mi.it/aree-tematiche/infrastrutture/viabilita-e-mobilita-sostenibile/novita/Metrotranvia-Milano-Seregno-contributi-ai-commercianti-domande-fino-al-5-ottobre/",
+   "esito": "trovato_con_scheda",
+   "annuncio": 1740,
+   "bando": 476,
+   "spiegazione": "Annuncio 1740 smistato rilevante dalle regole ('contribut*'), collegato al bando 476 (origine), pagina trovata, preliminare di produzione passa (per_imprese si, edizione si, aperto), scheda presente. Unico neo: la pagina ufficiale scelta e' la notizia della Citta' metropolitana, mentre il bando vero e la domanda stanno sul sito della Camera di commercio Milano Monza Brianza Lodi."
+  },
+  {
+   "titolo": "Dote Impresa EMERGO 2026 (incentivi assunzione persone con disabilita')",
+   "url": "https://www.cittametropolitana.mi.it/servizi/Dote-Impresa/",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Nessun annuncio in radar.json. E' una pagina della sezione /servizi/, non delle novita'; lo sportello e' aperto dal 26/02/2026 (sulla piattaforma regionale BES), quindi la notizia di apertura e' molto piu' vecchia della finestra che la pagina /novita/ mostra (circa una settimana di pubblicazioni) e della prima lettura della fonte (24/09/2026). E' l'aiuto per imprese piu' importante di questo ente e la fonte osservata non lo espone."
+  },
+  {
+   "titolo": "Dote Apprendistato 2026-2027 - avvisi MI0328 e MI0329",
+   "url": "https://www.cittametropolitana.mi.it/aree-tematiche/sviluppo-economico-sociale/politiche-del-lavoro/novita/Dote-Apprendistato-apertura-prenotazione-doti/",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Verificato: notizia di categoria 'Avviso' pubblicata il 16/09/2026, eppure non raccolta il 24/09 anche se annunci del 16/09 (Electrolux) lo sono. Motivo: la pagina /novita/ e l'RSS (24 voci) sono ordinati per 'data' che per gli eventi e' la data futura dell'evento (fino a novembre 2026), per cui convegni e corsi occupano l'elenco e gli avvisi recenti ne escono in pochi giorni. Per le imprese e' incerto: la dote la prenotano gli operatori formativi accreditati, l'impresa con apprendisti ne beneficia indirettamente."
+  },
+  {
+   "titolo": "Dote Apprendistato - avviso precedente MI0318",
+   "url": "https://www.cittametropolitana.mi.it/aree-tematiche/sviluppo-economico-sociale/politiche-del-lavoro/novita/Dote-Apprendistato-apertura-prenotazione-doti/",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Chiuso il 16/09/2026 e sostituito da MI0328/MI0329; non raccolto per lo stesso motivo del precedente. Anche se raccolto sarebbe stato fermato come chiuso: perdita senza conseguenze pratiche."
+  },
+  {
+   "titolo": "Accompagnamento al lavoro di persone con disabilita' dello spettro autistico - bando MI0330 EMERGO",
+   "url": "https://www.cittametropolitana.mi.it/aree-tematiche/sviluppo-economico-sociale/emergo-piano-per-il-lavoro-delle-persone-con-disabilita/novita/Accompagnamento-al-lavoro-persone-con-autismo-pubblicato-il-bando/",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Pubblicato a giugno 2026, chiuso il 15/09/2026, prima della prima lettura della fonte; proponenti probabilmente enti accreditati/cooperative (per_imprese incerto). Perdita senza conseguenze pratiche: sarebbe stato fermato come chiuso."
+  }
+ ],
+ "smistamento": [
+  {
+   "annuncio": 1723,
+   "regole": "non_rilevante",
+   "haiku": "non_rilevante",
+   "opus": "non_rilevante",
+   "giusto": "non_rilevante",
+   "errore_regole": "nessuno",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Seduta del Consiglio metropolitano (url e' la pagina elenco avvisi)."
+  },
+  {
+   "annuncio": 1724,
+   "regole": "non_rilevante",
+   "haiku": "non_rilevante",
+   "opus": "non_rilevante",
+   "giusto": "non_rilevante",
+   "errore_regole": "nessuno",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Seduta del Consiglio metropolitano (pagina elenco eventi)."
+  },
+  {
+   "annuncio": 1725,
+   "regole": "non_rilevante",
+   "haiku": "non_rilevante",
+   "opus": "non_rilevante",
+   "giusto": "non_rilevante",
+   "errore_regole": "nessuno",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Convocazione del Consiglio."
+  },
+  {
+   "annuncio": 1733,
+   "regole": "non_rilevante",
+   "haiku": "non_rilevante",
+   "opus": "non_rilevante",
+   "giusto": "non_rilevante",
+   "errore_regole": "nessuno",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Pagina di menu sulla Protezione civile."
+  },
+  {
+   "annuncio": 1736,
+   "regole": "da_rivedere",
+   "haiku": "non_rilevante",
+   "opus": "non_rilevante",
+   "giusto": "non_rilevante",
+   "errore_regole": "lieve",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Giornata della Trasparenza, evento istituzionale: caso chiaro lasciato in dubbio dalle regole."
+  },
+  {
+   "annuncio": 1740,
+   "regole": "rilevante",
+   "haiku": "rilevante",
+   "opus": "rilevante",
+   "giusto": "rilevante",
+   "errore_regole": "nessuno",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Contributi fino a 4.000 euro a micro e piccole imprese lungo la metrotranvia."
+  },
+  {
+   "annuncio": 1741,
+   "regole": "da_rivedere",
+   "haiku": "non_rilevante",
+   "opus": "non_rilevante",
+   "giusto": "non_rilevante",
+   "errore_regole": "lieve",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Convegno sul Circular Economy Act, nessun aiuto."
+  },
+  {
+   "annuncio": 1743,
+   "regole": "non_rilevante",
+   "haiku": "non_rilevante",
+   "opus": "non_rilevante",
+   "giusto": "non_rilevante",
+   "errore_regole": "nessuno",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Pagina elenco categoria Corso / formazione CAM per appalti: non un aiuto."
+  },
+  {
+   "annuncio": 1744,
+   "regole": "non_rilevante",
+   "haiku": "non_rilevante",
+   "opus": "non_rilevante",
+   "giusto": "non_rilevante",
+   "errore_regole": "nessuno",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Formazione gratuita sui CAM negli appalti, rivolta a stazioni appaltanti."
+  },
+  {
+   "annuncio": 1745,
+   "regole": "non_rilevante",
+   "haiku": "non_rilevante",
+   "opus": "non_rilevante",
+   "giusto": "non_rilevante",
+   "errore_regole": "nessuno",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Pagina di sezione Appalti e contratti."
+  },
+  {
+   "annuncio": 1746,
+   "regole": "da_rivedere",
+   "haiku": "non_rilevante",
+   "opus": "non_rilevante",
+   "giusto": "non_rilevante",
+   "errore_regole": "lieve",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Formazione CAM Veicoli: stesso tipo di 1744, qui le regole non trovano 'appalti' e restano in dubbio."
+  },
+  {
+   "annuncio": 1747,
+   "regole": "da_rivedere",
+   "haiku": "non_rilevante",
+   "opus": "non_rilevante",
+   "giusto": "non_rilevante",
+   "errore_regole": "lieve",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Convegno per enti locali."
+  },
+  {
+   "annuncio": 1748,
+   "regole": "da_rivedere",
+   "haiku": "non_rilevante",
+   "opus": "non_rilevante",
+   "giusto": "non_rilevante",
+   "errore_regole": "lieve",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Reclutamento ai Career Days."
+  },
+  {
+   "annuncio": 1750,
+   "regole": "da_rivedere",
+   "haiku": "non_rilevante",
+   "opus": "non_rilevante",
+   "giusto": "non_rilevante",
+   "errore_regole": "lieve",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Formazione CAM eventi sostenibili, nessun contributo."
+  },
+  {
+   "annuncio": 1751,
+   "regole": "da_rivedere",
+   "haiku": "non_rilevante",
+   "opus": "non_rilevante",
+   "giusto": "non_rilevante",
+   "errore_regole": "lieve",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Tavola rotonda sulla transizione energetica."
+  },
+  {
+   "annuncio": 1753,
+   "regole": "da_rivedere",
+   "haiku": "non_rilevante",
+   "opus": "non_rilevante",
+   "giusto": "non_rilevante",
+   "errore_regole": "lieve",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Passeggiata in bici nel parco."
+  },
+  {
+   "annuncio": 1763,
+   "regole": "non_rilevante",
+   "haiku": "non_rilevante",
+   "opus": "non_rilevante",
+   "giusto": "non_rilevante",
+   "errore_regole": "nessuno",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Pagina istituzionale delle commissioni consiliari."
+  }
+ ],
+ "preliminare": [
+  {
+   "bando": 476,
+   "produzione": "passa",
+   "haiku_nuovo": "passa",
+   "opus": "passa",
+   "giusto": "passa",
+   "errore_produzione": "nessuno",
+   "errore_haiku_nuovo": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Bando aperto (4/9-5/10/2026) per micro e piccole imprese: va schedato, tutti e tre lo fanno passare. Differenza minore: la produzione dice testo_bando=si, Haiku nuovo e Opus dicono solo_sintesi, che e' piu' corretto (nel fascicolo c'e' solo la notizia; il bando e' sul sito della Camera di commercio). Non cambia la decisione."
+  }
+ ],
+ "osservazioni": [
+  "La pagina /novita/ (e l'RSS, 24 voci) e' ordinata per la data dell'evento, anche futura (fino a novembre 2026): convegni e corsi restano in cima per settimane e gli avvisi veri escono dall'elenco in pochi giorni. Esempio verificato: 'Dote Apprendistato: apertura prenotazione doti' (avviso del 16/09/2026) non e' stato raccolto il 24/09. Meglio osservare il filtro per categoria avviso ordinato per data di pubblicazione (https://www.cittametropolitana.mi.it/novita/?reloaded&facet_category_exact=novita/avviso/&sort=date_desc) e/o le novita' dell'area Sviluppo economico e sociale / EMERGO.",
+  "Gli aiuti stabili per imprese dell'ente (Dote Impresa EMERGO) vivono nella sezione /servizi/ e non passano dalle novita': servirebbe una fonte in piu' (pagina servizi/Dote-Impresa o l'area EMERGO), oppure affidarsi alla fonte regionale BES se gia' coperta.",
+  "Il lettore HTML raccoglie anche voci di menu e pagine di sezione (Fai una segnalazione, Chiedi informazioni, Consiglio metropolitano, Edifici scolastici, pagine elenco con filtro come url): rumore che gonfia i da_rivedere (34 su 48 annunci). Andrebbero esclusi i link di navigazione e gli url con '?reloaded&facet_category_exact'.",
+  "Lo stesso titolo compare con piu' url (pagina notizia, pagina elenco di categoria, pagina di sezione): es. 1723/1724/1725, 1743/1744, 1736/1737, 1753/1754. Le regole li trattano bene qui, ma sono doppioni inutili.",
+  "Le regole lasciano da_rivedere tutti gli eventi/convegni/corsi senza parole chiave (8 casi lievi su 17 nel campione): Haiku e Opus li chiudono correttamente, nessun errore medio o grave di nessuno dei tre.",
+  "Bando 476: la pagina ufficiale e' la notizia della Citta' metropolitana; testo e domanda sono sul sito della Camera di commercio (https://www.milomb.camcom.it/bando-cantieri-metrotranvia-2026). Il preliminare di produzione dichiara testo_bando=si su una pagina che e' solo sintesi.",
+  "RI.CIRCO.LO. (bando di Regione Lombardia rilanciato il 22/05/2026) e' fuori dal conteggio perche' l'esploratore lo da' con stato non_noto; comunque e' di competenza della fonte regionale.",
+  "File presente ma non richiesto per questo controllo: opus_scheda_476.json (non valutato).",
+  "Verifica di riserva (27/09): ricontrollati sul sito Dote Apprendistato apertura prenotazione (avviso del 16/09/2026, rivolto agli Operatori formativi, chiude MI0318) e Dote Impresa (servizio attivo, domande su BES, imprese di ogni dimensione); radar.json non contiene nessuno dei quattro bandi persi; risposte di Haiku e Opus e preliminare di produzione (testo_bando=si) coincidono con quanto riportato. La pagina /novita/ ha solo le categorie Avviso, Comunicato stampa, Eventi, Notizie, Corso: nessuna sezione dimenticata dall esploratore. Nessuna correzione."
+ ],
+ "correzioni": [],
+ "fiducia": "alta"
+}

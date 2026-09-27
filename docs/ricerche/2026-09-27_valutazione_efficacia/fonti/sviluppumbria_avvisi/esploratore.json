@@ -1,0 +1,132 @@
+{
+  "fonte": "sviluppumbria_avvisi",
+  "raggiungibile": true,
+  "pagine_visitate": [
+    "https://www.sviluppumbria.it/robots.txt",
+    "https://www.sviluppumbria.it/",
+    "https://www.sviluppumbria.it/avvisi-pubblici",
+    "https://www.sviluppumbria.it/o/it.laserromae.portlets.list_content/js/main.js",
+    "https://www.sviluppumbria.it/avvisi-pubblici?p_p_id=it_laserromae_portlets_list_content_ListContentPortlet_INSTANCE_uHqLai9pPBfL&p_p_lifecycle=2&...&_action=listContent (JSON, pagine 0-3)",
+    "https://www.sviluppumbria.it/-/avviso-step-2026-linea-a-sovvenzione-strategic-technologies-for-europe-platform-step-",
+    "https://www.sviluppumbria.it/-/avviso-pubblico-icc-sostegno-progetti-triennali-innovativi-nel-settore-delle-imprese-culturali-e-creative-2026-2028",
+    "https://www.sviluppumbria.it/-/avviso-pubblico-progetti-di-internazionalizzazione-delle-pmi-mediante-partecipazione-a-fiere-internazionali-dal-1-aprile-2026-al-31-dicembre-2026",
+    "https://www.sviluppumbria.it/-/bando-incentivi-all-occupazione-2025-al-via-il-servizio-di-supporto-per-la-rendicontazione-sulla-piattaforma-coe.si-21-27",
+    "https://www.sviluppumbria.it/-/myself-plus-2026-avviso-a-sostegno-delle-nuove-iniziative-imprenditoriali-autoimpiego-creazione-d-impresa-",
+    "https://www.sviluppumbria.it/-/umbria-sorprendente-avviso-per-il-sostegno-alle-imprese-per-il-potenziamento-dell-accessibilita-dei-servizi-turistici",
+    "https://www.sviluppumbria.it/-/avviso-per-manifestazione-di-interesse-per-la-partecipazione-delle-imprese-turistiche-umbre-al-ttg-2026",
+    "https://www.sviluppumbria.it/-/avviso-per-manifestazioni-di-interesse-a-partecipare-nello-stand-regionale-al-wtm-2026",
+    "https://bandi.sviluppumbria.it/"
+  ],
+  "totale_stimato": 7,
+  "note": "La pagina /avvisi-pubblici e' vuota nell'HTML: l'elenco arriva via AJAX da un endpoint JSON del portlet Liferay ListContent (195 avvisi totali in archivio, 10 per pagina, parametro _..._page). Ho letto le prime 4 pagine (40 voci): dalla pagina 3 in poi le voci sono del 2025 o precedenti, quindi il perimetro degli ultimi 6 mesi (dal 26/03/2026) e' coperto. Attenzione: il campo 'data_fine' dell'elenco non e' sempre la scadenza delle domande (avviso fiere 2026: elenco dice 31/12/2026 ma le domande chiudevano il 31/07/2026). Il portale domande bandi.sviluppumbria.it e' un'app JavaScript non leggibile con curl. Fuori finestra per poco: 'Avviso investimenti produttivi e tutela ambientale area di crisi complessa Terni-Narni (Polo chimico)', scadenza 06/03/2026; 'Sostegno edicole cratere sismico 2025', scadenza 30/12/2025. Oggi aperto per imprese: solo ICC (fino al 05/10/2026); in arrivo: STEP (dal 01/10/2026). WTM e TTG sono adesioni a stand regionali in fiera (servizio con quota di partecipazione), non contributi in denaro: inclusi come opportunita' per imprese ma ambigui come finanza agevolata.",
+  "bandi": [
+    {
+      "titolo": "Avviso STEP 2026 - Linea A Sovvenzione - Strategic Technologies for Europe Platform",
+      "url": "https://www.sviluppumbria.it/-/avviso-step-2026-linea-a-sovvenzione-strategic-technologies-for-europe-platform-step-",
+      "stato": "in_arrivo",
+      "scadenza": "2026-11-30",
+      "per_imprese": "si",
+      "perche": "Contributi PR FESR a PMI e grandi imprese (anche in RTI) per investimenti in tecnologie critiche; domande dal 01/10/2026 ore 10 al 30/11/2026 ore 12."
+    },
+    {
+      "titolo": "Avviso pubblico ICC - Sostegno progetti triennali innovativi nel settore delle imprese culturali e creative 2026-2028",
+      "url": "https://www.sviluppumbria.it/-/avviso-pubblico-icc-sostegno-progetti-triennali-innovativi-nel-settore-delle-imprese-culturali-e-creative-2026-2028",
+      "stato": "aperto",
+      "scadenza": "2026-10-05",
+      "per_imprese": "si",
+      "perche": "Contributi PR FESR Azione 1.3.4 a soggetti giuridici del settore culturale e creativo (codici Ateco), sportello dal 25/08/2026 al 05/10/2026 ore 17."
+    },
+    {
+      "titolo": "UMBRIA SORPRENDENTE - Avviso per il sostegno alle imprese per il potenziamento dell'accessibilita' dei servizi turistici",
+      "url": "https://www.sviluppumbria.it/-/umbria-sorprendente-avviso-per-il-sostegno-alle-imprese-per-il-potenziamento-dell-accessibilita-dei-servizi-turistici",
+      "stato": "chiuso_recente",
+      "scadenza": "2026-09-23",
+      "per_imprese": "si",
+      "perche": "Contributi fino a 10.500-11.250 euro a imprese ricettive e di servizi turistici (solo quelle gia' selezionate da FELCOS); termine prorogato dal 10/09 al 23/09/2026."
+    },
+    {
+      "titolo": "Avviso pubblico: progetti di internazionalizzazione delle PMI mediante partecipazione a fiere internazionali dal 1 aprile 2026 al 31 dicembre 2026",
+      "url": "https://www.sviluppumbria.it/-/avviso-pubblico-progetti-di-internazionalizzazione-delle-pmi-mediante-partecipazione-a-fiere-internazionali-dal-1-aprile-2026-al-31-dicembre-2026",
+      "stato": "chiuso_recente",
+      "scadenza": "2026-07-31",
+      "per_imprese": "si",
+      "perche": "Fondo perduto de minimis 50-70% per PMI umbre che partecipano a fiere; domande dal 18/06 al 31/07/2026 (l'elenco mostra 31/12/2026, che e' la fine del periodo delle fiere)."
+    },
+    {
+      "titolo": "MYSELF PLUS 2026 - Avviso a sostegno delle nuove iniziative imprenditoriali 'Autoimpiego, creazione d'impresa'",
+      "url": "https://www.sviluppumbria.it/-/myself-plus-2026-avviso-a-sostegno-delle-nuove-iniziative-imprenditoriali-autoimpiego-creazione-d-impresa-",
+      "stato": "chiuso_recente",
+      "scadenza": "2026-06-30",
+      "per_imprese": "si",
+      "perche": "Agevolazioni (1,5 milioni) per micro e piccole imprese nuove o da costituire in Umbria; domande dal 13/04 al 30/06/2026."
+    },
+    {
+      "titolo": "Avviso per manifestazioni di interesse a partecipare nello stand regionale al WTM 2026",
+      "url": "https://www.sviluppumbria.it/-/avviso-per-manifestazioni-di-interesse-a-partecipare-nello-stand-regionale-al-wtm-2026",
+      "stato": "chiuso_recente",
+      "scadenza": "2026-09-15",
+      "per_imprese": "incerto",
+      "perche": "Rivolto a imprese turistiche umbre (strutture ricettive, agenzie incoming, consorzi) per lo stand regionale a Londra; e' una partecipazione a quota, non un contributo in denaro."
+    },
+    {
+      "titolo": "Avviso per manifestazioni di interesse per la partecipazione delle imprese turistiche umbre al TTG 2026",
+      "url": "https://www.sviluppumbria.it/-/avviso-per-manifestazione-di-interesse-per-la-partecipazione-delle-imprese-turistiche-umbre-al-ttg-2026",
+      "stato": "chiuso_recente",
+      "scadenza": "2026-08-06",
+      "per_imprese": "incerto",
+      "perche": "Rivolto a strutture ricettive e agenzie incoming umbre per lo stand regionale a TTG Rimini; partecipazione a quota, non contributo in denaro."
+    }
+  ],
+  "esclusi": [
+    {
+      "titolo": "Bando Incentivi all'Occupazione 2025: al via il servizio di supporto per la rendicontazione sulla piattaforma Coe.Si 21-27",
+      "url": "https://www.sviluppumbria.it/-/bando-incentivi-all-occupazione-2025-al-via-il-servizio-di-supporto-per-la-rendicontazione-sulla-piattaforma-coe.si-21-27",
+      "perche": "Notizia del 22/07/2026 su un servizio di assistenza alla rendicontazione di un bando ARPAL Umbria gia' assegnato; non e' un avviso nuovo e non sta nell'elenco avvisi."
+    },
+    {
+      "titolo": "Avviso pubblico del 04.08.2026 per il comodato gratuito del complesso immobiliare di CAICOCCI - PINQuA",
+      "url": "https://www.sviluppumbria.it/-/avviso-pubblico-del-04.08.2026-per-il-comodato-gratuito-del-complesso-immobiliare-di-caicocci-pinqua",
+      "perche": "Concessione gratuita di immobili (scadenza 30/09/2026), non contributo; beneficiari non verificati, potrebbero includere imprese o enti del terzo settore."
+    },
+    {
+      "titolo": "Avviso pubblico del 04.08.2026 per la concessione d'uso gratuita degli immobili della MONTESCA - PINQuA",
+      "url": "https://www.sviluppumbria.it/-/avviso-pubblico-del-04.08.2026-per-la-concessione-d-uso-gratuita-degli-immobili-della-montesca-pinqua",
+      "perche": "Concessione gratuita di immobili (scadenza 30/09/2026), non contributo; beneficiari non verificati."
+    },
+    {
+      "titolo": "Avviso pubblico per la concessione d'uso gratuita degli immobili delle EX STAZIONI FCU - PINQuA 'Vivere l'Umbria' (e analoghi Montesca e Caicocci del 03/03/2026)",
+      "url": "https://www.sviluppumbria.it/-/avviso-pubblico-per-la-concessione-gratuita-delle-ex-stazioni-fcu-pinqua-vivere-l-umbria",
+      "perche": "Prima tornata (scadenza 15/06/2026) delle concessioni gratuite di immobili: non e' finanza agevolata."
+    },
+    {
+      "titolo": "Avviso pubblico 2025 per concessione d'uso dei terreni industriali della Regione Umbria nell'area industriale Maratta (Terni)",
+      "url": "https://www.sviluppumbria.it/-/avviso-pubblico-per-l-assegnazione-in-concessione-d-uso-dei-terreni-industriali-di-proprieta-della-regione-umbria-ubicati-nel-comune-di-terni-area-industriale-maratta",
+      "perche": "Aperto fino al 25/08/2028 e rivolto a imprese, ma e' concessione di terreni, non contributo; pubblicato ad agosto 2025."
+    },
+    {
+      "titolo": "Avviso pubblico per l'iscrizione all'elenco regionale dei Centri estivi 2026",
+      "url": "https://www.sviluppumbria.it/-/avviso-pubblico-per-l-iscrizione-all-elenco-regionale-dei-centri-estivi-2026",
+      "perche": "Iscrizione a un elenco di gestori di centri estivi (scadenza 03/09/2026), non un contributo diretto alle imprese."
+    },
+    {
+      "titolo": "Avviso pubblico: contributi alle famiglie per i Centri estivi 2026",
+      "url": "https://www.sviluppumbria.it/-/avviso-pubblico-contributi-alle-famiglie-per-la-partecipazione-di-bambini-e-ragazzi-ai-centri-estivi-2026",
+      "perche": "Contributi solo a famiglie."
+    },
+    {
+      "titolo": "Avviso pubblico: sostegno alle famiglie per le rette dei servizi educativi per l'infanzia febbraio-giugno 2026",
+      "url": "https://www.sviluppumbria.it/-/avviso-sostegno-famiglie-rette-scuole-dell-infanzia-a.s.-2025/2026-periodo-febbraio-2026-giugno-2026",
+      "perche": "Contributi solo a famiglie (scadenza 29/06/2026)."
+    },
+    {
+      "titolo": "Avviso di selezione per l'assunzione a tempo determinato del Direttore amministrativo di Sviluppumbria 2026",
+      "url": "https://www.sviluppumbria.it/-/avviso-di-selezione-per-l-assunzione-a-tempo-determinato-del-direttore-amministrativo-di-sviluppumbria-2026",
+      "perche": "Selezione di personale."
+    },
+    {
+      "titolo": "Avviso pubblico - Manifestazioni di interesse per la nomina del CdA di S.A.S.E. S.p.A.",
+      "url": "https://www.sviluppumbria.it/-/avviso-pubblico-per-manifestazioni-d-interesse-per-la-nomina-del-consiglio-d-amministrazione-di-sase-per-3-esercizi",
+      "perche": "Nomina di amministratori, non un bando per imprese (scadenza 13/04/2026)."
+    }
+  ]
+}

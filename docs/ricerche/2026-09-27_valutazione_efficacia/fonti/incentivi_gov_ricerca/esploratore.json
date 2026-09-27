@@ -1,0 +1,692 @@
+{
+ "fonte": "incentivi_gov_ricerca",
+ "raggiungibile": true,
+ "pagine_visitate": [
+  "https://www.incentivi.gov.it/it/cerca-incentivi (404)",
+  "https://www.incentivi.gov.it/robots.txt",
+  "https://www.incentivi.gov.it/it/catalogo",
+  "https://www.incentivi.gov.it/solr/coredrupal/select?q=*:*&rows=1&wt=json",
+  "https://www.incentivi.gov.it/solr/coredrupal/select?q=*:*&fq=ss_search_api_language:it&rows=8000&wt=json&fl=..."
+ ],
+ "totale_stimato": 800,
+ "note": "ATTENZIONE: l'indirizzo osservato https://www.incentivi.gov.it/it/cerca-incentivi restituisce 404; il catalogo e' ora in /it/catalogo, che lato server e' vuoto: i risultati arrivano via JavaScript dall'endpoint pubblico Solr /solr/coredrupal/select (dichiarato nella pagina, non vietato da robots.txt), che in una sola richiesta restituisce tutti i 6025 incentivi con date di apertura/chiusura, beneficiari, regioni, forma di aiuto e link all'ente. Stato calcolato al 2026-09-26 dalle date del catalogo: aperti 800 (595 con scadenza futura, 205 senza data di chiusura: sportelli o schede non aggiornate, alcune con apertura 1999-2020), in arrivo 23, chiusi negli ultimi 6 mesi 545, piu' vecchi 4541. Tra aperti+in arrivo: 770 hanno tra i beneficiari imprese/professionisti/consorzi/reti, 53 solo altri soggetti (enti pubblici, cittadini, universita', non profit); esclusi dal conteggio 116 record Solr senza titolo, indirizzo e date (voci incomplete). Elencati: 40 aperti scelti a caso ma variati (12 nazionali/multiregionali, poi uno per regione), tutti i 20 in arrivo con imprese tra i beneficiari, 15 chiusi recenti a caso. Il catalogo aggrega bandi nazionali, regionali e camerali. Lo stato non e' stato verificato pagina per pagina sui siti degli enti: per i bandi senza data di chiusura lo stato 'aperto' e' dubbio.",
+ "bandi": [
+  {
+   "titolo": "Bandi per la partecipazione alle procedure competitive per l'accesso agli incentivi previsti dal DM FER2",
+   "url": "https://www.incentivi.gov.it/it/catalogo/bandi-la-partecipazione-alle-procedure-competitive-laccesso-agli-incentivi-previsti-dal-dm",
+   "stato": "aperto",
+   "scadenza": "2028-12-31",
+   "per_imprese": "si",
+   "perche": "Beneficiari indicati: Cittadino, Ente Pubblico, Impresa, Università/Ente di Ricerca; territorio: nazionale/multiregionale; forma: Contributo/Fondo perduto."
+  },
+  {
+   "titolo": "Finanziamenti agevolati per attività consulenziale destinata ad investimenti per una crescita sostenibile sui mercati esteri.",
+   "url": "https://www.incentivi.gov.it/it/catalogo/finanziamenti-agevolati-attivita-consulenziale-destinata-ad-investimenti-una-crescita",
+   "stato": "aperto",
+   "scadenza": "2050-12-31",
+   "per_imprese": "si",
+   "perche": "Beneficiari indicati: Impresa; territorio: nazionale/multiregionale; forma: Contributo/Fondo perduto, Prestito/Anticipo rimborsabile."
+  },
+  {
+   "titolo": "Calabria Film Commission - Regolamento per la concessione di contributi e l’acquisizione di opere audiovisive per la promozione e valorizzazione del territorio regionale 2026",
+   "url": "https://www.incentivi.gov.it/it/catalogo/calabria-film-commission-regolamento-la-concessione-di-contributi-e-lacquisizione-di-opere",
+   "stato": "aperto",
+   "scadenza": "2026-12-31",
+   "per_imprese": "si",
+   "perche": "Beneficiari indicati: Impresa, Cooperative/Associazioni Non Profit; territorio: nazionale/multiregionale; forma: Contributo/Fondo perduto."
+  },
+  {
+   "titolo": "Regione Lombardia - Contributi per iniziative e manifestazioni di rilievo regionale - 2026",
+   "url": "https://www.incentivi.gov.it/it/catalogo/regione-lombardia-contributi-iniziative-e-manifestazioni-di-rilievo-regionale-2026",
+   "stato": "aperto",
+   "scadenza": "2026-11-16",
+   "per_imprese": "si",
+   "perche": "Beneficiari indicati: Cooperative/Associazioni Non Profit, Ente Pubblico, Impresa, Consorzio, Università/Ente di Ricerca, Professionista; territorio: nazionale/multiregionale; forma: Contributo/Fondo perduto."
+  },
+  {
+   "titolo": "Finanziamento agevolato a sostegno della presenza di imprese e filiere italiane nel continente africano - Potenziamento mercati africani",
+   "url": "https://www.incentivi.gov.it/it/catalogo/finanziamento-agevolato-sostegno-della-presenza-di-imprese-e-filiere-italiane-nel-0",
+   "stato": "aperto",
+   "scadenza": null,
+   "per_imprese": "si",
+   "perche": "Beneficiari indicati: Impresa; territorio: nazionale/multiregionale; forma: Prestito/Anticipo rimborsabile, Contributo/Fondo perduto; nessuna data di chiusura nel catalogo (sportello o dato non aggiornato)."
+  },
+  {
+   "titolo": "Piano operativo del Comparto per contributi in conto interessi del Fondo patrimonio culturale",
+   "url": "https://www.incentivi.gov.it/it/catalogo/piano-operativo-del-comparto-contributi-conto-interessi-del-fondo-patrimonio-culturale",
+   "stato": "aperto",
+   "scadenza": "2027-06-30",
+   "per_imprese": "si",
+   "perche": "Beneficiari indicati: Ente Pubblico, Impresa, Università/Ente di Ricerca, Cooperative/Associazioni Non Profit; territorio: nazionale/multiregionale; forma: Contributo/Fondo perduto."
+  },
+  {
+   "titolo": "Ministero delle infrastrutture e dei trasporti - Incentivi alle imprese di autotrasporto per la formazione degli addetti - Edizione 15",
+   "url": "https://www.incentivi.gov.it/it/catalogo/ministero-delle-infrastrutture-e-dei-trasporti-incentivi-alle-imprese-di-autotrasporto-la",
+   "stato": "aperto",
+   "scadenza": "2026-12-31",
+   "per_imprese": "si",
+   "perche": "Beneficiari indicati: Impresa, Consorzio; territorio: nazionale/multiregionale; forma: Contributo/Fondo perduto."
+  },
+  {
+   "titolo": "Fondo di Garanzia per le Piccole e Medie Imprese",
+   "url": "https://www.incentivi.gov.it/it/catalogo/fondo-di-garanzia-le-piccole-e-medie-imprese",
+   "stato": "aperto",
+   "scadenza": "2026-12-31",
+   "per_imprese": "si",
+   "perche": "Beneficiari indicati: Impresa, Professionista; territorio: nazionale/multiregionale; forma: Interventi a garanzia."
+  },
+  {
+   "titolo": "Fondo per il trasferimento tecnologico",
+   "url": "https://www.incentivi.gov.it/it/catalogo/fondo-il-trasferimento-tecnologico",
+   "stato": "aperto",
+   "scadenza": null,
+   "per_imprese": "si",
+   "perche": "Beneficiari indicati: Impresa - SU/PMI innovativa, Università/Ente di Ricerca; territorio: nazionale/multiregionale; forma: Prestito/Anticipo rimborsabile; nessuna data di chiusura nel catalogo (sportello o dato non aggiornato)."
+  },
+  {
+   "titolo": "Finanziamento agevolato per la realizzazione di investimenti per l’innovazione digitale e/o per la transizione ecologica",
+   "url": "https://www.incentivi.gov.it/it/catalogo/finanziamento-agevolato-la-realizzazione-di-investimenti-linnovazione-digitale-eo-la",
+   "stato": "aperto",
+   "scadenza": "2050-12-31",
+   "per_imprese": "si",
+   "perche": "Beneficiari indicati: Impresa; territorio: nazionale/multiregionale; forma: Contributo/Fondo perduto, Prestito/Anticipo rimborsabile."
+  },
+  {
+   "titolo": "Fondo Salvaguardia imprese",
+   "url": "https://www.incentivi.gov.it/it/catalogo/fondo-salvaguardia-imprese",
+   "stato": "aperto",
+   "scadenza": "2026-12-31",
+   "per_imprese": "si",
+   "perche": "Beneficiari indicati: Impresa; territorio: nazionale/multiregionale; forma: Capitale di rischio, Contributo/Fondo perduto."
+  },
+  {
+   "titolo": "Contratti di sviluppo agroalimentari - Progetti di investimento nel settore della trasformazione e commercializzazione dei prodotti agricoli",
+   "url": "https://www.incentivi.gov.it/it/catalogo/contratti-di-sviluppo-agroalimentari-progetti-di-investimento-nel-settore-della",
+   "stato": "aperto",
+   "scadenza": null,
+   "per_imprese": "si",
+   "perche": "Beneficiari indicati: Impresa; territorio: nazionale/multiregionale; forma: Contributo/Fondo perduto, Prestito/Anticipo rimborsabile; nessuna data di chiusura nel catalogo (sportello o dato non aggiornato)."
+  },
+  {
+   "titolo": "Accesso al Fondo di Microfinanza - PR Basilicata FSE+ 2021-2027",
+   "url": "https://www.incentivi.gov.it/it/catalogo/accesso-al-fondo-di-microfinanza-pr-basilicata-fse-2021-2027",
+   "stato": "aperto",
+   "scadenza": "2029-06-30",
+   "per_imprese": "si",
+   "perche": "Beneficiari indicati: Impresa da costituire - Altro, Impresa; territorio: Basilicata; forma: Prestito/Anticipo rimborsabile."
+  },
+  {
+   "titolo": "Dote Impresa Collocamento Mirato Asse I - Provincia di Como - FONDO 2024",
+   "url": "https://www.incentivi.gov.it/it/catalogo/dote-impresa-collocamento-mirato-asse-i-provincia-di-como-fondo-2024",
+   "stato": "aperto",
+   "scadenza": "2026-10-31",
+   "per_imprese": "si",
+   "perche": "Beneficiari indicati: Cittadino, Consorzio, Cooperative/Associazioni Non Profit, Ente Pubblico, Impresa, Impresa da costituire - Femminile, Impresa da costituire - Altro, Impresa da costituire - Giovanile, Impresa - prevalenza femminile, Impresa - prevalenza giovanile, Impresa - SU/PMI innovativa, Istituto finanziario, Professionista, Rete d'impresa, Università/Ente di Ricerca; territorio: Lombardia; forma: Contributo/Fondo perduto."
+  },
+  {
+   "titolo": "Sovvenzioni per l’abbattimento degli interessi e dei costi della garanzia sui finanziamenti concessi dalle banche sulla linea di credito “Regione Toscana EU blending 2023-0118\" della BEI - 2026",
+   "url": "https://www.incentivi.gov.it/it/catalogo/sovvenzioni-labbattimento-degli-interessi-e-dei-costi-della-garanzia-sui-finanziamenti-0",
+   "stato": "aperto",
+   "scadenza": null,
+   "per_imprese": "si",
+   "perche": "Beneficiari indicati: Impresa, Professionista; territorio: Toscana; forma: Contributo/Fondo perduto; nessuna data di chiusura nel catalogo (sportello o dato non aggiornato)."
+  },
+  {
+   "titolo": "Sviluppo competenze - Innovazione tecnologica e transizione verde e digitale - Secondo sportello",
+   "url": "https://www.incentivi.gov.it/it/catalogo/sviluppo-competenze-innovazione-tecnologica-e-transizione-verde-e-digitale-secondo",
+   "stato": "aperto",
+   "scadenza": "2026-12-21",
+   "per_imprese": "si",
+   "perche": "Beneficiari indicati: Cooperative/Associazioni Non Profit, Rete d'impresa, Consorzio; territorio: Molise, Basilicata, Calabria, Campania, Puglia, Sicilia, Sardegna; forma: Contributo/Fondo perduto."
+  },
+  {
+   "titolo": "Avviso pubblico ISI 2024 per il miglioramento dei livelli di salute e sicurezza sul lavoro - Sicilia",
+   "url": "https://www.incentivi.gov.it/it/catalogo/avviso-pubblico-isi-2024-il-miglioramento-dei-livelli-di-salute-e-sicurezza-sul-lavoro-14",
+   "stato": "aperto",
+   "scadenza": null,
+   "per_imprese": "si",
+   "perche": "Beneficiari indicati: Impresa; territorio: Sicilia; forma: Capitale di rischio, Capitale di rischio, Contributo/Fondo perduto; nessuna data di chiusura nel catalogo (sportello o dato non aggiornato)."
+  },
+  {
+   "titolo": "Tecnonidi 2021-2027",
+   "url": "https://www.incentivi.gov.it/it/catalogo/tecnonidi-2021-2027",
+   "stato": "aperto",
+   "scadenza": null,
+   "per_imprese": "si",
+   "perche": "Beneficiari indicati: Impresa; territorio: Puglia; forma: Contributo/Fondo perduto, Prestito/Anticipo rimborsabile; nessuna data di chiusura nel catalogo (sportello o dato non aggiornato)."
+  },
+  {
+   "titolo": "Bando per contributi a fondo perduto a sostegno dei giovani imprenditori operanti sul territorio aronese - 2026",
+   "url": "https://www.incentivi.gov.it/it/catalogo/bando-contributi-fondo-perduto-sostegno-dei-giovani-imprenditori-operanti-sul-territorio",
+   "stato": "aperto",
+   "scadenza": "2026-10-20",
+   "per_imprese": "si",
+   "perche": "Beneficiari indicati: Impresa - prevalenza giovanile; territorio: Piemonte; forma: Contributo/Fondo perduto."
+  },
+  {
+   "titolo": "Fondo economia sociale - Accesso al credito rivolto all'associazionismo culturale e sportivo-Regione Umbria",
+   "url": "https://www.incentivi.gov.it/it/catalogo/fondo-economia-sociale-accesso-al-credito-rivolto-allassociazionismo-culturale-e-sportivo",
+   "stato": "aperto",
+   "scadenza": "2026-12-31",
+   "per_imprese": "si",
+   "perche": "Beneficiari indicati: Impresa, Cooperative/Associazioni Non Profit; territorio: Umbria; forma: Interventi a garanzia."
+  },
+  {
+   "titolo": "Regione Veneto - OCDPC 1131/2025 Primi interventi urgenti di protezione civile in conseguenza degli eccezionali eventi meteorologici verificatisi nei giorni 23 e 24 settembre 2024",
+   "url": "https://www.incentivi.gov.it/it/catalogo/regione-veneto-ocdpc-11312025-primi-interventi-urgenti-di-protezione-civile-conseguenza",
+   "stato": "aperto",
+   "scadenza": "2026-12-31",
+   "per_imprese": "si",
+   "perche": "Beneficiari indicati: Impresa; territorio: Veneto; forma: Contributo/Fondo perduto."
+  },
+  {
+   "titolo": "CCIAA Pordenone-Udine - Progetto “POLONIA - Ricerca partner con viaggio d'affari autonomo” aprile-dicembre 2026",
+   "url": "https://www.incentivi.gov.it/it/catalogo/cciaa-pordenone-udine-progetto-polonia-ricerca-partner-con-viaggio-daffari-autonomo-aprile",
+   "stato": "aperto",
+   "scadenza": "2026-10-02",
+   "per_imprese": "si",
+   "perche": "Beneficiari indicati: Impresa; territorio: Friuli-Venezia Giulia; forma: Contributo/Fondo perduto."
+  },
+  {
+   "titolo": "Regione Valle d'Aosta - Concessione di aiuti alle PMI per i costi di trattamento e valorizzazione del siero residuo lavorazioni lattiero casearie",
+   "url": "https://www.incentivi.gov.it/it/catalogo/regione-valle-daosta-concessione-di-aiuti-alle-pmi-i-costi-di-trattamento-e-valorizzazione",
+   "stato": "aperto",
+   "scadenza": null,
+   "per_imprese": "si",
+   "perche": "Beneficiari indicati: Impresa; territorio: Valle d'Aosta/Vallée d'Aoste; forma: Contributo/Fondo perduto, Contributo/Fondo perduto; nessuna data di chiusura nel catalogo (sportello o dato non aggiornato)."
+  },
+  {
+   "titolo": "Criteri per la concessione di agevolazioni per lo sviluppo della mobilità elettrica in provincia di Bolzano",
+   "url": "https://www.incentivi.gov.it/it/catalogo/criteri-la-concessione-di-agevolazioni-lo-sviluppo-della-mobilita-elettrica-provincia-di",
+   "stato": "aperto",
+   "scadenza": "2026-12-31",
+   "per_imprese": "si",
+   "perche": "Beneficiari indicati: Impresa, Professionista; territorio: Trentino-Alto Adige/Südtirol; forma: Contributo/Fondo perduto."
+  },
+  {
+   "titolo": "Avviso pubblico per la presentazione dei progetti relativi ad azioni di formazione continua",
+   "url": "https://www.incentivi.gov.it/it/catalogo/avviso-pubblico-la-presentazione-dei-progetti-relativi-ad-azioni-di-formazione-continua",
+   "stato": "aperto",
+   "scadenza": "2026-11-30",
+   "per_imprese": "si",
+   "perche": "Beneficiari indicati: Impresa; territorio: Marche; forma: Contributo/Fondo perduto."
+  },
+  {
+   "titolo": "Comune di Sacco - Fondo di sostegno Comuni marginali - II annualità",
+   "url": "https://www.incentivi.gov.it/it/catalogo/comune-di-sacco-fondo-di-sostegno-comuni-marginali-ii-annualita",
+   "stato": "aperto",
+   "scadenza": "2026-12-31",
+   "per_imprese": "si",
+   "perche": "Beneficiari indicati: Impresa; territorio: Campania; forma: Contributo/Fondo perduto."
+  },
+  {
+   "titolo": "Regolamento (2025) per la concessione di contributi e l'acquisizione di opere audiovisive - Fondazione Calabria Film Commission",
+   "url": "https://www.incentivi.gov.it/it/catalogo/regolamento-2025-la-concessione-di-contributi-e-lacquisizione-di-opere-audiovisive",
+   "stato": "aperto",
+   "scadenza": null,
+   "per_imprese": "si",
+   "perche": "Beneficiari indicati: Impresa; territorio: Calabria; forma: Contributo/Fondo perduto; nessuna data di chiusura nel catalogo (sportello o dato non aggiornato)."
+  },
+  {
+   "titolo": "CCIAA Modena - Outgoing 2026 - Incontri d'affari all'estero",
+   "url": "https://www.incentivi.gov.it/it/catalogo/cciaa-modena-outgoing-2026-incontri-daffari-allestero",
+   "stato": "aperto",
+   "scadenza": "2026-11-30",
+   "per_imprese": "si",
+   "perche": "Beneficiari indicati: Impresa; territorio: Emilia-Romagna; forma: Contributo/Fondo perduto."
+  },
+  {
+   "titolo": "PR FESR Liguria 2021 - 2027 Azione 1.3.4 - Interventi a sostegno dello sviluppo e produzione di progetti audiovisivi - Anno 2026",
+   "url": "https://www.incentivi.gov.it/it/catalogo/pr-fesr-liguria-2021-2027-azione-134-interventi-sostegno-dello-sviluppo-e-produzione-di",
+   "stato": "aperto",
+   "scadenza": "2026-10-02",
+   "per_imprese": "si",
+   "perche": "Beneficiari indicati: Impresa; territorio: Liguria; forma: Contributo/Fondo perduto."
+  },
+  {
+   "titolo": "CCIAA Chieti Pescara - Bando per incentivi per l'internazionalizzazione 2026",
+   "url": "https://www.incentivi.gov.it/it/catalogo/cciaa-chieti-pescara-bando-incentivi-linternazionalizzazione-2026",
+   "stato": "aperto",
+   "scadenza": "2026-12-15",
+   "per_imprese": "si",
+   "perche": "Beneficiari indicati: Impresa; territorio: Abruzzo; forma: Contributo/Fondo perduto."
+  },
+  {
+   "titolo": "Potenziamento rete Spazio Attivo - Avvisi per premi/contributi diretti",
+   "url": "https://www.incentivi.gov.it/it/catalogo/potenziamento-rete-spazio-attivo-avvisi-premicontributi-diretti",
+   "stato": "aperto",
+   "scadenza": "2028-12-31",
+   "per_imprese": "si",
+   "perche": "Beneficiari indicati: Impresa; territorio: Lazio; forma: Contributo/Fondo perduto."
+  },
+  {
+   "titolo": "Avviso pubblico ISI 2024 per il miglioramento dei livelli di salute e sicurezza sul lavoro - Sardegna",
+   "url": "https://www.incentivi.gov.it/it/catalogo/avviso-pubblico-isi-2024-il-miglioramento-dei-livelli-di-salute-e-sicurezza-sul-lavoro-12",
+   "stato": "aperto",
+   "scadenza": null,
+   "per_imprese": "si",
+   "perche": "Beneficiari indicati: Impresa; territorio: Sardegna; forma: Capitale di rischio, Contributo/Fondo perduto, Capitale di rischio; nessuna data di chiusura nel catalogo (sportello o dato non aggiornato)."
+  },
+  {
+   "titolo": "Basket Bond Lazio",
+   "url": "https://www.incentivi.gov.it/it/catalogo/basket-bond-lazio",
+   "stato": "aperto",
+   "scadenza": "2029-12-13",
+   "per_imprese": "si",
+   "perche": "Beneficiari indicati: Impresa; territorio: Lazio; forma: Contributo/Fondo perduto."
+  },
+  {
+   "titolo": "Tirocini di formazione e orientamento per l'inserimento nel mercato del lavoro - Provincia Autonoma di Trento",
+   "url": "https://www.incentivi.gov.it/it/catalogo/tirocini-di-formazione-e-orientamento-linserimento-nel-mercato-del-lavoro-provincia",
+   "stato": "aperto",
+   "scadenza": "2028-12-31",
+   "per_imprese": "si",
+   "perche": "Beneficiari indicati: Impresa; territorio: Trentino-Alto Adige/Südtirol; forma: Contributo/Fondo perduto."
+  },
+  {
+   "titolo": "Avviso pubblico ISI 2024 per il miglioramento dei livelli di salute e sicurezza sul lavoro - Lazio",
+   "url": "https://www.incentivi.gov.it/it/catalogo/avviso-pubblico-isi-2024-il-miglioramento-dei-livelli-di-salute-e-sicurezza-sul-lavoro-5",
+   "stato": "aperto",
+   "scadenza": null,
+   "per_imprese": "si",
+   "perche": "Beneficiari indicati: Impresa; territorio: Lazio; forma: Capitale di rischio, Contributo/Fondo perduto, Capitale di rischio; nessuna data di chiusura nel catalogo (sportello o dato non aggiornato)."
+  },
+  {
+   "titolo": "Comune di Tricesimo - Bando per la concessione di indennizzi a sostegno delle imprese commerciali, artigianali ed altre attività economiche aperte al pubblico situate in aree interessate dai cantieri per la realizzazione della rotonda di Piazza Verdi",
+   "url": "https://www.incentivi.gov.it/it/catalogo/comune-di-tricesimo-bando-la-concessione-di-indennizzi-sostegno-delle-imprese-commerciali",
+   "stato": "aperto",
+   "scadenza": null,
+   "per_imprese": "si",
+   "perche": "Beneficiari indicati: Impresa; territorio: Friuli-Venezia Giulia; forma: Contributo/Fondo perduto; nessuna data di chiusura nel catalogo (sportello o dato non aggiornato)."
+  },
+  {
+   "titolo": "Bando per l’erogazione di contributi alle imprese per la partecipazione a fiere e mostre in Italia e all’estero 2026 – CCIAA Nuoro",
+   "url": "https://www.incentivi.gov.it/it/catalogo/bando-lerogazione-di-contributi-alle-imprese-la-partecipazione-fiere-e-mostre-italia-e-0",
+   "stato": "aperto",
+   "scadenza": "2026-09-30",
+   "per_imprese": "si",
+   "perche": "Beneficiari indicati: Impresa; territorio: Sardegna; forma: Contributo/Fondo perduto."
+  },
+  {
+   "titolo": "Avviso pubblico - PIA Programmi Integrati di Agevolazione - PR Puglia FESR 2021-2027",
+   "url": "https://www.incentivi.gov.it/it/catalogo/avviso-pubblico-pia-programmi-integrati-di-agevolazione-pr-puglia-fesr-2021-2027",
+   "stato": "aperto",
+   "scadenza": null,
+   "per_imprese": "si",
+   "perche": "Beneficiari indicati: Impresa; territorio: Puglia; forma: Contributo/Fondo perduto; nessuna data di chiusura nel catalogo (sportello o dato non aggiornato)."
+  },
+  {
+   "titolo": "Aiuti per servizi di consulenza - Provincia autonoma di Trento",
+   "url": "https://www.incentivi.gov.it/it/catalogo/aiuti-servizi-di-consulenza-provincia-autonoma-di-trento",
+   "stato": "aperto",
+   "scadenza": null,
+   "per_imprese": "si",
+   "perche": "Beneficiari indicati: Impresa; territorio: Trentino-Alto Adige/Südtirol; forma: Contributo/Fondo perduto; nessuna data di chiusura nel catalogo (sportello o dato non aggiornato)."
+  },
+  {
+   "titolo": "Provincia autonoma di Trento - Incentivi alla conservazione dell’occupazione - Int. 3.4.2",
+   "url": "https://www.incentivi.gov.it/it/catalogo/provincia-autonoma-di-trento-incentivi-alla-conservazione-delloccupazione-int-342",
+   "stato": "aperto",
+   "scadenza": "2027-06-30",
+   "per_imprese": "si",
+   "perche": "Beneficiari indicati: Impresa, Professionista; territorio: Trentino-Alto Adige/Südtirol; forma: Contributo/Fondo perduto."
+  },
+  {
+   "titolo": "Regione Veneto - Interventi a sostegno delle imprese culturali, creative e dell’audiovisivo - Sub C Produzione audiovisiva - Anno 2026 (Tipologia B) - DGR n. 285 del 28 aprile 2026",
+   "url": "https://www.incentivi.gov.it/it/catalogo/regione-veneto-interventi-sostegno-delle-imprese-culturali-creative-e-dellaudiovisivo-0",
+   "stato": "in_arrivo",
+   "scadenza": "2027-02-02",
+   "per_imprese": "si",
+   "perche": "Beneficiari indicati: Impresa; territorio: Veneto; forma: Contributo/Fondo perduto."
+  },
+  {
+   "titolo": "CCIAA Salerno - Bando Doppia Transizione 2026",
+   "url": "https://www.incentivi.gov.it/it/catalogo/cciaa-salerno-bando-doppia-transizione-2026",
+   "stato": "in_arrivo",
+   "scadenza": "2026-11-05",
+   "per_imprese": "si",
+   "perche": "Beneficiari indicati: Consorzio, Impresa; territorio: Campania; forma: Contributo/Fondo perduto."
+  },
+  {
+   "titolo": "CCIAA Marche - Voucher per la Doppia Transizione 2026",
+   "url": "https://www.incentivi.gov.it/it/catalogo/cciaa-marche-voucher-la-doppia-transizione-2026",
+   "stato": "in_arrivo",
+   "scadenza": "2026-10-07",
+   "per_imprese": "si",
+   "perche": "Beneficiari indicati: Impresa; territorio: Marche; forma: Contributo/Fondo perduto."
+  },
+  {
+   "titolo": "CCIAA Cremona-Mantova-Pavia - Bando Valorizzazione delle Tipicità locali 2026",
+   "url": "https://www.incentivi.gov.it/it/catalogo/cciaa-cremona-mantova-pavia-bando-valorizzazione-delle-tipicita-locali-2026",
+   "stato": "in_arrivo",
+   "scadenza": "2026-12-18",
+   "per_imprese": "si",
+   "perche": "Beneficiari indicati: Impresa; territorio: Lombardia; forma: Contributo/Fondo perduto."
+  },
+  {
+   "titolo": "Unioncamere Piemonte - Bando voucher digitalizzazione 2026 PMI piemontesi",
+   "url": "https://www.incentivi.gov.it/it/catalogo/unioncamere-piemonte-bando-voucher-digitalizzazione-2026-pmi-piemontesi",
+   "stato": "in_arrivo",
+   "scadenza": "2026-12-15",
+   "per_imprese": "si",
+   "perche": "Beneficiari indicati: Impresa, Professionista; territorio: Piemonte; forma: Contributo/Fondo perduto."
+  },
+  {
+   "titolo": "CCIAA Modena - Bando Voucher Internazionalizzazione - Anno 2026",
+   "url": "https://www.incentivi.gov.it/it/catalogo/cciaa-modena-bando-voucher-internazionalizzazione-anno-2026",
+   "stato": "in_arrivo",
+   "scadenza": "2026-10-09",
+   "per_imprese": "si",
+   "perche": "Beneficiari indicati: Impresa; territorio: Emilia-Romagna; forma: Contributo/Fondo perduto."
+  },
+  {
+   "titolo": "Regione Emilia-Romagna - Bando per l'innovazione nella gestione delle sale deputate allo svolgimento di rappresentazioni cinematografiche, teatrali, musicali e artistiche",
+   "url": "https://www.incentivi.gov.it/it/catalogo/regione-emilia-romagna-bando-linnovazione-nella-gestione-delle-sale-deputate-allo",
+   "stato": "in_arrivo",
+   "scadenza": "2026-11-02",
+   "per_imprese": "si",
+   "perche": "Beneficiari indicati: Impresa; territorio: Emilia-Romagna; forma: Contributo/Fondo perduto."
+  },
+  {
+   "titolo": "Regione Lombardia - Bando per lo sviluppo tecnologico delle startup innovative",
+   "url": "https://www.incentivi.gov.it/it/catalogo/regione-lombardia-bando-lo-sviluppo-tecnologico-delle-startup-innovative",
+   "stato": "in_arrivo",
+   "scadenza": "2026-11-25",
+   "per_imprese": "si",
+   "perche": "Beneficiari indicati: Impresa - SU/PMI innovativa; territorio: Lombardia; forma: Contributo/Fondo perduto."
+  },
+  {
+   "titolo": "Unioncamere Emilia-Romagna - Bando Digital Export 2026-2027",
+   "url": "https://www.incentivi.gov.it/it/catalogo/unioncamere-emilia-romagna-bando-digital-export-2026-2027",
+   "stato": "in_arrivo",
+   "scadenza": "2026-10-05",
+   "per_imprese": "si",
+   "perche": "Beneficiari indicati: Impresa; territorio: Emilia-Romagna; forma: Contributo/Fondo perduto."
+  },
+  {
+   "titolo": "Regione Friuli Venezia Giulia - Aiuti sul costo dei premi assicurativi pagati a copertura delle perdite dovute a rischi di insolvenza di clienti imprenditori privati",
+   "url": "https://www.incentivi.gov.it/it/catalogo/regione-friuli-venezia-giulia-aiuti-sul-costo-dei-premi-assicurativi-pagati-copertura",
+   "stato": "in_arrivo",
+   "scadenza": "2027-01-31",
+   "per_imprese": "si",
+   "perche": "Beneficiari indicati: Impresa; territorio: Friuli-Venezia Giulia; forma: Contributo/Fondo perduto."
+  },
+  {
+   "titolo": "Avviso STEP Molise",
+   "url": "https://www.incentivi.gov.it/it/catalogo/avviso-step-molise",
+   "stato": "in_arrivo",
+   "scadenza": "2027-04-30",
+   "per_imprese": "si",
+   "perche": "Beneficiari indicati: Impresa; territorio: Molise; forma: Contributo/Fondo perduto."
+  },
+  {
+   "titolo": "Contributi diretti tramite sostegno al credito alle imprese dei comuni delle province di Catanzaro, Crotone e Vibo Valentia colpite dagli eccezionali eventi meteorologici verificatisi a partire dal 18 gennaio 2026",
+   "url": "https://www.incentivi.gov.it/it/catalogo/contributi-diretti-tramite-sostegno-al-credito-alle-imprese-dei-comuni-delle-province-di",
+   "stato": "in_arrivo",
+   "scadenza": "2026-10-29",
+   "per_imprese": "si",
+   "perche": "Beneficiari indicati: Impresa; territorio: Calabria; forma: Contributo/Fondo perduto."
+  },
+  {
+   "titolo": "Bando per contributi alle imprese delle province di Pistoia e Prato per la realizzazione di percorsi di formazione scuola-lavoro e per la certificazione delle competenze - Anno 2026",
+   "url": "https://www.incentivi.gov.it/it/catalogo/bando-contributi-alle-imprese-delle-province-di-pistoia-e-prato-la-realizzazione-di",
+   "stato": "in_arrivo",
+   "scadenza": "2026-11-12",
+   "per_imprese": "si",
+   "perche": "Beneficiari indicati: Impresa; territorio: Toscana; forma: Contributo/Fondo perduto."
+  },
+  {
+   "titolo": "Sostegno alla domanda di servizi di cloud computing e cyber security",
+   "url": "https://www.incentivi.gov.it/it/catalogo/sostegno-alla-domanda-di-servizi-di-cloud-computing-e-cyber-security",
+   "stato": "in_arrivo",
+   "scadenza": "2027-01-20",
+   "per_imprese": "si",
+   "perche": "Beneficiari indicati: Impresa, Impresa - SU/PMI innovativa, Professionista, Consorzio, Cooperative/Associazioni Non Profit, Istituto finanziario, Università/Ente di Ricerca; territorio: nazionale/multiregionale; forma: Contributo/Fondo perduto."
+  },
+  {
+   "titolo": "CCIAA Vicenza - Bando per contributi a supporto della filiera turistica - Anno 2026 (26FT)",
+   "url": "https://www.incentivi.gov.it/it/catalogo/cciaa-vicenza-bando-contributi-supporto-della-filiera-turistica-anno-2026-26ft",
+   "stato": "in_arrivo",
+   "scadenza": "2026-10-07",
+   "per_imprese": "si",
+   "perche": "Beneficiari indicati: Impresa; territorio: Veneto; forma: Contributo/Fondo perduto."
+  },
+  {
+   "titolo": "Bando a sostegno dell'accesso al credito delle imprese delle province di Parma, Piacenza e Reggio Emilia tramite i confidi",
+   "url": "https://www.incentivi.gov.it/it/catalogo/bando-sostegno-dellaccesso-al-credito-delle-imprese-delle-province-di-parma-piacenza-e",
+   "stato": "in_arrivo",
+   "scadenza": "2027-01-30",
+   "per_imprese": "si",
+   "perche": "Beneficiari indicati: Impresa; territorio: Emilia-Romagna; forma: Contributo/Fondo perduto."
+  },
+  {
+   "titolo": "PR FESR 2021-2027 Emilia-Romagna - Azione 2.2.2 - Bando per il supporto all'utilizzo di fonti rinnovabili nelle imprese",
+   "url": "https://www.incentivi.gov.it/it/catalogo/pr-fesr-2021-2027-emilia-romagna-azione-222-bando-il-supporto-allutilizzo-di-fonti",
+   "stato": "in_arrivo",
+   "scadenza": "2026-11-15",
+   "per_imprese": "si",
+   "perche": "Beneficiari indicati: Impresa; territorio: Emilia-Romagna; forma: Contributo/Fondo perduto."
+  },
+  {
+   "titolo": "CCIAA Modena - Bando a sostegno dell'occupazione giovanile - anno 2026",
+   "url": "https://www.incentivi.gov.it/it/catalogo/cciaa-modena-bando-sostegno-delloccupazione-giovanile-anno-2026",
+   "stato": "in_arrivo",
+   "scadenza": "2026-11-30",
+   "per_imprese": "si",
+   "perche": "Beneficiari indicati: Impresa; territorio: Emilia-Romagna; forma: Contributo/Fondo perduto."
+  },
+  {
+   "titolo": "Bando Internazionalizzazione 2026 - CCIAA Monte Rosa laghi Alto Piemonte",
+   "url": "https://www.incentivi.gov.it/it/catalogo/bando-internazionalizzazione-2026-cciaa-monte-rosa-laghi-alto-piemonte",
+   "stato": "in_arrivo",
+   "scadenza": "2026-10-22",
+   "per_imprese": "si",
+   "perche": "Beneficiari indicati: Impresa; territorio: Piemonte; forma: Contributo/Fondo perduto."
+  },
+  {
+   "titolo": "Bando unico annuale 2026 – Cultura - CCIAA Vicenza",
+   "url": "https://www.incentivi.gov.it/it/catalogo/bando-unico-annuale-2026-cultura-cciaa-vicenza",
+   "stato": "in_arrivo",
+   "scadenza": "2026-10-28",
+   "per_imprese": "si",
+   "perche": "Beneficiari indicati: Consorzio, Cooperative/Associazioni Non Profit, Ente Pubblico, Rete d'impresa; territorio: Veneto; forma: Contributo/Fondo perduto."
+  },
+  {
+   "titolo": "CCIAA Pordenone-Udine - Progetto “Linkedin Pro Business 2026”",
+   "url": "https://www.incentivi.gov.it/it/catalogo/cciaa-pordenone-udine-progetto-linkedin-pro-business-2026",
+   "stato": "chiuso_recente",
+   "scadenza": "2026-06-30",
+   "per_imprese": "si",
+   "perche": "Beneficiari indicati: Impresa; territorio: Friuli-Venezia Giulia; forma: Contributo/Fondo perduto."
+  },
+  {
+   "titolo": "CCIAA Toscana Nord-Ovest - Bando Voucher Doppia Transizione 2026",
+   "url": "https://www.incentivi.gov.it/it/catalogo/cciaa-toscana-nord-ovest-bando-voucher-doppia-transizione-2026",
+   "stato": "chiuso_recente",
+   "scadenza": "2026-07-17",
+   "per_imprese": "si",
+   "perche": "Beneficiari indicati: Impresa; territorio: Toscana; forma: Contributo/Fondo perduto."
+  },
+  {
+   "titolo": "Bando di contributi per la partecipazione a fiere in Italia e all'estero - Anno 2026 - Camera di Commercio dell'Umbria",
+   "url": "https://www.incentivi.gov.it/it/catalogo/bando-di-contributi-la-partecipazione-fiere-italia-e-allestero-anno-2026-camera-di",
+   "stato": "chiuso_recente",
+   "scadenza": "2026-09-02",
+   "per_imprese": "si",
+   "perche": "Beneficiari indicati: Impresa; territorio: Umbria; forma: Contributo/Fondo perduto."
+  },
+  {
+   "titolo": "Lazio Innova - Avviso Donne e impresa 2026",
+   "url": "https://www.incentivi.gov.it/it/catalogo/lazio-innova-avviso-donne-e-impresa-2026",
+   "stato": "chiuso_recente",
+   "scadenza": "2026-06-10",
+   "per_imprese": "si",
+   "perche": "Beneficiari indicati: Impresa da costituire - Femminile, Impresa - prevalenza femminile; territorio: Lazio; forma: Contributo/Fondo perduto."
+  },
+  {
+   "titolo": "CCIAA Bologna - Contributi per la partecipazione a fiere internazionali in Italia - Anno 2026",
+   "url": "https://www.incentivi.gov.it/it/catalogo/cciaa-bologna-contributi-la-partecipazione-fiere-internazionali-italia-anno-2026",
+   "stato": "chiuso_recente",
+   "scadenza": "2026-03-31",
+   "per_imprese": "si",
+   "perche": "Beneficiari indicati: Consorzio, Cooperative/Associazioni Non Profit, Impresa; territorio: Emilia-Romagna; forma: Contributo/Fondo perduto."
+  },
+  {
+   "titolo": "CCIAA Modena - Trenino di Natale - Anno 2026",
+   "url": "https://www.incentivi.gov.it/it/catalogo/cciaa-modena-trenino-di-natale-anno-2026",
+   "stato": "chiuso_recente",
+   "scadenza": "2026-07-15",
+   "per_imprese": "si",
+   "perche": "Beneficiari indicati: Impresa; territorio: Emilia-Romagna; forma: Contributo/Fondo perduto."
+  },
+  {
+   "titolo": "Bando Valore Impresa 2025 - Camera di Commercio di Frosinone e Latina",
+   "url": "https://www.incentivi.gov.it/it/catalogo/bando-valore-impresa-2025-camera-di-commercio-di-frosinone-e-latina",
+   "stato": "chiuso_recente",
+   "scadenza": "2026-05-30",
+   "per_imprese": "si",
+   "perche": "Beneficiari indicati: Impresa; territorio: Lazio; forma: Contributo/Fondo perduto."
+  },
+  {
+   "titolo": "Regione Toscana - Terzo Avviso pubblico rivolto a libere/i professioniste/i per il finanziamento di voucher formativi individuali a valere sul PR FSE+ Toscana 2021-2027",
+   "url": "https://www.incentivi.gov.it/it/catalogo/regione-toscana-terzo-avviso-pubblico-rivolto-liberei-professionistei-il-finanziamento-di",
+   "stato": "chiuso_recente",
+   "scadenza": "2026-09-15",
+   "per_imprese": "si",
+   "perche": "Beneficiari indicati: Professionista; territorio: Toscana; forma: Contributo/Fondo perduto."
+  },
+  {
+   "titolo": "Regione Marche - Partecipazione a ASFW Addis, 12-15 novembre 2026",
+   "url": "https://www.incentivi.gov.it/it/catalogo/regione-marche-partecipazione-asfw-addis-12-15-novembre-2026",
+   "stato": "chiuso_recente",
+   "scadenza": "2026-09-01",
+   "per_imprese": "si",
+   "perche": "Beneficiari indicati: Consorzio, Cooperative/Associazioni Non Profit, Impresa, Rete d'impresa; territorio: Marche; forma: Contributo/Fondo perduto."
+  },
+  {
+   "titolo": "Bando Fondo Regionale per l'occupazione delle persone con disabilità di natura psichica - 2025 - Avviso pubblico per la concessione di contributi ai datori di lavoro privati – Legge 68/99 - Lucca e Pistoia",
+   "url": "https://www.incentivi.gov.it/it/catalogo/bando-fondo-regionale-loccupazione-delle-persone-con-disabilita-di-natura-psichica-2025-0",
+   "stato": "chiuso_recente",
+   "scadenza": "2026-03-31",
+   "per_imprese": "si",
+   "perche": "Beneficiari indicati: Impresa; territorio: Toscana; forma: Contributo/Fondo perduto."
+  },
+  {
+   "titolo": "Bando per l’assegnazione di voucher per interventi di formazione - Anno 2025 - CCIAA di Bergamo",
+   "url": "https://www.incentivi.gov.it/it/catalogo/bando-lassegnazione-di-voucher-interventi-di-formazione-anno-2025-cciaa-di-bergamo",
+   "stato": "chiuso_recente",
+   "scadenza": "2026-04-30",
+   "per_imprese": "si",
+   "perche": "Beneficiari indicati: Impresa; territorio: Lombardia; forma: Contributo/Fondo perduto."
+  },
+  {
+   "titolo": "CCIAA Emilia - Bando Piccole Imprese per il territorio 2026 - BT26",
+   "url": "https://www.incentivi.gov.it/it/catalogo/cciaa-emilia-bando-piccole-imprese-il-territorio-2026-bt26",
+   "stato": "chiuso_recente",
+   "scadenza": "2026-07-30",
+   "per_imprese": "si",
+   "perche": "Beneficiari indicati: Impresa; territorio: Emilia-Romagna; forma: Contributo/Fondo perduto."
+  },
+  {
+   "titolo": "Bando per lo sviluppo di incubatori e acceleratori della Regione Emilia-Romagna 2026",
+   "url": "https://www.incentivi.gov.it/it/catalogo/bando-lo-sviluppo-di-incubatori-e-acceleratori-della-regione-emilia-romagna-2026",
+   "stato": "chiuso_recente",
+   "scadenza": "2026-03-26",
+   "per_imprese": "si",
+   "perche": "Beneficiari indicati: Impresa, Ente Pubblico; territorio: Emilia-Romagna; forma: Contributo/Fondo perduto."
+  },
+  {
+   "titolo": "CCIAA Pordenone-Udine - Progetto “SEO internazionale 2026”",
+   "url": "https://www.incentivi.gov.it/it/catalogo/cciaa-pordenone-udine-progetto-seo-internazionale-2026",
+   "stato": "chiuso_recente",
+   "scadenza": "2026-06-30",
+   "per_imprese": "si",
+   "perche": "Beneficiari indicati: Impresa; territorio: Friuli-Venezia Giulia; forma: Contributo/Fondo perduto."
+  },
+  {
+   "titolo": "Riapertura sportello per la presentazione delle domande di accesso alle agevolazioni per il sostegno all’accesso al credito per il comparto commercio e servizi di ristorazione e alloggio - PR FESR Liguria 2021–2027",
+   "url": "https://www.incentivi.gov.it/it/catalogo/riapertura-sportello-la-presentazione-delle-domande-di-accesso-alle-agevolazioni-il",
+   "stato": "chiuso_recente",
+   "scadenza": "2026-03-31",
+   "per_imprese": "si",
+   "perche": "Beneficiari indicati: Impresa; territorio: Liguria; forma: Contributo/Fondo perduto, Interventi a garanzia."
+  }
+ ],
+ "esclusi": [
+  {
+   "titolo": "Provincia Autonoma di Trento - Contributi per iniziative di interesse provinciale",
+   "url": "https://www.incentivi.gov.it/it/catalogo/provincia-autonoma-di-trento-contributi-iniziative-di-interesse-provinciale",
+   "perche": "Beneficiari indicati solo: Cittadino"
+  },
+  {
+   "titolo": "Assegnazione dei contributi di gestione per l’anno 2026 alla Fondazione La Triennale, alla Fondazione Museo Nazionale della Scienza e Tecnologia ‘Leonardo da Vinci’ e alla Fondazione Bagatti Valsecchi Onlus di Milano",
+   "url": "https://www.incentivi.gov.it/it/catalogo/assegnazione-dei-contributi-di-gestione-lanno-2026-alla-fondazione-la-triennale-alla",
+   "perche": "Beneficiari indicati solo: Cooperative/Associazioni Non Profit"
+  },
+  {
+   "titolo": "Accordo di Rilancio Economico Sociale e Territoriale – AREST per l’attrattività e la competitività di territori e imprese e il sostegno all’occupazione - Regione Lombardia",
+   "url": "https://www.incentivi.gov.it/it/catalogo/accordo-di-rilancio-economico-sociale-e-territoriale-arest-lattrattivita-e-la",
+   "perche": "Beneficiari indicati solo: Ente Pubblico"
+  },
+  {
+   "titolo": "Fondo di rotazione immobiliare",
+   "url": "https://www.incentivi.gov.it/it/catalogo/fondo-di-rotazione-immobiliare",
+   "perche": "Beneficiari indicati solo: Cooperative/Associazioni Non Profit"
+  },
+  {
+   "titolo": "CCIAA Vicenza - Bando di assegnazione di borse di studio per incentivare l’iscrizione di persone ai corsi di qualificazione professionale nella filiera turistica e della ricettività organizzati nella Provincia di Vicenza - Edizione 2026 (26QT)",
+   "url": "https://www.incentivi.gov.it/it/catalogo/cciaa-vicenza-bando-di-assegnazione-di-borse-di-studio-incentivare-liscrizione-di-persone",
+   "perche": "Beneficiari indicati solo: Cittadino"
+  },
+  {
+   "titolo": "Contributi per realizzazione di attività e manifestazioni dirette alla divulgazione degli argomenti forestali, ambientali ed ecologici (associazioni d'arma di rilievo nazionale) - Regione Autonoma Friuli-Venezia Giulia",
+   "url": "https://www.incentivi.gov.it/it/catalogo/contributi-realizzazione-di-attivita-e-manifestazioni-dirette-alla-divulgazione-degli",
+   "perche": "Beneficiari indicati solo: Cooperative/Associazioni Non Profit"
+  },
+  {
+   "titolo": "Regione Emilia-Romagna - Bando per il potenziamento infrastrutturale dei Tecnopoli dell'Emilia-Romagna - Grandi infrastrutture di ricerca - RER DGR 1152/2026",
+   "url": "https://www.incentivi.gov.it/it/catalogo/regione-emilia-romagna-bando-il-potenziamento-infrastrutturale-dei-tecnopoli-dellemilia",
+   "perche": "Beneficiari indicati solo: Ente Pubblico, Università/Ente di Ricerca"
+  },
+  {
+   "titolo": "Le Marche per i giovani imprenditori: Start&Innova Giovani – Sostegno alla creazione di imprese innovative da parte di giovani disoccupati",
+   "url": "https://www.incentivi.gov.it/it/catalogo/le-marche-i-giovani-imprenditori-startinnova-giovani-sostegno-alla-creazione-di-imprese",
+   "perche": "Beneficiari indicati solo: Cittadino"
+  },
+  {
+   "titolo": "Nuova Marcora - Cooperative di piccola e media dimensione",
+   "url": "https://www.incentivi.gov.it/it/catalogo/nuova-marcora-cooperative-di-piccola-e-media-dimensione",
+   "perche": "Beneficiari indicati solo: Cooperative/Associazioni Non Profit"
+  },
+  {
+   "titolo": "Regione Emilia-Romagna - Accordi di investimento e servizi per l'attrattività e competitività territoriale",
+   "url": "https://www.incentivi.gov.it/it/catalogo/regione-emilia-romagna-accordi-di-investimento-e-servizi-lattrattivita-e-competitivita",
+   "perche": "Beneficiari indicati solo: Ente Pubblico, Università/Ente di Ricerca"
+  },
+  {
+   "titolo": "VASP - Interventi speciali a favore della montagna",
+   "url": "https://www.incentivi.gov.it/it/catalogo/vasp-interventi-speciali-favore-della-montagna",
+   "perche": "Beneficiari indicati solo: Ente Pubblico"
+  },
+  {
+   "titolo": "Provincia Autonoma di Trento - Contributo per l’attività di tutoraggio a favore del tirocinante con disabilità - Int. 3.3.A",
+   "url": "https://www.incentivi.gov.it/it/catalogo/provincia-autonoma-di-trento-contributo-lattivita-di-tutoraggio-favore-del-tirocinante-con",
+   "perche": "Beneficiari indicati solo: Cooperative/Associazioni Non Profit"
+  },
+  {
+   "titolo": "Regione Emilia-Romagna - Bando per lo sviluppo di ecosistemi territoriali innovativi in attuazione indirizzi strategici per l'economia sociale",
+   "url": "https://www.incentivi.gov.it/it/catalogo/regione-emilia-romagna-bando-lo-sviluppo-di-ecosistemi-territoriali-innovativi-attuazione",
+   "perche": "Beneficiari indicati solo: Ente Pubblico"
+  },
+  {
+   "titolo": "Regione Lombardia - Manifestazioni di interesse per Zona Logistica Semplificata",
+   "url": "https://www.incentivi.gov.it/it/catalogo/regione-lombardia-manifestazioni-di-interesse-zona-logistica-semplificata",
+   "perche": "Beneficiari indicati solo: Ente Pubblico"
+  },
+  {
+   "titolo": "Sussidi per la costituzione di una nuova cooperativa - Provincia Autonoma di Bolzano",
+   "url": "https://www.incentivi.gov.it/it/catalogo/sussidi-la-costituzione-di-una-nuova-cooperativa-provincia-autonoma-di-bolzano",
+   "perche": "Beneficiari indicati solo: Cooperative/Associazioni Non Profit"
+  }
+ ]
+}

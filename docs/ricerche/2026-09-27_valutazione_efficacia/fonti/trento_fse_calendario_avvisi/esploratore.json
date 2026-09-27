@@ -1,0 +1,20 @@
+{"fonte": "trento_fse_calendario_avvisi", "raggiungibile": true,
+ "pagine_visitate": [
+  "https://www.provincia.tn.it/content/view/full/28905",
+  "https://docs.google.com/spreadsheets/d/e/2PACX-1vRfj-tAYqvDIqZOtoKQYJ2YE6qAqBBidAisnvRcBmKKMjzcY_9zjQkk8FtEbuwHeQz39G6AX8tbOh32/pub?gid=0&single=true&output=csv",
+  "https://www.provincia.tn.it/Servizi/Presentazione-di-progetti-per-realizzare-percorsi-di-formazione-continua"
+ ],
+ "totale_stimato": 1,
+ "note": "La pagina osservata e' una scheda 'dataset' con un solo CSV (Google Sheets pubblicato) che elenca 17 avvisi FSE+ 2021-2027 della PAT. Solo uno ha come beneficiari le imprese (2024-6 formazione continua, aperto fino al 30/04/2027 salvo esaurimento fondi; la pagina del servizio dice che il servizio online e' al momento 'non disponibile', forse sospensione temporanea dello sportello). Gli altri sono rivolti a enti di formazione accreditati, scuole o enti accreditati: gli enti di formazione accreditati possono essere societa' private o cooperative, quindi i recenti/in arrivo sono elencati negli esclusi come ambigui. Diversi avvisi 2026 sono indicati 'in arrivo 2° semestre 2026' senza link. Non ho esplorato il resto delle sezioni contributi della Provincia (es. APIAE/Agenzia per l'incentivazione) perche' fuori da questa fonte.",
+ "bandi": [
+  {"titolo": "Avviso FSE+ 2024-6 - Presentazione di interventi di formazione continua per le imprese", "url": "https://www.provincia.tn.it/Servizi/Presentazione-di-progetti-per-realizzare-percorsi-di-formazione-continua", "stato": "aperto", "scadenza": "2027-04-30", "per_imprese": "si", "perche": "Beneficiari imprese (anche cooperative), lavoratori autonomi e professionisti; contributo fino a 50/100/200 mila euro per dimensione, dotazione 7,1 milioni; sportello aperto dal 03/03/2025."}
+ ],
+ "esclusi": [
+  {"titolo": "Avviso FSE+ 2026-7 - Attivita' formative e laboratoriali di rafforzamento dell'occupabilita' di persone svantaggiate (ed. 2026)", "url": "https://www.provincia.tn.it/Servizi/Presentazione-progetti-per-l-occupabilita-delle-persone-svantaggiate-ed.-2026", "perche": "In arrivo (29/09/2026-29/10/2026), 700.000 euro; beneficiari 'enti accreditati' (formazione): ambiguo, possono essere societa'/cooperative ma non imprese in generale."},
+  {"titolo": "Avviso FSE+ 2026-2 - Percorsi formativi professionalizzanti e di formazione permanente nell'ambito dell'age e diversity management", "url": "https://www.provincia.tn.it/Servizi/Presentazione-progetti-formativi-di-age-e-diversity-management", "perche": "Chiuso il 17/09/2026 (aperto dal 28/07/2026), 500.000 euro; beneficiari enti accreditati di formazione: ambiguo."},
+  {"titolo": "Avviso FSE+ 2026-1 - Formazione permanente per competenze digitali della popolazione adulta", "url": "https://www.provincia.tn.it/content/view/full/28905", "perche": "In arrivo 2° semestre 2026, nessun link; beneficiari enti di formazione accreditati FSE."},
+  {"titolo": "Avviso FSE+ 2026-3 - Formazione di base e avanzata ICT e linguistica per lavoratori disoccupati, espulsi e sospesi", "url": "https://www.provincia.tn.it/content/view/full/28905", "perche": "In arrivo 2° semestre 2026, nessun link; beneficiari enti accreditati."},
+  {"titolo": "Avviso FSE+ 2026-4 - Percorsi di ricollocazione delle persone espulse dal mercato del lavoro verso settori in espansione", "url": "https://www.provincia.tn.it/content/view/full/28905", "perche": "In arrivo 2° semestre 2026, nessun link; beneficiari enti accreditati."},
+  {"titolo": "Avviso FSE+ 2026-5 - Proposte formative per il successo formativo degli studenti", "url": "https://www.provincia.tn.it/content/view/full/28905", "perche": "In arrivo 2° semestre 2026; beneficiari scuole ed enti di formazione accreditati."},
+  {"titolo": "Avviso FSE+ 2026-6 - Formazione e tirocinio in mobilita' internazionale per studenti", "url": "https://www.provincia.tn.it/content/view/full/28905", "perche": "In arrivo 2° semestre 2026; beneficiari scuole ed enti di formazione accreditati."}
+ ]}

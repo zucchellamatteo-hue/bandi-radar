@@ -1,0 +1,590 @@
+{
+ "fonte": "sardegna_regione_bandi",
+ "perimetro": [
+  {
+   "titolo": "PR FESR / PN JTF - Piani di investimenti Fondo di Competitivita' delle imprese",
+   "url": "https://www.regione.sardegna.it/atti-bandi-archivi/atti-amministrativi/bandi/178636975178294",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Aperto fino al 30/06/2027. Pubblicato prima del 2 settembre: la fonte legge solo la prima pagina (50 voci piu' recenti, 2-25/09) dell'API e alla prima raccolta del 25/09 non ha recuperato l'arretrato."
+  },
+  {
+   "titolo": "Contributi in conto capitale alle attivita' commerciali (L.R. 3/2022 art. 7) 2026",
+   "url": "https://www.regione.sardegna.it/atti-bandi-archivi/atti-amministrativi/bandi/178634261576085",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Aperto (click day fino al 9/10). Pubblicato ad agosto, fuori dalle 50 voci lette dalla prima pagina dell'API."
+  },
+  {
+   "titolo": "Avviso SO.LA.RE. Sardegna 2026 - PR FSE+",
+   "url": "https://www.regione.sardegna.it/atti-bandi-archivi/atti-amministrativi/bandi/178490349559484",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Aperto fino al 31/12/2026, aiuti MPMI per l'occupazione. Pubblicato prima del 2/09: non raccolto per limite di 50 voci."
+  },
+  {
+   "titolo": "PSP PAC SRE01 Insediamento giovani agricoltori 2026",
+   "url": "https://www.regione.sardegna.it/atti-bandi-archivi/atti-amministrativi/bandi/178634727851228",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Aperto fino al 31/10. Fuori dalla prima pagina di 50 voci."
+  },
+  {
+   "titolo": "L.R. 13/2024 art. 21 - Imprese artigiane passaggio generazionale 2026",
+   "url": "https://www.regione.sardegna.it/atti-bandi-archivi/atti-amministrativi/bandi/178599519881668",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Aperto fino al 12/10. Fuori dalla prima pagina di 50 voci."
+  },
+  {
+   "titolo": "Contributi imprese turistiche Albergo diffuso - II Avviso IMPRESE",
+   "url": "https://www.regione.sardegna.it/atti-bandi-archivi/atti-amministrativi/bandi/178488767347678",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Aperto fino al 12/10. Fuori dalla prima pagina di 50 voci."
+  },
+  {
+   "titolo": "L.R. 12/2001 - Incentivi imprese artigiane per l'apprendistato 2026",
+   "url": "https://www.regione.sardegna.it/atti-bandi-archivi/atti-amministrativi/bandi/178479332125088",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Aperto fino al 7/10. Fuori dalla prima pagina di 50 voci."
+  },
+  {
+   "titolo": "Aiuti Grandi imprese e MPMI del Sulcis-Iglesiente (PN JTF 1.5 e 1.6)",
+   "url": "https://www.regione.sardegna.it/atti-bandi-archivi/atti-amministrativi/bandi/178273476817963",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Aperto fino al 2/10. Pubblicato a luglio, fuori dalla prima pagina di 50 voci."
+  },
+  {
+   "titolo": "Intervento settoriale Prodotti dell'Apicoltura 2026/2027",
+   "url": "https://www.regione.sardegna.it/atti-bandi-archivi/atti-amministrativi/bandi/178488600378933",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Aperto fino al 30/10. Fuori dalla prima pagina di 50 voci."
+  },
+  {
+   "titolo": "PSP PAC SRA18 ACA18 Impegni per l'apicoltura 2026",
+   "url": "https://www.regione.sardegna.it/atti-bandi-archivi/atti-amministrativi/bandi/178237027345237",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Aperto fino al 5/10. Fuori dalla prima pagina di 50 voci."
+  },
+  {
+   "titolo": "PSP PAC SRD13 Trasformazione e commercializzazione prodotti agricoli 2026",
+   "url": "https://www.regione.sardegna.it/atti-bandi-archivi/atti-amministrativi/bandi/177884969569684",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Aperto fino al 30/09. Fuori dalla prima pagina di 50 voci."
+  },
+  {
+   "titolo": "PN FEAMPA Azione 4 - Acquacoltura",
+   "url": "https://www.regione.sardegna.it/atti-bandi-archivi/atti-amministrativi/bandi/177814446431538",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Aperto fino al 9/10. Fuori dalla prima pagina di 50 voci."
+  },
+  {
+   "titolo": "PN FEAMPA Azione 2 - Commercializzazione e trasformazione prodotti ittici",
+   "url": "https://www.regione.sardegna.it/atti-bandi-archivi/atti-amministrativi/bandi/177814389976736",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Aperto fino al 9/10. Fuori dalla prima pagina di 50 voci."
+  },
+  {
+   "titolo": "Workshop MICE Destinazione Sardegna 2026 - Alghero (seller)",
+   "url": "https://www.regione.sardegna.it/atti-bandi-archivi/atti-amministrativi/bandi/178483045784351",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Incerto, aperto fino al 30/09. Fuori dalla prima pagina di 50 voci."
+  },
+  {
+   "titolo": "Contributi Associazioni Cooperativistiche (L.R. 5/1957) 2026",
+   "url": "https://www.regione.sardegna.it/atti-bandi-archivi/atti-amministrativi/bandi/178428650359388",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Incerto (beneficiarie associazioni di cooperative). Fuori dalla prima pagina di 50 voci."
+  },
+  {
+   "titolo": "Interreg NEXT MED - Terzo invito capitalizzazione turismo sostenibile",
+   "url": "https://www.regione.sardegna.it/atti-bandi-archivi/atti-amministrativi/bandi/178290330373360",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Incerto, aperto fino al 29/10. Fuori dalla prima pagina di 50 voci."
+  },
+  {
+   "titolo": "L.R. 20/2026 art. 8 c. 24 - Finanziamento manifestazioni di rally automobilistico",
+   "url": "https://www.regione.sardegna.it/atti-bandi-archivi/atti-amministrativi/bandi/179017465554492",
+   "esito": "perso_smistamento",
+   "annuncio": 6815,
+   "bando": null,
+   "spiegazione": "Raccolto il 25/09 ma mai smistato (esito null): nessun bando collegato. Caso incerto (organizzatori societa' o ASD), andava almeno messo da_rivedere."
+  },
+  {
+   "titolo": "L.R. 31/1984 - Contributi gestione scuole dell'infanzia paritarie 2026/2027",
+   "url": "https://www.regione.sardegna.it/atti-bandi-archivi/atti-amministrativi/bandi/179025572646167",
+   "esito": "perso_smistamento",
+   "annuncio": 6812,
+   "bando": null,
+   "spiegazione": "Raccolto il 25/09 ma mai smistato (esito null). Caso incerto (gestori privati, anche cooperative); perdita di peso limitato."
+  },
+  {
+   "titolo": "Manifestazione di interesse DGR 45/23 del 09/09/2026 - progetti Beni culturali, spettacolo e sport (contributi a soggetti pubblici e privati, de minimis)",
+   "url": "https://www.regione.sardegna.it/atti-bandi-archivi/atti-amministrativi/bandi/17891246666673",
+   "esito": "perso_smistamento",
+   "annuncio": 6833,
+   "bando": null,
+   "spiegazione": "Incerto, chiuso il 18/09. Avviso (art. 3) aperto per le tipologie 2 e 3 a soggetti pubblici e privati, con aiuti in de minimis: possono partecipare imprese culturali e dello spettacolo. Raccolto il 25/09 ma mai smistato (esito null). Dimenticato dall esploratore."
+  },
+  {
+   "titolo": "Piano NEWGENS - Tirocini extracurriculari (PR FSE+)",
+   "url": "https://www.regione.sardegna.it/atti-bandi-archivi/atti-amministrativi/bandi/178592052935838",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Incerto, stato non noto. Fuori dalla prima pagina di 50 voci."
+  },
+  {
+   "titolo": "PSP PAC SRD11.3 Piani di gestione forestale",
+   "url": "https://www.regione.sardegna.it/atti-bandi-archivi/atti-amministrativi/bandi/178549987411445",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Incerto, stato non noto. Fuori dalla prima pagina di 50 voci."
+  },
+  {
+   "titolo": "Internazionalizzazione FOODEX JAPAN 2027",
+   "url": "https://www.regione.sardegna.it/atti-bandi-archivi/atti-amministrativi/bandi/178593282127590",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Chiuso il 30/08; comunque non raccolto (fuori dalle 50 voci)."
+  },
+  {
+   "titolo": "FEAMPA Azione 5 - Indennizzi imprese commercializzazione/trasformazione pesca",
+   "url": "https://www.regione.sardegna.it/atti-bandi-archivi/atti-amministrativi/bandi/178576139436595",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Chiuso il 18/09; non raccolto."
+  },
+  {
+   "titolo": "Imprese commerciali - certificazioni di qualita' e patentini 2026",
+   "url": "https://www.regione.sardegna.it/atti-bandi-archivi/atti-amministrativi/bandi/178394786973336",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Chiuso il 21/09; non raccolto."
+  },
+  {
+   "titolo": "Imprese artigiane - certificazioni, patentini, IGP",
+   "url": "https://www.regione.sardegna.it/atti-bandi-archivi/atti-amministrativi/bandi/178394862608360",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Chiuso il 21/09; non raccolto."
+  },
+  {
+   "titolo": "PR FESR 1.3.1 - Avviso SCENARI imprese culturali",
+   "url": "https://www.regione.sardegna.it/atti-bandi-archivi/atti-amministrativi/bandi/178368249756265",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Chiuso il 14/09; non raccolto."
+  },
+  {
+   "titolo": "L'Artigiano in Fiera Milano 2026",
+   "url": "https://www.regione.sardegna.it/atti-bandi-archivi/atti-amministrativi/bandi/178291024088446",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Chiuso il 10/09; non raccolto."
+  },
+  {
+   "titolo": "Roadshow BUY ITALY Polonia 2026",
+   "url": "https://www.regione.sardegna.it/atti-bandi-archivi/atti-amministrativi/bandi/178247919370354",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Chiuso il 22/09, incerto; non raccolto."
+  },
+  {
+   "titolo": "WTM World Travel Market 2026 Londra",
+   "url": "https://www.regione.sardegna.it/atti-bandi-archivi/atti-amministrativi/bandi/177928158189130",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Chiuso il 22/09, incerto; non raccolto."
+  },
+  {
+   "titolo": "IMPRENTAS 2027 - Lingua sarda nei media",
+   "url": "https://www.regione.sardegna.it/atti-bandi-archivi/atti-amministrativi/bandi/178343684981872",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Chiuso il 21/09; non raccolto."
+  },
+  {
+   "titolo": "L.R. 22/1998 art. 5 - Editoria libraria 2026",
+   "url": "https://www.regione.sardegna.it/atti-bandi-archivi/atti-amministrativi/bandi/178177914063475",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Chiuso il 10/09; non raccolto."
+  },
+  {
+   "titolo": "L.R. 40/2018 - Emittenti radiofoniche 2026",
+   "url": "https://www.regione.sardegna.it/atti-bandi-archivi/atti-amministrativi/bandi/178428228230949",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Chiuso il 24/08; non raccolto."
+  },
+  {
+   "titolo": "Testate giornalistiche online 2026",
+   "url": "https://www.regione.sardegna.it/atti-bandi-archivi/atti-amministrativi/bandi/178350931807668",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Chiuso il 9/08; non raccolto."
+  },
+  {
+   "titolo": "L.R. 22/1998 art. 19 - Editoria periodica 2026",
+   "url": "https://www.regione.sardegna.it/atti-bandi-archivi/atti-amministrativi/bandi/178212414998339",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Chiuso il 20/07; non raccolto."
+  },
+  {
+   "titolo": "Emittenti televisive locali 2026-2027",
+   "url": "https://www.regione.sardegna.it/atti-bandi-archivi/atti-amministrativi/bandi/178005840900374",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Chiuso il 22/06; non raccolto."
+  },
+  {
+   "titolo": "L.R. 15/2006 - Lungometraggi 2026",
+   "url": "https://www.regione.sardegna.it/atti-bandi-archivi/atti-amministrativi/bandi/178004330766446",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Chiuso il 30/06; non raccolto."
+  },
+  {
+   "titolo": "L.R. 15/2006 - Cortometraggi 2026",
+   "url": "https://www.regione.sardegna.it/atti-bandi-archivi/atti-amministrativi/bandi/178005046324376",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Chiuso il 30/06; non raccolto."
+  },
+  {
+   "titolo": "L.R. 15/2006 - Esercizio cinematografico 2026",
+   "url": "https://www.regione.sardegna.it/atti-bandi-archivi/atti-amministrativi/bandi/177935540526422",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Chiuso il 30/06; non raccolto."
+  },
+  {
+   "titolo": "Leggi 949/1952 e 240/1981 - Imprese artigiane credito e leasing 2026",
+   "url": "https://www.regione.sardegna.it/atti-bandi-archivi/atti-amministrativi/bandi/178248306222793",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Chiuso il 31/07; non raccolto."
+  },
+  {
+   "titolo": "Contratti di investimento - Settori STEP",
+   "url": "https://www.regione.sardegna.it/atti-bandi-archivi/atti-amministrativi/bandi/177573880030095",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Chiuso il 4/08; non raccolto."
+  },
+  {
+   "titolo": "PR FESR 3.1.1 - Efficientamento energetico imprese",
+   "url": "https://www.regione.sardegna.it/atti-bandi-archivi/atti-amministrativi/bandi/176121650253283",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Chiuso il 31/07; non raccolto."
+  },
+  {
+   "titolo": "Credito d'imposta spopolamento Comuni sotto 5.000 abitanti",
+   "url": "https://www.regione.sardegna.it/atti-bandi-archivi/atti-amministrativi/bandi/177936845549571",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Chiuso il 20/06; non raccolto."
+  },
+  {
+   "titolo": "Servizio taxi 2026",
+   "url": "https://www.regione.sardegna.it/atti-bandi-archivi/atti-amministrativi/bandi/177856439435976",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Chiuso il 12/06; non raccolto."
+  },
+  {
+   "titolo": "Voucher MEDIET 2026 Tokyo",
+   "url": "https://www.regione.sardegna.it/atti-bandi-archivi/atti-amministrativi/bandi/178228824752057",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Chiuso il 27/07; non raccolto."
+  },
+  {
+   "titolo": "Voucher MARMOMAC 2026",
+   "url": "https://www.regione.sardegna.it/atti-bandi-archivi/atti-amministrativi/bandi/177946117070585",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Chiuso il 13/07; non raccolto."
+  },
+  {
+   "titolo": "Accelerazione startup in Svizzera 2026",
+   "url": "https://www.regione.sardegna.it/atti-bandi-archivi/atti-amministrativi/bandi/177443005400910",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Chiuso il 12/05; non raccolto."
+  },
+  {
+   "titolo": "Roadshow SMAU Stoccolma 2026",
+   "url": "https://www.regione.sardegna.it/atti-bandi-archivi/atti-amministrativi/bandi/177676368879810",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Chiuso il 27/04; non raccolto."
+  },
+  {
+   "titolo": "PSP PAC SRD03 Diversificazione aziende agricole 2026",
+   "url": "https://www.regione.sardegna.it/atti-bandi-archivi/atti-amministrativi/bandi/177813834683533",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Chiuso il 7/08; non raccolto."
+  },
+  {
+   "titolo": "PSP PAC Promozione mercati Paesi terzi 2026/2027",
+   "url": "https://www.regione.sardegna.it/atti-bandi-archivi/atti-amministrativi/bandi/177813988894958",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Chiuso il 19/06; non raccolto."
+  },
+  {
+   "titolo": "PSP PAC Investimenti vino 2026/2027",
+   "url": "https://www.regione.sardegna.it/atti-bandi-archivi/atti-amministrativi/bandi/177522707502829",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Chiuso il 30/06; non raccolto."
+  },
+  {
+   "titolo": "PSP PAC Ristrutturazione vigneti 2026/2027",
+   "url": "https://www.regione.sardegna.it/atti-bandi-archivi/atti-amministrativi/bandi/177211725991056",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Chiuso il 14/05; non raccolto."
+  },
+  {
+   "titolo": "PSP PAC SRD01 Investimenti produttivi agricoli",
+   "url": "https://www.regione.sardegna.it/atti-bandi-archivi/atti-amministrativi/bandi/173469252561287",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Chiuso il 18/05; non raccolto."
+  },
+  {
+   "titolo": "PSP PAC SRG10 Promozione prodotti di qualita'",
+   "url": "https://www.regione.sardegna.it/atti-bandi-archivi/atti-amministrativi/bandi/176829323472734",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Chiuso il 7/05; non raccolto."
+  },
+  {
+   "titolo": "PSP PAC SRA29 Produzione biologica 2026",
+   "url": "https://www.regione.sardegna.it/atti-bandi-archivi/atti-amministrativi/bandi/176655990170519",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Chiuso il 30/06; non raccolto."
+  },
+  {
+   "titolo": "PSP PAC SRA30 Benessere animale 2026",
+   "url": "https://www.regione.sardegna.it/atti-bandi-archivi/atti-amministrativi/bandi/176656066158459",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Chiuso il 30/06; non raccolto."
+  },
+  {
+   "titolo": "PSP PAC SRB01/SRB02 Zone svantaggiate 2026",
+   "url": "https://www.regione.sardegna.it/atti-bandi-archivi/atti-amministrativi/bandi/176650069449161",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Chiuso il 30/06; non raccolto."
+  },
+  {
+   "titolo": "FEAMPA Azione 7 - Compensazioni danni da cormorani",
+   "url": "https://www.regione.sardegna.it/atti-bandi-archivi/atti-amministrativi/bandi/177564083956989",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Chiuso il 29/05; non raccolto."
+  },
+  {
+   "titolo": "Cooperative sociali di tipo B - conto occupazione",
+   "url": "https://www.regione.sardegna.it/atti-bandi-archivi/atti-amministrativi/bandi/177754034628190",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Chiuso il 30/06; non raccolto."
+  },
+  {
+   "titolo": "Potenziamento economico cooperative e consorzi 2026",
+   "url": "https://www.regione.sardegna.it/atti-bandi-archivi/atti-amministrativi/bandi/17756421839170",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Chiuso il 5/06; non raccolto."
+  },
+  {
+   "titolo": "Centri Commerciali Naturali - programmi di promozione",
+   "url": "https://www.regione.sardegna.it/atti-bandi-archivi/atti-amministrativi/bandi/177314638843623",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Chiuso il 31/03; non raccolto."
+  },
+  {
+   "titolo": "L.R. 7/1955 Cartellone 2026 - Bando 2E Turismo esperienziale",
+   "url": "https://www.regione.sardegna.it/atti-bandi-archivi/atti-amministrativi/bandi/17828897263142",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Chiuso il 17/07, incerto; non raccolto."
+  },
+  {
+   "titolo": "PR FESR 5.6.1 - Innovazione sociale cultura e turismo",
+   "url": "https://www.regione.sardegna.it/atti-bandi-archivi/atti-amministrativi/bandi/177434955196150",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Chiuso il 22/05, incerto; non raccolto."
+  },
+  {
+   "titolo": "PSP PAC SRH01 Servizi di consulenza",
+   "url": "https://www.regione.sardegna.it/atti-bandi-archivi/atti-amministrativi/bandi/173565547434444",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Chiuso il 31/07, incerto; non raccolto."
+  },
+  {
+   "titolo": "PSP PAC SRG09 Cooperazione innovazione",
+   "url": "https://www.regione.sardegna.it/atti-bandi-archivi/atti-amministrativi/bandi/176779157942339",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Chiuso il 15/05, incerto; non raccolto."
+  },
+  {
+   "titolo": "TTG Travel Experience 2026 Rimini",
+   "url": "https://www.regione.sardegna.it/atti-bandi-archivi/atti-amministrativi/bandi/177521145466068",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Chiuso l'8/09, incerto; non raccolto."
+  }
+ ],
+ "smistamento": [
+  {
+   "annuncio": 6807,
+   "regole": "null (non smistato)",
+   "haiku": "non_rilevante",
+   "opus": "non_rilevante",
+   "giusto": "non_rilevante",
+   "errore_regole": "nessuno",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Affidamento diretto per manutenzione biciclette: la Regione compra un servizio. Le regole non hanno prodotto un esito (null): nessun danno qui, ma e' un buco di catena."
+  },
+  {
+   "annuncio": 6808,
+   "regole": "null (non smistato)",
+   "haiku": "non_rilevante",
+   "opus": "non_rilevante",
+   "giusto": "non_rilevante",
+   "errore_regole": "nessuno",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Affidamento di servizio di consulenza (esito pubblicato, CIG): appalto."
+  },
+  {
+   "annuncio": 6809,
+   "regole": "null (non smistato)",
+   "haiku": "non_rilevante",
+   "opus": "non_rilevante",
+   "giusto": "non_rilevante",
+   "errore_regole": "nessuno",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Finanziamento ai Comuni sopra 20.000 abitanti (destinatari: ente): non per imprese."
+  },
+  {
+   "annuncio": 6810,
+   "regole": "null (non smistato)",
+   "haiku": "non_rilevante",
+   "opus": "non_rilevante",
+   "giusto": "non_rilevante",
+   "errore_regole": "nessuno",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Indagine di mercato per ristorazione collettiva: l'ente cerca un fornitore."
+  }
+ ],
+ "preliminare": [],
+ "osservazioni": [
+  "La fonte legge solo la prima pagina dell'API di ricerca (resultsPerPage 50, current 1, fonti/regioni.yaml): alla prima raccolta del 25/09 ha preso le 50 voci pubblicate dal 2 al 25 settembre e nessun arretrato. Tutti i bandi aperti pubblicati prima (Fondo Competitivita', attivita' commerciali L.R. 3/2022, SO.LA.RE., SRE01, Sulcis JTF, FEAMPA, apprendistato...) non sono mai entrati. Serve una raccolta iniziale con piu' pagine (o filtro per dataScadenza futura).",
+  "Circa 3/4 dei contenuti di tipo BANDO sono affidamenti e gare: con 50 voci per pagina e ~30 pubblicazioni a settimana, una frequenza tre a settimana basta a non perdere nulla dopo il primo giro, ma solo se la paginazione copre il volume in caso di salti.",
+  "Nessuno dei 50 annunci ha un esito di smistamento (tutti null, rilevanti 0, bandi 0): lo smistamento non e' ancora passato su questa fonte o non la tratta. Anche i due annunci incerti raccolti (6812 scuole paritarie, 6815 rally) sono fermi.",
+  "Il campo 'destinazione' del sito (impresa/ente) e' inaffidabile: molti affidamenti sono marcati 'impresa'. Non va usato come filtro positivo; puo' servire solo 'ente' come indizio di esclusione.",
+  "Una regola a parole chiave che scarti titoli con 'Affidamento diretto', 'art. 50', 'SardegnaCAT', 'CIG' toglierebbe la gran parte del rumore senza toccare i contributi (che qui non usano mai quelle formule).",
+  "Nessun bando collegato: la parte preliminare non e' valutabile (bandi.json, haiku_preliminari e opus_preliminari vuoti).",
+  "Verifica di riserva: confermato sul codice (app/raccolta/lettori/api.py fa un solo POST, nessuna paginazione) e sul registro (current 1, resultsPerPage 50) che la fonte legge solo le 50 voci piu recenti; il piu vecchio dei 50 annunci e del 02/09. Confermati sul sito Fondo Competitivita (scad. 30/06/2027), attivita commerciali L.R. 3/2022 (click day 8-9/10), SRE01 (31/10), rally (5/10, destinatari impresa e cittadino), scuole paritarie (20/10). La sezione Atti soggetti esterni (filtro esterno=true, escluso dalla fonte) contiene quasi solo gare di stazioni appaltanti comunali: nessuna lacuna rilevante. La pagina dei bandi non ha altre sezioni oltre all Archivio bandi caricato dall API."
+ ],
+ "correzioni": [
+  {
+   "caso": "annuncio 6833 - Manifestazione di interesse DGR 45/23 (Beni culturali, spettacolo e sport)",
+   "prima": "assente dal perimetro (non elencato dall esploratore)",
+   "dopo": "perso_smistamento (incerto, chiuso 18/09)",
+   "perche": "L avviso (art. 3) ammette soggetti privati per contributi a iniziative culturali e luoghi della cultura in regime de minimis; il sito indica destinatari ente, cittadino, impresa. Raccolto dal radar ma mai smistato, come 6812 e 6815."
+  }
+ ],
+ "fiducia": "alta"
+}

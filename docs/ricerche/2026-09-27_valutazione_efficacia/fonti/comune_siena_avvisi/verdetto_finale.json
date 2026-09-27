@@ -1,0 +1,199 @@
+{
+ "fonte": "comune_siena_avvisi",
+ "perimetro": [
+  {
+   "titolo": "Avviso pubblico per la concessione di benefici economici e contributi a sostegno delle attivita' economiche ubicate nel centro storico di Siena - anno 2026",
+   "url": "https://www.comune.siena.it/novita/avviso-pubblico-la-concessione-di-benefici-economici-e-contributi-sostegno-delle-attivita",
+   "esito": "perso_pagina_ufficiale",
+   "annuncio": 1882,
+   "bando": 356,
+   "spiegazione": "Unica vera agevolazione aperta della fonte (scadenza 31/12/2026). Annuncio smistato rilevante e collegato al bando 356, ma la pagina risulta non_trovata per ConnectError: niente preliminare, niente scheda. Dal server oggi la stessa pagina risponde 200 in 0,5 s: l'errore era di rete (passeggero o dal container), non una pagina mancante. Perdita grave. Ricontrollato il 27/09: pagina 200 in 0,36 s, 'Data scadenza: 31 dicembre 2026' e domande 'entro il 31/12/2026' confermate."
+  },
+  {
+   "titolo": "Contributi della Regione Toscana di immediato sostegno per aziende extra-agricole colpite dall'alluvione 2024",
+   "url": "https://www.comune.siena.it/novita/contributi-della-regione-toscana-di-immediato-sostegno-aziende-extra-agricole-colpite",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Chiuso il 29/05/2026, pubblicato prima delle 10 voci che il flusso RSS espone (la voce piu' vecchia raccolta e' del 13/04/2026). Nessun danno pratico: sarebbe stato comunque da fermare come chiuso; e' comunque una misura regionale gia' coperta dalle fonti della Regione."
+  },
+  {
+   "titolo": "Avviso pubblico di manifestazione di interesse rivolto agli esercenti del settore enogastronomico, agro-alimentare e dell'artigianato presenti nel territorio comunale",
+   "url": "https://www.comune.siena.it/novita/avviso-pubblico-di-manifestazione-di-interesse-rivolto-agli-esercenti-del-settore",
+   "esito": "perso_pagina_ufficiale",
+   "annuncio": 1879,
+   "bando": 492,
+   "spiegazione": "Rivolto a imprese enogastronomiche, agroalimentari e artigiane di Siena e comuni DMO Terre di Siena. Il PDF dell'avviso (par. 5) dice che non ci sono contributi diretti ma un 'contributo di natura indiretta': esenzione da canoni e spese di locazione per spazi di vendita e promozione. Il termine vero per aderire e' l'11/09/2026 (par. 4): la 'Data scadenza 31/12/2026' della pagina web e' solo la data di pubblicazione della notizia. Quindi chiuso da poco. Smistato rilevante, collegato al bando 492, bloccato dal ConnectError sulla pagina (che oggi risponde 200). Danno pratico basso perche' gia' chiuso, ma e' lo stesso difetto del bando 356."
+  },
+  {
+   "titolo": "Bando di concorso per l'assegnazione in concessione decennale di n. 2 posteggi per la vendita di caldarroste",
+   "url": "https://www.comune.siena.it/novita/bando-di-concorso-lassegnazione-concessione-decennale-di-n-2-posteggi-la-vendita-di",
+   "esito": "perso_pagina_ufficiale",
+   "annuncio": 1880,
+   "bando": 491,
+   "spiegazione": "Concessione di posteggi (non un'agevolazione) scaduta il 21/09/2026. Tenuto dalle regole per errore e poi bloccato dal ConnectError sulla pagina; nessun danno, andava comunque fermato."
+  },
+  {
+   "titolo": "Il Mercato nel Campo edizione 2026",
+   "url": "https://www.comune.siena.it/servizi/il-mercato-nel-campo-edizione-2026",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Sta nella sezione Servizi, non negli Avvisi osservati; e' un posteggio (non un aiuto) e le domande sono chiuse dal 14/09/2026. Nessun danno."
+  },
+  {
+   "titolo": "Concorso per l'assegnazione di 10 posteggi temporanei per la vendita di bibite, dolci e palloncini in occasione dei Palii di luglio e di agosto 2026",
+   "url": "https://www.comune.siena.it/novita/concorso-lassegnazione-di-10-posteggi-temporanei-la-vendita-di-bibite-dolci-e-palloncini",
+   "esito": "perso_pagina_ufficiale",
+   "annuncio": 1884,
+   "bando": 293,
+   "spiegazione": "Posteggi temporanei, scaduto il 29/05/2026, non un'agevolazione. Tenuto dalle regole per errore, poi bloccato dal ConnectError. Nessun danno."
+  },
+  {
+   "titolo": "Bando di concorso per l'assegnazione temporanea di n. 4 posteggi per la vendita di frittelle di riso, Festa di San Giuseppe 2026",
+   "url": "https://www.comune.siena.it/novita/bando-di-concorso-lassegnazione-temporanea-di-n-4-posteggi-destinati-alla-vendita-di-0",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Pubblicato prima della finestra delle 10 voci del flusso RSS; scaduto il 12/01/2026 e non e' un aiuto. Nessun danno."
+  }
+ ],
+ "smistamento": [
+  {
+   "annuncio": 1877,
+   "regole": "da_rivedere",
+   "haiku": "non_rilevante",
+   "opus": "non_rilevante",
+   "giusto": "non_rilevante",
+   "errore_regole": "lieve",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Il Comune cerca associazioni di volontariato: non riguarda le imprese."
+  },
+  {
+   "annuncio": 1878,
+   "regole": "rilevante",
+   "haiku": "non_rilevante",
+   "opus": "non_rilevante",
+   "giusto": "non_rilevante",
+   "errore_regole": "medio",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Servizio ai cittadini per animali deceduti. Le regole scattano su 'avvisi' + 'transizione ecologica' presi dal nome dell'ufficio (Servizio Logistica, Verde, Transizione ecologica...) riportato nel riassunto RSS."
+  },
+  {
+   "annuncio": 1879,
+   "regole": "rilevante",
+   "haiku": "da_rivedere",
+   "opus": "da_rivedere",
+   "giusto": "rilevante",
+   "errore_regole": "nessuno",
+   "errore_haiku": "lieve",
+   "errore_opus": "lieve",
+   "spiegazione": "Il PDF dell'avviso prevede per le imprese selezionate un contributo indiretto (esenzione da canoni e spese di locazione degli spazi di vendita e promozione): e' un vantaggio per imprese, come l'esempio 'Artigiano in Fiera con costi coperti' della guida allo smistamento. Le regole (rilevante) hanno ragione; Haiku e Opus lo mandano a revisione: errore lieve, perche' il riassunto RSS non mostrava il vantaggio."
+  },
+  {
+   "annuncio": 1880,
+   "regole": "rilevante",
+   "haiku": "non_rilevante",
+   "opus": "non_rilevante",
+   "giusto": "non_rilevante",
+   "errore_regole": "medio",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Concessione decennale di posteggi per caldarroste: l'impresa paga un canone, non riceve un aiuto. Le regole scattano su 'bando' + 'attivita produttive' preso dal nome dell'ufficio (Servizio Attivita' Produttive)."
+  },
+  {
+   "annuncio": 1881,
+   "regole": "rilevante",
+   "haiku": "non_rilevante",
+   "opus": "non_rilevante",
+   "giusto": "non_rilevante",
+   "errore_regole": "medio",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Soccorso della fauna selvatica. Stesso falso positivo di 1878 dovuto al nome dell'ufficio."
+  },
+  {
+   "annuncio": 1882,
+   "regole": "rilevante",
+   "haiku": "rilevante",
+   "opus": "rilevante",
+   "giusto": "rilevante",
+   "errore_regole": "nessuno",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Contributi alle attivita' economiche del centro storico 2026: agevolazione vera."
+  },
+  {
+   "annuncio": 1883,
+   "regole": "da_rivedere",
+   "haiku": "da_rivedere",
+   "opus": "non_rilevante",
+   "giusto": "non_rilevante",
+   "errore_regole": "lieve",
+   "errore_haiku": "lieve",
+   "errore_opus": "nessuno",
+   "spiegazione": "Co-progettazione per la manutenzione della via Francigena riservata agli Enti del Terzo Settore (verificato dall'esploratore)."
+  },
+  {
+   "annuncio": 1884,
+   "regole": "rilevante",
+   "haiku": "non_rilevante",
+   "opus": "non_rilevante",
+   "giusto": "non_rilevante",
+   "errore_regole": "medio",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Posteggi temporanei per ambulanti durante i Palii: concessione a pagamento, non un aiuto. Falso positivo delle regole sul nome dell'ufficio Attivita' Produttive."
+  },
+  {
+   "annuncio": 1885,
+   "regole": "da_rivedere",
+   "haiku": "non_rilevante",
+   "opus": "non_rilevante",
+   "giusto": "non_rilevante",
+   "errore_regole": "lieve",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Albo di associazioni/amici di Siena nel mondo, nessun contributo alle imprese."
+  },
+  {
+   "annuncio": 1886,
+   "regole": "da_rivedere",
+   "haiku": "non_rilevante",
+   "opus": "non_rilevante",
+   "giusto": "non_rilevante",
+   "errore_regole": "lieve",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Pubblicita' di istanze di autorizzazione per colonnine di ricarica: non e' un bando."
+  }
+ ],
+ "preliminare": [],
+ "osservazioni": [
+  "Tutti e 6 i bandi della fonte hanno pagina_stato non_trovata per ConnectError sulla pagina dell'annuncio stessa. Il 27/09 dal server la pagina del bando 356 risponde 200 in 0,5 s: l'errore e' di rete (passeggero, o specifico del container/IPv6) e il sistema lo tratta come 'bando ufficiale non trovato' definitivo. Un errore di connessione dovrebbe portare a un nuovo tentativo, non a uno stato non_trovata. A causa di questo, l'unica agevolazione aperta della fonte (contributi centro storico 2026, bando 356) non ha scheda.",
+  "Nessun preliminare valutabile: nessun bando della fonte ha un fascicolo di preliminare (haiku_preliminari e opus_preliminari vuoti), quindi la parte C non ha casi.",
+  "Le regole di smistamento leggono il riassunto RSS, che nei siti Drupal del Comune include il nome dell'ufficio responsabile ('Servizio Attivita' Produttive, Commercio...', 'Servizio ... Transizione ecologica...'). Cio' produce falsi rilevanti sistematici (4 su 10 nel campione). Conviene togliere dal riassunto il blocco dell'ufficio o non usare 'attivita produttive'/'transizione ecologica' come parola tema senza un termine di aiuto (contributo, agevolazione, voucher).",
+  "Il flusso RSS espone solo le ultime 10 voci degli Avvisi (da aprile 2026): voci piu' vecchie come l'alluvione 2024 non sono state raccolte; in questo caso erano chiuse, ma la finestra e' corta.",
+  "Il Protocollo Equino (contributi ai proprietari dei cavalli del Palio) e il Mercato nel Campo stanno in sezioni diverse (Comunicati, Servizi) che la fonte non osserva; la fonte 'Avvisi' non copre tutto il sito, ma le vere agevolazioni per imprese del Comune sono comunque pochissime.",
+  "Haiku e Opus hanno smistato bene tutto il campione; Haiku manda a revisione 1883 (lieve).",
+  "Verifica di riserva 27/09: la pagina elenco Avvisi ha 9 pagine e nel menu non compaiono sezioni dedicate a bandi o contributi oltre a Comunicati, Avvisi, Notizie e le categorie di servizio; l'esploratore non ha dimenticato sezioni evidenti. Restano non visti Albo pretorio e Amministrazione trasparente, come dichiarato.",
+  "Attenzione per le schede: sul sito del Comune la 'Data scadenza' della notizia puo' non essere il termine del bando (caso 1879: pagina 31/12/2026, avviso 11/09/2026). La scheda deve leggere il PDF allegato."
+ ],
+ "correzioni": [
+  {
+   "caso": "perimetro annuncio 1879 / bando 492",
+   "prima": "aperto fino al 31/12/2026, nessun beneficio economico esplicito",
+   "dopo": "chiuso l'11/09/2026, con contributo indiretto (esenzione canoni e locazione) per le imprese selezionate",
+   "perche": "Letto il PDF dell'avviso allegato alla pagina: par. 4 termine 11/09/2026, par. 5 contributo di natura indiretta. Esito resta perso_pagina_ufficiale."
+  },
+  {
+   "caso": "smistamento annuncio 1879",
+   "prima": "giusto da_rivedere; haiku e opus nessun errore",
+   "dopo": "giusto rilevante; haiku e opus errore lieve",
+   "perche": "Il vantaggio per le imprese esiste (esenzione dai canoni), analogo all'esempio di posto in fiera con costi coperti che la guida classifica rilevante. Errore lieve: da_rivedere porta comunque a un controllo umano."
+  }
+ ],
+ "fiducia": "alta"
+}

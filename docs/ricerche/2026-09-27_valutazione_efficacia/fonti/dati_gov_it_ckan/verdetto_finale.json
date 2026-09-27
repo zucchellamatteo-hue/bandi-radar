@@ -1,0 +1,378 @@
+{
+ "fonte": "dati_gov_it_ckan",
+ "perimetro": [
+  {
+   "titolo": "Fondo per l'insediamento dei giovani agricoltori - anno 2026 (Regione Lombardia)",
+   "url": "https://www.dati.lombardia.it/resource/bukx-h2uy.json?codice_bando=RLM12026053832",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "E' una riga del dataset lombardo 'Anagrafica dei bandi regionali': il radar legge solo i metadati dei dataset nuovi del catalogo, non le righe dentro i dataset. Va coperto dalla fonte Regione Lombardia."
+  },
+  {
+   "titolo": "RI.CIRCO.LO. Filiere prioritarie - PMI lombarde economia circolare",
+   "url": "https://www.dati.lombardia.it/resource/bukx-h2uy.json?codice_bando=RLT12026053863",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Riga del dataset lombardo, non un dataset a se': strutturalmente fuori dalla lettura del catalogo CKAN."
+  },
+  {
+   "titolo": "Fondo regionale per il pluralismo e l'innovazione dell'informazione radiotelevisiva e dell'editoria online locale - 2026",
+   "url": "https://www.dati.lombardia.it/resource/bukx-h2uy.json?codice_bando=RLA12026054924",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Riga del dataset lombardo, non esposta come voce del catalogo."
+  },
+  {
+   "titolo": "Misura per lo sviluppo tecnologico delle startup innovative",
+   "url": "https://www.dati.lombardia.it/resource/bukx-h2uy.json?codice_bando=RLO12026055303",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Riga del dataset lombardo, non esposta come voce del catalogo."
+  },
+  {
+   "titolo": "Bando recupero mulini storici della Lombardia (l.r. 9/2026) 2026-2028",
+   "url": "https://www.dati.lombardia.it/resource/bukx-h2uy.json?codice_bando=RLL12026054423",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Riga del dataset lombardo; per_imprese incerto."
+  },
+  {
+   "titolo": "Contributi per interventi selvicolturali - gestione forestale sostenibile",
+   "url": "https://www.dati.lombardia.it/resource/bukx-h2uy.json?codice_bando=RLM12026055263",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Riga del dataset lombardo; per_imprese incerto."
+  },
+  {
+   "titolo": "Modulo C-REG - Rendicontazione spese ripresa attivita' produttive dopo eventi calamitosi",
+   "url": "https://www.dati.lombardia.it/resource/bukx-h2uy.json?codice_bando=RLY12026055225",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Riga del dataset lombardo; e' una fase di rendicontazione, poco utile anche se raccolta."
+  },
+  {
+   "titolo": "Misura qualificazione imprese per filiere strategiche tramite certificazioni industriali avanzate",
+   "url": "https://www.dati.lombardia.it/resource/bukx-h2uy.json?codice_bando=RLO12026054663",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Riga del dataset lombardo, non esposta come voce del catalogo."
+  },
+  {
+   "titolo": "IRCCS - Ricerca & Trasferisci",
+   "url": "https://www.dati.lombardia.it/resource/bukx-h2uy.json?codice_bando=RLF12025045924",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Riga del dataset lombardo; per_imprese incerto."
+  },
+  {
+   "titolo": "Formazione Continua - Quarta Edizione - Voucher aziendali a catalogo",
+   "url": "https://www.dati.lombardia.it/resource/bukx-h2uy.json?codice_bando=RLW12026053243",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Riga del dataset lombardo, non esposta come voce del catalogo."
+  },
+  {
+   "titolo": "Bando Voucher di Accelerazione (DG Turismo)",
+   "url": "https://www.dati.lombardia.it/resource/bukx-h2uy.json?codice_bando=RLP12026053343",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Riga del dataset lombardo; chiuso il 09/07/2026, perdita poco rilevante."
+  },
+  {
+   "titolo": "Contributi MPMI fiere internazionali in forma aggregata - edizione 2026-2028",
+   "url": "https://www.dati.lombardia.it/resource/bukx-h2uy.json?codice_bando=RLO12026052292",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Riga del dataset lombardo, non esposta come voce del catalogo."
+  },
+  {
+   "titolo": "Bando promozione turistica mercati italiano ed estero - primo semestre 2027",
+   "url": "https://www.dati.lombardia.it/resource/bukx-h2uy.json?codice_bando=RLP12026054984",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Riga del dataset lombardo; chiuso il 15/09/2026."
+  },
+  {
+   "titolo": "Sostegno ai servizi di sostituzione in agricoltura - contributo 2027 su attivita' 2026",
+   "url": "https://www.dati.lombardia.it/resource/bukx-h2uy.json?codice_bando=RLM12026053503",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Riga del dataset lombardo; chiuso il 31/05/2026, per_imprese incerto."
+  },
+  {
+   "titolo": "Competenze & Innovazione - Seconda Edizione",
+   "url": "https://www.dati.lombardia.it/resource/bukx-h2uy.json?codice_bando=RLF12026051723",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Riga del dataset lombardo; chiuso il 22/05/2026, per_imprese incerto."
+  },
+  {
+   "titolo": "Bando a favore dei Distretti del Commercio 2026",
+   "url": "https://www.dati.lombardia.it/resource/bukx-h2uy.json?codice_bando=RLO12026052348",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Riga del dataset lombardo; chiuso il 31/07/2026, domanda dei Comuni."
+  },
+  {
+   "titolo": "ZLS Lombardia - progetti di investimento per insediamento attivita' produttive",
+   "url": "https://www.dati.lombardia.it/resource/bukx-h2uy.json?codice_bando=RLO12026052410",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Riga del dataset lombardo, non esposta come voce del catalogo."
+  },
+  {
+   "titolo": "Bando per i Musei di Impresa 2026",
+   "url": "https://www.dati.lombardia.it/resource/bukx-h2uy.json?codice_bando=RLO12026052303",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Riga del dataset lombardo; chiuso il 24/04/2026."
+  },
+  {
+   "titolo": "Dote Impresa Collocamento Mirato - Asse I - Citta' metropolitana di Milano",
+   "url": "https://www.dati.lombardia.it/resource/bukx-h2uy.json?codice_bando=PR_MI_42025049641",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Riga del dataset lombardo, non esposta come voce del catalogo."
+  },
+  {
+   "titolo": "Dote Impresa Collocamento Mirato - Asse I - Provincia di Brescia",
+   "url": "https://www.dati.lombardia.it/resource/bukx-h2uy.json?codice_bando=PR_BS_42025049618",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Riga del dataset lombardo, non esposta come voce del catalogo."
+  },
+  {
+   "titolo": "Nuova Impresa - Piccoli Comuni e Frazioni 2026",
+   "url": "https://www.dati.lombardia.it/resource/bukx-h2uy.json?codice_bando=RLO12025051423",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Riga del dataset lombardo, non esposta come voce del catalogo."
+  },
+  {
+   "titolo": "Voucher formativo aziendale - competenze per transizione industriale e sostenibilita'",
+   "url": "https://www.dati.lombardia.it/resource/bukx-h2uy.json?codice_bando=RLO12023033524",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Riga del dataset lombardo; chiuso l'11/06/2026."
+  },
+  {
+   "titolo": "Brevetti 2023",
+   "url": "https://www.dati.lombardia.it/resource/bukx-h2uy.json?codice_bando=RLF12023035064",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Riga del dataset lombardo; misura vecchia, mai stata un dataset nuovo nel catalogo."
+  },
+  {
+   "titolo": "Bando Check-up d'impresa",
+   "url": "https://www.dati.lombardia.it/resource/bukx-h2uy.json?codice_bando=UCL012025044383",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Riga del dataset lombardo (ente camerale), non esposta come voce del catalogo."
+  },
+  {
+   "titolo": "AQST Lodi \"Lodigiano Terra di opportunita' e nuovi investimenti\"",
+   "url": "https://www.dati.lombardia.it/resource/bukx-h2uy.json?codice_bando=RLO12025049609",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Riga del dataset lombardo; per_imprese incerto."
+  },
+  {
+   "titolo": "Formazione Continua terza edizione - Voucher aziendali a catalogo",
+   "url": "https://www.dati.lombardia.it/resource/bukx-h2uy.json?codice_bando=UCL012025047703",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Riga del dataset lombardo, non esposta come voce del catalogo."
+  },
+  {
+   "titolo": "Contributi MPMI fiere internazionali in forma aggregata (edizione 2025)",
+   "url": "https://www.dati.lombardia.it/resource/bukx-h2uy.json?codice_bando=RLO12025044563",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Riga del dataset lombardo; chiuso il 15/05/2026."
+  },
+  {
+   "titolo": "Voucher aziendali formazione aggiuntiva sicurezza e salute nei luoghi di lavoro",
+   "url": "https://www.dati.lombardia.it/resource/bukx-h2uy.json?codice_bando=RLW12024041803",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Riga del dataset lombardo, non esposta come voce del catalogo."
+  },
+  {
+   "titolo": "PR FESR 2021-2027 Azione 1.3.1 - MPMI fiere internazionali in Lombardia",
+   "url": "https://www.dati.lombardia.it/resource/bukx-h2uy.json?codice_bando=RLO12024039843",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Riga del dataset lombardo; chiuso il 20/07/2026, sostituito dal secondo sportello."
+  },
+  {
+   "titolo": "Re-Impresa",
+   "url": "https://www.dati.lombardia.it/resource/bukx-h2uy.json?codice_bando=RLO12023036183",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Riga del dataset lombardo; chiuso il 18/09/2026."
+  },
+  {
+   "titolo": "SRB01 - Sostegno zone svantaggiate montagna, campagna 2027 (PAT, CSR 2023-2027)",
+   "url": "https://www.provincia.tn.it/Servizi/Disposizioni-per-gli-interventi-a-superficie-e-capo-animale-2026-2027",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Riga del 'Calendario avvisi FEASR' della Provincia di Trento (foglio Google indicizzato nel catalogo): il radar non legge il contenuto dei dataset. Va coperto dalla fonte Provincia autonoma di Trento."
+  },
+  {
+   "titolo": "ACA 8 - Gestione prati e pascoli permanenti, campagna 2026 (PAT)",
+   "url": "https://www.provincia.tn.it/Servizi/Disposizioni-per-gli-interventi-a-superficie-e-capo-animale-2026-2027",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Riga del calendario FEASR trentino; chiuso il 30/06/2026."
+  },
+  {
+   "titolo": "SRD01 - Investimenti produttivi agricoli per la competitivita' - III bando (PAT)",
+   "url": "https://www.provincia.tn.it/Servizi/SRD01-Investimenti-produttivi-agricoli-per-la-competitivita-III-Bando",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Riga del calendario FEASR trentino; chiuso il 31/03/2026, al limite dei sei mesi."
+  },
+  {
+   "titolo": "SRD02 - Investimenti per ambiente, clima e benessere animale - III bando (PAT)",
+   "url": "https://www.provincia.tn.it/Servizi/SRD02-Investimenti-per-ambiente-clima-e-benessere-animale-III-bando",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Riga del calendario FEASR trentino; chiuso il 31/03/2026."
+  },
+  {
+   "titolo": "SRD07 - Investimenti reti viarie aree rurali - 2 bando (PAT)",
+   "url": "https://www.provincia.tn.it/Servizi/SRD07-Investimenti-reti-viarie-a-servizio-delle-aree-rurali-2-Bando",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Riga del calendario FEASR trentino; chiuso il 30/04/2026, per_imprese incerto."
+  }
+ ],
+ "smistamento": [
+  {
+   "annuncio": 2436,
+   "regole": "rilevante",
+   "haiku": "rilevante",
+   "opus": "non_rilevante",
+   "giusto": "non_rilevante",
+   "errore_regole": "medio",
+   "errore_haiku": "medio",
+   "errore_opus": "nessuno",
+   "spiegazione": "Dataset d'archivio dei bandi emessi dal PSR Liguria 2014-2020: nessun aiuto aperto o annunciato. Le regole scattano su 'cofinanziament*', Haiku si fa ingannare dalla descrizione del programma."
+  },
+  {
+   "annuncio": 2437,
+   "regole": "rilevante",
+   "haiku": "da_rivedere",
+   "opus": "non_rilevante",
+   "giusto": "non_rilevante",
+   "errore_regole": "medio",
+   "errore_haiku": "lieve",
+   "errore_opus": "nessuno",
+   "spiegazione": "Elenco dei Living Lab gia' finanziati in Puglia: dato ex post, nessun bando. Le regole scattano su 'bandi' + 'innovazione'."
+  },
+  {
+   "annuncio": 2438,
+   "regole": "da_rivedere",
+   "haiku": "non_rilevante",
+   "opus": "non_rilevante",
+   "giusto": "non_rilevante",
+   "errore_regole": "lieve",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Statistiche dei servizi dei Centri per l'impiego: nessun contributo."
+  },
+  {
+   "annuncio": 2439,
+   "regole": "rilevante",
+   "haiku": "non_rilevante",
+   "opus": "non_rilevante",
+   "giusto": "non_rilevante",
+   "errore_regole": "medio",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Elenco degli operatori economici di Consip/MEPA: l'impresa vende alla PA. Le regole scattano su 'bandi' + 'impres*'."
+  },
+  {
+   "annuncio": 2440,
+   "regole": "rilevante",
+   "haiku": "non_rilevante",
+   "opus": "non_rilevante",
+   "giusto": "non_rilevante",
+   "errore_regole": "medio",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Partecipazioni a gare e abilitazioni MEPA: l'impresa e' fornitore. Stesso difetto delle regole di 2439."
+  },
+  {
+   "annuncio": 2441,
+   "regole": "da_rivedere",
+   "haiku": "non_rilevante",
+   "opus": "non_rilevante",
+   "giusto": "non_rilevante",
+   "errore_regole": "lieve",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Rapporto di sostenibilita' del Comune di Crispiano: nessun aiuto."
+  }
+ ],
+ "preliminare": [],
+ "osservazioni": [
+  "dati.gov.it e' un catalogo di dataset, non un albo di bandi: gli annunci che produce sono metadati di dataset (archivi, statistiche, elenchi di fornitori), quasi mai bandi. I 6 annunci del campione sono tutti non rilevanti.",
+  "I bandi veri raggiungibili da qui stanno DENTRO due dataset (Anagrafica bandi Regione Lombardia su dati.lombardia.it, Calendario avvisi FEASR della Provincia di Trento): il radar legge solo l'arrivo di nuovi dataset, quindi non li vedra' mai. Il perimetro dell'esploratore e' quindi strutturalmente irraggiungibile da questa fonte; se interessa, conviene una fonte dedicata che legga le righe del dataset lombardo (API Socrata bukx-h2uy, con date di apertura/chiusura) oppure affidarsi alle fonti Regione Lombardia e Provincia di Trento.",
+  "Le regole di smistamento danno 'rilevante' a 4 dataset su 6 per parole come 'bandi', 'impres*', 'cofinanziament*': sulle fonti di tipo catalogo servono regole piu' severe (per esempio non_rilevante di default, o considerare solo dataset con elenchi di bandi aperti).",
+  "Le pagine view-dataset di dati.gov.it rispondono 403 al nostro User-Agent (verificato con curl il 27/09/2026) e anche robots.txt da' 403: i 4 bandi creati (591-594) restano con pagina 'non_trovata', nessun preliminare, nessuna scheda. Esito corretto nella sostanza (non sono bandi), ma per il motivo sbagliato; e 4 bandi spuri restano in archivio.",
+  "Nessun preliminare da valutare: haiku_preliminari.json e opus_preliminari.json sono vuoti e bandi.json non ha fascicoli di preliminare.",
+  "Esclusi dal perimetro i 7 bandi lombardi con stato non_noto (chiusura non indicata: fiere secondo sportello RLO12026055023, Microcredito, Impresa efficiente, Capitalizzazione cooperative, Filiere 2025, Credito Adesso Factoring, Pacchetto investimenti): probabilmente sportelli aperti, anche loro non raccolti per lo stesso motivo.",
+  "Verifica di riserva 27/09/2026: con il nostro User-Agent anche l API CKAN (package_show) e la pagina https://www.dati.gov.it/view-dataset rispondono 403, e WebFetch riceve 403: non e stato possibile dare l occhiata alle sezioni del sito. Se il blocco vale anche per package_search, la fonte smettera di produrre annunci: controllare in plancia la data dell ultimo record. Righe lombarde controllate a campione sull API Socrata bukx-h2uy (RLO12026055303, RLM12026053832, RLO12023036183, RLP12026054984, PR_MI_42025049641): date e titoli coincidono con il perimetro."
+ ],
+ "correzioni": [
+  {
+   "caso": "perimetro (35 bandi perso_non_raccolto)",
+   "prima": "perso_non_raccolto",
+   "dopo": "perso_non_raccolto (confermato)",
+   "perche": "Nessuna correzione: le righe controllate esistono nel dataset lombardo con le date indicate; il radar legge solo metadati dei dataset. Va pero letto come perdita strutturale da coprire con le fonti Regione Lombardia e Provincia di Trento, non come difetto della lettura CKAN."
+  },
+  {
+   "caso": "smistamento 2436-2441",
+   "prima": "regole 4 medi + 2 lievi, Haiku 1 medio + 1 lieve, Opus nessuno",
+   "dopo": "invariato",
+   "perche": "Riletti i riassunti: tutti i 6 dataset sono archivi, statistiche o elenchi di fornitori; nessun aiuto aperto. Giudizi del controllore confermati."
+  }
+ ],
+ "fiducia": "media"
+}

@@ -1,0 +1,441 @@
+{
+ "fonte": "comune_perugia_avvisi",
+ "perimetro": [
+  {
+   "titolo": "U.O. Segreteria organi istituzionali - Avviso contributi a sostegno della cultura e del patrimonio storico-artistico della citta' - Annualita' 2026",
+   "url": "https://www.comune.perugia.it/novita/u-o-segreteria-organi-istituzionali-comunicazione-e-partecipazione-avviso-pubblico-per-la-concessione-di-contributi-a-sostegno-della-cultura-e-del-patrimonio-storico-artistico-della-citta-annua/",
+   "esito": "trovato_con_scheda",
+   "annuncio": 1902,
+   "bando": 582,
+   "spiegazione": "Annuncio rilevante per regole, collegato al bando 582, pagina trovata, preliminare di produzione passa (per_imprese si, aperto), scheda presente."
+  },
+  {
+   "titolo": "U.O. Segreteria organi istituzionali - Avviso contributi a sostegno di iniziative e/o attivita' - Annualita' 2026",
+   "url": "https://www.comune.perugia.it/novita/u-o-segreteria-organi-istituzionali-comunicazione-e-partecipazione-avviso-pubblico-per-la-concessione-di-contributi-a-sostegno-di-iniziative-e-o-attivita-annualita-2026/",
+   "esito": "perso_preliminare",
+   "annuncio": 1903,
+   "bando": 576,
+   "spiegazione": "Raccolto, smistato rilevante, pagina trovata con il testo dell'avviso (riga 48 del fascicolo: 'associazioni di categoria di operatori economici o singole imprese' nel rispetto degli aiuti di Stato). Il preliminare di produzione lo ferma con per_imprese=no e testo_bando=no ('Avviso comunale per iniziative culturali, non bando imprese'): entrambe le risposte sono smentite dal testo. Scadenza 5/10/2026, aperto."
+  },
+  {
+   "titolo": "U.O. Segreteria organi istituzionali - Avviso contributi a sostegno di iniziative e/o attivita'. Area politiche giovanili - Annualita' 2026",
+   "url": "https://www.comune.perugia.it/novita/u-o-segreteria-organi-istituzionali-comunicazione-e-partecipazione-avviso-pubblico-per-la-concessione-di-contributi-a-sostegno-di-iniziative-e-o-attivita-area-politiche-giovanili-annualita-2026/",
+   "esito": "perso_preliminare",
+   "annuncio": 1904,
+   "bando": 577,
+   "spiegazione": "Stessa sorte del 576: raccolto, rilevante, pagina trovata con Art. 2 che ammette singole imprese (riga 51 del fascicolo), ma il preliminare di produzione risponde per_imprese=no e testo_bando=no con un motivo identico copiato dal 576 ('iniziative culturali'), segno di risposta a lotto non letta bando per bando. Aperto fino al 5/10/2026."
+  }
+ ],
+ "smistamento": [
+  {
+   "annuncio": 1897,
+   "regole": "da_rivedere",
+   "haiku": "non_rilevante",
+   "opus": "non_rilevante",
+   "giusto": "non_rilevante",
+   "errore_regole": "lieve",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Interruzione di energia elettrica: avviso di servizio."
+  },
+  {
+   "annuncio": 1898,
+   "regole": "da_rivedere",
+   "haiku": "non_rilevante",
+   "opus": "non_rilevante",
+   "giusto": "non_rilevante",
+   "errore_regole": "lieve",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Fermo Minimetro."
+  },
+  {
+   "annuncio": 1899,
+   "regole": "rilevante",
+   "haiku": "non_rilevante",
+   "opus": "non_rilevante",
+   "giusto": "non_rilevante",
+   "errore_regole": "medio",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "L'avviso esclude espressamente imprese e soggetti economici (riga 80 del fascicolo 608). Dal solo titolo le regole non potevano saperlo; il preliminare poi lo ferma correttamente, quindi il danno e' solo costo."
+  },
+  {
+   "annuncio": 1900,
+   "regole": "da_rivedere",
+   "haiku": "non_rilevante",
+   "opus": "non_rilevante",
+   "giusto": "non_rilevante",
+   "errore_regole": "lieve",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Carta dedicata a te: contributo alimentare alle famiglie."
+  },
+  {
+   "annuncio": 1901,
+   "regole": "da_rivedere",
+   "haiku": "non_rilevante",
+   "opus": "non_rilevante",
+   "giusto": "non_rilevante",
+   "errore_regole": "lieve",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Bollettino ondate di calore."
+  },
+  {
+   "annuncio": 1902,
+   "regole": "rilevante",
+   "haiku": "non_rilevante",
+   "opus": "rilevante",
+   "giusto": "rilevante",
+   "errore_regole": "nessuno",
+   "errore_haiku": "grave",
+   "errore_opus": "nessuno",
+   "spiegazione": "L'avviso ammette singole imprese (aiuti de minimis); Haiku lo scarta come 'enti no profit'."
+  },
+  {
+   "annuncio": 1903,
+   "regole": "rilevante",
+   "haiku": "non_rilevante",
+   "opus": "rilevante",
+   "giusto": "rilevante",
+   "errore_regole": "nessuno",
+   "errore_haiku": "grave",
+   "errore_opus": "nessuno",
+   "spiegazione": "Art. 2 ammette singole imprese; Haiku lo scarta."
+  },
+  {
+   "annuncio": 1904,
+   "regole": "rilevante",
+   "haiku": "non_rilevante",
+   "opus": "rilevante",
+   "giusto": "rilevante",
+   "errore_regole": "nessuno",
+   "errore_haiku": "grave",
+   "errore_opus": "nessuno",
+   "spiegazione": "Art. 2 ammette singole imprese; Haiku lo scarta."
+  },
+  {
+   "annuncio": 1905,
+   "regole": "non_rilevante",
+   "haiku": "non_rilevante",
+   "opus": "non_rilevante",
+   "giusto": "non_rilevante",
+   "errore_regole": "nessuno",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Selezione di personale."
+  },
+  {
+   "annuncio": 1906,
+   "regole": "non_rilevante",
+   "haiku": "non_rilevante",
+   "opus": "non_rilevante",
+   "giusto": "non_rilevante",
+   "errore_regole": "nessuno",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Disinfestazione."
+  },
+  {
+   "annuncio": 1909,
+   "regole": "non_rilevante",
+   "haiku": "non_rilevante",
+   "opus": "non_rilevante",
+   "giusto": "non_rilevante",
+   "errore_regole": "nessuno",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Esiti di appalti."
+  },
+  {
+   "annuncio": 1910,
+   "regole": "rilevante",
+   "haiku": "non_rilevante",
+   "opus": "non_rilevante",
+   "giusto": "non_rilevante",
+   "errore_regole": "medio",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Agevolazione sul combustibile per cittadini delle frazioni non metanizzate; la parola 'agevolazioni' inganna le regole."
+  },
+  {
+   "annuncio": 1912,
+   "regole": "non_rilevante",
+   "haiku": "non_rilevante",
+   "opus": "non_rilevante",
+   "giusto": "non_rilevante",
+   "errore_regole": "nessuno",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Libri di testo alle famiglie."
+  },
+  {
+   "annuncio": 1914,
+   "regole": "non_rilevante",
+   "haiku": "non_rilevante",
+   "opus": "non_rilevante",
+   "giusto": "non_rilevante",
+   "errore_regole": "nessuno",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Graduatorie nidi."
+  },
+  {
+   "annuncio": 1916,
+   "regole": "rilevante",
+   "haiku": "da_rivedere",
+   "opus": "da_rivedere",
+   "giusto": "non_rilevante",
+   "errore_regole": "medio",
+   "errore_haiku": "lieve",
+   "errore_opus": "lieve",
+   "spiegazione": "Graduatoria (procedura conclusa) di progetti di invecchiamento attivo della zona sociale: non e' un aiuto aperto per imprese. Non collegato a bando, quindi senza danni a valle."
+  },
+  {
+   "annuncio": 1919,
+   "regole": "rilevante",
+   "haiku": "non_rilevante",
+   "opus": "non_rilevante",
+   "giusto": "non_rilevante",
+   "errore_regole": "medio",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Graduatorie posteggi Fiera dei Morti: nessun contributo, l'impresa paga il posteggio. La regola 'avviso'+'fiera' scatta a vuoto."
+  },
+  {
+   "annuncio": 1920,
+   "regole": "non_rilevante",
+   "haiku": "non_rilevante",
+   "opus": "non_rilevante",
+   "giusto": "non_rilevante",
+   "errore_regole": "nessuno",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Graduatorie nidi."
+  },
+  {
+   "annuncio": 1923,
+   "regole": "non_rilevante",
+   "haiku": "non_rilevante",
+   "opus": "non_rilevante",
+   "giusto": "non_rilevante",
+   "errore_regole": "nessuno",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Servizio civile."
+  },
+  {
+   "annuncio": 1924,
+   "regole": "rilevante",
+   "haiku": "non_rilevante",
+   "opus": "non_rilevante",
+   "giusto": "non_rilevante",
+   "errore_regole": "medio",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Voucher sportivi a giovani svantaggiati (persone fisiche)."
+  },
+  {
+   "annuncio": 1930,
+   "regole": "rilevante",
+   "haiku": "non_rilevante",
+   "opus": "non_rilevante",
+   "giusto": "non_rilevante",
+   "errore_regole": "medio",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Contributo trasloco a nuclei con abitazione inagibile per sisma."
+  },
+  {
+   "annuncio": 1949,
+   "regole": "rilevante",
+   "haiku": "non_rilevante",
+   "opus": "non_rilevante",
+   "giusto": "non_rilevante",
+   "errore_regole": "medio",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Graduatoria agevolazione TARI 2025: esito di procedura per contribuenti, chiusa."
+  },
+  {
+   "annuncio": 1951,
+   "regole": "rilevante",
+   "haiku": "non_rilevante",
+   "opus": "non_rilevante",
+   "giusto": "non_rilevante",
+   "errore_regole": "medio",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Fondi PR FESR ricevuti dal Comune per lavori su scuole comunali: la parola 'pr fesr' non basta a farne un bando per imprese."
+  },
+  {
+   "annuncio": 1952,
+   "regole": "da_rivedere",
+   "haiku": "non_rilevante",
+   "opus": "non_rilevante",
+   "giusto": "non_rilevante",
+   "errore_regole": "lieve",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Accreditamento fornitori Home Care Premium: il Comune acquista servizi, non e' un aiuto. Data di pubblicazione registrata 2028-01-31, evidentemente sbagliata."
+  },
+  {
+   "annuncio": 1955,
+   "regole": "rilevante",
+   "haiku": "non_rilevante",
+   "opus": "non_rilevante",
+   "giusto": "non_rilevante",
+   "errore_regole": "medio",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Graduatoria agevolazione TARI 2024, chiusa, per contribuenti."
+  },
+  {
+   "annuncio": 1961,
+   "regole": "non_rilevante",
+   "haiku": "non_rilevante",
+   "opus": "non_rilevante",
+   "giusto": "non_rilevante",
+   "errore_regole": "nessuno",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Voce di menu del sito."
+  },
+  {
+   "annuncio": 1962,
+   "regole": "da_rivedere",
+   "haiku": "non_rilevante",
+   "opus": "non_rilevante",
+   "giusto": "non_rilevante",
+   "errore_regole": "lieve",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Voce di menu 'Richiedi assistenza'."
+  },
+  {
+   "annuncio": 1963,
+   "regole": "da_rivedere",
+   "haiku": "non_rilevante",
+   "opus": "non_rilevante",
+   "giusto": "non_rilevante",
+   "errore_regole": "lieve",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Voce di menu 'Prenota appuntamento'."
+  },
+  {
+   "annuncio": 1964,
+   "regole": "da_rivedere",
+   "haiku": "non_rilevante",
+   "opus": "non_rilevante",
+   "giusto": "non_rilevante",
+   "errore_regole": "lieve",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Voce di menu 'Segnala disservizio'."
+  }
+ ],
+ "preliminare": [
+  {
+   "bando": 582,
+   "produzione": "passa",
+   "haiku_nuovo": "passa",
+   "opus": "passa",
+   "giusto": "passa",
+   "errore_produzione": "nessuno",
+   "errore_haiku_nuovo": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Avviso cultura 2026, ammette singole imprese, scadenza 5/10/2026."
+  },
+  {
+   "bando": 576,
+   "produzione": "ferma",
+   "haiku_nuovo": "passa",
+   "opus": "passa",
+   "giusto": "passa",
+   "errore_produzione": "grave",
+   "errore_haiku_nuovo": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Il testo dell'avviso e' nel fascicolo e ammette 'singole imprese' (aiuti di Stato/de minimis); produzione risponde per_imprese=no e testo_bando=no: entrambe sbagliate. Aperto fino al 5/10/2026."
+  },
+  {
+   "bando": 577,
+   "produzione": "ferma",
+   "haiku_nuovo": "passa",
+   "opus": "passa",
+   "giusto": "passa",
+   "errore_produzione": "grave",
+   "errore_haiku_nuovo": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Come il 576 (stessa formula dell'Art. 2); il motivo di produzione e' identico a quello del 576 e parla di 'iniziative culturali' per un avviso sulle politiche giovanili."
+  },
+  {
+   "bando": 608,
+   "produzione": "ferma",
+   "haiku_nuovo": "ferma",
+   "opus": "ferma",
+   "giusto": "ferma",
+   "errore_produzione": "nessuno",
+   "errore_haiku_nuovo": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "L'avviso esclude esplicitamente imprese e soggetti economici."
+  },
+  {
+   "bando": 390,
+   "produzione": "ferma",
+   "haiku_nuovo": "ferma",
+   "opus": "ferma",
+   "giusto": "ferma",
+   "errore_produzione": "nessuno",
+   "errore_haiku_nuovo": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Voucher a giovani, domande chiuse; Haiku indica scadenza 8/3 e Opus 15/6, divergenza irrilevante per la decisione."
+  },
+  {
+   "bando": 160,
+   "produzione": "ferma",
+   "haiku_nuovo": "ferma",
+   "opus": "ferma",
+   "giusto": "ferma",
+   "errore_produzione": "nessuno",
+   "errore_haiku_nuovo": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Notizia su fondi FESR ricevuti dal Comune: non e' un bando."
+  },
+  {
+   "bando": 342,
+   "produzione": "ferma",
+   "haiku_nuovo": "ferma",
+   "opus": "ferma",
+   "giusto": "ferma",
+   "errore_produzione": "nessuno",
+   "errore_haiku_nuovo": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Contributo trasloco a famiglie terremotate."
+  },
+  {
+   "bando": 518,
+   "produzione": "ferma",
+   "haiku_nuovo": "ferma",
+   "opus": "ferma",
+   "giusto": "ferma",
+   "errore_produzione": "nessuno",
+   "errore_haiku_nuovo": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Agevolazione combustibile per cittadini."
+  }
+ ],
+ "osservazioni": [
+  "Il preliminare di produzione ha perso 2 dei 3 bandi per imprese della fonte (576, 577) pur avendo il testo completo: motivo identico copiato fra i due bandi e testo_bando=no smentito dal fascicolo. Sembra un errore da risposta a lotto (lotti da 20) in cui il modello non distingue i bandi; il Haiku a piccoli lotti li ha invece passati tutti e tre correttamente.",
+  "In radar.json i preliminari risultano compilati da 'claude-code (sessione del 26/09/2026, senza API)', non dalla catena Haiku automatica: il confronto 'produzione' riguarda quella compilazione.",
+  "Haiku come smistatore scarta i tre avvisi validi (1902-1904) perche' li legge come 'solo no profit': se sostituisse le regole in questa fonte, il perimetro scenderebbe a zero. Le regole a parole chiave tengono troppo (9 falsi rilevanti: graduatorie chiuse, TARI, FESR ricevuti dal Comune, posteggi fiera) ma non perdono nulla.",
+  "La fonte raccoglie anche voci di menu del sito (1961-1964: assistenza, appuntamenti, segnalazioni, FAQ) come annunci: il selettore della pagina elenco e' troppo largo.",
+  "Annuncio 1952 con data di pubblicazione 2028-01-31: data letta male dalla pagina.",
+  "Molti da_rivedere (36 su 68) su voci chiaramente non pertinenti (Minimetro, ordinanze, carte d'identita'): le regole di esclusione per avvisi di servizio comunali andrebbero ampliate.",
+  "Nessuna verifica in rete fatta: i fascicoli contenevano gia' il testo necessario. Il perimetro dell'esploratore (3 bandi, contributi per iniziative/eventi con imprese ammesse in de minimis e dotazioni piccole: 5.000, 50.000, 24.000 euro) e' coerente con quanto trovato.",
+  "Verifica di riserva (27/09/2026): scaricate la pagina del bando 576 (scadenza ore 12:00 del 05/10/2026 confermata) e le pagine 1 e 2 dell elenco avvisi; la pagina 2 ripete gli stessi contenuti della 1. Nessun altro avviso di contributo aperto alle imprese oltre ai tre del perimetro. Confermati nei fascicoli: Art. 2 di 576 e 577 ammette singole imprese (righe 48 e 51), Art. 2 di 608 le esclude (righe 80-81); preliminare di produzione di 576 e 577 in radar.json con motivo identico e testo_bando=no."
+ ],
+ "correzioni": [],
+ "fiducia": "alta"
+}

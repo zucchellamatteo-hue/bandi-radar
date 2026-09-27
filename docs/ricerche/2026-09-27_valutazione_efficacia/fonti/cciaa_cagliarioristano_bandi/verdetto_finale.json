@@ -1,0 +1,199 @@
+{
+ "fonte": "cciaa_cagliarioristano_bandi",
+ "perimetro": [
+  {
+   "titolo": "Bando DOPPIA TRANSIZIONE - Anno 2026",
+   "url": "https://www.caor.camcom.it/bandi/bando-doppia-transizione-anno-2026",
+   "esito": "trovato_con_scheda",
+   "annuncio": 998,
+   "bando": 395,
+   "spiegazione": "Annuncio rilevante per regole (voucher), bando 395 con pagina trovata, preliminare di produzione aperto/per imprese, scheda presente. Unico vero contributo in denaro della fonte (voucher fino a 10.000 euro, domande 7-30/09/2026)."
+  },
+  {
+   "titolo": "B2B on Green Energy (Istanbul, dicembre 2026)",
+   "url": "https://www.caor.camcom.it/bandi/b2b-on-green-energy-istanbul-dicembre-2026",
+   "esito": "perso_smistamento",
+   "annuncio": 1001,
+   "bando": null,
+   "spiegazione": "Raccolto, ma le regole lo lasciano da_rivedere (nessuna parola chiave) e non diventa bando. Aperto fino al 31/10/2026; e' un servizio camerale di internazionalizzazione (costi di sede coperti, viaggio a carico delle imprese), per_imprese incerto: perdita di peso modesto ma reale se il perimetro include le agevolazioni in natura. Haiku e Opus lo avrebbero tenuto. Verificato con curl il 27/09: pagina ancora Aperto, scadenza 31/10/2026; ASCAME e partner coprono sede, sessioni, visite tecniche e pasti, voli e albergo a carico delle imprese, adesione via email. Il prompt di smistamento include espressamente servizi gratuiti e partecipazioni con costi coperti (regola 3), quindi rientra nel perimetro del radar: perdita confermata, di peso modesto."
+  },
+  {
+   "titolo": "Progetto PLANBEE: corsi di formazione base e avanzata per apicoltori",
+   "url": "https://www.caor.camcom.it/bandi/progetto-planbee-corsi-formazione-base-avanzata-apicoltori",
+   "esito": "fermato_giustamente",
+   "annuncio": 995,
+   "bando": null,
+   "spiegazione": "Scadenza 14/09/2026 passata (il sito lo mostra ancora 'Aperto'); fermo in da_rivedere allo smistamento, esito finale corretto. Formazione gratuita, non contributo."
+  },
+  {
+   "titolo": "Sardegna Cavalli 2026: manifestazione di interesse per spazi espositivi riservati alle imprese artigiane e agroalimentari",
+   "url": "https://www.caor.camcom.it/bandi/sardegna-cavalli-2026-manifestazione-interesse-spazi-espositivi-riservati-alle-imprese-artigiane",
+   "esito": "fermato_giustamente",
+   "annuncio": 997,
+   "bando": null,
+   "spiegazione": "Chiuso il 31/08/2026; rimasto da_rivedere allo smistamento, quindi nessuna scheda: esito finale corretto. Verificato con curl: pagina Chiuso, scadenza 31/08/2026 ore 12; gazebo allestiti gratuiti per max 30 imprese iscritte."
+  },
+  {
+   "titolo": "Sardegna Cavalli 2026: manifestazione di interesse per spazi espositivi nell'area Food & Beverage",
+   "url": "https://www.caor.camcom.it/bandi/sardegna-cavalli-2026-manifestazione-interesse-spazi-espositivi-nellarea-food-beverage",
+   "esito": "fermato_giustamente",
+   "annuncio": 996,
+   "bando": null,
+   "spiegazione": "Chiuso il 31/08/2026; rimasto da_rivedere allo smistamento: esito finale corretto."
+  },
+  {
+   "titolo": "Progetto MESA - Selezione aziende per la partecipazione a incontri B2B a Berlino - Germania",
+   "url": "https://www.caor.camcom.it/bandi/progetto-mesa-selezione-aziende-partecipazione-incontri-b2b-berlino-germania",
+   "esito": "fermato_giustamente",
+   "annuncio": 999,
+   "bando": null,
+   "spiegazione": "Chiuso il 23/07/2026; rimasto da_rivedere allo smistamento: esito finale corretto."
+  }
+ ],
+ "smistamento": [
+  {
+   "annuncio": 994,
+   "regole": "da_rivedere",
+   "haiku": "non_rilevante",
+   "opus": "non_rilevante",
+   "giusto": "non_rilevante",
+   "errore_regole": "lieve",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Ricerca di sponsor: sono le imprese a pagare la Camera. Caso chiaro."
+  },
+  {
+   "annuncio": 995,
+   "regole": "da_rivedere",
+   "haiku": "rilevante",
+   "opus": "non_rilevante",
+   "giusto": "non_rilevante",
+   "errore_regole": "nessuno",
+   "errore_haiku": "lieve",
+   "errore_opus": "nessuno",
+   "spiegazione": "Corsi gratuiti per apicoltori (il base anche per privati): formazione, non aiuto economico. Caso di confine, quindi da_rivedere accettabile e l'errore di Haiku contato solo lieve."
+  },
+  {
+   "annuncio": 996,
+   "regole": "da_rivedere",
+   "haiku": "rilevante",
+   "opus": "rilevante",
+   "giusto": "rilevante",
+   "errore_regole": "lieve",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Postazioni espositive gratuite per imprese iscritte: agevolazione in natura riservata a imprese. Le regole non hanno parole chiave per questo tipo di avviso."
+  },
+  {
+   "annuncio": 997,
+   "regole": "da_rivedere",
+   "haiku": "rilevante",
+   "opus": "rilevante",
+   "giusto": "rilevante",
+   "errore_regole": "lieve",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Spazi espositivi gratuiti per imprese artigiane e agroalimentari: agevolazione in natura per imprese."
+  },
+  {
+   "annuncio": 998,
+   "regole": "rilevante",
+   "haiku": "rilevante",
+   "opus": "rilevante",
+   "giusto": "rilevante",
+   "errore_regole": "nessuno",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Voucher a fondo perduto per MPMI. Tutti concordi."
+  },
+  {
+   "annuncio": 999,
+   "regole": "da_rivedere",
+   "haiku": "rilevante",
+   "opus": "rilevante",
+   "giusto": "rilevante",
+   "errore_regole": "lieve",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Selezione di imprese agroalimentari per B2B all'estero: servizio camerale per imprese."
+  },
+  {
+   "annuncio": 1000,
+   "regole": "rilevante",
+   "haiku": "da_rivedere",
+   "opus": "non_rilevante",
+   "giusto": "non_rilevante",
+   "errore_regole": "medio",
+   "errore_haiku": "lieve",
+   "errore_opus": "nessuno",
+   "spiegazione": "Borse di mobilita' per studenti e disoccupati: le regole scattano su 'avviso' + 'imprenditor*' e lo tengono; il preliminare poi lo ferma correttamente, ma costa una lettura. Confermato sul testo dell avviso nel fascicolo 308: art. 2 rivolto a studenti e persone in cerca di lavoro, borsa da 5.600 euro al partecipante. Gravita medio coerente con gli altri falsi positivi delle regole nelle altre fonti."
+  },
+  {
+   "annuncio": 1001,
+   "regole": "da_rivedere",
+   "haiku": "rilevante",
+   "opus": "rilevante",
+   "giusto": "rilevante",
+   "errore_regole": "lieve",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Selezione di imprese sarde per B2B a Istanbul, aperto fino al 31/10/2026: servizio per imprese. Il da_rivedere delle regole lo lascia fuori dalla catena."
+  },
+  {
+   "annuncio": 1002,
+   "regole": "non_rilevante",
+   "haiku": "non_rilevante",
+   "opus": "non_rilevante",
+   "giusto": "non_rilevante",
+   "errore_regole": "nessuno",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Esami abilitanti, nessun aiuto."
+  },
+  {
+   "annuncio": 1003,
+   "regole": "da_rivedere",
+   "haiku": "non_rilevante",
+   "opus": "non_rilevante",
+   "giusto": "non_rilevante",
+   "errore_regole": "lieve",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Destinatarie associazioni di volontariato per redistribuzione a indigenti: non riguarda aiuti alle imprese. Caso chiaro."
+  }
+ ],
+ "preliminare": [
+  {
+   "bando": 395,
+   "produzione": "passa",
+   "haiku_nuovo": "passa",
+   "opus": "passa",
+   "giusto": "passa",
+   "errore_produzione": "nessuno",
+   "errore_haiku_nuovo": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Voucher per MPMI aperto 7-30/09/2026. Haiku nuovo mette stato 'incerto' (dice di non vedere la scadenza, che invece Opus trova: 30/09) ma non lo ferma."
+  },
+  {
+   "bando": 308,
+   "produzione": "ferma",
+   "haiku_nuovo": "ferma",
+   "opus": "ferma",
+   "giusto": "ferma",
+   "errore_produzione": "nessuno",
+   "errore_haiku_nuovo": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Borse per persone fisiche, scadenza 25/06/2026 passata. Tutti lo fermano (produzione dice edizione_in_corso=no, Haiku e Opus si: differenza irrilevante perche' per_imprese=no e stato=chiuso)."
+  }
+ ],
+ "osservazioni": [
+  "La fonte espone bene i bandi (RSS/Drupal camerale, sezione /bandi unica): tutti e 6 gli avvisi per imprese dell'esploratore sono stati raccolti, nessuna perdita per mancata raccolta.",
+  "Lo smistamento a regole lascia da_rivedere 7 annunci su 10 per 'nessuna parola chiave': gli avvisi camerali di servizi alle imprese (B2B, spazi espositivi, formazione) non hanno vocaboli come 'contributo' o 'voucher'. L'unico aperto perso cosi' e' B2B Istanbul (1001). Un passaggio del modello leggero sui da_rivedere li chiuderebbe quasi tutti correttamente.",
+  "Regola 'avviso' + 'imprenditor*' troppo larga: fa passare come rilevante una selezione di persone fisiche (Progetto Develop).",
+  "Il sito lascia PLANBEE come 'Aperto' dopo la scadenza del 14/09: lo stato va sempre ricavato dalle date, non dall'etichetta del sito.",
+  "Da chiarire nel perimetro se le agevolazioni in natura (spazi fieristici gratuiti, B2B con costi coperti) vanno schedate: Haiku e Opus le tengono, l'esploratore le marca 'incerto'.",
+  "Verifica di riserva: 3 richieste curl (elenco /bandi, B2B Istanbul, Sardegna Cavalli artigiani) e lettura del fascicolo 308; l elenco /bandi mostra in testa PLANBEE, Doppia Transizione, B2B Istanbul, esami Agenti e Conducenti, coerente con l esploratore. Nessuna sezione di contributi dimenticata: il menu ha PID e Progetti di transizione ecologica (gia visitati dall esploratore) e le pagine di Amministrazione trasparente, che non sono fonti di bandi aperti."
+ ],
+ "correzioni": [],
+ "fiducia": "alta"
+}

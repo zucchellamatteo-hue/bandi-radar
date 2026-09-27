@@ -28,3 +28,4 @@ In una sessione di Claude Code su questo repository, descrivere la domanda e chi
 | 2026-09-25 | `2026-09-25_fonti_difficili.md` | Le ~44 fonti non verdi (bot manager, connessioni chiuse, myPortal, Camere, "senza novità") si leggono dal server? Raccolta, curl IPv4/IPv6, Chromium, altre porte |
 | 2026-09-25 | `2026-09-25_prova_ia.md` | Prima di collegare l'IA: Haiku (smistamento) e Sonnet (schede) su dati reali, rivisti da Opus. La struttura regge? |
 | 2026-09-26 | `2026-09-26_schede_in_produzione.md` | Catena senza IA accesa in produzione (deduplica, pagina ufficiale, allegati) e schede dell'arretrato compilate senza API: quanti bandi, quante schede, cosa non va |
+| 2026-09-27 | `2026-09-27_valutazione_efficacia.md` | Il sistema e' efficace? 44 fonti stratificate per tipo e tecnologia: esploratore Opus sul sito, Haiku/Sonnet contro Opus, controllore e verifica di riserva. Perimetro, smistamento, preliminare, schede, costi |

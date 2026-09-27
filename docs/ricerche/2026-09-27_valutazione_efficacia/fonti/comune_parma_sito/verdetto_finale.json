@@ -1,0 +1,98 @@
+{
+ "fonte": "comune_parma_sito",
+ "perimetro": [
+  {
+   "titolo": "Incentivi per l'acquisto di e-bike e cargo bike a pedalata assistita (imprese: cargo bike)",
+   "url": "https://www.comune.parma.it/it/novita/notizie/dal-14-settembre-a-parma-incentivi-per-lacquisto-di-e-bike-e-cargo-bike-a-pedalata-assistita",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Aperto dal 14/09/2026, ma pubblicato solo come notizia nella sezione 'novita/notizie', non nella sezione bandi-e-avvisi che la fonte osserva (gestione affidata a Infomobility). La fonte non puo' vederlo. Verificato il 27/09 via API: la notizia (11/09/2026) ammette le imprese con sede operativa a Parma solo per cargo bike, fino a 1.000 euro. E' una lacuna di copertura (bando pubblicato solo tra le notizie), non un errore di lettura della fonte."
+  },
+  {
+   "titolo": "Ordinanza Commissariale 55/2026 - ricostruzione privata imprese agricole alluvione autunno 2024",
+   "url": "https://www.comune.parma.it/it/amministrazione/documenti-e-dati/bandi-e-avvisi/avvisi-pubblici/ordinanza-commissariale-55-2026-nuove-misure-di-ricostruzione-privata-a-favore-delle-imprese-agricole-colpite-dagli-eventi-alluvionali-verificatisi-nellautunno-2024",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "E' nella sezione osservata (tipo Bando, avvisi-pubblici), pubblicato il 09/02/2026, senza scadenza e ancora attivo. Radar ha raccolto solo i 30 annunci piu' recenti (dal 14/07/2026 in poi, tutti trovati nella stessa lettura del 25/09): questo e' piu' vecchio e non e' mai entrato. Misura del Commissario, ripubblicata dal Comune. Verificato il 27/09 via API: bando_state Attivo, nessuna scadenza, destinatari Cittadini e Imprese."
+  },
+  {
+   "titolo": "Avviso pubblico per l'erogazione di contributi a sostegno di azioni di Mobility Management - anno 2026",
+   "url": "https://www.comune.parma.it/it/amministrazione/documenti-e-dati/bandi-e-avvisi/avvisi-pubblici/avviso-pubblico-per-lerogazione-di-contributi-a-sostegno-di-azioni-di-mobility-management-anno-2026",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Nella sezione osservata, pubblicato il 03/06/2026 (verificato via API), scaduto il 31/07/2026. Non raccolto perche' anteriore ai 30 annunci letti. Essendo chiuso, la perdita pratica e' nulla; se raccolto sarebbe stato giustamente fermato."
+  },
+  {
+   "titolo": "Avviso pubblico rigenerazione urbana Centro Storico e Oltretorrente (associazioni di via, consorzi, reti di imprese)",
+   "url": "https://www.comune.parma.it/it/amministrazione/documenti-e-dati/bandi-e-avvisi/avvisi-pubblici/avviso-pubblico-per-la-presentazione-di-progetti-relativi-ad-interventi-finalizzati-alla-rigenerazione-urbana-dei-quartieri-del-centro-storico-e-delloltretorrente-presentati-dalle-associazioni-di-via-consorzi-reti-di-imprese",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Pubblicato l'11/12/2025, scaduto il 31/03/2026: troppo vecchio per i 30 annunci letti. Chiuso, quindi perdita pratica nulla."
+  }
+ ],
+ "smistamento": [
+  {
+   "annuncio": 7205,
+   "regole": "null (non smistato)",
+   "haiku": "non_rilevante",
+   "opus": "non_rilevante",
+   "giusto": "non_rilevante",
+   "errore_regole": "nessuno",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Alloggi ERP/ERS a famiglie. Le regole non hanno dato alcun esito (tutti i 30 annunci della fonte hanno esito null): non e' un errore di classificazione ma un annuncio mai smistato."
+  },
+  {
+   "annuncio": 7206,
+   "regole": "null (non smistato)",
+   "haiku": "non_rilevante",
+   "opus": "non_rilevante",
+   "giusto": "non_rilevante",
+   "errore_regole": "nessuno",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Contributo affitto ai conduttori (famiglie)."
+  },
+  {
+   "annuncio": 7207,
+   "regole": "null (non smistato)",
+   "haiku": "non_rilevante",
+   "opus": "non_rilevante",
+   "giusto": "non_rilevante",
+   "errore_regole": "nessuno",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Raccolta preventivi: il Comune compra un servizio."
+  },
+  {
+   "annuncio": 7208,
+   "regole": "null (non smistato)",
+   "haiku": "non_rilevante",
+   "opus": "non_rilevante",
+   "giusto": "non_rilevante",
+   "errore_regole": "nessuno",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Affidamento di servizio: il Comune compra."
+  }
+ ],
+ "preliminare": [],
+ "osservazioni": [
+  "Nessun bando collegato alla fonte (bandi.json vuoto, haiku/opus_preliminari vuoti): la parte C non ha casi da valutare.",
+  "Tutti i 30 annunci hanno esito di smistamento null: la fonte e' stata letta la prima volta il 25/09/2026 20:11 e lo smistamento non risulta ancora eseguito su di essa (o non la copre). Da verificare.",
+  "La prima lettura ha preso solo i 30 elementi piu' recenti (dal 14/07/2026): i bandi ancora aperti ma pubblicati prima (es. Ordinanza 55/2026 del 09/02/2026, senza scadenza) non entreranno mai. Alla prima lettura di una fonte API Plone servirebbe paginare o filtrare per scadenza_bando futura / bando_state aperto, non solo per data di pubblicazione.",
+  "L'API Plone espone scadenza_bando e tipologia_bando: si potrebbero usare per escludere a regole alienazioni, bandi-di-concorso e bandi scaduti prima di passare all'IA.",
+  "Alcuni incentivi per imprese del Comune (e-bike/cargo bike) compaiono solo tra le notizie (novita/notizie), fuori dalla sezione osservata: valutare una seconda fonte sulle notizie filtrata per parole come 'contributi', 'incentivi', 'imprese'.",
+  "Una mia richiesta curl ha dato un errore TLS transitorio (codice 35); le successive sono andate a buon fine. Usate 3 richieste.",
+  "Verifica di riserva (27/09): la sezione bandi-e-avvisi ha solo 4 cartelle (bandi-di-concorso, bandi-di-gara, avvisi-pubblici, alienazioni), tutte coperte dall'esploratore. Una ricerca 'contributi' su tutta la sezione (gare incluse) non ha rivelato altri bandi per imprese dal 12/2025 oltre a quelli gia' nel perimetro o tra gli esclusi.",
+  "Caso dubbio non aggiunto al perimetro: Ordinanza commissariale 54 (pubblicata 15/12/2025, Attiva, senza scadenza), semplificazione della ricostruzione privata post alluvione; il Comune la presenta come rimborsi ai privati (destinatari 'Altro'), non e' chiaro se copra attivita' economiche. Anch'essa non raccolta perche' anteriore ai 30 annunci letti.",
+  "Smistamento: regole senza esito su tutti i 30 annunci, Haiku e Opus concordi (non_rilevante) sui 4 del campione; ricontrollati, esito corretto. Nessun errore da attribuire.",
+  "Verifica di riserva: 7 richieste curl (una ripetuta per errore TLS 35 transitorio)."
+ ],
+ "correzioni": [],
+ "fiducia": "alta"
+}

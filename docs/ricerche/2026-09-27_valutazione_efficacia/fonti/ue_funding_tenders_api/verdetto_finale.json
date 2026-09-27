@@ -1,0 +1,453 @@
+{
+ "fonte": "ue_funding_tenders_api",
+ "perimetro": [
+  {
+   "titolo": "EIC Accelerator 2026 - Short proposal",
+   "url": "https://ec.europa.eu/info/funding-tenders/opportunities/portal/screen/opportunities/topic-details/HORIZON-EIC-2026-ACCELERATOR-01",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Aperto, per PMI. Non fra i 35 annunci: il lettore sedia chiede all'API solo pageSize=50, pageNumber=1 su circa 1225 risultati, senza ordinamento ne' paginazione."
+  },
+  {
+   "titolo": "EIC STEP Scale Up",
+   "url": "https://ec.europa.eu/info/funding-tenders/opportunities/portal/screen/opportunities/topic-details/HORIZON-EIC-2026-STEP",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Aperto, per imprese. Fuori dalla prima pagina da 50 risultati letta dal lettore."
+  },
+  {
+   "titolo": "EIC defence call",
+   "url": "https://ec.europa.eu/info/funding-tenders/opportunities/portal/screen/opportunities/topic-details/HORIZON-EIC-2026-DEFENCE-01",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Aperto, per start-up e PMI. Fuori dalla prima pagina letta."
+  },
+  {
+   "titolo": "The European Prize for Women Innovators",
+   "url": "https://ec.europa.eu/info/funding-tenders/opportunities/portal/screen/opportunities/topic-details/HORIZON-EIC-2026-PRIZE-WIP",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Premio aperto a fondatrici di imprese. Fuori dalla prima pagina letta."
+  },
+  {
+   "titolo": "Rising Innovators category",
+   "url": "https://ec.europa.eu/info/funding-tenders/opportunities/portal/screen/opportunities/topic-details/HORIZON-EIC-2026-PRIZE-WIP-RisingInnovators",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Premio aperto. Fuori dalla prima pagina letta."
+  },
+  {
+   "titolo": "EdTech Accelerator",
+   "url": "https://ec.europa.eu/info/funding-tenders/opportunities/portal/screen/opportunities/topic-details/DIGITAL-2026-SKILLS-10-EDTECH",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Aperto (per imprese incerto). Fuori dalla prima pagina letta."
+  },
+  {
+   "titolo": "Digital solutions for regulatory compliance through data",
+   "url": "https://ec.europa.eu/info/funding-tenders/opportunities/portal/screen/opportunities/topic-details/DIGITAL-2026-AI-DATA-10-COMPLIANCE",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Aperto (incerto). Fuori dalla prima pagina letta."
+  },
+  {
+   "titolo": "Strengthening cybersecurity capacities of European SMEs with cybersecure AI-powered solutions",
+   "url": "https://ec.europa.eu/info/funding-tenders/opportunities/portal/screen/opportunities/topic-details/DIGITAL-ECCC-2027-DEPLOY-CYBER-11-AI4SME",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Aperto, per PMI. Fuori dalla prima pagina letta."
+  },
+  {
+   "titolo": "Cybersecure tools, technologies and services relying on AI",
+   "url": "https://ec.europa.eu/info/funding-tenders/opportunities/portal/screen/opportunities/topic-details/DIGITAL-ECCC-2027-DEPLOY-CYBER-11-CYBERAI",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Aperto (incerto). Fuori dalla prima pagina letta."
+  },
+  {
+   "titolo": "Alternative Fuel Infrastructure Facility: Road & Air Transport - works",
+   "url": "https://ec.europa.eu/info/funding-tenders/opportunities/portal/screen/opportunities/topic-details/CEF-T-2026-AFIFGEN-COSTS",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Aperto, operatori privati ammessi. Fuori dalla prima pagina letta."
+  },
+  {
+   "titolo": "Electricity, Gas, Smart Grids, Hydrogen and CO2 networks - Works",
+   "url": "https://ec.europa.eu/info/funding-tenders/opportunities/portal/screen/opportunities/topic-details/CEF-E-2026-PCI-PMI-WORKS",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Aperto (incerto, promotori societa' energetiche). Fuori dalla prima pagina letta."
+  },
+  {
+   "titolo": "Integrated Production and Product Development for Next-Generation Lithium-based Batteries for Mobility",
+   "url": "https://ec.europa.eu/info/funding-tenders/opportunities/portal/screen/opportunities/topic-details/HORIZON-CL5-2026-10-D2-03",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Aperto (incerto). Fuori dalla prima pagina letta."
+  },
+  {
+   "titolo": "I3-2026-INV1 - Interregional Innovation Investments Strand 1",
+   "url": "https://ec.europa.eu/info/funding-tenders/opportunities/portal/screen/opportunities/topic-details/I3-2026-INV1",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Aperto, per PMI. Fuori dalla prima pagina letta."
+  },
+  {
+   "titolo": "I3-2026-INV2a - Interregional Innovation Investments Strand 2a",
+   "url": "https://ec.europa.eu/info/funding-tenders/opportunities/portal/screen/opportunities/topic-details/I3-2026-INV2a",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Aperto, per PMI. Fuori dalla prima pagina letta."
+  },
+  {
+   "titolo": "EU support to Stakeholders to improve measurement of food waste",
+   "url": "https://ec.europa.eu/info/funding-tenders/opportunities/portal/screen/opportunities/topic-details/SMP-FOOD-2026-FW-STAKEHOLDERS-PJ",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Aperto (incerto). Fuori dalla prima pagina letta."
+  },
+  {
+   "titolo": "Sustainable, inclusive, affordable and beautiful solutions for thermal comfort in buildings",
+   "url": "https://ec.europa.eu/info/funding-tenders/opportunities/portal/screen/opportunities/topic-details/HORIZON-NEB-2026-01-REGEN-01",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Aperto (incerto). Fuori dalla prima pagina letta."
+  },
+  {
+   "titolo": "Open Call of Perform Europe 2026-2028 (sovvenzione a cascata)",
+   "url": "https://ec.europa.eu/info/funding-tenders/opportunities/portal/screen/opportunities/competitive-calls-cs/49521170",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Aperto (incerto). Non nella prima pagina da 50. Se arrivasse, il lettore gli darebbe titolo e indirizzo topic-details del topic madre invece del titolo della call e di competitive-calls-cs."
+  },
+  {
+   "titolo": "AI chip demonstrators for EU compute infrastructure",
+   "url": "https://ec.europa.eu/info/funding-tenders/opportunities/portal/screen/opportunities/topic-details/DIGITAL-JU-CHIPS-2026-AI1-SG",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Aperto (incerto). Fuori dalla prima pagina letta."
+  },
+  {
+   "titolo": "Fast Track to Innovation for breakthroughs in the Chemical Industry Action Plan",
+   "url": "https://ec.europa.eu/info/funding-tenders/opportunities/portal/screen/opportunities/topic-details/HORIZON-CL4-2027-01-MAT-PROD-62",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "In arrivo, per imprese. Fuori dalla prima pagina letta."
+  },
+  {
+   "titolo": "Fast Track to Research and Innovation for breakthroughs in industrial technologies",
+   "url": "https://ec.europa.eu/info/funding-tenders/opportunities/portal/screen/opportunities/topic-details/HORIZON-CL4-2027-01-MAT-PROD-61",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "In arrivo, per imprese. Fuori dalla prima pagina letta."
+  },
+  {
+   "titolo": "Pilot access schemes to Technology Infrastructures for European startups, scaleups and innovative SMEs",
+   "url": "https://ec.europa.eu/info/funding-tenders/opportunities/portal/screen/opportunities/topic-details/HORIZON-CL4-2027-01-MAT-PROD-47",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "In arrivo, per PMI. Fuori dalla prima pagina letta."
+  },
+  {
+   "titolo": "Textile circularity through advanced processing and manufacturing technologies",
+   "url": "https://ec.europa.eu/info/funding-tenders/opportunities/portal/screen/opportunities/topic-details/HORIZON-CL4-2027-01-MAT-PROD-08",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "In arrivo (incerto). Fuori dalla prima pagina letta."
+  },
+  {
+   "titolo": "Apply AI: Challenge-Driven AI Innovation Booster in Apply AI prioritised sectors (RIA)",
+   "url": "https://ec.europa.eu/info/funding-tenders/opportunities/portal/screen/opportunities/topic-details/HORIZON-CL4-2027-04-DIGITAL-EMERGING-04",
+   "esito": "perso_deduplica_o_dubbio",
+   "annuncio": 2527,
+   "bando": null,
+   "spiegazione": "Raccolto come annuncio 2527 (e' nella prima pagina da 50 dell'API). Le regole lo lasciano da_rivedere per 'nessuna parola chiave', come previsto dal disegno (smista.py: 'li smistera' l'IA'). Al momento della fotografia lo smistamento con l'IA in produzione, lanciato a mano con --limite, non l'aveva ancora deciso: resta fermo in dubbio, nessun bando creato. Non e' un errore delle regole."
+  },
+  {
+   "titolo": "Startup Europe",
+   "url": "https://ec.europa.eu/info/funding-tenders/opportunities/portal/screen/opportunities/topic-details/HORIZON-EIE-2027-01-CONNECT-01",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "In arrivo (incerto). Fuori dalla prima pagina letta."
+  },
+  {
+   "titolo": "Enhancing farmer's profitability and resilience through innovations for diversified crops and value chains",
+   "url": "https://ec.europa.eu/info/funding-tenders/opportunities/portal/screen/opportunities/topic-details/HORIZON-CL6-2027-02-FARM2FORK-05",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "In arrivo (incerto). Fuori dalla prima pagina letta."
+  },
+  {
+   "titolo": "Carbon farming innovation and scale-up",
+   "url": "https://ec.europa.eu/info/funding-tenders/opportunities/portal/screen/opportunities/topic-details/HORIZON-CL6-2027-02-CLIMATE-03",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "In arrivo (incerto). Fuori dalla prima pagina letta."
+  },
+  {
+   "titolo": "Empowering local urban food systems entrepreneurship and innovation",
+   "url": "https://ec.europa.eu/info/funding-tenders/opportunities/portal/screen/opportunities/topic-details/HORIZON-CL6-2027-02-COMMUNITIES-02",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "In arrivo (incerto). Fuori dalla prima pagina letta."
+  },
+  {
+   "titolo": "Crafting routes to a circular economy",
+   "url": "https://ec.europa.eu/info/funding-tenders/opportunities/portal/screen/opportunities/topic-details/HORIZON-CL2-2027-01-HERITAGE-03",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "In arrivo (incerto). Fuori dalla prima pagina letta."
+  },
+  {
+   "titolo": "MANTRA Second Open Call for Manufacturing SMEs (sovvenzione a cascata)",
+   "url": "https://ec.europa.eu/info/funding-tenders/opportunities/portal/screen/opportunities/competitive-calls-cs/45705096",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Aperto, per PMI. Non nella prima pagina da 50 letta dal lettore. Nota: le sovvenzioni a cascata della prima pagina arrivano, ma con il titolo e l'identificativo del topic madre (vedi osservazioni)."
+  },
+  {
+   "titolo": "Financial Support to Startups and Scaleups (Shape Accelerator & Scale Post-Accelerator)",
+   "url": "https://ec.europa.eu/info/funding-tenders/opportunities/portal/screen/opportunities/competitive-calls-cs/48939704",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Aperto, per start-up. Sovvenzione a cascata non raccolta (vedi sopra)."
+  },
+  {
+   "titolo": "KAVA Call 14 - Upscaling",
+   "url": "https://ec.europa.eu/info/funding-tenders/opportunities/portal/screen/opportunities/competitive-calls-cs/48939754",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Aperto, per imprese. Sovvenzione a cascata non raccolta."
+  },
+  {
+   "titolo": "AI Entrepreneurs Lab",
+   "url": "https://ec.europa.eu/info/funding-tenders/opportunities/portal/screen/opportunities/competitive-calls-cs/48939740",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Aperto (incerto). Sovvenzione a cascata non raccolta."
+  },
+  {
+   "titolo": "FIERCE 2nd Open Call for the Financial Support Programme",
+   "url": "https://ec.europa.eu/info/funding-tenders/opportunities/portal/screen/opportunities/competitive-calls-cs/45705096",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Aperto (incerto). Sovvenzione a cascata non raccolta. Nota: l'esploratore riporta lo stesso indirizzo di MANTRA (pagina del progetto madre)."
+  },
+  {
+   "titolo": "RENEW-BOOSTER EUROCLUSTER CALL N.2 FOR FINANCIAL SUPPORT TO THIRD PARTIES",
+   "url": "https://ec.europa.eu/info/funding-tenders/opportunities/portal/screen/opportunities/competitive-calls-cs/47108154",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "In arrivo, per PMI. Non raccolto: non e' nella prima pagina da 50. L'indirizzo competitive-calls-cs/47108154 dato dall'esploratore e' la pagina del topic madre SMP-COSME-2024-CLUSTER-01, la stessa a cui rimandano le sovvenzioni a cascata RESIST II e Green Grid PowerBoost che invece SONO nella prima pagina e sono confluite nell'annuncio 2540 con il titolo del topic madre."
+  },
+  {
+   "titolo": "European Partnership on Innovative SMEs/Innowwide CALL 5",
+   "url": "https://ec.europa.eu/info/funding-tenders/opportunities/portal/screen/opportunities/competitive-calls-cs/44087099",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "In arrivo, per PMI. Sovvenzione a cascata non raccolta."
+  },
+  {
+   "titolo": "European Partnership on Innovative SMEs/Eurostars CALL 12",
+   "url": "https://ec.europa.eu/info/funding-tenders/opportunities/portal/screen/opportunities/competitive-calls-cs/44087099",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "In arrivo, per PMI. Sovvenzione a cascata non raccolta."
+  },
+  {
+   "titolo": "WoodStock Grants to support climate-smart wood construction solutions",
+   "url": "https://ec.europa.eu/info/funding-tenders/opportunities/portal/screen/opportunities/competitive-calls-cs/45656490",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Aperto (incerto). Sovvenzione a cascata non raccolta."
+  },
+  {
+   "titolo": "Boosting creative startups for disruptive innovation",
+   "url": "https://ec.europa.eu/info/funding-tenders/opportunities/portal/screen/opportunities/topic-details/HORIZON-CL2-2026-01-HERITAGE-02",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Chiuso il 24/09/2026: la query del lettore chiede solo stato aperto/in arrivo, quindi i chiusi non arrivano mai. Perdita senza danno pratico."
+  },
+  {
+   "titolo": "European mini-slate development",
+   "url": "https://ec.europa.eu/info/funding-tenders/opportunities/portal/screen/opportunities/topic-details/CREA-MEDIA-2026-DEVMINISLATE",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Chiuso il 22/09/2026, non richiesto dalla query. Perdita senza danno pratico."
+  },
+  {
+   "titolo": "Circular Economy and Zero Pollution (LIFE-2026-SAP-ENV-ENVIRONMENT)",
+   "url": "https://ec.europa.eu/info/funding-tenders/opportunities/portal/screen/opportunities/topic-details/LIFE-2026-SAP-ENV-ENVIRONMENT",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Chiuso il 22/09/2026, non richiesto dalla query. Perdita senza danno pratico."
+  }
+ ],
+ "smistamento": [
+  {
+   "annuncio": 2519,
+   "regole": "da_rivedere",
+   "haiku": "rilevante",
+   "opus": "rilevante",
+   "giusto": "rilevante",
+   "errore_regole": "lieve",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Topic Horizon Cluster 5 (2ZERO) per powertrain di veicoli pesanti: consorzi industriali, imprese ammesse. Le regole non trovano parole chiave italiane nei titoli inglesi."
+  },
+  {
+   "annuncio": 2520,
+   "regole": "da_rivedere",
+   "haiku": "rilevante",
+   "opus": "rilevante",
+   "giusto": "rilevante",
+   "errore_regole": "lieve",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Horizon Cluster 5 (2ZERO), imprese in consorzio ammesse."
+  },
+  {
+   "annuncio": 2524,
+   "regole": "da_rivedere",
+   "haiku": "rilevante",
+   "opus": "rilevante",
+   "giusto": "rilevante",
+   "errore_regole": "lieve",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Horizon Cluster 5 sui sistemi PNT, imprese in consorzio ammesse."
+  },
+  {
+   "annuncio": 2525,
+   "regole": "da_rivedere",
+   "haiku": "rilevante",
+   "opus": "rilevante",
+   "giusto": "rilevante",
+   "errore_regole": "lieve",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Azione CCAM (knowledge hub, probabilmente CSA): meno orientata all'industria ma imprese ammesse in consorzio; per il prompt e' rilevante."
+  },
+  {
+   "annuncio": 2526,
+   "regole": "da_rivedere",
+   "haiku": "rilevante",
+   "opus": "rilevante",
+   "giusto": "rilevante",
+   "errore_regole": "lieve",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Horizon CCAM, imprese in consorzio ammesse."
+  },
+  {
+   "annuncio": 2529,
+   "regole": "da_rivedere",
+   "haiku": "rilevante",
+   "opus": "rilevante",
+   "giusto": "rilevante",
+   "errore_regole": "lieve",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Horizon Built4People, imprese edili/consulenza in consorzio ammesse."
+  },
+  {
+   "annuncio": 2530,
+   "regole": "da_rivedere",
+   "haiku": "rilevante",
+   "opus": "rilevante",
+   "giusto": "rilevante",
+   "errore_regole": "lieve",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Horizon Cluster 5 su navi autonome, imprese in consorzio ammesse."
+  },
+  {
+   "annuncio": 2562,
+   "regole": "da_rivedere",
+   "haiku": "non_rilevante",
+   "opus": "rilevante",
+   "giusto": "rilevante",
+   "errore_regole": "nessuno",
+   "errore_haiku": "grave",
+   "errore_opus": "nessuno",
+   "spiegazione": "MSCA Staff Exchanges finanzia le organizzazioni partecipanti (accademiche e non accademiche, PMI comprese) per gli scambi di personale: le imprese ricevono i contributi. Il prompt stesso mette MSCA fra i bandi UE da tenere se ammettono imprese. Haiku lo scarta come 'solo ricercatori': errore grave. Il da_rivedere delle regole qui non e' su un caso del tutto chiaro al solo titolo, quindi non conteggiato."
+  }
+ ],
+ "preliminare": [],
+ "osservazioni": [
+  "Raccolta molto parziale (verificato nel codice e con una chiamata all'API il 27/09): fonti/nazionali.yaml usa feed_url con pageSize=50&pageNumber=1 e il lettore sedia (app/raccolta/lettori/api.py) non pagina e non ordina; l'API oggi dichiara 1893 risultati aperti/in arrivo (1225 per l'esploratore). 39 dei 40 bandi del perimetro mancano per questo, compresi EIC Accelerator, EIC STEP, I3, Eurostars.",
+  "Correzione rispetto al controllore: le sovvenzioni a cascata (tipo 8) CI SONO fra i raccolti. Nella prima pagina 25 risultati su 50 sono di tipo 8; il lettore prende metadata.title (titolo del topic madre) e metadata.identifier (codice del topic madre) invece di callTitle/caName e dell'url competitive-calls-cs, quindi 25 call diverse collassano in 10 annunci con titolo e indirizzo del topic madre (50 risultati -> 35 annunci). Esempi: l'annuncio 2540 'Joint Cluster Initiatives (EUROCLUSTERS)' contiene in realta' RESIST II Process/Product Innovation Open Call e Green Grid PowerBoost, contributi a PMI fino a 20-30 mila euro; 2536 CERV raccoglie 4 call a cascata distinte. Correggere: titolo = callTitle, url = metadata.url (competitive-calls-cs) con l'identificativo della call (callccm2Id) per non fondere le call.",
+  "Le voci 'vecchie' fra i 35 annunci (digital-2021/2022/2023 skills, EIT Urban Mobility, CERV-2024, Euratom) sono per lo piu' sovvenzioni a cascata di progetti avviati anni fa con scadenze ancora future (es. DIGITAL-2021-SKILLS-01: 2027-07-07; EIT Urban Mobility 2023-2025: 2026-09-29): non sono necessariamente scadute. Resta vero che il lettore non usa deadlineDate e che alcune voci hanno solo scadenze passate (una call DIGITAL-ECCC NCC-06: 2026-06-28).",
+  "Il riassunto dell'annuncio e' il callTitle per i topic ('MOBILITY', 'BATTERIES and ENERGY'): quasi nessuna informazione per lo smistamento. Meglio usare la descrizione del topic o almeno programma, tipo d'azione (RIA/IA/CSA) e scadenza; per le call a cascata beneficiaryAdministration dice esplicitamente 'European SMEs'.",
+  "Smistamento a regole inutile per questa fonte: 35 su 35 da_rivedere per 'nessuna parola chiave' (titoli in inglese). Il da_rivedere passa per disegno all'IA, ma in produzione 'ia smista' si lancia a mano con --limite e alla data della fotografia non aveva deciso nessuno dei 35: nessun bando, zero schede dalla fonte UE principale.",
+  "Nessun bando collegato: bandi.json vuoto, haiku_preliminari e opus_preliminari vuoti, nessun preliminare di produzione da valutare.",
+  "Prompt: la regola sui bandi UE e' chiara, ma Haiku scarta MSCA Staff Exchanges; conviene un esempio esplicito (MSCA Staff Exchanges e COFUND ammettono organizzazioni non accademiche, PMI comprese).",
+  "Occhiata alla pagina topic-search: e' un'applicazione JavaScript (HTML 60 KB senza elenco); le sezioni rilevanti (topic, call, sovvenzioni a cascata, premi EIC come topic) sono coperte dall'esploratore via API; i bandi di gara d'appalto (procurement) non interessano. Nessuna sezione evidente dimenticata."
+ ],
+ "correzioni": [
+  {
+   "caso": "Apply AI: Challenge-Driven AI Innovation Booster (annuncio 2527)",
+   "prima": "perso_smistamento",
+   "dopo": "perso_deduplica_o_dubbio",
+   "perche": "Le regole hanno fatto quello per cui sono disegnate (da_rivedere passato all'IA); il bando e' fermo in dubbio perche' lo smistamento IA di produzione non l'ha ancora trattato, non per una decisione sbagliata."
+  },
+  {
+   "caso": "RENEW-BOOSTER EUROCLUSTER CALL N.2 / annuncio 2540",
+   "prima": "2540 e' la call per i cluster, non la sovvenzione alle PMI",
+   "dopo": "2540 nasce da tre sovvenzioni a cascata per PMI (RESIST II x2, Green Grid PowerBoost) etichettate col titolo del topic madre; RENEW-BOOSTER resta perso_non_raccolto",
+   "perche": "Chiamata all'API del 27/09: i tre risultati tipo 8 con identifier SMP-COSME-2024-CLUSTER-01 hanno callTitle RESIST II / PowerBoost e beneficiari 'European SMEs'."
+  },
+  {
+   "caso": "Osservazione sulle sovvenzioni a cascata",
+   "prima": "Nessuna e' fra i 35 annunci",
+   "dopo": "25 dei 50 risultati letti sono a cascata, fusi in 10 annunci col titolo e l'indirizzo del topic madre",
+   "perche": "Il lettore usa metadata.title/identifier del topic madre; la deduplica per indirizzo spiega il passaggio da 50 a 35."
+  },
+  {
+   "caso": "Osservazione sulle voci vecchie o scadute",
+   "prima": "voci probabilmente scadute, stato dell'API non affidabile",
+   "dopo": "per lo piu' call a cascata di progetti vecchi con scadenze ancora future",
+   "perche": "deadlineDate delle call nella prima pagina: molte scadenze 2027-2028."
+  }
+ ],
+ "fiducia": "alta"
+}

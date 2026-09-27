@@ -1,0 +1,336 @@
+{
+ "fonte": "molise_home_notizie",
+ "perimetro": [
+  {
+   "titolo": "Avviso STEP Molise - 43,8 milioni per investimenti in tecnologie strategiche",
+   "url": "https://www.regione.molise.it/flex/cm/pages/ServeBLOB.php/L/IT/IDPagina/22405",
+   "esito": "trovato_con_scheda",
+   "annuncio": 3468,
+   "bando": 528,
+   "spiegazione": "Annuncio rilevante per regole, collegato al bando 528, pagina trovata (e' il comunicato stampa, 0 documenti), preliminare di produzione in_arrivo/per_imprese si: passa e ha scheda. Catena corretta, ma la scheda poggia solo sul comunicato (completezza solo_sintesi)."
+  },
+  {
+   "titolo": "Avviso IMPATTO - finanziamenti a tasso zero per MPMI (Regione Molise / Finmolise)",
+   "url": "https://www.regione.molise.it/flex/cm/pages/ServeBLOB.php/L/IT/IDPagina/22385",
+   "esito": "perso_smistamento",
+   "annuncio": 3464,
+   "bando": null,
+   "spiegazione": "La notizia del 17/09 (IDPagina/22419) e' stata raccolta come annuncio 3464 ma le regole l'hanno lasciata da_rivedere ('nessuna parola chiave': il titolo parla di 'Avviso IMPATTO' e 'domande' ma la regola vuole 'avviso'+'impres*' nel titolo troncato) e non e' mai stata collegata a un bando. La notizia 22385 di presentazione non e' mai stata vista (era gia' uscita dalla home). Verificato sul sito: la piattaforma aperta il 15/09/2026 e' stata chiusa al raggiungimento di 15 milioni di richieste, quindi oggi lo sportello e' chiuso per esaurimento fondi: perdita senza danno pratico, ma difetto di smistamento reale. Riverificato il 27/09 su IDPagina/22419: la piattaforma aperta il 15/09 alle 10 e' stata chiusa al raggiungimento di 15 milioni di richieste; la notizia raccolta (17/09) e' comunque successiva alla chiusura, quindi anche uno smistamento corretto avrebbe portato a un bando chiuso."
+  },
+  {
+   "titolo": "Avviso a sostegno delle start-up innovative (4,5 milioni, Sviluppo Italia Molise)",
+   "url": "https://www.regione.molise.it/flex/cm/pages/ServeBLOB.php/L/IT/IDPagina/22042",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Notizia di marzo 2026 (Archivio 2026/Marzo), domande via PEC a Sviluppo Italia dal 02/04/2026 alle 12 del 30/12/2026, procedura a sportello fino a esaurimento risorse (non verificato se le risorse siano gia' esaurite). La fonte e' la home con le sole ultime notizie e il primo passaggio del radar e' del 24/09/2026, quindi non e' mai stata elencata. Perdita grave se lo sportello e' ancora aperto; sta nell'Archivio Notizie (IDPagina/6867) e sul sito di Sviluppo Italia Molise."
+  },
+  {
+   "titolo": "CSR Molise SRD03 - Diversificazione delle attivita' agricole",
+   "url": "https://www.regione.molise.it/flex/cm/pages/ServeBLOB.php/L/IT/IDPagina/22341",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Notizia di luglio 2026, precedente al primo passaggio (fuori dalla home). Riverificato: domande entro il 16 ottobre, bando e allegati su svilupporuralemolise.it sezione bandi CSR. Bando APERTO: perdita grave se quella fonte non e' coperta altrove."
+  },
+  {
+   "titolo": "Bando regionale microricettivita' (case vacanza, B&B, strutture all'aperto)",
+   "url": "https://www.regione.molise.it/flex/cm/pages/ServeBLOB.php/L/IT/IDPagina/22281",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Notizia di giugno 2026 (incontri informativi 25/06, 2/07, 9/07 con Sviluppo Italia Molise), mai elencata dalla home. Riverificato: la notizia non riporta scadenza ne' link al bando; stato non noto."
+  },
+  {
+   "titolo": "Fondo regionale per le edicole nei piccoli comuni",
+   "url": "https://www.regione.molise.it/flex/cm/pages/ServeBLOB.php/L/IT/IDPagina/22201",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Notizia di maggio 2026 (legge approvata, criteri ancora da definire), mai elencata dalla home. Non e' ancora un bando: perdita di poco peso oggi."
+  },
+  {
+   "titolo": "Avviso 'Turismo e' Cultura 2026' - contributi per eventi",
+   "url": "https://www.regione.molise.it/flex/cm/pages/ServeBLOB.php/L/IT/IDPagina/22310",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Chiuso il 27/07/2026, prima del primo passaggio del radar; destinatari incerti. Perdita senza danno."
+  },
+  {
+   "titolo": "Emergenza maltempo 2026 - Fase B, modello C1 contributo ripresa attivita' economiche",
+   "url": "https://www.regione.molise.it/flex/cm/pages/ServeBLOB.php/L/IT/IDPagina/22286",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Chiuso il 26/07/2026, prima dell'avvio della fonte. Perdita senza danno."
+  },
+  {
+   "titolo": "Stato di calamita' in agricoltura - segnalazioni danni (D.Lgs. 102/2004)",
+   "url": "https://www.regione.molise.it/flex/cm/pages/ServeBLOB.php/L/IT/IDPagina/22148",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Segnalazioni di aprile 2026, chiuse. Mai elencate dalla home. Perdita senza danno."
+  },
+  {
+   "titolo": "CSR Molise SRA-ACA 18 'Impegni per l'apicoltura'",
+   "url": "https://www.regione.molise.it/flex/cm/pages/ServeBLOB.php/L/IT/IDPagina/22147",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Chiuso il 26/05/2026. Mai elencato dalla home. Perdita senza danno."
+  },
+  {
+   "titolo": "PSP PAC - Ristrutturazione e riconversione vigneti 2026-2027",
+   "url": "https://www.regione.molise.it/flex/cm/pages/ServeBLOB.php/L/IT/IDPagina/22138",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Chiuso il 14/04/2026. Mai elencato dalla home. Perdita senza danno."
+  }
+ ],
+ "smistamento": [
+  {
+   "annuncio": 3456,
+   "regole": "non_rilevante",
+   "haiku": "non_rilevante",
+   "opus": "non_rilevante",
+   "giusto": "non_rilevante",
+   "errore_regole": "nessuno",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Voce di menu Elezioni Regionali 2023."
+  },
+  {
+   "annuncio": 3457,
+   "regole": "non_rilevante",
+   "haiku": "non_rilevante",
+   "opus": "non_rilevante",
+   "giusto": "non_rilevante",
+   "errore_regole": "nessuno",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Voce di menu Albo pretorio."
+  },
+  {
+   "annuncio": 3458,
+   "regole": "da_rivedere",
+   "haiku": "non_rilevante",
+   "opus": "non_rilevante",
+   "giusto": "non_rilevante",
+   "errore_regole": "lieve",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Voce di menu Bollettino Ufficiale: caso chiaro lasciato da_rivedere."
+  },
+  {
+   "annuncio": 3459,
+   "regole": "non_rilevante",
+   "haiku": "non_rilevante",
+   "opus": "non_rilevante",
+   "giusto": "non_rilevante",
+   "errore_regole": "nessuno",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Amministrazione trasparente."
+  },
+  {
+   "annuncio": 3460,
+   "regole": "da_rivedere",
+   "haiku": "non_rilevante",
+   "opus": "non_rilevante",
+   "giusto": "non_rilevante",
+   "errore_regole": "lieve",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Voce di menu Atti amministrativi."
+  },
+  {
+   "annuncio": 3461,
+   "regole": "da_rivedere",
+   "haiku": "non_rilevante",
+   "opus": "non_rilevante",
+   "giusto": "non_rilevante",
+   "errore_regole": "lieve",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Servizio PagoPA."
+  },
+  {
+   "annuncio": 3466,
+   "regole": "non_rilevante",
+   "haiku": "non_rilevante",
+   "opus": "non_rilevante",
+   "giusto": "non_rilevante",
+   "errore_regole": "nessuno",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Agevolazioni TPL per studenti."
+  },
+  {
+   "annuncio": 3468,
+   "regole": "rilevante",
+   "haiku": "rilevante",
+   "opus": "rilevante",
+   "giusto": "rilevante",
+   "errore_regole": "nessuno",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Avviso STEP Molise per PMI e grandi imprese."
+  },
+  {
+   "annuncio": 3469,
+   "regole": "rilevante",
+   "haiku": "rilevante",
+   "opus": "rilevante",
+   "giusto": "non_rilevante",
+   "errore_regole": "medio",
+   "errore_haiku": "medio",
+   "errore_opus": "medio",
+   "spiegazione": "Notizia di pagamento degli anticipi PAC/CSR su misure a superficie gia' in corso: nessuna domanda da presentare, nessun bando. Caso di confine (e' denaro alle aziende agricole), ma non e' un'opportunita' da schedare; infatti a valle la pagina del bando risulta non trovata (bando 529 con titolo-notizia)."
+  },
+  {
+   "annuncio": 3479,
+   "regole": "non_rilevante",
+   "haiku": "non_rilevante",
+   "opus": "non_rilevante",
+   "giusto": "non_rilevante",
+   "errore_regole": "nessuno",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Link al sito della protezione civile."
+  },
+  {
+   "annuncio": 3483,
+   "regole": "non_rilevante",
+   "haiku": "non_rilevante",
+   "opus": "non_rilevante",
+   "giusto": "non_rilevante",
+   "errore_regole": "nessuno",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Voce di menu Organi di tutela."
+  },
+  {
+   "annuncio": 3501,
+   "regole": "da_rivedere",
+   "haiku": "non_rilevante",
+   "opus": "non_rilevante",
+   "giusto": "non_rilevante",
+   "errore_regole": "lieve",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Pagina di categoria Mobilita' e Trasporti."
+  },
+  {
+   "annuncio": 3502,
+   "regole": "da_rivedere",
+   "haiku": "non_rilevante",
+   "opus": "non_rilevante",
+   "giusto": "non_rilevante",
+   "errore_regole": "lieve",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Sede di Bruxelles."
+  },
+  {
+   "annuncio": 3503,
+   "regole": "da_rivedere",
+   "haiku": "non_rilevante",
+   "opus": "non_rilevante",
+   "giusto": "non_rilevante",
+   "errore_regole": "lieve",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Categoria Per le Amministrazioni."
+  },
+  {
+   "annuncio": 3504,
+   "regole": "non_rilevante",
+   "haiku": "non_rilevante",
+   "opus": "non_rilevante",
+   "giusto": "non_rilevante",
+   "errore_regole": "nessuno",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Albo pretorio."
+  },
+  {
+   "annuncio": 3505,
+   "regole": "da_rivedere",
+   "haiku": "non_rilevante",
+   "opus": "non_rilevante",
+   "giusto": "non_rilevante",
+   "errore_regole": "lieve",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Categoria UE - Euroinformazione."
+  },
+  {
+   "annuncio": 3506,
+   "regole": "da_rivedere",
+   "haiku": "non_rilevante",
+   "opus": "non_rilevante",
+   "giusto": "non_rilevante",
+   "errore_regole": "lieve",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Pagina celebrativa 50 anni."
+  },
+  {
+   "annuncio": 3509,
+   "regole": "non_rilevante",
+   "haiku": "non_rilevante",
+   "opus": "non_rilevante",
+   "giusto": "non_rilevante",
+   "errore_regole": "nessuno",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Dichiarazione di accessibilita'."
+  }
+ ],
+ "preliminare": [
+  {
+   "bando": 528,
+   "produzione": "passa",
+   "haiku_nuovo": "passa",
+   "opus": "passa",
+   "giusto": "passa",
+   "errore_produzione": "lieve",
+   "errore_haiku_nuovo": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "STEP Molise, per imprese, in arrivo (sportello 26/10/2026-30/04/2027): va schedato, decisione corretta per tutti. Produzione pero' dichiara testo_bando=si mentre il fascicolo contiene solo la copia della pagina-comunicato stampa (nessun documento dell'Avviso): Haiku nuovo e Opus (solo_sintesi) hanno ragione. Errore lieve di produzione, non cambia la decisione."
+  }
+ ],
+ "osservazioni": [
+  "La fonte e' la home del portale: 55 annunci di cui quasi tutti voci di menu e link fissi (45 da_rivedere), e solo le ultime 5 notizie. Tutto cio' che e' uscito dalla home prima del 24/09/2026 non e' mai stato visto: perso l'avviso start-up innovative (aperto fino al 30/12/2026) e il CSR SRD03 (aperto fino al 16/10/2026). Conviene osservare l'Archivio Notizie IDPagina/6867 (filtrabile ?YY=&MM=) invece della home, ed eventualmente aggiungere svilupporuralemolise.it, finmoliself.it e Sviluppo Italia Molise come fonti.",
+  "Le regole lasciano da_rivedere quasi tutte le voci di menu (Bollettino, Atti, categorie tematiche): servirebbe una lista di esclusione per i link di navigazione fissi del FlexCMP, o meglio leggere solo il blocco notizie.",
+  "La notizia IMPATTO (3464) e' rimasta da_rivedere: le regole non riconoscono 'Avviso \"IMPATTO\"' + 'investimenti delle imprese' perche' lavorano sul titolo troncato che contiene 'imprese' solo oltre il taglio. Nessuno ha poi ripreso i da_rivedere. Oggi IMPATTO e' chiuso (piattaforma chiusa a 15 milioni il 15/09), quindi il danno e' nullo, ma il difetto resta.",
+  "I titoli degli annunci includono categoria, data e l'inizio del testo ('Notizie del Presidente 03 Settembre 2026 ...'): il bando 529 ha ereditato questo titolo-notizia. L'estrattore dovrebbe prendere solo il titolo della notizia.",
+  "Il bando 528 ha pagina ufficiale = comunicato stampa (0 documenti): la scheda e' solo sintesi. Il preliminare di produzione dichiara testo_bando=si, ma e' un comunicato: l'indicatore testo_bando in produzione e' troppo generoso.",
+  "Annunci di pagamenti PAC/anticipi (3469) passano come rilevanti per la parola 'sviluppo rurale': generano bandi fantasma fermati poi dalla ricerca pagina; aggiungere un'eccezione per 'anticipo dei pagamenti'/'liquidazione'.",
+  "Verifica di riserva (27/09): riletta la home IDPagina/1 e aperte le sezioni non visitate dall'esploratore che potevano contenere bandi: 'Finanziare un'attivita'' (254: solo 3 schede informative), 'Attivita' produttive' (2894: solo testo e rimando al sito del Servizio Competitivita'), 'Avvisi Altri Enti' (19679: nomine e selezioni di personale, nessun aiuto alle imprese). Nessuna sezione dimenticata con bandi per imprese; l'Archivio Notizie resta l'unico elenco utile del portale."
+ ],
+ "correzioni": [
+  {
+   "caso": "preliminare bando 528, errore_produzione",
+   "prima": "nessuno",
+   "dopo": "lieve",
+   "perche": "Il preliminare di produzione (fascicoli/528/preliminare.json) dice testo_bando=si, ma il fascicolo contiene solo la pagina del comunicato stampa: indicatore sbagliato, decisione (passa) giusta. Lieve, non entra nei conteggi."
+  },
+  {
+   "caso": "perimetro start-up innovative (22042), spiegazione",
+   "prima": "Notizia di aprile 2026; bando APERTO fino al 30/12/2026",
+   "dopo": "Notizia di marzo 2026; sportello fino a esaurimento risorse, termine 30/12/2026, stato attuale delle risorse non verificato",
+   "perche": "La pagina riletta e' nell'Archivio 2026/Marzo e dice esplicitamente procedura a sportello fino a esaurimento; l'esito perso_non_raccolto resta."
+  },
+  {
+   "caso": "perimetro IMPATTO (22385), spiegazione",
+   "prima": "perso_smistamento, sportello chiuso",
+   "dopo": "perso_smistamento confermato, con precisazione",
+   "perche": "Confermato sul sito che la piattaforma e' stata chiusa a 15 milioni il 15/09; la notizia raccolta e' del 17/09, quindi il danno pratico era nullo gia' al momento della raccolta. Il difetto delle regole (titolo troncato prima di 'imprese') resta."
+  }
+ ],
+ "fiducia": "alta"
+}

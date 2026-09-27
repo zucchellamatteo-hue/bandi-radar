@@ -1,0 +1,124 @@
+{
+  "fonte": "citta_metropolitana_milano_novita",
+  "raggiungibile": true,
+  "pagine_visitate": [
+    "https://www.cittametropolitana.mi.it/novita/",
+    "https://www.cittametropolitana.mi.it/rss.xml",
+    "https://www.cittametropolitana.mi.it/novita/?reloaded&facet_category_exact=novita/avviso/ (pagine 1-5, fino a gennaio 2026)",
+    "https://www.cittametropolitana.mi.it/novita/index.html?reloaded&facet_category_exact=novita/comunicato-stampa/&sort=date_desc&page=2",
+    "https://www.cittametropolitana.mi.it/novita/index.html?reloaded&facet_category_exact=novita/comunicato-stampa/&sort=date_desc&page=4",
+    "https://www.cittametropolitana.mi.it/aree-tematiche/sviluppo-economico-sociale/",
+    "https://www.cittametropolitana.mi.it/aree-tematiche/sviluppo-economico-sociale/sviluppo-economico/",
+    "https://www.cittametropolitana.mi.it/aree-tematiche/sviluppo-economico-sociale/politiche-del-lavoro/",
+    "https://www.cittametropolitana.mi.it/aree-tematiche/sviluppo-economico-sociale/emergo-piano-per-il-lavoro-delle-persone-con-disabilita/",
+    "https://www.cittametropolitana.mi.it/servizi/Dote-Impresa/",
+    "https://www.cittametropolitana.mi.it/servizi/Azioni-di-Rete-per-il-lavoro/",
+    "https://www.cittametropolitana.mi.it/aree-tematiche/infrastrutture/viabilita-e-mobilita-sostenibile/novita/Metrotranvia-Milano-Seregno-contributi-ai-commercianti-domande-fino-al-5-ottobre/",
+    "https://www.cittametropolitana.mi.it/aree-tematiche/sviluppo-economico-sociale/politiche-del-lavoro/novita/Dote-Apprendistato-2026-2027/",
+    "https://www.cittametropolitana.mi.it/aree-tematiche/sviluppo-economico-sociale/politiche-del-lavoro/novita/Dote-Apprendistato-apertura-prenotazione-doti/",
+    "https://www.cittametropolitana.mi.it/aree-tematiche/ambiente-e-tutela-del-territorio/rifiuti-e-bonifiche/novita/Bando-RI.CIRCO.LO.-di-Regione-Lombardia/",
+    "https://www.cittametropolitana.mi.it/aree-tematiche/sviluppo-economico-sociale/emergo-piano-per-il-lavoro-delle-persone-con-disabilita/novita/Accompagnamento-al-lavoro-persone-con-autismo-pubblicato-il-bando/",
+    "https://www.cittametropolitana.mi.it/aree-tematiche/transizione-digitale/connettivita/novita/Avviso-pubblico-di-manifestazione-di-interesse-per-lindividuazione-di-Delivery-Partner/",
+    "https://www.cittametropolitana.mi.it/aree-tematiche/sviluppo-economico-sociale/emergo-piano-per-il-lavoro-delle-persone-con-disabilita/novita/Dote-Impresa-e-Dote-Lavoro-EMERGO-laccesso-ai-prossimi-bandi-sara-dalla-piattaforma-regionale-BES/",
+    "https://www.cittametropolitana.mi.it/aree-tematiche/sviluppo-economico-sociale/emergo-piano-per-il-lavoro-delle-persone-con-disabilita/novita/PCTO-Emergo-presentato-il-nuovo-bando-finanziato-con-un-milione-di-euro/"
+  ],
+  "totale_stimato": 5,
+  "note": "L'ente non ha una sezione 'bandi per imprese' vera e propria: i contributi alle imprese passano quasi tutti dal piano EMERGO (disabilita') e dalla Dote Apprendistato, oppure sono gestiti da altri enti e solo rilanciati nelle novita' (Metrotranvia -> Camera di Commercio Milano Monza Brianza Lodi; RI.CIRCO.LO -> Regione Lombardia). La pagina /novita/ mostra pochi elementi; l'elenco completo e' nel filtro 'avviso' paginato (5 pagine lette, fino a gennaio 2026) e nei comunicati stampa (lette solo 2 pagine su ~6, quindi possibili omissioni tra i comunicati). La ricerca interna del sito e' caricata via JavaScript e non e' stata usabile. Scadenza di Dote Impresa 2026 non trovata (sportello aperto dal 26/02/2026 su piattaforma BES di Regione Lombardia). Per il bando autismo MI0330 non ho verificato nel PDF chi puo' presentare domanda. Circa 28 richieste usate.",
+  "bandi": [
+    {
+      "titolo": "Metrotranvia Milano-Seregno, contributi ai commercianti (Bando Cantieri Metrotranvia 2026)",
+      "url": "https://www.cittametropolitana.mi.it/aree-tematiche/infrastrutture/viabilita-e-mobilita-sostenibile/novita/Metrotranvia-Milano-Seregno-contributi-ai-commercianti-domande-fino-al-5-ottobre/",
+      "stato": "aperto",
+      "scadenza": "2026-10-05",
+      "per_imprese": "si",
+      "perche": "Contributi fino a 4.000 euro (50% delle spese) a micro e piccole imprese lungo il tracciato nei comuni di Bresso, Cusano Milanino, Paderno Dugnano, Nova Milanese, Desio, Seregno; domande dal 4/9 al 5/10/2026 sulla piattaforma della Camera di Commercio (https://www.milomb.camcom.it/bando-cantieri-metrotranvia-2026), 500.000 euro dalla Citta' metropolitana."
+    },
+    {
+      "titolo": "Dote Impresa EMERGO 2026 (incentivi assunzione e servizi per datori di lavoro che inseriscono persone con disabilita')",
+      "url": "https://www.cittametropolitana.mi.it/servizi/Dote-Impresa/",
+      "stato": "aperto",
+      "scadenza": null,
+      "per_imprese": "si",
+      "perche": "Incentivi economici all'assunzione, contributi per tirocini, adattamento del posto di lavoro e sostegno alla nascita di cooperative sociali di tipo B, per imprese di ogni dimensione del territorio metropolitano; sportello aperto dal 26/02/2026 su piattaforma BES, chiusura non trovata."
+    },
+    {
+      "titolo": "Dote Apprendistato 2026-2027 - avvisi MI0328 e MI0329 (apertura prenotazione doti dal 16/09/2026)",
+      "url": "https://www.cittametropolitana.mi.it/aree-tematiche/sviluppo-economico-sociale/politiche-del-lavoro/novita/Dote-Apprendistato-apertura-prenotazione-doti/",
+      "stato": "aperto",
+      "scadenza": null,
+      "per_imprese": "incerto",
+      "perche": "Finanzia la formazione degli apprendisti delle imprese con sede operativa nell'area metropolitana; la dote la prenotano gli operatori formativi accreditati, l'impresa e' beneficiaria indiretta. Avviso generale pubblicato il 02/09/2026 (https://www.cittametropolitana.mi.it/aree-tematiche/sviluppo-economico-sociale/politiche-del-lavoro/novita/Dote-Apprendistato-2026-2027/)."
+    },
+    {
+      "titolo": "Dote Apprendistato - avviso precedente MI0318",
+      "url": "https://www.cittametropolitana.mi.it/aree-tematiche/sviluppo-economico-sociale/politiche-del-lavoro/novita/Dote-Apprendistato-apertura-prenotazione-doti/",
+      "stato": "chiuso_recente",
+      "scadenza": "2026-09-16",
+      "per_imprese": "incerto",
+      "perche": "Stessa misura del ciclo precedente, chiusa il 16/09/2026 all'apertura dei nuovi avvisi; beneficiarie indirette le imprese con apprendisti."
+    },
+    {
+      "titolo": "Progetti per l'accompagnamento al lavoro di persone con disabilita' dello spettro autistico - bando MI0330 EMERGO 2024",
+      "url": "https://www.cittametropolitana.mi.it/aree-tematiche/sviluppo-economico-sociale/emergo-piano-per-il-lavoro-delle-persone-con-disabilita/novita/Accompagnamento-al-lavoro-persone-con-autismo-pubblicato-il-bando/",
+      "stato": "chiuso_recente",
+      "scadenza": "2026-09-15",
+      "per_imprese": "incerto",
+      "perche": "Bando per progetti aperto dal 16/06 al 15/09/2026; i soggetti proponenti non sono indicati nella pagina (probabilmente enti accreditati e cooperative sociali, da verificare nel PDF)."
+    },
+    {
+      "titolo": "RI.CIRCO.LO. - sostegno alle PMI lombarde per l'economia circolare (filiere prioritarie), bando di Regione Lombardia rilanciato dalla Citta' metropolitana",
+      "url": "https://www.cittametropolitana.mi.it/aree-tematiche/ambiente-e-tutela-del-territorio/rifiuti-e-bonifiche/novita/Bando-RI.CIRCO.LO.-di-Regione-Lombardia/",
+      "stato": "non_noto",
+      "scadenza": null,
+      "per_imprese": "si",
+      "perche": "Notizia del 22/05/2026 su contributi regionali a PMI lombarde (plastica, tessile, RAEE, fosforo, materie prime critiche); ente erogatore Regione Lombardia, scadenze non indicate nella pagina."
+    }
+  ],
+  "esclusi": [
+    {
+      "titolo": "Avviso pubblico di manifestazione di interesse per l'individuazione di Delivery Partner (European Urban Initiative - Innovative Actions)",
+      "url": "https://www.cittametropolitana.mi.it/aree-tematiche/transizione-digitale/connettivita/novita/Avviso-pubblico-di-manifestazione-di-interesse-per-lindividuazione-di-Delivery-Partner/",
+      "perche": "Selezione di partner di progetto (01/06/2026), non un contributo alle imprese; ambiguo perche' possono partecipare anche soggetti privati."
+    },
+    {
+      "titolo": "Dote Unica Lavoro persone con Disabilita' (DULD) EMERGO",
+      "url": "https://www.cittametropolitana.mi.it/servizi/Dote-Unica-Lavoro-persone-con-Disabilita-DULD/",
+      "perche": "Dote a persone con disabilita' gestita da operatori accreditati (aperta dal 26/03/2026); non rivolta alle imprese."
+    },
+    {
+      "titolo": "Azioni di Rete per il lavoro",
+      "url": "https://www.cittametropolitana.mi.it/servizi/Azioni-di-Rete-per-il-lavoro/",
+      "perche": "Domande chiuse il 03/02/2025; destinatari persone con disabilita' tramite reti di enti."
+    },
+    {
+      "titolo": "PCTO Emergo - bando da 1 milione di euro",
+      "url": "https://www.cittametropolitana.mi.it/aree-tematiche/sviluppo-economico-sociale/emergo-piano-per-il-lavoro-delle-persone-con-disabilita/novita/PCTO-Emergo-presentato-il-nuovo-bando-finanziato-con-un-milione-di-euro/",
+      "perche": "Rivolto a enti accreditati e scuole (le imprese sono solo ospitanti); chiuso il 09/02/2026, oltre i 6 mesi."
+    },
+    {
+      "titolo": "Voucher formativi 'Cittadinanza digitale' per le persone con disabilita'",
+      "url": "https://www.cittametropolitana.mi.it/aree-tematiche/sviluppo-economico-sociale/emergo-piano-per-il-lavoro-delle-persone-con-disabilita/novita/Avviso-per-lerogazione-di-voucher-formativi-Cittadinanza-digitale-per-le-persone-con-disabilita/",
+      "perche": "Voucher a persone fisiche (luglio 2026); gli enti formativi entrano solo come catalogo corsi."
+    },
+    {
+      "titolo": "Voucher interpretariato LIS - riaperte le prenotazioni",
+      "url": "https://www.cittametropolitana.mi.it/aree-tematiche/sviluppo-economico-sociale/emergo-piano-per-il-lavoro-delle-persone-con-disabilita/novita/Voucher-interpretariato-LIS-riaperte-le-prenotazioni/",
+      "perche": "Voucher per persone sorde, non per imprese (non verificato nel dettaglio)."
+    },
+    {
+      "titolo": "PMRR - bando per i Comuni (scadenza prorogata al 10 aprile)",
+      "url": "https://www.cittametropolitana.mi.it/aree-tematiche/pmrr-piano-metropolitano-di-ripresa-e-resilienza/pmrr-piano-metropolitano-di-ripresa-e-resilienza/novita/PMRR-prorogata-al-10-aprile-la-scadenza-del-bando-per-i-Comuni/",
+      "perche": "Contributi solo a enti pubblici (Comuni)."
+    },
+    {
+      "titolo": "Servizio civile alla Citta' metropolitana di Milano: 21 posti disponibili",
+      "url": "https://www.cittametropolitana.mi.it/aree-tematiche/sviluppo-economico-sociale/Politiche-giovanili/novita/Servizio-civile-alla-Citta-metropolitana-di-Milano-21-posti-disponibili/",
+      "perche": "Selezione di volontari, non contributo."
+    },
+    {
+      "titolo": "Aumento contributo esonerativo legge 68/99",
+      "url": "https://www.cittametropolitana.mi.it/aree-tematiche/sviluppo-economico-sociale/Collocamento-mirato/novita/Aumento-contributo-esonerativo-legge-68-99/",
+      "perche": "Riguarda imprese ma e' un onere che pagano (esonero), non un'agevolazione."
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+{"fonte": "comune_chieti_sito",
+ "perimetro": [],
+ "smistamento": [
+  {"annuncio": 7267, "regole": "null (non smistato)", "haiku": "non_rilevante", "opus": "non_rilevante", "giusto": "non_rilevante", "errore_regole": "nessuno", "errore_haiku": "nessuno", "errore_opus": "nessuno", "spiegazione": "Calendario delle disinfestazioni: avviso di servizio ai cittadini, nessun aiuto."},
+  {"annuncio": 7268, "regole": "null (non smistato)", "haiku": "non_rilevante", "opus": "non_rilevante", "giusto": "non_rilevante", "errore_regole": "nessuno", "errore_haiku": "nessuno", "errore_opus": "nessuno", "spiegazione": "Avvio della mensa scolastica: servizio alle famiglie."},
+  {"annuncio": 7269, "regole": "null (non smistato)", "haiku": "da_rivedere", "opus": "rilevante", "giusto": "rilevante", "errore_regole": "nessuno", "errore_haiku": "lieve", "errore_opus": "nessuno", "spiegazione": "Verificato sulla pagina (27/09/2026): il Comune recepisce l'OCDPC 1158 del 29/08/2025 'per la concessione dei contributi destinati ai soggetti privati e alle attivita' economiche e produttive danneggiate dagli eventi 2022 e 2023'; domande entro il 7 novembre 2025 via PEC. E' un aiuto anche per imprese, quindi rilevante; il preliminare lo fermerebbe come chiuso. Haiku da_rivedere e' prudente: il riassunto ricevuto era troncato e non nominava i contributi, ma il titolo cita le attivita' economiche; errore lieve, confermato."},
+  {"annuncio": 7270, "regole": "null (non smistato)", "haiku": "non_rilevante", "opus": "non_rilevante", "giusto": "non_rilevante", "errore_regole": "nessuno", "errore_haiku": "nessuno", "errore_opus": "nessuno", "spiegazione": "Atti dell'Organo straordinario di liquidazione: riguarda i creditori del Comune, non aiuti."}
+ ],
+ "preliminare": [],
+ "osservazioni": [
+  "L'esploratore non ha trovato bandi per imprese aperti, in arrivo o chiusi di recente sul sito del Comune di Chieti: perimetro vuoto, nessun bando perso. La verifica di riserva ha riletto la pagina tipi_notizia/avvisi: contiene solo le 23 voci gia' raccolte (elezioni, IMU/TARI, acqua, disinfestazioni, volontari davanti alle scuole, mercato del Villaggio Mediterraneo, Abruzzo Include, ecc.), quasi tutte del 2024-2025; nessuna sezione evidente dimenticata (Comunicati, Notizie, Imprese e commercio, POR FESR e ricerche interne erano gia' state viste; 'Appalti pubblici' e' procurement).",
+  "Tutti i 23 annunci della fonte hanno esito null (nessuno smistato: rilevanti 0, da_rivedere 0), benche' trovati il 25/09/2026 alle 20:11: lo smistamento non e' ancora passato su questa fonte, oppure la fonte e' esclusa dallo smistamento. Da verificare.",
+  "La pagina osservata (tipi_notizia/avvisi) e' quasi ferma: l'ultima voce e' del 15/06/2026, la precedente del 28/09/2025. I contenuti vivi del Comune sono in tipi_notizia/comunicati (circa 30 voci al mese): conviene osservare anche il feed dei Comunicati.",
+  "L'albo pretorio (gazzettaamministrativa.it) non e' stato letto dall'esploratore per un errore di certificato TLS: resta un punto cieco.",
+  "Il riassunto RSS dell'annuncio 7269 e' troncato prima di dire chi riceve i soldi: il modello leggero ha dovuto decidere solo dal titolo."
+ ],
+ "correzioni": [],
+ "fiducia": "alta"}

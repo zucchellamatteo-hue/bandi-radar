@@ -1,0 +1,355 @@
+BANDI APERTI O IN ARRIVO sui siti del campione: 427; con scheda in Bandi Radar: 96 (22%)
+   perso_non_raccolto                193
+   trovato_con_scheda                 56
+   trovato_altrove_senza_scheda       54
+   perso_smistamento                  50
+   trovato_altrove_con_scheda         40
+   fermato_giustamente                 9
+   fuori_perimetro                     7
+   perso_preliminare                   7
+   perso_deduplica_o_dubbio            6
+   perso_pagina_ufficiale              5
+
+Per strato (aperti o in arrivo): totale / con scheda
+   camera/api               4 /   3   {'fuori_perimetro': 1, 'trovato_con_scheda': 2, 'trovato_altrove_con_scheda': 1}
+   camera/html             35 /  15   {'trovato_con_scheda': 12, 'fermato_giustamente': 6, 'perso_smistamento': 4, 'perso_non_raccolto': 7, 'perso_deduplica_o_dubbio': 1, 'trovato_altrove_con_scheda': 3, 'trovato_altrove_senza_scheda': 2}
+   camera/rss               3 /   1   {'perso_deduplica_o_dubbio': 1, 'trovato_con_scheda': 1, 'perso_smistamento': 1}
+   capoluogo/api            6 /   0   {'perso_pagina_ufficiale': 1, 'perso_non_raccolto': 5}
+   capoluogo/html           6 /   3   {'trovato_con_scheda': 3, 'perso_preliminare': 2, 'fuori_perimetro': 1}
+   capoluogo/rss            2 /   0   {'perso_pagina_ufficiale': 2}
+   contesto/api            20 /   7   {'trovato_altrove_con_scheda': 7, 'perso_non_raccolto': 8, 'trovato_altrove_senza_scheda': 5}
+   fondazione/browser       5 /   0   {'perso_deduplica_o_dubbio': 3, 'fermato_giustamente': 1, 'perso_non_raccolto': 1}
+   nazionale/api           60 /  18   {'fermato_giustamente': 1, 'trovato_con_scheda': 13, 'perso_preliminare': 2, 'perso_non_raccolto': 32, 'trovato_altrove_senza_scheda': 7, 'trovato_altrove_con_scheda': 5}
+   nazionale/html          37 /   1   {'trovato_altrove_senza_scheda': 7, 'perso_non_raccolto': 23, 'perso_smistamento': 5, 'perso_preliminare': 1, 'trovato_con_scheda': 1}
+   nazionale/rss           25 /   7   {'trovato_con_scheda': 7, 'perso_non_raccolto': 15, 'perso_smistamento': 2, 'trovato_altrove_senza_scheda': 1}
+   provincia/api           42 /  15   {'trovato_altrove_con_scheda': 15, 'perso_non_raccolto': 18, 'perso_smistamento': 1, 'trovato_altrove_senza_scheda': 8}
+   provincia/html           3 /   1   {'trovato_con_scheda': 1, 'perso_non_raccolto': 2}
+   provincia/rss            3 /   0   {'perso_non_raccolto': 1, 'perso_pagina_ufficiale': 1, 'perso_smistamento': 1}
+   regione/api             50 /   4   {'trovato_altrove_senza_scheda': 7, 'perso_non_raccolto': 20, 'perso_smistamento': 15, 'trovato_con_scheda': 2, 'trovato_altrove_con_scheda': 2, 'fuori_perimetro': 4}
+   regione/html            34 /  15   {'trovato_con_scheda': 14, 'perso_preliminare': 2, 'perso_smistamento': 7, 'perso_non_raccolto': 8, 'trovato_altrove_con_scheda': 1, 'fermato_giustamente': 1, 'trovato_altrove_senza_scheda': 1}
+   regione/rss             41 /   6   {'perso_smistamento': 1, 'trovato_altrove_con_scheda': 6, 'trovato_altrove_senza_scheda': 10, 'perso_non_raccolto': 23, 'fuori_perimetro': 1}
+   ue/api                  37 /   0   {'trovato_altrove_senza_scheda': 6, 'perso_non_raccolto': 30, 'perso_deduplica_o_dubbio': 1}
+   ue/rss                  14 /   0   {'perso_smistamento': 13, 'perso_pagina_ufficiale': 1}
+
+Tutti (anche chiusi di recente): {'perso_pagina_ufficiale': 9, 'fuori_perimetro': 10, 'perso_non_raccolto': 363, 'trovato_con_scheda': 79, 'trovato_altrove_con_scheda': 56, 'perso_smistamento': 59, 'fermato_giustamente': 51, 'perso_deduplica_o_dubbio': 9, 'perso_preliminare': 8, 'trovato_altrove_senza_scheda': 88}
+
+SMISTAMENTO 466 annunci: errori medi+gravi -> regole 48 (gravi 1), haiku 14 (gravi 6), opus 1 (gravi 0)
+PRELIMINARE 113 bandi: produzione: fermati per errore 3, passati per errore 32, haiku_nuovo: fermati per errore 0, passati per errore 11, opus: fermati per errore 0, passati per errore 0
+SCHEDE 21: voto Sonnet 3.45, Opus 4.74; schede con errori gravi Sonnet 9, Opus 1; errori gravi totali Sonnet 17, Opus 1
+
+Aperti persi (dettaglio):
+   camera/html | cciaa_como_lecco_bandi_aperti | perso_non_raccolto | Verso la certificazione della parita' di genere - Annualita' 2025-2027
+   camera/html | cciaa_como_lecco_bandi_aperti | perso_smistamento | Servizio di accesso e accompagnamento alla redazione e pubblicazione d
+   camera/html | cciaa_como_lecco_bandi_aperti | perso_smistamento | Servizio di accompagnamento Economia Circolare RE-FIL ECO2
+   camera/html | cciaa_cosenza_bandi | perso_non_raccolto | Manifestazione di interesse - Fiera Goodlife-Biolife Bolzano 13-15 nov
+   camera/html | cciaa_cosenza_bandi | perso_smistamento | 014 Bando Doppia Transizione anno 2026 I edizione (BDT1)
+   camera/html | cciaa_cosenza_bandi | perso_smistamento | 15 AI Lab Cosenza 2026 (AIL1)
+   camera/html | unioncamere_lombardia_bandi_aperti | perso_deduplica_o_dubbio | Bando Contributi per la partecipazione delle PMI alle fiere internazio
+   camera/html | unioncamere_lombardia_bandi_aperti | perso_non_raccolto | Bando Check-up d'impresa
+   camera/html | unioncamere_lombardia_bandi_aperti | perso_non_raccolto | Bando SI4.0 2026
+   camera/html | unioncamere_lombardia_bandi_aperti | perso_non_raccolto | Bando Verso la certificazione della parita' di genere - Annualita' 202
+   camera/html | unioncamere_lombardia_bandi_aperti | perso_non_raccolto | Manifestazione di Interesse per l'Ospitalita' di Personale Marocchino 
+   camera/html | unioncamere_lombardia_bandi_aperti | perso_non_raccolto | Manifestazione interesse per sviluppo filiere produttive ed ecosistemi
+   camera/html | unioncamere_lombardia_bandi_aperti | trovato_altrove_senza_scheda | Bando Nuova Impresa 2026
+   camera/html | unioncamere_lombardia_bandi_aperti | trovato_altrove_senza_scheda | Bando Sviluppo edilizia sostenibile ed innovativa in Lombardia - EDIL-
+   camera/rss | cciaa_cagliarioristano_bandi | perso_smistamento | B2B on Green Energy (Istanbul, dicembre 2026)
+   camera/rss | unioncamere_veneto_bandi_rss | perso_deduplica_o_dubbio | Bando veicoli aziendali 2026: incentivi alla rottamazione e acquisto (
+   capoluogo/api | comune_la_spezia_avvisi_api | perso_non_raccolto | SMP Food - prevenzione sprechi alimentari 2026-2027
+   capoluogo/api | comune_la_spezia_avvisi_api | perso_non_raccolto | Simest - Energia per la competitivita' internazionale
+   capoluogo/api | comune_la_spezia_avvisi_api | perso_pagina_ufficiale | Bandi "Botteghe Storiche e Botteghe Artigiane Storiche" 2026
+   capoluogo/api | comune_parma_sito | perso_non_raccolto | Incentivi per l'acquisto di e-bike e cargo bike a pedalata assistita (
+   capoluogo/api | comune_parma_sito | perso_non_raccolto | Ordinanza Commissariale 55/2026 - ricostruzione privata imprese agrico
+   capoluogo/api | comune_rovigo_sito | perso_non_raccolto | Bando "Premiazione del Lavoro, del Progresso Economico e dell'Innovazi
+   capoluogo/html | comune_perugia_avvisi | perso_preliminare | U.O. Segreteria organi istituzionali - Avviso contributi a sostegno di
+   capoluogo/html | comune_perugia_avvisi | perso_preliminare | U.O. Segreteria organi istituzionali - Avviso contributi a sostegno di
+   capoluogo/rss | comune_siena_avvisi | perso_pagina_ufficiale | Avviso pubblico di manifestazione di interesse rivolto agli esercenti 
+   capoluogo/rss | comune_siena_avvisi | perso_pagina_ufficiale | Avviso pubblico per la concessione di benefici economici e contributi 
+   contesto/api | dati_gov_it_ckan | perso_non_raccolto | AQST Lodi "Lodigiano Terra di opportunita' e nuovi investimenti"
+   contesto/api | dati_gov_it_ckan | perso_non_raccolto | Bando Check-up d'impresa
+   contesto/api | dati_gov_it_ckan | perso_non_raccolto | Bando recupero mulini storici della Lombardia (l.r. 9/2026) 2026-2028
+   contesto/api | dati_gov_it_ckan | perso_non_raccolto | Brevetti 2023
+   contesto/api | dati_gov_it_ckan | perso_non_raccolto | Modulo C-REG - Rendicontazione spese ripresa attivita' produttive dopo
+   contesto/api | dati_gov_it_ckan | perso_non_raccolto | RI.CIRCO.LO. Filiere prioritarie - PMI lombarde economia circolare
+   contesto/api | dati_gov_it_ckan | perso_non_raccolto | Voucher aziendali formazione aggiuntiva sicurezza e salute nei luoghi 
+   contesto/api | dati_gov_it_ckan | perso_non_raccolto | ZLS Lombardia - progetti di investimento per insediamento attivita' pr
+   contesto/api | dati_gov_it_ckan | trovato_altrove_senza_scheda | Dote Impresa Collocamento Mirato - Asse I - Citta' metropolitana di Mi
+   contesto/api | dati_gov_it_ckan | trovato_altrove_senza_scheda | Dote Impresa Collocamento Mirato - Asse I - Provincia di Brescia
+   contesto/api | dati_gov_it_ckan | trovato_altrove_senza_scheda | Fondo regionale per il pluralismo e l'innovazione dell'informazione ra
+   contesto/api | dati_gov_it_ckan | trovato_altrove_senza_scheda | IRCCS - Ricerca & Trasferisci
+   contesto/api | dati_gov_it_ckan | trovato_altrove_senza_scheda | Misura qualificazione imprese per filiere strategiche tramite certific
+   fondazione/browser | fondazione_cariplo_bandi | perso_deduplica_o_dubbio | Carcere e comunita' in rete
+   fondazione/browser | fondazione_cariplo_bandi | perso_deduplica_o_dubbio | Musei e accessibilita' universale
+   fondazione/browser | fondazione_cariplo_bandi | perso_deduplica_o_dubbio | Nuovi ponti culturali
+   fondazione/browser | fondazione_cariplo_bandi | perso_non_raccolto | Housing sociale per persone fragili
+   nazionale/api | incentivi_gov_ricerca | perso_non_raccolto | Accesso al Fondo di Microfinanza - PR Basilicata FSE+ 2021-2027
+   nazionale/api | incentivi_gov_ricerca | perso_non_raccolto | Aiuti per servizi di consulenza - Provincia autonoma di Trento
+   nazionale/api | incentivi_gov_ricerca | perso_non_raccolto | Avviso pubblico - PIA Programmi Integrati di Agevolazione - PR Puglia 
+   nazionale/api | incentivi_gov_ricerca | perso_non_raccolto | Avviso pubblico ISI 2024 - Lazio
+   nazionale/api | incentivi_gov_ricerca | perso_non_raccolto | Avviso pubblico ISI 2024 - Sardegna
+   nazionale/api | incentivi_gov_ricerca | perso_non_raccolto | Avviso pubblico ISI 2024 - Sicilia
+   nazionale/api | incentivi_gov_ricerca | perso_non_raccolto | Bandi per la partecipazione alle procedure competitive per l'accesso a
+   nazionale/api | incentivi_gov_ricerca | perso_non_raccolto | CCIAA Pordenone-Udine - Progetto POLONIA - Ricerca partner con viaggio
+   nazionale/api | incentivi_gov_ricerca | perso_non_raccolto | Calabria Film Commission - Regolamento per la concessione di contribut
+   nazionale/api | incentivi_gov_ricerca | perso_non_raccolto | Comune di Tricesimo - Indennizzi alle imprese nelle aree dei cantieri 
+   nazionale/api | incentivi_gov_ricerca | perso_non_raccolto | Contratti di sviluppo agroalimentari
+   nazionale/api | incentivi_gov_ricerca | perso_non_raccolto | Contributi alle imprese per fiere e mostre in Italia e all'estero 2026
+   nazionale/api | incentivi_gov_ricerca | perso_non_raccolto | Criteri per agevolazioni per lo sviluppo della mobilita' elettrica in 
+   nazionale/api | incentivi_gov_ricerca | perso_non_raccolto | Finanziamenti agevolati per attivita' consulenziale destinata ad inves
+   nazionale/api | incentivi_gov_ricerca | perso_non_raccolto | Finanziamento agevolato a sostegno della presenza di imprese e filiere
+   nazionale/api | incentivi_gov_ricerca | perso_non_raccolto | Finanziamento agevolato per investimenti per l'innovazione digitale e/
+   nazionale/api | incentivi_gov_ricerca | perso_non_raccolto | Fondo di Garanzia per le Piccole e Medie Imprese
+   nazionale/api | incentivi_gov_ricerca | perso_non_raccolto | Fondo economia sociale - Accesso al credito associazionismo culturale 
+   nazionale/api | incentivi_gov_ricerca | perso_non_raccolto | MIT - Incentivi alle imprese di autotrasporto per la formazione degli 
+   nazionale/api | incentivi_gov_ricerca | perso_non_raccolto | Piano operativo del Comparto per contributi in conto interessi del Fon
+   nazionale/api | incentivi_gov_ricerca | perso_non_raccolto | Potenziamento rete Spazio Attivo - Avvisi per premi/contributi diretti
+   nazionale/api | incentivi_gov_ricerca | perso_non_raccolto | Provincia autonoma di Trento - Incentivi alla conservazione dell'occup
+   nazionale/api | incentivi_gov_ricerca | perso_non_raccolto | Regione Emilia-Romagna - Innovazione nella gestione delle sale per spe
+   nazionale/api | incentivi_gov_ricerca | perso_non_raccolto | Regione Valle d'Aosta - Aiuti alle PMI per trattamento e valorizzazion
+   nazionale/api | incentivi_gov_ricerca | perso_non_raccolto | Regione Veneto - Imprese culturali, creative e dell'audiovisivo - Sub 
+   nazionale/api | incentivi_gov_ricerca | perso_non_raccolto | Regione Veneto - OCDPC 1131/2025 Primi interventi urgenti eventi meteo
+   nazionale/api | incentivi_gov_ricerca | perso_non_raccolto | Regolamento (2025) contributi opere audiovisive - Fondazione Calabria 
+   nazionale/api | incentivi_gov_ricerca | perso_non_raccolto | Sovvenzioni abbattimento interessi e garanzia - linea Regione Toscana 
+   nazionale/api | incentivi_gov_ricerca | perso_non_raccolto | Sviluppo competenze - Innovazione tecnologica e transizione verde e di
+   nazionale/api | incentivi_gov_ricerca | perso_non_raccolto | Tecnonidi 2021-2027
+   nazionale/api | incentivi_gov_ricerca | perso_non_raccolto | Tirocini di formazione e orientamento - Provincia Autonoma di Trento
+   nazionale/api | incentivi_gov_ricerca | perso_non_raccolto | Unioncamere Piemonte - Bando voucher digitalizzazione 2026 PMI piemont
+   nazionale/api | incentivi_gov_ricerca | perso_preliminare | Bando unico annuale 2026 - Cultura - CCIAA Vicenza
+   nazionale/api | incentivi_gov_ricerca | perso_preliminare | PR FESR 2021-2027 Emilia-Romagna - Azione 2.2.2 - Bando per il support
+   nazionale/api | incentivi_gov_ricerca | trovato_altrove_senza_scheda | Avviso pubblico per progetti di formazione continua
+   nazionale/api | incentivi_gov_ricerca | trovato_altrove_senza_scheda | Basket Bond Lazio
+   nazionale/api | incentivi_gov_ricerca | trovato_altrove_senza_scheda | CCIAA Cremona-Mantova-Pavia - Bando Valorizzazione delle Tipicita' loc
+   nazionale/api | incentivi_gov_ricerca | trovato_altrove_senza_scheda | CCIAA Modena - Outgoing 2026 - Incontri d'affari all'estero
+   nazionale/api | incentivi_gov_ricerca | trovato_altrove_senza_scheda | Comune di Sacco - Fondo di sostegno Comuni marginali - II annualita'
+   nazionale/api | incentivi_gov_ricerca | trovato_altrove_senza_scheda | Fondo Salvaguardia imprese
+   nazionale/api | incentivi_gov_ricerca | trovato_altrove_senza_scheda | Fondo per il trasferimento tecnologico
+   nazionale/html | invitalia_incentivi_imprese | perso_non_raccolto | Agevolazioni per le imprese confiscate o sequestrate
+   nazionale/html | invitalia_incentivi_imprese | perso_non_raccolto | Call for Ideas 38a America's Cup - Blue Economy
+   nazionale/html | invitalia_incentivi_imprese | perso_non_raccolto | Contratto di sviluppo
+   nazionale/html | invitalia_incentivi_imprese | perso_non_raccolto | Cultura Cresce
+   nazionale/html | invitalia_incentivi_imprese | perso_non_raccolto | Digital transformation
+   nazionale/html | invitalia_incentivi_imprese | perso_non_raccolto | Finanziamenti a vittime di mancati pagamenti
+   nazionale/html | invitalia_incentivi_imprese | perso_non_raccolto | Fondo Cresci al Sud
+   nazionale/html | invitalia_incentivi_imprese | perso_non_raccolto | Fondo nazionale efficienza energetica
+   nazionale/html | invitalia_incentivi_imprese | perso_non_raccolto | GreenTour
+   nazionale/html | invitalia_incentivi_imprese | perso_non_raccolto | Legge 181
+   nazionale/html | invitalia_incentivi_imprese | perso_non_raccolto | Mobilita' sostenibile - Filiera degli autobus elettrici
+   nazionale/html | invitalia_incentivi_imprese | perso_non_raccolto | Nuovo ecobonus - mobilita' sostenibile
+   nazionale/html | invitalia_incentivi_imprese | perso_non_raccolto | Resto al Sud 2.0
+   nazionale/html | invitalia_incentivi_imprese | perso_preliminare | Credito d'imposta per incubatori e acceleratori certificati
+   nazionale/html | invitalia_incentivi_imprese | perso_smistamento | Fondo di contrasto alla deindustrializzazione 2026
+   nazionale/html | invitalia_incentivi_imprese | perso_smistamento | Fondo di partecipazione MUR
+   nazionale/html | invitalia_incentivi_imprese | perso_smistamento | Investimenti sostenibili 4.0 - Bando 2026
+   nazionale/html | invitalia_incentivi_imprese | perso_smistamento | Smart&Start Italia
+   nazionale/html | invitalia_incentivi_imprese | perso_smistamento | Sviluppo competenze specialistiche delle Pmi
+   nazionale/html | invitalia_incentivi_imprese | trovato_altrove_senza_scheda | Autoimpiego Centro-Nord
+   nazionale/html | invitalia_incentivi_imprese | trovato_altrove_senza_scheda | Beni strumentali - Nuova Sabatini
+   nazionale/html | invitalia_incentivi_imprese | trovato_altrove_senza_scheda | Economia circolare
+   nazionale/html | invitalia_incentivi_imprese | trovato_altrove_senza_scheda | Fondo Salvaguardia Imprese
+   nazionale/html | invitalia_incentivi_imprese | trovato_altrove_senza_scheda | Italia Economia Sociale
+   nazionale/html | simest_finanziamenti_agevolati | perso_non_raccolto | Affiancamento strategico per il mercato indiano
+   nazionale/html | simest_finanziamenti_agevolati | perso_non_raccolto | Certificazioni e consulenze
+   nazionale/html | simest_finanziamenti_agevolati | perso_non_raccolto | Competitivita' delle filiere italiane in America centrale o meridional
+   nazionale/html | simest_finanziamenti_agevolati | perso_non_raccolto | Energia per la competitivita' internazionale
+   nazionale/html | simest_finanziamenti_agevolati | perso_non_raccolto | Fiere ed eventi (con condizioni EXPO 2027 Belgrado)
+   nazionale/html | simest_finanziamenti_agevolati | perso_non_raccolto | Inserimento mercati esteri
+   nazionale/html | simest_finanziamenti_agevolati | perso_non_raccolto | Nuova Misura USA
+   nazionale/html | simest_finanziamenti_agevolati | perso_non_raccolto | Potenziamento mercati africani
+   nazionale/html | simest_finanziamenti_agevolati | perso_non_raccolto | Temporary Manager
+   nazionale/html | simest_finanziamenti_agevolati | perso_non_raccolto | Transizione digitale o ecologica - sezione IA & Quantum Computing
+   nazionale/html | simest_finanziamenti_agevolati | trovato_altrove_senza_scheda | E-commerce
+   nazionale/html | simest_finanziamenti_agevolati | trovato_altrove_senza_scheda | Transizione digitale o ecologica
+   nazionale/rss | mcc_fondo_garanzia_news | perso_non_raccolto | Fondo di garanzia: riserva speciale PN Ricerca, innovazione e competit
+   nazionale/rss | mimit_incentivi | perso_non_raccolto | Brevetti+ 2026
+   nazionale/rss | mimit_incentivi | perso_non_raccolto | Contratti di sviluppo
+   nazionale/rss | mimit_incentivi | perso_non_raccolto | Cooperative di piccola e media dimensione (Nuova Marcora)
+   nazionale/rss | mimit_incentivi | perso_non_raccolto | Credito d'imposta design e ideazione estetica 2026
+   nazionale/rss | mimit_incentivi | perso_non_raccolto | Disegni+ 2026
+   nazionale/rss | mimit_incentivi | perso_non_raccolto | IPCEI Chimica Biotecnologica (BIOCHEM) - manifestazioni di interesse
+   nazionale/rss | mimit_incentivi | perso_non_raccolto | IPCEI Materiali Avanzati Circolari (CAM) - manifestazioni di interesse
+   nazionale/rss | mimit_incentivi | perso_non_raccolto | Marchi+ 2026
+   nazionale/rss | mimit_incentivi | perso_non_raccolto | Nuovo Piano Transizione 5.0 - Iperammortamento
+   nazionale/rss | mimit_incentivi | perso_non_raccolto | Nuovo fondo per le imprese artigiane
+   nazionale/rss | mimit_incentivi | perso_non_raccolto | Nuovo piano incentivi filiera automotive (DPCM 10 giugno 2026)
+   nazionale/rss | mimit_incentivi | perso_non_raccolto | Sostegno alle startup innovative (Smart & Start Italia)
+   nazionale/rss | mimit_incentivi | perso_non_raccolto | Sviluppo competenze - secondo sportello
+   nazionale/rss | mimit_incentivi | perso_smistamento | Beni strumentali - Nuova Sabatini
+   nazionale/rss | mimit_incentivi | perso_smistamento | Soluzioni digitali per la compliance normativa attraverso l'utilizzo d
+   nazionale/rss | mimit_incentivi | trovato_altrove_senza_scheda | Nuove imprese a tasso zero (NITO-ON)
+   nazionale/rss | ministero_turismo_strumenti | perso_non_raccolto | Green Tour 2026 - Fondo per il sostegno alle imprese del turismo (109 
+   provincia/api | bolzano_economia | perso_non_raccolto | Imprese: nuovi contributi per iniziative ed eventi economici
+   provincia/api | bolzano_economia | perso_smistamento | Contributi per le produzioni cinematografiche e audiovisive (IDM Film 
+   provincia/api | citta_metropolitana_bologna_sitemap | perso_non_raccolto | Bando per esercizi commerciali con green corner
+   provincia/api | citta_metropolitana_bologna_sitemap | perso_non_raccolto | Community Startup Emilia-Romagna per l'Internazionalizzazione
+   provincia/api | citta_metropolitana_bologna_sitemap | perso_non_raccolto | Fondo EuReCa
+   provincia/api | citta_metropolitana_bologna_sitemap | perso_non_raccolto | Fondo StartER PR FESR 21-27 (nuova finestra)
+   provincia/api | citta_metropolitana_bologna_sitemap | perso_non_raccolto | Fondo speciale di garanzia per l'accesso al credito
+   provincia/api | citta_metropolitana_bologna_sitemap | perso_non_raccolto | G-Factor | I-Tech Innovation
+   provincia/api | citta_metropolitana_bologna_sitemap | perso_non_raccolto | Incentivi a neolaureati e neodiplomati ITS Academy
+   provincia/api | citta_metropolitana_bologna_sitemap | perso_non_raccolto | Investimenti in neo imprese extra agricole
+   provincia/api | citta_metropolitana_bologna_sitemap | perso_non_raccolto | Librerie under 35
+   provincia/api | citta_metropolitana_bologna_sitemap | perso_non_raccolto | Nuova Sabatini Green
+   provincia/api | citta_metropolitana_bologna_sitemap | perso_non_raccolto | Percorsi per startup "Le Serre di ART-ER 2026"
+   provincia/api | citta_metropolitana_bologna_sitemap | perso_non_raccolto | Premio Barresi - Bando per l'assegnazione di incentivi a imprese giova
+   provincia/api | citta_metropolitana_bologna_sitemap | perso_non_raccolto | START4PEOPLE di In Action Esg
+   provincia/api | citta_metropolitana_bologna_sitemap | perso_non_raccolto | Step 2025: tecnologie strategiche
+   provincia/api | citta_metropolitana_bologna_sitemap | perso_non_raccolto | Vetrina: Spazi che diventano impresa (Fase 1)
+   provincia/api | citta_metropolitana_bologna_sitemap | perso_non_raccolto | Voucher 3i - Investire in Innovazione
+   provincia/api | citta_metropolitana_bologna_sitemap | perso_non_raccolto | Women TechEU a sostegno di startup deep tech
+   provincia/api | citta_metropolitana_bologna_sitemap | trovato_altrove_senza_scheda | Autoimpiego Centro-Nord
+   provincia/api | citta_metropolitana_bologna_sitemap | trovato_altrove_senza_scheda | Innovazione nella gestione delle sale deputate allo svolgimento di rap
+   provincia/api | citta_metropolitana_bologna_sitemap | trovato_altrove_senza_scheda | Interventi a favore del settore apicoltura per l'anno 2027
+   provincia/api | citta_metropolitana_bologna_sitemap | trovato_altrove_senza_scheda | Investimenti nelle aziende agricole per la diversificazione in attivit
+   provincia/api | citta_metropolitana_bologna_sitemap | trovato_altrove_senza_scheda | ON, Oltre Nuove Imprese a Tasso Zero
+   provincia/api | citta_metropolitana_bologna_sitemap | trovato_altrove_senza_scheda | Progetti di trasferimento tecnologico
+   provincia/api | citta_metropolitana_bologna_sitemap | trovato_altrove_senza_scheda | Smart&Start Italia
+   provincia/api | citta_metropolitana_bologna_sitemap | trovato_altrove_senza_scheda | Supporto all'utilizzo di fonti rinnovabili nelle imprese
+   provincia/html | citta_metropolitana_milano_novita | perso_non_raccolto | Dote Impresa EMERGO 2026 (incentivi assunzione persone con disabilita'
+   provincia/html | trento_fse_calendario_avvisi | perso_non_raccolto | Avviso FSE+ 2024-6 - Presentazione di interventi di formazione continu
+   provincia/rss | provincia_lecco_bandi_contributi | perso_non_raccolto | Dote Impresa Collocamento mirato - Avviso 2025/2026 (incentivi assunzi
+   provincia/rss | provincia_sulcis_iglesiente_avvisi_rss | perso_pagina_ufficiale | BANDO PUBBLICO A SPORTELLO APERTO: Contributo per la bonifica di manuf
+   provincia/rss | provincia_sulcis_iglesiente_avvisi_rss | perso_smistamento | Avviso pubblico ASPAL Tirocini di formazione e orientamento (TFO) - PN
+   regione/api | calabria_europa_bandi_api | perso_non_raccolto | AVVISO PUBBLICO BO.AR.D. BOtteghe ARtigianali Diffuse
+   regione/api | calabria_europa_bandi_api | perso_smistamento | Avviso pubblico STEP Calabria - Aiuti per interventi su tecnologie cri
+   regione/api | calabria_europa_bandi_api | perso_smistamento | FRI Calabria
+   regione/api | calabria_europa_bandi_api | perso_smistamento | TecSTEP - Fondo Tecnologie STEP
+   regione/api | calabria_europa_bandi_api | trovato_altrove_senza_scheda | Avviso pubblico per il sostegno all'accoglienza turistica di qualita' 
+   regione/api | calabria_europa_bandi_api | trovato_altrove_senza_scheda | Avviso pubblico per l'emersione e qualificazione della ricettivita' de
+   regione/api | calabria_europa_bandi_api | trovato_altrove_senza_scheda | Transformer Calabria
+   regione/api | finlombarda_prodotti_imprese | perso_non_raccolto | ANTICIPO CONTRIBUTI
+   regione/api | finlombarda_prodotti_imprese | perso_non_raccolto | BREVETTI 2023
+   regione/api | finlombarda_prodotti_imprese | perso_non_raccolto | CREDITO ADESSO LOMBARDIA FACTORING
+   regione/api | finlombarda_prodotti_imprese | perso_non_raccolto | INVESTIMENTI - LINEA SVILUPPO AZIENDALE
+   regione/api | finlombarda_prodotti_imprese | perso_non_raccolto | MICROCREDITO
+   regione/api | finlombarda_prodotti_imprese | perso_non_raccolto | PIU' CREDITO
+   regione/api | finlombarda_prodotti_imprese | perso_non_raccolto | RAFFORZA & INNOVA
+   regione/api | finlombarda_prodotti_imprese | perso_smistamento | AGRIFOOD BASKET BOND
+   regione/api | finlombarda_prodotti_imprese | perso_smistamento | BANDO PER LE AGEVOLAZIONI FINANZIARIE ALLE IMPRESE AGRICOLE PER IL CRE
+   regione/api | finlombarda_prodotti_imprese | perso_smistamento | FONDO PER LA CAPITALIZZAZIONE DELLE IMPRESE COOPERATIVE LOMBARDE - SPO
+   regione/api | finlombarda_prodotti_imprese | perso_smistamento | INVESTIMENTI - LINEA IMPRESA EFFICIENTE
+   regione/api | finlombarda_prodotti_imprese | perso_smistamento | L.A.N.D. (Local Attraction For New Development)
+   regione/api | finlombarda_prodotti_imprese | perso_smistamento | LOMBARDIA VENTURE STEP
+   regione/api | finlombarda_prodotti_imprese | perso_smistamento | MISURA DI SOSTEGNO ALLA QUALIFICAZIONE DELLE IMPRESE ... CERTIFICAZION
+   regione/api | finlombarda_prodotti_imprese | perso_smistamento | MISURA PER IL RAFFORZAMENTO DELLE FILIERE PRODUTTIVE E DEGLI ECOSISTEM
+   regione/api | finlombarda_prodotti_imprese | perso_smistamento | PIU' CREDITO AGRICOLTURA
+   regione/api | finlombarda_prodotti_imprese | perso_smistamento | SVILUPPO TECNOLOGICO DELLE STARTUP INNOVATIVE
+   regione/api | finlombarda_prodotti_imprese | trovato_altrove_senza_scheda | BASKET BOND LOMBARDIA
+   regione/api | finlombarda_prodotti_imprese | trovato_altrove_senza_scheda | LOMBARDIA VENTURE
+   regione/api | sardegna_regione_bandi | perso_non_raccolto | Aiuti Grandi imprese e MPMI del Sulcis-Iglesiente (PN JTF 1.5 e 1.6)
+   regione/api | sardegna_regione_bandi | perso_non_raccolto | Avviso SO.LA.RE. Sardegna 2026 - PR FSE+
+   regione/api | sardegna_regione_bandi | perso_non_raccolto | Contributi Associazioni Cooperativistiche (L.R. 5/1957) 2026
+   regione/api | sardegna_regione_bandi | perso_non_raccolto | Contributi imprese turistiche Albergo diffuso - II Avviso IMPRESE
+   regione/api | sardegna_regione_bandi | perso_non_raccolto | Contributi in conto capitale alle attivita' commerciali (L.R. 3/2022 a
+   regione/api | sardegna_regione_bandi | perso_non_raccolto | Interreg NEXT MED - Terzo invito capitalizzazione turismo sostenibile
+   regione/api | sardegna_regione_bandi | perso_non_raccolto | L.R. 12/2001 - Incentivi imprese artigiane per l'apprendistato 2026
+   regione/api | sardegna_regione_bandi | perso_non_raccolto | PN FEAMPA Azione 2 - Commercializzazione e trasformazione prodotti itt
+   regione/api | sardegna_regione_bandi | perso_non_raccolto | PN FEAMPA Azione 4 - Acquacoltura
+   regione/api | sardegna_regione_bandi | perso_non_raccolto | PR FESR / PN JTF - Piani di investimenti Fondo di Competitivita' delle
+   regione/api | sardegna_regione_bandi | perso_non_raccolto | PSP PAC SRA18 ACA18 Impegni per l'apicoltura 2026
+   regione/api | sardegna_regione_bandi | perso_non_raccolto | Workshop MICE Destinazione Sardegna 2026 - Alghero (seller)
+   regione/api | sardegna_regione_bandi | perso_smistamento | L.R. 20/2026 art. 8 c. 24 - Finanziamento manifestazioni di rally auto
+   regione/api | sardegna_regione_bandi | perso_smistamento | L.R. 31/1984 - Contributi gestione scuole dell'infanzia paritarie 2026
+   regione/api | sardegna_regione_bandi | trovato_altrove_senza_scheda | Intervento settoriale Prodotti dell'Apicoltura 2026/2027
+   regione/api | sardegna_regione_bandi | trovato_altrove_senza_scheda | PSP PAC SRD13 Trasformazione e commercializzazione prodotti agricoli 2
+   regione/html | finpiemonte_agevolazioni | perso_preliminare | PR FESR 21-27 MATCHIN
+   regione/html | finpiemonte_agevolazioni | perso_smistamento | Abbattimento oneri emissione obbligazioni PMI e mid-cap
+   regione/html | finpiemonte_agevolazioni | perso_smistamento | Contratto di insediamento - Grandi Imprese
+   regione/html | finpiemonte_agevolazioni | perso_smistamento | Fondo rotativo Foncooper
+   regione/html | finpiemonte_agevolazioni | perso_smistamento | L.R. 18/94 Cooperative sociali 2019
+   regione/html | finpiemonte_agevolazioni | perso_smistamento | L.R. 23/04 Cooperazione 2022
+   regione/html | finpiemonte_agevolazioni | perso_smistamento | L.R. 34/2004 Acquisizione di aziende in crisi e impianti chiusi
+   regione/html | finpiemonte_agevolazioni | perso_smistamento | L.R. 34/2008 Supporto finanziario alle imprese per il rilancio e lo sv
+   regione/html | fvg_bandi_avvisi | perso_non_raccolto | Avviso aiuti sul costo dei premi assicurativi a copertura delle perdit
+   regione/html | fvg_bandi_avvisi | perso_non_raccolto | Avviso contributi a interventi per lo sviluppo del trasporto combinato
+   regione/html | fvg_bandi_avvisi | perso_non_raccolto | Avviso contributi per interventi per lo sviluppo del trasporto intermo
+   regione/html | fvg_bandi_avvisi | perso_non_raccolto | Avviso di contributi ai proprietari e conduttori di campeggi in area m
+   regione/html | fvg_bandi_avvisi | perso_non_raccolto | Avviso di contributi per proprietari di boschi (pubblici e privati), i
+   regione/html | marche_bandi | perso_preliminare | Febbre catarrale degli ovini - Vaccini e repellenti (terzo bando 2026,
+   regione/html | marche_bandi | trovato_altrove_senza_scheda | GAL Colli Esini - Progetto GIOINIT (giovani e inclusione)
+   regione/html | molise_home_notizie | perso_non_raccolto | Avviso a sostegno delle start-up innovative (4,5 milioni, Sviluppo Ita
+   regione/html | molise_home_notizie | perso_non_raccolto | CSR Molise SRD03 - Diversificazione delle attivita' agricole
+   regione/html | molise_home_notizie | perso_non_raccolto | Fondo regionale per le edicole nei piccoli comuni
+   regione/rss | abruzzo_contributi_finanziamenti | perso_non_raccolto | Avviso Digitalizzazione delle PMI (FESR Abruzzo 2021-2027)
+   regione/rss | abruzzo_contributi_finanziamenti | perso_non_raccolto | Avviso n. 2 - Formazione aggiuntiva su sicurezza e salute nei luoghi d
+   regione/rss | abruzzo_contributi_finanziamenti | perso_non_raccolto | Indennizzo eventi imprevisti (Bando IRAN) - FEAMPA 21-27
+   regione/rss | abruzzo_contributi_finanziamenti | perso_non_raccolto | Intervento SRG09 - Cooperazione per l'innovazione agricola/forestale/a
+   regione/rss | abruzzo_contributi_finanziamenti | perso_non_raccolto | Progetto CYROS - Rastrelliere portabiciclette gratuite per operatori t
+   regione/rss | abruzzo_contributi_finanziamenti | perso_non_raccolto | Sostegno alla marineria pescarese (L.R. Stabilita' 2024, art. 22) - 20
+   regione/rss | abruzzo_contributi_finanziamenti | trovato_altrove_senza_scheda | Sottoprogramma Apistico regionale 2027
+   regione/rss | piemonte_bandi_rss | perso_non_raccolto | Attivita' integrative di mobilita' transnazionale 2026-2028
+   regione/rss | piemonte_bandi_rss | perso_non_raccolto | Avviso pubblico per la realizzazione dei percorsi formativi in apprend
+   regione/rss | piemonte_bandi_rss | perso_non_raccolto | Bando per il sostegno agli investimenti per i vivaisti (L. 206/2023 ar
+   regione/rss | piemonte_bandi_rss | perso_non_raccolto | CSR 2023-2027. Formazione degli imprenditori agricoli e degli addetti 
+   regione/rss | piemonte_bandi_rss | perso_non_raccolto | CSR 2023-2027. Formazione in ambito forestale e ambientale (SRH03). Ba
+   regione/rss | piemonte_bandi_rss | perso_non_raccolto | CSR 2023-2027. Investimenti irrigui (SRD02 Azione C) - Bando 2026
+   regione/rss | piemonte_bandi_rss | perso_non_raccolto | CSR 2023-2027. Investimenti per la prevenzione di danni di tipo biotic
+   regione/rss | piemonte_bandi_rss | perso_non_raccolto | CSR 2023-2027. Partecipazione a regimi di qualita' (SRG03)
+   regione/rss | piemonte_bandi_rss | perso_non_raccolto | Contributi negli interessi sui prestiti contratti da cooperative agric
+   regione/rss | piemonte_bandi_rss | perso_non_raccolto | Danni causati dalle predazioni da grandi carnivori al patrimonio zoote
+   regione/rss | piemonte_bandi_rss | perso_non_raccolto | Energie rinnovabili nelle Imprese 2026
+   regione/rss | piemonte_bandi_rss | perso_non_raccolto | Installazione di defibrillatori (DAE) presso gli edifici pubblici ed i
+   regione/rss | piemonte_bandi_rss | perso_non_raccolto | L.R. 23/2004 e s.m.i. Interventi per lo sviluppo e la promozione della
+   regione/rss | piemonte_bandi_rss | perso_non_raccolto | Piemonte Film Tv Fund 2026 - seconda sessione
+   regione/rss | piemonte_bandi_rss | perso_non_raccolto | Presentazione delle domande di accesso alle agevolazioni a nuove impre
+   regione/rss | piemonte_bandi_rss | perso_non_raccolto | Sovvenzioni a nuove imprese e lavoratori autonomi - Misura 3
+   regione/rss | piemonte_bandi_rss | perso_non_raccolto | Voucher fiere 2026. Salone internazionale del libro di Torino e altre 
+   regione/rss | piemonte_bandi_rss | perso_smistamento | MATCHIN - Mobilizing Advanced Talents for Competence and High INnovati
+   regione/rss | piemonte_bandi_rss | trovato_altrove_senza_scheda | Abbattimento degli oneri connessi all'emissione di obbligazioni da par
+   regione/rss | piemonte_bandi_rss | trovato_altrove_senza_scheda | Bando contributi per rinnovo delle flotte delle imprese piemontesi 202
+   regione/rss | piemonte_bandi_rss | trovato_altrove_senza_scheda | Contratto di insediamento - Attrazione di investimenti in Piemonte - G
+   regione/rss | piemonte_bandi_rss | trovato_altrove_senza_scheda | Fondo regionale per la prevenzione e il contrasto dei fenomeni dell'us
+   regione/rss | piemonte_bandi_rss | trovato_altrove_senza_scheda | Fondo rotativo Foncooper
+   regione/rss | piemonte_bandi_rss | trovato_altrove_senza_scheda | Interventi integrati per l'acquisizione di aziende in crisi, di impian
+   regione/rss | piemonte_bandi_rss | trovato_altrove_senza_scheda | L.R. 34/2008 Supporto finanziario alle imprese per il rilancio e lo sv
+   regione/rss | piemonte_bandi_rss | trovato_altrove_senza_scheda | Sostegno finanziario a start up
+   regione/rss | piemonte_bandi_rss | trovato_altrove_senza_scheda | Voucher digitalizzazione PMI 2026
+   ue/api | ue_funding_tenders_api | perso_deduplica_o_dubbio | Apply AI: Challenge-Driven AI Innovation Booster in Apply AI prioritis
+   ue/api | ue_funding_tenders_api | perso_non_raccolto | AI Entrepreneurs Lab
+   ue/api | ue_funding_tenders_api | perso_non_raccolto | AI chip demonstrators for EU compute infrastructure
+   ue/api | ue_funding_tenders_api | perso_non_raccolto | Alternative Fuel Infrastructure Facility: Road & Air Transport - works
+   ue/api | ue_funding_tenders_api | perso_non_raccolto | Carbon farming innovation and scale-up
+   ue/api | ue_funding_tenders_api | perso_non_raccolto | Crafting routes to a circular economy
+   ue/api | ue_funding_tenders_api | perso_non_raccolto | Cybersecure tools, technologies and services relying on AI
+   ue/api | ue_funding_tenders_api | perso_non_raccolto | Digital solutions for regulatory compliance through data
+   ue/api | ue_funding_tenders_api | perso_non_raccolto | EIC defence call
+   ue/api | ue_funding_tenders_api | perso_non_raccolto | EU support to Stakeholders to improve measurement of food waste
+   ue/api | ue_funding_tenders_api | perso_non_raccolto | Electricity, Gas, Smart Grids, Hydrogen and CO2 networks - Works
+   ue/api | ue_funding_tenders_api | perso_non_raccolto | Empowering local urban food systems entrepreneurship and innovation
+   ue/api | ue_funding_tenders_api | perso_non_raccolto | Enhancing farmer's profitability and resilience through innovations fo
+   ue/api | ue_funding_tenders_api | perso_non_raccolto | European Partnership on Innovative SMEs/Eurostars CALL 12
+   ue/api | ue_funding_tenders_api | perso_non_raccolto | European Partnership on Innovative SMEs/Innowwide CALL 5
+   ue/api | ue_funding_tenders_api | perso_non_raccolto | FIERCE 2nd Open Call for the Financial Support Programme
+   ue/api | ue_funding_tenders_api | perso_non_raccolto | Fast Track to Innovation for breakthroughs in the Chemical Industry Ac
+   ue/api | ue_funding_tenders_api | perso_non_raccolto | Fast Track to Research and Innovation for breakthroughs in industrial 
+   ue/api | ue_funding_tenders_api | perso_non_raccolto | Financial Support to Startups and Scaleups (Shape Accelerator & Scale 
+   ue/api | ue_funding_tenders_api | perso_non_raccolto | Integrated Production and Product Development for Next-Generation Lith
+   ue/api | ue_funding_tenders_api | perso_non_raccolto | KAVA Call 14 - Upscaling
+   ue/api | ue_funding_tenders_api | perso_non_raccolto | MANTRA Second Open Call for Manufacturing SMEs (sovvenzione a cascata)
+   ue/api | ue_funding_tenders_api | perso_non_raccolto | Open Call of Perform Europe 2026-2028 (sovvenzione a cascata)
+   ue/api | ue_funding_tenders_api | perso_non_raccolto | Pilot access schemes to Technology Infrastructures for European startu
+   ue/api | ue_funding_tenders_api | perso_non_raccolto | RENEW-BOOSTER EUROCLUSTER CALL N.2 FOR FINANCIAL SUPPORT TO THIRD PART
+   ue/api | ue_funding_tenders_api | perso_non_raccolto | Rising Innovators category
+   ue/api | ue_funding_tenders_api | perso_non_raccolto | Startup Europe
+   ue/api | ue_funding_tenders_api | perso_non_raccolto | Strengthening cybersecurity capacities of European SMEs with cybersecu
+   ue/api | ue_funding_tenders_api | perso_non_raccolto | Sustainable, inclusive, affordable and beautiful solutions for thermal
+   ue/api | ue_funding_tenders_api | perso_non_raccolto | Textile circularity through advanced processing and manufacturing tech
+   ue/api | ue_funding_tenders_api | perso_non_raccolto | WoodStock Grants to support climate-smart wood construction solutions
+   ue/api | ue_funding_tenders_api | trovato_altrove_senza_scheda | EIC Accelerator 2026 - Short proposal
+   ue/api | ue_funding_tenders_api | trovato_altrove_senza_scheda | EIC STEP Scale Up
+   ue/api | ue_funding_tenders_api | trovato_altrove_senza_scheda | EdTech Accelerator
+   ue/api | ue_funding_tenders_api | trovato_altrove_senza_scheda | I3-2026-INV1 - Interregional Innovation Investments Strand 1
+   ue/api | ue_funding_tenders_api | trovato_altrove_senza_scheda | I3-2026-INV2a - Interregional Innovation Investments Strand 2a
+   ue/api | ue_funding_tenders_api | trovato_altrove_senza_scheda | The European Prize for Women Innovators
+   ue/rss | ue_cinea_life_calls | perso_pagina_ufficiale | Horizon Europe: €45 million for projects advancing science for a fair 
+   ue/rss | ue_cinea_life_calls | perso_smistamento | 2026 CEF Transport Calls for proposals
+   ue/rss | ue_cinea_life_calls | perso_smistamento | EUR 131.5 million available for Horizon Europe energy call
+   ue/rss | ue_cinea_life_calls | perso_smistamento | Horizon Europe: EUR 101.1 million under the New European Bauhaus Facil
+   ue/rss | ue_cinea_life_calls | perso_smistamento | Horizon Europe: EUR 85.5 million available under the Climate-Neutral a
+   ue/rss | ue_cinea_life_calls | perso_smistamento | Horizon Europe: €23.5 million for projects supporting sustainable, sec
+   ue/rss | ue_cinea_life_calls | perso_smistamento | Horizon Europe: €263 million available for batteries and mobility call
+   ue/rss | ue_cinea_life_calls | perso_smistamento | LIFE - Strategic Nature Projects (SNaP)
+   ue/rss | ue_cinea_life_calls | perso_smistamento | LIFE - Strategic Nature and Integrated Projects – SIP CLIMA
+   ue/rss | ue_eismea_calls | perso_smistamento | European Innovation Council permanent calls
+   ue/rss | ue_eismea_calls | perso_smistamento | Interregional Innovation Investments Strand 1 (I3-2026-INV1)
+   ue/rss | ue_eismea_calls | perso_smistamento | Interregional Innovation Investments Strand 2a (I3-2026-INV2a)
+   ue/rss | ue_eismea_calls | perso_smistamento | SYSTEMEU project - Open Call for Interregional Innovation Proposals
+   ue/rss | ue_eismea_calls | perso_smistamento | UNITE project - 2nd Open Call for Interregional Innovation Proposals i

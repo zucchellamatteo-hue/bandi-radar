@@ -1,0 +1,32 @@
+{"fonte": "fondazione_cariplo_bandi", "raggiungibile": false,
+ "pagine_visitate": [
+  "https://www.fondazionecariplo.it/it/bandi/bandi.html (403, sfida Cloudflare 'Just a moment...')",
+  "https://www.fondazionecariplo.it/robots.txt (200: solo Crawl-delay 10)",
+  "https://www.fondazionecariplo.it/sitemap.xml (403)",
+  "https://www.fondazionecariplo.it/contributi/bandi/ (403, sia curl sia WebFetch)",
+  "https://www.fondazionecariplo.it/wp-json/wp/v2/types (403)",
+  "https://www.fondazionecariplo.it/wp-content/uploads/2025/12/2026-01-25-Criteri-generali_def.pdf (scaricato ma testo non estraibile)",
+  "https://www.regione.lombardia.it/cultura-turismo-e-sport/musei/fondazione-cariplo---bando-musei-e-accessibilit--universale",
+  "https://www.indicebandi.it/it/bando/luoghi-plurali-2026-fondazione-cariplo",
+  "https://www.fastzero.it/notizie-e-bandi/2971/cariplo-emblematici-maggiori-lombardia-2026",
+  "motore di ricerca web (10 ricerche) su fondazionecariplo.it e siti terzi"
+ ],
+ "totale_stimato": 17,
+ "note": "Sito dell'ente NON leggibile direttamente: ogni pagina HTML (vecchio e nuovo indirizzo) risponde 403 con sfida JavaScript Cloudflare; servirebbe un browser senza interfaccia. Inoltre l'indirizzo osservato (/it/bandi/bandi.html) e' del VECCHIO sito: il sito e' migrato su WordPress e il catalogo ora e' https://www.fondazionecariplo.it/contributi/bandi/ con schede /bando/<nome>/ e PDF in /wp-content/uploads/. Elenco ricostruito solo da risultati di ricerca e siti terzi, quindi probabilmente incompleto. Il piano 2026 prevede 17 bandi (totale_stimato riferito all'anno). Nessun bando Cariplo e' per imprese for-profit: i destinatari sono enti privati non profit; cooperative sociali e imprese sociali sono ammesse in diversi bandi (esplicitamente in Luoghi Plurali/Rigenerazione dei luoghi e Nuovi ponti culturali), per questo sono marcati 'incerto'. Scadenze verificate solo tramite fonti secondarie.",
+ "bandi": [
+  {"titolo": "Carcere e comunita' in rete", "url": "https://www.fondazionecariplo.it/carcere-e-comunita-in-rete-bando-cariplo/", "stato": "aperto", "scadenza": "2026-10-29", "per_imprese": "incerto", "perche": "Inclusione lavorativa e abitativa di detenuti; enti non profit, tipicamente anche cooperative sociali. Fase 2 l'8/04/2027."},
+  {"titolo": "Progetti Emblematici 2026 (Interventi emblematici maggiori)", "url": "https://www.fondazionecariplo.it/bando/progetti-emblematici-2026/", "stato": "aperto", "scadenza": "2026-10-29", "per_imprese": "incerto", "perche": "Fase 2 (progetto definitivo) il 29/10/2026 solo per chi ha inviato la proposta entro il 12/02; enti non profit e pubblici di BG, LO, MN, MB, SO."},
+  {"titolo": "Musei e accessibilita' universale", "url": "https://www.fondazionecariplo.it/musei-e-accessibilita-universale-un-nuovo-bando-cariplo/", "stato": "aperto", "scadenza": "2026-12-09", "per_imprese": "incerto", "perche": "Rivolto a musei lombardi (enti pubblici o non profit); improbabile per imprese, tenuto per completezza. Scadenza fase 1."},
+  {"titolo": "Nuovi ponti culturali", "url": "https://www.fondazionecariplo.it/bando/nuovi-ponti-culturali/", "stato": "aperto", "scadenza": null, "per_imprese": "incerto", "perche": "Senza scadenza fino a esaurimento di 4,5 milioni; ammesse anche cooperative sociali."},
+  {"titolo": "Housing sociale per persone fragili", "url": "https://www.fondazionecariplo.it/bando/housing-sociale-per-persone-fragili/", "stato": "aperto", "scadenza": null, "per_imprese": "incerto", "perche": "Senza scadenza; enti non profit che realizzano housing sociale, spesso cooperative sociali."},
+  {"titolo": "Luoghi plurali (Rigenerazione dei luoghi) 2026", "url": "https://www.fondazionecariplo.it/bando/luoghi-plurali/", "stato": "chiuso_recente", "scadenza": "2026-06-30", "per_imprese": "incerto", "perche": "Fase 1 chiusa il 30/06/2026 (fase 2 il 25/02/2027); ammesse esplicitamente cooperative sociali e imprese sociali."},
+  {"titolo": "InnovaWelfare 2026", "url": "https://www.fondazionecariplo.it/bando/innovawelfare-2/", "stato": "chiuso_recente", "scadenza": "2026-07-14", "per_imprese": "incerto", "perche": "Fase 1 chiusa il 14/07/2026 (fase 2 il 25/03/2027); enti non profit dei servizi alla persona, incluse cooperative sociali."},
+  {"titolo": "Riprogettiamo il futuro 2026", "url": "https://www.fondazionecariplo.it/bando/riprogettiamo-il-futuro-2026/", "stato": "chiuso_recente", "scadenza": "2026-07-23", "per_imprese": "incerto", "perche": "Sviluppo organizzativo di enti privati non profit (cooperative sociali ammissibili); chiuso il 23/07/2026."},
+  {"titolo": "Artescienza", "url": "https://www.csvlombardia.it/milano/post/fondazione-cariplo-bando-artescienza/", "stato": "chiuso_recente", "scadenza": "2026-03-31", "per_imprese": "incerto", "perche": "Chiuso il 31/03/2026, al limite dei 6 mesi; enti culturali non profit. URL sul sito Cariplo non trovato."}
+ ],
+ "esclusi": [
+  {"titolo": "vEIColo - Accompagnamento per la valorizzazione della ricerca", "url": "https://www.fondazionecariplo.it/bando/veicolo-2/", "perche": "Solo universita' ed enti di ricerca non profit; scadenza 30/09/2026."},
+  {"titolo": "Joint Call for Applications 2026 (con Fondazione Telethon)", "url": "https://www.fondazionecariplo.it/nuovo-bando-joint-call-for-applications-2026-e-presentazione/", "perche": "Ricerca sulle malattie rare, per enti di ricerca; scaduto il 16/09/2026."},
+  {"titolo": "Giovani ricercatori 2026", "url": "https://www.fondazionecariplo.it/bando/bando-giovani-ricercatori/", "perche": "Per ricercatori ed enti di ricerca; fase 1 scaduta il 13-15/04/2026."},
+  {"titolo": "Alternative - Comunita' energetiche rinnovabili e solidali", "url": "https://www.fondazionecariplo.it/it/news/ambiente/comunita-energetiche-rinnovabili-e-solidali-nuovo-bando.html", "perche": "Enti pubblici e non profit; edizione 2026 e date non verificate."}
+ ]}
