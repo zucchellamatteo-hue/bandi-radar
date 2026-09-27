@@ -627,14 +627,34 @@ def cmd_raccogli(conn) -> int:
     return 0
 
 
+def preliminare_dai_segnali(conn, bando_id: int, oggi: date) -> dict | None:
+    """Controllo preliminare senza IA: se i segnali gratuiti (app/schede/segnali.py) dicono solo "chiuso" (scadenza
+    passata nei dati della fonte, "Bando Chiuso" nella pagina, data barrata...) il bando si ferma qui, senza spesa."""
+    from app.schede.segnali import segnali_del_bando
+
+    s = segnali_del_bando(conn, bando_id, oggi)
+    if s.stato != "chiuso":
+        return None
+    return {"per_imprese": "incerto", "edizione_in_corso": "incerto", "stato": "chiuso", "testo_bando": "si",
+            "motivo": ("segnali gratuiti, senza IA: " + "; ".join(s.chiuso))[:500], "deciso_da": "segnali"}
+
+
 def cmd_schede(conn, bando_id: int | None, limite: int) -> int:
-    client = nuovo_client()
+    client = None     # si apre solo quando serve: i bandi fermati dai segnali gratuiti non chiamano l'API
     oggi = date.today()
     registra = registratore(conn)
     istr_pre, mod_pre = leggi_prompt("prompt_preliminare.md")
     istr_pre = riempi(istr_pre, {"data_oggi": oggi.isoformat()})   # la data compare anche nelle istruzioni
     istr_scheda, mod_scheda = leggi_prompt("prompt_scheda.md")
     for b in bandi_da_schedare(conn, bando_id, limite):
+        gratuito = preliminare_dai_segnali(conn, b["id"], oggi)
+        if gratuito:
+            with conn.cursor() as cur:
+                cur.execute("UPDATE bandi SET preliminare = %s WHERE id = %s", (json.dumps(gratuito), b["id"]))
+            conn.commit()
+            print(f"[{b['id']}] niente scheda, fermato senza IA: {gratuito['motivo']}", flush=True)
+            continue
+        client = client or nuovo_client()
         controlla_tetto(conn)
         corti, _ = documenti_del_bando(conn, b["id"], MASSIMO_TESTO_PRELIMINARE)
         r = chiama(client, parametri(MODELLO_PRELIMINARE, istr_pre, riempi(mod_pre, {
