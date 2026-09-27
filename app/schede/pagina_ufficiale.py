@@ -62,7 +62,7 @@ class Candidato:
 @dataclass
 class Esito:
     url: str | None
-    stato: str           # trovata | non_trovata
+    stato: str           # trovata | non_trovata | errore_rete (si riprova il giorno dopo)
     motivo: str
     provati: list[str] = field(default_factory=list)   # candidati scartati, con il perche'
 
@@ -168,6 +168,7 @@ def esegui_regole(client, pausa, annunci: list[AnnuncioDelBando], regole_fonti: 
     provati: list[str] = []
     visti: set[str] = set()
     indirizzi_fonti = indirizzi_fonti or {}
+    errori_rete: list[str] = []
 
     def prova(c: Candidato) -> Esito | None:
         chiave = url_chiave(c.url)
@@ -193,6 +194,7 @@ def esegui_regole(client, pausa, annunci: list[AnnuncioDelBando], regole_fonti: 
             return None
         except httpx.HTTPError as exc:
             provati.append(f"{c.url} ({c.motivo}): {type(exc).__name__}")
+            errori_rete.append(c.url)
             return None
         tipo = risposta.headers.get("content-type", "").split(";")[0].strip().lower()
         if tipo and tipo not in ("text/html", "application/xhtml+xml", "text/plain"):
@@ -242,6 +244,9 @@ def esegui_regole(client, pausa, annunci: list[AnnuncioDelBando], regole_fonti: 
                                 f"pagina dell'annuncio {a.id}", a.id))
         if esito:
             return esito
+    if errori_rete:
+        # Un errore di connessione (Comune di Siena, 26/09) non dice che il bando non ha una pagina: si riprova.
+        return Esito(None, "errore_rete", "errore di rete, si riprova il giorno dopo", provati)
     return Esito(None, "non_trovata", "bando ufficiale non trovato", provati)
 
 
@@ -252,7 +257,9 @@ def bandi_da_cercare(conn, bando_id: int | None, limite: int, rifai_non_trovati:
         if bando_id:
             cur.execute("SELECT id, titolo FROM bandi WHERE id = %s", (bando_id,))
         else:
-            condizione = "pagina_stato IS NULL" + (" OR pagina_stato = 'non_trovata'" if rifai_non_trovati else "")
+            # Dopo un errore di rete pagina_stato resta vuoto con la data del tentativo: si riprova dopo un giorno.
+            condizione = ("(pagina_stato IS NULL AND (pagina_cercata_il IS NULL OR pagina_cercata_il < now() - interval '1 day'))"
+                          + (" OR pagina_stato = 'non_trovata'" if rifai_non_trovati else ""))
             cur.execute(f"SELECT id, titolo FROM bandi WHERE {condizione} ORDER BY id LIMIT %s", (limite,))
         return list(cur.fetchall())
 
@@ -269,6 +276,12 @@ def annunci_del_bando(conn, bando_id: int) -> list[AnnuncioDelBando]:
 
 
 def salva(conn, bando_id: int, esito: Esito) -> None:
+    if esito.stato == "errore_rete":
+        with conn.cursor() as cur:
+            cur.execute("UPDATE bandi SET pagina_cercata_il = now(), pagina_motivo = %s WHERE id = %s AND pagina_stato IS NULL",
+                        ((esito.motivo + " — " + "; ".join(esito.provati))[:2000], bando_id))
+        conn.commit()
+        return
     with conn.cursor() as cur:
         cur.execute("SELECT set_config('bandi_radar.causa', %s, true)", (f"ricerca della pagina ufficiale: {esito.motivo}"[:300],))
         cur.execute(
@@ -292,7 +305,8 @@ def esegui(bando_id: int | None = None, limite: int = LIMITE_PREDEFINITO, rifai_
     from app.raccolta.scarica import nuovo_client
 
     registro = carica_registro(CARTELLA_FONTI)
-    regole = {f.id: f.pagina_ufficiale for f in registro}
+    regole = {f.id: ({**f.pagina_ufficiale, "documenti": "plone_api"} if f.documenti_plone else f.pagina_ufficiale)
+              for f in registro}
     indirizzi = {f.id: f.url for f in registro if f.url}
     conteggi: Counter = Counter()
     motivi_mancati: Counter = Counter()
@@ -309,12 +323,14 @@ def esegui(bando_id: int | None = None, limite: int = LIMITE_PREDEFINITO, rifai_
             else:
                 for p in esito.provati:
                     motivi_mancati[p.rsplit(": ", 1)[-1]] += 1
-                print(f"NON TROVATA [{b['id']}] {b['titolo'][:70]}", flush=True)
+                print(f"{'NON TROVATA' if esito.stato == 'non_trovata' else 'ERRORE RETE'} [{b['id']}] {b['titolo'][:70]}",
+                      flush=True)
                 for p in esito.provati:
                     print(f"            - {p[:200]}")
             if not prova:
                 salva(conn, b["id"], esito)
-    print(f"\nTotale: {conteggi['trovata']} trovate, {conteggi['non_trovata']} non trovate.")
+    print(f"\nTotale: {conteggi['trovata']} trovate, {conteggi['non_trovata']} non trovate"
+          + (f", {conteggi['errore_rete']} da riprovare per errori di rete." if conteggi['errore_rete'] else "."))
     if motivi_mancati:
         print("Perche' i candidati sono stati scartati (bandi non trovati): "
               + ", ".join(f"{m} {n}" for m, n in motivi_mancati.most_common()))

@@ -717,7 +717,7 @@ def esegui(annuncio_id: int | None = None, limite: int = LIMITE_PREDEFINITO, car
                 fonti = [registro[f] for f in fonti_del_bando(conn, x["id"]) if f in registro]
                 sito = urlsplit(x["url"]).netloc
                 ignora = any(f.ignora_robots and urlsplit(f.url or "").netloc == sito for f in fonti)
-                plone = any(f.pagina_ufficiale.get("documenti") == "plone_api" for f in fonti)
+                plone = any(f.documenti_plone for f in fonti)
                 presenti = gia_scaricati(conn, bando_id=x["id"])
                 chiamata = lambda: elabora_pagina(client, f"b{x['id']}", x["url"], cartella, pausa, ignora, len(presenti),
                                                   presenti | documenti_del_sito(conn), plone, "Pagina del bando (copia)")

@@ -379,9 +379,24 @@ class Indice:
             return Esito("dubbio", bando, ruolo_agg, f"titolo simile a annuncio {b.id} (somiglianza {s:.2f})", s)
         if a.ruolo and self.archivio(a):
             return Esito("ignora", None, a.ruolo, f"{a.ruolo} di un bando vecchio, non trovato: si lascia senza bando")
+        if a.ruolo in ("proroga", "rettifica") and descrive_un_bando(a.titolo_an, a.titolo):
+            # "Bando veicoli aziendali 2026: incentivi alla rottamazione... Termine prorogato" (Unioncamere Veneto,
+            # 27/09): il titolo descrive il bando intero, la pagina e' quella del bando. Senza un bando a cui
+            # agganciarsi diventa un bando nuovo, invece di restare in dubbio senza candidato.
+            return Esito("nuovo", None, "origine", f"{a.ruolo} di un bando non ancora noto: la pagina e' quella del bando")
         if a.ruolo:
             return Esito("dubbio", None, a.ruolo, f"{a.ruolo}: non trovo il bando a cui si riferisce")
         return Esito("nuovo", None, "origine", "nuovo bando")
+
+
+_PAROLE_DA_BANDO = re.compile(r"(?<!\w)(bando|avviso|contribut\w*|incentiv\w*|voucher|agevolazion\w*|finanziament\w*|"
+                             r"fondo perduto|sostegno|aiut[oi])(?!\w)")
+
+
+def descrive_un_bando(t: Titolo, titolo: str) -> bool:
+    """Tolte le parole della proroga, il titolo dice ancora di che bando si tratta (almeno 4 parole e una parola
+    da bando)? "Proroga dei termini" no; "Bando veicoli aziendali 2026: incentivi... prorogato" si'."""
+    return len(t.parole) >= 4 and bool(_PAROLE_DA_BANDO.search(normalizza(titolo)))
 
 
 def url_ambigui(annunci: list[Annuncio]) -> set[str]:
@@ -437,7 +452,9 @@ def carica(conn) -> tuple[list[Annuncio], dict[int, list[Annuncio]], set[int]]:
             """
         )
         righe = cur.fetchall()
-        cur.execute("SELECT DISTINCT annuncio_id FROM bandi_dubbi WHERE decisione IS NULL")
+        # Un dubbio senza candidato ("proroga: non trovo il bando") si rivaluta a ogni giro: le regole possono
+        # essere cambiate (27/09: proroga che descrive il bando intero) o il bando puo' essere arrivato da un'altra fonte.
+        cur.execute("SELECT DISTINCT annuncio_id FROM bandi_dubbi WHERE decisione IS NULL AND bando_id IS NOT NULL")
         in_dubbio = {r["annuncio_id"] for r in cur.fetchall()}
     annunci = []
     for r in righe:
@@ -560,6 +577,8 @@ def salva_piano(conn, piano: list[tuple[Annuncio, Esito]]) -> Counter:
     veri: dict[int, int] = {}
     with conn.cursor() as cur:
         for a, e in piano:
+            if e.azione in ("nuovo", "collega"):   # l'eventuale dubbio senza candidato di un giro precedente si chiude
+                cur.execute("DELETE FROM bandi_dubbi WHERE annuncio_id = %s AND bando_id IS NULL AND decisione IS NULL", (a.id,))
             if e.azione == "nuovo":
                 veri[e.bando] = crea_bando(cur, a)
                 collega(cur, a.id, veri[e.bando], "origine", e.motivo)
