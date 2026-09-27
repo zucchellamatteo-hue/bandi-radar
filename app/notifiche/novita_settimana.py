@@ -27,7 +27,7 @@ def raccogli_dati(conn, da: datetime) -> dict:
             """
             SELECT a.fonte_id, f.nome AS fonte, f.ente, f.tipo, f.territorio, a.titolo, a.url, a.pubblicato_il, a.trovato_il
             FROM annunci a JOIN fonti f ON f.id = a.fonte_id
-            WHERE a.trovato_il >= %s
+            WHERE a.trovato_il >= %s AND NOT a.da_scorta   -- i bandi letti dalla scorta non sono novita'
             ORDER BY f.tipo, a.pubblicato_il DESC NULLS LAST, a.trovato_il DESC
             """,
             (da,),

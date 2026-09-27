@@ -38,7 +38,7 @@ def riepilogo() -> dict:
     for f in fonti:
         colori[f["colore"]] += 1
     with connetti() as conn, conn.cursor() as cur:
-        cur.execute("SELECT count(*) AS n FROM annunci WHERE trovato_il > now() - interval '7 days'")
+        cur.execute("SELECT count(*) AS n FROM annunci WHERE trovato_il > now() - interval '7 days' AND NOT da_scorta")
         ultimi_7 = cur.fetchone()["n"]
         cur.execute("SELECT count(*) AS n FROM annunci")
         totale = cur.fetchone()["n"]
@@ -82,7 +82,7 @@ def elenco_fonti() -> list[dict]:
                    count(*) FILTER (WHERE trovato_il > now() - interval '30 days') AS n30,
                    count(*) FILTER (WHERE trovato_il > now() - interval '90 days') AS n90,
                    (array_agg(titolo ORDER BY trovato_il DESC))[1] AS ultimo_titolo
-            FROM annunci GROUP BY fonte_id
+            FROM annunci WHERE NOT da_scorta GROUP BY fonte_id   -- la scorta non e' una novita' (silenzi e conteggi)
             """
         )
         novita = {r["fonte_id"]: r for r in cur.fetchall()}
@@ -440,7 +440,7 @@ def settimane() -> list[dict]:
             """
             SELECT to_char(date_trunc('week', trovato_il), 'IYYY-"W"IW') AS chiave,
                    date_trunc('week', trovato_il)::date AS inizio, count(*) AS n, count(DISTINCT fonte_id) AS fonti
-            FROM annunci GROUP BY 1, 2 ORDER BY 2 DESC LIMIT 52
+            FROM annunci WHERE NOT da_scorta GROUP BY 1, 2 ORDER BY 2 DESC LIMIT 52
             """
         )
         return _righe(cur)
@@ -461,7 +461,7 @@ def settimana(chiave: str) -> dict:
             SELECT a.id, a.fonte_id, f.nome AS fonte, f.ente, f.tipo, f.territorio, a.url, a.titolo, a.riassunto,
                    a.pubblicato_il, a.trovato_il, data_sicura({SCADENZA_SQL}) AS scadenza
             FROM annunci a JOIN fonti f ON f.id = a.fonte_id
-            WHERE a.trovato_il >= %s AND a.trovato_il < %s
+            WHERE a.trovato_il >= %s AND a.trovato_il < %s AND NOT a.da_scorta
             ORDER BY f.tipo, coalesce(a.pubblicato_il, a.trovato_il) DESC
             """,
             (inizio, fine),
