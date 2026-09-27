@@ -1,0 +1,30 @@
+{"fonte": "cciaa_caserta_bandi", "raggiungibile": true,
+ "pagine_visitate": [
+  "https://www.ce.camcom.it/robots.txt",
+  "https://www.ce.camcom.it/bandi-incentivi",
+  "https://www.ce.camcom.it/punto-impresa-digitale/bandi-incentivi",
+  "https://www.ce.camcom.it/promozione-e-finanziamenti",
+  "https://www.ce.camcom.it/promozione-e-finanziamenti/incentivi-alle-imprese",
+  "https://www.ce.camcom.it/notizie",
+  "https://www.ce.camcom.it/notizie?page=1",
+  "https://www.ce.camcom.it/notizie?page=2",
+  "https://www.ce.camcom.it/notizie?page=3",
+  "https://www.ce.camcom.it/notizie?field_notizia_categoria_tid=195",
+  "https://www.ce.camcom.it/notizie/bando-contributi-alle-imprese-agricole-sostenere-green-economy-edizione-2026",
+  "https://www.ce.camcom.it/notizie/progetto-speciale-mirabilia-xiv-edizione-della-borsa-del-turismo-culturale-delle-produzioni",
+  "https://www.ce.camcom.it/notizie/premio-nazionale-maestro-del-made-italy-aperte-candidature-0"
+ ],
+ "totale_stimato": 4,
+ "note": "Sito Drupal statico, leggibile senza browser; robots.txt chiede Crawl-delay 10 (rispettato con richieste sequenziali, 14 in tutto). La pagina /bandi-incentivi e' un elenco curato a mano diviso in 'Bandi Attivi' e 'Bandi scaduti' per anno, con link a notizie o direttamente a PDF. Oggi un solo bando aperto (Green Economy agricoltura 2026). Finestra considerata per i chiusi recenti: dal 26/03/2026. Il bando fiere I quadrimestre 2026 e' pubblicato il 13/03/2026 ma scade il 31/03/2026, quindi rientra. Non risulta ancora pubblicato un bando fiere III quadrimestre 2026 (negli anni precedenti usciva in autunno con scadenza a dicembre): possibile uscita a breve, ma non c'e' traccia sul sito, quindi non l'ho elencato. Le notizie da marzo a settembre 2026 (pagine 0-3 dell'archivio) sono per lo piu' listini BMTI; la categoria 'Contributi e finanziamenti' e' usata in modo incompleto. Anche la pagina /promozione-e-finanziamenti/incentivi-alle-imprese raccoglie i bandi (con Mirabilia, Maestro del Made in Italy e Vinitaly 2026).",
+ "bandi": [
+  {"titolo": "Bando contributi alle imprese agricole per sostenere la Green Economy - Edizione 2026", "url": "https://www.ce.camcom.it/notizie/bando-contributi-alle-imprese-agricole-sostenere-green-economy-edizione-2026", "stato": "aperto", "scadenza": "2026-10-30", "per_imprese": "si", "perche": "Contributi in conto capitale alle imprese agricole della provincia per macchinari e attrezzature green/digitali, dotazione 150.000 euro, domande entro le 12:00 del 30/10/2026."},
+  {"titolo": "Bando Voucher Doppia Transizione - Anno 2026 (PID)", "url": "https://www.ce.camcom.it/notizie/bando-voucher-doppia-transizione-2026", "stato": "chiuso_recente", "scadenza": "2026-09-09", "per_imprese": "si", "perche": "Voucher alle MPMI per servizi digitali e green, domande dal 08/07/2026 al 09/09/2026; gia' pubblicato l'elenco delle domande ammesse."},
+  {"titolo": "Bando contributi per favorire le produzioni del territorio e l'internazionalizzazione delle imprese - II quadrimestre 2026 (fiere 1 maggio - 31 agosto 2026)", "url": "https://www.ce.camcom.it/notizie/bando-contributi-favorire-produzioni-del-territorio-linternazionalizzazione-delle-imprese-12", "stato": "chiuso_recente", "scadenza": "2026-07-13", "per_imprese": "si", "perche": "Contributi alle imprese produttive della provincia per la partecipazione a fiere in Italia e all'estero, 80.000 euro, scaduto il 13/07/2026."},
+  {"titolo": "Bando contributi per favorire le produzioni del territorio e l'internazionalizzazione delle imprese - I quadrimestre 2026 (fiere 1 gennaio - 30 aprile 2026)", "url": "https://www.ce.camcom.it/notizie/bando-contributi-favorire-produzioni-del-territorio-linternazionalizzazione-delle-imprese-11", "stato": "chiuso_recente", "scadenza": "2026-03-31", "per_imprese": "si", "perche": "Contributi alle imprese produttive della provincia per partecipazione a fiere, 150.000 euro, scaduto il 31/03/2026 (dentro la finestra di 6 mesi)."}
+ ],
+ "esclusi": [
+  {"titolo": "Progetto Speciale Mirabilia - XIV edizione Borsa del Turismo culturale e delle produzioni agroalimentari - Manifestazione di interesse", "url": "https://www.ce.camcom.it/notizie/progetto-speciale-mirabilia-xiv-edizione-della-borsa-del-turismo-culturale-delle-produzioni", "perche": "Ambiguo: rivolto a imprese food&drink e turismo (scadenza 31/03/2026, dentro la finestra), ma e' una ricognizione senza impegno per partecipare a un evento B2B, non un contributo o agevolazione economica esplicita."},
+  {"titolo": "Premio nazionale 'Maestro del Made in Italy'", "url": "https://www.ce.camcom.it/notizie/premio-nazionale-maestro-del-made-italy-aperte-candidature-0", "perche": "Premio per imprese promosso dalla Fondazione Imprese e Competenze (non dalla Camera), candidature chiuse il 20/03/2026: appena fuori dalla finestra di 6 mesi e riconoscimento onorifico piu' che agevolazione."},
+  {"titolo": "Vinitaly 2026 - avviso pubblico per la partecipazione delle imprese campane", "url": "https://www.ce.camcom.it/promozione-e-finanziamenti/incentivi-alle-imprese", "perche": "Avviso della Regione Campania per la collettiva a Vinitaly (imprese vinicole, quota a carico 1.500 euro), chiuso il 09/02/2026: fuori finestra e non e' un contributo diretto."},
+  {"titolo": "Registro Imprese Storiche - riaperte le iscrizioni 2026", "url": "https://www.ce.camcom.it/notizie/registro-imprese-storiche-riaperte-iscrizioni-2026", "perche": "Iscrizione a un registro onorifico per imprese, nessun contributo."}
+ ]}

@@ -1,0 +1,72 @@
+{
+  "fonte": "trento_fse_calendario_avvisi",
+  "perimetro": [
+    {
+      "titolo": "Avviso FSE+ 2024-6 - Presentazione di interventi di formazione continua per le imprese",
+      "url": "https://www.provincia.tn.it/Servizi/Presentazione-di-progetti-per-realizzare-percorsi-di-formazione-continua",
+      "esito": "perso_non_raccolto",
+      "annuncio": null,
+      "bando": null,
+      "spiegazione": "Verificato il 27/09/2026: la pagina del servizio conferma contributi alle imprese per formazione continua, domande dal 03/03/2025 al 30/04/2027 salvo esaurimento fondi (graduatorie bimestrali, provvedimenti fino ad agosto 2026); il servizio online risulta 'non disponibile' ma l'avviso e' aperto. Bandi Radar non ha nessun annuncio con questo indirizzo o titolo. Motivo: la fonte osservata e' una scheda 'dataset' che contiene solo il link al CSV (Google Sheets) con l'elenco dei 17 avvisi; il lettore HTML ha raccolto i link della pagina (menu, argomenti, ufficio, export CSV) e il link al CSV come un solo annuncio (7026), senza leggere le righe del CSV, dove l'avviso 2024-6 e il suo link sono elencati. Nessun annuncio della fonte e' stato smistato (esito null su tutti e 6)."
+    }
+  ],
+  "smistamento": [
+    {
+      "annuncio": 7023,
+      "regole": "null (non smistato)",
+      "haiku": "non_rilevante",
+      "opus": "non_rilevante",
+      "giusto": "non_rilevante",
+      "errore_regole": "nessuno",
+      "errore_haiku": "nessuno",
+      "errore_opus": "nessuno",
+      "spiegazione": "Pagina di argomento del sito (Europa e attivita' internazionali), nessun bando."
+    },
+    {
+      "annuncio": 7024,
+      "regole": "null (non smistato)",
+      "haiku": "da_rivedere",
+      "opus": "non_rilevante",
+      "giusto": "non_rilevante",
+      "errore_regole": "nessuno",
+      "errore_haiku": "lieve",
+      "errore_opus": "nessuno",
+      "spiegazione": "Pagina del programma FSE+ (pagina di argomento): in evidenza avvisi per enti formativi accreditati e corsi per adulti, nessun aiuto per imprese nel testo. Per la regola 7 e' una pagina di categoria: non_rilevante. Il da_rivedere di Haiku e' un eccesso di prudenza su un caso abbastanza chiaro."
+    },
+    {
+      "annuncio": 7025,
+      "regole": "null (non smistato)",
+      "haiku": "non_rilevante",
+      "opus": "non_rilevante",
+      "giusto": "non_rilevante",
+      "errore_regole": "nessuno",
+      "errore_haiku": "nessuno",
+      "errore_opus": "nessuno",
+      "spiegazione": "Link 'customexport' del dataset con titolo 'Ultimo aggiornamento:': non e' un annuncio. (Il contenuto utile del dataset, cioe' l'elenco degli avvisi, e' nel CSV Google 7026, non nel campione.)"
+    },
+    {
+      "annuncio": 7027,
+      "regole": "null (non smistato)",
+      "haiku": "non_rilevante",
+      "opus": "non_rilevante",
+      "giusto": "non_rilevante",
+      "errore_regole": "nessuno",
+      "errore_haiku": "nessuno",
+      "errore_opus": "nessuno",
+      "spiegazione": "Pagina istituzionale dell'Ufficio FSE (competenze), nessun contributo."
+    }
+  ],
+  "preliminare": [],
+  "osservazioni": [
+    "La fonte non espone i bandi in HTML: la pagina osservata (content/view/full/28905) e' una scheda dataset con un CSV Google Sheets che elenca i 17 avvisi FSE+ con stato e link. Il lettore HTML raccoglie solo i link di contorno (menu, argomenti, ufficio, export) e tratta il CSV come un solo annuncio (7026). Serve una lettura del CSV riga per riga (una riga = un avviso, con titolo, beneficiari, date e link al servizio), oppure puntare la fonte alle pagine 'Servizi' degli avvisi FSE+.",
+    "Nessuno dei 6 annunci ha un esito dello smistamento (tutti null) e non c'e' nessun bando collegato: la fonte a oggi non produce nulla. bandi.json, haiku_preliminari.json e opus_preliminari.json sono vuoti, quindi il compito C non ha bandi da valutare.",
+    "Il perimetro per imprese di questa fonte e' piccolo (1 avviso su 17: formazione continua 2024-6, aperto fino al 30/04/2027); gli altri sono per enti di formazione accreditati o scuole. Il bando perso pero' e' un aiuto concreto e aperto per le imprese trentine.",
+    "Il titolo 'Ultimo aggiornamento:' dell'annuncio 7025 mostra che l'estrattore prende come titolo un'etichetta della pagina: segnale di una configurazione dei selettori non adatta a questa pagina."
+  ],
+  "correzioni": [
+    {"caso": "perimetro: Avviso FSE+ 2024-6 formazione continua (perso_non_raccolto)", "prima": "perso_non_raccolto", "dopo": "perso_non_raccolto (confermato)", "perche": "Ricontrollato il 27/09/2026: il CSV Google (17 righe) elenca il 2024-6 con beneficiari 'Imprese', 3/3/2025-30/4/2027, 7,1 milioni e link al servizio; la pagina del servizio riporta 30/04/2027 e 'esaurimento delle risorse'. Nessun annuncio in radar.json ha quell'indirizzo o titolo: il CSV e' stato preso come un solo annuncio (7026) senza leggerne le righe."},
+    {"caso": "smistamento 7024 (Haiku da_rivedere, Opus non_rilevante)", "prima": "giusto non_rilevante, errore_haiku lieve", "dopo": "confermato", "perche": "Pagina di argomento FSE+: gli avvisi in evidenza sono per enti accreditati (come fornitori di formazione) e corsi per adulti; la regola 7 classifica pagine di categoria e corsi per persone come non_rilevante. Il dubbio di Haiku e' prudenza, errore lieve."},
+    {"caso": "esploratore: sezioni dimenticate", "prima": "nessuna segnalazione", "dopo": "nessuna sezione dimenticata", "perche": "La pagina 28905 (scaricata il 27/09/2026) contiene solo i link al dataset, all'export customexport, al CSV Google e al menu /Servizi: nessun altro elenco di bandi da esplorare."}
+  ],
+  "fiducia": "alta"
+}

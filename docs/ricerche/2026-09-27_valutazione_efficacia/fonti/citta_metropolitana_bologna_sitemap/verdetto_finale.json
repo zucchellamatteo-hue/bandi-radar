@@ -1,0 +1,537 @@
+{
+ "fonte": "citta_metropolitana_bologna_sitemap",
+ "perimetro": [
+  {
+   "titolo": "Premio Barresi - Bando per l'assegnazione di incentivi a imprese giovanili e sostenibili 2026",
+   "url": "https://www.cittametropolitana.bo.it/progimpresa/Bandi_e_opportunita_per_le_imprese_1/Bandi_e_opportunita/Premio_Barresi_-_Bando_per_l_assegnazione_di_incentivi_a_imprese_giovanili_e_sostenibili_2026",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Bando emesso dalla Citta' metropolitana stessa, aperto (pagina progimpresa verificata, risponde 200). Non e' tra i 'bandi e avvisi' del portale (tipo rer_bando_avviso_pubblico letto dall'API): nella sitemap quella sezione ha solo le edizioni 2021, 2022, 2024. L'edizione 2026 e' pero' annunciata anche nelle notizie/comunicati del portale (novita/comunicati/premio-barresi-2026-torna-il-bando-per-sostenere-le-imprese-under-36-del-territorio, novita/notizie/premio-barresi-2026), sezione che la fonte non legge, oltre che su progimpresa. Radar ha solo le graduatorie 2021 e 2022 (annunci 6426, 6429), mai smistate."
+  },
+  {
+   "titolo": "Vetrina: Spazi che diventano impresa (Fase 1)",
+   "url": "https://www.cittametropolitana.bo.it/progimpresa/Bandi_e_opportunita_per_le_imprese_1/Bandi_e_opportunita/Vetrina_Spazi_che_diventano_impresa_1",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Promosso dalla Citta' metropolitana, aperto fino al 29/10/2026; non e' tra i 'bandi e avvisi' del portale (verificato sulla sitemap). Il portale ne parla solo in notizie/comunicati (es. novita/comunicati/vetrina-spazi-che-diventano-impresa-aperta-la-call), sezione non letta dalla fonte; la scheda sta su progimpresa."
+  },
+  {
+   "titolo": "Contributi agli esercizi commerciali polifunzionali per spese di gestione",
+   "url": "https://www.cittametropolitana.bo.it/progimpresa/Bandi_e_opportunita_per_le_imprese_1/Bandi_e_opportunita/Contributi_agli_esercizi_commerciali_polifunzionali_per_spese_di_gestione",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Bando Regione ER rilanciato da progimpresa; la fonte osservata (sitemap bandi-e-avvisi) non lo elenca. Va coperto dalla fonte Regione ER."
+  },
+  {
+   "titolo": "Bando Digital Export 2026-2027",
+   "url": "https://www.cittametropolitana.bo.it/progimpresa/Bandi_e_opportunita_per_le_imprese_1/Bandi_e_opportunita/Bando_Digital_Export_2026-2027",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Unioncamere ER, solo su progimpresa; fonte osservata non lo elenca."
+  },
+  {
+   "titolo": "START4PEOPLE di In Action Esg",
+   "url": "https://www.cittametropolitana.bo.it/progimpresa/Bandi_e_opportunita_per_le_imprese_1/Bandi_e_opportunita/START4PEOPLE_di_In_Action_Esg",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Iniziativa privata segnalata su progimpresa; non nella fonte osservata."
+  },
+  {
+   "titolo": "Contributi per l'autoproduzione di energia da fonti rinnovabili e per il miglioramento dell'efficienza energetica delle imprese",
+   "url": "https://www.cittametropolitana.bo.it/progimpresa/Bandi_e_opportunita_per_le_imprese_1/Bandi_e_opportunita/Contributi_per_l_autoproduzione_di_energia_da_fonti_rinnovabili_e_per_il_miglioramento_dell_efficienza_energetica_delle_imprese",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Bando CCIAA Bologna rilanciato da progimpresa; non nella fonte osservata (dovrebbe arrivare dalla fonte CCIAA Bologna)."
+  },
+  {
+   "titolo": "Contributi per acquisizione sistemi e servizi per la sicurezza",
+   "url": "https://www.cittametropolitana.bo.it/progimpresa/Bandi_e_opportunita_per_le_imprese_1/Bandi_e_opportunita/Contributi_per_acquisizione_sistemi_e_servizi_per_la_sicurezza_2",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "CCIAA Bologna via progimpresa; non nella fonte osservata."
+  },
+  {
+   "titolo": "Librerie under 35",
+   "url": "https://www.cittametropolitana.bo.it/progimpresa/Bandi_e_opportunita_per_le_imprese_1/Bandi_e_opportunita/Librerie_under_35",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Ministero della Cultura via progimpresa; non nella fonte osservata."
+  },
+  {
+   "titolo": "G-Factor | I-Tech Innovation",
+   "url": "https://www.cittametropolitana.bo.it/progimpresa/Bandi_e_opportunita_per_le_imprese_1/Bandi_e_opportunita/G-Factor_I-Tech_Innovation",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Programma privato di accelerazione via progimpresa; non nella fonte osservata."
+  },
+  {
+   "titolo": "Ristori a favore delle imprese che hanno subito disagi a causa di grandi cantieri",
+   "url": "https://www.cittametropolitana.bo.it/progimpresa/Bandi_e_opportunita_per_le_imprese_1/Bandi_e_opportunita/Ristori_a_favore_delle_imprese_che_hanno_subito_disagi_a_causa_di_grandi_cantieri",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "CCIAA Bologna via progimpresa; non nella fonte osservata."
+  },
+  {
+   "titolo": "Incentivi a neolaureati e neodiplomati ITS Academy",
+   "url": "https://www.cittametropolitana.bo.it/progimpresa/Bandi_e_opportunita_per_le_imprese_1/Bandi_e_opportunita/Incentivi_a_neolaureati_e_neodiplomati_ITS_Academy",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "CCIAA Bologna via progimpresa; non nella fonte osservata."
+  },
+  {
+   "titolo": "Interventi a favore del settore apicoltura per l'anno 2027",
+   "url": "https://www.cittametropolitana.bo.it/progimpresa/Bandi_e_opportunita_per_le_imprese_1/Bandi_e_opportunita/Interventi_a_favore_del_settore_apicoltura_per_l_u2019anno_2027",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Regione ER via progimpresa; non nella fonte osservata."
+  },
+  {
+   "titolo": "Fondo EuReCa",
+   "url": "https://www.cittametropolitana.bo.it/progimpresa/Bandi_e_opportunita_per_le_imprese_1/Bandi_e_opportunita/Fondo_EuReCa",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Regione ER via progimpresa; non nella fonte osservata."
+  },
+  {
+   "titolo": "Investimenti in neo imprese extra agricole",
+   "url": "https://www.cittametropolitana.bo.it/progimpresa/Bandi_e_opportunita_per_le_imprese_1/Bandi_e_opportunita/Investimenti_in_neo_imprese_extra_agricole",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "GAL Appennino Bolognese via progimpresa; non nella fonte osservata."
+  },
+  {
+   "titolo": "Progetti di trasferimento tecnologico",
+   "url": "https://www.cittametropolitana.bo.it/progimpresa/Bandi_e_opportunita_per_le_imprese_1/Bandi_e_opportunita/Progetti_di_trasferimento_tecnologico",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Regione ER via progimpresa; non nella fonte osservata."
+  },
+  {
+   "titolo": "Innovazione nella gestione delle sale deputate allo svolgimento di rappresentazioni cinematografiche, teatrali, musicali e artistiche",
+   "url": "https://www.cittametropolitana.bo.it/progimpresa/Bandi_e_opportunita_per_le_imprese_1/Bandi_e_opportunita/Innovazione_nella_gestione_delle_sale_deputate_allo_svolgimento_di_rappresentazioni_cinematografiche_teatrali_musicali_e_artistiche",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Regione ER via progimpresa (per_imprese incerto); non nella fonte osservata."
+  },
+  {
+   "titolo": "Supporto all'utilizzo di fonti rinnovabili nelle imprese",
+   "url": "https://www.cittametropolitana.bo.it/progimpresa/Bandi_e_opportunita_per_le_imprese_1/Bandi_e_opportunita/Supporto_all_utilizzo_di_fonti_rinnovabili_nelle_imprese",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Regione ER via progimpresa; non nella fonte osservata."
+  },
+  {
+   "titolo": "Investimenti nelle aziende agricole per la diversificazione in attivita' non agricole",
+   "url": "https://www.cittametropolitana.bo.it/progimpresa/Bandi_e_opportunita_per_le_imprese_1/Bandi_e_opportunita/Investimenti_nelle_aziende_agricole_per_la_diversificazione_in_attivita_non_agricole",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "GAL Appennino Bolognese via progimpresa; non nella fonte osservata."
+  },
+  {
+   "titolo": "Fondo StartER PR FESR 21-27 (nuova finestra)",
+   "url": "https://www.cittametropolitana.bo.it/progimpresa/Bandi_e_opportunita_per_le_imprese_1/Bandi_e_opportunita/Fondo_StartER_PR_FESR_21-27_2",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Regione ER via progimpresa; non nella fonte osservata."
+  },
+  {
+   "titolo": "Step 2025: tecnologie strategiche",
+   "url": "https://www.cittametropolitana.bo.it/progimpresa/Bandi_e_opportunita_per_le_imprese_1/Bandi_e_opportunita/Step_2025_tecnologie_strategiche",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Regione ER via progimpresa; non nella fonte osservata."
+  },
+  {
+   "titolo": "Bando per esercizi commerciali con green corner",
+   "url": "https://www.cittametropolitana.bo.it/progimpresa/Bandi_e_opportunita_per_le_imprese_1/Bandi_e_opportunita/Bando_per_esercizi_commerciali_con_green_corner",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Regione ER via progimpresa; non nella fonte osservata."
+  },
+  {
+   "titolo": "Percorsi per startup \"Le Serre di ART-ER 2026\"",
+   "url": "https://www.cittametropolitana.bo.it/progimpresa/Bandi_e_opportunita_per_le_imprese_1/Bandi_e_opportunita/Percorsi_per_startup_Le_Serre_di_ART-ER_2026",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "ART-ER via progimpresa (servizio, non contributo); non nella fonte osservata."
+  },
+  {
+   "titolo": "Autoimpiego Centro-Nord",
+   "url": "https://www.cittametropolitana.bo.it/progimpresa/Bandi_e_opportunita_per_le_imprese_1/Bandi_e_opportunita/Autoimpiego_Centro-Nord",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Invitalia via progimpresa; non nella fonte osservata."
+  },
+  {
+   "titolo": "Contributi per attivita' economiche, produttive e agricole colpite dagli eventi alluvionali",
+   "url": "https://www.cittametropolitana.bo.it/progimpresa/Bandi_e_opportunita_per_le_imprese_1/Bandi_e_opportunita/Contributi_per_attivita_economiche_produttive_e_agricole_colpite_dagli_eventi_alluvionali",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Regione ER via progimpresa; non nella fonte osservata."
+  },
+  {
+   "titolo": "Women TechEU a sostegno di startup deep tech",
+   "url": "https://www.cittametropolitana.bo.it/progimpresa/Bandi_e_opportunita_per_le_imprese_1/Bandi_e_opportunita/Women_TechEU_a_sostegno_di_startup_deep_tech",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Bando UE via progimpresa; non nella fonte osservata."
+  },
+  {
+   "titolo": "Community Startup Emilia-Romagna per l'Internazionalizzazione",
+   "url": "https://www.cittametropolitana.bo.it/progimpresa/Bandi_e_opportunita_per_le_imprese_1/Bandi_e_opportunita/Community_Startup_Emilia-Romagna_per_l_u2019Internazionalizzazione",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Manifestazione d'interesse (per_imprese incerto) via progimpresa; non nella fonte osservata."
+  },
+  {
+   "titolo": "Smart&Start Italia",
+   "url": "https://www.cittametropolitana.bo.it/progimpresa/Bandi_e_opportunita_per_le_imprese_1/Bandi_e_opportunita/Smart_Start_Italia_1",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Invitalia via progimpresa; non nella fonte osservata."
+  },
+  {
+   "titolo": "ON, Oltre Nuove Imprese a Tasso Zero",
+   "url": "https://www.cittametropolitana.bo.it/progimpresa/Bandi_e_opportunita_per_le_imprese_1/Bandi_e_opportunita/ON_Oltre_Nuove_Imprese_a_Tasso_Zero_1",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Invitalia via progimpresa; non nella fonte osservata."
+  },
+  {
+   "titolo": "Fondo speciale di garanzia per l'accesso al credito",
+   "url": "https://www.cittametropolitana.bo.it/progimpresa/Bandi_e_opportunita_per_le_imprese_1/Bandi_e_opportunita/Fondo_speciale_di_garanzia_per_l_accesso_al_credito",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Regione ER via progimpresa; non nella fonte osservata."
+  },
+  {
+   "titolo": "Bando MePA per Startup Innovative",
+   "url": "https://www.cittametropolitana.bo.it/progimpresa/Bandi_e_opportunita_per_le_imprese_1/Bandi_e_opportunita/Bando_MePA_per_Startup_Innovative_1",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Consip (per_imprese incerto, non agevolazione economica) via progimpresa; non nella fonte osservata."
+  },
+  {
+   "titolo": "Nuova Sabatini Green",
+   "url": "https://www.cittametropolitana.bo.it/progimpresa/Bandi_e_opportunita_per_le_imprese_1/Bandi_e_opportunita/Nuova_Sabatini_Green",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "MIMIT via progimpresa; non nella fonte osservata."
+  },
+  {
+   "titolo": "Voucher 3i - Investire in Innovazione",
+   "url": "https://www.cittametropolitana.bo.it/progimpresa/Bandi_e_opportunita_per_le_imprese_1/Bandi_e_opportunita/Voucher_3i_-_Investire_in_Innovazione",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Invitalia via progimpresa; non nella fonte osservata."
+  },
+  {
+   "titolo": "Voucher Doppia Transizione",
+   "url": "https://www.cittametropolitana.bo.it/progimpresa/Bandi_e_opportunita_per_le_imprese_1/Archivio_opportunita/Voucher_Doppia_Transizione",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Chiuso di recente (CCIAA Bologna), solo nell'archivio progimpresa; non nella fonte osservata."
+  },
+  {
+   "titolo": "GreenTour",
+   "url": "https://www.cittametropolitana.bo.it/progimpresa/Bandi_e_opportunita_per_le_imprese_1/Archivio_opportunita/GreenTour",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Chiuso di recente, archivio progimpresa; non nella fonte osservata."
+  },
+  {
+   "titolo": "Sviluppo rurale 2023-2027: pacchetto giovani",
+   "url": "https://www.cittametropolitana.bo.it/progimpresa/Bandi_e_opportunita_per_le_imprese_1/Archivio_opportunita/Sviluppo_rurale_2023-2027_pacchetto_giovani",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Chiuso di recente, archivio progimpresa; non nella fonte osservata."
+  },
+  {
+   "titolo": "Sostegno allo sviluppo di video giochi",
+   "url": "https://www.cittametropolitana.bo.it/progimpresa/Bandi_e_opportunita_per_le_imprese_1/Archivio_opportunita/Sostegno_allo_sviluppo_di_video_giochi",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Chiuso di recente, archivio progimpresa; non nella fonte osservata."
+  },
+  {
+   "titolo": "Sostegno all'innovazione e agli investimenti per le imprese del commercio e dei pubblici esercizi",
+   "url": "https://www.cittametropolitana.bo.it/progimpresa/Bandi_e_opportunita_per_le_imprese_1/Archivio_opportunita/Sostegno_all_u2019innovazione_e_agli_investimenti_per_le_imprese_del_commercio_e_dei_pubblici_esercizi",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Chiuso di recente, archivio progimpresa; non nella fonte osservata."
+  },
+  {
+   "titolo": "Coopstartup Changemakers",
+   "url": "https://www.cittametropolitana.bo.it/progimpresa/Bandi_e_opportunita_per_le_imprese_1/Archivio_opportunita/Coopstartup_Changemakers",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Chiuso di recente, archivio progimpresa; non nella fonte osservata."
+  },
+  {
+   "titolo": "Call4INNOVIT 2026: accelerazione per startup e PMI italiane verso la Silicon Valley",
+   "url": "https://www.cittametropolitana.bo.it/progimpresa/Bandi_e_opportunita_per_le_imprese_1/Archivio_opportunita/Call4INNOVIT_2026_accelerazione_per_startup_e_PMI_italiane_verso_la_Silicon_Valley",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Chiuso di recente, archivio progimpresa; non nella fonte osservata."
+  },
+  {
+   "titolo": "Premio Innovazione Sociale 2026",
+   "url": "https://www.cittametropolitana.bo.it/progimpresa/Bandi_e_opportunita_per_le_imprese_1/Archivio_opportunita/Premio_Innovazione_Sociale_2026",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Chiuso di recente (per_imprese incerto), archivio progimpresa; non nella fonte osservata."
+  },
+  {
+   "titolo": "Fondo StartER PR FESR 21-27 (finestra primavera 2026)",
+   "url": "https://www.cittametropolitana.bo.it/progimpresa/Bandi_e_opportunita_per_le_imprese_1/Archivio_opportunita/Fondo_StartER_PR_FESR_21-27",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Chiuso di recente, archivio progimpresa; non nella fonte osservata."
+  },
+  {
+   "titolo": "Fondo Energia 2026",
+   "url": "https://www.cittametropolitana.bo.it/progimpresa/Bandi_e_opportunita_per_le_imprese_1/Archivio_opportunita/Fondo_Energia_2026",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Chiuso di recente, archivio progimpresa; non nella fonte osservata."
+  },
+  {
+   "titolo": "Premio \"Le donne di ora\" di Invitalia",
+   "url": "https://www.cittametropolitana.bo.it/progimpresa/Bandi_e_opportunita_per_le_imprese_1/Archivio_opportunita/Premio_Le_donne_di_ora_di_Invitalia",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Chiuso di recente, archivio progimpresa; non nella fonte osservata."
+  },
+  {
+   "titolo": "Voucher Cloud & Cybersecurity",
+   "url": "https://www.cittametropolitana.bo.it/progimpresa/Bandi_e_opportunita_per_le_imprese_1/Archivio_opportunita/Voucher_Cloud_Cybersecurity",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Chiuso di recente, archivio progimpresa; non nella fonte osservata."
+  },
+  {
+   "titolo": "Concessione di contributi a favore delle imprese per progetti di ricerca e sviluppo mediante inserimento di nuovi talenti",
+   "url": "https://www.cittametropolitana.bo.it/progimpresa/Bandi_e_opportunita_per_le_imprese_1/Archivio_opportunita/Concessione_di_contributi_a_favore_delle_imprese_per_progetti_di_ricerca_e_sviluppo_mediante_inserimento_di_nuovi_talenti",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Chiuso di recente, archivio progimpresa; non nella fonte osservata."
+  },
+  {
+   "titolo": "Rafforzamento della competitivita' delle imprese e delle filiere tramite l'ottenimento di sistemi di certificazione",
+   "url": "https://www.cittametropolitana.bo.it/progimpresa/Bandi_e_opportunita_per_le_imprese_1/Archivio_opportunita/Rafforzamento_della_competitivita_delle_imprese_e_delle_filiere_tramite_l_u2019ottenimento_di_sistemi_di_certificazione_di_processo_servizio_gestione_aziendale",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Chiuso di recente, archivio progimpresa; non nella fonte osservata."
+  },
+  {
+   "titolo": "Start Cup Emilia-Romagna - Edizione 2026",
+   "url": "https://www.cittametropolitana.bo.it/progimpresa/Bandi_e_opportunita_per_le_imprese_1/Archivio_opportunita/Start_Cup_Emilia-Romagna_-_Edizione_2026",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Chiuso di recente (per_imprese incerto), archivio progimpresa; non nella fonte osservata."
+  },
+  {
+   "titolo": "Turismo accessibile: contributi a fondo perduto a locali e attivita' che operano nella zona del Mercato delle Erbe",
+   "url": "https://www.cittametropolitana.bo.it/progimpresa/Bandi_e_opportunita_per_le_imprese_1/Archivio_opportunita/Turismo_accessibile_contributi_a_fondo_perduto_a_locali_e_attivita_che_operano_nella_zona_del_Mercato_delle_Erbe",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Chiuso di recente, archivio progimpresa; non nella fonte osservata."
+  },
+  {
+   "titolo": "Bando Start-Up Scale-Up",
+   "url": "https://www.cittametropolitana.bo.it/progimpresa/Bandi_e_opportunita_per_le_imprese_1/Archivio_opportunita/Bando_Start-Up_Scale-Up",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Chiuso di recente (per_imprese incerto, formazione), archivio progimpresa; non nella fonte osservata."
+  },
+  {
+   "titolo": "Staff House - Riqualificazione degli immobili",
+   "url": "https://www.cittametropolitana.bo.it/progimpresa/Bandi_e_opportunita_per_le_imprese_1/Archivio_opportunita/Staff_House_-_Riqualificazione_degli_immobili",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Chiuso di recente, archivio progimpresa; non nella fonte osservata."
+  },
+  {
+   "titolo": "Voucher per il sostegno dei piccoli editori",
+   "url": "https://www.cittametropolitana.bo.it/progimpresa/Bandi_e_opportunita_per_le_imprese_1/Archivio_opportunita/Voucher_per_il_sostegno_dei_piccoli_editori",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Chiuso di recente, archivio progimpresa; non nella fonte osservata."
+  },
+  {
+   "titolo": "Bando Bologna Game Farm",
+   "url": "https://www.cittametropolitana.bo.it/progimpresa/Bandi_e_opportunita_per_le_imprese_1/Archivio_opportunita/Bando_Bologna_Game_Farm",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Chiuso di recente (Comune di Bologna), archivio progimpresa; non nella fonte osservata."
+  },
+  {
+   "titolo": "Bando produzione di opere cinematografiche e audiovisive - 2026",
+   "url": "https://www.cittametropolitana.bo.it/progimpresa/Bandi_e_opportunita_per_le_imprese_1/Archivio_opportunita/Bando_produzione_di_opere_cinematografiche_e_audiovisive_-_2026",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Chiuso di recente, archivio progimpresa; non nella fonte osservata."
+  },
+  {
+   "titolo": "Vetrina: Spazi che diventano impresa (edizione gennaio-aprile 2026)",
+   "url": "https://www.cittametropolitana.bo.it/progimpresa/Bandi_e_opportunita_per_le_imprese_1/Archivio_opportunita/Vetrina_Spazi_che_diventano_impresa",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Chiuso di recente, promosso dalla Citta' metropolitana ma pubblicato solo su progimpresa; non nella sitemap del portale."
+  },
+  {
+   "titolo": "Contributi per la partecipazione a fiere internazionali in Italia - Anno 2026",
+   "url": "https://www.cittametropolitana.bo.it/progimpresa/Bandi_e_opportunita_per_le_imprese_1/Archivio_opportunita/Contributi_per_la_partecipazione_a_fiere_internazionali_in_Italia_-_Anno_2026",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Chiuso di recente (CCIAA Bologna), archivio progimpresa; non nella fonte osservata."
+  },
+  {
+   "titolo": "Contributi a sostegno approvazione bilancio di sostenibilita' ESG - Anno 2026",
+   "url": "https://www.cittametropolitana.bo.it/progimpresa/Bandi_e_opportunita_per_le_imprese_1/Archivio_opportunita/Contributi_a_sostegno_approvazione_bilancio_di_sostenibilita_ESG_-_Anno_2026",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Chiuso a fine marzo 2026, archivio progimpresa; non nella fonte osservata."
+  }
+ ],
+ "smistamento": [
+  {
+   "annuncio": 6407,
+   "regole": "null (non smistato)",
+   "haiku": "non_rilevante",
+   "opus": "non_rilevante",
+   "giusto": "non_rilevante",
+   "errore_regole": "nessuno",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Interpello per un posto di funzionario: selezione di personale. Le regole non hanno mai deciso (esito null, fonte 'piattaforma generico'), ma sul risultato non c'e' danno."
+  },
+  {
+   "annuncio": 6408,
+   "regole": "null (non smistato)",
+   "haiku": "non_rilevante",
+   "opus": "non_rilevante",
+   "giusto": "non_rilevante",
+   "errore_regole": "nessuno",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Graduatoria di mobilita' di personale."
+  },
+  {
+   "annuncio": 6409,
+   "regole": "null (non smistato)",
+   "haiku": "non_rilevante",
+   "opus": "non_rilevante",
+   "giusto": "non_rilevante",
+   "errore_regole": "nessuno",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Verbale d'asta di vendita di fabbricati pubblici: l'acquirente paga l'ente."
+  },
+  {
+   "annuncio": 6410,
+   "regole": "null (non smistato)",
+   "haiku": "non_rilevante",
+   "opus": "non_rilevante",
+   "giusto": "non_rilevante",
+   "errore_regole": "nessuno",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Verbale d'asta immobiliare, vendita di bene pubblico."
+  }
+ ],
+ "preliminare": [],
+ "osservazioni": [
+  "La fonte osservata (sitemap del portale, sezione bandi-e-avvisi) non espone i bandi per imprese: su 50 annunci quasi tutti sono concorsi, interpelli, aste, affidamenti, esiti e avvisi per associazioni/scuole; nessuno dei 50 bandi per imprese del perimetro dell'esploratore c'e'. Verificato sulla sitemap: il Premio Barresi 2026 (unico bando per imprese emesso dall'ente) non c'e', ci sono solo le edizioni 2021, 2022, 2024.",
+  "I bandi per imprese dell'ente stanno nella sezione 'Progetti d'impresa' (www.cittametropolitana.bo.it/progimpresa/Bandi_e_opportunita_per_le_imprese_1/Bandi_e_opportunita e Archivio_opportunita), in HTML statico leggibile. Conviene aggiungere quella pagina come fonte (HTML), con l'avvertenza che e' un aggregatore: la maggior parte dei bandi e' di Regione ER, CCIAA Bologna, Invitalia, MIMIT, GAL, che dovrebbero gia' arrivare dalle loro fonti; lo smistamento/deduplica deve collegarli al bando dell'ente emittente.",
+  "Nessuno dei 50 annunci e' stato smistato (esito null, bandi 0, motivo 'piattaforma generico'): la fonte raccoglie ma la catena si ferma prima dello smistamento. Anche risolto questo, il risultato utile sarebbe nullo per il punto sopra.",
+  "Il portale e' un'applicazione JavaScript: il testo scaricato della pagina e' la licenza Creative Commons, non il bando (lo si vede in smistamento.md, 'Inizio della pagina'). La fonte legge l'API sotto /myportal/ con ignora_robots: true (decisione di Matteo del 24/09), ma per il testo scarica la pagina HTML, che non ha contenuto. Qualsiasi smistamento o preliminare su questa fonte lavorerebbe solo sul titolo.",
+  "Le date pubblicato_il vengono dal campo firstPublishedAt dell'API myportal (la fonte e' in modalita' api, POST con tipo rer_bando_avviso_pubblico, pagina 0 da 50), non dal lastmod della sitemap; ma quei valori sono comunque date di migrazione del portale (27/08/2026, 04/09/2026): annunci vecchi (Bologna Estate 2024, Premio Barresi 2021-2022, PPCT 2025, antidiscriminazione 2023-2024) appaiono come recenti. La plancia mostrerebbe una fonte 'fresca' che in realta' non porta novita' per imprese.",
+  "Preliminare: bandi.json, haiku_preliminari.json e opus_preliminari.json sono vuoti; nessun bando collegato, quindi nessun preliminare da valutare.",
+  "Nota di perimetro (verifica di riserva): dei 56 bandi del perimetro solo 3 sono dell'ente (Premio Barresi 2026, Vetrina Fase 1 aperta, Vetrina gennaio-aprile 2026 chiusa); gli altri 53 sono rilanci su progimpresa di bandi di Regione ER, CCIAA Bologna, Invitalia, MIMIT, MiC, GAL, Unioncamere, privati. Sono sul sito dell'ente e quindi restano 'perso_non_raccolto' per questa fonte, ma il danno reale dipende dalla copertura delle fonti emittenti, non da questa.",
+  "Suggerimento aggiuntivo: oltre a progimpresa, le notizie/comunicati del portale annunciano i bandi propri dell'ente (Premio Barresi 2026, Vetrina) e sono gia' nella sitemap."
+ ],
+ "correzioni": [
+  {
+   "caso": "Premio Barresi 2026 (spiegazione)",
+   "prima": "l'edizione 2026 sta solo su progimpresa",
+   "dopo": "sta su progimpresa e anche nelle notizie/comunicati del portale; esito perso_non_raccolto confermato",
+   "perche": "La sitemap del portale contiene novita/comunicati/premio-barresi-2026-torna-il-bando-per-sostenere-le-imprese-under-36-del-territorio e novita/notizie/premio-barresi-2026; la fonte legge solo il tipo bandi e avvisi."
+  },
+  {
+   "caso": "Vetrina Fase 1 (spiegazione)",
+   "prima": "sta solo sulla sezione progimpresa",
+   "dopo": "annunciato anche nei comunicati del portale; esito confermato",
+   "perche": "Nella sitemap ci sono varie pagine notizie/comunicati sulla Vetrina, fuori dalla sezione bandi-e-avvisi letta dalla fonte."
+  },
+  {
+   "caso": "osservazione sulle date pubblicato_il",
+   "prima": "vengono dal lastmod della sitemap",
+   "dopo": "vengono da firstPublishedAt dell'API; effetto (date di migrazione) confermato",
+   "perche": "fonti/capoluoghi.yaml: modalita api, feed_url myportal search-advanced; i pubblicato_il in radar.json hanno millisecondi, tipici dell'API, non della sitemap."
+  },
+  {
+   "caso": "osservazione su robots.txt",
+   "prima": "Le API sono sotto /myportal/, vietato da robots.txt",
+   "dopo": "la fonte usa gia' quell'API con ignora_robots: true per decisione di Matteo",
+   "perche": "fonti/capoluoghi.yaml riga 1126."
+  }
+ ],
+ "fiducia": "media"
+}

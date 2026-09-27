@@ -1,0 +1,296 @@
+{
+ "fonte": "finlombarda_prodotti_imprese",
+ "perimetro": [
+  {
+   "titolo": "PIU' CREDITO AGRICOLTURA",
+   "url": "https://finlombarda.it/it/prodotti-e-servizi/prodotti-servizi/183/piu-credito-agricoltura",
+   "esito": "perso_smistamento",
+   "annuncio": 7373,
+   "bando": null,
+   "spiegazione": "Raccolto il 25/09 ma l'annuncio non e' mai stato smistato (esito null), quindi nessun bando collegato. In arrivo dal 19/10/2026. Il programma di smistamento prende gli annunci senza riga in smistamenti (LEFT JOIN, smista.py): non c e stata una decisione sbagliata, lo smistamento non e ancora passato su questi annunci raccolti il 25/09 20:11."
+  },
+  {
+   "titolo": "SVILUPPO TECNOLOGICO DELLE STARTUP INNOVATIVE",
+   "url": "https://finlombarda.it/it/prodotti-e-servizi/prodotti-servizi/182/sviluppo-tecnologico-startup-innovative",
+   "esito": "perso_smistamento",
+   "annuncio": 7374,
+   "bando": null,
+   "spiegazione": "Raccolto, esito null (non smistato), nessun bando. Apre il 28/09/2026. Il programma di smistamento prende gli annunci senza riga in smistamenti (LEFT JOIN, smista.py): non c e stata una decisione sbagliata, lo smistamento non e ancora passato su questi annunci raccolti il 25/09 20:11."
+  },
+  {
+   "titolo": "MISURA DI SOSTEGNO ALLA QUALIFICAZIONE DELLE IMPRESE ... CERTIFICAZIONI INDUSTRIALI AVANZATE",
+   "url": "https://finlombarda.it/it/prodotti-e-servizi/prodotti-servizi/180/contributi-certificazioni-industriali",
+   "esito": "perso_smistamento",
+   "annuncio": 7377,
+   "bando": null,
+   "spiegazione": "Raccolto, esito null, nessun bando. Aperto fino al 30/12/2027. Il programma di smistamento prende gli annunci senza riga in smistamenti (LEFT JOIN, smista.py): non c e stata una decisione sbagliata, lo smistamento non e ancora passato su questi annunci raccolti il 25/09 20:11."
+  },
+  {
+   "titolo": "INVESTIMENTI - LINEA IMPRESA EFFICIENTE",
+   "url": "https://finlombarda.it/it/prodotti-e-servizi/prodotti-servizi/172/investimenti-linea-impresa-efficiente",
+   "esito": "perso_smistamento",
+   "annuncio": 7378,
+   "bando": null,
+   "spiegazione": "Raccolto, esito null, nessun bando. Sportello aperto. Il programma di smistamento prende gli annunci senza riga in smistamenti (LEFT JOIN, smista.py): non c e stata una decisione sbagliata, lo smistamento non e ancora passato su questi annunci raccolti il 25/09 20:11."
+  },
+  {
+   "titolo": "MISURA PER IL RAFFORZAMENTO DELLE FILIERE PRODUTTIVE E DEGLI ECOSISTEMI INDUSTRIALI - 2025",
+   "url": "https://finlombarda.it/it/prodotti-e-servizi/prodotti-servizi/159/misura-per-il-rafforzamento-delle-filiere-produttive-2025",
+   "esito": "perso_smistamento",
+   "annuncio": 7385,
+   "bando": null,
+   "spiegazione": "Raccolto, esito null, nessun bando. Aperto fino al 31/12/2027. Il programma di smistamento prende gli annunci senza riga in smistamenti (LEFT JOIN, smista.py): non c e stata una decisione sbagliata, lo smistamento non e ancora passato su questi annunci raccolti il 25/09 20:11."
+  },
+  {
+   "titolo": "FONDO PER LA CAPITALIZZAZIONE DELLE IMPRESE COOPERATIVE LOMBARDE - SPORTELLO 2025",
+   "url": "https://finlombarda.it/it/prodotti-e-servizi/prodotti-servizi/164/fondo-per-la-capitalizzazione-delle-imprese-cooperative-lombarde-2025",
+   "esito": "perso_smistamento",
+   "annuncio": 7384,
+   "bando": null,
+   "spiegazione": "Raccolto, esito null, nessun bando. Sportello aperto fino a esaurimento. Il programma di smistamento prende gli annunci senza riga in smistamenti (LEFT JOIN, smista.py): non c e stata una decisione sbagliata, lo smistamento non e ancora passato su questi annunci raccolti il 25/09 20:11."
+  },
+  {
+   "titolo": "RAFFORZA & INNOVA",
+   "url": "https://finlombarda.it/it/prodotti-e-servizi/prodotti-servizi/162/rafforza-e-innova",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "E' nella pagina 1 del filtro AJAX (verificato con curl), ma il lettore html_in_json usa estrai_link che scarta i link con testo corto: titolo breve, quindi non raccolto."
+  },
+  {
+   "titolo": "BREVETTI 2023",
+   "url": "https://finlombarda.it/it/prodotti-e-servizi/prodotti-servizi/94/brevetti-2023",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Nella pagina 1 del filtro AJAX ma scartato per titolo corto (13 caratteri, soglia 18). Scheda verificata il 27/09: contributo a fondo perduto 80-90% per brevetti di PMI e professionisti, domande su Bandi e Servizi dal 23/10/2025 al 25/02/2027: perdita vera."
+  },
+  {
+   "titolo": "BANDO PER LE AGEVOLAZIONI FINANZIARIE ALLE IMPRESE AGRICOLE PER IL CREDITO DI FUNZIONAMENTO (ed. 2024)",
+   "url": "https://finlombarda.it/it/prodotti-e-servizi/prodotti-servizi/156/bando-per-le-agevolazioni-finanziarie-alle-imprese-agricole-2024",
+   "esito": "perso_smistamento",
+   "annuncio": 7381,
+   "bando": null,
+   "spiegazione": "Raccolto, esito null, nessun bando. Indicato Aperto nel catalogo. Il programma di smistamento prende gli annunci senza riga in smistamenti (LEFT JOIN, smista.py): non c e stata una decisione sbagliata, lo smistamento non e ancora passato su questi annunci raccolti il 25/09 20:11."
+  },
+  {
+   "titolo": "MICROCREDITO",
+   "url": "https://finlombarda.it/it/prodotti-e-servizi/prodotti-servizi/52/microcredito",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Nella pagina 1 del filtro AJAX ma scartato per titolo corto."
+  },
+  {
+   "titolo": "INVESTIMENTI - LINEA SVILUPPO AZIENDALE",
+   "url": "https://finlombarda.it/it/prodotti-e-servizi/prodotti-servizi/56/investimenti-linea-sviluppo-aziendale",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Non e' nella pagina 1: il registro legge solo page=1 del filtro AJAX, le pagine successive non vengono mai scaricate."
+  },
+  {
+   "titolo": "L.A.N.D. (Local Attraction For New Development)",
+   "url": "https://finlombarda.it/it/prodotti-e-servizi/prodotti-servizi/175/l-a-n-d",
+   "esito": "perso_smistamento",
+   "annuncio": 7383,
+   "bando": null,
+   "spiegazione": "Raccolto, esito null, nessun bando. Il programma di smistamento prende gli annunci senza riga in smistamenti (LEFT JOIN, smista.py): non c e stata una decisione sbagliata, lo smistamento non e ancora passato su questi annunci raccolti il 25/09 20:11."
+  },
+  {
+   "titolo": "LOMBARDIA VENTURE STEP",
+   "url": "https://finlombarda.it/it/prodotti-e-servizi/prodotti-servizi/170/lombardia-venture-step",
+   "esito": "perso_smistamento",
+   "annuncio": 7380,
+   "bando": null,
+   "spiegazione": "Raccolto, esito null, nessun bando. Strumento di capitale di rischio. Il programma di smistamento prende gli annunci senza riga in smistamenti (LEFT JOIN, smista.py): non c e stata una decisione sbagliata, lo smistamento non e ancora passato su questi annunci raccolti il 25/09 20:11."
+  },
+  {
+   "titolo": "LOMBARDIA VENTURE",
+   "url": "https://finlombarda.it/it/prodotti-e-servizi/prodotti-servizi/88/lombardia-venture",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Nelle pagine 2+ del filtro AJAX, mai lette."
+  },
+  {
+   "titolo": "AGRIFOOD BASKET BOND",
+   "url": "https://finlombarda.it/it/prodotti-e-servizi/prodotti-servizi/176/agrifood-basket-bond",
+   "esito": "perso_smistamento",
+   "annuncio": 7382,
+   "bando": null,
+   "spiegazione": "Raccolto, esito null, nessun bando. Il programma di smistamento prende gli annunci senza riga in smistamenti (LEFT JOIN, smista.py): non c e stata una decisione sbagliata, lo smistamento non e ancora passato su questi annunci raccolti il 25/09 20:11."
+  },
+  {
+   "titolo": "BASKET BOND LOMBARDIA",
+   "url": "https://finlombarda.it/it/prodotti-e-servizi/prodotti-servizi/148/basket-bond-lombardia",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Nelle pagine 2+ del filtro AJAX, mai lette."
+  },
+  {
+   "titolo": "PIU' CREDITO",
+   "url": "https://finlombarda.it/it/prodotti-e-servizi/prodotti-servizi/161/piu-credito",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Nella pagina 1 del filtro AJAX ma scartato per titolo corto."
+  },
+  {
+   "titolo": "PLAIN VANILLA",
+   "url": "https://finlombarda.it/it/prodotti-e-servizi/prodotti-servizi/46/plain-vanilla",
+   "esito": "fuori_perimetro",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Non raccolto (pagina 1 titolo corto o pagine 2+), ma Finanziamento Finlombarda da risorse proprie (anche provvista BEI) a tasso base piu spread deciso in istruttoria, da 150 mila a 15 milioni: prestito a condizioni di mercato, nessun elemento agevolato. Verificato sulla scheda il 27/09."
+  },
+  {
+   "titolo": "ANTICIPO CONTRIBUTI",
+   "url": "https://finlombarda.it/it/prodotti-e-servizi/prodotti-servizi/158/anticipo-contributi",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Nelle pagine 2+ del filtro AJAX, mai lette."
+  },
+  {
+   "titolo": "CREDITO ADESSO LOMBARDIA FACTORING",
+   "url": "https://finlombarda.it/it/prodotti-e-servizi/prodotti-servizi/157/credito-adesso-lombardia-factoring",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Nelle pagine 2+ del filtro AJAX, mai lette."
+  },
+  {
+   "titolo": "MINIBOND",
+   "url": "https://finlombarda.it/it/prodotti-e-servizi/prodotti-servizi/60/minibond",
+   "esito": "fuori_perimetro",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Non raccolto (pagina 1 titolo corto o pagine 2+), ma Finlombarda sottoscrive minibond di societa di capitali (escluse micro) insieme ad altri investitori: strumento di mercato, non un aiuto. Verificato sulla scheda il 27/09."
+  },
+  {
+   "titolo": "CROWDFUNDING MINIBOND",
+   "url": "https://finlombarda.it/it/prodotti-e-servizi/prodotti-servizi/59/crowdfunding-minibond",
+   "esito": "fuori_perimetro",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Non raccolto (pagina 1 titolo corto o pagine 2+), ma Stessa natura di MINIBOND (sottoscrizione di minibond collocati via crowdfunding): strumento di mercato, non un aiuto. Scheda non riaperta, dedotto dal prodotto gemello."
+  },
+  {
+   "titolo": "SYNDICATED LOANS",
+   "url": "https://finlombarda.it/it/prodotti-e-servizi/prodotti-servizi/82/syndicated-loans",
+   "esito": "fuori_perimetro",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Non raccolto (pagina 1 titolo corto o pagine 2+), ma Partecipazione di Finlombarda a finanziamenti in pool fino a 15 milioni, anche per grandi imprese e operazioni di M&A: strumento di mercato, non un aiuto. Verificato sulla scheda il 27/09."
+  },
+  {
+   "titolo": "TERTIUM",
+   "url": "https://finlombarda.it/it/prodotti-e-servizi/prodotti-servizi/178/tertium",
+   "esito": "fermato_giustamente",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Chiuso il 07/09/2026. Non raccolto (catalogo chiusi nelle pagine successive), ma non avere la scheda di un bando chiuso non e' una perdita per i clienti."
+  },
+  {
+   "titolo": "BANDO DISTRETTI DEL COMMERCIO 2026",
+   "url": "https://finlombarda.it/it/prodotti-e-servizi/prodotti-servizi/177/bando-distretti-del-commercio-2026",
+   "esito": "fermato_giustamente",
+   "annuncio": 7379,
+   "bando": null,
+   "spiegazione": "Raccolto, esito null, nessun bando. Sportello chiuso il 31/07/2026 (domanda dei Comuni capofila): che non abbia scheda e' corretto, anche se per caso (non e' mai stato smistato). Verificato il 27/09: domande dal 24/03/2026 al 31/07/2026, beneficiari diretti Comuni/Comunita Montane/Unioni di Comuni, le MPMI solo indirette tramite bandi comunali."
+  }
+ ],
+ "smistamento": [
+  {
+   "annuncio": 7373,
+   "regole": "null (non smistato)",
+   "haiku": "rilevante",
+   "opus": "rilevante",
+   "giusto": "rilevante",
+   "errore_regole": "nessuno",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Cofinanziamenti a imprese agricole. Le regole non hanno mai deciso (esito null): nessuna decisione sbagliata, ma di fatto l'annuncio resta fermo."
+  },
+  {
+   "annuncio": 7374,
+   "regole": "null (non smistato)",
+   "haiku": "rilevante",
+   "opus": "rilevante",
+   "giusto": "rilevante",
+   "errore_regole": "nessuno",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Contributi a startup innovative. Regole non eseguite."
+  },
+  {
+   "annuncio": 7375,
+   "regole": "null (non smistato)",
+   "haiku": "non_rilevante",
+   "opus": "non_rilevante",
+   "giusto": "non_rilevante",
+   "errore_regole": "nessuno",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Finanziamento agli enti di formazione IeFP, non alle imprese."
+  },
+  {
+   "annuncio": 7376,
+   "regole": "null (non smistato)",
+   "haiku": "non_rilevante",
+   "opus": "non_rilevante",
+   "giusto": "non_rilevante",
+   "errore_regole": "nessuno",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Contributi agli IRCCS (istituti di ricerca sanitaria), non imprese."
+  }
+ ],
+ "preliminare": [],
+ "osservazioni": [
+  "Nessuno dei 13 annunci raccolti (25/09 20:11) e' stato smistato: esito null su tutti, quindi zero bandi e zero schede per la fonte. Va capito perche' lo smistamento a regole non li ha presi (fonte aggiunta dopo l'ultimo giro? filtro per piattaforma?).",
+  "Il registro legge solo page=1 del filtro AJAX (feed_url con page=1 fisso): il catalogo imprese ha piu' pagine (18 schede per pagina, ordinate per stato), quindi i prodotti aperti in pagina 2 (Linea Sviluppo Aziendale, Lombardia Venture, Basket Bond, Anticipo Contributi, Factoring, Minibond...) non vengono mai visti. Serve la paginazione.",
+  "Anche nella pagina 1 si perdono 5 schede su 18 (Plain Vanilla, Microcredito, Brevetti 2023, Rafforza & Innova, Piu' Credito): html_in_json passa per estrai_link, che scarta i link con testo corto. Per questa fonte i titoli brevi sono veri prodotti; serve un selettore o una soglia diversa.",
+  "pubblicato_il e' null per tutti gli annunci (le date sono solo nelle schede di dettaglio): la plancia non puo' mostrare una data di ultimo record sensata per questa fonte.",
+  "Il catalogo tiene 'Aperto' prodotti chiusi (Distretti del Commercio chiuso il 31/07/2026) e mescola strumenti di mercato (Plain Vanilla, Minibond, Syndicated Loans) con agevolazioni vere: il preliminare dovra' leggere la scheda, non lo stato del catalogo.",
+  "Nella richiesta di verifica ho usato per errore uno User-Agent con indirizzo finlombarda.it invece di finanzagevolata.qiaro.it (una sola richiesta).",
+  "Verifica di riserva 27/09: pagine 1 e 2 del filtro AJAX riscaricate con curl, contenuto identico a quanto descritto (18 schede per pagina, 13 raccolte su 18 in pagina 1; i 5 scartati hanno titoli di 11-17 caratteri contro la soglia LUNGHEZZA_MINIMA_TITOLO = 18 in app/raccolta/lettori/html.py).",
+  "La pagina indice ha solo i filtri scope=1 (imprese), 2 e 3 (altri destinatari) e le voci di menu del sito: nessuna sezione per imprese dimenticata dall esploratore.",
+  "Restano di natura discutibile anche PIU CREDITO, PIU CREDITO AGRICOLTURA, ANTICIPO CONTRIBUTI e L.A.N.D. (co-finanziamenti Finlombarda con banche): li lascio nel perimetro perche Haiku e Opus giudicano rilevante il prodotto gemello Piu Credito Agricoltura e la fonte e una finanziaria regionale, ma il tasso agevolato non e stato verificato."
+ ],
+ "correzioni": [
+  {
+   "caso": "PLAIN VANILLA",
+   "prima": "perso_non_raccolto",
+   "dopo": "fuori_perimetro",
+   "perche": "Finanziamento Finlombarda da risorse proprie (anche provvista BEI) a tasso base piu spread deciso in istruttoria, da 150 mila a 15 milioni: prestito a condizioni di mercato, nessun elemento agevolato. Verificato sulla scheda il 27/09."
+  },
+  {
+   "caso": "MINIBOND",
+   "prima": "perso_non_raccolto",
+   "dopo": "fuori_perimetro",
+   "perche": "Finlombarda sottoscrive minibond di societa di capitali (escluse micro) insieme ad altri investitori: strumento di mercato, non un aiuto. Verificato sulla scheda il 27/09."
+  },
+  {
+   "caso": "CROWDFUNDING MINIBOND",
+   "prima": "perso_non_raccolto",
+   "dopo": "fuori_perimetro",
+   "perche": "Stessa natura di MINIBOND (sottoscrizione di minibond collocati via crowdfunding): strumento di mercato, non un aiuto. Scheda non riaperta, dedotto dal prodotto gemello."
+  },
+  {
+   "caso": "SYNDICATED LOANS",
+   "prima": "perso_non_raccolto",
+   "dopo": "fuori_perimetro",
+   "perche": "Partecipazione di Finlombarda a finanziamenti in pool fino a 15 milioni, anche per grandi imprese e operazioni di M&A: strumento di mercato, non un aiuto. Verificato sulla scheda il 27/09."
+  },
+  {
+   "caso": "BREVETTI 2023",
+   "prima": "perso_non_raccolto, scadenza non verificata",
+   "dopo": "perso_non_raccolto confermato, aperto fino al 25/02/2027",
+   "perche": "Letta la scheda di dettaglio il 27/09."
+  }
+ ],
+ "fiducia": "media"
+}

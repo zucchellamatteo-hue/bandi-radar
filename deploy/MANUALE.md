@@ -1,6 +1,6 @@
 # Bandi Radar: manuale del server
 
-*Aggiornato al 24/09/2026, Fase 3 (smistamento e allegati, senza IA). Per i dettagli passo-passo vedi `deploy/README.md`.*
+*Aggiornato al 26/09/2026, Fase 3 (bandi, pagine ufficiali, allegati e prime schede in produzione). Per i dettagli passo-passo vedi `deploy/README.md`.*
 
 ## 1. Cosa c'è sul server
 
@@ -97,6 +97,23 @@ cd /srv/bandi-radar && sudo -u deploy docker compose run --rm raccolta python -m
 cd /srv/bandi-radar && sudo -u deploy docker compose run --rm raccolta python -m app.schede.allegati --annuncio 123  # la pagina di un annuncio, come prima
 ```
 **Stato dei bandi**: aperto, chiuso o in arrivo lo calcola il sistema dalle date della scheda, da solo, una volta al giorno (nel servizio `raccolta`). Ogni cambio resta nello storico del bando. A mano: `cd /srv/bandi-radar && sudo -u deploy docker compose run --rm raccolta python -m app.schede.stato`.
+
+### Dagli annunci ai bandi (deduplica e pagina ufficiale)
+
+Lanciati in produzione per la prima volta il 26/09/2026; per ora a mano, dopo lo smistamento. Si possono rilanciare quando si vuole: rifanno solo il lavoro nuovo.
+```
+cd /srv/bandi-radar && sudo -u deploy docker compose run --rm raccolta python -m app.schede.bandi --prova --esempi 20   # solo guardare
+cd /srv/bandi-radar && sudo -u deploy docker compose run --rm raccolta python -m app.schede.bandi                      # collega gli annunci rilevanti ai bandi
+cd /srv/bandi-radar && sudo -u deploy docker compose run --rm raccolta python -m app.schede.pagina_ufficiale           # pagina ufficiale, 100 bandi per giro
+cd /srv/bandi-radar && sudo -u deploy docker compose run --rm raccolta python -m app.schede.pagina_ufficiale --rifai-non-trovati
+```
+Poi gli allegati (sotto). Dentro `psql`, per vedere a che punto si è:
+```
+SELECT pagina_stato, (allegati_cercati_il IS NOT NULL) AS allegati, (dati IS NOT NULL) AS scheda, count(*) FROM bandi GROUP BY 1, 2, 3;
+SELECT stato, count(*) FROM bandi WHERE dati IS NOT NULL GROUP BY 1;     -- schede per stato (aperto, chiuso, in arrivo)
+```
+
+**Le schede del 26/09.** Le schede dei bandi raccolti fino al 26/09 le ha compilate la sessione di Claude Code, su tua richiesta, con gli stessi prompt e gli stessi controlli del programma: in `dati` hanno `"modello": "claude-code (sessione del 26/09/2026, senza API)"` e costo 0. I bandi fermati dal controllo preliminare (chiusi, edizioni vecchie, non per imprese) hanno solo `preliminare`, senza scheda. Dai bandi nuovi in poi le schede le fa l'API (sotto).
 
 ### L'IA (spenta finché non c'è la chiave)
 

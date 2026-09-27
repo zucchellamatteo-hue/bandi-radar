@@ -1,0 +1,75 @@
+{
+  "fonte": "provincia_lecco_bandi_contributi",
+  "raggiungibile": true,
+  "pagine_visitate": [
+    "https://www.provincia.lecco.it/robots.txt",
+    "https://www.provincia.lecco.it/documenti-e-dati/bandi/bandi-per-contributi/",
+    "https://www.provincia.lecco.it/documenti-e-dati/bandi/bandi-per-contributi/bandi-per-contributi-scaduti/",
+    "https://www.provincia.lecco.it/documento/bando-contributi-prevenzione-rischio-idrogeologico-per-fiumi-sicuri-2026/",
+    "https://www.provincia.lecco.it/argomenti/fiumi-sicuri/",
+    "https://www.provincia.lecco.it/documenti-e-dati/bandi/altri-bandi/",
+    "https://www.provincia.lecco.it/novita/avvisi/",
+    "https://www.provincia.lecco.it/?s=imprese",
+    "https://www.provincia.lecco.it/categorie-servizi/lavoro/",
+    "https://www.provincia.lecco.it/servizi/lavoro/page/2/",
+    "https://www.provincia.lecco.it/servizi/pagamenti-e-contributi/",
+    "https://www.provincia.lecco.it/servizio/dote-impresa-collocamento-mirato/",
+    "http://www.lavoro.provincia.lecco.it",
+    "https://www.lavoro.provincia.lecco.it/disabilita/informazioni-per-le-aziende/",
+    "https://www.lavoro.provincia.lecco.it/novita/avvisi/",
+    "https://www.lavoro.provincia.lecco.it/tutti-i-servizi/dettaglio/Dote-Impresa-Collocamento-mirato-00001/",
+    "https://www.provincia.lecco.it/wp-json/wp/v2/search?search=imprese&per_page=40",
+    "https://www.provincia.lecco.it/wp-json/wp/v2/posts?search=bando&after=2026-03-01T00:00:00&per_page=50",
+    "https://www.provincia.lecco.it/2026/07/15/collocamento-mirato-continua-lerogazione-della-dote-impresa-9/",
+    "https://www.provincia.lecco.it/2026/05/14/area-interna-lario-orientale-valle-san-martino-e-valle-imagna/",
+    "https://www.provincia.lecco.it/2026/03/14/paesaggi-rurali-storici-del-lecchese-bando-in-scadenza/",
+    "https://www.provincia.lecco.it/2026/07/31/bandi-regionali-per-la-prevenzione-del-rischio-sismico/"
+  ],
+  "totale_stimato": 1,
+  "note": "La pagina osservata 'Bandi per contributi' oggi (27/09/2026) dice 'Non sono disponibili contenuti in questa area': nessun bando per contributi aperto. L'archivio 'scaduti' contiene 9 bandi dal 2021 al 2026, tutti rivolti a Comuni/enti (Fiumi sicuri, barriere architettoniche, centri raccolta rifiuti, decoro urbano); l'unico degli ultimi 6 mesi e' Fiumi sicuri 2026 (1/6-11/7/2026), con 35 domande tutte da Comuni. L'unica misura per imprese dell'ente e' la Dote Impresa Collocamento mirato (incentivi alle assunzioni di persone con disabilita', ausili, cooperative sociali di tipo B), che NON compare nella sezione bandi per contributi ma nelle pagine Servizi/Lavoro, nelle notizie e sul portale dei Centri per l'impiego lavoro.provincia.lecco.it; avviso 2025/2026 a sportello dal 11/12/2025, domande su Bandi e Servizi di Regione Lombardia; il 15/07/2026 la Provincia ha comunicato che l'erogazione continua; la data di chiusura non e' indicata nelle pagine HTML (il PDF dell'avviso non e' stato letto perche' robots.txt vieta i .pdf). Il sito pubblica anche la rubrica mensile 'Seav: InformaBandi' (segnalazioni di bandi europei/regionali di terzi), non esaminata nel dettaglio. robots.txt rispettato (Crawl-delay 2, niente PDF); circa 29 richieste.",
+  "bandi": [
+    {
+      "titolo": "Dote Impresa Collocamento mirato - Avviso 2025/2026 (incentivi assunzione persone con disabilita', ausili, cooperative sociali tipo B)",
+      "url": "https://www.lavoro.provincia.lecco.it/tutti-i-servizi/dettaglio/Dote-Impresa-Collocamento-mirato-00001/",
+      "stato": "aperto",
+      "scadenza": null,
+      "per_imprese": "si",
+      "perche": "Beneficiari imprese e cooperative sociali con sede operativa in provincia di Lecco; procedura a sportello aperta dal 11/12/2025 e confermata attiva dalla notizia del 15/07/2026; pubblicata fuori dalla sezione bandi per contributi (scheda servizio https://www.provincia.lecco.it/servizio/dote-impresa-collocamento-mirato/)."
+    },
+    {
+      "titolo": "Premio paesaggi rurali storici 2026 (Associazione PRIS, segnalato dalla Provincia)",
+      "url": "https://www.provincia.lecco.it/2026/03/14/paesaggi-rurali-storici-del-lecchese-bando-in-scadenza/",
+      "stato": "chiuso_recente",
+      "scadenza": "2026-03-27",
+      "per_imprese": "incerto",
+      "perche": "Premio nazionale di un'associazione terza, aperto anche ad aziende agricole; e' solo segnalato nelle notizie della Provincia e non e' chiaro se preveda un contributo economico; al limite dei 6 mesi."
+    }
+  ],
+  "esclusi": [
+    {
+      "titolo": "Bando contributi prevenzione rischio idrogeologico per Fiumi sicuri 2026",
+      "url": "https://www.provincia.lecco.it/documento/bando-contributi-prevenzione-rischio-idrogeologico-per-fiumi-sicuri-2026/",
+      "perche": "Chiuso l'11/07/2026; contributi per attivita' addestrative di protezione civile, domande presentate da 35 Comuni (enti pubblici/volontariato), non imprese."
+    },
+    {
+      "titolo": "Bandi regionali per la prevenzione del rischio sismico (segnalazione della Provincia)",
+      "url": "https://www.provincia.lecco.it/2026/07/31/bandi-regionali-per-la-prevenzione-del-rischio-sismico/",
+      "perche": "Bandi di Regione Lombardia per Comuni e soggetti pubblici proprietari di edifici strategici, scadenza 30/10/2026; non per imprese."
+    },
+    {
+      "titolo": "Area Interna Lario Orientale-Valle San Martino e Valle Imagna (Strategia d'area)",
+      "url": "https://www.provincia.lecco.it/2026/05/14/area-interna-lario-orientale-valle-san-martino-e-valle-imagna/",
+      "perche": "Notizia sull'accordo regionale (14,4 milioni) che cita le MPMI tra i beneficiari futuri, ma non e' un bando: nessun avviso pubblicato dalla Provincia."
+    },
+    {
+      "titolo": "Bando gestione rotatorie lungo le strade provinciali",
+      "url": "https://www.provincia.lecco.it/2026/05/07/bando-gestione-rotatorie-lungo-le-strade-provinciali/",
+      "perche": "Affidamento in gestione/sponsorizzazione di rotatorie, non un'agevolazione; pagina non aperta, valutato dal titolo."
+    },
+    {
+      "titolo": "Vendita automezzi di proprieta' provinciale",
+      "url": "https://www.provincia.lecco.it/documento/vendita-automezzi-di-proprieta-provinciale-4/",
+      "perche": "Alienazione di beni (sezione Altri bandi, scadenza 29/09/2026), non un contributo."
+    }
+  ]
+}

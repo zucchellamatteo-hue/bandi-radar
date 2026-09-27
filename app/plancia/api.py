@@ -92,7 +92,7 @@ def elenco_fonti() -> list[dict]:
         u = ultimi.get(f["id"])
         n = novita.get(f["id"])
         stato = semaforo.calcola(f["frequenza"], f["stato"], f["in_pausa"], list(s["esiti"]) if s else [],
-                                 n["ultima_trovata"] if n else None, adesso)
+                                 n["ultima_trovata"] if n else None, adesso, u["elementi_letti"] if u else None)
         risultato.append({
             **{k: f[k] for k in ("id", "nome", "ente", "tipo", "territorio", "url", "modalita", "frequenza", "stato", "in_pausa", "piattaforma")},
             "colore": stato.colore, "motivo": stato.motivo,

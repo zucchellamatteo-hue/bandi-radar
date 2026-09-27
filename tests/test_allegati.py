@@ -191,3 +191,27 @@ def test_non_prende_i_documenti_di_menu_e_pie_di_pagina_del_sito():
       <section id="4-blocchi-footer"><a href="/documenti/codice univoco.PDF">Codice destinatario fatture</a></section>
     </body></html>"""
     assert [c.url for c in trova_allegati(html, "https://x.it/bando")] == ["https://x.it/uploads/regolamento.pdf"]
+
+
+def test_link_con_indirizzo_malformato_non_ferma_il_bando(tmp_path):
+    # Un nome di sito con un'etichetta oltre 63 caratteri: il trasporto vero fallisce con UnicodeError (codifica idna).
+    lungo = "x" * 70
+    pagina = f'<a href="/doc/bando.pdf">Bando</a> <a href="https://{lungo}.it/doc/altro.pdf">Altro</a>'
+    client = client_finto({"/b": httpx.Response(200, html=pagina),
+                           "/doc/bando.pdf": httpx.Response(200, content=PDF, headers={"content-type": "application/pdf"})})
+    risponde = client._transport.handler
+
+    def come_il_trasporto_vero(request):
+        if len(request.url.host.split(".")[0]) > 63:
+            raise UnicodeError("encoding with 'idna' codec failed (UnicodeError: label too long)")
+        return risponde(request)
+
+    client._transport.handler = come_il_trasporto_vero
+    risultati = elabora_annuncio(client, 3, "https://ente.it/b", tmp_path, Pausa(client, minima=0, dormi=lambda s: None))
+    per_url = {r.url.rsplit("/", 1)[-1]: r for r in risultati}
+    assert per_url["bando.pdf"].errore is None
+    assert per_url["altro.pdf"].errore.startswith("indirizzo non valido")
+
+
+def test_testo_senza_caratteri_che_postgres_rifiuta():
+    assert allegati._senza_nul("a\x00b\udd00c") == "abc"

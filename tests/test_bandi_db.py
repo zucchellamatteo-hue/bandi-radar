@@ -10,6 +10,23 @@ import pytest
 pytestmark = pytest.mark.skipif(not os.environ.get("PGHOST"), reason="serve un database Postgres di prova (PGHOST)")
 
 
+_ANNUNCI_PROVA = "SELECT id FROM annunci WHERE starts_with(fonte_id, 'prova_')"
+
+
+def _pulisci(cur) -> None:
+    """Cancella solo le righe di prova (fonti prova_*, i loro annunci e i bandi nati da loro), mai dati veri."""
+    cur.execute(f"""SELECT id FROM bandi WHERE annuncio_id IN ({_ANNUNCI_PROVA})
+                    OR id IN (SELECT bando_id FROM annunci WHERE starts_with(fonte_id, 'prova_') AND bando_id IS NOT NULL)""")
+    bandi = [r["id"] for r in cur.fetchall()]
+    cur.execute(f"DELETE FROM bandi_dubbi WHERE annuncio_id IN ({_ANNUNCI_PROVA}) OR bando_id = ANY(%s)", (bandi,))
+    cur.execute(f"DELETE FROM allegati WHERE annuncio_id IN ({_ANNUNCI_PROVA}) OR bando_id = ANY(%s)", (bandi,))
+    cur.execute("UPDATE annunci SET bando_id = NULL WHERE starts_with(fonte_id, 'prova_')")
+    cur.execute("DELETE FROM bandi WHERE id = ANY(%s)", (bandi,))
+    cur.execute(f"DELETE FROM smistamenti WHERE annuncio_id IN ({_ANNUNCI_PROVA})")
+    cur.execute("DELETE FROM annunci WHERE starts_with(fonte_id, 'prova_')")
+    cur.execute("DELETE FROM fonti WHERE starts_with(id, 'prova_')")
+
+
 @pytest.fixture()
 def conn():
     from app.db.connessione import connetti
@@ -18,8 +35,12 @@ def conn():
     with connetti() as c:
         applica_migrazioni(c)
         with c.cursor() as cur:
-            cur.execute("DELETE FROM bandi_dubbi; UPDATE annunci SET bando_id = NULL; DELETE FROM allegati; DELETE FROM bandi;"
-                        "DELETE FROM smistamenti; DELETE FROM annunci WHERE fonte_id LIKE 'prova_%'; DELETE FROM fonti WHERE id LIKE 'prova_%'")
+            # La deduplica lavora su tutti gli annunci rilevanti: con dati veri nel database i conteggi non
+            # tornerebbero. Meglio saltare che toccare un database che non e' di prova.
+            cur.execute("SELECT count(*) AS n FROM annunci WHERE NOT starts_with(fonte_id, 'prova_')")
+            if cur.fetchone()["n"]:
+                pytest.skip("il database contiene annunci veri: questi test vogliono un database di prova vuoto")
+            _pulisci(cur)
             cur.execute("""INSERT INTO fonti (id, nome, ente, tipo, territorio, modalita, frequenza, stato) VALUES
                 ('prova_camera', 'Camera', 'Camera di Commercio di Modena', 'camera', 'EMR', 'html', 'settimanale', 'attiva'),
                 ('prova_catalogo', 'Catalogo', 'MIMIT (incentivi.gov.it)', 'nazionale', 'ITA', 'api', 'giornaliera', 'attiva')""")
@@ -40,8 +61,7 @@ def conn():
         c.commit()
         yield c
         with c.cursor() as cur:
-            cur.execute("DELETE FROM bandi_dubbi; UPDATE annunci SET bando_id = NULL; DELETE FROM allegati; DELETE FROM bandi;"
-                        "DELETE FROM smistamenti; DELETE FROM annunci WHERE fonte_id LIKE 'prova_%'; DELETE FROM fonti WHERE id LIKE 'prova_%'")
+            _pulisci(cur)
         c.commit()
 
 

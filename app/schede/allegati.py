@@ -283,9 +283,13 @@ def estrai_testo(percorso: Path, tipo: str) -> str | None:
     return _senza_nul(testo)[:MASSIMO_TESTO] if testo else None
 
 
+_SURROGATI = re.compile(r"[\ud800-\udfff]")
+
+
 def _senza_nul(testo: str) -> str:
-    """Postgres non accetta il carattere nullo nei testi: alcuni PDF della PA lo contengono."""
-    return testo.replace("\x00", "")
+    """Postgres non accetta il carattere nullo nei testi, e l'UTF-8 non accetta i "surrogati" isolati:
+    alcuni PDF della PA contengono l'uno o gli altri (Calabria Europa, 26/09/2026)."""
+    return _SURROGATI.sub("", testo.replace("\x00", ""))
 
 
 def _copia_pagina(risposta: httpx.Response, url: str, cartella: Path, cartella_annuncio: Path) -> Risultato:
@@ -471,6 +475,10 @@ def elabora_pagina(client: httpx.Client, sottocartella: str, url_pagina: str, ca
             continue
         except httpx.HTTPError as exc:
             r.errore = f"{type(exc).__name__}: {str(exc)[:200]}"
+            continue
+        except (httpx.InvalidURL, ValueError) as exc:   # link malformato (es. nome del sito troppo lungo): solo questo file
+            temporaneo.unlink(missing_ok=True)
+            r.errore = f"indirizzo non valido: {str(exc)[:150]}"
             continue
         if c.tipo in ("faq", "file") and mime in TIPI_MIME:
             r.tipo = TIPI_MIME[mime]          # la "FAQ" o il link senza estensione e' un documento (es. un PDF)

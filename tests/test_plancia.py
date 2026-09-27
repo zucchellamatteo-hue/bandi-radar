@@ -27,6 +27,13 @@ def test_semaforo_giallo_con_un_errore_o_silenzio_o_mai_controllata():
     assert calcola("mensile", "attiva", False, [], None, ADESSO).colore == "giallo"
 
 
+def test_semaforo_fonte_che_risponde_ma_non_legge_nulla():
+    s = calcola("settimanale", "attiva", False, ["ok"], None, ADESSO, elementi_ultimo=0)
+    assert s.colore == "giallo" and "non si legge nulla" in s.motivo
+    s = calcola("settimanale", "attiva", False, ["ok"], None, ADESSO, elementi_ultimo=5)
+    assert s.motivo == "nessuna novita' trovata finora"
+
+
 def test_semaforo_pausa():
     assert calcola("mensile", "attiva", True, ["ok"], ADESSO, ADESSO).colore == "pausa"
     assert calcola("mensile", "esclusa", False, [], None, ADESSO).colore == "pausa"

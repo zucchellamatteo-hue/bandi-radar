@@ -1,0 +1,18 @@
+{"fonte": "mcc_fondo_garanzia_news", "raggiungibile": true,
+ "pagine_visitate": [
+  "https://www.fondidigaranzia.it/archivio-delle-news/",
+  "https://www.fondidigaranzia.it/il-fondo-di-garanzia-apre-agli-enti-del-terzo-settore-e-agli-enti-religiosi/",
+  "https://www.fondidigaranzia.it/al-via-la-nuova-sezione-per-la-provincia-di-taranto-e-il-sulcis-iglesiente/",
+  "https://www.fondidigaranzia.it/tutte-le-sezioni/"],
+ "totale_stimato": 3,
+ "note": "La fonte e' un archivio di news (8 pagine, 25 per pagina circa) del Fondo di Garanzia PMI (MCC per MIMIT): non pubblica bandi a scadenza ma strumenti a sportello sempre aperti (sezioni speciali) e avvisi tecnici (tassi di riferimento, ESL, fattore di rischio). Negli ultimi 6 mesi (dal 26/03/2026) ci sono 5 news: 21/09 sezione Terzo settore, 17/09 nuovo sito, 28/07 sezione JTF Taranto/Sulcis, 23/06 tasso di riferimento 3,71%, 12/05 fattore di rischio. Solo la sezione JTF e' una misura nuova per imprese; la sezione Terzo settore e' ambigua (enti RUNTS non iscritti al REA, quindi non imprese). Le altre sezioni speciali regionali (Marche, Trento, Sicilia, Emilia-Romagna, Piemonte, Veneto, Riserva PN RIC) risultano attive nella pagina Tutte le sezioni ma non sono state annunciate negli ultimi 6 mesi (news tra 2024 e 2025); ne elenco solo la Riserva PN RIC come esempio di strumento aperto. Nota: WebFetch mostra i link con dominio fondodigaranzia.it, curl conferma fondidigaranzia.it (usato qui). Nessuna scadenza indicata per le misure.",
+ "bandi": [
+  {"titolo": "Fondo di garanzia: sezione speciale Just Transition Fund 2021-2027 per provincia di Taranto e Sulcis Iglesiente", "url": "https://www.fondidigaranzia.it/al-via-la-nuova-sezione-per-la-provincia-di-taranto-e-il-sulcis-iglesiente/", "stato": "aperto", "scadenza": null, "per_imprese": "si", "perche": "Garanzia diretta 80% e riassicurazione 90% per PMI e professionisti dei due territori, dotazione 80 milioni, operativa dal 28/07/2026."},
+  {"titolo": "Fondo di garanzia: sezione speciale Enti del Terzo settore ed enti religiosi", "url": "https://www.fondidigaranzia.it/il-fondo-di-garanzia-apre-agli-enti-del-terzo-settore-e-agli-enti-religiosi/", "stato": "aperto", "scadenza": null, "per_imprese": "incerto", "perche": "Garanzia gratuita 80% fino a 60.000 euro per operazione, dotazione 10 milioni, dal 21/09/2026; riguarda enti RUNTS non iscritti al REA ed enti religiosi, quindi non imprese in senso stretto (possibile interesse per enti con attivita' economica)."},
+  {"titolo": "Fondo di garanzia: riserva speciale PN Ricerca, innovazione e competitivita' per la transizione verde e digitale 2021-2027 (Mezzogiorno)", "url": "https://www.fondidigaranzia.it/sezioni-del-fondo/riserva-speciale-programma-nazionale-ricerca-innovazione-e-competitivita-per-la-transizione-verde-e-digitale-2021-2027/", "stato": "aperto", "scadenza": null, "per_imprese": "si", "perche": "Riserva per imprese del Mezzogiorno indicata come attiva nella pagina delle sezioni; annunciata prima del periodo di 6 mesi (news 2024)."}
+ ],
+ "esclusi": [
+  {"titolo": "Tasso di riferimento al 3,71%, nuova ESL per la garanzia (23/06/2026)", "url": "https://www.fondidigaranzia.it/tasso-di-riferimento-al-371-nuova-esl-per-la-garanzia-2/", "perche": "Avviso tecnico sul calcolo dell'aiuto, non un bando."},
+  {"titolo": "Varia il fattore di rischio, nuova ESL per la garanzia (12/05/2026)", "url": "https://www.fondidigaranzia.it/varia-il-fattore-di-rischio-nuova-esl-per-la-garanzia-6/", "perche": "Avviso tecnico, non un bando."},
+  {"titolo": "Online il nuovo sito del Fondo di garanzia (17/09/2026)", "url": "https://www.fondidigaranzia.it/online-il-nuovo-sito-del-fondo-di-garanzia-con-il-primo-logo-ufficiale/", "perche": "Notizia istituzionale."}
+ ]}

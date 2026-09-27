@@ -1,0 +1,426 @@
+{
+ "fonte": "unioncamere_lombardia_bandi_aperti",
+ "perimetro": [
+  {
+   "titolo": "Bando SI4.0 2026",
+   "url": "https://www.unioncamerelombardia.it/bandi-e-incentivi-alle-imprese/dettaglio-bando/bando-si40-2026",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "E' la prima scheda della pagina stato=2 (ricontrollato il 27/09 con curl). Aperto il 24/09, giorno della raccolta (sportello dalle 14 del 1/9 alle 12 del 25/09/2026, verificato sulla pagina del bando). Causa ora identificata: il titolo 'Bando SI4.0 2026' ha 16 caratteri, sotto la soglia LUNGHEZZA_MINIMA_TITOLO=18 di app/raccolta/lettori/html.py; anche il titolo della scheda (h2) e' lo stesso testo corto, quindi il link del titolo e il link 'Dettaglio' vengono scartati. Al suo posto e' stato registrato solo il filtro ?argomento=18 della stessa scheda (annuncio 257). In Radar esiste solo l'annuncio 59 di Bergamo (SI4.0 edizione camerale, da_rivedere, senza bando): nessuna scheda SI4.0. Ora chiuso, danno pratico limitato."
+  },
+  {
+   "titolo": "Bando Export su Misura 2026",
+   "url": "https://www.unioncamerelombardia.it/bandi-e-incentivi-alle-imprese/dettaglio-bando/bando-export-su-misura-2026",
+   "esito": "trovato_con_scheda",
+   "annuncio": 258,
+   "bando": 822,
+   "spiegazione": "Annuncio 258 rilevante per regole, collegato come doppione al bando 822 (origine annuncio 2585 di altra fonte); pagina trovata con testo ufficiale, preliminare aperto, scheda presente."
+  },
+  {
+   "titolo": "Riconoscimento \"Qualita' Artigiana\" 2026",
+   "url": "https://www.unioncamerelombardia.it/bandi-e-incentivi-alle-imprese/dettaglio-bando/riconoscimento-qualita-artigiana-2026",
+   "esito": "fermato_giustamente",
+   "annuncio": 261,
+   "bando": null,
+   "spiegazione": "Raccolto (annuncio 261, da_rivedere per le regole). La pagina dice esplicitamente 'Non sono previsti contributi a fondo perduto ma la sola concessione del Riconoscimento': non e' un aiuto economico, quindi non schedarlo e' giusto (Haiku e Opus lo scartano)."
+  },
+  {
+   "titolo": "Bando Contributi per la partecipazione delle PMI alle fiere internazionali in Lombardia - Secondo Sportello",
+   "url": "https://www.unioncamerelombardia.it/bandi-e-incentivi-alle-imprese/dettaglio-bando/bando-contributi-per-la-partecipazione-delle-pmi-alle-fiere-internazionali-in-lombardia-secondo-sportello",
+   "esito": "perso_deduplica_o_dubbio",
+   "annuncio": 262,
+   "bando": null,
+   "spiegazione": "Confermato perso in deduplica: l'annuncio 262 (rilevante) e' fermo in bandi_dubbi (id 71) contro il bando SBAGLIATO 315 ('MPMI a fiere internazionali in forma aggregata 2026-2028', somiglianza 0.72), senza decisione. Il bando giusto esiste gia' in Radar: 459, dall'API anagrafica di Regione Lombardia (RLO12026055023, secondo sportello). Per questa fonte resta una perdita; a livello di sistema il bando c'e' (459), ma il suo preliminare in produzione dice 'grandi eventi sportivi, enti sportivi, non imprese', cosa che non torna col titolo: da ricontrollare a parte (fuori da questa fonte)."
+  },
+  {
+   "titolo": "Bando Contributi per la partecipazione delle MPMI a fiere internazionali in forma aggregata - edizione 2026-2028",
+   "url": "https://www.unioncamerelombardia.it/bandi-e-incentivi-alle-imprese/dettaglio-bando/bando-contributi-per-la-partecipazione-delle-mpmi-a-fiere-internazionali-in-forma-aggregata-edizione-2026-2028",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Aperto (scadenza 30/09/2027) ma sta nelle pagine 2-4 dell'elenco (?pagina=N&stato=2): il lettore legge solo la prima pagina (4 schede) e non segue la paginazione. Per questa fonte perso; in Radar esiste comunque come bando 315 (aperto, 30/09/2027) da lombardia_anagrafica_bandi_api."
+  },
+  {
+   "titolo": "Manifestazione interesse per sviluppo filiere produttive ed ecosistemi industriali",
+   "url": "https://www.unioncamerelombardia.it/bandi-e-incentivi-alle-imprese/dettaglio-bando/manifestazione-interesse-per-sviluppo-filiere-produttive-ed-ecosistemi-industriali-scadenza-31-dicembre-2023",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Pagine 2-4 non lette. Per_imprese incerto (manifestazione di interesse, contributo diretto non verificato)."
+  },
+  {
+   "titolo": "Manifestazione di Interesse per l'Ospitalita' di Personale Marocchino nel Settore Meccatronica (THAMM+)",
+   "url": "https://www.unioncamerelombardia.it/bandi-e-incentivi-alle-imprese/dettaglio-bando/manifestazione-di-interesse-per-lospitalita-di-personale-marocchino-nel-settore-meccatronica-nellambito-del-progetto-thamm",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Pagine 2-4 non lette. Per_imprese incerto, probabilmente senza contributo economico: perdita di poco conto."
+  },
+  {
+   "titolo": "Bando Sviluppo edilizia sostenibile ed innovativa in Lombardia - EDIL-SOS Lombardia",
+   "url": "https://www.unioncamerelombardia.it/bandi-e-incentivi-alle-imprese/dettaglio-bando/bando-sviluppo-edilizia-sostenibile-ed-innovativa-in-lombardia-edil-sos-lombardia",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Aperto (scadenza 30/09/2026) ma nelle pagine 2-4 non lette dal lettore."
+  },
+  {
+   "titolo": "Bando Nuova Impresa 2026",
+   "url": "https://www.unioncamerelombardia.it/bandi-e-incentivi-alle-imprese/dettaglio-bando/bando-nuova-impresa-2026",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Aperto (scadenza 29/01/2027) ma nelle pagine 2-4 non lette. In Radar esiste da altra fonte (bando 250, Camera Como-Lecco, aperto)."
+  },
+  {
+   "titolo": "Bando Nuova Impresa - PICCOLI COMUNI E FRAZIONI 2026",
+   "url": "https://www.unioncamerelombardia.it/bandi-e-incentivi-alle-imprese/dettaglio-bando/bando-nuova-impresa-piccoli-comuni-e-frazioni-2026",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Aperto (scadenza 12/11/2026) ma nelle pagine 2-4 non lette. In Radar esiste da altra fonte (bando 223, Regione Lombardia, aperto)."
+  },
+  {
+   "titolo": "Avviso Formazione continua FSE+ 2021-2027 - terza edizione",
+   "url": "https://www.unioncamerelombardia.it/bandi-e-incentivi-alle-imprese/dettaglio-bando/avviso-formazione-continua-fse-2021-2027-terza-edizione",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Aperto (scadenza 30/12/2026) ma nelle pagine 2-4 non lette. Paradosso: Radar ha schedato invece la notizia del 2022 sulla prima edizione (bando 33)."
+  },
+  {
+   "titolo": "Bando Check-up d'impresa",
+   "url": "https://www.unioncamerelombardia.it/bandi-e-incentivi-alle-imprese/dettaglio-bando/bando-check-up-dimpresa",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Aperto (scadenza 30/06/2027) ma nelle pagine 2-4 non lette."
+  },
+  {
+   "titolo": "Bando Verso la certificazione della parita' di genere - Annualita' 2025-2027",
+   "url": "https://www.unioncamerelombardia.it/bandi-e-incentivi-alle-imprese/dettaglio-bando/bando-verso-la-certificazione-della-parita-di-genere-annualita-2025-2027",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Aperto (scadenza 30/06/2027) ma nelle pagine 2-4 non lette."
+  },
+  {
+   "titolo": "Bando Voucher doppia transizione Lombardia 2026",
+   "url": "https://www.unioncamerelombardia.it/bandi-e-incentivi-alle-imprese/dettaglio-bando/bando-voucher-doppia-transizione-lombardia-2026",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Chiuso il 29/07/2026, prima che la fonte fosse osservata (raccolta dal 24/09); sta nell'elenco dei chiusi (stato=3) che la fonte non guarda. Perdita senza danno pratico."
+  },
+  {
+   "titolo": "Bando Rinnova Veicoli 2026-2027",
+   "url": "https://www.unioncamerelombardia.it/bandi-e-incentivi-alle-imprese/dettaglio-bando/bando-rinnova-veicoli-2026-2027",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Gia' tra i chiusi (stato=3) nonostante scadenza indicata 31/10/2026; la fonte osserva solo gli aperti. Senza danno pratico."
+  },
+  {
+   "titolo": "Avviso formazione propedeutica certificazione parita' di genere - II edizione",
+   "url": "https://www.unioncamerelombardia.it/bandi-e-incentivi-alle-imprese/dettaglio-bando/vviso-pubblico-per-la-partecipazione-al-programma-di-formazione-propedeutico-al-conseguimento-della-certificazione-della-parita-di-genere-ii-edizione",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Chiuso il 06/05/2026 (elenco chiusi, non osservato); per_imprese incerto (servizio formativo, non contributo). Senza danno."
+  },
+  {
+   "titolo": "Bando Imprese Storiche Verso il futuro 2026",
+   "url": "https://www.unioncamerelombardia.it/bandi-e-incentivi-alle-imprese/dettaglio-bando/bando-imprese-storiche-verso-il-futuro-2026",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Chiuso il 16/06/2026, elenco chiusi non osservato. Senza danno."
+  },
+  {
+   "titolo": "Competenze&Innovazione - seconda edizione",
+   "url": "https://www.unioncamerelombardia.it/bandi-e-incentivi-alle-imprese/dettaglio-bando/competenzeinnovazione-seconda-edizione",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Tra i chiusi (data effettiva non nota). Elenco chiusi non osservato. Senza danno."
+  },
+  {
+   "titolo": "Innovacultura - seconda edizione",
+   "url": "https://www.unioncamerelombardia.it/bandi-e-incentivi-alle-imprese/dettaglio-bando/innovacultura-2026",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Chiuso il 15/04/2026. Elenco chiusi non osservato. Senza danno."
+  },
+  {
+   "titolo": "Bando Export su Misura (edizione precedente)",
+   "url": "https://www.unioncamerelombardia.it/bandi-e-incentivi-alle-imprese/dettaglio-bando/bando-export-su-misura",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Chiuso il 29/05/2026; l'edizione 2026 e' schedata (822). Senza danno."
+  },
+  {
+   "titolo": "Bando lavoro inclusivo per le imprese e cooperative di tipo B",
+   "url": "https://www.unioncamerelombardia.it/bandi-e-incentivi-alle-imprese/dettaglio-bando/bando-lavoro-inclusivo-nelle-imprese-lombarde-rettificato-con-dgr-2732-dell8-luglio-2024",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Chiuso il 30/06/2026. Elenco chiusi non osservato. Senza danno."
+  },
+  {
+   "titolo": "Bando Fiere internazionali in Lombardia (primo sportello)",
+   "url": "https://www.unioncamerelombardia.it/bandi-e-incentivi-alle-imprese/dettaglio-bando/bando-fiere-internazionali-lombardia",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Chiuso il 20/07/2026; sostituito dal secondo sportello (annuncio 262). Senza danno."
+  }
+ ],
+ "smistamento": [
+  {
+   "annuncio": 257,
+   "regole": "da_rivedere",
+   "haiku": "non_rilevante",
+   "opus": "non_rilevante",
+   "giusto": "non_rilevante",
+   "errore_regole": "lieve",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Pagina di elenco filtrata per argomento (?argomento=18), non un bando."
+  },
+  {
+   "annuncio": 258,
+   "regole": "rilevante",
+   "haiku": "rilevante",
+   "opus": "rilevante",
+   "giusto": "rilevante",
+   "errore_regole": "nessuno",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Bando Export su Misura 2026, aperto, per MPMI."
+  },
+  {
+   "annuncio": 260,
+   "regole": "rilevante",
+   "haiku": "non_rilevante",
+   "opus": "non_rilevante",
+   "giusto": "non_rilevante",
+   "errore_regole": "lieve",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Pagina di elenco ?argomento=34 (filtro 'PMI' della scheda Export su Misura): il lettore, trovando il testo corto 'PMI', le ha dato il titolo della scheda che la contiene. Le regole hanno giudicato correttamente il titolo che ricevevano; l'errore nasce nel lettore. Nessun bando creato: lieve."
+  },
+  {
+   "annuncio": 261,
+   "regole": "da_rivedere",
+   "haiku": "non_rilevante",
+   "opus": "non_rilevante",
+   "giusto": "non_rilevante",
+   "errore_regole": "lieve",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Riconoscimento Qualita' Artigiana: la pagina dice che non ci sono contributi, solo iscrizione in elenco e kit."
+  },
+  {
+   "annuncio": 262,
+   "regole": "rilevante",
+   "haiku": "rilevante",
+   "opus": "rilevante",
+   "giusto": "rilevante",
+   "errore_regole": "nessuno",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Contributi a fondo perduto alle PMI per fiere, sportello aperto. Smistamento giusto, ma poi l'annuncio non e' stato collegato a un bando."
+  },
+  {
+   "annuncio": 263,
+   "regole": "rilevante",
+   "haiku": "rilevante",
+   "opus": "rilevante",
+   "giusto": "rilevante",
+   "errore_regole": "nessuno",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Notizia 2022 su un avviso per imprese (Formare per assumere): argomento pertinente; la vecchiaia la deve fermare il preliminare, come e' successo."
+  },
+  {
+   "annuncio": 264,
+   "regole": "rilevante",
+   "haiku": "rilevante",
+   "opus": "rilevante",
+   "giusto": "rilevante",
+   "errore_regole": "nessuno",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Notizia 2022 sull'avviso Formazione continua FSE+ per imprese: pertinente allo smistamento; va fermata dal preliminare (che invece in produzione l'ha fatta passare)."
+  },
+  {
+   "annuncio": 265,
+   "regole": "rilevante",
+   "haiku": "rilevante",
+   "opus": "rilevante",
+   "giusto": "rilevante",
+   "errore_regole": "nessuno",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Graduatoria (terzo elenco di imprese beneficiarie, rifinanziamento) di un bando regionale per imprese artigiane del 2022. Le istruzioni dello smistamento dicono esplicitamente che 'graduatorie ed esiti di bandi per imprese' sono rilevanti; la vecchiaia la gestiscono il collegamento (ruolo graduatoria, regola d'archivio) e il preliminare. Nessun bando creato."
+  },
+  {
+   "annuncio": 266,
+   "regole": "da_rivedere",
+   "haiku": "non_rilevante",
+   "opus": "non_rilevante",
+   "giusto": "non_rilevante",
+   "errore_regole": "lieve",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Voce di menu 'eventi'."
+  },
+  {
+   "annuncio": 267,
+   "regole": "da_rivedere",
+   "haiku": "non_rilevante",
+   "opus": "non_rilevante",
+   "giusto": "non_rilevante",
+   "errore_regole": "lieve",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Pagina istituzionale 'chi siamo'."
+  },
+  {
+   "annuncio": 268,
+   "regole": "da_rivedere",
+   "haiku": "non_rilevante",
+   "opus": "non_rilevante",
+   "giusto": "non_rilevante",
+   "errore_regole": "lieve",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Pagina statistiche 'dati'."
+  },
+  {
+   "annuncio": 270,
+   "regole": "da_rivedere",
+   "haiku": "non_rilevante",
+   "opus": "non_rilevante",
+   "giusto": "non_rilevante",
+   "errore_regole": "lieve",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Voce di menu 'progetti'."
+  },
+  {
+   "annuncio": 271,
+   "regole": "da_rivedere",
+   "haiku": "non_rilevante",
+   "opus": "non_rilevante",
+   "giusto": "non_rilevante",
+   "errore_regole": "lieve",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Elenco di tutte le notizie, voce di menu."
+  },
+  {
+   "annuncio": 272,
+   "regole": "da_rivedere",
+   "haiku": "non_rilevante",
+   "opus": "non_rilevante",
+   "giusto": "non_rilevante",
+   "errore_regole": "lieve",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Selezioni di personale e acquisti dell'ente."
+  },
+  {
+   "annuncio": 273,
+   "regole": "non_rilevante",
+   "haiku": "non_rilevante",
+   "opus": "non_rilevante",
+   "giusto": "non_rilevante",
+   "errore_regole": "nessuno",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Amministrazione trasparente."
+  }
+ ],
+ "preliminare": [
+  {
+   "bando": 33,
+   "produzione": "passa",
+   "haiku_nuovo": "ferma",
+   "opus": "ferma",
+   "giusto": "ferma",
+   "errore_produzione": "medio",
+   "errore_haiku_nuovo": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "E' una notizia del 12/12/2022 sulla prima edizione dell'avviso Formazione continua FSE+; oggi e' aperta la TERZA edizione su un'altra pagina. Produzione ha messo edizione_in_corso=si e stato non_noto, e ne e' uscita una scheda su un'edizione superata. Haiku nuovo ferma col risultato giusto ma con motivazione inventata ('scadenza 13 dicembre 2024', presa dal bando 34): esito corretto, ragionamento no. Opus corretto (edizione_in_corso=no)."
+  },
+  {
+   "bando": 822,
+   "produzione": "passa",
+   "haiku_nuovo": "passa",
+   "opus": "passa",
+   "giusto": "passa",
+   "errore_produzione": "nessuno",
+   "errore_haiku_nuovo": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Export su Misura 2026, aperto 02/09-09/10/2026, testo ufficiale presente."
+  },
+  {
+   "bando": 34,
+   "produzione": "ferma",
+   "haiku_nuovo": "ferma",
+   "opus": "ferma",
+   "giusto": "ferma",
+   "errore_produzione": "nessuno",
+   "errore_haiku_nuovo": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Notizia 2022 su avviso Formare per assumere, chiuso (13/12/2024 secondo produzione e Opus). Haiku nuovo mette edizione_in_corso=si ma stato=chiuso, quindi ferma comunque."
+  }
+ ],
+ "osservazioni": [
+  "La fonte non segue la paginazione: l'elenco degli aperti ha 13 bandi su 4 pagine da 4 schede (?pagina=N&stato=2), il lettore ne vede solo la prima. 9 bandi aperti per imprese (Nuova Impresa, Check-up, EDIL-SOS, Formazione continua terza edizione, parita' di genere, fiere in forma aggregata...) sono persi per questo. Correzione piu' utile: leggere le pagine 1-4 (o finche' ci sono schede).",
+  "Il Bando SI4.0 2026 non e' stato raccolto perche' il suo titolo ('Bando SI4.0 2026', 16 caratteri) e' sotto la soglia di 18 caratteri del lettore html: ogni bando con titolo corto sparisce senza traccia. Rimedio semplice: per questa fonte usare un selettore (richiesta.selettore, es. 'a.bandoTitle') oppure non applicare la soglia ai link con classe/percorso da scheda bando.",
+  "Il lettore raccoglie tutti i link della pagina (menu, footer, filtri per argomento, notizie in evidenza): 19 annunci di cui solo 3 schede bando vere. Dovrebbe limitarsi ai link 'dettaglio-bando/'. Le pagine di filtro ?argomento=N prendono il titolo della prima scheda (annuncio 260 'Bando Export su Misura 2026') e ingannano le regole.",
+  "L'annuncio 262 (Fiere internazionali secondo sportello, aperto) e' in dubbio (bandi_dubbi id 71) contro il bando sbagliato 315 (forma aggregata) invece che il 459 (secondo sportello, da Regione): la somiglianza dei titoli ha scelto il candidato errato e il caso aspetta una decisione di Matteo. Lo stesso candidato errato 315 e' proposto per gli annunci 60 (Bergamo) e 220-221 (Varese).",
+  "Le notizie 2022 (263, 264, 265) vengono dalla sezione 'Ultime notizie' in pagina, non dall'elenco dei bandi aperti; hanno prodotto il bando 33 con scheda su un'edizione superata. Il preliminare di produzione ha messo edizione_in_corso=si su una notizia datata 2022 senza date: il prompt dovrebbe dire che una notizia vecchia di anni senza date di apertura/chiusura va considerata edizione non in corso.",
+  "Il catalogo mostra la scadenza prevista, non la chiusura effettiva: SI4.0 appare 'Aperto' con scadenza passata e alcuni bandi sono chiusi prima della data (esaurimento fondi). Per questa fonte lo stato va preso dalla pagina di dettaglio o dal filtro stato, non dalla data in elenco.",
+  "Controllo sul database di produzione (27/09): tra i bandi persi da questa fonte, esistono in Radar da altre fonti Nuova Impresa 2026 (250), Nuova Impresa Piccoli Comuni (223), Fiere in forma aggregata (315), Fiere secondo sportello (459). Non trovati: SI4.0, EDIL-SOS, Check-up d'impresa, Formazione continua terza edizione, Verso la certificazione parita' di genere 2025-2027, THAMM+, filiere.",
+  "Esploratore: ricontrollata la pagina stato=2; le sezioni presenti sono Aperti (4 pagine), In apertura (stato=1, vuota), Archivio chiusi (bandi-archivio?stato=3) e il box 'Ultime notizie'/'Avvisi' (/media/avvisi) da cui vengono gli annunci 263-265. Nessuna sezione evidente dimenticata."
+ ],
+ "correzioni": [
+  {
+   "caso": "Bando SI4.0 2026 (perso_non_raccolto)",
+   "prima": "perso, causa non visibile dai dati",
+   "dopo": "perso confermato, causa: titolo di 16 caratteri sotto la soglia di 18 del lettore html",
+   "perche": "Pagina riscaricata: <h2><a class='bandoTitle'>Bando SI4.0 2026</a></h2>; html.py scarta titoli < 18 caratteri anche dopo aver cercato il titolo della scheda."
+  },
+  {
+   "caso": "Annuncio 262 Fiere secondo sportello (perso_deduplica_o_dubbio)",
+   "prima": "passaggio annuncio->bando da indagare",
+   "dopo": "perso confermato: in dubbio contro il bando sbagliato 315; il bando giusto 459 esiste da Regione",
+   "perche": "Tabella bandi_dubbi in produzione: annuncio 262, bando 315, somiglianza 0.72, nessuna decisione."
+  },
+  {
+   "caso": "Smistamento annuncio 265 (graduatoria Qualita' Artigiana 2022)",
+   "prima": "giusto non_rilevante; errore medio a regole, Haiku e Opus",
+   "dopo": "giusto rilevante; nessun errore",
+   "perche": "Le istruzioni di smistamento includono esplicitamente graduatorie ed esiti di bandi per imprese; la pagina parla di imprese beneficiarie di un bando finanziato."
+  },
+  {
+   "caso": "Smistamento annuncio 260 (filtro ?argomento=34)",
+   "prima": "errore regole medio",
+   "dopo": "errore regole lieve",
+   "perche": "Il titolo sbagliato viene dal lettore; le regole hanno giudicato bene il titolo ricevuto e non ne e' nato alcun bando."
+  },
+  {
+   "caso": "Osservazione su altre fonti",
+   "prima": "non verificabile dai file",
+   "dopo": "verificato sul database: 4 dei persi esistono da altre fonti (250, 223, 315, 459)",
+   "perche": "Interrogazione in sola lettura del database di produzione."
+  }
+ ],
+ "fiducia": "alta"
+}

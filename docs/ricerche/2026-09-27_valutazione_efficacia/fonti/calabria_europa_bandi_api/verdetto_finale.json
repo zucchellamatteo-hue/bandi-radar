@@ -1,0 +1,631 @@
+{
+ "fonte": "calabria_europa_bandi_api",
+ "perimetro": [
+  {
+   "titolo": "Avviso pubblico per l'emersione e qualificazione della ricettivita' delle seconde case",
+   "url": "https://calabriaeuropa.regione.calabria.it/bando/avviso-pubblico-per-lemersione-e-qualificazione-della-ricettivita-delle-seconde-case/",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Non raccolto: la fonte legge l'API /wp-json/wp/v2/bando?per_page=50, che ordina per data di pubblicazione e restituisce solo le 50 voci piu' recenti (la piu' vecchia nel radar e' del 18/05/2026). Questo avviso ha data di pubblicazione 31/03/2026 ma e' stato aggiornato il 25/09/2026: il sito aggiorna i vecchi post invece di ripubblicarli, quindi resta fuori dalla finestra. Stato sul sito 'Aperto', contributo a MPMI extra-alberghiere."
+  },
+  {
+   "titolo": "Avviso pubblico per il sostegno all'accoglienza turistica di qualita' in Calabria",
+   "url": "https://calabriaeuropa.regione.calabria.it/bando/avviso-pubblico-per-il-sostegno-allaccoglienza-turistica-di-qualita-in-calabria/",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Non raccolto: la fonte legge l'API /wp-json/wp/v2/bando?per_page=50, che ordina per data di pubblicazione e restituisce solo le 50 voci piu' recenti (la piu' vecchia nel radar e' del 18/05/2026). Questo avviso ha data di pubblicazione 31/03/2026 ma e' stato aggiornato il 25/09/2026: il sito aggiorna i vecchi post invece di ripubblicarli, quindi resta fuori dalla finestra. Indicato 'Aperto' in home."
+  },
+  {
+   "titolo": "Transformer Calabria",
+   "url": "https://calabriaeuropa.regione.calabria.it/bando/trasformer-calabria/",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Non raccolto: la fonte legge l'API /wp-json/wp/v2/bando?per_page=50, che ordina per data di pubblicazione e restituisce solo le 50 voci piu' recenti (la piu' vecchia nel radar e' del 18/05/2026). Questo avviso ha data di pubblicazione 07/08/2025 ma e' stato aggiornato il 23/09/2026: il sito aggiorna i vecchi post invece di ripubblicarli, quindi resta fuori dalla finestra. Stato 'Aperto', FSE+ per datori di lavoro privati."
+  },
+  {
+   "titolo": "AVVISO PUBBLICO BO.AR.D. BOtteghe ARtigianali Diffuse",
+   "url": "https://calabriaeuropa.regione.calabria.it/bando/avviso-pubblico-in-pre-informazione-bo-ar-d-botteghe-artigianali-diffuse/",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Non raccolto: la fonte legge l'API /wp-json/wp/v2/bando?per_page=50, che ordina per data di pubblicazione e restituisce solo le 50 voci piu' recenti (la piu' vecchia nel radar e' del 18/05/2026). Questo avviso ha data di pubblicazione 15/04/2025 ma e' stato aggiornato il 31/08/2026: il sito aggiorna i vecchi post invece di ripubblicarli, quindi resta fuori dalla finestra. Stato 'Pubblicazione', riapertura sportello annunciata per novembre."
+  },
+  {
+   "titolo": "Avviso pubblico per il sostegno a progetti di attivita' di ricerca, sviluppo e innovazione",
+   "url": "https://calabriaeuropa.regione.calabria.it/bando/avviso-pubblico-per-il-sostegno-a-progetti-di-attivita-di-ricerca-sviluppo-e-innovazione/",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Non raccolto: la fonte legge l'API /wp-json/wp/v2/bando?per_page=50, che ordina per data di pubblicazione e restituisce solo le 50 voci piu' recenti (la piu' vecchia nel radar e' del 18/05/2026). Questo avviso ha data di pubblicazione 30/06/2025 ma e' stato aggiornato il 11/09/2026: il sito aggiorna i vecchi post invece di ripubblicarli, quindi resta fuori dalla finestra. Stato 'Valutazione' (domande chiuse): perdita di poco conto."
+  },
+  {
+   "titolo": "Avviso pubblico per il sostegno all'acquisizione di servizi avanzati",
+   "url": "https://calabriaeuropa.regione.calabria.it/bando/avviso-pubblico-per-il-sostegno-allacquisizione-di-servizi-avanzati/",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Non raccolto: la fonte legge l'API /wp-json/wp/v2/bando?per_page=50, che ordina per data di pubblicazione e restituisce solo le 50 voci piu' recenti (la piu' vecchia nel radar e' del 18/05/2026). Questo avviso ha data di pubblicazione 17/12/2024 ma e' stato aggiornato il 10/09/2026: il sito aggiorna i vecchi post invece di ripubblicarli, quindi resta fuori dalla finestra. Stato 'Valutazione' (domande chiuse)."
+  },
+  {
+   "titolo": "Avviso pubblico per il sostegno agli investimenti in impianti e macchinari delle PMI",
+   "url": "https://calabriaeuropa.regione.calabria.it/bando/avviso-pubblico-per-il-sostegno-agli-investimenti-in-impianti-e-macchinari-delle-pmi/",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Non raccolto: la fonte legge l'API /wp-json/wp/v2/bando?per_page=50, che ordina per data di pubblicazione e restituisce solo le 50 voci piu' recenti (la piu' vecchia nel radar e' del 18/05/2026). Questo avviso ha data di pubblicazione 18/07/2025 ma e' stato aggiornato il 10/09/2026: il sito aggiorna i vecchi post invece di ripubblicarli, quindi resta fuori dalla finestra. Stato 'Valutazione' (domande chiuse)."
+  },
+  {
+   "titolo": "FRI Calabria",
+   "url": "https://calabriaeuropa.regione.calabria.it/bando/fri-calabria/",
+   "esito": "perso_smistamento",
+   "annuncio": 3773,
+   "bando": null,
+   "spiegazione": "Annuncio raccolto ma lasciato 'da_rivedere' dalle regole (nessuna parola chiave nel titolo) e mai collegato a un bando. E' un bando aperto per PMI e grandi imprese (finanziamento agevolato + contributo, sportello fino a comunicazione di chiusura): Haiku e Opus lo danno rilevante."
+  },
+  {
+   "titolo": "TecSTEP - Fondo Tecnologie STEP",
+   "url": "https://calabriaeuropa.regione.calabria.it/bando/tecstep-fondo-tecnologie-step-per-il-sostegno-e-lattrazione-degli-investimenti-step/",
+   "esito": "perso_smistamento",
+   "annuncio": 3798,
+   "bando": null,
+   "spiegazione": "Annuncio 'da_rivedere' dalle regole, nessun bando. Sul sito e' 'Aperto' per piccole, medie e grandi imprese, sportello fino al 30/12/2026."
+  },
+  {
+   "titolo": "Avviso pubblico STEP Calabria - Aiuti per interventi su tecnologie critiche",
+   "url": "https://calabriaeuropa.regione.calabria.it/bando/avviso-pubblico-step-calabria-aiuti-per-interventi-su-tecnologie-critiche/",
+   "esito": "perso_smistamento",
+   "annuncio": 3789,
+   "bando": null,
+   "spiegazione": "Annuncio 'da_rivedere' dalle regole ('Aiuti' non basta), nessun bando. Sul sito 'Aperto', aiuti alle imprese a sportello."
+  },
+  {
+   "titolo": "FUSESE - Fund for Self Employment and Self Entrepreneurship",
+   "url": "https://calabriaeuropa.regione.calabria.it/bando/fusese-fund-for-self-employment-and-self-entrepreneurship/",
+   "esito": "perso_smistamento",
+   "annuncio": 3810,
+   "bando": null,
+   "spiegazione": "Annuncio 'da_rivedere', nessun bando. Verificato in rete: stato 'Aperto' (agg. 04/08/2026), microcredito + fondo perduto per nuove imprese di disoccupati svantaggiati."
+  },
+  {
+   "titolo": "Avviso pubblico per il sostegno e l'attrazione degli investimenti e per il rafforzamento della struttura produttiva regionale",
+   "url": "https://calabriaeuropa.regione.calabria.it/bando/avviso-pubblico-per-il-sostegno-e-lattrazione-degli-investimenti-e-per-il-rafforzamento-della-struttura-produttiva-regionale/",
+   "esito": "perso_smistamento",
+   "annuncio": 3799,
+   "bando": null,
+   "spiegazione": "Annuncio 'da_rivedere', nessun bando. Bando per imprese ma chiuso il 10/02/2026 (stato 'Valutazione'): perdita strutturale, danno pratico limitato."
+  },
+  {
+   "titolo": "Impresa Sicura",
+   "url": "https://calabriaeuropa.regione.calabria.it/bando/impresa-sicura/",
+   "esito": "perso_smistamento",
+   "annuncio": 3794,
+   "bando": null,
+   "spiegazione": "Annuncio 'da_rivedere', nessun bando. Verificato in rete: contributi alle imprese per formazione sulla sicurezza, sportello dall'11/05/2026, stato 'Valutazione' (chiuso): perdita strutturale, danno pratico limitato."
+  },
+  {
+   "titolo": "IN.TUR - Incentivi all'occupazione alle imprese della filiera turistica",
+   "url": "https://calabriaeuropa.regione.calabria.it/bando/in-tur-incentivi-alloccupazione-alle-imprese-che-operano-nella-filiera-turistica/",
+   "esito": "perso_deduplica_o_dubbio",
+   "annuncio": 3802,
+   "bando": null,
+   "spiegazione": "Annuncio smistato 'rilevante' ma senza bando collegato (bando_id nullo, ruolo nullo): non si vede dai dati se sia stato fuso con un altro bando o non ancora lavorato. Verificato in rete: stato 'Aperto', sportello dal 29/06/2026 fino a esaurimento risorse."
+  },
+  {
+   "titolo": "Avviso per il sostegno alla creazione e al consolidamento di startup innovative",
+   "url": "https://calabriaeuropa.regione.calabria.it/bando/avviso-per-il-sostegno-alla-creazione-e-al-consolidamento-di-startup-innovative-ad-alta-intensita-di-conoscenza/",
+   "esito": "fermato_giustamente",
+   "annuncio": 3785,
+   "bando": 457,
+   "spiegazione": "Preliminare di produzione: stato chiuso (graduatoria pubblicata), sito 'Valutazione'. Fermato correttamente."
+  },
+  {
+   "titolo": "Attrazione degli investimenti delle Grandi Imprese",
+   "url": "https://calabriaeuropa.regione.calabria.it/bando/attrazione-degli-investimenti-delle-grandi-imprese-a-sostegno-del-sistema-produttivo-regionale/",
+   "esito": "trovato_con_scheda",
+   "annuncio": 3772,
+   "bando": 525,
+   "spiegazione": "Catena completa: rilevante, bando, pagina, preliminare (non_noto) passa, scheda presente. Sito 'Aperto'."
+  },
+  {
+   "titolo": "FEERI - Fondo Efficienza Energetica e Rinnovabili per le Imprese",
+   "url": "https://calabriaeuropa.regione.calabria.it/bando/feeri-fondo-efficienza-energetica-e-rinnovabili-per-le-imprese/",
+   "esito": "trovato_con_scheda",
+   "annuncio": 3809,
+   "bando": 352,
+   "spiegazione": "Catena completa; aperto fino al 30/12/2026."
+  },
+  {
+   "titolo": "Avviso contributi alle PMI per la Certificazione della parita' di genere",
+   "url": "https://calabriaeuropa.regione.calabria.it/bando/avviso-pubblico-per-la-concessione-di-contributi-alle-pmi-per-la-certificazione-della-parita-di-genere/",
+   "esito": "trovato_con_scheda",
+   "annuncio": 3804,
+   "bando": 391,
+   "spiegazione": "Catena completa. Verificato in rete: stato 'Aperto' (agg. 20/07/2026), sportello fino a provvedimento di chiusura."
+  },
+  {
+   "titolo": "Dunamis Calabria - Incentivi all'occupazione",
+   "url": "https://calabriaeuropa.regione.calabria.it/bando/dunamis-calabria-incentivi-alloccupazione-alle-imprese-per-nuove-assunzioni/",
+   "esito": "trovato_con_scheda",
+   "annuncio": 3801,
+   "bando": 406,
+   "spiegazione": "Catena completa. Verificato in rete: stato 'Aperto', sportello dal 31/07/2024 fino a esaurimento risorse."
+  },
+  {
+   "titolo": "Avviso sviluppo imprese socialmente desiderabili - donne, giovani, svantaggiati (Reventino-Savuto)",
+   "url": "https://calabriaeuropa.regione.calabria.it/bando/avviso-per-il-sostegno-allo-sviluppo-di-imprese-che-producano-effetti-socialmente-desiderabili-e-beni-pubblici-promosse-da-donne-giovani-e-svantaggiati-in-genere/",
+   "esito": "trovato_con_scheda",
+   "annuncio": 3792,
+   "bando": 429,
+   "spiegazione": "Arriva alla scheda, ma e' chiuso (finestra riaperta 1-15/09/2026, pagina 'Chiuso' al 25/09): il preliminare di produzione (non_noto, edizione incerto) avrebbe dovuto fermarlo."
+  },
+  {
+   "titolo": "Incentivi attivita' imprenditoriali socialmente desiderabili - Comune di Lamezia Terme",
+   "url": "https://calabriaeuropa.regione.calabria.it/bando/incentivi-e-sostegno-allavvio-e-al-rafforzamento-di-attivita-imprenditoriali-che-producono-effetti-socialmente-desiderabili-e-beni-pubblici-nel-comune-di-lamezia-terme/",
+   "esito": "trovato_con_scheda",
+   "annuncio": 3769,
+   "bando": 556,
+   "spiegazione": "Ha scheda ma e' chiuso (sportello chiuso a novembre 2025, stato 'Conclusione'; lo stato calcolato del radar e' 'chiuso' con scadenza 06/11/2025): il preliminare di produzione lo ha dato 'aperto', errore."
+  },
+  {
+   "titolo": "Voucher per la transizione digitale delle PMI",
+   "url": "https://calabriaeuropa.regione.calabria.it/bando/voucher-per-la-transizione-digitale-delle-pmi/",
+   "esito": "trovato_con_scheda",
+   "annuncio": 3807,
+   "bando": 355,
+   "spiegazione": "Ha scheda ma e' chiuso (sportello 17-23/04/2025, stato 'Valutazione'); stato calcolato del radar 'chiuso' eppure la scheda c'e'."
+  },
+  {
+   "titolo": "Incentivi filiere produttive riuso/riciclo rifiuti",
+   "url": "https://calabriaeuropa.regione.calabria.it/bando/incentivi-per-lo-sviluppo-di-filiere-produttive-innovative-per-il-riutilizzo-il-riciclaggio-e-il-recupero-di-materia-dai-rifiuti/",
+   "esito": "trovato_con_scheda",
+   "annuncio": 3784,
+   "bando": 458,
+   "spiegazione": "Ha scheda ma e' chiuso dal 31/07/2026 (pagina 'Chiuso'): il preliminare di produzione lo ha dato 'aperto'."
+  },
+  {
+   "titolo": "AVVISO PUBBLICO - Incentivi alle imprese per la formazione continua",
+   "url": "https://calabriaeuropa.regione.calabria.it/bando/avviso-pubblico-incentivi-alle-imprese-per-la-formazione-continua/",
+   "esito": "trovato_con_scheda",
+   "annuncio": 3796,
+   "bando": 427,
+   "spiegazione": "Ha scheda ma verificato in rete: piattaforma chiusa il 13/03/2026, stato 'Valutazione', graduatoria provvisoria 22/07/2026. Andava fermato."
+  }
+ ],
+ "smistamento": [
+  {
+   "annuncio": 3766,
+   "regole": "da_rivedere",
+   "haiku": "rilevante",
+   "opus": "da_rivedere",
+   "giusto": "da_rivedere",
+   "errore_regole": "nessuno",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Sezioni primavera: beneficiari Comuni, scuole statali e gestori privati (anche cooperative/imprese); contributo a costo standard per bambino. Caso misto: da_rivedere corretto, rilevante difendibile."
+  },
+  {
+   "annuncio": 3767,
+   "regole": "da_rivedere",
+   "haiku": "non_rilevante",
+   "opus": "non_rilevante",
+   "giusto": "non_rilevante",
+   "errore_regole": "lieve",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Co-progettazione con enti del terzo settore per centri socio-assistenziali (regola 7)."
+  },
+  {
+   "annuncio": 3768,
+   "regole": "non_rilevante",
+   "haiku": "da_rivedere",
+   "opus": "non_rilevante",
+   "giusto": "non_rilevante",
+   "errore_regole": "nessuno",
+   "errore_haiku": "lieve",
+   "errore_opus": "nessuno",
+   "spiegazione": "Raccolta differenziata e centri di raccolta: misura per enti locali."
+  },
+  {
+   "annuncio": 3769,
+   "regole": "rilevante",
+   "haiku": "rilevante",
+   "opus": "rilevante",
+   "giusto": "rilevante",
+   "errore_regole": "nessuno",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Incentivi a imprese sociali a Lamezia Terme."
+  },
+  {
+   "annuncio": 3770,
+   "regole": "rilevante",
+   "haiku": "da_rivedere",
+   "opus": "da_rivedere",
+   "giusto": "non_rilevante",
+   "errore_regole": "medio",
+   "errore_haiku": "lieve",
+   "errore_opus": "lieve",
+   "spiegazione": "P.Art.E.C.I.P.O.: verificato sul sito (27/09) che possono presentare proposte 'esclusivamente i Comuni della Calabria'; stato 'Valutazione', scadenza istanze 25/06/2025. Le regole lo passano per la parola 'contributi' (medio); Haiku e Opus, col testo troncato che non mostrava i beneficiari, dicono da_rivedere (lieve)."
+  },
+  {
+   "annuncio": 3771,
+   "regole": "da_rivedere",
+   "haiku": "rilevante",
+   "opus": "da_rivedere",
+   "giusto": "da_rivedere",
+   "errore_regole": "nessuno",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Fondi a societa' sportive professionistiche per promozione turistica (stato 'Sospeso'): vicino a una sponsorizzazione acquistata dalla Regione, beneficiari non chiari. Rilevante di Haiku difendibile."
+  },
+  {
+   "annuncio": 3772,
+   "regole": "rilevante",
+   "haiku": "rilevante",
+   "opus": "rilevante",
+   "giusto": "rilevante",
+   "errore_regole": "nessuno",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Agevolazioni alle grandi imprese."
+  },
+  {
+   "annuncio": 3773,
+   "regole": "da_rivedere",
+   "haiku": "rilevante",
+   "opus": "rilevante",
+   "giusto": "rilevante",
+   "errore_regole": "lieve",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "FRI Calabria: finanziamento a PMI e grandi imprese, caso chiaro. Lieve per definizione, ma in pratica il bando aperto e' andato perso (nessun bando collegato)."
+  },
+  {
+   "annuncio": 3774,
+   "regole": "da_rivedere",
+   "haiku": "non_rilevante",
+   "opus": "non_rilevante",
+   "giusto": "non_rilevante",
+   "errore_regole": "lieve",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Selezione partner terzo settore per co-progettazione (regola 7)."
+  },
+  {
+   "annuncio": 3775,
+   "regole": "da_rivedere",
+   "haiku": "non_rilevante",
+   "opus": "non_rilevante",
+   "giusto": "non_rilevante",
+   "errore_regole": "lieve",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Allegra-mente: enti del terzo settore per anziani."
+  },
+  {
+   "annuncio": 3776,
+   "regole": "rilevante",
+   "haiku": "non_rilevante",
+   "opus": "non_rilevante",
+   "giusto": "non_rilevante",
+   "errore_regole": "medio",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "SuperAbilities: contributi a enti del terzo settore e associazioni sportive per persone con disabilita'; il preliminare di produzione conferma per_imprese=no."
+  },
+  {
+   "annuncio": 3777,
+   "regole": "rilevante",
+   "haiku": "non_rilevante",
+   "opus": "non_rilevante",
+   "giusto": "non_rilevante",
+   "errore_regole": "medio",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "CONCILIA: il voucher lo chiedono lavoratrici e lavoratori con carichi di cura (sezione Destinatari), non le imprese."
+  },
+  {
+   "annuncio": 3778,
+   "regole": "rilevante",
+   "haiku": "non_rilevante",
+   "opus": "non_rilevante",
+   "giusto": "non_rilevante",
+   "errore_regole": "medio",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Donne libere: contributi a centri antiviolenza e case rifugio."
+  },
+  {
+   "annuncio": 3779,
+   "regole": "non_rilevante",
+   "haiku": "non_rilevante",
+   "opus": "non_rilevante",
+   "giusto": "non_rilevante",
+   "errore_regole": "nessuno",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Borse di studio universitarie."
+  },
+  {
+   "annuncio": 3780,
+   "regole": "da_rivedere",
+   "haiku": "non_rilevante",
+   "opus": "non_rilevante",
+   "giusto": "non_rilevante",
+   "errore_regole": "lieve",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Accordo quadro: la Regione acquista servizi di marketing (appalto)."
+  },
+  {
+   "annuncio": 3781,
+   "regole": "rilevante",
+   "haiku": "rilevante",
+   "opus": "non_rilevante",
+   "giusto": "non_rilevante",
+   "errore_regole": "medio",
+   "errore_haiku": "medio",
+   "errore_opus": "nessuno",
+   "spiegazione": "Illuminazione pubblica: Destinatari 'Comuni in forma singola; Unioni di Comuni'. Il testo parla di partenariati pubblico-privati ed ESCo come modalita' di attuazione (Haiku non l'ha inventato), ma chi chiede il contributo sono solo i Comuni: rilevante resta un errore medio."
+  },
+  {
+   "annuncio": 3782,
+   "regole": "non_rilevante",
+   "haiku": "non_rilevante",
+   "opus": "non_rilevante",
+   "giusto": "non_rilevante",
+   "errore_regole": "nessuno",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Borse di studio universitarie."
+  },
+  {
+   "annuncio": 3783,
+   "regole": "rilevante",
+   "haiku": "non_rilevante",
+   "opus": "non_rilevante",
+   "giusto": "non_rilevante",
+   "errore_regole": "medio",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Grandi eventi sportivi: possono presentare domanda solo ASD/SSD iscritte al RASD e comitati delle federazioni."
+  },
+  {
+   "annuncio": 3784,
+   "regole": "rilevante",
+   "haiku": "rilevante",
+   "opus": "rilevante",
+   "giusto": "rilevante",
+   "errore_regole": "nessuno",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Incentivi a imprese di riciclo."
+  },
+  {
+   "annuncio": 3785,
+   "regole": "rilevante",
+   "haiku": "rilevante",
+   "opus": "rilevante",
+   "giusto": "rilevante",
+   "errore_regole": "nessuno",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Startup innovative."
+  },
+  {
+   "annuncio": 3786,
+   "regole": "rilevante",
+   "haiku": "da_rivedere",
+   "opus": "non_rilevante",
+   "giusto": "non_rilevante",
+   "errore_regole": "medio",
+   "errore_haiku": "lieve",
+   "errore_opus": "nessuno",
+   "spiegazione": "Dottorati in rete: i soldi vanno a universita', AFAM ed enti di ricerca; le imprese sono solo partner."
+  },
+  {
+   "annuncio": 3787,
+   "regole": "da_rivedere",
+   "haiku": "non_rilevante",
+   "opus": "non_rilevante",
+   "giusto": "non_rilevante",
+   "errore_regole": "lieve",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Vivi e scopri la Calabria: contributi alle scuole per itinerari didattici."
+  },
+  {
+   "annuncio": 3792,
+   "regole": "rilevante",
+   "haiku": "rilevante",
+   "opus": "rilevante",
+   "giusto": "rilevante",
+   "errore_regole": "nessuno",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Nuove imprese di donne, giovani, svantaggiati."
+  },
+  {
+   "annuncio": 3793,
+   "regole": "non_rilevante",
+   "haiku": "non_rilevante",
+   "opus": "non_rilevante",
+   "giusto": "non_rilevante",
+   "errore_regole": "nessuno",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Assunzioni nella PA."
+  },
+  {
+   "annuncio": 3812,
+   "regole": "non_rilevante",
+   "haiku": "non_rilevante",
+   "opus": "non_rilevante",
+   "giusto": "non_rilevante",
+   "errore_regole": "nessuno",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Voucher caro scuola per studenti."
+  },
+  {
+   "annuncio": 3813,
+   "regole": "non_rilevante",
+   "haiku": "non_rilevante",
+   "opus": "non_rilevante",
+   "giusto": "non_rilevante",
+   "errore_regole": "nessuno",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Voucher caro scuola per studenti."
+  },
+  {
+   "annuncio": 3815,
+   "regole": "non_rilevante",
+   "haiku": "non_rilevante",
+   "opus": "non_rilevante",
+   "giusto": "non_rilevante",
+   "errore_regole": "nessuno",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Vittime di usura: progetti di enti e associazioni."
+  }
+ ],
+ "preliminare": [
+  {
+   "bando": 352,
+   "produzione": "passa",
+   "haiku_nuovo": "passa",
+   "opus": "passa",
+   "giusto": "passa",
+   "errore_produzione": "nessuno",
+   "errore_haiku_nuovo": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "FEERI aperto fino al 30/12/2026 per imprese."
+  },
+  {
+   "bando": 355,
+   "produzione": "passa",
+   "haiku_nuovo": "passa",
+   "opus": "ferma",
+   "giusto": "ferma",
+   "errore_produzione": "medio",
+   "errore_haiku_nuovo": "medio",
+   "errore_opus": "nessuno",
+   "spiegazione": "Voucher digitali PMI: sportello 17-23/04/2025 chiuso con decreto, pagina 'Valutazione', graduatoria definitiva 07/2026. Produzione e Haiku lo fanno passare (non_noto)."
+  },
+  {
+   "bando": 391,
+   "produzione": "passa",
+   "haiku_nuovo": "passa",
+   "opus": "passa",
+   "giusto": "passa",
+   "errore_produzione": "nessuno",
+   "errore_haiku_nuovo": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Parita' di genere: verificato 'Aperto', sportello fino a provvedimento di chiusura."
+  },
+  {
+   "bando": 406,
+   "produzione": "passa",
+   "haiku_nuovo": "passa",
+   "opus": "passa",
+   "giusto": "passa",
+   "errore_produzione": "nessuno",
+   "errore_haiku_nuovo": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Dunamis: verificato 'Aperto', sportello fino a esaurimento risorse."
+  },
+  {
+   "bando": 427,
+   "produzione": "passa",
+   "haiku_nuovo": "passa",
+   "opus": "ferma",
+   "giusto": "ferma",
+   "errore_produzione": "medio",
+   "errore_haiku_nuovo": "medio",
+   "errore_opus": "nessuno",
+   "spiegazione": "Formazione continua: verificato in rete, piattaforma chiusa il 13/03/2026 (avviso in pagina), stato 'Valutazione'. Produzione e Haiku dicono 'documento troncato, non_noto'."
+  },
+  {
+   "bando": 429,
+   "produzione": "passa",
+   "haiku_nuovo": "ferma",
+   "opus": "ferma",
+   "giusto": "ferma",
+   "errore_produzione": "medio",
+   "errore_haiku_nuovo": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Reventino-Savuto: finestra riaperta 1-15/09/2026, pagina 'Chiuso'. Haiku ferma per il motivo sbagliato (dice edizione 2014-2020 scaduta) ma l'esito e' giusto."
+  },
+  {
+   "bando": 458,
+   "produzione": "passa",
+   "haiku_nuovo": "passa",
+   "opus": "ferma",
+   "giusto": "ferma",
+   "errore_produzione": "medio",
+   "errore_haiku_nuovo": "medio",
+   "errore_opus": "nessuno",
+   "spiegazione": "Filiere rifiuti: domande fino al 31/07/2026 dopo proroga, pagina 'Chiuso'. Produzione lo dichiara addirittura 'aperto'."
+  },
+  {
+   "bando": 462,
+   "produzione": "passa",
+   "haiku_nuovo": "ferma",
+   "opus": "ferma",
+   "giusto": "ferma",
+   "errore_produzione": "medio",
+   "errore_haiku_nuovo": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Grandi eventi sportivi: beneficiari solo ASD/SSD e comitati, domande 17/03-17/04/2026 chiuse. Produzione dice per_imprese=si e 'aperto'."
+  }
+ ],
+ "osservazioni": [
+  "Difetto principale di raccolta: feed_url usa /wp-json/wp/v2/bando?per_page=50 con l'ordinamento predefinito per data di pubblicazione. Il sito aggiorna i vecchi post (campo 'modified') invece di pubblicarne di nuovi: bandi aperti come Seconde case, Accoglienza turistica di qualita', Transformer Calabria e BO.AR.D. (in pubblicazione, riapertura annunciata) hanno data di pubblicazione anteriore al 18/05/2026 e restano fuori. (Corretto dalla verifica: KAIRE e' 'Chiuso', Family Hotel e FCI sono in 'Valutazione', Lavoro Giovani e' in 'Conclusione' e non e' per imprese: non sono bandi aperti persi.) Soluzione proposta: aggiungere &orderby=modified e alzare a per_page=100 (verificato: la richiesta funziona e mette in cima i post aggiornati il 25/09/2026).",
+  "Smistamento a regole debole su questa fonte: 25 annunci su 50 finiscono 'da_rivedere' per 'nessuna parola chiave' (titoli come 'FRI Calabria', 'TecSTEP', 'FUSESE', 'Impresa Sicura', 'STEP Calabria - Aiuti'), e i 'da_rivedere' non vengono mai collegati a un bando: FRI, TecSTEP, STEP Calabria e FUSESE, tutti aperti per imprese, sono persi. Viceversa la parola 'contributi'/'voucher' fa passare avvisi per Comuni, ASD, lavoratori, centri antiviolenza, universita' (7 errori medi su 27, compreso P.Art.E.C.I.P.O. riservato ai Comuni). Qui Haiku o Opus sul testo della pagina (che contiene le sezioni 'Destinatari'/'Beneficiari') farebbero molto meglio.",
+  "Lo stato ufficiale del bando ('Aperto', 'Valutazione', 'Chiuso', 'Conclusione', 'Sospeso', 'Pubblicazione') e' scritto in chiaro nella pagina subito dopo 'Fondo:' e prima di 'Data aggiornamento stato'. Il preliminare di produzione non lo usa: 5 bandi chiusi su 8 passano (355, 427, 429, 458, 462) e 556 Lamezia (chiuso da novembre 2025) ha scheda con preliminare 'aperto'. Conviene estrarre questa etichetta a regole e passarla al preliminare, o fermare direttamente 'Valutazione/Chiuso/Conclusione'.",
+  "Incoerenza interna: i bandi 355 e 556 hanno stato calcolato 'chiuso' nel radar ma ha_scheda=true; lo stato calcolato non blocca la scheda.",
+  "Le date di pubblicazione del sito non sono affidabili (es. Lamezia pubblicato 10/09/2026 ma chiuso a novembre 2025): non usarle come indizio di novita'.",
+  "Bando 548 (P.Art.E.C.I.P.O.) ha pagina trovata ma nessun preliminare: non e' una perdita (riservato ai Comuni, stato 'Valutazione', scadenza 25/06/2025), ma resta da capire se il preliminare mancante sia un lotto non eseguito o un errore silenzioso.",
+  "Annuncio 3802 IN.TUR rilevante senza bando collegato: bando aperto per imprese, verificare perche' non e' stato creato o a quale bando e' stato fuso.",
+  "Nota di metodo: ho fatto 7 richieste in rete (1 all'API, 6 pagine); le copie scaricate sono in /tmp/claude-1000/sp/cal_*.html e /tmp/claude-1000/sp/cal_api_mod.json. Nel perimetro ho aggiunto ai bandi dell'esploratore con stato noto anche 391, 406, 427, IN.TUR, FUSESE e Impresa Sicura, che l'esploratore dava 'non_noto' e che ho verificato io. Restano non verificati altri bandi 'non_noto' dell'esploratore (KAIRE, Family Hotel, FCI, CIG, M-ERA.NET, incoming, centri commerciali naturali, Oikos, ecc.).",
+  "Fuori campione ma da segnalare: il bando 510 CONCILIA ha ha_scheda=true con preliminare di produzione per_imprese=si, mentre sul sito (27/09) i destinatari del voucher sono lavoratrici e lavoratori con carichi di cura e lo stato e' 'Valutazione': una scheda che non doveva nascere.",
+  "Verifica di riserva: 15 richieste in rete (lista /bandi/ + 14 pagine di bando). La pagina /bandi/ e' vuota lato server (elenco via JavaScript dall'API bando); l'esploratore ha letto tutte le 297 voci dell'API: nessuna sezione del sito dimenticata."
+ ],
+ "correzioni": [
+  {
+   "caso": "perimetro: P.Art.E.C.I.P.O. (bando 548, annuncio 3770)",
+   "prima": "perso_preliminare",
+   "dopo": "tolto dal perimetro",
+   "perche": "Pagina ufficiale: proposte 'esclusivamente' dei Comuni della Calabria; stato 'Valutazione', scadenza 25/06/2025. Non e' un bando per imprese, quindi non e' una perdita."
+  },
+  {
+   "caso": "smistamento annuncio 3770",
+   "prima": "giusto da_rivedere; regole lieve, Haiku nessuno, Opus nessuno",
+   "dopo": "giusto non_rilevante; regole medio, Haiku lieve, Opus lieve",
+   "perche": "Beneficiari solo Comuni (verificato sul sito): le regole lo hanno fatto passare come rilevante."
+  },
+  {
+   "caso": "smistamento annuncio 3781 (spiegazione)",
+   "prima": "Haiku ha inventato un partenariato pubblico-privato",
+   "dopo": "il testo cita partenariati pubblico-privati/ESCo, ma i destinatari sono solo Comuni",
+   "perche": "Il testo passato a Haiku contiene davvero 'partenariati pubblico-privati'; l'errore medio resta perche' i richiedenti sono Comuni."
+  },
+  {
+   "caso": "osservazione su bandi aperti fuori finestra",
+   "prima": "KAIRE, Family Hotel, FCI, Lavoro Giovani indicati come aperti persi",
+   "dopo": "non aperti: KAIRE 'Chiuso', Family Hotel e FCI 'Valutazione', Lavoro Giovani 'Conclusione' (tirocini, non per imprese)",
+   "perche": "Verificato sulle pagine ufficiali il 27/09/2026. Non erano nel perimetro, quindi i conteggi non cambiano."
+  },
+  {
+   "caso": "bando 510 CONCILIA (fuori campione)",
+   "prima": "non citato",
+   "dopo": "aggiunta osservazione",
+   "perche": "Ha una scheda ma e' un voucher per lavoratori e lo stato e' 'Valutazione'."
+  }
+ ],
+ "fiducia": "alta"
+}

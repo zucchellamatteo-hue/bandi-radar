@@ -1,0 +1,374 @@
+{
+ "fonte": "ue_funding_tenders_api",
+ "raggiungibile": true,
+ "pagine_visitate": [
+  "https://api.tech.ec.europa.eu/search-api/prod/rest/search?apiKey=SEDIA&text=*** (POST, status aperto+in arrivo, type 1/2/8, 13 pagine da 100)",
+  "https://api.tech.ec.europa.eu/search-api/prod/rest/search?apiKey=SEDIA&text=*** (POST, status chiuso, ordinato per scadenza, 1 pagina)"
+ ],
+ "totale_stimato": 525,
+ "note": "Portale letto tramite l'API di ricerca SEDIA che alimenta la pagina topic-search (la pagina stessa e' un'app JavaScript). L'API restituisce 1225 voci 'aperte o in arrivo' (tipi topic, call, sovvenzioni a cascata), ma molte hanno scadenze gia' passate (voci con piu' scadenze o dati non aggiornati). Con scadenza dal 26/09/2026 in poi: circa 432 topic distinti (166 aperti, 266 in arrivo, soprattutto Horizon Europe 2027), circa 23 call di altri tipi e circa 70 sovvenzioni a cascata (FSTP), totale stimato circa 525. La grande maggioranza e' per consorzi transnazionali di ricerca/innovazione in cui le imprese possono partecipare: per questo molti sono 'incerto'. Nessun topic LIFE, Innovation Fund o SMP-COSME 'classico' risulta aperto oggi (LIFE 2026 chiuso a settembre). Elenco di 40 voci scelte in modo vario (EIC, Digital, CEF, I3, Horizon cluster 4/5/6/2, sovvenzioni a cascata per PMI, chiusi recenti). I chiusi recenti sono molti (centinaia nel semestre); ne ho riportati solo tre esempi. Scadenze prese dal campo deadlineDate dell'API: per bandi a piu' scadenze e' indicata la prima futura.",
+ "bandi": [
+  {
+   "titolo": "EIC Accelerator 2026 - Short proposal (HORIZON-EIC-2026-ACCELERATOR-01)",
+   "url": "https://ec.europa.eu/info/funding-tenders/opportunities/portal/screen/opportunities/topic-details/HORIZON-EIC-2026-ACCELERATOR-01",
+   "stato": "aperto",
+   "scadenza": "2026-12-17",
+   "per_imprese": "si",
+   "perche": "EIC Accelerator: sovvenzioni e investimento per PMI e start-up innovative."
+  },
+  {
+   "titolo": "EIC STEP Scale Up (HORIZON-EIC-2026-STEP)",
+   "url": "https://ec.europa.eu/info/funding-tenders/opportunities/portal/screen/opportunities/topic-details/HORIZON-EIC-2026-STEP",
+   "stato": "aperto",
+   "scadenza": "2026-11-25",
+   "per_imprese": "si",
+   "perche": "EIC STEP Scale Up: investimento per scale-up tecnologiche."
+  },
+  {
+   "titolo": "EIC defence call (HORIZON-EIC-2026-DEFENCE-01)",
+   "url": "https://ec.europa.eu/info/funding-tenders/opportunities/portal/screen/opportunities/topic-details/HORIZON-EIC-2026-DEFENCE-01",
+   "stato": "aperto",
+   "scadenza": "2026-10-28",
+   "per_imprese": "si",
+   "perche": "Bando EIC per innovazione nel settore difesa, aperto a start-up e PMI."
+  },
+  {
+   "titolo": "The European Prize for Women Innovators (HORIZON-EIC-2026-PRIZE-WIP)",
+   "url": "https://ec.europa.eu/info/funding-tenders/opportunities/portal/screen/opportunities/topic-details/HORIZON-EIC-2026-PRIZE-WIP",
+   "stato": "aperto",
+   "scadenza": "2026-12-01",
+   "per_imprese": "si",
+   "perche": "Premio a donne fondatrici di imprese innovative."
+  },
+  {
+   "titolo": "Rising Innovators category (HORIZON-EIC-2026-PRIZE-WIP-RisingInnovators)",
+   "url": "https://ec.europa.eu/info/funding-tenders/opportunities/portal/screen/opportunities/topic-details/HORIZON-EIC-2026-PRIZE-WIP-RisingInnovators",
+   "stato": "aperto",
+   "scadenza": "2026-12-01",
+   "per_imprese": "si",
+   "perche": "Premio a giovani fondatrici di imprese innovative."
+  },
+  {
+   "titolo": "EdTech Accelerator (DIGITAL-2026-SKILLS-10-EDTECH)",
+   "url": "https://ec.europa.eu/info/funding-tenders/opportunities/portal/screen/opportunities/topic-details/DIGITAL-2026-SKILLS-10-EDTECH",
+   "stato": "aperto",
+   "scadenza": "2026-10-01",
+   "per_imprese": "incerto",
+   "perche": "Acceleratore EdTech del programma Europa Digitale; beneficiari da verificare (consorzi con imprese)."
+  },
+  {
+   "titolo": "Digital solutions for regulatory compliance  through data (DIGITAL-2026-AI-DATA-10-COMPLIANCE)",
+   "url": "https://ec.europa.eu/info/funding-tenders/opportunities/portal/screen/opportunities/topic-details/DIGITAL-2026-AI-DATA-10-COMPLIANCE",
+   "stato": "aperto",
+   "scadenza": "2026-10-01",
+   "per_imprese": "incerto",
+   "perche": "Soluzioni digitali per la conformita' normativa; consorzi aperti a imprese."
+  },
+  {
+   "titolo": "Strengthening cybersecurity capacities of European SMEs  with cybersecure AI-powered solutions (DIGITAL-ECCC-2027-DEPLOY-CYBER-11-AI4SME)",
+   "url": "https://ec.europa.eu/info/funding-tenders/opportunities/portal/screen/opportunities/topic-details/DIGITAL-ECCC-2027-DEPLOY-CYBER-11-AI4SME",
+   "stato": "aperto",
+   "scadenza": "2027-01-14",
+   "per_imprese": "si",
+   "perche": "Rafforzare la cybersicurezza delle PMI europee con IA sicura."
+  },
+  {
+   "titolo": "Cybersecure tools, technologies and services relying on AI (DIGITAL-ECCC-2027-DEPLOY-CYBER-11-CYBERAI)",
+   "url": "https://ec.europa.eu/info/funding-tenders/opportunities/portal/screen/opportunities/topic-details/DIGITAL-ECCC-2027-DEPLOY-CYBER-11-CYBERAI",
+   "stato": "aperto",
+   "scadenza": "2027-01-14",
+   "per_imprese": "incerto",
+   "perche": "Strumenti di cybersicurezza basati su IA; ammesse imprese in consorzio."
+  },
+  {
+   "titolo": "Alternative Fuel Infrastructure Facility: Road & Air Transport - works (CEF-T-2026-AFIFGEN-COSTS)",
+   "url": "https://ec.europa.eu/info/funding-tenders/opportunities/portal/screen/opportunities/topic-details/CEF-T-2026-AFIFGEN-COSTS",
+   "stato": "aperto",
+   "scadenza": "2026-10-06",
+   "per_imprese": "si",
+   "perche": "Infrastrutture per combustibili alternativi (ricarica/idrogeno): ammessi operatori privati."
+  },
+  {
+   "titolo": "Electricity, Gas, Smart Grids, Hydrogen and CO₂ networks - Works (CEF-E-2026-PCI-PMI-WORKS)",
+   "url": "https://ec.europa.eu/info/funding-tenders/opportunities/portal/screen/opportunities/topic-details/CEF-E-2026-PCI-PMI-WORKS",
+   "stato": "aperto",
+   "scadenza": "2026-09-30",
+   "per_imprese": "incerto",
+   "perche": "Lavori su reti energetiche di interesse comune; promotori spesso societa' energetiche."
+  },
+  {
+   "titolo": "Integrated Production and Product Development for Next-Generation Lithium-based Batteries for Mobility (BATT4EU and Made in Europe Partnerships) (HORIZON-CL5-2026-10-D2-03)",
+   "url": "https://ec.europa.eu/info/funding-tenders/opportunities/portal/screen/opportunities/topic-details/HORIZON-CL5-2026-10-D2-03",
+   "stato": "aperto",
+   "scadenza": "2026-10-08",
+   "per_imprese": "incerto",
+   "perche": "Produzione batterie al litio di nuova generazione: azione di innovazione con industria."
+  },
+  {
+   "titolo": "I3-2026-INV1 - Interregional Innovation Investments Strand 1 (I3-2026-INV1)",
+   "url": "https://ec.europa.eu/info/funding-tenders/opportunities/portal/screen/opportunities/topic-details/I3-2026-INV1",
+   "stato": "aperto",
+   "scadenza": "2026-11-12",
+   "per_imprese": "si",
+   "perche": "Investimenti interregionali per l'innovazione (FESR), rivolti in particolare alle PMI."
+  },
+  {
+   "titolo": "I3-2026-INV2a - Interregional Innovation Investments Strand 2a (I3-2026-INV2a)",
+   "url": "https://ec.europa.eu/info/funding-tenders/opportunities/portal/screen/opportunities/topic-details/I3-2026-INV2a",
+   "stato": "aperto",
+   "scadenza": "2026-11-12",
+   "per_imprese": "si",
+   "perche": "Investimenti interregionali per l'innovazione, filone 2a per regioni meno sviluppate, con PMI."
+  },
+  {
+   "titolo": "EU support to Stakeholders to improve measurement of food waste and help implement food waste prevention in their operations and organisation - 2026-2027 (SMP-FOOD-2026-FW-STAKEHOLDERS-PJ)",
+   "url": "https://ec.europa.eu/info/funding-tenders/opportunities/portal/screen/opportunities/topic-details/SMP-FOOD-2026-FW-STAKEHOLDERS-PJ",
+   "stato": "aperto",
+   "scadenza": "2026-10-15",
+   "per_imprese": "incerto",
+   "perche": "Sostegno ad attori della filiera alimentare contro lo spreco; possibili imprese."
+  },
+  {
+   "titolo": "Sustainable, inclusive, affordable and beautiful solutions for thermal comfort in buildings (HORIZON-NEB-2026-01-REGEN-01)",
+   "url": "https://ec.europa.eu/info/funding-tenders/opportunities/portal/screen/opportunities/topic-details/HORIZON-NEB-2026-01-REGEN-01",
+   "stato": "aperto",
+   "scadenza": "2026-12-01",
+   "per_imprese": "incerto",
+   "perche": "Soluzioni per il comfort termico negli edifici; consorzi con imprese edili."
+  },
+  {
+   "titolo": "Open Call of Perform Europe 2026 – 2028 (sovvenzione a cascata, progetto CREA-CULT-2026-PERFORM-EU)",
+   "url": "https://ec.europa.eu/info/funding-tenders/opportunities/portal/screen/opportunities/competitive-calls-cs/49521170",
+   "stato": "aperto",
+   "scadenza": "2026-10-22",
+   "per_imprese": "incerto",
+   "perche": "Europa Creativa: organizzazioni culturali, anche imprese dello spettacolo."
+  },
+  {
+   "titolo": "AI chip demonstrators for EU compute infrastructure (DIGITAL-JU-CHIPS-2026-AI1-SG)",
+   "url": "https://ec.europa.eu/info/funding-tenders/opportunities/portal/screen/opportunities/topic-details/DIGITAL-JU-CHIPS-2026-AI1-SG",
+   "stato": "aperto",
+   "scadenza": "2026-10-27",
+   "per_imprese": "incerto",
+   "perche": "Dimostratori di chip per IA: imprese dei semiconduttori in consorzio."
+  },
+  {
+   "titolo": "Fast Track to Innovation for breakthroughs in the Chemical Industry Action Plan  (Research and Innovation Action) (HORIZON-CL4-2027-01-MAT-PROD-62)",
+   "url": "https://ec.europa.eu/info/funding-tenders/opportunities/portal/screen/opportunities/topic-details/HORIZON-CL4-2027-01-MAT-PROD-62",
+   "stato": "in_arrivo",
+   "scadenza": "2027-02-02",
+   "per_imprese": "si",
+   "perche": "Fast Track to Innovation per l'industria chimica, pensato per imprese."
+  },
+  {
+   "titolo": "Fast Track to Research and Innovation for breakthroughs in industrial technologies (Research and Innovation Action) (HORIZON-CL4-2027-01-MAT-PROD-61)",
+   "url": "https://ec.europa.eu/info/funding-tenders/opportunities/portal/screen/opportunities/topic-details/HORIZON-CL4-2027-01-MAT-PROD-61",
+   "stato": "in_arrivo",
+   "scadenza": "2027-02-02",
+   "per_imprese": "si",
+   "perche": "Fast Track per innovazioni in tecnologie industriali, guidato da imprese."
+  },
+  {
+   "titolo": "Pilot access schemes to Technology Infrastructures for European startups, scaleups and innovative SMEs (CSA) (HORIZON-CL4-2027-01-MAT-PROD-47)",
+   "url": "https://ec.europa.eu/info/funding-tenders/opportunities/portal/screen/opportunities/topic-details/HORIZON-CL4-2027-01-MAT-PROD-47",
+   "stato": "in_arrivo",
+   "scadenza": "2027-02-02",
+   "per_imprese": "si",
+   "perche": "Accesso pilota a infrastrutture tecnologiche per start-up e PMI."
+  },
+  {
+   "titolo": "Textile circularity through advanced processing and manufacturing technologies and system approaches (IA) (Textiles for the Future partnership) (HORIZON-CL4-2027-01-MAT-PROD-08)",
+   "url": "https://ec.europa.eu/info/funding-tenders/opportunities/portal/screen/opportunities/topic-details/HORIZON-CL4-2027-01-MAT-PROD-08",
+   "stato": "in_arrivo",
+   "scadenza": "2027-02-02",
+   "per_imprese": "incerto",
+   "perche": "Circolarita' del tessile con manifattura avanzata; consorzi con imprese."
+  },
+  {
+   "titolo": "Apply AI: Challenge-Driven AI Innovation Booster in Apply AI prioritised sectors (RIA) (Partnership in AI, Data and Robotics) (HORIZON-CL4-2027-04-DIGITAL-EMERGING-04)",
+   "url": "https://ec.europa.eu/info/funding-tenders/opportunities/portal/screen/opportunities/topic-details/HORIZON-CL4-2027-04-DIGITAL-EMERGING-04",
+   "stato": "in_arrivo",
+   "scadenza": "2027-03-18",
+   "per_imprese": "incerto",
+   "perche": "Apply AI: acceleratore di innovazione IA nei settori prioritari."
+  },
+  {
+   "titolo": "Startup Europe (HORIZON-EIE-2027-01-CONNECT-01)",
+   "url": "https://ec.europa.eu/info/funding-tenders/opportunities/portal/screen/opportunities/topic-details/HORIZON-EIE-2027-01-CONNECT-01",
+   "stato": "in_arrivo",
+   "scadenza": "2027-09-15",
+   "per_imprese": "incerto",
+   "perche": "Startup Europe: azione a supporto dell'ecosistema delle start-up."
+  },
+  {
+   "titolo": "Enhancing farmer's profitability and resilience through innovations for diversified crops and value chains (HORIZON-CL6-2027-02-FARM2FORK-05)",
+   "url": "https://ec.europa.eu/info/funding-tenders/opportunities/portal/screen/opportunities/topic-details/HORIZON-CL6-2027-02-FARM2FORK-05",
+   "stato": "in_arrivo",
+   "scadenza": "2027-09-23",
+   "per_imprese": "incerto",
+   "perche": "Redditivita' e resilienza degli agricoltori; progetti di ricerca con aziende agricole."
+  },
+  {
+   "titolo": "Carbon farming innovation and scale-up (HORIZON-CL6-2027-02-CLIMATE-03)",
+   "url": "https://ec.europa.eu/info/funding-tenders/opportunities/portal/screen/opportunities/topic-details/HORIZON-CL6-2027-02-CLIMATE-03",
+   "stato": "in_arrivo",
+   "scadenza": "2027-09-23",
+   "per_imprese": "incerto",
+   "perche": "Carbon farming: innovazione e diffusione presso aziende agricole."
+  },
+  {
+   "titolo": "Empowering local urban food systems entrepreneurship and innovation (HORIZON-CL6-2027-02-COMMUNITIES-02)",
+   "url": "https://ec.europa.eu/info/funding-tenders/opportunities/portal/screen/opportunities/topic-details/HORIZON-CL6-2027-02-COMMUNITIES-02",
+   "stato": "in_arrivo",
+   "scadenza": "2027-09-23",
+   "per_imprese": "incerto",
+   "perche": "Imprenditorialita' e innovazione nei sistemi alimentari urbani."
+  },
+  {
+   "titolo": "Crafting routes to a circular economy (HORIZON-CL2-2027-01-HERITAGE-03)",
+   "url": "https://ec.europa.eu/info/funding-tenders/opportunities/portal/screen/opportunities/topic-details/HORIZON-CL2-2027-01-HERITAGE-03",
+   "stato": "in_arrivo",
+   "scadenza": "2027-09-23",
+   "per_imprese": "incerto",
+   "perche": "Percorsi artigianali verso l'economia circolare (mestieri e artigianato)."
+  },
+  {
+   "titolo": "MANTRA Second Open Call for Manufacturing SMEs (sovvenzione a cascata, progetto HORIZON-CL4-2024-RESILIENCE-01-41)",
+   "url": "https://ec.europa.eu/info/funding-tenders/opportunities/portal/screen/opportunities/competitive-calls-cs/45705096",
+   "stato": "aperto",
+   "scadenza": "2026-09-30",
+   "per_imprese": "si",
+   "perche": "Contributi a cascata per PMI manifatturiere."
+  },
+  {
+   "titolo": "Financial Support to Startups and Scaleups (Shape Accelerator & Scale Post-Accelerator) (sovvenzione a cascata, progetto HORIZON-EIT-2025-KIC-IBA-CC)",
+   "url": "https://ec.europa.eu/info/funding-tenders/opportunities/portal/screen/opportunities/competitive-calls-cs/48939704",
+   "stato": "aperto",
+   "scadenza": "2026-10-12",
+   "per_imprese": "si",
+   "perche": "Sostegno finanziario a start-up e scale-up (EIT Culture & Creativity)."
+  },
+  {
+   "titolo": "KAVA Call 14 - Upscaling (sovvenzione a cascata, progetto HORIZON-EIT-2025-KIC-IBA-RM)",
+   "url": "https://ec.europa.eu/info/funding-tenders/opportunities/portal/screen/opportunities/competitive-calls-cs/48939754",
+   "stato": "aperto",
+   "scadenza": "2026-10-16",
+   "per_imprese": "si",
+   "perche": "EIT RawMaterials: finanziamento a progetti di scale-up con imprese."
+  },
+  {
+   "titolo": "AI Entrepreneurs Lab (sovvenzione a cascata, progetto HORIZON-EIT-2025-KIC-IBA-INBC)",
+   "url": "https://ec.europa.eu/info/funding-tenders/opportunities/portal/screen/opportunities/competitive-calls-cs/48939740",
+   "stato": "aperto",
+   "scadenza": "2026-10-21",
+   "per_imprese": "incerto",
+   "perche": "Programma EIT per imprenditori dell'IA; forme di sostegno da verificare."
+  },
+  {
+   "titolo": "FIERCE 2nd Open Call for the Financial Support Programme (sovvenzione a cascata, progetto HORIZON-CL4-2024-RESILIENCE-01-41)",
+   "url": "https://ec.europa.eu/info/funding-tenders/opportunities/portal/screen/opportunities/competitive-calls-cs/45705096",
+   "stato": "aperto",
+   "scadenza": "2026-11-09",
+   "per_imprese": "incerto",
+   "perche": "Sostegno finanziario a terzi nell'ambito 'Innovate to transform' per la sostenibilita' delle PMI."
+  },
+  {
+   "titolo": "RENEW-BOOSTER EUROCLUSTER CALL N°2 FOR FINANCIAL SUPPORT TO THIRD PARTIES (sovvenzione a cascata, progetto SMP-COSME-2024-CLUSTER-01)",
+   "url": "https://ec.europa.eu/info/funding-tenders/opportunities/portal/screen/opportunities/competitive-calls-cs/47108154",
+   "stato": "in_arrivo",
+   "scadenza": "2026-11-30",
+   "per_imprese": "si",
+   "perche": "Eurocluster: contributi a PMI tramite i cluster."
+  },
+  {
+   "titolo": "European Partnership on Innovative SMEs/Innowwide CALL 5 (sovvenzione a cascata, progetto HORIZON-EIE-2021-INNOVSMES-01-01)",
+   "url": "https://ec.europa.eu/info/funding-tenders/opportunities/portal/screen/opportunities/competitive-calls-cs/44087099",
+   "stato": "in_arrivo",
+   "scadenza": "2026-12-01",
+   "per_imprese": "si",
+   "perche": "Innowwide: studi di fattibilita' di mercato internazionali per PMI."
+  },
+  {
+   "titolo": "European Partnership on Innovative SMEs/Eurostars: joint transnational call for proposals (CALL 12 of Eurostars-3) (sovvenzione a cascata, progetto HORIZON-EIE-2021-INNOVSMES-01-01)",
+   "url": "https://ec.europa.eu/info/funding-tenders/opportunities/portal/screen/opportunities/competitive-calls-cs/44087099",
+   "stato": "in_arrivo",
+   "scadenza": "2027-03-04",
+   "per_imprese": "si",
+   "perche": "Eurostars: progetti di R&S guidati da PMI innovative."
+  },
+  {
+   "titolo": "WoodStock Grants to support climate-smart wood construction solutions (sovvenzione a cascata, progetto HORIZON-CL6-2024-CLIMATE-01-5)",
+   "url": "https://ec.europa.eu/info/funding-tenders/opportunities/portal/screen/opportunities/competitive-calls-cs/45656490",
+   "stato": "aperto",
+   "scadenza": "2026-12-15",
+   "per_imprese": "incerto",
+   "perche": "Contributi per soluzioni costruttive in legno; imprese probabilmente ammesse."
+  },
+  {
+   "titolo": "Boosting creative startups for disruptive innovation (HORIZON-CL2-2026-01-HERITAGE-02)",
+   "url": "https://ec.europa.eu/info/funding-tenders/opportunities/portal/screen/opportunities/topic-details/HORIZON-CL2-2026-01-HERITAGE-02",
+   "stato": "chiuso_recente",
+   "scadenza": "2026-09-24",
+   "per_imprese": "si",
+   "perche": "Boosting creative startups: sostegno a start-up creative, chiuso il 24/09/2026."
+  },
+  {
+   "titolo": "European mini-slate development (CREA-MEDIA-2026-DEVMINISLATE)",
+   "url": "https://ec.europa.eu/info/funding-tenders/opportunities/portal/screen/opportunities/topic-details/CREA-MEDIA-2026-DEVMINISLATE",
+   "stato": "chiuso_recente",
+   "scadenza": "2026-09-22",
+   "per_imprese": "si",
+   "perche": "MEDIA: sviluppo di mini-slate per case di produzione audiovisive indipendenti."
+  },
+  {
+   "titolo": "Circular Economy and Zero Pollution (LIFE-2026-SAP-ENV-ENVIRONMENT)",
+   "url": "https://ec.europa.eu/info/funding-tenders/opportunities/portal/screen/opportunities/topic-details/LIFE-2026-SAP-ENV-ENVIRONMENT",
+   "stato": "chiuso_recente",
+   "scadenza": "2026-09-22",
+   "per_imprese": "incerto",
+   "perche": "LIFE economia circolare: ammessi anche soggetti privati/imprese."
+  }
+ ],
+ "esclusi": [
+  {
+   "titolo": "Call for proposals for civil society organisations active on protecting and promoting Union values (CERV-2024-CITIZENS-VALUES)",
+   "url": "https://ec.europa.eu/info/funding-tenders/opportunities/portal/screen/opportunities/topic-details/CERV-2024-CITIZENS-VALUES",
+   "perche": "Rivolto a organizzazioni della societa' civile, non a imprese."
+  },
+  {
+   "titolo": "ERC Starting Grant (ERC-2027-STG)",
+   "url": "https://ec.europa.eu/info/funding-tenders/opportunities/portal/screen/opportunities/topic-details/ERC-2027-STG",
+   "perche": "Borse per ricercatori ospitati da enti di ricerca."
+  },
+  {
+   "titolo": "Transaction Costs Support for social finance intermediaries (ESF-2026-AG-TCS)",
+   "url": "https://ec.europa.eu/info/funding-tenders/opportunities/portal/screen/opportunities/topic-details/ESF-2026-AG-TCS",
+   "perche": "Beneficiari intermediari di finanza sociale; imprese sociali solo indirettamente."
+  },
+  {
+   "titolo": "Counter-drone systems (EDF-EDIP-P-2026-FNLC-CPA-CDS)",
+   "url": "https://ec.europa.eu/info/funding-tenders/opportunities/portal/screen/opportunities/topic-details/EDF-EDIP-P-2026-FNLC-CPA-CDS",
+   "perche": "Azione di acquisto congiunto nel programma difesa: ambiguo, beneficiari soprattutto consorzi di Stati/industria della difesa."
+  },
+  {
+   "titolo": "Sustainable Gender Equality Champions (HORIZON-WIDERA-2026-GENDER-Prize-01)",
+   "url": "https://ec.europa.eu/info/funding-tenders/opportunities/portal/screen/opportunities/topic-details/HORIZON-WIDERA-2026-GENDER-Prize-01",
+   "perche": "Premio per universita' ed enti di ricerca."
+  },
+  {
+   "titolo": "EU-China Think Tank Engagement on Green Governance (EuropeAid/186411/DD/ACT/CN)",
+   "url": "https://ec.europa.eu/info/funding-tenders/opportunities/portal/screen/opportunities/topic-details/EuropeAid/186411/DD/ACT/CN",
+   "perche": "Cooperazione esterna rivolta a think tank/ONG."
+  },
+  {
+   "titolo": "UPC-AI4CI 1st Scholarship Call (sovvenzione a cascata)",
+   "url": "https://ec.europa.eu/info/funding-tenders/opportunities/portal/screen/opportunities/competitive-calls-cs/45114064",
+   "perche": "Borse di studio a persone fisiche."
+  },
+  {
+   "titolo": "Posting of workers: enhancing administrative cooperation and access to information (ESF-2026-POW)",
+   "url": "https://ec.europa.eu/info/funding-tenders/opportunities/portal/screen/opportunities/topic-details/ESF-2026-POW",
+   "perche": "Rivolto a autorita' pubbliche e parti sociali."
+  }
+ ]
+}

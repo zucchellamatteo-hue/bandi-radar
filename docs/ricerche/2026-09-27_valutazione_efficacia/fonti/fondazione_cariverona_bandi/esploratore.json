@@ -1,0 +1,24 @@
+{"fonte": "fondazione_cariverona_bandi", "raggiungibile": false,
+ "pagine_visitate": [
+  "https://www.fondazionecariverona.org/bandi/ (403, sfida Cloudflare 'Just a moment', sia WebFetch sia curl)",
+  "https://www.fondazionecariverona.org/robots.txt (200, nessun divieto)",
+  "https://www.fondazionecariverona.org/wp-json/wp/v2/types (403 Cloudflare)",
+  "https://www.fondazionecariverona.org/sitemap_index.xml (403 Cloudflare)",
+  "https://www.contributieuropa.com/bandi/fondazione-cariverona-e-caritro-bando-ricerca-e-sviluppo-2026-finanziamento-a-fondo-perduto-in-sostegno-a-progetti-di-ricerca-applicata-per-lintroduzione-di-nuovi-servizi-nelle-imprese/",
+  "https://www.obiettivoeuropa.com/bandi/fondazione-cariverona-bando-lavoro-e-inclusione",
+  "https://www.csvmarche.it/bando-2026-sport-e-cultura-per-linclusione-2026-fondazione-cariverona/",
+  "ricerche web (5) su bandi Cariverona 2026"
+ ],
+ "totale_stimato": null,
+ "note": "Il sito dell'ente e' dietro una sfida Cloudflare gestita (managed challenge): tutte le pagine, API WordPress e sitemap rispondono 403 a un client senza JavaScript; solo robots.txt e' leggibile. Per la lettura automatica serve un browser senza interfaccia (e forse neanche basta). L'elenco e' ricostruito da risultati di ricerca e siti terzi (CSV, portali bandi, stampa locale), quindi puo' essere incompleto. Fondazione di origine bancaria: quasi tutti i bandi sono per enti pubblici e terzo settore delle province di Verona, Vicenza, Belluno, Mantova, Ancona; l'unico chiaramente per imprese e' Ricerca e Sviluppo 2026 (chiuso il 06/03/2026, appena fuori dalla finestra di 6 mesi che parte dal 26/03/2026, incluso comunque perche' e' il caso rilevante). Nessun bando per imprese risulta aperto oggi (26/09/2026).",
+ "bandi": [
+  {"titolo": "Bando Ricerca e Sviluppo 2026 (con Fondazione Caritro)", "url": "https://www.fondazionecariverona.org/Iniziative/bando-ricerca-e-sviluppo-2026/", "stato": "chiuso_recente", "scadenza": "2026-03-06", "per_imprese": "si", "perche": "Progetti di ricerca applicata tra centri di ricerca e imprese iscritte al Registro Imprese (micro, PMI e grandi), che cofinanziano almeno il 30%; chiuso poco piu' di 6 mesi fa."},
+  {"titolo": "Bando Nutrire il cambiamento - Agricoltura sostenibile e rigenerazione locale", "url": "https://www.fondazionecariverona.org/Iniziative/nutrire-il-cambiamento/", "stato": "chiuso_recente", "scadenza": "2026-09-25", "per_imprese": "incerto", "perche": "Capofila enti pubblici e terzo settore, ma la Linea B riguarda l'imprenditoria agricola giovanile under 40 nelle aree interne (formazione e accompagnamento, fino a 50.000 euro): i giovani agricoltori sono beneficiari indiretti."}
+ ],
+ "esclusi": [
+  {"titolo": "Bando Facciamo Spazio! Giovani, luoghi e comunita' in azione", "url": "https://veronaeconomia.it/2026/05/28/leggi-notizia/argomenti/enti/bando-facciamo-spazio-75-milioni-per-i-giovani.html", "perche": "Scadenza 09/09/2026; richiedenti enti pubblici, privati non profit, terzo settore ed enti religiosi; tema casa e spazi per giovani."},
+  {"titolo": "Bando Capitale naturale 2026", "url": "https://www.fondazionecariverona.org/Iniziative/bando-capitale-naturale-2026/", "perche": "Scadenza 29/05/2026; progetti di rigenerazione ecologica di enti pubblici/terzo settore con partenariati; imprese al massimo come partner, non verificato."},
+  {"titolo": "Bando Sport e cultura per l'inclusione 2026", "url": "https://www.fondazionecariverona.org/Iniziative/sport-e-cultura-2026/", "perche": "Scadenza 27/03/2026; solo enti pubblici e non profit."},
+  {"titolo": "Progetto Upskill AI for Social Impact", "url": "https://www.fondazionecariverona.org/Iniziative/progetto-upskill-ai-for-social-impact/", "perche": "Percorso per enti del terzo settore (settembre-novembre 2026); le cooperative sociali potrebbero rientrare, ma non e' un contributo alle imprese e non ho potuto verificare i dettagli."},
+  {"titolo": "Bando Lavoro e inclusione", "url": "https://www.fondazionecariverona.org/Iniziative/lavoro-e-inclusione/", "perche": "Scaduto 15/10/2025 (fuori finestra); capofila pubblico o non profit, le imprese profit solo come partner."}
+ ]}

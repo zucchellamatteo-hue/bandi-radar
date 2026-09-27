@@ -1,0 +1,191 @@
+{
+ "fonte": "fvg_bandi_avvisi",
+ "perimetro": [
+  {
+   "titolo": "Avviso contributi a interventi per lo sviluppo del trasporto combinato delle merci",
+   "url": "https://www.regione.fvg.it/rafvg/cms/RAFVG/MODULI/bandi_avvisi/BANDI/8756.html",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Pubblicato il 28/11/2025, scadenza 31/12/2026 (ricontrollato con curl il 27/09: contributi LR 7/2004 al trasporto combinato merci). Non sta a pagina 11 (l annuncio-contenitore 3168 non lo contiene) ma in una delle altre pagine ?pag=N, che il lettore tratta come annunci-contenitore: il dettaglio non viene mai raccolto. Compare anche nel filtro Bandi contenenti misure contributive."
+  },
+  {
+   "titolo": "Avviso contributi per interventi per lo sviluppo del trasporto intermodale delle merci",
+   "url": "https://www.regione.fvg.it/rafvg/cms/RAFVG/MODULI/bandi_avvisi/BANDI/8757.html",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Stessa situazione di 8756: voce vecchia (28/11/2025) nelle pagine successive alla prima, che il lettore non espande."
+  },
+  {
+   "titolo": "Avviso aiuti sul costo dei premi assicurativi a copertura delle perdite dovute a rischi agricoli e rischi di insolvenza",
+   "url": "https://www.regione.fvg.it/rafvg/cms/RAFVG/MODULI/bandi_avvisi/BANDI/8760.html",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Compare solo dentro l'annuncio-contenitore 3168 (pagina ?pag=11), smistato dalle regole come da_rivedere; nessun annuncio proprio."
+  },
+  {
+   "titolo": "Avviso di contributi per proprietari di boschi (pubblici e privati), imprese boschive",
+   "url": "https://www.regione.fvg.it/rafvg/cms/RAFVG/MODULI/bandi_avvisi/BANDI/8761.html",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Visibile solo nel testo dell'annuncio-contenitore 3168; non raccolto come voce singola."
+  },
+  {
+   "titolo": "Avviso di contributi ai proprietari e conduttori di campeggi in area montana",
+   "url": "https://www.regione.fvg.it/rafvg/cms/RAFVG/MODULI/bandi_avvisi/BANDI/8762.html",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Visibile solo nel testo dell'annuncio-contenitore 3168; non raccolto come voce singola. Nota: la pagina di dettaglio dice domanda entro il 31 marzo di ogni anno, quindi oggi la finestra e chiusa e riapre nel 2027; resta una misura ricorrente per imprese che il radar dovrebbe conoscere."
+  },
+  {
+   "titolo": "Contributi ad attivita' storiche e a locali storici - Anno 2026",
+   "url": "https://www.regione.fvg.it/rafvg/cms/RAFVG/economia-imprese/commercio-terziario/FOGLIA9/",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Aperto (domande 14/09-15/10/2026) ma pubblicato nella sezione economia-imprese, non nel modulo bandi_avvisi osservato da questa fonte: serve un'altra fonte nel registro. La perdita va attribuita alla copertura del registro (manca una fonte economia-imprese), non al lettore di questa pagina: ricontrollato che non compare nel filtro misure contributive del modulo."
+  }
+ ],
+ "smistamento": [
+  {
+   "annuncio": 3161,
+   "regole": "da_rivedere",
+   "haiku": "non_rilevante",
+   "opus": "non_rilevante",
+   "giusto": "non_rilevante",
+   "errore_regole": "lieve",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Pagina di elenco (?pag=4): per la regola 7 del prompt e' non_rilevante; le regole non trovano parole chiave e lasciano da_rivedere."
+  },
+  {
+   "annuncio": 3163,
+   "regole": "da_rivedere",
+   "haiku": "non_rilevante",
+   "opus": "non_rilevante",
+   "giusto": "non_rilevante",
+   "errore_regole": "lieve",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Pagina di elenco con LPU e cantieri di lavoro."
+  },
+  {
+   "annuncio": 3164,
+   "regole": "da_rivedere",
+   "haiku": "non_rilevante",
+   "opus": "non_rilevante",
+   "giusto": "non_rilevante",
+   "errore_regole": "lieve",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Pagina di elenco."
+  },
+  {
+   "annuncio": 3165,
+   "regole": "da_rivedere",
+   "haiku": "non_rilevante",
+   "opus": "non_rilevante",
+   "giusto": "non_rilevante",
+   "errore_regole": "lieve",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Pagina di elenco."
+  },
+  {
+   "annuncio": 3166,
+   "regole": "da_rivedere",
+   "haiku": "non_rilevante",
+   "opus": "non_rilevante",
+   "giusto": "non_rilevante",
+   "errore_regole": "lieve",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Pagina di elenco."
+  },
+  {
+   "annuncio": 3167,
+   "regole": "da_rivedere",
+   "haiku": "non_rilevante",
+   "opus": "non_rilevante",
+   "giusto": "non_rilevante",
+   "errore_regole": "lieve",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Pagina di elenco."
+  },
+  {
+   "annuncio": 3168,
+   "regole": "da_rivedere",
+   "haiku": "rilevante",
+   "opus": "non_rilevante",
+   "giusto": "non_rilevante",
+   "errore_regole": "lieve",
+   "errore_haiku": "medio",
+   "errore_opus": "nessuno",
+   "spiegazione": "Pagina di elenco (?pag=11) che contiene 3-4 avvisi per imprese agricole/forestali/campeggi: i singoli avvisi sono rilevanti, ma la pagina-contenitore no (regola 7), e tenerla produrrebbe un bando con la pagina sbagliata. Haiku la tiene: errore medio, anche se segnala un problema reale (gli avvisi dentro non sono raccolti)."
+  },
+  {
+   "annuncio": 3169,
+   "regole": "da_rivedere",
+   "haiku": "non_rilevante",
+   "opus": "non_rilevante",
+   "giusto": "non_rilevante",
+   "errore_regole": "lieve",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Pagina di elenco."
+  },
+  {
+   "annuncio": 5068,
+   "regole": "null (non ancora smistato)",
+   "haiku": "non_rilevante",
+   "opus": "non_rilevante",
+   "giusto": "non_rilevante",
+   "errore_regole": "nessuno",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Cantieri di lavoro: adesioni di lavoratori disoccupati presso un Comune. Le regole non l'hanno ancora smistato (esito null), quindi nessun errore contabile."
+  }
+ ],
+ "preliminare": [],
+ "osservazioni": [
+  "Il lettore della fonte registra come annunci singoli solo le ~15 voci della prima pagina e trasforma i link di paginazione (?pag=2..13) e i filtri (?p=cpi, ?p=cm) in annunci-contenitore intitolati 'tutti i bandi e gli avvisi in corso': le ~110 voci delle pagine successive, tra cui tutti e 6 gli avvisi per imprese (8756, 8757, 8760, 8761, 8762, 8764), non vengono mai raccolte. Serve seguire la paginazione oppure, meglio, osservare il filtro 'Bandi contenenti misure contributive' (ricerca.jsp?txtChiave=&onlyTagServizio=1, ~11 voci).",
+  "La pagina osservata e' dominata da centri per l'impiego, collocamento mirato e concessioni idriche: rumore alto, resa bassa. Le regole mettono tutto in da_rivedere ('nessuna parola chiave'): 24 su 25 annunci in coda, nessuno rilevante, nessun bando.",
+  "I veri incentivi alle imprese della Regione FVG stanno nella sezione economia-imprese (industria, artigianato, commercio, turismo, cooperative, accesso al credito), organizzata per linee a sportello: questa fonte non la copre, serve una fonte dedicata nel registro.",
+  "Nessun bando collegato alla fonte: bandi.json, haiku_preliminari.json e opus_preliminari.json sono vuoti, quindi il compito C (preliminare) non e' valutabile per questa fonte.",
+  "L'annuncio 5068 (25/09) ha esito null: lo smistamento a regole non era ancora passato al momento dell'estrazione.",
+  "Verifica di riserva: la pagina https://www.regione.fvg.it/rafvg/cms/RAFVG/MODULI/bandi_avvisi/ offre solo elenco paginato (13 pagine), filtri Centri per l impiego e Collocamento mirato, ricerca per parola chiave e filtro Bandi contenenti misure contributive: l esploratore li ha visitati tutti, nessuna sezione dimenticata.",
+  "Diversi avvisi sportello del modulo mostrano scadenza 31/12/2026 ma hanno finestre annuali interne (campeggi entro 31 marzo, bressane e roccoli 1 gennaio-31 maggio): la scadenza dell elenco non e la finestra di presentazione."
+ ],
+ "correzioni": [
+  {
+   "caso": "8764 bressane e roccoli",
+   "prima": "nel perimetro, perso_non_raccolto",
+   "dopo": "fuori perimetro",
+   "perche": "Dettaglio ricontrollato: contributi ai proprietari di bressane e roccoli (impianti storici di uccellagione, Servizio caccia), domande 1 gennaio-31 maggio di ogni anno, oggi finestra chiusa; beneficiari non indicati come imprese. Non e un bando per imprese in modo riconoscibile."
+  },
+  {
+   "caso": "economia-imprese/industria/FOGLIA200 (R&S bando 2025)",
+   "prima": "nel perimetro, perso_non_raccolto",
+   "dopo": "fuori perimetro",
+   "perche": "Bando chiuso (graduatoria 15/07/2026) e pubblicato fuori dalla pagina osservata da questa fonte; lo stesso controllore lo giudica poco grave. Tenerlo gonfierebbe le perdite della fonte."
+  },
+  {
+   "caso": "8756 trasporto combinato",
+   "prima": "sta a pagina 11 circa",
+   "dopo": "sta in un altra pagina dell elenco (non la 11)",
+   "perche": "Il testo dell annuncio-contenitore 3168 (pag=11) non contiene 8756 ne 8757; l esito perso_non_raccolto resta confermato."
+  },
+  {
+   "caso": "3168 Haiku rilevante",
+   "prima": "errore medio",
+   "dopo": "errore medio (confermato)",
+   "perche": "La regola 7 del prompt dice che le pagine di elenco sono non_rilevante; Opus lo applica. Il segnale di Haiku e utile ma la risposta e sbagliata rispetto alle istruzioni."
+  }
+ ],
+ "fiducia": "alta"
+}

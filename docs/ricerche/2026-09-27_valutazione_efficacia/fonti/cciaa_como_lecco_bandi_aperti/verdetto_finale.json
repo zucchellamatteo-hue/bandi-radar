@@ -1,0 +1,358 @@
+{
+ "fonte": "cciaa_como_lecco_bandi_aperti",
+ "perimetro": [
+  {
+   "titolo": "Bando Fiere internazionali all'estero 2026",
+   "url": "https://www.comolecco.camcom.it/archivio27_bandi-opportunita_0_195.html",
+   "esito": "trovato_con_scheda",
+   "annuncio": 97,
+   "bando": 549,
+   "spiegazione": "Annuncio 97 rilevante (origine), collegato al bando 549; la pagina del bando e' la variante index.php?id_doc=195 (stessa scheda); preliminare passa; scheda presente."
+  },
+  {
+   "titolo": "Bando Export su Misura 2026",
+   "url": "https://www.comolecco.camcom.it/archivio27_bandi-opportunita_0_197.html",
+   "esito": "trovato_con_scheda",
+   "annuncio": 98,
+   "bando": 517,
+   "spiegazione": "Catena completa: rilevante, bando 517, pagina trovata, preliminare passa, scheda presente."
+  },
+  {
+   "titolo": "BANDO VOUCHER AI - EDIZIONE 2026",
+   "url": "https://www.comolecco.camcom.it/archivio27_bandi-opportunita_0_189.html",
+   "esito": "trovato_con_scheda",
+   "annuncio": 99,
+   "bando": 279,
+   "spiegazione": "Catena completa; il preliminare di produzione dice stato non_noto ma lo fa passare, scheda presente."
+  },
+  {
+   "titolo": "Bando Nuova Impresa 2026",
+   "url": "https://www.comolecco.camcom.it/archivio27_bandi-opportunita_0_186.html",
+   "esito": "trovato_con_scheda",
+   "annuncio": 102,
+   "bando": 250,
+   "spiegazione": "Catena completa (testo solo sintesi, ma passa); scheda presente."
+  },
+  {
+   "titolo": "Servizio di accompagnamento Economia Circolare RE-FIL ECO2",
+   "url": "https://www.comolecco.camcom.it/archivio27_bandi-opportunita_0_187.html",
+   "esito": "perso_smistamento",
+   "annuncio": 100,
+   "bando": null,
+   "spiegazione": "Le regole lo lasciano da_rivedere (nessuna parola chiave: il titolo troncato non contiene 'bando'/'contributo') e nessuno lo ha poi promosso: nessun bando collegato. E' un servizio gratuito in de minimis (aiuto indiretto da 1.700 euro) per 15 MPMI, aperto fino al 30/11/2026. Haiku e Opus lo danno rilevante."
+  },
+  {
+   "titolo": "Servizio di accesso e accompagnamento alla redazione e pubblicazione di un rapporto di sostenibilita' di territorio",
+   "url": "https://www.comolecco.camcom.it/archivio27_bandi-opportunita_0_188.html",
+   "esito": "perso_smistamento",
+   "annuncio": 101,
+   "bando": null,
+   "spiegazione": "Stesso caso del 187: da_rivedere per le regole, mai collegato a un bando. Servizio in de minimis (2.000 euro) per 10 MPMI, aperto fino al 30/11/2026."
+  },
+  {
+   "titolo": "Verso la certificazione della parita' di genere - Annualita' 2025-2027",
+   "url": "https://www.comolecco.camcom.it/archivio27_bandi-opportunita_0_174.html",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Verificato in rete il 27/09: contributi a MPMI lombarde per la certificazione UNI/PdR 125, domande fino a esaurimento e comunque entro il 30/06/2027. Il sito LO ELENCA nella pagina 'Bandi aperti', ma a pagina 2 (link di paginazione inizio=6): il lettore isweb non segue la paginazione e ha registrato quel link come annuncio 103 con titolo sbagliato ('Bando Fiere...'), poi fuso come doppione. Nessun fascicolo di Bandi Radar lo contiene da altre fonti (solo menzioni nella colonna laterale di altre schede)."
+  },
+  {
+   "titolo": "Bando Voucher Doppia Transizione Lombardia 2026",
+   "url": "https://www.comolecco.camcom.it/archivio27_bandi-opportunita_0_194.html",
+   "esito": "fermato_giustamente",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Chiuso per esaurimento fondi prima che la fonte fosse letta (primo passaggio 24/09); non era piu' in 'Bandi aperti'. Non raccolto, ma nessun danno."
+  },
+  {
+   "titolo": "Bando Turismo 2026",
+   "url": "https://www.comolecco.camcom.it/archivio27_bandi-opportunita_0_196.html",
+   "esito": "fermato_giustamente",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Chiuso l'08/09/2026 per esaurimento risorse, prima della prima lettura; non raccolto, nessun danno."
+  },
+  {
+   "titolo": "Avviso selezione operatori workshop 'Lake Como in Stockholm'",
+   "url": "https://www.comolecco.camcom.it/archivio27_bandi-opportunita_0_193.html",
+   "esito": "fermato_giustamente",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Chiuso il 31/07/2026 (per_imprese incerto); non raccolto, nessun danno."
+  },
+  {
+   "titolo": "Bando Incubatore d'impresa 2026",
+   "url": "https://www.comolecco.camcom.it/archivio27_bandi-opportunita_0_191.html",
+   "esito": "fermato_giustamente",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Chiuso il 30/07/2026; non raccolto, nessun danno."
+  },
+  {
+   "titolo": "Avviso di Selezione Servizi Digitali 2026",
+   "url": "https://www.comolecco.camcom.it/archivio27_bandi-opportunita_0_192.html",
+   "esito": "fermato_giustamente",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Chiuso il 30/06/2026; non raccolto, nessun danno."
+  },
+  {
+   "titolo": "Bando Rafforza & Innova",
+   "url": "https://www.comolecco.camcom.it/archivio27_bandi-opportunita_0_177.html",
+   "esito": "fermato_giustamente",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Chiuso il 30/06/2026; non raccolto, nessun danno."
+  },
+  {
+   "titolo": "Bando imprese storiche verso il futuro - 2026",
+   "url": "https://www.comolecco.camcom.it/archivio27_bandi-opportunita_0_190.html",
+   "esito": "fermato_giustamente",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Chiuso il 16/06/2026; non raccolto, nessun danno."
+  },
+  {
+   "titolo": "Bando Export su Misura 2025-2026",
+   "url": "https://www.comolecco.camcom.it/archivio27_bandi-opportunita_0_184.html",
+   "esito": "fermato_giustamente",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Chiuso il 20/05/2026 (sostituito dall'edizione 2026, che e' schedata); nessun danno."
+  },
+  {
+   "titolo": "Parita' di genere in azienda: II edizione del programma formativo",
+   "url": "https://www.comolecco.camcom.it/archivio27_bandi-opportunita_0_179.html",
+   "esito": "fermato_giustamente",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Chiuso il 24/04/2026, formazione (per_imprese incerto); nessun danno."
+  },
+  {
+   "titolo": "Innovacultura 2 (bando regionale)",
+   "url": "https://www.comolecco.camcom.it/archivio27_bandi-opportunita_0_185.html",
+   "esito": "fermato_giustamente",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Chiuso il 15/04/2026; nessun danno."
+  },
+  {
+   "titolo": "Bando Fiere internazionali in Lombardia (FESR, Unioncamere/Regione)",
+   "url": "https://www.comolecco.camcom.it/archivio27_bandi-opportunita_0_158.html",
+   "esito": "fermato_giustamente",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Aggiunto dalla verifica: compare a pagina 2 di 'Bandi aperti' con etichetta 'aperto' (fino ad esaurimento fondi), ma secondo Unioncamere Lombardia lo sportello si e' chiuso il 20/07/2026 (Decreto 9829 del 21/07/2026), prima della prima lettura; non raccolto, nessun danno. L'esploratore non l'aveva visto perche' non ha aperto la pagina 2."
+  }
+ ],
+ "smistamento": [
+  {
+   "annuncio": 93,
+   "regole": "rilevante",
+   "haiku": "non_rilevante",
+   "opus": "non_rilevante",
+   "giusto": "non_rilevante",
+   "errore_regole": "lieve",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "L'indirizzo e' la sezione 'In apertura' (vuota); il titolo 'Bando Fiere...' e' un'etichetta sbagliata presa dal lettore isweb. Le regole si fidano del titolo. Danno nullo solo perche' la deduplica lo ha fuso nel bando 549 come doppione. Declassato a lieve: le regole hanno applicato correttamente la parola chiave al titolo ricevuto; il difetto e' del lettore isweb che assegna il titolo sbagliato, e il danno e' nullo (fuso come doppione)."
+  },
+  {
+   "annuncio": 94,
+   "regole": "da_rivedere",
+   "haiku": "non_rilevante",
+   "opus": "non_rilevante",
+   "giusto": "non_rilevante",
+   "errore_regole": "lieve",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Pagina di elenco 'Bandi in rendicontazione'."
+  },
+  {
+   "annuncio": 95,
+   "regole": "rilevante",
+   "haiku": "non_rilevante",
+   "opus": "non_rilevante",
+   "giusto": "non_rilevante",
+   "errore_regole": "lieve",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Pagina 'Bandi chiusi' con titolo sbagliato; fusa come doppione nel 549. Declassato a lieve: le regole hanno applicato correttamente la parola chiave al titolo ricevuto; il difetto e' del lettore isweb che assegna il titolo sbagliato, e il danno e' nullo (fuso come doppione)."
+  },
+  {
+   "annuncio": 96,
+   "regole": "da_rivedere",
+   "haiku": "non_rilevante",
+   "opus": "non_rilevante",
+   "giusto": "non_rilevante",
+   "errore_regole": "lieve",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Pagina di elenco 'Tutti i Bandi ed Opportunita''."
+  },
+  {
+   "annuncio": 97,
+   "regole": "rilevante",
+   "haiku": "rilevante",
+   "opus": "rilevante",
+   "giusto": "rilevante",
+   "errore_regole": "nessuno",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Bando Fiere 2026, contributo a MPMI."
+  },
+  {
+   "annuncio": 98,
+   "regole": "rilevante",
+   "haiku": "rilevante",
+   "opus": "rilevante",
+   "giusto": "rilevante",
+   "errore_regole": "nessuno",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Export su Misura 2026."
+  },
+  {
+   "annuncio": 99,
+   "regole": "rilevante",
+   "haiku": "rilevante",
+   "opus": "rilevante",
+   "giusto": "rilevante",
+   "errore_regole": "nessuno",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Voucher AI 2026."
+  },
+  {
+   "annuncio": 100,
+   "regole": "da_rivedere",
+   "haiku": "rilevante",
+   "opus": "rilevante",
+   "giusto": "rilevante",
+   "errore_regole": "lieve",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Servizio gratuito in de minimis per MPMI: caso chiaro. Formalmente errore lieve, ma nei fatti il da_rivedere non e' mai stato risolto e il bando e' andato perso."
+  },
+  {
+   "annuncio": 101,
+   "regole": "da_rivedere",
+   "haiku": "rilevante",
+   "opus": "rilevante",
+   "giusto": "rilevante",
+   "errore_regole": "lieve",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Come il 100: servizio in de minimis per MPMI, perso perche' rimasto da_rivedere."
+  },
+  {
+   "annuncio": 102,
+   "regole": "rilevante",
+   "haiku": "rilevante",
+   "opus": "rilevante",
+   "giusto": "rilevante",
+   "errore_regole": "nessuno",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Nuova Impresa 2026."
+  },
+  {
+   "annuncio": 103,
+   "regole": "rilevante",
+   "haiku": "non_rilevante",
+   "opus": "non_rilevante",
+   "giusto": "non_rilevante",
+   "errore_regole": "lieve",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Link di paginazione dell'elenco 'Bandi aperti' con titolo sbagliato; fuso come doppione nel 549. Declassato a lieve: le regole hanno applicato correttamente la parola chiave al titolo ricevuto; il difetto e' del lettore isweb che assegna il titolo sbagliato, e il danno e' nullo (fuso come doppione). Pero' questo link e' la pagina 2 di 'Bandi aperti', che contiene il bando aperto 174 (parita' di genere): il vero danno e' la paginazione non seguita dal lettore, non lo smistamento."
+  },
+  {
+   "annuncio": 104,
+   "regole": "rilevante",
+   "haiku": "non_rilevante",
+   "opus": "non_rilevante",
+   "giusto": "non_rilevante",
+   "errore_regole": "lieve",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Pagina di iscrizione alla newsletter con titolo sbagliato; fusa come doppione nel 549. Declassato a lieve: le regole hanno applicato correttamente la parola chiave al titolo ricevuto; il difetto e' del lettore isweb che assegna il titolo sbagliato, e il danno e' nullo (fuso come doppione)."
+  }
+ ],
+ "preliminare": [
+  {
+   "bando": 250,
+   "produzione": "passa",
+   "haiku_nuovo": "passa",
+   "opus": "passa",
+   "giusto": "passa",
+   "errore_produzione": "nessuno",
+   "errore_haiku_nuovo": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Aperto fino al 29/01/2027, per imprese; testo solo sintesi (bando completo su Unioncamere Lombardia) ma non va fermato."
+  },
+  {
+   "bando": 279,
+   "produzione": "passa",
+   "haiku_nuovo": "passa",
+   "opus": "passa",
+   "giusto": "passa",
+   "errore_produzione": "nessuno",
+   "errore_haiku_nuovo": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Aperto fino al 31/12/2026. La produzione mette stato non_noto (impreciso, date presenti) ma lo fa passare: nessun effetto."
+  },
+  {
+   "bando": 517,
+   "produzione": "passa",
+   "haiku_nuovo": "passa",
+   "opus": "passa",
+   "giusto": "passa",
+   "errore_produzione": "nessuno",
+   "errore_haiku_nuovo": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Aperto fino al 09/10/2026. Produzione dice testo_bando=si, Haiku nuovo e Opus solo_sintesi (piu' corretto: c'e' solo locandina); irrilevante per passa/ferma."
+  },
+  {
+   "bando": 549,
+   "produzione": "passa",
+   "haiku_nuovo": "passa",
+   "opus": "passa",
+   "giusto": "passa",
+   "errore_produzione": "nessuno",
+   "errore_haiku_nuovo": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Aperto fino al 10/10/2026 salvo esaurimento, regolamento completo."
+  }
+ ],
+ "osservazioni": [
+  "Il lettore isweb assegna a 4 link di navigazione (In apertura, Bandi chiusi, paginazione, newsletter) il titolo del primo bando in evidenza ('Bando Fiere internazionali all'estero 2026'): le regole li tengono per il titolo. Oggi la deduplica li assorbe come doppioni del 549, ma e' un difetto di estrazione del titolo da correggere (o escludere i link di menu/paginazione).",
+  "Gli annunci con titolo troncato ('Servizio di accompagnamento ... ....') restano da_rivedere senza che nessuno li risolva: due aiuti aperti per MPMI (id 187 e 188) sono persi. Serve che il da_rivedere passi a Haiku (che qui li classifica bene) o che il titolo venga letto intero dalla pagina di dettaglio.",
+  "Il bando 'Verso la certificazione della parita' di genere 2025-2027' (aperto fino al 30/06/2027) E' nella pagina 'Bandi aperti', ma a pagina 2: il lettore isweb legge solo la prima pagina (6 voci) e tratta il link di paginazione come un annuncio. Correzione: far seguire al lettore la paginazione (parametro inizio=6, limite=6) invece di aggiungere una nuova fonte.",
+  "L'etichetta 'aperto' del sito non e' affidabile (molte schede chiuse la riportano ancora): il preliminare deve continuare a basarsi sulle date e sugli avvisi di chiusura anticipata.",
+  "Il bando 549 ha come pagina ufficiale l'indirizzo index.php?id_oggetto=27&id_doc=195 (preso da un annuncio di un'altra fonte, 4371) invece dell'indirizzo leggibile archivio27_..._195.html: stessa scheda, nessun danno, ma non uniforme.",
+  "La pagina 2 di 'Bandi aperti' contiene anche 'Lombardia per le donne - Voucher servizi di cura' (id 163, fino al 15/12/2026): e' per lavoratrici, non per imprese, giustamente fuori perimetro; e 'Bando Fiere internazionali in Lombardia' (id 158) chiuso il 20/07/2026 ma ancora etichettato aperto."
+ ],
+ "correzioni": [
+  {
+   "caso": "bando 174 Verso la certificazione della parita di genere",
+   "prima": "perso_non_raccolto perche' non elencato in 'Bandi aperti'",
+   "dopo": "perso_non_raccolto perche' il lettore non segue la paginazione (e' a pagina 2 di 'Bandi aperti')",
+   "perche": "Scaricata la pagina di paginazione (url dell'annuncio 103): elenca 174, 163 e 158."
+  },
+  {
+   "caso": "bando 158 Fiere internazionali in Lombardia",
+   "prima": "assente dal perimetro",
+   "dopo": "fermato_giustamente (chiuso 20/07/2026)",
+   "perche": "Presente a pagina 2 di 'Bandi aperti'; Unioncamere Lombardia indica chiusura sportello 20/07/2026."
+  },
+  {
+   "caso": "smistamento annunci 93, 95, 103, 104 (regole)",
+   "prima": "errore_regole medio",
+   "dopo": "errore_regole lieve",
+   "perche": "Le regole agiscono sul titolo ricevuto; l'errore e' del lettore isweb e il danno e' nullo (doppioni del 549). Coerenza con 100/101, dove le regole hanno un errore lieve."
+  }
+ ],
+ "fiducia": "media"
+}

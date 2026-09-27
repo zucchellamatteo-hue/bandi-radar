@@ -1,0 +1,267 @@
+{
+ "fonte": "comune_la_spezia_avvisi_api",
+ "perimetro": [
+  {
+   "titolo": "Bandi \"Botteghe Storiche e Botteghe Artigiane Storiche\" 2026",
+   "url": "https://www.comune.laspezia.it/novita/avvisi/bando-botteghe-storiche-e-le-botteghe-artigiane-storiche",
+   "esito": "perso_pagina_ufficiale",
+   "annuncio": 1230,
+   "bando": 312,
+   "spiegazione": "Annuncio raccolto e smistato rilevante, collegato al bando 312, ma pagina_stato=non_trovata: la pagina (verificata via API Plone) ha solo una frase descrittiva e nessun allegato nel JSON della notizia, quindi il cercatore della pagina ufficiale non trova il bando e la catena si ferma. Termini riaperti al 01/10/2026 (secondo l'esploratore). Nota: e' un'iscrizione all'albo (riconoscimento), non un contributo in denaro, quindi la perdita pesa poco. Verifica di riserva: i documenti (2 PDF di delibera, 4 moduli doc/docx) stanno nella sottocartella documenti-allegati, confermato via @search; il comunicato del 28/07/2026 conferma riapertura al 1/10/2026; la delibera GC 202/2026 non prevede somme di denaro."
+  },
+  {
+   "titolo": "Simest - Energia per la competitivita' internazionale",
+   "url": "https://www.comune.laspezia.it/amministrazione/aree-amministrative/dipartimento-1-servizi-finanziari-e-informatici/politiche-comunitarie/bandi-e-finanziamenti/crisi-energetica-e-internazionalizzazione-da-simest-una-nuova-misura-per-supportare-subito-le-imprese",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Si trova nella sezione 'Politiche comunitarie > Bandi e finanziamenti', non in /novita/avvisi che e' l'unica osservata dalla fonte. E' un bando nazionale rilanciato dal Comune: dovrebbe arrivare da fonti nazionali (Simest, incentivi.gov.it)."
+  },
+  {
+   "titolo": "SMP Food - prevenzione sprechi alimentari 2026-2027",
+   "url": "https://www.comune.laspezia.it/amministrazione/aree-amministrative/dipartimento-1-servizi-finanziari-e-informatici/politiche-comunitarie/bandi-e-finanziamenti/single-market-bando-per-la-prevenzione-degli-sprechi-alimentari",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Stessa sezione 'Politiche comunitarie' non osservata. Bando UE: va coperto dalle fonti UE, non da questa."
+  },
+  {
+   "titolo": "Avviso contributi potenziamento Centri Estivi e servizi socioeducativi (CUP G49I26000990001)",
+   "url": "https://www.comune.laspezia.it/novita/avvisi/avviso-pubblico-per-lerogazione-di-contributi-per-il-potenziamento-dei-centri-estivi-dei-servizi-socioeducativi-territoriali-e-dei-centri-con-funzione-educativa-e-ricreativa-destinati-alle-attivita-dei-minori-cup-g49i26000990001",
+   "esito": "perso_smistamento",
+   "annuncio": 1228,
+   "bando": null,
+   "spiegazione": "Verificato sul PDF avviso-3.pdf (estratto con pypdf): art. 4 ammette esplicitamente \"Imprese che gestiscono servizi educativi\" e cooperative sociali oltre a ETS ed enti; istanze entro le ore 12 del 30/09/2026 via PEC; dotazione 25.927,67 euro; spese 1/6-31/12/2026. Bando aperto per imprese scartato dalle regole (parola centri estivi -> famiglie). Haiku lo conferma non_rilevante, Opus da_rivedere."
+  },
+  {
+   "titolo": "La Spezia, mille e una notte 2026 (manifestazione di interesse strutture ricettive)",
+   "url": "https://www.comune.laspezia.it/novita/avvisi/avviso-pubblico-per-la-presentazione-di-manifestazioni-di-interesse-ad-aderire-alliniziativa-la-spezia-mille-e-una-notte",
+   "esito": "fermato_giustamente",
+   "annuncio": 1237,
+   "bando": null,
+   "spiegazione": "Annuncio raccolto, rimasto da_rivedere dalle regole e mai collegato a un bando; adesioni chiuse il 15/03/2026, quindi fuori tempo. Il vantaggio per l'impresa e' indiretto (il Comune paga la seconda notte al turista)."
+  }
+ ],
+ "smistamento": [
+  {
+   "annuncio": 1224,
+   "regole": "da_rivedere",
+   "haiku": "non_rilevante",
+   "opus": "non_rilevante",
+   "giusto": "non_rilevante",
+   "errore_regole": "lieve",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Borse di studio a studenti."
+  },
+  {
+   "annuncio": 1225,
+   "regole": "da_rivedere",
+   "haiku": "non_rilevante",
+   "opus": "non_rilevante",
+   "giusto": "non_rilevante",
+   "errore_regole": "lieve",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Nomina in una fondazione."
+  },
+  {
+   "annuncio": 1226,
+   "regole": "non_rilevante",
+   "haiku": "non_rilevante",
+   "opus": "non_rilevante",
+   "giusto": "non_rilevante",
+   "errore_regole": "nessuno",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Affidamento di servizio."
+  },
+  {
+   "annuncio": 1227,
+   "regole": "da_rivedere",
+   "haiku": "non_rilevante",
+   "opus": "non_rilevante",
+   "giusto": "non_rilevante",
+   "errore_regole": "lieve",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Avviso di servizio sul deposito barche."
+  },
+  {
+   "annuncio": 1228,
+   "regole": "non_rilevante",
+   "haiku": "non_rilevante",
+   "opus": "da_rivedere",
+   "giusto": "da_rivedere",
+   "errore_regole": "grave",
+   "errore_haiku": "grave",
+   "errore_opus": "nessuno",
+   "spiegazione": "Verificato sul PDF: ammesse imprese che gestiscono servizi educativi e cooperative sociali, scadenza 30/09/2026. Con solo titolo e riassunto da_rivedere e la risposta corretta (rilevante sarebbe ancora meglio); scartarlo perde un bando aperto per imprese."
+  },
+  {
+   "annuncio": 1229,
+   "regole": "da_rivedere",
+   "haiku": "non_rilevante",
+   "opus": "non_rilevante",
+   "giusto": "non_rilevante",
+   "errore_regole": "lieve",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Graduatoria di persone (rilevatori Istat); motivo di Haiku impreciso ma esito giusto."
+  },
+  {
+   "annuncio": 1230,
+   "regole": "rilevante",
+   "haiku": "rilevante",
+   "opus": "rilevante",
+   "giusto": "rilevante",
+   "errore_regole": "nessuno",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Bando comunale rivolto a botteghe e imprese artigiane storiche."
+  },
+  {
+   "annuncio": 1231,
+   "regole": "da_rivedere",
+   "haiku": "non_rilevante",
+   "opus": "non_rilevante",
+   "giusto": "non_rilevante",
+   "errore_regole": "lieve",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Designazione in un organo portuale."
+  },
+  {
+   "annuncio": 1232,
+   "regole": "da_rivedere",
+   "haiku": "non_rilevante",
+   "opus": "non_rilevante",
+   "giusto": "non_rilevante",
+   "errore_regole": "lieve",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Co-programmazione con terzo settore."
+  },
+  {
+   "annuncio": 1233,
+   "regole": "da_rivedere",
+   "haiku": "non_rilevante",
+   "opus": "non_rilevante",
+   "giusto": "non_rilevante",
+   "errore_regole": "lieve",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Elenco di soggetti autorizzati / SCIA, nessun contributo."
+  },
+  {
+   "annuncio": 1234,
+   "regole": "da_rivedere",
+   "haiku": "non_rilevante",
+   "opus": "non_rilevante",
+   "giusto": "non_rilevante",
+   "errore_regole": "lieve",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Gestione di mercati su area pubblica."
+  },
+  {
+   "annuncio": 1239,
+   "regole": "rilevante",
+   "haiku": "rilevante",
+   "opus": "non_rilevante",
+   "giusto": "non_rilevante",
+   "errore_regole": "medio",
+   "errore_haiku": "medio",
+   "errore_opus": "nessuno",
+   "spiegazione": "Graduatoria TARIC 2025 per utenze domestiche con ISEE basso; Haiku inventa 'attivita' economiche'. La parola 'agevolazion*' delle regole non basta."
+  },
+  {
+   "annuncio": 1245,
+   "regole": "rilevante",
+   "haiku": "rilevante",
+   "opus": "non_rilevante",
+   "giusto": "non_rilevante",
+   "errore_regole": "medio",
+   "errore_haiku": "medio",
+   "errore_opus": "nessuno",
+   "spiegazione": "Agevolazione tariffa rifiuti 2025 per famiglie (confermato dai preliminari: utenze domestiche)."
+  },
+  {
+   "annuncio": 1248,
+   "regole": "rilevante",
+   "haiku": "non_rilevante",
+   "opus": "non_rilevante",
+   "giusto": "non_rilevante",
+   "errore_regole": "medio",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Contributi 2025 per cooperazione internazionale e gemellaggi, di fatto ad associazioni; edizione chiusa."
+  },
+  {
+   "annuncio": 1251,
+   "regole": "non_rilevante",
+   "haiku": "non_rilevante",
+   "opus": "da_rivedere",
+   "giusto": "da_rivedere",
+   "errore_regole": "lieve",
+   "errore_haiku": "lieve",
+   "errore_opus": "nessuno",
+   "spiegazione": "Stessa formula del 1228 (regola 8: stesso esito), ma edizione 2025 ormai chiusa: scartarla costa poco."
+  }
+ ],
+ "preliminare": [
+  {
+   "bando": 157,
+   "produzione": "ferma",
+   "haiku_nuovo": "passa",
+   "opus": "ferma",
+   "giusto": "ferma",
+   "errore_produzione": "nessuno",
+   "errore_haiku_nuovo": "medio",
+   "errore_opus": "nessuno",
+   "spiegazione": "Contributi 2025 per cooperazione internazionale, non per imprese e chiusi (iniziative entro 31/12/2025). Haiku nuovo risponde tutto 'incerto/non_noto' e quindi lo fa passare."
+  },
+  {
+   "bando": 162,
+   "produzione": "ferma",
+   "haiku_nuovo": "ferma",
+   "opus": "ferma",
+   "giusto": "ferma",
+   "errore_produzione": "nessuno",
+   "errore_haiku_nuovo": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "TARIC 2025 per utenze domestiche, chiuso il 20/11/2025. La produzione mette edizione_in_corso=si e testo_bando=si (incoerenti), ma ferma comunque per per_imprese=no e stato=chiuso."
+  }
+ ],
+ "osservazioni": [
+  "La fonte osserva solo /novita/avvisi: la sezione 'Politiche comunitarie > Bandi e finanziamenti' del Comune, dove stanno i rilanci di bandi per imprese (Simest, SMP Food), non e' coperta. Sono bandi nazionali/UE, da prendere alle fonti originali piuttosto che aggiungere questa sezione.",
+  "Le pagine Plone/Volto hanno il testo nei blocchi JSON e i documenti in una sottocartella 'documenti-allegati' che non compare nel JSON della notizia: il cercatore della pagina ufficiale vede 'solo menu' e segna non_trovata (Botteghe Storiche, TARIC). Servirebbe leggere anche i figli della notizia via @search.",
+  "La regola 'centri estivi' -> famiglie e cittadini scarta i contributi ai GESTORI dei centri estivi (possibili imprese/cooperative): dovrebbe mandare a da_rivedere, non a non_rilevante.",
+  "La regola 'agevolazion*' -> rilevante fa passare le agevolazioni tariffarie per famiglie (TARIC); lo stesso per 'contribut*' su contributi ad associazioni: le regole generano bandi inutili che il preliminare poi deve fermare.",
+  "23 annunci su 30 restano da_rivedere per le regole ('nessuna parola chiave'): quasi tutti sono chiaramente non rilevanti e Haiku li chiude bene.",
+  "Haiku nuovo nel preliminare, se il testo e' poco, risponde tutto 'incerto' e fa passare bandi chiusi e non per imprese (157).",
+  "Verifica di riserva: il PDF centri estivi e leggibile con pypdf (gia presente nel container raccolta): il limite era dell ambiente del controllore, non del sistema.",
+  "Elenco /novita/avvisi ricontrollato via API (48 voci): tutte le voci dal 2025-07-30 sono raccolte tranne due gare di concessione bar pubblicate il 25/09/2026, dopo l ultima raccolta (24/09) e comunque non pertinenti. Nessuna sezione evidente dimenticata oltre a Politiche comunitarie, gia segnalata."
+ ],
+ "correzioni": [
+  {
+   "caso": "perimetro: Compagnia di San Paolo - Buoni per formazione per la cultura",
+   "prima": "perso_non_raccolto (per_imprese incerto)",
+   "dopo": "rimosso dal perimetro",
+   "perche": "La pagina del Comune (API Plone) dice: lo strumento si rivolge a tutti gli enti non profit operanti in ambito culturale e agli enti pubblici. Nessuna impresa ammessa."
+  },
+  {
+   "caso": "perimetro/smistamento annuncio 1228 (centri estivi 2026)",
+   "prima": "beneficiari non verificati, PDF non leggibile",
+   "dopo": "confermato perso_smistamento con errore grave di regole e Haiku, ora verificato",
+   "perche": "PDF letto con pypdf nel container raccolta: art. 4 ammette Imprese che gestiscono servizi educativi; scadenza 30/09/2026 ore 12. Il verdetto resta, ma diventa certo."
+  },
+  {
+   "caso": "perimetro annuncio 1230 (Botteghe Storiche)",
+   "prima": "perso_pagina_ufficiale",
+   "dopo": "confermato perso_pagina_ufficiale",
+   "perche": "Allegati presenti in documenti-allegati ma non visti dal cercatore; riapertura al 1/10/2026 confermata dal comunicato del 28/07/2026; nessun contributo in denaro nella delibera."
+  }
+ ],
+ "fiducia": "alta"
+}

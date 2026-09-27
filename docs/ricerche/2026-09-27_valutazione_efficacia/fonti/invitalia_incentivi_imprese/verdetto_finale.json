@@ -1,0 +1,465 @@
+{
+ "fonte": "invitalia_incentivi_imprese",
+ "perimetro": [
+  {
+   "titolo": "Fondo di contrasto alla deindustrializzazione 2026",
+   "url": "https://www.invitalia.it/incentivi-e-strumenti/fondo-di-contrasto-alla-deindustrializzazione-2026",
+   "esito": "perso_smistamento",
+   "annuncio": 2472,
+   "bando": null,
+   "spiegazione": "Raccolto, ma le regole lo lasciano da_rivedere (nessuna parola chiave) e nessuno lo ha poi deciso: niente bando. Haiku e Opus lo danno rilevante. (Riclassificato: annuncio rimasto da_rivedere per le regole e mai deciso dall'IA = perdita nello smistamento, come nelle altre fonti.)"
+  },
+  {
+   "titolo": "Investimenti sostenibili 4.0 - Bando 2026",
+   "url": "https://www.invitalia.it/incentivi-e-strumenti/investimenti-sostenibili-40-bando-2026",
+   "esito": "perso_smistamento",
+   "annuncio": 2474,
+   "bando": null,
+   "spiegazione": "Raccolto, rimasto da_rivedere dalle regole, mai collegato a un bando. Bando aperto per PMI del Sud: perdita grave. (Riclassificato: annuncio rimasto da_rivedere per le regole e mai deciso dall'IA = perdita nello smistamento, come nelle altre fonti.)"
+  },
+  {
+   "titolo": "GreenTour",
+   "url": "https://www.invitalia.it/incentivi-e-strumenti/fondo-greentour",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Presente nella prima pagina del catalogo (scheda Attivo, 15/07-08/10/2026) ma non raccolto. Causa accertata leggendo app/raccolta/lettori/html.py: il lettore scarta i link il cui titolo e' piu' corto di 18 caratteri (LUNGHEZZA_MINIMA_TITOLO = 18); il link 'Leggi tutto' e' considerato generico e il titolo della scheda (h3) e' 'GreenTour' (9 caratteri), quindi la scheda viene saltata. Nel markup del 27/09 la scheda e' identica a quelle raccolte."
+  },
+  {
+   "titolo": "Sviluppo competenze specialistiche delle Pmi",
+   "url": "https://www.invitalia.it/incentivi-e-strumenti/sviluppo-competenze-specialistiche-delle-pmi",
+   "esito": "perso_smistamento",
+   "annuncio": 2477,
+   "bando": null,
+   "spiegazione": "Raccolto, da_rivedere per le regole, mai deciso. Sportello aperto 10/09-21/12/2026 per PMI: perdita grave. (Riclassificato: annuncio rimasto da_rivedere per le regole e mai deciso dall'IA = perdita nello smistamento, come nelle altre fonti.)"
+  },
+  {
+   "titolo": "Fondo di partecipazione MUR",
+   "url": "https://www.invitalia.it/incentivi-e-strumenti/fondo-di-partecipazione-mur",
+   "esito": "perso_smistamento",
+   "annuncio": 2475,
+   "bando": null,
+   "spiegazione": "Raccolto, da_rivedere, mai deciso. Caso davvero dubbio: le imprese accedono tramite operatori finanziari selezionati. (Riclassificato: annuncio rimasto da_rivedere per le regole e mai deciso dall'IA = perdita nello smistamento, come nelle altre fonti.)"
+  },
+  {
+   "titolo": "Credito d'imposta per incubatori e acceleratori certificati",
+   "url": "https://www.invitalia.it/incentivi-e-strumenti/credito-dimposta-incubatori-e-acceleratori-certificati",
+   "esito": "perso_preliminare",
+   "annuncio": 2476,
+   "bando": 265,
+   "spiegazione": "Rilevante per le regole, bando 265 con pagina trovata, ma il preliminare di produzione mette per_imprese=no: incubatori e acceleratori certificati sono imprese iscritte nella sezione speciale del registro imprese, quindi andava schedato (platea ristretta)."
+  },
+  {
+   "titolo": "Cultura Cresce",
+   "url": "https://www.invitalia.it/incentivi-e-strumenti/cultura-cresce",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Presente nella prima pagina del catalogo (Attivo dal 10/12/2025) ma non raccolto. Causa accertata leggendo app/raccolta/lettori/html.py: il lettore scarta i link il cui titolo e' piu' corto di 18 caratteri (LUNGHEZZA_MINIMA_TITOLO = 18); il link 'Leggi tutto' e' considerato generico e il titolo della scheda (h3) e' 'Cultura Cresce' (14 caratteri), quindi la scheda viene saltata. Nel markup del 27/09 la scheda e' identica a quelle raccolte."
+  },
+  {
+   "titolo": "Resto al Sud 2.0",
+   "url": "https://www.invitalia.it/incentivi-e-strumenti/resto-al-sud-20",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Sta nel blocco 'per chi vuole fare impresa' della pagina, non nell'elenco a schede; il lettore non lo prende. Il registro stesso suggerisce di osservare anche /per-chi-vuole-fare-impresa/incentivi-e-strumenti, cosa non fatta. Inoltre il titolo 'Resto al Sud 2.0' ha 16 caratteri: anche se il blocco fosse letto, il filtro dei 18 caratteri lo scarterebbe."
+  },
+  {
+   "titolo": "Autoimpiego Centro-Nord",
+   "url": "https://www.invitalia.it/incentivi-e-strumenti/autoimpiego-centro-nord",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Come Resto al Sud 2.0: blocco separato della pagina, non raccolto."
+  },
+  {
+   "titolo": "ON - Oltre Nuove imprese a tasso zero",
+   "url": "https://www.invitalia.it/incentivi-e-strumenti/ON-nuove-imprese-tasso-zero",
+   "esito": "trovato_con_scheda",
+   "annuncio": 2478,
+   "bando": 17,
+   "spiegazione": "Catena completa: rilevante, bando 17, pagina trovata, preliminare passa, scheda presente."
+  },
+  {
+   "titolo": "Smart&Start Italia",
+   "url": "https://www.invitalia.it/incentivi-e-strumenti/smartstart-italia",
+   "esito": "perso_smistamento",
+   "annuncio": 2480,
+   "bando": null,
+   "spiegazione": "Raccolto, da_rivedere per le regole (titolo senza parole chiave), mai deciso. Strumento aperto a sportello per startup: perdita grave. (Riclassificato: annuncio rimasto da_rivedere per le regole e mai deciso dall'IA = perdita nello smistamento, come nelle altre fonti.)"
+  },
+  {
+   "titolo": "Beni strumentali - Nuova Sabatini",
+   "url": "https://www.invitalia.it/incentivi-e-strumenti/beni-strumentali-nuova-sabatini",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Nelle pagine successive del catalogo o nei filtri: il lettore legge solo la prima pagina senza seguire la paginazione."
+  },
+  {
+   "titolo": "Legge 181",
+   "url": "https://www.invitalia.it/incentivi-e-strumenti/legge-181",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Presente nella prima pagina del catalogo (Attivo) ma non raccolto. Causa accertata leggendo app/raccolta/lettori/html.py: il lettore scarta i link il cui titolo e' piu' corto di 18 caratteri (LUNGHEZZA_MINIMA_TITOLO = 18); il link 'Leggi tutto' e' considerato generico e il titolo della scheda (h3) e' 'Legge 181' (9 caratteri), quindi la scheda viene saltata. Nel markup del 27/09 la scheda e' identica a quelle raccolte."
+  },
+  {
+   "titolo": "Contratto di sviluppo",
+   "url": "https://www.invitalia.it/incentivi-e-strumenti/contratto-di-sviluppo",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Linkato nel blocco secondario della prima pagina, non raccolto."
+  },
+  {
+   "titolo": "Agevolazioni per le imprese confiscate o sequestrate",
+   "url": "https://www.invitalia.it/incentivi-e-strumenti/agevolazioni-le-imprese-confiscate-o-sequestrate-alla-criminalita",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Pagine successive del catalogo, paginazione non seguita."
+  },
+  {
+   "titolo": "Economia circolare",
+   "url": "https://www.invitalia.it/incentivi-e-strumenti/economia-circolare",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Pagine successive del catalogo. Verificato il 27/09: etichetta Attivo dal 30/11/2020 ma la pagina dice 'per le imprese proponenti e' stato possibile' presentare domanda: sportello di fatto probabilmente chiuso, perdita di poco peso."
+  },
+  {
+   "titolo": "Digital transformation",
+   "url": "https://www.invitalia.it/incentivi-e-strumenti/digital-transformation",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Pagine successive del catalogo. Verificato il 27/09: Attivo dal 15/12/2020, domande 'a partire dal 15/12/2020', nessun avviso di chiusura; disponibilita' reale dei fondi non verificata."
+  },
+  {
+   "titolo": "Finanziamenti a vittime di mancati pagamenti",
+   "url": "https://www.invitalia.it/incentivi-e-strumenti/finanziamenti-vittime-di-mancati-pagamenti",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Pagine successive del catalogo, paginazione non seguita."
+  },
+  {
+   "titolo": "Fondo Salvaguardia Imprese",
+   "url": "https://www.invitalia.it/incentivi-e-strumenti/fondo-salvaguardia-imprese",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Pagine successive del catalogo, paginazione non seguita."
+  },
+  {
+   "titolo": "Fondo Cresci al Sud",
+   "url": "https://www.invitalia.it/incentivi-e-strumenti/fondo-cresci-al-sud",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Pagine successive del catalogo, paginazione non seguita."
+  },
+  {
+   "titolo": "Italia Economia Sociale",
+   "url": "https://www.invitalia.it/incentivi-e-strumenti/italia-economia-sociale",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Pagine successive del catalogo, paginazione non seguita."
+  },
+  {
+   "titolo": "Mobilita' sostenibile - Filiera degli autobus elettrici",
+   "url": "https://www.invitalia.it/incentivi-e-strumenti/mobilita-sostenibile-filiera-degli-autobus-elettrici",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Pagine successive del catalogo, paginazione non seguita."
+  },
+  {
+   "titolo": "Fondo nazionale efficienza energetica",
+   "url": "https://www.invitalia.it/incentivi-e-strumenti/fondo-nazionale-efficienza-energetica",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Pagine successive del catalogo, paginazione non seguita."
+  },
+  {
+   "titolo": "Nuovo ecobonus - mobilita' sostenibile",
+   "url": "https://www.invitalia.it/incentivi-e-strumenti/nuovo-ecobonus-lincentivo-la-mobilita-sostenibile",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Pagine successive del catalogo, paginazione non seguita. Verificato il 27/09: contributo a fondo perduto per chi acquista veicoli commerciali N1/N2 (quindi anche imprese) e impianti GPL/metano, Attivo 18/03-31/12/2026."
+  },
+  {
+   "titolo": "Call for Ideas 38a America's Cup - Blue Economy",
+   "url": "https://www.invitalia.it/news-media/news/38deg-americas-cup-al-la-call-ideas-del-comune-di-napoli-e-invitalia-linnovazione-nella-blue-economy",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Sta nella sezione news, non nel catalogo osservato."
+  },
+  {
+   "titolo": "Voucher 3i",
+   "url": "https://www.invitalia.it/incentivi-e-strumenti/voucher-3i",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Chiuso il 03/09/2026, nelle pagine successive: perdita di poco peso."
+  },
+  {
+   "titolo": "Voucher per il sostegno dei piccoli editori",
+   "url": "https://www.invitalia.it/incentivi-e-strumenti/voucher-il-sostegno-dei-piccoli-editori",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Chiuso il 23/06/2026: perdita di poco peso."
+  },
+  {
+   "titolo": "Premio Le donne di ora",
+   "url": "https://www.invitalia.it/incentivi-e-strumenti/premio-le-donne-di-ora",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Chiuso il 31/05/2026: perdita di poco peso."
+  },
+  {
+   "titolo": "Fondo Nazionale Connettivita'",
+   "url": "https://www.invitalia.it/incentivi-e-strumenti/fondo-nazionale-connettivita",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Chiuso l'11/05/2026: perdita di poco peso."
+  },
+  {
+   "titolo": "Staff House - Riqualificazione degli immobili",
+   "url": "https://www.invitalia.it/incentivi-e-strumenti/staff-house-riqualificazione-degli-immobili",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Chiuso il 05/05/2026: perdita di poco peso."
+  },
+  {
+   "titolo": "Contratto di sviluppo - Net Zero",
+   "url": "https://www.invitalia.it/incentivi-e-strumenti/contratto-di-sviluppo-net-zero",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Chiuso il 21/04/2026: perdita di poco peso."
+  },
+  {
+   "titolo": "Fondo idrico - SFNIISSI",
+   "url": "https://www.invitalia.it/incentivi-e-strumenti/fondo-idrico-sfniissi",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Chiuso l'08/06/2026, per_imprese incerto (gestori idrici)."
+  }
+ ],
+ "smistamento": [
+  {
+   "annuncio": 2472,
+   "regole": "da_rivedere",
+   "haiku": "rilevante",
+   "opus": "rilevante",
+   "giusto": "rilevante",
+   "errore_regole": "lieve",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Agevolazioni a imprese nei consorzi industriali di Lazio e Marche: caso chiaro."
+  },
+  {
+   "annuncio": 2473,
+   "regole": "da_rivedere",
+   "haiku": "non_rilevante",
+   "opus": "non_rilevante",
+   "giusto": "non_rilevante",
+   "errore_regole": "lieve",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Bonus colonnine domestiche per persone fisiche e condomini."
+  },
+  {
+   "annuncio": 2474,
+   "regole": "da_rivedere",
+   "haiku": "rilevante",
+   "opus": "rilevante",
+   "giusto": "rilevante",
+   "errore_regole": "lieve",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Bando per PMI, caso chiaro; il titolo non contiene parole chiave."
+  },
+  {
+   "annuncio": 2475,
+   "regole": "da_rivedere",
+   "haiku": "da_rivedere",
+   "opus": "rilevante",
+   "giusto": "rilevante",
+   "errore_regole": "nessuno",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Strumento finanziario che investe in imprese del Mezzogiorno tramite operatori selezionati: rilevante, ma il dubbio e' legittimo."
+  },
+  {
+   "annuncio": 2476,
+   "regole": "rilevante",
+   "haiku": "da_rivedere",
+   "opus": "rilevante",
+   "giusto": "rilevante",
+   "errore_regole": "nessuno",
+   "errore_haiku": "lieve",
+   "errore_opus": "nessuno",
+   "spiegazione": "Incubatori e acceleratori certificati sono imprese iscritte al registro: agevolazione per imprese."
+  },
+  {
+   "annuncio": 2477,
+   "regole": "da_rivedere",
+   "haiku": "rilevante",
+   "opus": "rilevante",
+   "giusto": "rilevante",
+   "errore_regole": "lieve",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Sportello aperto per la formazione del personale delle PMI."
+  },
+  {
+   "annuncio": 2478,
+   "regole": "rilevante",
+   "haiku": "rilevante",
+   "opus": "rilevante",
+   "giusto": "rilevante",
+   "errore_regole": "nessuno",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Finanziamento agevolato a imprese giovanili e femminili."
+  },
+  {
+   "annuncio": 2479,
+   "regole": "rilevante",
+   "haiku": "da_rivedere",
+   "opus": "non_rilevante",
+   "giusto": "non_rilevante",
+   "errore_regole": "lieve",
+   "errore_haiku": "lieve",
+   "errore_opus": "nessuno",
+   "spiegazione": "Pagina di programma (eventi, formazione, rimandi a iniziative), non un bando; la parola 'imprenditoria femminile' inganna le regole. Caso al limite. Errore delle regole declassato a lieve: caso al limite e nessun danno (non ha generato un bando)."
+  },
+  {
+   "annuncio": 2480,
+   "regole": "da_rivedere",
+   "haiku": "rilevante",
+   "opus": "rilevante",
+   "giusto": "rilevante",
+   "errore_regole": "lieve",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Smart&Start: finanziamento agevolato per startup, caso chiaro."
+  },
+  {
+   "annuncio": 2481,
+   "regole": "rilevante",
+   "haiku": "non_rilevante",
+   "opus": "non_rilevante",
+   "giusto": "non_rilevante",
+   "errore_regole": "medio",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "E' la pagina catalogo stessa, letta come annuncio col testo del filtro ('Stato incentivo o strumento 0 Selected items'); ha generato il bando spurio 819."
+  }
+ ],
+ "preliminare": [
+  {
+   "bando": 17,
+   "produzione": "passa",
+   "haiku_nuovo": "passa",
+   "opus": "passa",
+   "giusto": "passa",
+   "errore_produzione": "nessuno",
+   "errore_haiku_nuovo": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "ON aperto a sportello; fondo perduto esaurito, resta il finanziamento a tasso zero."
+  },
+  {
+   "bando": 265,
+   "produzione": "ferma",
+   "haiku_nuovo": "ferma",
+   "opus": "passa",
+   "giusto": "passa",
+   "errore_produzione": "medio",
+   "errore_haiku_nuovo": "medio",
+   "errore_opus": "nessuno",
+   "spiegazione": "Produzione e Haiku mettono per_imprese=no perche' i beneficiari sono incubatori/acceleratori; ma sono societa' iscritte al registro imprese e il credito d'imposta e' loro. Aperto dal 30/03/2026 a esaurimento risorse. Gravita' ridotta a media: il ragionamento e' sbagliato (la pagina stessa dice 'iscritti e attivi nella sezione speciale del registro delle imprese'), ma la platea e' di poche decine di incubatori certificati e quasi mai riguarda i clienti di uno studio."
+  },
+  {
+   "bando": 819,
+   "produzione": "ferma",
+   "haiku_nuovo": "ferma",
+   "opus": "ferma",
+   "giusto": "ferma",
+   "errore_produzione": "nessuno",
+   "errore_haiku_nuovo": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Pagina catalogo, non un bando; tutti la fermano (produzione tramite testo_bando=no)."
+  }
+ ],
+ "osservazioni": [
+  "La fonte e' letta in modo molto parziale: 10 annunci su circa 106 voci del catalogo (9 pagine). Il lettore html non segue la paginazione ne' usa i filtri stato_incentivo=129 (Attivo) / 130 (In apertura), ne' items_per_page=60: basterebbe osservare ?stato_incentivo=129&items_per_page=60 e ?stato_incentivo=130.",
+  "Resto al Sud 2.0, Autoimpiego Centro-Nord e Contratto di sviluppo stanno in un blocco separato della pagina e non nel filtro Attivo: serve osservare anche /per-chi-vuole-fare-impresa/incentivi-e-strumenti, come gia' scritto nelle note del registro.",
+  "GreenTour, Cultura Cresce e Legge 181 sono nella prima pagina ma vengono scartati dal lettore html perche' il loro titolo e' piu' corto di 18 caratteri (LUNGHEZZA_MINIMA_TITOLO in app/raccolta/lettori/html.py). Per questa fonte conviene un selettore sulle schede (es. 'article.card--incentivi') oppure accettare titoli brevi quando il link sta nell'h3 di una scheda.",
+  "Il testo del widget di filtro e' stato preso come annuncio ('Stato incentivo o strumento 0 Selected items', URL della pagina stessa, in http) e ha generato il bando spurio 819: il lettore dovrebbe escludere il link alla pagina osservata.",
+  "Le regole a parole chiave lasciano da_rivedere 6 annunci su 10 perche' i titoli Invitalia sono nomi propri (Smart&Start, Investimenti sostenibili 4.0...); questi da_rivedere non vengono mai risolti (deciso_da=regole ovunque) e quindi 5 bandi aperti per imprese restano fermi prima di diventare bandi. Haiku li avrebbe decisi tutti correttamente: il secondo passaggio con Haiku sui da_rivedere sembra non girare per questa fonte.",
+  "L'annuncio 2479 e' rilevante ma senza bando_id: non si capisce dai dati perche' non sia stato collegato.",
+  "L'estratto delle pagine inizia col banner dei cookie (circa 10 righe sprecate) e il riassunto e' vuoto: conviene togliere il banner prima di passare il testo all'IA.",
+  "Prompt del preliminare: 'per_imprese' viene letto come 'imprese generiche'; incubatori, acceleratori, cooperative, imprese sociali, editori sono imprese. Va chiarito che per_imprese=no vale solo per persone fisiche, enti pubblici, scuole, associazioni non imprenditoriali.",
+  "L'annuncio del catalogo (2481) ha URL in http mentre la fonte e' in https: il controllo 'non e' la pagina stessa' del lettore confronta le stringhe e non lo riconosce.",
+  "Rimossi dal perimetro 'Imprenditoria femminile' (pagina di programma, non un bando: coerente con giusto=non_rilevante nello smistamento) e 'Rilanciamo le aree di crisi industriale' (pagina di programma che rimanda solo alla Legge 181, gia' nel perimetro)."
+ ],
+ "correzioni": [
+  {
+   "caso": "annunci 2472, 2474, 2475, 2477, 2480",
+   "prima": "perso_deduplica_o_dubbio",
+   "dopo": "perso_smistamento",
+   "perche": "Sono annunci rimasti da_rivedere per le regole e mai decisi: nelle altre fonti lo stesso caso e' classificato perso_smistamento; perso_deduplica_o_dubbio e' per annunci rilevanti non collegati a un bando."
+  },
+  {
+   "caso": "Imprenditoria femminile (annuncio 2479)",
+   "prima": "nel perimetro, perso_deduplica_o_dubbio",
+   "dopo": "tolto dal perimetro",
+   "perche": "La pagina (letta nel testo di smistamento) e' un programma di iniziative (COD(H)ER, Giro d'Italia, LiFE, premi di laurea), non un bando; il controllore stesso lo giudica non_rilevante nello smistamento."
+  },
+  {
+   "caso": "Rilanciamo le aree di crisi industriale",
+   "prima": "nel perimetro, perso_non_raccolto",
+   "dopo": "tolto dal perimetro",
+   "perche": "Verificato sul sito il 27/09: pagina descrittiva delle aree di crisi che come unico sportello rimanda alla Legge 181, gia' contata."
+  },
+  {
+   "caso": "GreenTour, Cultura Cresce, Legge 181",
+   "prima": "perso_non_raccolto, causa non accertata",
+   "dopo": "perso_non_raccolto, causa accertata",
+   "perche": "Il lettore html scarta i titoli sotto 18 caratteri; il markup delle tre schede e' identico a quello delle schede raccolte."
+  },
+  {
+   "caso": "smistamento annuncio 2479, regole",
+   "prima": "errore_regole medio",
+   "dopo": "errore_regole lieve",
+   "perche": "Caso al limite (programma con percorsi di accelerazione e premi) e nessun effetto: non ha generato bandi."
+  },
+  {
+   "caso": "preliminare bando 265, produzione e Haiku nuovo",
+   "prima": "grave",
+   "dopo": "medio",
+   "perche": "L'errore e' confermato (incubatori e acceleratori certificati sono imprese iscritte al registro), ma la perdita riguarda una platea di poche decine di soggetti."
+  },
+  {
+   "caso": "Nuovo ecobonus",
+   "prima": "per_imprese incerto (probabilmente soprattutto privati)",
+   "dopo": "anche imprese",
+   "perche": "Pagina verificata: rivolto a chi acquista veicoli commerciali N1/N2, tipicamente imprese."
+  }
+ ],
+ "fiducia": "media"
+}

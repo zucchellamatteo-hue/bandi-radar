@@ -1,0 +1,24 @@
+{"fonte": "marche_bandi",
+ "raggiungibile": false,
+ "pagine_visitate": [
+  "https://www.regione.marche.it/Entra-in-Regione/Bandi",
+  "https://www.regione.marche.it/robots.txt",
+  "https://www.regione.marche.it/Entra-in-Regione/Bandi?page=2",
+  "https://www.regione.marche.it/Entra-in-Regione/Bandi?idb=28602"
+ ],
+ "totale_stimato": null,
+ "note": "Accesso solo parziale. Il sito e' protetto da Radware Bot Manager (captcha perfdrive/hCaptcha): curl dal server (IP 146.59.145.138) riceve subito la pagina captcha (anche per robots.txt); con WebFetch e' passata una sola lettura della prima pagina dell'elenco (10 bandi aperti, ordinati per scadenza, 'pagina 1 di 4'), poi ogni richiesta successiva (pagina 2, scheda di dettaglio idb=28602) e' stata rediretta a validate.perfdrive.com. Non ho aggirato il captcha. Quindi: elenco NON esaustivo, solo i 10 bandi aperti della prima pagina; le pagine 2-4 (stimabili in circa 30-40 bandi aperti in totale, ma non verificato) e i bandi chiusi negli ultimi 6 mesi non sono stati visti; beneficiari dedotti solo dal titolo e dalla categoria, non dalle schede di dettaglio. Conseguenza pratica per Bandi Radar: la fonte blocca le richieste automatiche dall'IP del server; serve verificare se il lettore riceve la pagina captcha invece dell'elenco.",
+ "bandi": [
+  {"titolo": "\"Marche Giovani\" - Incentivi all'occupazione di laureati under 36", "url": "https://www.regione.marche.it/Entra-in-Regione/Bandi?idb=28437", "stato": "aperto", "scadenza": "2026-09-30", "per_imprese": "si", "perche": "Incentivi all'assunzione: i beneficiari tipici sono i datori di lavoro/imprese che assumono (dedotto dal titolo, dettaglio non letto)."},
+  {"titolo": "Occupazione - convenzioni trilaterali", "url": "https://www.regione.marche.it/Entra-in-Regione/Bandi?idb=21880", "stato": "aperto", "scadenza": "2026-09-30", "per_imprese": "incerto", "perche": "Categoria Lavoro e Formazione; le convenzioni trilaterali coinvolgono di solito imprese e cooperative sociali per l'inserimento di disabili, ma il dettaglio non e' stato letto."},
+  {"titolo": "Febbre catarrale degli ovini - Vaccini e repellenti", "url": "https://www.regione.marche.it/Entra-in-Regione/Bandi?idb=26359", "stato": "aperto", "scadenza": "2026-10-13", "per_imprese": "si", "perche": "Contributo agli allevatori (imprese agricole) per vaccini e repellenti, categoria Agricoltura."},
+  {"titolo": "GAL Colli Esini - Imprese turistiche e prodotti tipici", "url": "https://www.regione.marche.it/Entra-in-Regione/Bandi?idb=28602", "stato": "aperto", "scadenza": "2026-10-16", "per_imprese": "si", "perche": "Bando GAL (sviluppo rurale) rivolto a imprese turistiche e dei prodotti tipici."},
+  {"titolo": "GAL Colli Esini - Patrimonio insediativo rurale (centri storici minori)", "url": "https://www.regione.marche.it/Entra-in-Regione/Bandi?idb=26319", "stato": "aperto", "scadenza": "2026-09-30", "per_imprese": "incerto", "perche": "Misure di recupero del patrimonio rurale spesso aperte a privati e imprese oltre che a enti; beneficiari non verificati."},
+  {"titolo": "GAL Colli Esini - Progetto GIOINIT (giovani e inclusione)", "url": "https://www.regione.marche.it/Entra-in-Regione/Bandi?idb=28604", "stato": "aperto", "scadenza": "2026-10-23", "per_imprese": "incerto", "perche": "Bando GAL su giovani e inclusione: potrebbe riguardare nuove imprese giovanili o soggetti del terzo settore, non verificato."}
+ ],
+ "esclusi": [
+  {"titolo": "Protezione civile - Mezzi e attrezzature per le Organizzazioni di Volontariato", "url": "https://www.regione.marche.it/Entra-in-Regione/Bandi?idb=28657", "perche": "Rivolto a organizzazioni di volontariato (scadenza 2026-09-28)."},
+  {"titolo": "Valorizzazione della cultura e delle tradizioni faunistico-venatorie", "url": "https://www.regione.marche.it/Entra-in-Regione/Bandi?idb=28654", "perche": "Probabilmente per associazioni venatorie/enti; ambiguo, dettaglio non letto (scadenza 2026-09-30)."},
+  {"titolo": "Sicurezza territoriale - Videosorveglianza", "url": "https://www.regione.marche.it/Entra-in-Regione/Bandi?idb=28631", "perche": "Categoria Enti Locali e PA: per comuni (scadenza 2026-09-30)."},
+  {"titolo": "GAL Montefeltro - Servizi di base nelle zone rurali", "url": "https://www.regione.marche.it/Entra-in-Regione/Bandi?idb=28584", "perche": "Le misure 'servizi di base' sono di norma per enti pubblici; ambiguo, dettaglio non letto (scadenza 2026-10-30)."}
+ ]}

@@ -1,0 +1,96 @@
+{
+  "fonte": "provincia_lecco_bandi_contributi",
+  "perimetro": [
+    {
+      "titolo": "Dote Impresa Collocamento mirato - Avviso 2025/2026 (incentivi assunzione persone con disabilita', ausili, cooperative sociali tipo B)",
+      "url": "https://www.lavoro.provincia.lecco.it/tutti-i-servizi/dettaglio/Dote-Impresa-Collocamento-mirato-00001/",
+      "esito": "perso_non_raccolto",
+      "annuncio": null,
+      "bando": null,
+      "spiegazione": "Unica misura aperta per imprese dell'ente (a sportello, avviso 2025/2026, confermata attiva il 15/07/2026). Non compare nella sezione osservata 'Bandi per contributi' (verificato oggi: 'Non sono disponibili contenuti in questa area'), ma nella scheda servizio /servizio/dote-impresa-collocamento-mirato/, nelle notizie e su lavoro.provincia.lecco.it. La domanda si presenta sul portale provinciale Sintesi (non su Bandi e Servizi di Regione Lombardia), quindi e' poco probabile che arrivi dalla fonte regionale: perdita reale per la copertura dell'ente, ma fuori dalla sezione osservata."
+    },
+    {
+      "titolo": "Premio paesaggi rurali storici 2026 (Associazione PRIS, segnalato dalla Provincia)",
+      "url": "https://www.provincia.lecco.it/2026/03/14/paesaggi-rurali-storici-del-lecchese-bando-in-scadenza/",
+      "esito": "perso_non_raccolto",
+      "annuncio": null,
+      "bando": null,
+      "spiegazione": "Premio di un'associazione terza, solo segnalato in una notizia (non nella sezione bandi osservata); per imprese incerto, scaduto il 27/03/2026, al limite dei 6 mesi. Perdita senza conseguenze: anche se raccolto sarebbe stato fermato come chiuso."
+    }
+  ],
+  "smistamento": [
+    {
+      "annuncio": 1254,
+      "regole": "da_rivedere",
+      "haiku": "non_rilevante",
+      "opus": "non_rilevante",
+      "giusto": "non_rilevante",
+      "errore_regole": "lieve",
+      "errore_haiku": "nessuno",
+      "errore_opus": "nessuno",
+      "spiegazione": "Link a una registrazione video su SharePoint (seduta del Consiglio), nessun contributo. Le regole lo lasciano in dubbio per assenza di parole chiave."
+    },
+    {
+      "annuncio": 1255,
+      "regole": "da_rivedere",
+      "haiku": "non_rilevante",
+      "opus": "non_rilevante",
+      "giusto": "non_rilevante",
+      "errore_regole": "lieve",
+      "errore_haiku": "nessuno",
+      "errore_opus": "nessuno",
+      "spiegazione": "Sezione bandi di abilitazione professionale (esami taxi/NCC), non un aiuto economico."
+    },
+    {
+      "annuncio": 1256,
+      "regole": "da_rivedere",
+      "haiku": "non_rilevante",
+      "opus": "non_rilevante",
+      "giusto": "non_rilevante",
+      "errore_regole": "lieve",
+      "errore_haiku": "nessuno",
+      "errore_opus": "nessuno",
+      "spiegazione": "Sezione nomine in societa' ed enti, nessun contributo."
+    },
+    {
+      "annuncio": 1257,
+      "regole": "rilevante",
+      "haiku": "da_rivedere",
+      "opus": "non_rilevante",
+      "giusto": "non_rilevante",
+      "errore_regole": "medio",
+      "errore_haiku": "lieve",
+      "errore_opus": "nessuno",
+      "spiegazione": "E' la pagina d'archivio dei bandi per contributi scaduti (2021-2026), tutti rivolti a Comuni/enti (Fiumi sicuri, barriere architettoniche, rifiuti, decoro urbano). Le regole la tengono per la parola 'contributi' e creano il bando 803; Haiku resta nel dubbio; Opus la scarta correttamente."
+    }
+  ],
+  "preliminare": [
+    {
+      "bando": 803,
+      "produzione": "ferma",
+      "haiku_nuovo": "ferma",
+      "opus": "ferma",
+      "giusto": "ferma",
+      "errore_produzione": "nessuno",
+      "errore_haiku_nuovo": "nessuno",
+      "errore_opus": "nessuno",
+      "spiegazione": "Pagina elenco di bandi scaduti, non un bando: tutti e tre la fermano (stato chiuso, edizione_in_corso no, testo_bando no). Produzione e Haiku dicono per_imprese 'incerto', Opus 'no' (piu' preciso), ma l'esito ferma e' identico e corretto."
+    }
+  ],
+  "osservazioni": [
+    "La pagina osservata 'Bandi per contributi' oggi e' vuota e l'archivio contiene solo bandi per Comuni/enti: come fonte di bandi per imprese rende praticamente zero.",
+    "L'unica misura per imprese dell'ente (Dote Impresa Collocamento mirato) sta nelle pagine Servizi/Lavoro e su lavoro.provincia.lecco.it, fuori dalla sezione osservata; la domanda passa dal portale provinciale Sintesi, quindi non conviene contare sulla fonte Regione Lombardia: per coprirla serve osservare la scheda servizio o le notizie/avvisi di lavoro.provincia.lecco.it.",
+    "La lettura della fonte raccoglie i link di menu/navigazione come annunci (registrazione video, abilitazione professione, nomine, sottopagina 'scaduti'): rumore strutturale che finisce in da_rivedere.",
+    "La regola sulla parola 'contribut*' trasforma in bando una pagina d'archivio 'scaduti': conviene una regola che escluda titoli/URL con 'scadut' o 'archivio'.",
+    "Verifica di riserva (27/09/2026): 2 richieste di rete (pagina Bandi per contributi, ancora vuota; scheda servizio Dote Impresa). Nessuna sezione evidente dimenticata: dal menu Bandi le sottosezioni sono concorso, gara, abilitazione, contributi (+scaduti), nomine, altri bandi; gara e concorso non sono agevolazioni, altri bandi gia' esaminata dall'esploratore."
+  ],
+  "correzioni": [
+    {
+      "caso": "perimetro Dote Impresa Collocamento mirato",
+      "prima": "perso_non_raccolto; 'probabilmente arriva dalla fonte Regione Lombardia (Bandi e Servizi)'",
+      "dopo": "perso_non_raccolto confermato; la domanda si presenta sul portale provinciale Sintesi, quindi l'arrivo dalla fonte regionale e' improbabile",
+      "perche": "La scheda servizio della Provincia dice: 'La domanda di contributo va presentata tramite il portale Sintesi della Provincia di Lecco'."
+    }
+  ],
+  "fiducia": "alta"
+}

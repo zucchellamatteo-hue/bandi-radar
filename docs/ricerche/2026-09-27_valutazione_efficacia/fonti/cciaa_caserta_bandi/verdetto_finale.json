@@ -1,0 +1,374 @@
+{
+ "fonte": "cciaa_caserta_bandi",
+ "perimetro": [
+  {
+   "titolo": "Bando contributi alle imprese agricole per sostenere la Green Economy - Edizione 2026",
+   "url": "https://www.ce.camcom.it/notizie/bando-contributi-alle-imprese-agricole-sostenere-green-economy-edizione-2026",
+   "esito": "trovato_con_scheda",
+   "annuncio": 752,
+   "bando": 1010,
+   "spiegazione": "Annuncio rilevante per regole, collegato al bando 1010, pagina trovata, preliminare di produzione aperto, scheda presente. Unico bando davvero aperto (scadenza 30/10/2026)."
+  },
+  {
+   "titolo": "Bando Voucher Doppia Transizione - Anno 2026",
+   "url": "https://www.ce.camcom.it/notizie/bando-voucher-doppia-transizione-2026",
+   "esito": "trovato_con_scheda",
+   "annuncio": 753,
+   "bando": 388,
+   "spiegazione": "Catena completa, ma il bando e' chiuso dal 09/09/2026 (stato calcolato 'chiuso'): il preliminare di produzione lo ha dato 'aperto' e ha prodotto una scheda che non doveva esserci. Andava fermato; errore medio del preliminare, non una perdita."
+  },
+  {
+   "titolo": "Bando contributi fiere - II quadrimestre 2026 (fiere 1 maggio - 31 agosto 2026)",
+   "url": "https://www.ce.camcom.it/notizie/bando-contributi-favorire-produzioni-del-territorio-linternazionalizzazione-delle-imprese-12",
+   "esito": "fermato_giustamente",
+   "annuncio": 755,
+   "bando": 385,
+   "spiegazione": "Raccolto e collegato, pagina trovata; preliminare di produzione stato=chiuso (scaduto il 13/07/2026). Nessuna scheda, corretto."
+  },
+  {
+   "titolo": "Bando contributi fiere - I quadrimestre 2026 (fiere 1 gennaio - 30 aprile 2026)",
+   "url": "https://www.ce.camcom.it/notizie/bando-contributi-favorire-produzioni-del-territorio-linternazionalizzazione-delle-imprese-11",
+   "esito": "fermato_giustamente",
+   "annuncio": 754,
+   "bando": 254,
+   "spiegazione": "Raccolto e collegato, pagina trovata; preliminare chiuso (scaduto il 31/03/2026; il motivo di produzione cita per errore il 30 aprile, ma la decisione e' giusta). Nessuna scheda."
+  }
+ ],
+ "smistamento": [
+  {
+   "annuncio": 752,
+   "regole": "rilevante",
+   "haiku": "rilevante",
+   "opus": "rilevante",
+   "giusto": "rilevante",
+   "errore_regole": "nessuno",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Contributi alle imprese agricole, Green Economy 2026."
+  },
+  {
+   "annuncio": 753,
+   "regole": "rilevante",
+   "haiku": "rilevante",
+   "opus": "rilevante",
+   "giusto": "rilevante",
+   "errore_regole": "nessuno",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Voucher alle MPMI, Doppia Transizione 2026."
+  },
+  {
+   "annuncio": 754,
+   "regole": "rilevante",
+   "haiku": "rilevante",
+   "opus": "rilevante",
+   "giusto": "rilevante",
+   "errore_regole": "nessuno",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Contributi fiere I quadrimestre 2026."
+  },
+  {
+   "annuncio": 755,
+   "regole": "rilevante",
+   "haiku": "rilevante",
+   "opus": "rilevante",
+   "giusto": "rilevante",
+   "errore_regole": "nessuno",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Contributi fiere II quadrimestre 2026."
+  },
+  {
+   "annuncio": 756,
+   "regole": "rilevante",
+   "haiku": "rilevante",
+   "opus": "rilevante",
+   "giusto": "rilevante",
+   "errore_regole": "nessuno",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Contributi fiere III quadrimestre 2025 (scaduto, ma e' un aiuto per imprese)."
+  },
+  {
+   "annuncio": 757,
+   "regole": "rilevante",
+   "haiku": "rilevante",
+   "opus": "rilevante",
+   "giusto": "rilevante",
+   "errore_regole": "nessuno",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Contributi fiere I quadrimestre 2025."
+  },
+  {
+   "annuncio": 758,
+   "regole": "da_rivedere",
+   "haiku": "non_rilevante",
+   "opus": "rilevante",
+   "giusto": "non_rilevante",
+   "errore_regole": "lieve",
+   "errore_haiku": "nessuno",
+   "errore_opus": "lieve",
+   "spiegazione": "Il titolo e' la voce 'Top of the PID 2025' (premio di riconoscimento per MPMI, scaduto il 9/6/2025, senza premio in denaro noto) ma l'indirizzo e' la pagina elenco del PID, che non e' un bando: il voucher 2026 che elenca e' gia' raccolto dalla sua notizia. Caso discutibile, per questo l'errore di Opus e' segnato lieve e non medio."
+  },
+  {
+   "annuncio": 759,
+   "regole": "rilevante",
+   "haiku": "rilevante",
+   "opus": "rilevante",
+   "giusto": "rilevante",
+   "errore_regole": "nessuno",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Voucher Doppia Transizione 2025."
+  },
+  {
+   "annuncio": 760,
+   "regole": "rilevante",
+   "haiku": "rilevante",
+   "opus": "rilevante",
+   "giusto": "rilevante",
+   "errore_regole": "nessuno",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Contributi fiere II quadrimestre 2025."
+  },
+  {
+   "annuncio": 761,
+   "regole": "da_rivedere",
+   "haiku": "non_rilevante",
+   "opus": "non_rilevante",
+   "giusto": "non_rilevante",
+   "errore_regole": "lieve",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Premio Storie di Alternanza: riservato a studenti e scuole, caso esplicitamente negli esempi del prompt."
+  },
+  {
+   "annuncio": 762,
+   "regole": "rilevante",
+   "haiku": "rilevante",
+   "opus": "rilevante",
+   "giusto": "rilevante",
+   "errore_regole": "nessuno",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Green Economy agricoltura 2025."
+  },
+  {
+   "annuncio": 763,
+   "regole": "rilevante",
+   "haiku": "da_rivedere",
+   "opus": "rilevante",
+   "giusto": "rilevante",
+   "errore_regole": "nessuno",
+   "errore_haiku": "lieve",
+   "errore_opus": "nessuno",
+   "spiegazione": "Bando camerale contributi videosorveglianza 2024: per imprese (regola 5 sui bandi camerali)."
+  },
+  {
+   "annuncio": 764,
+   "regole": "rilevante",
+   "haiku": "da_rivedere",
+   "opus": "rilevante",
+   "giusto": "rilevante",
+   "errore_regole": "nessuno",
+   "errore_haiku": "lieve",
+   "errore_opus": "nessuno",
+   "spiegazione": "Bando camerale turismo 2024: contributi a imprese/operatori turistici."
+  },
+  {
+   "annuncio": 765,
+   "regole": "rilevante",
+   "haiku": "rilevante",
+   "opus": "rilevante",
+   "giusto": "rilevante",
+   "errore_regole": "nessuno",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Contributi fiere III quadrimestre 2024 (PDF)."
+  },
+  {
+   "annuncio": 777,
+   "regole": "da_rivedere",
+   "haiku": "rilevante",
+   "opus": "rilevante",
+   "giusto": "rilevante",
+   "errore_regole": "lieve",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "IFC Imprenditrici e Formazione per la Crescita: bando camerale per imprese femminili."
+  },
+  {
+   "annuncio": 782,
+   "regole": "da_rivedere",
+   "haiku": "rilevante",
+   "opus": "rilevante",
+   "giusto": "rilevante",
+   "errore_regole": "lieve",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Bando camerale Turismo Sostenibile 2022 per imprese."
+  },
+  {
+   "annuncio": 786,
+   "regole": "da_rivedere",
+   "haiku": "rilevante",
+   "opus": "rilevante",
+   "giusto": "rilevante",
+   "errore_regole": "lieve",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Avviso Vinitaly 2022, collettiva camerale per imprese (regola 3)."
+  },
+  {
+   "annuncio": 790,
+   "regole": "da_rivedere",
+   "haiku": "da_rivedere",
+   "opus": "rilevante",
+   "giusto": "rilevante",
+   "errore_regole": "lieve",
+   "errore_haiku": "lieve",
+   "errore_opus": "nessuno",
+   "spiegazione": "Bando camerale Formazione Lavoro 2021: contributi alle imprese (regola 5 e esempio CCIAA Trento)."
+  },
+  {
+   "annuncio": 791,
+   "regole": "da_rivedere",
+   "haiku": "rilevante",
+   "opus": "rilevante",
+   "giusto": "rilevante",
+   "errore_regole": "lieve",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Bando camerale Turismo 2021 per imprese."
+  },
+  {
+   "annuncio": 795,
+   "regole": "non_rilevante",
+   "haiku": "non_rilevante",
+   "opus": "non_rilevante",
+   "giusto": "non_rilevante",
+   "errore_regole": "nessuno",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Borse di studio a studenti."
+  },
+  {
+   "annuncio": 798,
+   "regole": "da_rivedere",
+   "haiku": "rilevante",
+   "opus": "rilevante",
+   "giusto": "rilevante",
+   "errore_regole": "lieve",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Bando Ripartenza SiCura 2021: contributi camerali alle imprese."
+  }
+ ],
+ "preliminare": [
+  {
+   "bando": 388,
+   "produzione": "passa",
+   "haiku_nuovo": "ferma",
+   "opus": "ferma",
+   "giusto": "ferma",
+   "errore_produzione": "medio",
+   "errore_haiku_nuovo": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Voucher Doppia Transizione 2026: domande dal 08/07 al 09/09/2026, gia' pubblicato l'elenco ammessi. La produzione lo ha dato 'aperto' (motivo vuoto) e ha fatto una scheda; il fascicolo del preliminare non sembra contenere le date di presentazione (compaiono solo nella pagina notizia) e la pagina /bandi-incentivi lo elenca ancora sotto 'Bandi Attivi'."
+  },
+  {
+   "bando": 1010,
+   "produzione": "passa",
+   "haiku_nuovo": "passa",
+   "opus": "passa",
+   "giusto": "passa",
+   "errore_produzione": "nessuno",
+   "errore_haiku_nuovo": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Aperto fino al 30/10/2026, per imprese agricole."
+  },
+  {
+   "bando": 254,
+   "produzione": "ferma",
+   "haiku_nuovo": "ferma",
+   "opus": "ferma",
+   "giusto": "ferma",
+   "errore_produzione": "nessuno",
+   "errore_haiku_nuovo": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Scaduto il 31/03/2026 (la produzione scrive 30 aprile, data sbagliata ma decisione giusta)."
+  },
+  {
+   "bando": 385,
+   "produzione": "ferma",
+   "haiku_nuovo": "ferma",
+   "opus": "ferma",
+   "giusto": "ferma",
+   "errore_produzione": "nessuno",
+   "errore_haiku_nuovo": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Scaduto il 13/07/2026."
+  },
+  {
+   "bando": 1011,
+   "produzione": "ferma",
+   "haiku_nuovo": "ferma",
+   "opus": "ferma",
+   "giusto": "ferma",
+   "errore_produzione": "nessuno",
+   "errore_haiku_nuovo": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Edizione III quadrimestre 2025, scaduta il 10/12/2025."
+  },
+  {
+   "bando": 1012,
+   "produzione": "ferma",
+   "haiku_nuovo": "ferma",
+   "opus": "ferma",
+   "giusto": "ferma",
+   "errore_produzione": "nessuno",
+   "errore_haiku_nuovo": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Edizione I quadrimestre 2025, scaduta il 9/04/2025."
+  },
+  {
+   "bando": 1013,
+   "produzione": "ferma",
+   "haiku_nuovo": "ferma",
+   "opus": "ferma",
+   "giusto": "ferma",
+   "errore_produzione": "nessuno",
+   "errore_haiku_nuovo": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Voucher DT 2025, scaduto l'8/09/2025; produzione dice stato 'incerto' ma edizione_in_corso=no lo ferma comunque."
+  },
+  {
+   "bando": 1014,
+   "produzione": "ferma",
+   "haiku_nuovo": "ferma",
+   "opus": "ferma",
+   "giusto": "ferma",
+   "errore_produzione": "nessuno",
+   "errore_haiku_nuovo": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Edizione II quadrimestre 2025, scaduta il 22/09/2025."
+  }
+ ],
+ "osservazioni": [
+  "Fonte ben coperta: i 4 bandi del perimetro (1 aperto, 3 chiusi recenti) sono tutti raccolti, smistati rilevanti, collegati e con pagina trovata. Nessuna perdita.",
+  "Il preliminare di produzione ha dato 'aperto' al Voucher Doppia Transizione 2026 chiuso dal 09/09/2026, generando una scheda inutile (bando 388). Lo stato calcolato del bando e' gia' 'chiuso' con scadenza 2026-09-09: una regola che ferma i bandi con scadenza passata nota, prima o dopo il preliminare, avrebbe evitato l'errore.",
+  "Il sito elenca ancora il Voucher DT 2026 sotto 'Bandi Attivi' dopo la scadenza (verificato il 27/09): un'insidia per chi legge l'elenco senza controllare le date.",
+  "Nel fascicolo del preliminare 388 le date di presentazione (08/07-09/09/2026) non compaiono: il testo e' la determina con il bando, mentre le date stanno nella notizia. Il fascicolo dovrebbe includere anche l'intestazione della pagina notizia.",
+  "Le regole mettono in 'da_rivedere' tutti i vecchi bandi camerali esposti solo come PDF senza testo (777, 782, 786, 790, 791, 798): per la regola 5 del prompt un 'Bando' di Camera di Commercio e' quasi sempre per imprese. Errori lievi ma fanno lavoro manuale.",
+  "La fonte e' un elenco con molti PDF di bandi 2018-2024: raccoglie decine di bandi storici chiusi (1015-1049) che finiscono tutti al preliminare; utile un filtro per anno nel titolo o per 'Bandi scaduti' nell'elenco.",
+  "L'annuncio 758 ha come indirizzo la pagina elenco del PID con il titolo di una sua voce (Top of the PID): la lettura dell'elenco associa titoli di voci a link di pagine elenco.",
+  "Verifica di riserva: tutti i 66 annunci della fonte hanno pubblicato_il = 2026-10-30 (data futura, e' la prima data letta nell'elenco, cioe' la scadenza del Green Economy 2026): la data di pubblicazione ricavata dall'elenco e' sbagliata e falsa la 'data dell'ultimo record' mostrata in plancia.",
+  "Verifica di riserva: fuori campione, il preliminare di produzione del bando 1017 (turismo 2024, annuncio 764) dice per_imprese=no 'per enti turistici', ma l'art. 2 del bando ammette tour operator e agenzie di viaggio: decisione finale giusta (scaduto), motivo sbagliato.",
+  "Verifica di riserva: la pagina /bandi-incentivi (scaricata il 27/09/2026) coincide con il perimetro dell'esploratore: 2 bandi in Bandi Attivi (Green Economy 2026, Voucher DT 2026 ancora li' benche' scaduto) e i 2 bandi fiere 2026 tra gli scaduti; nessuna sezione dimenticata. Mirabilia 2026 (esclusa) e' una ricognizione senza impegno e senza costi coperti dichiarati, e non compare in questa pagina: esclusione confermata."
+ ],
+ "correzioni": [],
+ "fiducia": "alta"
+}

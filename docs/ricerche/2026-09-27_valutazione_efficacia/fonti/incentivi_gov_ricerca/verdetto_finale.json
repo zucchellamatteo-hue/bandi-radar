@@ -1,0 +1,1000 @@
+{
+ "fonte": "incentivi_gov_ricerca",
+ "perimetro": [
+  {
+   "titolo": "Regione Lombardia - Contributi per iniziative e manifestazioni di rilievo regionale - 2026",
+   "url": "https://www.incentivi.gov.it/it/catalogo/regione-lombardia-contributi-iniziative-e-manifestazioni-di-rilievo-regionale-2026",
+   "esito": "fermato_giustamente",
+   "annuncio": 4290,
+   "bando": 171,
+   "spiegazione": "Annuncio rilevante, bando 171 con pagina regionale trovata; il preliminare lo ferma per per_imprese=no. Giusto: il testo (L.R. 50/1986) ammette solo soggetti pubblici e privati senza scopo di lucro. L'esploratore lo segnava per imprese solo perche' il catalogo elenca anche 'Impresa' tra i beneficiari. Riverificato nel fascicolo: 'soggetti che operano senza scopo di lucro' (associazioni, fondazioni, ODV, APS, cooperative sociali, enti pubblici); le cooperative sociali non bastano a farne un aiuto per imprese."
+  },
+  {
+   "titolo": "Bando per contributi a fondo perduto a sostegno dei giovani imprenditori operanti sul territorio aronese - 2026",
+   "url": "https://www.incentivi.gov.it/it/catalogo/bando-contributi-fondo-perduto-sostegno-dei-giovani-imprenditori-operanti-sul-territorio",
+   "esito": "trovato_con_scheda",
+   "annuncio": 4212,
+   "bando": 597,
+   "spiegazione": "Catena completa: rilevante, pagina del Comune di Arona, preliminare passa, scheda presente."
+  },
+  {
+   "titolo": "PR FESR Liguria 2021 - 2027 Azione 1.3.4 - Interventi a sostegno dello sviluppo e produzione di progetti audiovisivi - Anno 2026",
+   "url": "https://www.incentivi.gov.it/it/catalogo/pr-fesr-liguria-2021-2027-azione-134-interventi-sostegno-dello-sviluppo-e-produzione-di",
+   "esito": "trovato_con_scheda",
+   "annuncio": 4176,
+   "bando": 609,
+   "spiegazione": "Catena completa; la pagina ufficiale e' il PDF del decreto regionale (solo sintesi), ma il preliminare fa passare e la scheda c'e'."
+  },
+  {
+   "titolo": "Regione Lombardia - Bando per lo sviluppo tecnologico delle startup innovative",
+   "url": "https://www.incentivi.gov.it/it/catalogo/regione-lombardia-bando-lo-sviluppo-tecnologico-delle-startup-innovative",
+   "esito": "trovato_con_scheda",
+   "annuncio": 4356,
+   "bando": 996,
+   "spiegazione": "L'annuncio di questa fonte e' fermo in un dubbio di deduplica non deciso (bandi_dubbi 106, somiglianza 0.90 con il bando 996), quindi bando_id e' vuoto; ma il bando 996 (stessa misura, pagina bandi.regione.lombardia.it, da altra fonte) ha la scheda. Nessuna perdita per Matteo, solo il collegamento manca."
+  },
+  {
+   "titolo": "Unioncamere Emilia-Romagna - Bando Digital Export 2026-2027",
+   "url": "https://www.incentivi.gov.it/it/catalogo/unioncamere-emilia-romagna-bando-digital-export-2026-2027",
+   "esito": "trovato_con_scheda",
+   "annuncio": 4331,
+   "bando": 478,
+   "spiegazione": "Annuncio fermo nel dubbio 105 (somiglianza 0.67) verso il bando 478 'Digital Export - Anno 2026-2027' della Regione, che ha la scheda: e' la stessa misura."
+  },
+  {
+   "titolo": "Regione Friuli Venezia Giulia - Aiuti sul costo dei premi assicurativi pagati a copertura delle perdite dovute a rischi di insolvenza di clienti imprenditori privati",
+   "url": "https://www.incentivi.gov.it/it/catalogo/regione-friuli-venezia-giulia-aiuti-sul-costo-dei-premi-assicurativi-pagati-copertura",
+   "esito": "trovato_con_scheda",
+   "annuncio": 4304,
+   "bando": 1055,
+   "spiegazione": "Catena completa (pagina regionale FVG, solo sintesi), scheda presente."
+  },
+  {
+   "titolo": "Avviso STEP Molise",
+   "url": "https://www.incentivi.gov.it/it/catalogo/avviso-step-molise",
+   "esito": "trovato_con_scheda",
+   "annuncio": 4279,
+   "bando": 1007,
+   "spiegazione": "Catena completa; pagina ufficiale e' una notizia regionale (solo sintesi), stato non noto ma passa e ha scheda."
+  },
+  {
+   "titolo": "Contributi diretti tramite sostegno al credito alle imprese dei comuni delle province di Catanzaro, Crotone e Vibo Valentia colpite dagli eccezionali eventi meteorologici",
+   "url": "https://www.incentivi.gov.it/it/catalogo/contributi-diretti-tramite-sostegno-al-credito-alle-imprese-dei-comuni-delle-province-di",
+   "esito": "trovato_con_scheda",
+   "annuncio": 4232,
+   "bando": 562,
+   "spiegazione": "Collegato come doppione al bando 562 della CCIAA Catanzaro-Crotone-Vibo, scheda presente."
+  },
+  {
+   "titolo": "Bando per contributi alle imprese delle province di Pistoia e Prato per percorsi di formazione scuola-lavoro e certificazione delle competenze - Anno 2026",
+   "url": "https://www.incentivi.gov.it/it/catalogo/bando-contributi-alle-imprese-delle-province-di-pistoia-e-prato-la-realizzazione-di",
+   "esito": "trovato_con_scheda",
+   "annuncio": 4231,
+   "bando": 499,
+   "spiegazione": "Doppione del bando 499 (CCIAA Pistoia-Prato), scheda presente."
+  },
+  {
+   "titolo": "Sostegno alla domanda di servizi di cloud computing e cyber security",
+   "url": "https://www.incentivi.gov.it/it/catalogo/sostegno-alla-domanda-di-servizi-di-cloud-computing-e-cyber-security",
+   "esito": "trovato_con_scheda",
+   "annuncio": 4221,
+   "bando": 175,
+   "spiegazione": "Doppione del bando 175 (pagina MIMIT), in arrivo, scheda presente."
+  },
+  {
+   "titolo": "CCIAA Vicenza - Bando per contributi a supporto della filiera turistica - Anno 2026 (26FT)",
+   "url": "https://www.incentivi.gov.it/it/catalogo/cciaa-vicenza-bando-contributi-supporto-della-filiera-turistica-anno-2026-26ft",
+   "esito": "trovato_con_scheda",
+   "annuncio": 4213,
+   "bando": 1002,
+   "spiegazione": "Doppione del bando 1002 (CCIAA Vicenza), scheda presente."
+  },
+  {
+   "titolo": "Bando a sostegno dell'accesso al credito delle imprese delle province di Parma, Piacenza e Reggio Emilia tramite i confidi",
+   "url": "https://www.incentivi.gov.it/it/catalogo/bando-sostegno-dellaccesso-al-credito-delle-imprese-delle-province-di-parma-piacenza-e",
+   "esito": "trovato_con_scheda",
+   "annuncio": 4218,
+   "bando": 574,
+   "spiegazione": "Annuncio fermo nel dubbio 109 (somiglianza 0.90) verso il bando 574 della CCIAA dell'Emilia, stessa misura, che ha la scheda."
+  },
+  {
+   "titolo": "PR FESR 2021-2027 Emilia-Romagna - Azione 2.2.2 - Bando per il supporto all'utilizzo di fonti rinnovabili nelle imprese",
+   "url": "https://www.incentivi.gov.it/it/catalogo/pr-fesr-2021-2027-emilia-romagna-azione-222-bando-il-supporto-allutilizzo-di-fonti",
+   "esito": "perso_preliminare",
+   "annuncio": 4216,
+   "bando": 999,
+   "spiegazione": "Rilevante e collegato al bando 999; come pagina ufficiale e' stata presa la scheda del catalogo incentivi.gov.it (0 documenti) invece del sito FESR Emilia-Romagna, ma quella pagina contiene gia' tutto il necessario: apertura 30/09/2026 ore 10, chiusura 15/11/2026 ore 13 (Sfinge 2020), PMI beneficiarie, fondo perduto 35% fino a 100.000 euro, dotazione 3 milioni. Il preliminare di produzione ha scritto testo_bando=no e 'senza informazioni su stato e date', il che e' falso: andava solo_sintesi + in_arrivo + edizione_in_corso=si, e il bando sarebbe passato come i bandi 26, 61 e 113 (stessa situazione, solo_sintesi). La pagina ufficiale debole e' una concausa, ma l'anello che lo ferma e' il preliminare. Bando in arrivo per imprese, nessun'altra fonte: perdita reale."
+  },
+  {
+   "titolo": "CCIAA Modena - Bando a sostegno dell'occupazione giovanile - anno 2026",
+   "url": "https://www.incentivi.gov.it/it/catalogo/cciaa-modena-bando-sostegno-delloccupazione-giovanile-anno-2026",
+   "esito": "trovato_con_scheda",
+   "annuncio": 4199,
+   "bando": 1051,
+   "spiegazione": "Catena completa, scheda presente."
+  },
+  {
+   "titolo": "Bando Internazionalizzazione 2026 - CCIAA Monte Rosa laghi Alto Piemonte",
+   "url": "https://www.incentivi.gov.it/it/catalogo/bando-internazionalizzazione-2026-cciaa-monte-rosa-laghi-alto-piemonte",
+   "esito": "trovato_con_scheda",
+   "annuncio": 4192,
+   "bando": 626,
+   "spiegazione": "Annuncio fermo nel dubbio 107 ('stesso indirizzo ma titoli diversi', pno.camcom.it) verso il bando 626, che e' la stessa misura e ha la scheda. Il dubbio andava risolto in automatico: stesso indirizzo ufficiale."
+  },
+  {
+   "titolo": "Bando unico annuale 2026 - Cultura - CCIAA Vicenza",
+   "url": "https://www.incentivi.gov.it/it/catalogo/bando-unico-annuale-2026-cultura-cciaa-vicenza",
+   "esito": "perso_preliminare",
+   "annuncio": 7768,
+   "bando": 1003,
+   "spiegazione": "L'annuncio di questa fonte (trovato il 26/09) non e' ancora smistato; la stessa misura e' pero' gia' il bando 1003 (fonte cciaa_vicenza_bandi), che il preliminare di produzione ferma con per_imprese=no ('riservato a enti senza scopo di lucro'). Sbagliato: l'art. 4 ammette anche consorzi di imprese, societa' consortili e reti di imprese con ATECO 90/91. Domande dal 12/10 al 28/10/2026. Riverificato nel fascicolo (art. 4, elenco tassativo): lettere b) consorzi di imprese, societa' consortili, reti di imprese soggetto e d) societa' cooperative con ATECO 90/91; il progetto deve essere senza fine di lucro, ma il beneficiario puo' essere un'impresa."
+  },
+  {
+   "titolo": "Regione Marche - Partecipazione a ASFW Addis, 12-15 novembre 2026",
+   "url": "https://www.incentivi.gov.it/it/catalogo/regione-marche-partecipazione-asfw-addis-12-15-novembre-2026",
+   "esito": "fermato_giustamente",
+   "annuncio": 4339,
+   "bando": null,
+   "spiegazione": "Le regole lo lasciano da_rivedere e non diventa bando; le adesioni chiudevano il 01/09/2026, quindi nessun danno. Verificato sulla scheda del catalogo il 27/09: apertura 10/08/2026, chiusura 01/09/2026."
+  },
+  {
+   "titolo": "Bandi per la partecipazione alle procedure competitive per l'accesso agli incentivi previsti dal DM FER2",
+   "url": "https://www.incentivi.gov.it/it/catalogo/bandi-la-partecipazione-alle-procedure-competitive-laccesso-agli-incentivi-previsti-dal-dm",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Aperto, non raccolto: la fonte legge solo le 200 schede aggiornate piu' di recente (sort=ds_last_update desc, rows=200) e ha fatto la prima lettura il 25/09; le misure gia' aperte e non ritoccate di recente non entrano mai."
+  },
+  {
+   "titolo": "Finanziamenti agevolati per attivita' consulenziale destinata ad investimenti per una crescita sostenibile sui mercati esteri",
+   "url": "https://www.incentivi.gov.it/it/catalogo/finanziamenti-agevolati-attivita-consulenziale-destinata-ad-investimenti-una-crescita",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Aperto; fuori dalle 200 schede aggiornate di recente lette dalla fonte."
+  },
+  {
+   "titolo": "Calabria Film Commission - Regolamento per la concessione di contributi e l'acquisizione di opere audiovisive 2026",
+   "url": "https://www.incentivi.gov.it/it/catalogo/calabria-film-commission-regolamento-la-concessione-di-contributi-e-lacquisizione-di-opere",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Aperto; fuori dalle 200 schede lette."
+  },
+  {
+   "titolo": "Finanziamento agevolato a sostegno della presenza di imprese e filiere italiane nel continente africano",
+   "url": "https://www.incentivi.gov.it/it/catalogo/finanziamento-agevolato-sostegno-della-presenza-di-imprese-e-filiere-italiane-nel-0",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Aperto (sportello SIMEST); fuori dalle 200 schede lette."
+  },
+  {
+   "titolo": "Piano operativo del Comparto per contributi in conto interessi del Fondo patrimonio culturale",
+   "url": "https://www.incentivi.gov.it/it/catalogo/piano-operativo-del-comparto-contributi-conto-interessi-del-fondo-patrimonio-culturale",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Aperto; fuori dalle 200 schede lette."
+  },
+  {
+   "titolo": "MIT - Incentivi alle imprese di autotrasporto per la formazione degli addetti - Edizione 15",
+   "url": "https://www.incentivi.gov.it/it/catalogo/ministero-delle-infrastrutture-e-dei-trasporti-incentivi-alle-imprese-di-autotrasporto-la",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Aperto; fuori dalle 200 schede lette."
+  },
+  {
+   "titolo": "Fondo di Garanzia per le Piccole e Medie Imprese",
+   "url": "https://www.incentivi.gov.it/it/catalogo/fondo-di-garanzia-le-piccole-e-medie-imprese",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Aperto; non raccolto da questa fonte (fuori dalle 200), ma nel sistema esiste il bando 15 'Fondo di garanzia per le PMI' da pagina MIMIT."
+  },
+  {
+   "titolo": "Fondo per il trasferimento tecnologico",
+   "url": "https://www.incentivi.gov.it/it/catalogo/fondo-il-trasferimento-tecnologico",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Aperto; fuori dalle 200 schede lette."
+  },
+  {
+   "titolo": "Finanziamento agevolato per investimenti per l'innovazione digitale e/o la transizione ecologica",
+   "url": "https://www.incentivi.gov.it/it/catalogo/finanziamento-agevolato-la-realizzazione-di-investimenti-linnovazione-digitale-eo-la",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Aperto; fuori dalle 200 schede lette."
+  },
+  {
+   "titolo": "Fondo Salvaguardia imprese",
+   "url": "https://www.incentivi.gov.it/it/catalogo/fondo-salvaguardia-imprese",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Aperto; fuori dalle 200 schede lette."
+  },
+  {
+   "titolo": "Contratti di sviluppo agroalimentari",
+   "url": "https://www.incentivi.gov.it/it/catalogo/contratti-di-sviluppo-agroalimentari-progetti-di-investimento-nel-settore-della",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Aperto; fuori dalle 200 schede lette."
+  },
+  {
+   "titolo": "Accesso al Fondo di Microfinanza - PR Basilicata FSE+ 2021-2027",
+   "url": "https://www.incentivi.gov.it/it/catalogo/accesso-al-fondo-di-microfinanza-pr-basilicata-fse-2021-2027",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Aperto; fuori dalle 200 schede lette."
+  },
+  {
+   "titolo": "Dote Impresa Collocamento Mirato Asse I - Provincia di Como - FONDO 2024",
+   "url": "https://www.incentivi.gov.it/it/catalogo/dote-impresa-collocamento-mirato-asse-i-provincia-di-como-fondo-2024",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Aperto (scad. 31/10/2026); fuori dalle 200 schede lette."
+  },
+  {
+   "titolo": "Sovvenzioni abbattimento interessi e garanzia - linea Regione Toscana EU blending 2023-0118 BEI - 2026",
+   "url": "https://www.incentivi.gov.it/it/catalogo/sovvenzioni-labbattimento-degli-interessi-e-dei-costi-della-garanzia-sui-finanziamenti-0",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Aperto; fuori dalle 200 schede lette (raccolta solo la variante turismo, bando 113)."
+  },
+  {
+   "titolo": "Sviluppo competenze - Innovazione tecnologica e transizione verde e digitale - Secondo sportello",
+   "url": "https://www.incentivi.gov.it/it/catalogo/sviluppo-competenze-innovazione-tecnologica-e-transizione-verde-e-digitale-secondo",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Aperto; fuori dalle 200 schede lette."
+  },
+  {
+   "titolo": "Avviso pubblico ISI 2024 - Sicilia",
+   "url": "https://www.incentivi.gov.it/it/catalogo/avviso-pubblico-isi-2024-il-miglioramento-dei-livelli-di-salute-e-sicurezza-sul-lavoro-14",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Segnato aperto senza data di chiusura (probabile scheda non aggiornata: ISI 2024 e' in fase avanzata); fuori dalle 200 lette."
+  },
+  {
+   "titolo": "Tecnonidi 2021-2027",
+   "url": "https://www.incentivi.gov.it/it/catalogo/tecnonidi-2021-2027",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Aperto; fuori dalle 200 lette (esiste in sistema solo 'Avviso TecnoNidi JTF', bando 225, forse diverso)."
+  },
+  {
+   "titolo": "Fondo economia sociale - Accesso al credito associazionismo culturale e sportivo - Regione Umbria",
+   "url": "https://www.incentivi.gov.it/it/catalogo/fondo-economia-sociale-accesso-al-credito-rivolto-allassociazionismo-culturale-e-sportivo",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Aperto; fuori dalle 200 lette (per imprese dubbio: associazioni)."
+  },
+  {
+   "titolo": "Regione Veneto - OCDPC 1131/2025 Primi interventi urgenti eventi meteorologici 23-24 settembre 2024",
+   "url": "https://www.incentivi.gov.it/it/catalogo/regione-veneto-ocdpc-11312025-primi-interventi-urgenti-di-protezione-civile-conseguenza",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Aperto; fuori dalle 200 lette."
+  },
+  {
+   "titolo": "CCIAA Pordenone-Udine - Progetto POLONIA - Ricerca partner con viaggio d'affari autonomo",
+   "url": "https://www.incentivi.gov.it/it/catalogo/cciaa-pordenone-udine-progetto-polonia-ricerca-partner-con-viaggio-daffari-autonomo-aprile",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Aperto (scad. 02/10/2026); fuori dalle 200 lette."
+  },
+  {
+   "titolo": "Regione Valle d'Aosta - Aiuti alle PMI per trattamento e valorizzazione del siero residuo",
+   "url": "https://www.incentivi.gov.it/it/catalogo/regione-valle-daosta-concessione-di-aiuti-alle-pmi-i-costi-di-trattamento-e-valorizzazione",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Aperto; fuori dalle 200 lette."
+  },
+  {
+   "titolo": "Criteri per agevolazioni per lo sviluppo della mobilita' elettrica in provincia di Bolzano",
+   "url": "https://www.incentivi.gov.it/it/catalogo/criteri-la-concessione-di-agevolazioni-lo-sviluppo-della-mobilita-elettrica-provincia-di",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Aperto; fuori dalle 200 lette."
+  },
+  {
+   "titolo": "Avviso pubblico per progetti di formazione continua",
+   "url": "https://www.incentivi.gov.it/it/catalogo/avviso-pubblico-la-presentazione-dei-progetti-relativi-ad-azioni-di-formazione-continua",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Aperto (scad. 30/11/2026); fuori dalle 200 lette."
+  },
+  {
+   "titolo": "Comune di Sacco - Fondo di sostegno Comuni marginali - II annualita'",
+   "url": "https://www.incentivi.gov.it/it/catalogo/comune-di-sacco-fondo-di-sostegno-comuni-marginali-ii-annualita",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Aperto; fuori dalle 200 lette."
+  },
+  {
+   "titolo": "Regolamento (2025) contributi opere audiovisive - Fondazione Calabria Film Commission",
+   "url": "https://www.incentivi.gov.it/it/catalogo/regolamento-2025-la-concessione-di-contributi-e-lacquisizione-di-opere-audiovisive",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Segnato aperto senza chiusura, probabilmente superato dall'edizione 2026; fuori dalle 200 lette."
+  },
+  {
+   "titolo": "CCIAA Modena - Outgoing 2026 - Incontri d'affari all'estero",
+   "url": "https://www.incentivi.gov.it/it/catalogo/cciaa-modena-outgoing-2026-incontri-daffari-allestero",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Aperto (scad. 30/11/2026); fuori dalle 200 lette."
+  },
+  {
+   "titolo": "CCIAA Chieti Pescara - Bando per incentivi per l'internazionalizzazione 2026",
+   "url": "https://www.incentivi.gov.it/it/catalogo/cciaa-chieti-pescara-bando-incentivi-linternazionalizzazione-2026",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Aperto (scad. 15/12/2026); fuori dalle 200 lette."
+  },
+  {
+   "titolo": "Potenziamento rete Spazio Attivo - Avvisi per premi/contributi diretti",
+   "url": "https://www.incentivi.gov.it/it/catalogo/potenziamento-rete-spazio-attivo-avvisi-premicontributi-diretti",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Aperto; fuori dalle 200 lette."
+  },
+  {
+   "titolo": "Avviso pubblico ISI 2024 - Sardegna",
+   "url": "https://www.incentivi.gov.it/it/catalogo/avviso-pubblico-isi-2024-il-miglioramento-dei-livelli-di-salute-e-sicurezza-sul-lavoro-12",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Aperto senza chiusura nel catalogo (stato dubbio); fuori dalle 200 lette."
+  },
+  {
+   "titolo": "Basket Bond Lazio",
+   "url": "https://www.incentivi.gov.it/it/catalogo/basket-bond-lazio",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Aperto; fuori dalle 200 lette."
+  },
+  {
+   "titolo": "Tirocini di formazione e orientamento - Provincia Autonoma di Trento",
+   "url": "https://www.incentivi.gov.it/it/catalogo/tirocini-di-formazione-e-orientamento-linserimento-nel-mercato-del-lavoro-provincia",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Aperto; fuori dalle 200 lette."
+  },
+  {
+   "titolo": "Avviso pubblico ISI 2024 - Lazio",
+   "url": "https://www.incentivi.gov.it/it/catalogo/avviso-pubblico-isi-2024-il-miglioramento-dei-livelli-di-salute-e-sicurezza-sul-lavoro-5",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Aperto senza chiusura nel catalogo (stato dubbio); fuori dalle 200 lette."
+  },
+  {
+   "titolo": "Comune di Tricesimo - Indennizzi alle imprese nelle aree dei cantieri della rotonda di Piazza Verdi",
+   "url": "https://www.incentivi.gov.it/it/catalogo/comune-di-tricesimo-bando-la-concessione-di-indennizzi-sostegno-delle-imprese-commerciali",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Aperto; fuori dalle 200 lette."
+  },
+  {
+   "titolo": "Contributi alle imprese per fiere e mostre in Italia e all'estero 2026 - CCIAA Nuoro",
+   "url": "https://www.incentivi.gov.it/it/catalogo/bando-lerogazione-di-contributi-alle-imprese-la-partecipazione-fiere-e-mostre-italia-e-0",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Aperto (scad. 30/09/2026); fuori dalle 200 lette."
+  },
+  {
+   "titolo": "Avviso pubblico - PIA Programmi Integrati di Agevolazione - PR Puglia FESR 2021-2027",
+   "url": "https://www.incentivi.gov.it/it/catalogo/avviso-pubblico-pia-programmi-integrati-di-agevolazione-pr-puglia-fesr-2021-2027",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Aperto; fuori dalle 200 lette."
+  },
+  {
+   "titolo": "Aiuti per servizi di consulenza - Provincia autonoma di Trento",
+   "url": "https://www.incentivi.gov.it/it/catalogo/aiuti-servizi-di-consulenza-provincia-autonoma-di-trento",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Aperto; fuori dalle 200 lette."
+  },
+  {
+   "titolo": "Provincia autonoma di Trento - Incentivi alla conservazione dell'occupazione - Int. 3.4.2",
+   "url": "https://www.incentivi.gov.it/it/catalogo/provincia-autonoma-di-trento-incentivi-alla-conservazione-delloccupazione-int-342",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Aperto; fuori dalle 200 lette."
+  },
+  {
+   "titolo": "Regione Veneto - Imprese culturali, creative e dell'audiovisivo - Sub C Produzione audiovisiva 2026",
+   "url": "https://www.incentivi.gov.it/it/catalogo/regione-veneto-interventi-sostegno-delle-imprese-culturali-creative-e-dellaudiovisivo-0",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "In arrivo; non tra le 200 lette il 25/09 ne' tra le 5 nuove del 26/09."
+  },
+  {
+   "titolo": "CCIAA Salerno - Bando Doppia Transizione 2026",
+   "url": "https://www.incentivi.gov.it/it/catalogo/cciaa-salerno-bando-doppia-transizione-2026",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "In arrivo; fuori dalle 200 lette."
+  },
+  {
+   "titolo": "CCIAA Marche - Voucher per la Doppia Transizione 2026",
+   "url": "https://www.incentivi.gov.it/it/catalogo/cciaa-marche-voucher-la-doppia-transizione-2026",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "In arrivo; fuori dalle 200 lette; nel sistema esiste pero' il bando 396 dalla fonte della CCIAA Marche."
+  },
+  {
+   "titolo": "CCIAA Cremona-Mantova-Pavia - Bando Valorizzazione delle Tipicita' locali 2026",
+   "url": "https://www.incentivi.gov.it/it/catalogo/cciaa-cremona-mantova-pavia-bando-valorizzazione-delle-tipicita-locali-2026",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "In arrivo; fuori dalle 200 lette."
+  },
+  {
+   "titolo": "Unioncamere Piemonte - Bando voucher digitalizzazione 2026 PMI piemontesi",
+   "url": "https://www.incentivi.gov.it/it/catalogo/unioncamere-piemonte-bando-voucher-digitalizzazione-2026-pmi-piemontesi",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "In arrivo; fuori dalle 200 lette."
+  },
+  {
+   "titolo": "CCIAA Modena - Bando Voucher Internazionalizzazione - Anno 2026",
+   "url": "https://www.incentivi.gov.it/it/catalogo/cciaa-modena-bando-voucher-internazionalizzazione-anno-2026",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "In arrivo; fuori dalle 200 lette."
+  },
+  {
+   "titolo": "Regione Emilia-Romagna - Innovazione nella gestione delle sale per spettacolo",
+   "url": "https://www.incentivi.gov.it/it/catalogo/regione-emilia-romagna-bando-linnovazione-nella-gestione-delle-sale-deputate-allo",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "In arrivo; fuori dalle 200 lette."
+  },
+  {
+   "titolo": "CCIAA Pordenone-Udine - Progetto Linkedin Pro Business 2026",
+   "url": "https://www.incentivi.gov.it/it/catalogo/cciaa-pordenone-udine-progetto-linkedin-pro-business-2026",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Chiuso di recente (30/06): non raccolto, perdita senza danno."
+  },
+  {
+   "titolo": "CCIAA Toscana Nord-Ovest - Bando Voucher Doppia Transizione 2026",
+   "url": "https://www.incentivi.gov.it/it/catalogo/cciaa-toscana-nord-ovest-bando-voucher-doppia-transizione-2026",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Chiuso di recente (17/07): perdita senza danno."
+  },
+  {
+   "titolo": "Contributi per fiere in Italia e all'estero 2026 - Camera di Commercio dell'Umbria",
+   "url": "https://www.incentivi.gov.it/it/catalogo/bando-di-contributi-la-partecipazione-fiere-italia-e-allestero-anno-2026-camera-di",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Chiuso di recente (02/09): perdita senza danno."
+  },
+  {
+   "titolo": "Lazio Innova - Avviso Donne e impresa 2026",
+   "url": "https://www.incentivi.gov.it/it/catalogo/lazio-innova-avviso-donne-e-impresa-2026",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Chiuso di recente (10/06): perdita senza danno."
+  },
+  {
+   "titolo": "CCIAA Bologna - Contributi fiere internazionali in Italia 2026",
+   "url": "https://www.incentivi.gov.it/it/catalogo/cciaa-bologna-contributi-la-partecipazione-fiere-internazionali-italia-anno-2026",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Chiuso di recente (31/03): perdita senza danno."
+  },
+  {
+   "titolo": "CCIAA Modena - Trenino di Natale 2026",
+   "url": "https://www.incentivi.gov.it/it/catalogo/cciaa-modena-trenino-di-natale-anno-2026",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Chiuso di recente (15/07): perdita senza danno."
+  },
+  {
+   "titolo": "Bando Valore Impresa 2025 - CCIAA Frosinone e Latina",
+   "url": "https://www.incentivi.gov.it/it/catalogo/bando-valore-impresa-2025-camera-di-commercio-di-frosinone-e-latina",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Chiuso di recente (30/05): perdita senza danno."
+  },
+  {
+   "titolo": "Regione Toscana - Terzo Avviso voucher formativi per libere/i professioniste/i PR FSE+",
+   "url": "https://www.incentivi.gov.it/it/catalogo/regione-toscana-terzo-avviso-pubblico-rivolto-liberei-professionistei-il-finanziamento-di",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Chiuso di recente (15/09): perdita senza danno."
+  },
+  {
+   "titolo": "Fondo Regionale occupazione persone con disabilita' psichica 2025 - Lucca e Pistoia",
+   "url": "https://www.incentivi.gov.it/it/catalogo/bando-fondo-regionale-loccupazione-delle-persone-con-disabilita-di-natura-psichica-2025-0",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Chiuso di recente (31/03): perdita senza danno."
+  },
+  {
+   "titolo": "Voucher per interventi di formazione 2025 - CCIAA di Bergamo",
+   "url": "https://www.incentivi.gov.it/it/catalogo/bando-lassegnazione-di-voucher-interventi-di-formazione-anno-2025-cciaa-di-bergamo",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Chiuso di recente (30/04): perdita senza danno."
+  },
+  {
+   "titolo": "CCIAA Emilia - Bando Piccole Imprese per il territorio 2026 - BT26",
+   "url": "https://www.incentivi.gov.it/it/catalogo/cciaa-emilia-bando-piccole-imprese-il-territorio-2026-bt26",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Chiuso di recente (30/07): perdita senza danno."
+  },
+  {
+   "titolo": "Bando incubatori e acceleratori Regione Emilia-Romagna 2026",
+   "url": "https://www.incentivi.gov.it/it/catalogo/bando-lo-sviluppo-di-incubatori-e-acceleratori-della-regione-emilia-romagna-2026",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Chiuso di recente (26/03): perdita senza danno."
+  },
+  {
+   "titolo": "CCIAA Pordenone-Udine - Progetto SEO internazionale 2026",
+   "url": "https://www.incentivi.gov.it/it/catalogo/cciaa-pordenone-udine-progetto-seo-internazionale-2026",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Chiuso di recente (30/06): perdita senza danno."
+  },
+  {
+   "titolo": "Riapertura sportello accesso al credito commercio, ristorazione e alloggio - PR FESR Liguria",
+   "url": "https://www.incentivi.gov.it/it/catalogo/riapertura-sportello-la-presentazione-delle-domande-di-accesso-alle-agevolazioni-il",
+   "esito": "perso_non_raccolto",
+   "annuncio": null,
+   "bando": null,
+   "spiegazione": "Chiuso di recente (31/03): perdita senza danno."
+  }
+ ],
+ "smistamento": [
+  {
+   "annuncio": 4192,
+   "regole": "rilevante",
+   "haiku": "rilevante",
+   "opus": "rilevante",
+   "giusto": "rilevante",
+   "errore_regole": "nessuno",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Voucher camerali alle MPMI per fiere internazionali."
+  },
+  {
+   "annuncio": 4199,
+   "regole": "rilevante",
+   "haiku": "rilevante",
+   "opus": "rilevante",
+   "giusto": "rilevante",
+   "errore_regole": "nessuno",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Contributi alle imprese che assumono giovani."
+  },
+  {
+   "annuncio": 4213,
+   "regole": "rilevante",
+   "haiku": "rilevante",
+   "opus": "rilevante",
+   "giusto": "rilevante",
+   "errore_regole": "nessuno",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Fondo perduto alla filiera turistica vicentina."
+  },
+  {
+   "annuncio": 4215,
+   "regole": "da_rivedere",
+   "haiku": "rilevante",
+   "opus": "rilevante",
+   "giusto": "rilevante",
+   "errore_regole": "lieve",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Incontri B2B con buyer esteri organizzati dalla Camera, riservati alle imprese: vantaggio per l'impresa (regola 3). Le regole non trovano parole chiave."
+  },
+  {
+   "annuncio": 4216,
+   "regole": "rilevante",
+   "haiku": "rilevante",
+   "opus": "rilevante",
+   "giusto": "rilevante",
+   "errore_regole": "nessuno",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Contributi FESR alle imprese per rinnovabili."
+  },
+  {
+   "annuncio": 4218,
+   "regole": "rilevante",
+   "haiku": "rilevante",
+   "opus": "rilevante",
+   "giusto": "rilevante",
+   "errore_regole": "nessuno",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Contributi alle PMI su finanziamenti garantiti da confidi."
+  },
+  {
+   "annuncio": 4221,
+   "regole": "rilevante",
+   "haiku": "rilevante",
+   "opus": "rilevante",
+   "giusto": "rilevante",
+   "errore_regole": "nessuno",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Voucher cloud e cybersecurity MIMIT."
+  },
+  {
+   "annuncio": 4231,
+   "regole": "rilevante",
+   "haiku": "rilevante",
+   "opus": "rilevante",
+   "giusto": "rilevante",
+   "errore_regole": "nessuno",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Contributi alle imprese che ospitano studenti."
+  },
+  {
+   "annuncio": 4232,
+   "regole": "rilevante",
+   "haiku": "rilevante",
+   "opus": "rilevante",
+   "giusto": "rilevante",
+   "errore_regole": "nessuno",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Contributi alle imprese colpite dal maltempo."
+  },
+  {
+   "annuncio": 4244,
+   "regole": "da_rivedere",
+   "haiku": "rilevante",
+   "opus": "rilevante",
+   "giusto": "rilevante",
+   "errore_regole": "lieve",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Collettiva della Regione Marche a una borsa turistica: posto per gli operatori (regola 3); nel catalogo incentivi e' classificato come contributo."
+  },
+  {
+   "annuncio": 4245,
+   "regole": "da_rivedere",
+   "haiku": "rilevante",
+   "opus": "rilevante",
+   "giusto": "rilevante",
+   "errore_regole": "lieve",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Come 4244 (ILTM Cannes)."
+  },
+  {
+   "annuncio": 4259,
+   "regole": "non_rilevante",
+   "haiku": "rilevante",
+   "opus": "rilevante",
+   "giusto": "rilevante",
+   "errore_regole": "medio",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Spazio a SMAU Milano per 15 startup/PMI innovative lombarde scelte con 'selezione pubblica': le regole leggono 'selezione pubblica' come concorso di personale e scartano un vantaggio per imprese. Decisione sbagliata e difetto di regola sistematico, ma per questo annuncio senza danno: la selezione era aperta dal 22/06 al 16/07/2026 (scheda catalogo verificata il 27/09), quindi gia' chiusa quando e' stato raccolto."
+  },
+  {
+   "annuncio": 4279,
+   "regole": "rilevante",
+   "haiku": "da_rivedere",
+   "opus": "rilevante",
+   "giusto": "rilevante",
+   "errore_regole": "nessuno",
+   "errore_haiku": "lieve",
+   "errore_opus": "nessuno",
+   "spiegazione": "Avviso STEP della Regione Molise: sostegno a progetti di imprese in tecnologie critiche; Haiku dubita inutilmente."
+  },
+  {
+   "annuncio": 4304,
+   "regole": "rilevante",
+   "haiku": "rilevante",
+   "opus": "rilevante",
+   "giusto": "rilevante",
+   "errore_regole": "nessuno",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Aiuti alle PMI sui premi assicurativi."
+  },
+  {
+   "annuncio": 4307,
+   "regole": "da_rivedere",
+   "haiku": "rilevante",
+   "opus": "rilevante",
+   "giusto": "rilevante",
+   "errore_regole": "lieve",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Partecipazione delle imprese marchigiane al forum Investment Africa con la Regione (catalogato come incentivo)."
+  },
+  {
+   "annuncio": 4322,
+   "regole": "da_rivedere",
+   "haiku": "rilevante",
+   "opus": "rilevante",
+   "giusto": "rilevante",
+   "errore_regole": "lieve",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Collettiva regionale BITESP Venezia."
+  },
+  {
+   "annuncio": 4331,
+   "regole": "rilevante",
+   "haiku": "rilevante",
+   "opus": "rilevante",
+   "giusto": "rilevante",
+   "errore_regole": "nessuno",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Contributi Digital Export alle imprese."
+  },
+  {
+   "annuncio": 4339,
+   "regole": "da_rivedere",
+   "haiku": "rilevante",
+   "opus": "rilevante",
+   "giusto": "rilevante",
+   "errore_regole": "lieve",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Collettiva regionale ASFW Addis per imprese moda (adesioni gia' chiuse, ma l'annuncio in se' e' rilevante)."
+  },
+  {
+   "annuncio": 4340,
+   "regole": "da_rivedere",
+   "haiku": "rilevante",
+   "opus": "rilevante",
+   "giusto": "rilevante",
+   "errore_regole": "lieve",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Collettiva regionale WTM Londra."
+  },
+  {
+   "annuncio": 4341,
+   "regole": "da_rivedere",
+   "haiku": "rilevante",
+   "opus": "rilevante",
+   "giusto": "rilevante",
+   "errore_regole": "lieve",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Collettiva regionale ACE Roma."
+  },
+  {
+   "annuncio": 4356,
+   "regole": "rilevante",
+   "haiku": "rilevante",
+   "opus": "rilevante",
+   "giusto": "rilevante",
+   "errore_regole": "nessuno",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Contributi alle startup innovative lombarde."
+  },
+  {
+   "annuncio": 7768,
+   "regole": "non_smistato",
+   "haiku": "da_rivedere",
+   "opus": "da_rivedere",
+   "giusto": "rilevante",
+   "errore_regole": "nessuno",
+   "errore_haiku": "lieve",
+   "errore_opus": "lieve",
+   "spiegazione": "Il riassunto parla di contributi 'a terzi' per progetti culturali: il dubbio e' comprensibile, ma la fonte e' il catalogo incentivi di una Camera e il bando ammette consorzi e reti di imprese (art. 4): rilevante. Le regole non lo hanno ancora smistato (trovato il 26/09)."
+  },
+  {
+   "annuncio": 7769,
+   "regole": "non_smistato",
+   "haiku": "rilevante",
+   "opus": "rilevante",
+   "giusto": "rilevante",
+   "errore_regole": "nessuno",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Contributi alle imprese del Comune di San Leonardo in Passiria. Regole: non ancora smistato."
+  },
+  {
+   "annuncio": 7770,
+   "regole": "non_smistato",
+   "haiku": "rilevante",
+   "opus": "rilevante",
+   "giusto": "rilevante",
+   "errore_regole": "nessuno",
+   "errore_haiku": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Fondo comuni marginali di Pazzano alle nuove attivita' d'impresa (edizione 2023: l'eventuale chiusura la decide il preliminare, non lo smistamento)."
+  },
+  {
+   "annuncio": 7771,
+   "regole": "non_smistato",
+   "haiku": "da_rivedere",
+   "opus": "rilevante",
+   "giusto": "rilevante",
+   "errore_regole": "nessuno",
+   "errore_haiku": "lieve",
+   "errore_opus": "nessuno",
+   "spiegazione": "PSR Umbria 15.1: pagamenti a ettaro a proprietari e gestori privati di boschi, tra cui aziende agricole e forestali."
+  }
+ ],
+ "preliminare": [
+  {
+   "bando": 20,
+   "produzione": "passa",
+   "haiku_nuovo": "passa",
+   "opus": "ferma",
+   "giusto": "ferma",
+   "errore_produzione": "medio",
+   "errore_haiku_nuovo": "medio",
+   "errore_opus": "nessuno",
+   "spiegazione": "Verificato sulla pagina della CCIAA Gran Sasso: sportello Doppia Transizione 2026 chiuso in anticipo alle 12 del 22/09/2026 per risorse esaurite. Il fascicolo conteneva solo il PDF del bando (scadenza 30/09), non l'avviso sulla pagina; Opus ha ragione. In piu' l'annuncio d'origine (4317) parla di un altro bando (eccellenze territoriali 2022): collegamento sbagliato, e la stessa pagina e' anche il bando 786 (doppione). Riverificato il 27/09 sulla pagina camerale: chiusura anticipata dalle 12:00 del 22/09/2026, dotazione 400.000 euro superata."
+  },
+  {
+   "bando": 26,
+   "produzione": "passa",
+   "haiku_nuovo": "passa",
+   "opus": "ferma",
+   "giusto": "ferma",
+   "errore_produzione": "medio",
+   "errore_haiku_nuovo": "medio",
+   "errore_opus": "nessuno",
+   "spiegazione": "Contributi MIT autotrasporto veicoli ad elevata sostenibilita': la sesta e ultima finestra era dal 12/01 al 20/02/2026 (fonti di settore); il 31/12/2026 del catalogo non e' una scadenza per le domande. Fascicolo con sola scheda catalogo: produzione e Haiku fanno passare per stato incerto. Riverificato il 27/09 con ricerca web (artigiani.it, Clean Cities, FAI Ferrara): sesta e ultima finestra 12/01-20/02/2026; ora e' aperta solo la rendicontazione (prorogata al 15/10/2026), non nuove domande."
+  },
+  {
+   "bando": 51,
+   "produzione": "ferma",
+   "haiku_nuovo": "ferma",
+   "opus": "ferma",
+   "giusto": "ferma",
+   "errore_produzione": "nessuno",
+   "errore_haiku_nuovo": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Pagina ufficiale sbagliata (Lexview vuota + testo della Costituzione): nessun testo del bando, testo_bando=no. Giusto fermarlo, ma la scheda risulta comunque creata (ha_scheda=true): il fermo del preliminare non e' stato applicato."
+  },
+  {
+   "bando": 61,
+   "produzione": "ferma",
+   "haiku_nuovo": "ferma",
+   "opus": "ferma",
+   "giusto": "ferma",
+   "errore_produzione": "nessuno",
+   "errore_haiku_nuovo": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Annualita' 2021 del Comune di Placanica: edizione_in_corso=no per tutti. Anche qui ha_scheda=true nonostante il fermo."
+  },
+  {
+   "bando": 113,
+   "produzione": "passa",
+   "haiku_nuovo": "passa",
+   "opus": "passa",
+   "giusto": "passa",
+   "errore_produzione": "nessuno",
+   "errore_haiku_nuovo": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Sovvenzioni Toscana turismo su linea BEI: sportello aperto dal 31/03/2025 senza chiusura; da schedare con stato da confermare."
+  },
+  {
+   "bando": 116,
+   "produzione": "passa",
+   "haiku_nuovo": "passa",
+   "opus": "ferma",
+   "giusto": "ferma",
+   "errore_produzione": "medio",
+   "errore_haiku_nuovo": "medio",
+   "errore_opus": "nessuno",
+   "spiegazione": "Manifestazione di interesse del Comune di Taranto per un soggetto gestore di un immobile (progetto ERATO), scaduta il 05/05/2025: non e' un aiuto alle imprese ed e' chiusa. Produzione la segna per imprese e aperta; Haiku per_imprese=incerto e in_arrivo, quindi passa. La scadenza 05/05/2025 ore 10 e' nel testo dell'avviso (fascicolo della scheda); la pagina del Comune non la riporta ma l'avviso e' approvato ad aprile 2025."
+  },
+  {
+   "bando": 166,
+   "produzione": "passa",
+   "haiku_nuovo": "passa",
+   "opus": "passa",
+   "giusto": "passa",
+   "errore_produzione": "nessuno",
+   "errore_haiku_nuovo": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Offerta formativa GOL Marche per dipendenti di imprese in crisi, prorogata al 31/12/2026 a sportello."
+  },
+  {
+   "bando": 175,
+   "produzione": "passa",
+   "haiku_nuovo": "passa",
+   "opus": "passa",
+   "giusto": "passa",
+   "errore_produzione": "nessuno",
+   "errore_haiku_nuovo": "nessuno",
+   "errore_opus": "nessuno",
+   "spiegazione": "Voucher Cloud & Cybersecurity MIMIT, invio dal 10/11/2026."
+  }
+ ],
+ "osservazioni": [
+  "Difetto principale: la fonte chiede a Solr solo le 200 schede aggiornate piu' di recente (sort=ds_last_update desc, rows=200). Alla prima lettura (25/09) sono entrate 200 schede, il 26/09 solo 5 nuove. Le circa 800 misure aperte o in arrivo del catalogo che non sono state ritoccate di recente non entreranno mai: nel campione dell'esploratore 44 bandi aperti/in arrivo su 60 non sono stati raccolti. Serve una lettura iniziale completa (filtrando per data di chiusura futura o assente, l'endpoint restituisce tutto in una richiesta) e poi l'aggiornamento incrementale.",
+  "L'indirizzo registrato come pagina della fonte (/it/cerca-incentivi) oggi da' 404; la raccolta funziona perche' usa feed_url su Solr, ma la plancia mostra un link rotto: aggiornarlo a /it/catalogo.",
+  "Il campo pubblicato_il degli annunci e' la data di APERTURA del bando (zs_field_open_date), che puo' essere futura (es. 2027-01-01) o molto vecchia: non e' una data di pubblicazione e confonde ordinamenti e 'ultimo record trovato'.",
+  "Pagina ufficiale: quando il link_ente manca o non basta, viene presa la scheda del catalogo stesso (bandi 26, 61, 113, 999) e il preliminare ferma o passa senza testo del bando; nel caso 999 (FESR Emilia-Romagna 2.2.2, in arrivo) si perde un bando vero. In altri casi il link_ente e' sbagliato: bando 51 (Lexview FVG vuota e Costituzione), bando 20 (l'annuncio 'eccellenze territoriali 2022' porta alla pagina del bando Doppia Transizione 2026, gia' presente anche come bando 786: doppione).",
+  "Deduplica: 4 annunci rilevanti di questa fonte (4192, 4218, 4331, 4356) sono fermi in bandi_dubbi senza decisione; i bandi corrispondenti hanno la scheda da altre fonti, quindi non c'e' perdita, ma il dubbio 107 (stesso indirizzo ufficiale) andava risolto in automatico come 'stesso'.",
+  "Il fermo del preliminare non sembra applicato alle schede: i bandi 51 (testo_bando=no) e 61 (edizione_in_corso=no) risultano con ha_scheda=true.",
+  "Preliminare: il fascicolo contiene solo i documenti (PDF), non il testo della pagina ufficiale, dove spesso c'e' l'avviso di chiusura anticipata (bando 20). Per bandi a finestre (bando 26) la data di chiusura del catalogo non e' la scadenza reale. Il bando 1003 (Bando unico Cultura CCIAA Vicenza) e' fermato per per_imprese=no anche se ammette consorzi e reti di imprese: il prompt dovrebbe dire che 'anche solo alcune imprese' basta.",
+  "Regole di smistamento: 'selezione pubblica' fa scartare come concorso di personale la selezione di startup per SMAU (4259); le collettive fieristiche della Regione Marche finiscono tutte da_rivedere per mancanza di parole chiave: per le voci del catalogo incentivi.gov.it (che sono per definizione incentivi) si potrebbe partire da 'rilevante' e scartare solo con beneficiari chiaramente non imprese.",
+  "Verifiche in rete fatte: pagina CCIAA Gran Sasso (chiusura anticipata 22/09/2026), pagina CCIAA Vicenza id=186 (termini 12-28/10/2026), una ricerca web sul bando MIT autotrasporto (ultima finestra 12/01-20/02/2026); piu' interrogazioni al database di produzione (bandi_dubbi, bandi di altre fonti).",
+  "Verifica di riserva (27/09): il bando 999 non e' fermato 'giustamente' dal preliminare: la pagina del catalogo riporta date, beneficiari e intensita'; il preliminare di produzione ha letto male una pagina con sintesi sufficiente. Fuori dal campione dei preliminari confrontati, quindi, la produzione ha sbagliato almeno due preliminari con perdita reale: 999 (testo_bando=no invece di solo_sintesi) e 1003 (per_imprese=no nonostante consorzi, reti e cooperative).",
+  "Verifica di riserva: /it/cerca-incentivi risponde 404 (confermato); /it/catalogo non ha sezioni di bandi diverse dal catalogo stesso (i link del menu sono chi-siamo, glossario, faq, open-data, incentivi-italia, scrivania, confronta): l'esploratore non ha dimenticato sezioni. La configurazione in fonti/nazionali.yaml conferma sort=ds_last_update desc&rows=200. Nel perimetro restano alcune voci dallo stato dubbio (ISI 2024 Sicilia/Sardegna/Lazio, Regolamento 2025 Calabria Film Commission, Fondo economia sociale Umbria per associazioni): il numero dei persi_non_raccolto e' quindi leggermente sovrastimato come danno, non come difetto."
+ ],
+ "correzioni": [
+  {
+   "caso": "Perimetro: bando 999 (PR FESR Emilia-Romagna 2.2.2, annuncio 4216)",
+   "prima": "perso_pagina_ufficiale; 'il preliminare ha giustamente detto testo_bando=no'",
+   "dopo": "perso_preliminare",
+   "perche": "Il fascicolo del preliminare (pagina catalogo) contiene date 30/09-15/11/2026, beneficiari PMI, 35% fino a 100.000 euro: il preliminare doveva dire solo_sintesi/in_arrivo e farlo passare, come ha fatto per 26, 61, 113. La pagina ufficiale debole e' concausa, ma il fermo nasce dalla lettura sbagliata."
+  },
+  {
+   "caso": "Smistamento annuncio 4259 (SMAU Milano 2026), errore delle regole",
+   "prima": "grave",
+   "dopo": "medio",
+   "perche": "La decisione e' sbagliata, ma la selezione delle startup era chiusa dal 16/07/2026 (verificato sul catalogo): nessun bando perso per Matteo in questo caso; resta il difetto sistematico della regola 'selezione pubblica'."
+  }
+ ],
+ "fiducia": "media"
+}
