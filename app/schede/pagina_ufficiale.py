@@ -9,7 +9,9 @@ si applicano le regole della loro fonte, scritte nel registro (campo `pagina_uff
   segui_link  la pagina e' una notizia: si segue il link al bando sul sito dell'ente ("Bando e modulistica");
   escludi     indirizzi che non sono mai la pagina del bando (pagine di domanda con login);
   sostituisci come passare dall'indirizzo salvato alla pagina per le persone (Pordenone: "/api/it/" -> "/it/");
-  documenti   plone_api: i documenti stanno nelle sottocartelle, leggibili solo dall'API del sito (Emilia-Romagna).
+  documenti   plone_api: i documenti stanno nelle sottocartelle, leggibili solo dall'API del sito (Emilia-Romagna);
+  testo_dai_dati  la pagina si costruisce con JavaScript, ma il testo del bando e' in un campo dei dati grezzi
+              dell'annuncio (Portale UE: descrizione e condizioni del topic dall'API di ricerca).
 
 Poi si apre la pagina candidata e si controlla che contenga davvero un bando (non un login, una pagina vuota o solo
 menu). Il primo candidato buono diventa bandi.url; se nessuno va bene il bando resta "bando ufficiale non trovato"
@@ -214,6 +216,13 @@ def esegui_regole(client, pausa, annunci: list[AnnuncioDelBando], regole_fonti: 
             documenti = len(candidati_plone(client, pausa, str(risposta.url)))
             if len(_SEGNI_BANDO.findall(testo)) >= 3 or documenti:
                 ok, perche = True, f"letta dall'API del sito: {len(_SEGNI_BANDO.findall(testo))} parole da bando, {documenti} documenti"
+        campo = regole.get("testo_dai_dati")
+        if not ok and campo:
+            # Portale UE: la pagina e' un'applicazione JavaScript, il testo del bando e' nei dati della ricerca.
+            annuncio = next((a for a in annunci if a.id == c.annuncio_id), None)
+            testo = normalizza(str(((annuncio.dati if annuncio else None) or {}).get(campo) or ""))
+            if len(_SEGNI_BANDO.findall(testo)) >= 3 or len(testo) >= TESTO_MINIMO:
+                ok, perche = True, f"testo del bando dai dati della fonte ({campo}, {len(testo)} caratteri)"
         if ok:
             return Esito(str(risposta.url), "trovata", f"{c.motivo} ({perche})", provati)
         provati.append(f"{c.url} ({c.motivo}): {perche}")

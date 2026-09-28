@@ -48,6 +48,7 @@ Qui vive l'elenco delle fonti che Bandi Radar controlla. **Aggiungere una fonte 
       link: "/servizi/servizio/bandi/dettaglio/.*{codice}$"   # quale link dei risultati e' la pagina giusta
     segui_link: {testi: [bando, modulistica], stesso_sito: false}   # notizie: segui il link al bando ("Bando e modulistica")
     documenti: plone_api               # siti Plone/Volto: i documenti si leggono dall'API del sito (Emilia-Romagna, Pordenone)
+    testo_dai_dati: testo              # la pagina e' un'app JavaScript ma il testo del bando e' in questo campo dei dati grezzi (Portale UE)
   scorta:                              # facoltativo: lettura completa di tutti i bandi ancora aperti (vedi sotto)
     url: https://esempio.it/bandi?pagina={pagina}   # indirizzo della lettura completa ({anno} = anno in corso); senza, quello normale
     parametro: page                    # oppure: il numero di pagina va in questo parametro dell'indirizzo

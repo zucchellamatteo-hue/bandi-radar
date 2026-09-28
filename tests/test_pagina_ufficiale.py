@@ -158,3 +158,14 @@ def test_testo_delle_pagine_volto_dall_api():
         "blocks": {"a": {"@type": "slate", "plaintext": "Il contributo massimo e' di 20.000 euro."}}}))})
     testo = testo_plone(c, pausa(c), f"{base}/bandi/x")
     assert "Contributi per le PMI" in testo and "20.000 euro" in testo
+
+
+def test_portale_ue_testo_dai_dati_della_ricerca():
+    # La pagina del topic e' un'applicazione JavaScript: HTML vuoto. Il testo sta nei dati grezzi dell'annuncio.
+    url = "https://ec.europa.eu/info/funding-tenders/opportunities/portal/screen/opportunities/topic-details/eic-2026"
+    c = client({url: (200, "text/html", "<html><body><app-root></app-root></body></html>")})
+    testo = "EIC Accelerator. Expected outcome... Eligibility: SMEs. Deadline 2026-10-01. " * 20
+    a = AnnuncioDelBando(1, "ue", url, {"testo": testo}, None, "origine")
+    assert esegui_regole(c, pausa(c), [a], {}).stato == "non_trovata"
+    esito = esegui_regole(c, pausa(c), [a], {"ue": {"testo_dai_dati": "testo"}})
+    assert esito.stato == "trovata" and "dati della fonte" in esito.motivo
