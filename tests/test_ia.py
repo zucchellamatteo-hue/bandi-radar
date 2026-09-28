@@ -52,7 +52,17 @@ class FintoClient:
 
     def __init__(self):
         self.chiamate = []
-        self.messages = SimpleNamespace(create=self.create)
+        self.messages = SimpleNamespace(create=self.create, stream=self.stream)
+
+    def stream(self, **p):
+        """Come client.messages.stream: un gestore di contesto con get_final_message()."""
+        from contextlib import contextmanager
+
+        @contextmanager
+        def flusso():
+            messaggio = self.create(**p)
+            yield SimpleNamespace(get_final_message=lambda: messaggio)
+        return flusso()
 
     def create(self, **p):
         self.chiamate.append(p)
@@ -73,7 +83,9 @@ def test_smistamento_rimanda_i_mancanti():
     assert len(client.chiamate) == 2 and '<annuncio id="20">' in client.chiamate[1]["messages"][0]["content"]
     assert len(esito.decisi) == 20 and not esito.mancanti and len(registrate) == 2
     p = client.chiamate[0]
-    assert p["model"] == "claude-haiku-4-5" and p["output_config"]["format"]["schema"] is ia.SCHEMA_SMISTAMENTO
+    assert p["model"] == "claude-opus-5-5" and p["output_config"]["format"]["schema"] is ia.SCHEMA_SMISTAMENTO
+    assert p["output_config"]["effort"] == "medium" and "thinking" not in p and "tool_choice" not in p
+    assert p["max_tokens"] >= 6000          # il ragionamento, sempre acceso, sta dentro max_tokens
     assert p["system"][0]["cache_control"] == {"type": "ephemeral"}
 
 
@@ -218,3 +230,18 @@ def test_dettagli_per_il_commercialista_nello_schema_e_nei_controlli():
     assert "intensita.percentuale_base superiore alla percentuale massima" in problemi
     assert "vincoli_spese.fornitore = vincolo, ma manca il dettaglio" in problemi
     assert not ia._pieno({"iva": {"stato": "non_noto", "dettaglio": None}})
+
+
+def test_costo_opus_con_cache_e_batch():
+    # 1.000.000 token normali in ingresso a 4 $, 100.000 in uscita a 20 $
+    assert round(ia.costo("claude-opus-5-5", 1_000_000, 100_000), 4) == 6.0
+    # di cui 800.000 letti dalla cache a 0,20 $: 200.000*4 + 800.000*0,2 + 100.000*20 = 0,8 + 0,16 + 2
+    assert round(ia.costo("claude-opus-5-5", 1_000_000, 100_000, cache_lettura=800_000), 4) == 2.96
+    assert round(ia.costo("claude-opus-5-5", 1_000_000, 100_000, batch=True), 4) == 3.0
+
+
+def test_seconda_lettura_cita_la_scadenza_della_fonte():
+    from app.schede.segnali import Segnali
+
+    testo = ia.seconda_lettura(Segnali(aperto=["scadenza 30/09/2027 nei dati della fonte"]))
+    assert "30/09/2027" in testo and "Seconda lettura" in testo
