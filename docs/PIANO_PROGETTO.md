@@ -96,6 +96,8 @@ Un servizio Docker (`raccolta`) si sveglia ogni ora e chiede: quali fonti hanno 
 5. **Sitemap XML**: per i siti che non offrono altro, si leggono le pagine nuove dalla sitemap.
 6. **Email del lunedì**: dalle 7 di ogni lunedì il servizio manda a Matteo il riepilogo delle novità della settimana e lo stato delle fonti (con Resend; senza chiave, lo scrive nel log).
 
+**La scorta (dal 28/09/2026).** Oltre al controllo delle novità, le fonti con il blocco `scorta` nel registro vengono lette per intero (tutte le pagine, filtro sulla scadenza) la prima volta e poi una volta al mese o alla settimana: così entrano anche i bandi pubblicati prima dell'avvio e ancora aperti. Gli annunci della scorta non contano come novità. Formato in `fonti/README.md`.
+
 Ogni visita è un **controllo** (esito, durata, quanti elementi, quante novità). Ogni elemento nuovo è un **annuncio**: non ancora un bando, solo "qualcosa di nuovo su quella fonte". Gli annunci sono l'ingresso della Fase 3, dove l'IA li smista e li trasforma in schede. Il tutto è senza IA e senza costi, come da §3b.
 
 ## 3b. Stato del registro delle fonti (al 24/09/2026)
@@ -327,6 +329,14 @@ Alcune fasi si sovrappongono di una settimana, apposta. Nella **Fase 0** e nella
 | Fonti difficili | 25 recuperate, 8 escluse, 12 bloccate sugli indirizzi esteri del server (dal PC di Matteo si aprono). Uscire da un indirizzo italiano resta da valutare; nel frattempo le copre in parte incentivi.gov.it. |
 | Arretrato delle schede | Deciso da Matteo il 26/09: le schede dei bandi già raccolti le compila la sessione di Claude Code (agenti Haiku per il controllo preliminare, Sonnet per la scheda), leggendo **gli stessi testi** che manderebbe il programma (`app/schede/ia.py`: stessi prompt, stessi documenti in ordine, stessi tagli) e passando dagli stessi controlli (`verifica_scheda`). Le schede sono riconoscibili: `dati.modello` = "claude-code (sessione del 26/09/2026, senza API)", costo 0. Non è il sistema automatico: è un lavoro fatto una volta, come le mappature. **Dai bandi nuovi in poi** si usa l'API con la chiave e il tetto di spesa, come deciso. |
 | Catena senza IA | Deduplica, pagina ufficiale e allegati si lanciano per ora a mano; proposta di metterli nel giro orario della raccolta (vedi il rapporto del 26/09 per i tempi misurati). |
+
+**Decise il 27-28/09/2026 (valutazione dell'efficacia, `docs/ricerche/2026-09-27_valutazione_efficacia.md`):**
+
+| Tema | Decisione |
+|---|---|
+| Perimetro | Prima il perimetro, senza IA: lettura completa della "scorta" delle fonti (non solo le novità), incentivi.gov.it dal servizio Solr completo, Portale UE e anagrafica lombarda per intero, sezioni mancanti aggiunte al registro, pagine Plone lette dall'API, segnali di stato gratuiti prima dell'IA. PR #27. Obiettivo di Matteo: persi meno del 5% dei bandi aperti per imprese. |
+| IA | Decisione di Matteo: **Claude Opus 5.5** per smistamento dei "da rivedere", controllo preliminare e schede (sostituisce Haiku e Sonnet decisi il 25/09). Effort "medium" esplicito; seconda lettura con effort "high" quando l'IA dice chiuso ma la fonte scrive una scadenza futura. Stima 45-75 $ al mese, circa la metà con la Batch API. Niente lotti grandi senza il via libera di Matteo sul costo. |
+| Valutazione | Si rifà identica sulle stesse 44 fonti dopo perimetro e API, per misurare il miglioramento. |
 
 **Ancora aperti:**
 
