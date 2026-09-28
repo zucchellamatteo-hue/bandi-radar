@@ -78,6 +78,7 @@ services:
       RESEND_API_KEY: ${RESEND_API_KEY:-}
       ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}      # vuota = IA spenta (app/schede/ia.py)
       IA_TETTO_MESE_USD: ${IA_TETTO_MESE_USD:-30}
+      CATENA_AUTOMATICA: ${CATENA_AUTOMATICA:-1}     # 0 = solo raccolta, senza smistamento/pagine/allegati/IA nel giro orario
       EMAIL_MATTEO: ${EMAIL_MATTEO:-}
       EMAIL_MITTENTE: ${EMAIL_MITTENTE:-}
       ALLEGATI_CARTELLA: /srv/allegati

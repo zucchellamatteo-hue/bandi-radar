@@ -139,6 +139,8 @@ cd /srv/bandi-radar && sudo -u deploy docker compose run --rm raccolta python -m
 cd /srv/bandi-radar && sudo -u deploy docker compose run --rm raccolta python -m app.schede.ia smista --batch     # arretrato: a metà prezzo, risposte entro 24 ore
 cd /srv/bandi-radar && sudo -u deploy docker compose run --rm raccolta python -m app.schede.ia raccogli          # legge le risposte del batch
 ```
+**Dal 28/09 la catena gira da sola, ogni ora, dopo la raccolta** (`CATENA_AUTOMATICA=1`, il valore di base): smistamento a regole, deduplica, pagina ufficiale (20 bandi per giro) e allegati (10 per giro). Con la chiave, in piu', l'IA con la **Batch API** (meta' prezzo, risposte entro 24 ore): raccoglie le risposte arrivate e, se non ci sono lotti in corso, manda un lotto nuovo con i "da rivedere" (fino a 400 annunci), i controlli preliminari (fino a 150) e le schede (fino a 40). Ogni bando si manda una volta sola: se una risposta non va, si riprova a mano con `ia schede --bando ID`. `CATENA_AUTOMATICA=0` nel `.env` spegne tutto tranne la raccolta.
+
 Ogni chiamata resta nella tabella `chiamate_ia`, con token e costo. Le tue correzioni dello smistamento e i tuoi legami tra annunci e bandi non vengono mai sovrascritti dall'IA.
 
 I file stanno nel volume Docker `allegati` (una cartella per bando, `b<numero>`, e le vecchie per annuncio), che sopravvive ai riavvii e agli aggiornamenti come il database. Per vedere quanto spazio occupa:
