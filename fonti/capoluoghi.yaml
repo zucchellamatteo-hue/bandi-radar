@@ -303,6 +303,22 @@
   verificato_il: 2026-09-23
   note: "Header Accept: application/json. Bandi per botteghe e imprese ricorrenti. La piattaforma bandispezia (SPID) non e' osservabile."
 
+- id: comune_la_spezia_bandi_finanziamenti_api
+  nome: Comune della Spezia - Politiche comunitarie, Bandi e finanziamenti (API Plone)
+  ente: Comune della Spezia
+  tipo: capoluogo
+  territorio: LIG
+  url: https://www.comune.laspezia.it/amministrazione/aree-amministrative/dipartimento-1-servizi-finanziari-e-informatici/politiche-comunitarie/bandi-e-finanziamenti
+  modalita: api
+  feed_url: https://www.comune.laspezia.it/++api++/@search?path.query=/amministrazione/aree-amministrative/dipartimento-1-servizi-finanziari-e-informatici/politiche-comunitarie/bandi-e-finanziamenti&path.depth=1&sort_on=effective&sort_order=descending&b_size=30&metadata_fields=effective
+  piattaforma: plone
+  frequenza: settimanale
+  stato: attiva
+  verificato_il: '2026-09-27'
+  note: 'Aggiunta il 27/09 (valutazione dell''efficacia): l''ufficio Politiche comunitarie rilancia bandi nazionali, UE
+    e di fondazioni, anche per imprese (misura Simest crisi energetica, Single Market sprechi alimentari): 31 pagine al
+    27/09. Sono quasi sempre bandi di altri enti: la deduplica li collega al bando della fonte che li emette.' 
+
 - id: provincia_lecco_bandi_contributi
   nome: Provincia di Lecco - Bandi per contributi
   ente: Provincia di Lecco
@@ -936,7 +952,7 @@
   territorio: EMR
   url: https://www.comune.parma.it/it/amministrazione/documenti-e-dati/bandi-e-avvisi
   modalita: api
-  feed_url: https://www.comune.parma.it/++api++/@search?portal_type=Bando&sort_on=effective&sort_order=descending&b_size=30&metadata_fields=effective
+  feed_url: https://www.comune.parma.it/++api++/@search?portal_type=Bando&sort_on=effective&sort_order=descending&b_size=30&metadata_fields=effective&metadata_fields=scadenza_bando
   piattaforma: plone
   frequenza: settimanale
   stato: attiva
@@ -951,6 +967,29 @@
     risponde 504.
 
     '
+  scorta:                              # 27/09: i 30 piu' recenti lasciavano fuori bandi aperti da febbraio (Ordinanza 55/2026)
+    url: https://www.comune.parma.it/++api++/@search?portal_type=Bando&sort_on=effective&sort_order=descending&b_size=100&metadata_fields=effective&metadata_fields=scadenza_bando
+    parametro: b_start
+    inizio: 0
+    passo: 100
+    pagine: 10
+    scadenza: scadenza_bando
+
+- id: comune_parma_notizie_api
+  nome: Comune di Parma - Notizie su contributi e incentivi (API Plone)
+  ente: Comune di Parma
+  tipo: capoluogo
+  territorio: EMR
+  url: https://www.comune.parma.it/it/novita/notizie
+  modalita: api
+  feed_url: https://www.comune.parma.it/++api++/@search?path.query=/it/novita/notizie&SearchableText=contribut*%20OR%20incentiv*%20OR%20agevolazion*%20OR%20voucher&sort_on=effective&sort_order=descending&b_size=30&metadata_fields=effective
+  piattaforma: plone
+  frequenza: settimanale
+  stato: attiva
+  verificato_il: '2026-09-27'
+  note: 'Aggiunta il 27/09 (valutazione dell''efficacia): alcuni incentivi del Comune per le imprese escono solo come
+    notizia (e-bike e cargo bike dal 14/09/2026, negozi di vicinato). Si leggono solo le notizie con contribut*,
+    incentiv*, agevolazion* o voucher nel testo (circa 30 al mese, molte per famiglie: le scarta lo smistamento).' 
 
 - id: comune_reggio_emilia_avvisi_api
   nome: Comune di Reggio Emilia - Novita' > Avvisi (API Plone)
@@ -1307,6 +1346,13 @@
     il Palio. Categoria servizi /categorie-dei-servizi/imprese-e-commercio.
 
     '
+  scorta:                              # 27/09: il feed ha solo le ultime 10 voci; la pagina Avvisi ha 9 pagine
+    url: https://www.comune.siena.it/tipi-di-notizia/avvisi
+    modalita: html
+    selettore: div.card-teaser
+    parametro: page
+    inizio: 0
+    pagine: 15
 
 - id: comune_grosseto_sito
   nome: Comune di Grosseto - sito istituzionale

@@ -20,14 +20,19 @@ from app.raccolta.modelli import Annuncio, Lettura
 from app.raccolta.scarica import scarica
 
 LUNGHEZZA_MINIMA_TITOLO = 18
+# Con un selettore del registro i link sono gia' quelli giusti: bastano titoli corti ("Legge 181", "Bando SI4.0 2026").
+LUNGHEZZA_MINIMA_CON_SELETTORE = 5
 _TESTI_GENERICI = re.compile(
-    r"^(leggi( di piu'| tutto)?|vai( alla pagina)?|scopri( di piu')?|dettagli|apri|continua|home|privacy|cookie|"
+    r"^(leggi( di piu'| tutto)?|vai( alla pagina)?|scopri( di piu')?|(ulteriori |maggiori )?dettagli|per saperne di pi(u'|ù)|"
+    r"apri|continua|home|privacy|cookie|"
     r"accedi|login|contatti|mappa del sito|torna su|scarica|download|prev|next|precedente|successivo)\b",
     re.IGNORECASE,
 )
 _ESTENSIONI_FILE = (".pdf", ".doc", ".docx", ".xls", ".xlsx", ".zip", ".p7m", ".odt", ".jpg", ".png")
 _SPAZI = re.compile(r"\s+")
 _SESSIONE = re.compile(r";jsessionid=[^?#]*", re.IGNORECASE)
+# Il titolo nell'attributo title del link, a volte con un prefisso ("Vai al contenuto ...", Design Comuni).
+_PREFISSI_TITLE = re.compile(r"^(vai al contenuto|vai a|leggi|apri|visualizza)\s+", re.IGNORECASE)
 
 
 _RUOLI_DI_CORNICE = re.compile("banner|contentinfo|navigation", re.I)
@@ -43,8 +48,12 @@ def _pulisci(pagina: BeautifulSoup) -> None:
     for tag in pagina(["script", "style", "noscript"]):
         tag.decompose()
     # Un <nav> non chiuso bene (Camera di Torino) finisce per contenere tutta la pagina: si toglie solo se non ha dentro il contenuto.
+    # Un <nav> piccolo dentro una scheda (<article>: "Per saperne di piu'" della Regione Piemonte) e' parte della
+    # scheda; un menu vero ha piu' link, anche se il sito mette tutta la pagina in un <article> (Roma Capitale).
     for tag in list(pagina.find_all("nav")):
-        if not tag.decomposed and _e_cornice(tag):
+        if tag.decomposed or not _e_cornice(tag):
+            continue
+        if tag.find_parent("article") is None or len(tag.find_all("a")) > 3:
             tag.decompose()
     for tag in list(pagina.find_all(["header", "footer", "aside", "div"], role=_RUOLI_DI_CORNICE)):
         if _e_cornice(tag):
@@ -76,7 +85,7 @@ def estrai_link(html: str, url_pagina: str, selettore: str | None = None) -> lis
         annunci: list[Annuncio] = []
         visti: set[str] = set()
         for radice in radici:
-            for a in _link_in(radice, url_pagina):
+            for a in _link_in(radice, url_pagina, LUNGHEZZA_MINIMA_CON_SELETTORE):
                 if a.url not in visti:
                     visti.add(a.url)
                     annunci.append(a)
@@ -106,7 +115,11 @@ def _titolo_della_scheda(a) -> str | None:
     return None
 
 
-def _link_in(radice, url_pagina: str) -> list[Annuncio]:
+def _senza_schema(url: str) -> str:
+    return url.split("://", 1)[-1].rstrip("/")
+
+
+def _link_in(radice, url_pagina: str, minimo: int = LUNGHEZZA_MINIMA_TITOLO) -> list[Annuncio]:
     host = urlsplit(url_pagina).netloc
     visti: set[str] = set()
     annunci: list[Annuncio] = []
@@ -116,13 +129,21 @@ def _link_in(radice, url_pagina: str) -> list[Annuncio]:
             continue
         # Il codice di sessione (;jsessionid=...) cambia a ogni visita: senza toglierlo ogni link sembrerebbe nuovo.
         url = _SESSIONE.sub("", urljoin(url_pagina, href).split("#")[0])
-        if url in visti or url.rstrip("/") == url_pagina.rstrip("/"):
+        # Il link alla pagina stessa (anche in http invece che https: filtro "Stato incentivo" di Invitalia) non e' un annuncio.
+        if url in visti or _senza_schema(url) == _senza_schema(url_pagina):
             continue
         testo = _SPAZI.sub(" ", a.get_text(" ")).strip()
-        if len(testo) < LUNGHEZZA_MINIMA_TITOLO or _TESTI_GENERICI.match(testo):
-            # "Scopri di piu'", "Vai": il titolo e' nel titolo della scheda che contiene il link.
-            testo = _titolo_della_scheda(a) or ""
-            if len(testo) < LUNGHEZZA_MINIMA_TITOLO:
+        if len(testo) < minimo or _TESTI_GENERICI.match(testo):
+            # "Scopri di piu'", "Vai": il titolo e' nell'attributo title del link o nel titolo della scheda che lo contiene.
+            # Solo per i link con un testo generico ("Ulteriori dettagli"): non per le icone ("Seguici su facebook")
+            # ne' per i link corti di condivisione ("Facebook" con title "Condividi su Facebook").
+            attributo = _PREFISSI_TITLE.sub("", _SPAZI.sub(" ", a.get("title") or "").strip()) \
+                if _TESTI_GENERICI.match(testo) else ""
+            if len(attributo) >= max(minimo, LUNGHEZZA_MINIMA_TITOLO) and not _TESTI_GENERICI.match(attributo):
+                testo = attributo
+            else:
+                testo = _titolo_della_scheda(a) or ""
+            if len(testo) < minimo:
                 continue
         if url.lower().endswith(_ESTENSIONI_FILE) and urlsplit(url).netloc != host:
             continue

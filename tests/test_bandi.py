@@ -150,3 +150,12 @@ def test_annunci_gia_collegati_o_in_dubbio_non_si_toccano():
     annunci = [ann(1, "Voucher export 2026", bando=10), ann(2, "Voucher export 2026"), ann(3, "Voucher fiere 2026")]
     piano = pianifica(annunci, {10: [annunci[0]]}, in_dubbio={3}, anno_corrente=2026)
     assert [(a.id, e.azione, e.bando) for a, e in piano] == [(2, "collega", 10)]
+
+
+def test_proroga_che_descrive_il_bando_intero_diventa_un_bando():
+    # Unioncamere Veneto, 27/09: il bando era aperto ma restava in dubbio "proroga: non trovo il bando".
+    titolo = "Bando veicoli aziendali 2026: incentivi alla rottamazione e acquisto. Termine di chiusura prorogato"
+    (_, e), = pianifica([ann(1, titolo, ente="Unioncamere del Veneto", territorio="VEN")], anno_corrente=2026)
+    assert e.azione == "nuovo" and e.ruolo == "origine" and "pagina e' quella del bando" in e.motivo
+    (_, e), = pianifica([ann(2, "Proroga dei termini di presentazione delle domande")], anno_corrente=2026)
+    assert e.azione == "dubbio"

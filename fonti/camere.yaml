@@ -253,6 +253,14 @@
     senza feed veri: nessun RSS trovato.
 
     '
+  richiesta:                           # 27/09: solo le schede dei bandi (i link di menu e di paginazione prendevano il titolo del primo bando)
+    selettore: article.istanza-contenitore
+  scorta:                              # 27/09: 6 schede per pagina; "Verso la certificazione della parita' di genere" era a pagina 2
+    url: https://www.comolecco.camcom.it/index.php?id_doc=0&id_cat=0&id_oggetto=0&id_sezione=478&senso=DESC&ordine=data&limite=6&gtp=1
+    parametro: inizio
+    inizio: 0
+    passo: 6
+    pagine: 10
 
 - id: cciaa_cremona_bandi
   nome: Camera di Commercio di Cremona-Mantova-Pavia - Bandi e contributi
@@ -361,7 +369,7 @@
   ente: Unioncamere Lombardia
   tipo: camera
   territorio: LOM
-  url: https://www.unioncamerelombardia.it/bandi-e-incentivi-alle-imprese?stato=2
+  url: https://www.unioncamerelombardia.it/bandi-e-incentivi-alle-imprese?stato=2&pagina=1
   modalita: html
   feed_url: null
   piattaforma: typo3
@@ -376,6 +384,11 @@
     è bloccata. Nessun RSS trovato nel sito. Osservare anche ?stato=1 (in apertura) per anticipare le date.
 
     '
+  richiesta:                           # 27/09: solo i titoli delle schede (menu, filtri e notizie in pagina facevano rumore; SI4.0 ha 16 caratteri)
+    selettore: "h2:has(> a.bandoTitle)"
+  scorta:                              # 27/09: 13 bandi aperti su 4 pagine da 4 schede
+    parametro: pagina
+    pagine: 10
 
 - id: cciaa_venezia_rovigo_bandi
   nome: CCIAA Venezia Rovigo - Incentivi ed agevolazioni, Contributi (bandi per anno)
@@ -464,6 +477,23 @@
 
     '
 
+- id: cciaa_verona_pid_api
+  nome: CCIAA Verona - Punto Impresa Digitale, progetti e iniziative (API Plone)
+  ente: Camera di Commercio di Verona
+  tipo: camera
+  territorio: VEN
+  url: https://www.vr.camcom.it/impresa-digitale-e-sostenibile/pid-punto-impresa-digitale
+  modalita: api
+  feed_url: https://www.vr.camcom.it/++api++/@search?path.query=/impresa-digitale-e-sostenibile/pid-punto-impresa-digitale&portal_type=News%20Item&portal_type=Document&sort_on=effective&sort_order=descending&b_size=30&metadata_fields=effective
+  piattaforma: plone
+  frequenza: settimanale
+  stato: attiva
+  verificato_il: '2026-09-27'
+  note: 'Aggiunta il 27/09 (valutazione dell''efficacia): premi e servizi con vantaggio economico della Camera
+    (Top of the PID, percorsi di affiancamento su cybersecurity e business intelligence, contributi per la
+    digitalizzazione) stanno nella sezione PID, fuori da "Contributi e patrocini". Si leggono notizie e pagine,
+    non i file allegati.' 
+
 - id: cciaa_vicenza_bandi
   nome: CCIAA Vicenza - Bandi contributivi Camera Vicenza
   ente: Camera di Commercio di Vicenza
@@ -508,6 +538,24 @@
     '
   pagina_ufficiale:                    # notizie: si segue il link al bando sul sito dell'ente
     segui_link: {testi: [bando, modulistica, avviso, "maggiori informazioni", "sito dell'ente"]}
+
+- id: unioncamere_veneto_bandi_contributi_rss
+  nome: Unioncamere del Veneto - sottocategoria Bandi di contributi (feed WordPress)
+  ente: Unioncamere del Veneto
+  tipo: camera
+  territorio: VEN
+  url: https://www.unioncamereveneto.it/category/bandi/bandi-di-contributi/
+  modalita: rss
+  feed_url: https://www.unioncamereveneto.it/category/bandi/bandi-di-contributi/feed/
+  piattaforma: wordpress
+  frequenza: settimanale
+  stato: attiva
+  verificato_il: '2026-09-28'
+  note: 'Aggiunta il 28/09 (valutazione dell''efficacia): gli articoli messi solo nella sottocategoria "Bandi di
+    contributi" non compaiono nel feed della categoria Bandi (imprenditoria femminile 2026, WAVEMAKER).'
+  pagina_ufficiale:
+    segui_link:
+      testi: [bando, modulistica, avviso, maggiori informazioni, "sito dell'ente"]
 
 - id: cciaa_pordenone_udine_contributi
   nome: CCIAA Pordenone-Udine - Contributi e rendicontazione
@@ -702,6 +750,24 @@
 
     '
 
+
+- id: cciaa_emilia_internazionalizzazione_api
+  nome: CCIAA dell'Emilia - Contributi per l'internazionalizzazione delle imprese (API Plone)
+  ente: Camera di Commercio dell'Emilia
+  tipo: camera
+  territorio: EMR
+  url: https://www.emilia.camcom.it/promuovere-limpresa-e-il-territorio/promuovere-limpresa-allestero/contributi-per-linternazionalizzazione-delle-imprese
+  modalita: api
+  feed_url: https://www.emilia.camcom.it/++api++/@search?path.query=/promuovere-limpresa-e-il-territorio/promuovere-limpresa-allestero/contributi-per-linternazionalizzazione-delle-imprese&path.depth=1&sort_on=effective&sort_order=descending&b_size=30&metadata_fields=effective&metadata_fields=scadenza_bando
+  piattaforma: plone
+  frequenza: settimanale
+  stato: attiva
+  verificato_il: '2026-09-27'
+  note: 'Aggiunta il 27/09 (valutazione dell''efficacia): il Bando Digital Export 2026-2027 (domande dal 28/09 al
+    05/10/2026) sta in questa cartella come pagina (Document) e sfuggiva alla voce dei contributi, che legge solo
+    i Bando con Subject CONTRIBUTICAMERALI. Al 27/09 un solo elemento.'
+  pagina_ufficiale:
+    documenti: plone_api
 - id: cciaa_ferrara_ravenna_bandi_rss
   nome: CCIAA Ferrara e Ravenna - Bandi e contributi (feed RSS)
   ente: Camera di Commercio di Ferrara e Ravenna
@@ -1292,6 +1358,21 @@
     (avvisi misti). Il feed /it/rss.xml è fermo a maggio 2024. www.cs.camcom.gov.it reindirizza qui.
 
     '
+
+- id: cciaa_cosenza_news
+  nome: Camera di Commercio di Cosenza - News (iniziative di Promocosenza)
+  ente: Camera di Commercio di Cosenza
+  tipo: camera
+  territorio: CAL
+  url: https://www.cs.camcom.it/it/news
+  modalita: html
+  piattaforma: drupal_camcom
+  frequenza: settimanale
+  stato: attiva
+  verificato_il: '2026-09-27'
+  note: 'Aggiunta il 27/09 (valutazione dell''efficacia): le iniziative dell''azienda speciale Promocosenza (fiere con
+    stand pagato dalla Camera, come la Goodlife-Biolife di Bolzano del novembre 2026) escono solo nelle News, non
+    nella pagina Bandi. Circa 7 notizie per pagina.' 
 
 - id: cciaa_czkrvv_bandi
   nome: Camera di Commercio di Catanzaro Crotone Vibo Valentia - Bandi promozione (RSS)

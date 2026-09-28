@@ -24,9 +24,13 @@ _ID_VALIDO = re.compile(r"^[a-z0-9_]+$")
 _CAMPI_NOTI = {
     "id", "nome", "ente", "tipo", "territorio", "url", "modalita", "feed_url",
     "piattaforma", "frequenza", "stato", "verificato_il", "note", "ignora_robots", "richiesta", "pagina_ufficiale",
+    "scorta",
 }
 # Regole per trovare la pagina ufficiale del bando a partire dagli annunci della fonte (app/schede/pagina_ufficiale.py).
 _REGOLE_PAGINA = {"campo", "escludi", "cerca", "segui_link", "documenti", "sostituisci"}
+# Lettura completa della fonte ("scorta": tutti i bandi ancora aperti, non solo le novita'), app/raccolta/scorta.py.
+_CAMPI_SCORTA = {"url", "parametro", "inizio", "passo", "pagine", "corpo_json", "scadenza", "frequenza", "modalita",
+                 "selettore", "senza_scadenza_mesi", "tutte_le_pagine"}
 
 
 @dataclass
@@ -47,7 +51,14 @@ class Fonte:
     ignora_robots: bool = False  # solo per decisione esplicita di Matteo, fonte per fonte
     richiesta: dict = field(default_factory=dict)  # metodo, intestazioni, corpo_json, corpo_form, url_modello; selettore per html/browser; ipv6; elenco per api
     pagina_ufficiale: dict = field(default_factory=dict)  # campo, escludi, cerca, segui_link, documenti (fonti/README.md)
+    scorta: dict = field(default_factory=dict)  # lettura completa: url, parametro, pagine, scadenza, modalita... (app/raccolta/scorta.py)
     file: str = ""  # nome del file YAML di provenienza
+
+    @property
+    def documenti_plone(self) -> bool:
+        """Pagine e documenti del sito si leggono dall'API Plone/Volto (++api++): regola `documenti: plone_api` o,
+        dal 27/09, qualunque fonte con piattaforma plone (Verona, La Spezia, Parma: l'HTML delle pagine e' vuoto)."""
+        return self.pagina_ufficiale.get("documenti") == "plone_api" or self.piattaforma == "plone"
 
     @property
     def indirizzo_da_controllare(self) -> str:
@@ -111,6 +122,8 @@ def _controlla_voce(voce: dict, file: str, posizione: int) -> tuple[Fonte | None
 
     pagina_ufficiale = voce.get("pagina_ufficiale") or {}
     errori.extend(_controlla_pagina_ufficiale(pagina_ufficiale, dove))
+    scorta = voce.get("scorta") or {}
+    errori.extend(_controlla_scorta(scorta, dove))
 
     if errori:
         return None, errori
@@ -132,6 +145,7 @@ def _controlla_voce(voce: dict, file: str, posizione: int) -> tuple[Fonte | None
             ignora_robots=ignora_robots,
             richiesta=richiesta,
             pagina_ufficiale=pagina_ufficiale,
+            scorta=scorta,
             file=file,
         ),
         [],
@@ -165,6 +179,32 @@ def _controlla_pagina_ufficiale(regole: object, dove: str) -> list[str]:
         errori.append(f"{dove}: pagina_ufficiale.segui_link vuole un elenco testi (e, se serve, stesso_sito: true)")
     if regole.get("documenti") not in (None, "plone_api"):
         errori.append(f"{dove}: pagina_ufficiale.documenti ammette solo plone_api")
+    return errori
+
+
+def _controlla_scorta(regole: object, dove: str) -> list[str]:
+    if not isinstance(regole, dict):
+        return [f"{dove}: scorta deve essere un blocco di campi"]
+    errori = []
+    if set(regole) - _CAMPI_SCORTA:
+        errori.append(f"{dove}: scorta ammette solo {', '.join(sorted(_CAMPI_SCORTA))}")
+    if "url" in regole and not str(regole["url"]).startswith(("http://", "https://")):
+        errori.append(f"{dove}: scorta.url deve iniziare con http:// o https://")
+    for chiave in ("inizio", "passo", "pagine", "senza_scadenza_mesi"):
+        if chiave in regole and not (isinstance(regole[chiave], int) and not isinstance(regole[chiave], bool)
+                                     and regole[chiave] >= (0 if chiave == "inizio" else 1)):
+            errori.append(f"{dove}: scorta.{chiave} e' un numero intero")
+    if isinstance(regole.get("pagine"), int) and regole["pagine"] > 1 and "parametro" not in regole \
+            and "{pagina}" not in str(regole.get("url", "")) + str(regole.get("corpo_json", "")):
+        errori.append(f"{dove}: scorta su piu' pagine vuole parametro oppure {{pagina}} in url o corpo_json")
+    if "frequenza" in regole and regole["frequenza"] not in FREQUENZE:
+        errori.append(f"{dove}: scorta.frequenza '{regole['frequenza']}' non ammessa")
+    if "tutte_le_pagine" in regole and not isinstance(regole["tutte_le_pagine"], bool):
+        errori.append(f"{dove}: scorta.tutte_le_pagine e' true o false")
+    if "modalita" in regole and regole["modalita"] not in MODALITA:
+        errori.append(f"{dove}: scorta.modalita '{regole['modalita']}' non ammessa")
+    if "corpo_json" in regole and not isinstance(regole["corpo_json"], dict):
+        errori.append(f"{dove}: scorta.corpo_json e' un blocco di campi")
     return errori
 
 

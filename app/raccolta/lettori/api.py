@@ -164,12 +164,13 @@ def _stringhe(dati: Any):
             yield from _stringhe(x)
 
 
-def html_in_json(dati: Any, base_url: str, url_modello: str | None = None) -> list[Annuncio]:
-    """Risposte JSON che contengono frammenti HTML (DataTables, filtri AJAX): si estraggono i link dai frammenti."""
+def html_in_json(dati: Any, base_url: str, url_modello: str | None = None, selettore: str | None = None) -> list[Annuncio]:
+    """Risposte JSON che contengono frammenti HTML (DataTables, filtri AJAX): si estraggono i link dai frammenti,
+    solo nelle parti indicate da richiesta.selettore se c'e' (Finlombarda: titoli brevi come "PLAIN VANILLA")."""
     from app.raccolta.lettori.html import estrai_link
 
     frammenti = [s for s in _stringhe(dati) if "<a " in s or "href=" in s]
-    return estrai_link("<html><body><main>" + "\n".join(frammenti) + "</main></body></html>", base_url)
+    return estrai_link("<html><body><main>" + "\n".join(frammenti) + "</main></body></html>", base_url, selettore)
 
 
 # ---- Famiglie con struttura nota -------------------------------------------------------------------
@@ -221,31 +222,68 @@ def ckan(dati: dict, base_url: str, url_modello: str | None = None) -> list[Annu
     return annunci
 
 
+_SEDIA_TOPIC = "https://ec.europa.eu/info/funding-tenders/opportunities/portal/screen/opportunities/topic-details/"
+
+
+def _sedia_primo(meta: dict, chiave: str) -> str | None:
+    return _come_testo(meta.get(chiave))
+
+
+def sedia_annuncio(r: dict) -> Annuncio | None:
+    """Un risultato del Portale UE. I topic (tipo 1 e 2) hanno la pagina topic-details; le sovvenzioni a cascata
+    (tipo 8, "competitive calls" di progetti gia' finanziati, spesso per PMI) hanno titolo e pagina propri: con il
+    titolo e il codice del topic madre 25 call diverse finivano in 10 annunci."""
+    meta = r.get("metadata", {})
+    tipo = _sedia_primo(meta, "type")
+    ident = _sedia_primo(meta, "identifier") or r.get("reference")
+    # Un topic a piu' scadenze (EIC Accelerator, bandi a due stadi) ne elenca diverse: conta l'ultima.
+    scadenza = max((str(d) for d in meta.get("deadlineDate") or [] if d), default=None)
+    if tipo == "8":
+        titolo = _sedia_primo(meta, "caName") or _sedia_primo(meta, "callTitle")
+        url = _sedia_primo(meta, "url") or r.get("url")
+        progetto = _sedia_primo(meta, "projectName") or _sedia_primo(meta, "projectAcronym")
+        descrizione = pulisci_html(_sedia_primo(meta, "description"), 600)
+        riassunto = " - ".join(x for x in (f"Sovvenzione a cascata del progetto {progetto}" if progetto else None,
+                                           descrizione) if x)
+    else:
+        titolo = _sedia_primo(meta, "title") or _come_testo(r.get("title"))
+        url = _SEDIA_TOPIC + ident.lower() if ident else None
+        azione = _sedia_primo(meta, "typesOfAction")
+        riassunto = " - ".join(x for x in (_sedia_primo(meta, "callTitle"), _sedia_primo(meta, "destinationDescription"),
+                                           azione) if x)
+    if not (titolo and url):
+        return None
+    if scadenza:
+        riassunto = f"{riassunto} (scadenza {scadenza[:10]})" if riassunto else f"Scadenza {scadenza[:10]}"
+    return Annuncio(
+        url=url, titolo=titolo.strip(), riassunto=riassunto or None,
+        pubblicato_il=leggi_data(_sedia_primo(meta, "startDate")),
+        dati={"identifier": ident, "tipo": tipo, "status": meta.get("status"), "deadlineDate": meta.get("deadlineDate"),
+              "scadenza": scadenza[:10] if scadenza else None, "callIdentifier": meta.get("callIdentifier"),
+              "callTitle": _sedia_primo(meta, "callTitle")},
+    )
+
+
 def sedia(fonte: Fonte, client: httpx.Client) -> Lettura:
-    """Portale UE Funding & Tenders: POST multipart con la parte 'query' in JSON (GET non e' ammesso)."""
+    """Portale UE Funding & Tenders: POST multipart con la parte 'query' in JSON (GET non e' ammesso).
+    Topic e call aperti o in arrivo; le pagine si scelgono con pageNumber nell'indirizzo (lettura della scorta)."""
     url = fonte.feed_url or fonte.url
     query = {"bool": {"must": [{"terms": {"type": ["1", "2", "8"]}}, {"terms": {"status": ["31094501", "31094502"]}}]}}
     risposta = client.post(
         url,
         files={"query": ("blob", json.dumps(query).encode(), "application/json"),
-               "languages": ("blob", b'["it","en"]', "application/json")},
+               "languages": ("blob", b'["it","en"]', "application/json"),
+               # Ordine fisso (i piu' recenti prima): serve alle novita' e a scorrere le pagine della scorta senza salti.
+               "sort": ("blob", b'{"field":"startDate","order":"DESC"}', "application/json")},
     )
     risposta.raise_for_status()
     dati = risposta.json()
-    annunci = []
+    annunci, visti = [], set()
     for r in dati.get("results", []):
-        meta = r.get("metadata", {})
-        titolo = _come_testo(meta.get("title")) or _come_testo(r.get("title"))
-        ident = _come_testo(meta.get("identifier")) or r.get("reference")
-        if not (titolo and ident):
-            continue
-        annunci.append(Annuncio(
-            url=f"https://ec.europa.eu/info/funding-tenders/opportunities/portal/screen/opportunities/topic-details/{ident.lower()}",
-            titolo=titolo, riassunto=_come_testo(meta.get("callTitle")),
-            pubblicato_il=leggi_data(_come_testo(meta.get("startDate"))),
-            dati={"identifier": ident, "status": meta.get("status"), "deadlineDate": meta.get("deadlineDate"),
-                  "callIdentifier": meta.get("callIdentifier")},
-        ))
+        a = sedia_annuncio(r)
+        if a and a.url not in visti:   # lo stesso topic torna una volta per lingua
+            visti.add(a.url)
+            annunci.append(a)
     return Lettura(annunci=annunci, codice_http=risposta.status_code, byte=len(risposta.content),
                    impronta_pagina=hashlib.sha256(risposta.content).hexdigest()[:32])
 
@@ -319,6 +357,9 @@ def leggi(fonte: Fonte, client: httpx.Client) -> Lettura:
             record = _cerca(dati, fonte.richiesta["elenco"]) or []
             annunci = [a for r in record if isinstance(r, dict) and (a := da_record(r, base, url_modello))]
         else:
-            annunci = funzione(dati, base, url_modello) if funzione else generico(dati, base, url_modello)
+            if funzione is html_in_json:
+                annunci = html_in_json(dati, base, url_modello, fonte.richiesta.get("selettore"))
+            else:
+                annunci = funzione(dati, base, url_modello) if funzione else generico(dati, base, url_modello)
     return Lettura(annunci=annunci, codice_http=risposta.status_code, byte=len(risposta.content),
                    impronta_pagina=hashlib.sha256(risposta.content).hexdigest()[:32])

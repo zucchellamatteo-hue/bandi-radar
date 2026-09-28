@@ -1,6 +1,6 @@
 # Bandi Radar: manuale del server
 
-*Aggiornato al 26/09/2026, Fase 3 (bandi, pagine ufficiali, allegati e prime schede in produzione). Per i dettagli passo-passo vedi `deploy/README.md`.*
+*Aggiornato al 28/09/2026, Fase 3 (bandi, pagine ufficiali, allegati e prime schede in produzione; lettura della scorta e segnali di stato). Per i dettagli passo-passo vedi `deploy/README.md`.*
 
 ## 1. Cosa c'è sul server
 
@@ -77,6 +77,12 @@ cd /srv/bandi-radar && sudo -u deploy docker compose run --rm raccolta python -m
 ```
 Per controllare subito una fonte: lo stesso comando con `--fonte ID_FONTE`.
 
+**La scorta** (dal 28/09): le fonti con il blocco `scorta` nel registro vengono lette per intero (tutte le pagine, tutti i bandi ancora aperti) la prima volta e poi una volta al mese o alla settimana, prima dei controlli normali; i bandi trovati cosi' non contano come novita'. Nel log compaiono con la parola `scorta`. A mano:
+```
+cd /srv/bandi-radar && sudo -u deploy docker compose run --rm raccolta python -m app.raccolta.esegui --prova ID_FONTE --scorta   # solo guardare
+cd /srv/bandi-radar && sudo -u deploy docker compose run --rm raccolta python -m app.raccolta.esegui --scorta ID_FONTE           # leggere e salvare
+```
+
 La raccolta è collegata anche a una seconda rete Docker, `ipv6`: alcuni siti (Napoli, Siracusa) rifiutano l'indirizzo IPv4 del server ma accettano l'IPv6. Le fonti che ne hanno bisogno hanno `richiesta: {ipv6: true}` nel registro. Database e app restano sulla rete di sempre.
 
 ### Smistamento e allegati (Fase 3)
@@ -96,6 +102,8 @@ cd /srv/bandi-radar && sudo -u deploy docker compose run --rm raccolta python -m
 cd /srv/bandi-radar && sudo -u deploy docker compose run --rm raccolta python -m app.schede.allegati --bando 45      # un bando preciso
 cd /srv/bandi-radar && sudo -u deploy docker compose run --rm raccolta python -m app.schede.allegati --annuncio 123  # la pagina di un annuncio, come prima
 ```
+**Segnali di stato gratuiti** (dal 28/09): prima di chiamare l'IA per il controllo preliminare, il sistema guarda cosa sa gia' del bando (scadenza nei dati della fonte, "Bando Chiuso" o "Stato: Valutazione" in testa alla pagina, "In vigore dal ... al ...", data barrata con la nuova accanto, indirizzo tra i "bandi chiusi"): se tutto dice "chiuso" il bando si ferma senza spesa, con `deciso_da: segnali` nel preliminare. Per vedere i segnali di un bando: `python -m app.schede.segnali --bando 45`; su tutti: `--prova`.
+
 **Stato dei bandi**: aperto, chiuso o in arrivo lo calcola il sistema dalle date della scheda, da solo, una volta al giorno (nel servizio `raccolta`). Ogni cambio resta nello storico del bando. A mano: `cd /srv/bandi-radar && sudo -u deploy docker compose run --rm raccolta python -m app.schede.stato`.
 
 ### Dagli annunci ai bandi (deduplica e pagina ufficiale)
@@ -107,6 +115,7 @@ cd /srv/bandi-radar && sudo -u deploy docker compose run --rm raccolta python -m
 cd /srv/bandi-radar && sudo -u deploy docker compose run --rm raccolta python -m app.schede.pagina_ufficiale           # pagina ufficiale, 100 bandi per giro
 cd /srv/bandi-radar && sudo -u deploy docker compose run --rm raccolta python -m app.schede.pagina_ufficiale --rifai-non-trovati
 ```
+Un errore di rete (sito che non risponde) non segna piu' il bando come "non trovato": si riprova il giorno dopo. I siti Plone/Volto (`piattaforma: plone`) si leggono dall'API del sito.
 Poi gli allegati (sotto). Dentro `psql`, per vedere a che punto si è:
 ```
 SELECT pagina_stato, (allegati_cercati_il IS NOT NULL) AS allegati, (dati IS NOT NULL) AS scheda, count(*) FROM bandi GROUP BY 1, 2, 3;

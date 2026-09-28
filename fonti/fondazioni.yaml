@@ -6,7 +6,7 @@
   ente: Fondazione Cariplo
   tipo: fondazione
   territorio: LOM
-  url: https://www.fondazionecariplo.it/it/bandi/bandi.html
+  url: https://www.fondazionecariplo.it/contributi/bandi/
   modalita: browser
   feed_url: null
   piattaforma: wordpress
@@ -21,6 +21,9 @@
     it! per imprese sociali) non riguarda le imprese: se dal server la pagina si apre, valutare l'esclusione.
     Dal VPS il 24/09: Cloudflare risponde 403 'Just a moment' a una richiesta semplice (anche in IPv6); col
     browser la pagina si apre e si leggono 4 bandi.
+    28/09 (valutazione dell'efficacia): l'indirizzo era del vecchio sito; il catalogo attuale e' /contributi/bandi/
+    (col browser: 4 bandi, tutti per enti non profit). Le pagine dei bandi rispondono 403 alle richieste semplici,
+    i PDF in /wp-content/uploads/ si scaricano.
 
 - id: compagnia_san_paolo_contributi
   nome: Compagnia di San Paolo - Bandi e contributi
