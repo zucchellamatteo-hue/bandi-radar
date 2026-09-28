@@ -29,3 +29,4 @@ In una sessione di Claude Code su questo repository, descrivere la domanda e chi
 | 2026-09-25 | `2026-09-25_prova_ia.md` | Prima di collegare l'IA: Haiku (smistamento) e Sonnet (schede) su dati reali, rivisti da Opus. La struttura regge? |
 | 2026-09-26 | `2026-09-26_schede_in_produzione.md` | Catena senza IA accesa in produzione (deduplica, pagina ufficiale, allegati) e schede dell'arretrato compilate senza API: quanti bandi, quante schede, cosa non va |
 | 2026-09-27 | `2026-09-27_valutazione_efficacia.md` | Il sistema e' efficace? 44 fonti stratificate per tipo e tecnologia: esploratore Opus sul sito, Haiku/Sonnet contro Opus, controllore e verifica di riserva. Perimetro, smistamento, preliminare, schede, costi |
+| 2026-09-28 | `2026-09-28_perimetro_scorta.md` | Leggendo per intero le fonti (scorta) e aggiungendo le sezioni mancanti, quanti bandi in più entrano? Primo giro in produzione e incrocio con i 193 bandi aperti persi il 27/09 |
