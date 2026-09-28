@@ -126,7 +126,7 @@ SELECT stato, count(*) FROM bandi WHERE dati IS NOT NULL GROUP BY 1;     -- sche
 
 ### L'IA (spenta finché non c'è la chiave)
 
-Smistamento dei "da rivedere" con Haiku, controllo preliminare e scheda con Sonnet: `app/schede/ia.py`. **Finché nel `.env` manca `ANTHROPIC_API_KEY` non chiama nulla** e lo dice. Quando avrai creato la chiave nella Console Anthropic (con il tetto di spesa impostato lì), aggiungi al `.env`:
+Smistamento dei "da rivedere", controllo preliminare e scheda con **Claude Opus 5.5** (decisione del 28/09, dopo la valutazione del 27/09; 4 $ per milione di token in ingresso e 20 in uscita, la meta' con la Batch API): `app/schede/ia.py`. Un bando che l'IA dice chiuso ma che ha una scadenza futura nei dati della fonte viene riletto una seconda volta con piu' ragionamento. **Finché nel `.env` manca `ANTHROPIC_API_KEY` non chiama nulla** e lo dice. Quando avrai creato la chiave nella Console Anthropic (con il tetto di spesa impostato lì), aggiungi al `.env`:
 ```
 ANTHROPIC_API_KEY=...        # la chiave della Console, mai quella dell'abbonamento
 IA_TETTO_MESE_USD=30         # tetto anche nel programma: oltre, si ferma da solo

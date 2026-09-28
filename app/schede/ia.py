@@ -1,4 +1,8 @@
-"""L'IA nelle schede: smistamento con Haiku, controllo preliminare con Haiku, scheda con Sonnet. SPENTO senza chiave.
+"""L'IA nelle schede: smistamento, controllo preliminare e scheda con Claude Opus 5.5. SPENTO senza chiave.
+
+Dal 28/09/2026 (decisione di Matteo dopo la valutazione del 27/09, docs/ricerche/2026-09-27_valutazione_efficacia.md)
+tutti e tre i passi usano Opus 5.5: Haiku scartava aiuti veri, Sonnet lasciava errori gravi in 9 schede su 21.
+Con Opus 5.5 il ragionamento e' sempre acceso (non si spegne: 400) e si regola con `effort`, di base "medium".
 
 Finche' nell'ambiente manca ANTHROPIC_API_KEY (la chiave API con il tetto di spesa, mai quella dell'abbonamento)
 nessuna funzione di questo modulo chiama l'API: i comandi lo dicono e si fermano. Le protezioni chieste dalla
@@ -9,8 +13,10 @@ prova del 25/09/2026 (docs/ricerche/2026-09-25_prova_ia.md) sono gia' qui:
   - risposte in JSON vincolato da uno schema (output_config.format), poi verificate anche dal programma
     (valori ammessi, date, importi, fonti; per le schede verifica_scheda);
   - Batch API (meta' prezzo, risposta entro 24 ore) per tutto quello che non e' urgente, con --batch;
-  - controllo preliminare con Haiku prima di Sonnet: e' per imprese? e' l'edizione in corso? e' aperto?
-    c'e' il testo del bando? Solo se passa si chiede la scheda;
+  - controllo preliminare prima della scheda: e' per imprese? e' l'edizione in corso? e' aperto? c'e' il testo
+    del bando? Solo se passa si chiede la scheda. Prima, gratis, i segnali di stato (app/schede/segnali.py): un
+    bando con soli segnali di chiusura non va all'IA; un bando che l'IA dice chiuso ma che ha una scadenza futura
+    nei dati della fonte si rilegge una seconda volta, con piu' ragionamento;
   - un tetto di spesa mensile anche nel programma (IA_TETTO_MESE_USD, di base 30 $), oltre a quello della Console;
   - le decisioni di Matteo non si sovrascrivono mai.
 
@@ -37,14 +43,17 @@ from pathlib import Path
 from app.schede import campi
 
 CARTELLA = Path(__file__).resolve().parent
-MODELLO_SMISTAMENTO = "claude-haiku-4-5"
-MODELLO_PRELIMINARE = "claude-haiku-4-5"
-MODELLO_SCHEDA = "claude-sonnet-5"
+MODELLO_SMISTAMENTO = "claude-opus-5-5"
+MODELLO_PRELIMINARE = "claude-opus-5-5"
+MODELLO_SCHEDA = "claude-opus-5-5"
+# Quanto ragiona il modello (output_config.effort). Opus 5.5 ha "medium" di base: lo si scrive sempre, esplicito.
+EFFORT = {"smistamento": "medium", "preliminare": "medium", "seconda_lettura": "high", "scheda": "medium"}
 DIMENSIONE_LOTTO = 20            # la prova del 25/09 ha perso 2 annunci su lotti da 45
-MASSIMO_TESTO_SCHEDA = 150_000   # caratteri di documenti per Sonnet (circa 40.000 token)
+MASSIMO_TESTO_SCHEDA = 150_000   # caratteri di documenti per la scheda (circa 40.000 token)
 MASSIMO_TESTO_PRELIMINARE = 18_000   # circa 3.000 parole
-# Prezzi in dollari per milione di token (ingresso, uscita); con la Batch API la meta'.
-PREZZI = {"claude-haiku-4-5": (1.0, 5.0), "claude-sonnet-5": (2.0, 10.0)}
+# Prezzi in dollari per milione di token (ingresso, uscita, lettura dalla cache), verificati il 28/09/2026;
+# con la Batch API la meta'. La scrittura in cache costa 1,25 volte l'ingresso.
+PREZZI = {"claude-opus-5-5": (4.0, 20.0, 0.20), "claude-haiku-4-5": (1.0, 5.0, 0.10), "claude-sonnet-5": (2.0, 10.0, 0.20)}
 TETTO_MESE_PREDEFINITO = 30.0
 
 
@@ -225,12 +234,17 @@ def controlla_smistamento(inviati: list[int], risposta: dict | None) -> Smistame
     return esito
 
 
+def max_token_smistamento(n: int) -> int:
+    """Risposta (circa 120 token per annuncio) piu' spazio per il ragionamento, sempre acceso su Opus 5.5."""
+    return 6000 + 150 * n
+
+
 def lotti(elementi: list, dimensione: int = DIMENSIONE_LOTTO) -> list[list]:
     return [elementi[i:i + dimensione] for i in range(0, len(elementi), dimensione)]
 
 
 def passa_preliminare(p: dict) -> tuple[bool, str]:
-    """Si chiede la scheda a Sonnet solo se il controllo preliminare non ha trovato un motivo per fermarsi."""
+    """Si chiede la scheda al modello solo se il controllo preliminare non ha trovato un motivo per fermarsi."""
     if p.get("per_imprese") == "no":
         return False, "non e' per imprese"
     if p.get("edizione_in_corso") == "no":
@@ -305,7 +319,7 @@ def _verifica_dettagli(s: dict) -> list[str]:
 
 
 def verifica_scheda(s: dict, documenti: list[dict] | None = None) -> list[str]:
-    """Controlli automatici su una scheda di Sonnet. Ogni problema e' una frase; nessun problema = lista vuota.
+    """Controlli automatici su una scheda dell'IA. Ogni problema e' una frase; nessun problema = lista vuota.
     Una scheda con problemi si salva lo stesso, ma va in coda a Matteo (dati.problemi)."""
     problemi: list[str] = []
     for nome, ammessi in campi.VALORI_AMMESSI.items():
@@ -358,20 +372,27 @@ def verifica_scheda(s: dict, documenti: list[dict] | None = None) -> list[str]:
 
 # --- chiamate ---------------------------------------------------------------------------------------
 
-def costo(modello: str, token_in: int, token_out: int, batch: bool = False) -> float:
-    ingresso, uscita = PREZZI.get(modello, (0.0, 0.0))
-    c = (token_in * ingresso + token_out * uscita) / 1_000_000
+def costo(modello: str, token_in: int, token_out: int, batch: bool = False, cache_lettura: int = 0,
+          cache_scrittura: int = 0) -> float:
+    """Dollari di una chiamata. token_in comprende i token letti e scritti in cache, che hanno prezzi propri."""
+    ingresso, uscita, lettura = PREZZI.get(modello, (0.0, 0.0, 0.0))
+    normali = max(token_in - cache_lettura - cache_scrittura, 0)
+    c = (normali * ingresso + cache_scrittura * ingresso * 1.25 + cache_lettura * lettura + token_out * uscita) / 1_000_000
     return c / 2 if batch else c
 
 
-def parametri(modello: str, istruzioni: str, messaggio: str, schema: dict, max_tokens: int) -> dict:
-    """I parametri di una richiesta, uguali per la chiamata diretta e per la Batch API. Istruzioni in cache."""
+def parametri(modello: str, istruzioni: str, messaggio: str, schema: dict, max_tokens: int,
+              effort: str = "medium") -> dict:
+    """I parametri di una richiesta, uguali per la chiamata diretta e per la Batch API. Istruzioni in cache.
+    Opus 5.5: niente `thinking` (il ragionamento e' sempre acceso, si regola con effort), niente tool_choice
+    forzato; la risposta e' JSON vincolato dallo schema (output_config.format). max_tokens comprende anche il
+    ragionamento: va lasciato largo."""
     return {
         "model": modello,
         "max_tokens": max_tokens,
         "system": [{"type": "text", "text": istruzioni, "cache_control": {"type": "ephemeral"}}],
         "messages": [{"role": "user", "content": messaggio}],
-        "output_config": {"format": {"type": "json_schema", "schema": schema}},
+        "output_config": {"format": {"type": "json_schema", "schema": schema}, "effort": effort},
     }
 
 
@@ -382,30 +403,42 @@ class Risposta:
     token_in: int = 0
     token_out: int = 0
     messaggio: str = ""
+    cache_lettura: int = 0
+    cache_scrittura: int = 0
+
+    def costo(self, modello: str, batch: bool = False) -> float:
+        return costo(modello, self.token_in, self.token_out, batch, self.cache_lettura, self.cache_scrittura)
 
 
 def leggi_messaggio(msg) -> Risposta:
     """Da un messaggio dell'API (diretto o da Batch) al JSON, con i casi di errore."""
     uso = getattr(msg, "usage", None)
-    token_in = (getattr(uso, "input_tokens", 0) or 0) + (getattr(uso, "cache_read_input_tokens", 0) or 0) \
-        + (getattr(uso, "cache_creation_input_tokens", 0) or 0)
-    token_out = getattr(uso, "output_tokens", 0) or 0
+    lettura = getattr(uso, "cache_read_input_tokens", 0) or 0
+    scrittura = getattr(uso, "cache_creation_input_tokens", 0) or 0
+    token_in = (getattr(uso, "input_tokens", 0) or 0) + lettura + scrittura
+    token_out = getattr(uso, "output_tokens", 0) or 0   # comprende il ragionamento
+    cache = {"cache_lettura": lettura, "cache_scrittura": scrittura}
     if msg.stop_reason == "refusal":
-        return Risposta(None, "rifiutata", token_in, token_out, "il modello ha rifiutato la richiesta")
+        dettagli = getattr(msg, "stop_details", None)
+        categoria = getattr(dettagli, "category", None) if dettagli else None
+        return Risposta(None, "rifiutata", token_in, token_out,
+                        "il modello ha rifiutato la richiesta" + (f" ({categoria})" if categoria else ""), **cache)
     if msg.stop_reason == "max_tokens":
-        return Risposta(None, "incompleta", token_in, token_out, "risposta tagliata (max_tokens)")
+        return Risposta(None, "incompleta", token_in, token_out, "risposta tagliata (max_tokens)", **cache)
     testo = next((b.text for b in msg.content if getattr(b, "type", "") == "text"), "")
     try:
-        return Risposta(json.loads(testo), "ok", token_in, token_out)
+        return Risposta(json.loads(testo), "ok", token_in, token_out, **cache)
     except json.JSONDecodeError as exc:
-        return Risposta(None, "errore", token_in, token_out, f"JSON non valido: {exc}")
+        return Risposta(None, "errore", token_in, token_out, f"JSON non valido: {exc}", **cache)
 
 
 def chiama(client, p: dict) -> Risposta:
     import anthropic
 
     try:
-        return leggi_messaggio(client.messages.create(**p))
+        # In streaming: con il ragionamento e schede lunghe una richiesta semplice rischia il timeout HTTP.
+        with client.messages.stream(**p) as flusso:
+            return leggi_messaggio(flusso.get_final_message())
     except anthropic.APIStatusError as exc:
         return Risposta(None, "errore", messaggio=f"API {exc.status_code}: {str(exc)[:200]}")
     except anthropic.APIConnectionError as exc:
@@ -427,7 +460,7 @@ def smista_lotto(client, annunci: list[dict], oggi: date, registra=None) -> Smis
     for tentativo in (1, 2):
         istruzioni, messaggio = messaggio_smistamento(da_mandare, oggi)
         r = chiama(client, parametri(MODELLO_SMISTAMENTO, istruzioni, messaggio, SCHEMA_SMISTAMENTO,
-                                     max_tokens=200 + 120 * len(da_mandare)))
+                                     max_tokens=max_token_smistamento(len(da_mandare)), effort=EFFORT["smistamento"]))
         if registra:
             registra("smistamento", MODELLO_SMISTAMENTO, ",".join(str(a["id"]) for a in da_mandare), r)
         controllo = controlla_smistamento([a["id"] for a in da_mandare], r.dati)
@@ -464,7 +497,7 @@ def registratore(conn, batch: bool = False, batch_id: str | None = None):
                 """INSERT INTO chiamate_ia (scopo, modello, batch, batch_id, riferimento, token_in, token_out, costo_usd, esito, messaggio)
                    VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)""",
                 (scopo, modello, batch, batch_id, riferimento[:2000], r.token_in, r.token_out,
-                 costo(modello, r.token_in, r.token_out, batch), r.esito, r.messaggio[:500]),
+                 r.costo(modello, batch), r.esito, r.messaggio[:500]),
             )
         conn.commit()
     return registra
@@ -548,7 +581,7 @@ def salva_scheda(conn, bando_id: int, scheda: dict, problemi: list[str], costo_u
             "avvertenze": scheda.get("avvertenze") or []}
     assegnazioni = ", ".join(f"{c} = %s" for c in valori)
     with conn.cursor() as cur:
-        cur.execute("SELECT set_config('bandi_radar.causa', 'scheda compilata da Sonnet', true)")
+        cur.execute("SELECT set_config('bandi_radar.causa', %s, true)", (f"scheda compilata da {MODELLO_SCHEDA}",))
         cur.execute(f"UPDATE bandi SET {assegnazioni}, dati = %s WHERE id = %s",
                     (*valori.values(), json.dumps(dati), bando_id))
     conn.commit()
@@ -567,7 +600,7 @@ def cmd_smista(conn, limite: int, batch: bool) -> int:
     client = nuovo_client()
     controlla_tetto(conn)
     annunci = annunci_da_smistare(conn, limite)
-    print(f"Annunci da smistare con Haiku: {len(annunci)} ({len(lotti(annunci))} lotti)")
+    print(f"Annunci da smistare con l'IA ({MODELLO_SMISTAMENTO}): {len(annunci)} ({len(lotti(annunci))} lotti)")
     oggi = date.today()
     aggiungi_inizio_pagina(annunci)
     if batch:
@@ -576,7 +609,7 @@ def cmd_smista(conn, limite: int, batch: bool) -> int:
             istruzioni, messaggio = messaggio_smistamento(lotto, oggi)
             richieste.append({"custom_id": f"smista-{n}",
                               "params": parametri(MODELLO_SMISTAMENTO, istruzioni, messaggio, SCHEMA_SMISTAMENTO,
-                                                  200 + 120 * len(lotto))})
+                                                  max_token_smistamento(len(lotto)), EFFORT["smistamento"])})
             gruppi.append(f"smista-{n}:" + ",".join(str(a["id"]) for a in lotto))
         lotto_batch = client.messages.batches.create(requests=richieste)
         registra = registratore(conn, True, lotto_batch.id)
@@ -627,16 +660,22 @@ def cmd_raccogli(conn) -> int:
     return 0
 
 
-def preliminare_dai_segnali(conn, bando_id: int, oggi: date) -> dict | None:
+def preliminare_dai_segnali(s) -> dict | None:
     """Controllo preliminare senza IA: se i segnali gratuiti (app/schede/segnali.py) dicono solo "chiuso" (scadenza
     passata nei dati della fonte, "Bando Chiuso" nella pagina, data barrata...) il bando si ferma qui, senza spesa."""
-    from app.schede.segnali import segnali_del_bando
-
-    s = segnali_del_bando(conn, bando_id, oggi)
     if s.stato != "chiuso":
         return None
     return {"per_imprese": "incerto", "edizione_in_corso": "incerto", "stato": "chiuso", "testo_bando": "si",
             "motivo": ("segnali gratuiti, senza IA: " + "; ".join(s.chiuso))[:500], "deciso_da": "segnali"}
+
+
+def seconda_lettura(segnali) -> str:
+    """Il testo aggiunto al messaggio del controllo preliminare quando si rilegge un bando dato per chiuso."""
+    return ("\n\n# Seconda lettura\n\nUna prima lettura di questi documenti ha concluso che il bando e' chiuso, ma i dati "
+            "raccolti dalla fonte dicono altro: " + "; ".join(segnali.aperto) + ". Rileggi con attenzione le date di "
+            "apertura e chiusura, le proroghe e gli avvisi di chiusura anticipata. Rispondi 'chiuso' solo se il testo "
+            "dice chiaramente che le domande non si possono piu' presentare; altrimenti 'aperto', 'in_arrivo' o "
+            "'non_noto', e spiega nel motivo quale data hai trovato.")
 
 
 def cmd_schede(conn, bando_id: int | None, limite: int) -> int:
@@ -646,8 +685,11 @@ def cmd_schede(conn, bando_id: int | None, limite: int) -> int:
     istr_pre, mod_pre = leggi_prompt("prompt_preliminare.md")
     istr_pre = riempi(istr_pre, {"data_oggi": oggi.isoformat()})   # la data compare anche nelle istruzioni
     istr_scheda, mod_scheda = leggi_prompt("prompt_scheda.md")
+    from app.schede.segnali import segnali_del_bando
+
     for b in bandi_da_schedare(conn, bando_id, limite):
-        gratuito = preliminare_dai_segnali(conn, b["id"], oggi)
+        segnali = segnali_del_bando(conn, b["id"], oggi)
+        gratuito = preliminare_dai_segnali(segnali)
         if gratuito:
             with conn.cursor() as cur:
                 cur.execute("UPDATE bandi SET preliminare = %s WHERE id = %s", (json.dumps(gratuito), b["id"]))
@@ -657,13 +699,23 @@ def cmd_schede(conn, bando_id: int | None, limite: int) -> int:
         client = client or nuovo_client()
         controlla_tetto(conn)
         corti, _ = documenti_del_bando(conn, b["id"], MASSIMO_TESTO_PRELIMINARE)
-        r = chiama(client, parametri(MODELLO_PRELIMINARE, istr_pre, riempi(mod_pre, {
-            "data_oggi": oggi.isoformat(), "titolo": b["titolo"], "url": b["url"], "documenti": corti}),
-            SCHEMA_PRELIMINARE, 1000))
+        messaggio_pre = riempi(mod_pre, {"data_oggi": oggi.isoformat(), "titolo": b["titolo"], "url": b["url"],
+                                         "documenti": corti})
+        r = chiama(client, parametri(MODELLO_PRELIMINARE, istr_pre, messaggio_pre, SCHEMA_PRELIMINARE, 8000,
+                                     EFFORT["preliminare"]))
         registra("preliminare", MODELLO_PRELIMINARE, str(b["id"]), r)
         if r.dati is None:
             print(f"[{b['id']}] controllo preliminare non riuscito: {r.messaggio}")
             continue
+        if r.dati.get("stato") == "chiuso" and segnali.aperto:
+            # Seconda lettura: l'IA dice chiuso ma la fonte scrive una scadenza futura (o "aperto"). Nella prova
+            # del 26/09 cosi' si erano fermati bandi aperti (MATCHIN, intelligenza artificiale nelle PMI).
+            seconda = chiama(client, parametri(MODELLO_PRELIMINARE, istr_pre, messaggio_pre + seconda_lettura(segnali),
+                                               SCHEMA_PRELIMINARE, 16000, EFFORT["seconda_lettura"]))
+            registra("preliminare", MODELLO_PRELIMINARE, f"{b['id']} seconda lettura", seconda)
+            if seconda.dati is not None:
+                seconda.dati["prima_lettura"] = {"stato": r.dati.get("stato"), "motivo": r.dati.get("motivo")}
+                r = seconda
         with conn.cursor() as cur:
             cur.execute("UPDATE bandi SET preliminare = %s WHERE id = %s", (json.dumps(r.dati), b["id"]))
         conn.commit()
@@ -679,13 +731,13 @@ def cmd_schede(conn, bando_id: int | None, limite: int) -> int:
             "data_oggi": oggi.isoformat(), "titolo": b["titolo"], "ente": b["ente"], "territorio": b["territorio"],
             "url": b["url"], "pagina_motivo": b.get("pagina_motivo"), "annunci": collegati,
             "avvertenze_documenti": "\n".join(f"- {a}" for a in avvertenze) or "- nessuna", "documenti": documenti})
-        r = chiama(client, parametri(MODELLO_SCHEDA, istr_scheda, messaggio, SCHEMA_SCHEDA, 16000))
+        r = chiama(client, parametri(MODELLO_SCHEDA, istr_scheda, messaggio, SCHEMA_SCHEDA, 64000, EFFORT["scheda"]))
         registra("scheda", MODELLO_SCHEDA, str(b["id"]), r)
         if r.dati is None:
             print(f"[{b['id']}] scheda non riuscita: {r.messaggio}")
             continue
         problemi = verifica_scheda(r.dati, documenti)
-        salva_scheda(conn, b["id"], r.dati, problemi, costo(MODELLO_SCHEDA, r.token_in, r.token_out))
+        salva_scheda(conn, b["id"], r.dati, problemi, r.costo(MODELLO_SCHEDA))
         print(f"[{b['id']}] scheda salvata{'' if not problemi else f', {len(problemi)} problemi da controllare'}", flush=True)
     return 0
 
