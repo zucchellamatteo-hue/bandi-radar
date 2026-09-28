@@ -359,6 +359,8 @@
     da 100 e scarta le voci con scadenza (deadlineDate) gia'' passata.
 
     '
+  pagina_ufficiale:                    # 28/09: le pagine del portale sono un'app JavaScript; il testo e' nei dati della ricerca
+    testo_dai_dati: testo
   scorta:
     url: https://api.tech.ec.europa.eu/search-api/prod/rest/search?apiKey=SEDIA&text=***&pageSize=100&pageNumber={pagina}
     pagine: 40

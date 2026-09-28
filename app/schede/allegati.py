@@ -404,6 +404,21 @@ def testo_plone(client: httpx.Client, pausa: Pausa, url_pagina: str) -> str | No
     return None
 
 
+def con_testo_dai_dati(conn, bando_id: int, campi: list[str], risultati: list[Risultato]) -> list[Risultato]:
+    """Portale UE (regola `testo_dai_dati` del registro): la copia della pagina e' vuota, il testo del bando sta nei
+    dati grezzi dell'annuncio. Se e' piu' lungo, prende il posto del testo della copia."""
+    if not campi:
+        return risultati
+    with conn.cursor() as cur:
+        cur.execute("SELECT dati FROM annunci WHERE bando_id = %s", (bando_id,))
+        testi = [str(r["dati"].get(c) or "") for r in cur.fetchall() if isinstance(r["dati"], dict) for c in campi]
+    testo = max(testi, key=len, default="")
+    for r in risultati:
+        if r.tipo == "pagina" and len(testo) > len(r.testo_estratto or ""):
+            r.testo_estratto = _senza_nul(testo)[:MASSIMO_TESTO]
+    return risultati
+
+
 # --- una pagina: annuncio o bando ------------------------------------------------------------------
 
 def elabora_annuncio(client: httpx.Client, annuncio_id: int, url_annuncio: str, cartella: Path, pausa: Pausa,
@@ -719,8 +734,11 @@ def esegui(annuncio_id: int | None = None, limite: int = LIMITE_PREDEFINITO, car
                 ignora = any(f.ignora_robots and urlsplit(f.url or "").netloc == sito for f in fonti)
                 plone = any(f.documenti_plone for f in fonti)
                 presenti = gia_scaricati(conn, bando_id=x["id"])
-                chiamata = lambda: elabora_pagina(client, f"b{x['id']}", x["url"], cartella, pausa, ignora, len(presenti),
-                                                  presenti | documenti_del_sito(conn), plone, "Pagina del bando (copia)")
+                campi_testo = [f.pagina_ufficiale["testo_dai_dati"] for f in fonti if f.pagina_ufficiale.get("testo_dai_dati")]
+                chiamata = lambda: con_testo_dai_dati(
+                    conn, x["id"], campi_testo,
+                    elabora_pagina(client, f"b{x['id']}", x["url"], cartella, pausa, ignora, len(presenti),
+                                   presenti | documenti_del_sito(conn), plone, "Pagina del bando (copia)"))
                 segna = lambda: segna_cercato(conn, bando_id=x["id"])
                 etichetta = f"bando {x['id']}"
             else:

@@ -27,7 +27,7 @@ _CAMPI_NOTI = {
     "scorta",
 }
 # Regole per trovare la pagina ufficiale del bando a partire dagli annunci della fonte (app/schede/pagina_ufficiale.py).
-_REGOLE_PAGINA = {"campo", "escludi", "cerca", "segui_link", "documenti", "sostituisci"}
+_REGOLE_PAGINA = {"campo", "escludi", "cerca", "segui_link", "documenti", "sostituisci", "testo_dai_dati"}
 # Lettura completa della fonte ("scorta": tutti i bandi ancora aperti, non solo le novita'), app/raccolta/scorta.py.
 _CAMPI_SCORTA = {"url", "parametro", "inizio", "passo", "pagine", "corpo_json", "scadenza", "frequenza", "modalita",
                  "selettore", "senza_scadenza_mesi", "tutte_le_pagine"}
@@ -177,6 +177,8 @@ def _controlla_pagina_ufficiale(regole: object, dove: str) -> list[str]:
     if segui is not None and not (isinstance(segui, dict) and isinstance(segui.get("testi"), list) and segui["testi"]
                                   and not set(segui) - {"testi", "stesso_sito"}):
         errori.append(f"{dove}: pagina_ufficiale.segui_link vuole un elenco testi (e, se serve, stesso_sito: true)")
+    if "testo_dai_dati" in regole and not isinstance(regole["testo_dai_dati"], str):
+        errori.append(f"{dove}: pagina_ufficiale.testo_dai_dati e' il nome di un campo dei dati grezzi (testo)")
     if regole.get("documenti") not in (None, "plone_api"):
         errori.append(f"{dove}: pagina_ufficiale.documenti ammette solo plone_api")
     return errori

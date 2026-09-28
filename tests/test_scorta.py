@@ -130,6 +130,7 @@ def test_portale_ue_sovvenzione_a_cascata_ha_titolo_e_pagina_propri():
     assert a.titolo == "Enhancing Cybersecurity of SMEs (SSNS-2026)"
     assert a.url.endswith("competitive-calls-cs/46786367")
     assert a.dati["scadenza"] == "2026-11-28" and "NCC Hungary" in a.riassunto
+    assert "Micro, small and medium" in a.dati["testo"]      # il testo del bando: la pagina del portale e' vuota
     t = sedia_annuncio({"metadata": {"type": ["1"], "identifier": ["HORIZON-X-01"], "title": ["Un topic"], "callTitle": ["Call"],
                                      "deadlineDate": ["2026-03-04T00:00:00.000+0000", "2027-01-01T00:00:00.000+0000"]}})
     assert t.url.endswith("/topic-details/horizon-x-01") and t.titolo == "Un topic"

@@ -222,6 +222,7 @@ def ckan(dati: dict, base_url: str, url_modello: str | None = None) -> list[Annu
     return annunci
 
 
+TESTO_MASSIMO_SEDIA = 30_000
 _SEDIA_TOPIC = "https://ec.europa.eu/info/funding-tenders/opportunities/portal/screen/opportunities/topic-details/"
 
 
@@ -255,12 +256,18 @@ def sedia_annuncio(r: dict) -> Annuncio | None:
         return None
     if scadenza:
         riassunto = f"{riassunto} (scadenza {scadenza[:10]})" if riassunto else f"Scadenza {scadenza[:10]}"
+    # Il testo del bando: le pagine del portale sono un'applicazione JavaScript (HTML vuoto), ma la ricerca
+    # restituisce gia' descrizione e condizioni. Si tiene nei dati grezzi e fa da pagina ufficiale.
+    campi_testo = ("description", "beneficiaryAdministration", "duration", "furtherInformation") if tipo == "8" \
+        else ("descriptionByte", "topicConditions")
+    testo = "\n\n".join(t for c in campi_testo if (t := pulisci_html(_sedia_primo(meta, c), TESTO_MASSIMO_SEDIA)))
     return Annuncio(
         url=url, titolo=titolo.strip(), riassunto=riassunto or None,
         pubblicato_il=leggi_data(_sedia_primo(meta, "startDate")),
         dati={"identifier": ident, "tipo": tipo, "status": meta.get("status"), "deadlineDate": meta.get("deadlineDate"),
               "scadenza": scadenza[:10] if scadenza else None, "callIdentifier": meta.get("callIdentifier"),
-              "callTitle": _sedia_primo(meta, "callTitle")},
+              "callTitle": _sedia_primo(meta, "callTitle"),
+              "testo": (f"{titolo.strip()}\n{riassunto or ''}\n\n{testo}").strip() or None},
     )
 
 
