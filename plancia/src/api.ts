@@ -85,6 +85,20 @@ export interface Valori {
   regioni: Record<string, string>; province: Record<string, string>;
 }
 
+// Profilo d'impresa anonimo (docs/PROFILO_IMPRESA.md, app/abbinamento/profilo.py).
+export interface Sede { tipo: "legale" | "operativa" | "legale_e_operativa"; regione: string | null; provincia: string | null; comune: string | null }
+export interface Profilo {
+  codice: string; soggetto: "impresa" | "libero_professionista" | "ente_terzo_settore" | null; da_costituire: boolean;
+  forma_giuridica: string | null; sedi: Sede[]; ateco: string[]; ateco_versione: "2007" | "2025"; attivita: string | null;
+  dimensione: "micro" | "piccola" | "media" | "grande" | null; dipendenti: number | null; fatturato: number | null;
+  totale_bilancio: number | null; data_costituzione: string | null; requisiti: Record<string, boolean>;
+  temi: string[]; categorie_spesa: string[]; importo_progetto: number | null; note: string | null;
+}
+export interface ProfiloSalvato { codice: string; profilo: Profilo; origine: string; creato_il: string; aggiornato_il: string }
+export interface RispostaAbbinamento {
+  conteggi: { compatibile: number; da_verificare: number; escluso: number }; bandi: BandoRiga[];
+}
+
 export interface Smistamento {
   esito: Esito; motivo: string | null; deciso_da: "regole" | "ia" | "matteo"; costo: number | null; deciso_il: string;
   proposta_esito: Esito | null; proposta_motivo: string | null; proposta_da: string | null;
@@ -119,7 +133,11 @@ export interface SettimanaDettaglio {
 
 async function chiama<T>(percorso: string, opzioni?: RequestInit): Promise<T> {
   const r = await fetch(percorso, { ...opzioni, headers: { "Content-Type": "application/json", ...(opzioni?.headers || {}) } });
-  if (!r.ok) throw new Error(`Errore ${r.status} su ${percorso}`);
+  if (!r.ok) {
+    // Gli errori di controllo (422) spiegano cosa correggere: si mostra il messaggio del server.
+    const corpo = await r.json().catch(() => null);
+    throw new Error(typeof corpo?.detail === "string" ? corpo.detail : `Errore ${r.status} su ${percorso}`);
+  }
   return r.json();
 }
 
@@ -148,6 +166,13 @@ export const api = {
   bandi: (parametri: Record<string, string>) =>
     chiama<RispostaCatalogo>("/api/bandi?" + new URLSearchParams(parametri).toString()),
   valori: () => chiama<Valori>("/api/valori"),
+  profili: () => chiama<ProfiloSalvato[]>("/api/profili"),
+  profilo: (codice: string) => chiama<ProfiloSalvato>(`/api/profili/${encodeURIComponent(codice)}`),
+  salvaProfilo: (p: Profilo) =>
+    chiama<ProfiloSalvato>(`/api/profili/${encodeURIComponent(p.codice)}`, { method: "PUT", body: JSON.stringify(p) }),
+  cancellaProfilo: (codice: string) => chiama(`/api/profili/${encodeURIComponent(codice)}`, { method: "DELETE" }),
+  bandiDelProfilo: (codice: string) => chiama<RispostaAbbinamento>(`/api/profili/${encodeURIComponent(codice)}/bandi`),
+  abbina: (p: Profilo) => chiama<RispostaAbbinamento>("/api/abbina", { method: "POST", body: JSON.stringify(p) }),
   correggiSmistamento: (id: number, esito: Esito) =>
     chiama<{ esito: Esito; deciso_da: string }>(`/api/annunci/${id}/smistamento`, { method: "POST", body: JSON.stringify({ esito }) }),
   settimane: () => chiama<Settimana[]>("/api/novita/settimane"),

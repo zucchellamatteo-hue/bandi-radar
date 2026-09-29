@@ -8,6 +8,7 @@ import Novita from "./pagine/Novita";
 import Settimana from "./pagine/Settimana";
 import Bando from "./pagine/Bando";
 import Doppioni from "./pagine/Doppioni";
+import Profili from "./pagine/Profili";
 
 export default function App() {
   const classe = ({ isActive }: { isActive: boolean }) => (isActive ? "attivo" : "");
@@ -18,6 +19,7 @@ export default function App() {
         <nav>
           <NavLink to="/" end className={classe}>Fonti</NavLink>{" · "}
           <NavLink to="/catalogo" className={classe}>Catalogo</NavLink>{" · "}
+          <NavLink to="/profili" className={classe}>Profili</NavLink>{" · "}
           <NavLink to="/annunci" end className={classe}>Annunci</NavLink>{" · "}
           <NavLink to="/doppioni" className={classe}>Doppioni</NavLink>{" · "}
           <NavLink to="/novita" className={classe}>Novità</NavLink>
@@ -29,6 +31,8 @@ export default function App() {
           <Route path="/fonti/:id" element={<DettaglioFonte />} />
           <Route path="/catalogo" element={<Catalogo />} />
           <Route path="/annunci" element={<Annunci />} />
+          <Route path="/profili" element={<Profili />} />
+          <Route path="/profili/:codice" element={<Profili />} />
           <Route path="/annunci/:id" element={<DettaglioAnnuncio />} />
           <Route path="/bandi/:id" element={<Bando />} />
           <Route path="/doppioni" element={<Doppioni />} />
