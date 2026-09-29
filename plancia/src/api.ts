@@ -61,7 +61,7 @@ export interface Bando extends BandoBreve {
 export type Livello = "compatibile" | "da_verificare" | "escluso";
 export interface EsitoRegole {
   livello: Livello; esclusioni: string[]; da_verificare: string[]; punti_a_favore: string[]; da_controllare: string[];
-  interessi: number; fuori_zona: boolean;
+  interessi: number; fuori_zona: boolean; dubbi_pesanti: number;
 }
 
 // Una riga del catalogo dei bandi.

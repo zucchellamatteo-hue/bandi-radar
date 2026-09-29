@@ -158,12 +158,19 @@ function Modulo({ p, cambia, valori, bloccaCodice }: {
 
 function Risultati({ r }: { r: RispostaAbbinamento }) {
   const gruppo = (livello: string) => r.bandi.filter((b) => b.esito.livello === livello);
+  const dubbi = gruppo("da_verificare");
+  const quasi = dubbi.filter((b) => !b.esito.fuori_zona && b.esito.dubbi_pesanti === 0);
+  const importanti = dubbi.filter((b) => !b.esito.fuori_zona && b.esito.dubbi_pesanti > 0);
+  const altrove = dubbi.filter((b) => b.esito.fuori_zona);
   return (
     <>
       <h2>Bandi aperti o in arrivo per questo profilo</h2>
-      <p><b>{r.conteggi.compatibile}</b> ✓ compatibili · <b>{r.conteggi.da_verificare}</b> ? da verificare · {r.conteggi.escluso} ✗ esclusi</p>
+      <p><b>{r.conteggi.compatibile}</b> ✓ compatibili · <b>{quasi.length}</b> quasi compatibili · {importanti.length} con dubbi importanti
+        {" "}· {altrove.length} di altre regioni · {r.conteggi.escluso} ✗ esclusi</p>
       <Gruppo titolo="✓ Compatibili" bandi={gruppo("compatibile")} aperto />
-      <Gruppo titolo="? Da verificare" bandi={gruppo("da_verificare")} aperto />
+      <Gruppo titolo="? Quasi compatibili: solo dettagli da leggere nel bando (soglie, età, forma, scheda su sintesi)" bandi={quasi} aperto />
+      <Gruppo titolo="? Da verificare, con dubbi importanti (territorio, beneficiari, settore, dimensione, requisiti)" bandi={importanti} />
+      <Gruppo titolo="? Di altre regioni: servirebbe una sede o un progetto lì" bandi={altrove} />
       <Gruppo titolo="✗ Esclusi, con il motivo" bandi={gruppo("escluso")} />
     </>
   );
