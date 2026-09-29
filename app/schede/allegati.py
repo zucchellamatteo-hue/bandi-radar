@@ -311,8 +311,10 @@ def testo_ocr(dati: bytes) -> str | None:
                             str(Path(cartella) / "p")], check=True, capture_output=True, timeout=SECONDI_OCR)
             pagine = []
             for immagine in sorted(Path(cartella).glob("p-*.png")):
-                uscita = subprocess.run(["tesseract", str(immagine), "-", "-l", "ita+eng"], check=True,
-                                        capture_output=True, timeout=SECONDI_OCR)
+                # Priorita' bassa e un solo processore per file: l'OCR non deve rallentare il resto del server.
+                uscita = subprocess.run(["nice", "-n", "15", "tesseract", str(immagine), "-", "-l", "ita+eng"],
+                                        check=True, capture_output=True, timeout=SECONDI_OCR,
+                                        env={**os.environ, "OMP_THREAD_LIMIT": "1"})
                 pagine.append(uscita.stdout.decode("utf-8", "replace"))
         except (subprocess.SubprocessError, OSError):
             return None
@@ -851,39 +853,51 @@ def esegui(annuncio_id: int | None = None, limite: int = LIMITE_PREDEFINITO, car
     return 0
 
 
-def rileggi_illeggibili(cartella: Path = CARTELLA, bando_id: int | None = None, prova: bool = False) -> int:
+def rileggi_illeggibili(cartella: Path = CARTELLA, bando_id: int | None = None, prova: bool = False,
+                        paralleli: int = 1) -> int:
     """Rilegge i PDF gia' scaricati il cui testo e' vuoto o spazzatura (testo_leggibile), con l'OCR se serve.
     Stampa i bandi toccati: le loro schede vanno rifatte."""
     from app.db.connessione import connetti
 
-    condizione = "tipo IN ('pdf', 'p7m') AND percorso_locale IS NOT NULL" + (" AND bando_id = %s" if bando_id else "")
+    from concurrent.futures import ThreadPoolExecutor
+
+    # La modulistica non va alla scheda e i bandi chiusi non servono: si saltano. Prima i bandi con la scheda.
+    condizione = ("a.tipo IN ('pdf', 'p7m') AND a.percorso_locale IS NOT NULL AND a.categoria IS DISTINCT FROM 'modulistica'"
+                  " AND b.stato IS DISTINCT FROM 'chiuso'" + (" AND a.bando_id = %s" if bando_id else ""))
     with connetti() as conn:
         with conn.cursor() as cur:
-            cur.execute(f"SELECT id FROM allegati WHERE {condizione} ORDER BY id", (bando_id,) if bando_id else ())
+            cur.execute(f"""SELECT a.id FROM allegati a JOIN bandi b ON b.id = a.bando_id WHERE {condizione}
+                            ORDER BY b.completezza IS NULL, b.stato IS NULL, a.bando_id, a.id""",
+                        (bando_id,) if bando_id else ())
             ids = [r["id"] for r in cur.fetchall()]
         da_rifare = []
         for inizio in range(0, len(ids), 500):
             with conn.cursor() as cur:
                 cur.execute("SELECT id, bando_id, percorso_locale, tipo, testo_estratto FROM allegati WHERE id = ANY(%s)",
                             (ids[inizio:inizio + 500],))
-                da_rifare += [dict(r, testo_estratto=None) for r in cur.fetchall() if not testo_leggibile(r["testo_estratto"])]
+                trovati = {r["id"]: r for r in cur.fetchall() if not testo_leggibile(r["testo_estratto"])}
+            da_rifare += [dict(trovati[i], testo_estratto=None) for i in ids[inizio:inizio + 500] if i in trovati]
         print(f"PDF controllati: {len(ids)}; senza testo leggibile: {len(da_rifare)}", flush=True)
-        bandi_toccati: set[int] = set()
-        for r in da_rifare:
+
+        def leggi(r: dict) -> tuple[dict, str | None, bool]:
             percorso = cartella / r["percorso_locale"]
-            if not percorso.exists():
-                print(f"manca    [allegato {r['id']}] {percorso}")
-                continue
-            testo = estrai_testo(percorso, r["tipo"])
-            print(f"{'letto   ' if testo else 'illeggib'} [allegato {r['id']}, bando {r['bando_id']}] "
-                  f"{r['percorso_locale'][:70]}: {len(testo or '')} caratteri", flush=True)
-            if prova:
-                continue
-            with conn.cursor() as cur:
-                cur.execute("UPDATE allegati SET testo_estratto = %s WHERE id = %s", (testo, r["id"]))
-            conn.commit()
-            if testo and r["bando_id"]:
-                bandi_toccati.add(r["bando_id"])
+            return (r, estrai_testo(percorso, r["tipo"]), True) if percorso.exists() else (r, None, False)
+
+        bandi_toccati: set[int] = set()
+        with ThreadPoolExecutor(max_workers=max(1, paralleli)) as esecutore:   # l'OCR gira in processi esterni
+            for r, testo, esiste in esecutore.map(leggi, da_rifare):
+                if not esiste:
+                    print(f"manca    [allegato {r['id']}] {r['percorso_locale']}")
+                    continue
+                print(f"{'letto   ' if testo else 'illeggib'} [allegato {r['id']}, bando {r['bando_id']}] "
+                      f"{r['percorso_locale'][:70]}: {len(testo or '')} caratteri", flush=True)
+                if prova:
+                    continue
+                with conn.cursor() as cur:
+                    cur.execute("UPDATE allegati SET testo_estratto = %s WHERE id = %s", (testo, r["id"]))
+                conn.commit()
+                if testo and r["bando_id"]:
+                    bandi_toccati.add(r["bando_id"])
     print("Bandi con testo nuovo (schede da rifare):", " ".join(str(b) for b in sorted(bandi_toccati)) or "nessuno")
     return 0
 
@@ -897,9 +911,11 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--rileggi-illeggibili", action="store_true",
                         help="rilegge (anche con l'OCR) i PDF gia' scaricati senza testo leggibile, poi si ferma")
     parser.add_argument("--prova", action="store_true", help="con --rileggi-illeggibili: mostra, non salva")
+    parser.add_argument("--paralleli", type=int, default=1, metavar="N",
+                        help="con --rileggi-illeggibili: N file letti insieme (l'OCR usa un processore per file)")
     args = parser.parse_args(argv)
     if args.rileggi_illeggibili:
-        return rileggi_illeggibili(bando_id=args.bando, prova=args.prova)
+        return rileggi_illeggibili(bando_id=args.bando, prova=args.prova, paralleli=args.paralleli)
     return esegui(args.annuncio, args.limite, bando_id=args.bando)
 
 
