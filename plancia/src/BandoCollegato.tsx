@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { AnnuncioDelBando, api, BandoBreve, data, DubbioAnnuncio, NOMI_DECISO_DA, NOMI_RUOLO, Ruolo } from "./api";
+import { AnnuncioDelBando, api, BandoBreve, data, DubbioAnnuncio, nome, NOMI_DECISO_DA, NOMI_RUOLO, Ruolo } from "./api";
 
 // Nella pagina dell'annuncio: il bando a cui e' collegato, gli altri annunci dello stesso bando,
 // i dubbi aperti e i comandi per unire o separare a mano.
@@ -28,8 +28,11 @@ export default function BandoCollegato({ annuncioId, bando, ruolo, collegatoDa, 
       {bando ? (
         <p>
           <Link to={`/bandi/${bando.id}`} className="titolo-annuncio">{bando.titolo}</Link>
+          {" "}<span className={`stato-bando ${bando.stato || "non_noto"}`}>{bando.stato ? nome(bando.stato) : "stato non noto"}</span>
           <span className="piccolo"> · {bando.ente}{bando.codice_ufficiale ? ` · codice ${bando.codice_ufficiale}` : ""}
-            {bando.scadenza ? ` · scade il ${data(bando.scadenza)}` : ""}</span>
+            {bando.scadenza ? ` · scade il ${data(bando.scadenza)}` : ""}
+            {" · "}{bando.completezza ? <Link to={`/bandi/${bando.id}`}>apri la scheda</Link> : "scheda non ancora fatta"}</span>
+          {bando.sintesi && <><br /><span className="riassunto">{bando.sintesi}</span></>}
           <br /><span className="piccolo">Questo annuncio è: <b>{ruolo ? NOMI_RUOLO[ruolo] : "–"}</b>
             {collegatoDa ? ` (collegato da ${NOMI_DECISO_DA[collegatoDa] || collegatoDa}${motivo ? `: ${motivo}` : ""})` : ""}</span>
         </p>

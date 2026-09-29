@@ -47,3 +47,32 @@ button:hover { border-color: var(--accento); color: var(--accento); }
 .smistamento .correggi button.scelto { background: #eef2f7; color: var(--testo); }
 .errore-allegato { color: #9a3412; }
 .testo-lungo { white-space: pre-wrap; background: var(--carta); border: 1px solid var(--bordo); border-radius: 8px; padding: .8rem 1rem; }
+/* Catalogo dei bandi e profili: esito delle regole di abbinamento */
+.filtri .filtro-attivo { border-color: var(--accento); background: #f1f6fd; }
+.filtri .etichetta-filtri { min-width: 7rem; font-weight: 600; }
+.filtri input.ateco { min-width: 0; width: 11rem; }
+.segno-esito { display: inline-block; width: 1.6rem; height: 1.6rem; line-height: 1.6rem; text-align: center; border-radius: 50%; font-weight: 700; }
+.segno-esito.compatibile { background: #e3f4ea; color: #1e6b3e; }
+.segno-esito.da_verificare { background: #fff4d6; color: #8a6100; }
+.segno-esito.escluso { background: #fbe9e7; color: #9a3412; }
+ul.motivi { margin: .3rem 0 0; padding-left: 0; list-style: none; font-size: .8rem; }
+ul.motivi.da_verificare li { color: #8a6100; }
+ul.motivi.esclusioni li { color: #9a3412; }
+ul.motivi.a_favore li { color: #1e6b3e; }
+ul.motivi.da_controllare li { color: var(--grigio); }
+.stato-bando { display: inline-block; border-radius: 4px; padding: .1rem .4rem; font-size: .78rem; font-weight: 600; background: #f0f2f5; color: var(--grigio); }
+.stato-bando.aperto { background: #e3f4ea; color: #1e6b3e; }
+.stato-bando.in_arrivo { background: #e6effb; color: #1f5fbf; }
+.stato-bando.chiuso { background: #f0f2f5; color: var(--grigio); }
+.scheda-griglia { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: .8rem; margin: 1rem 0; }
+.scheda-griglia .riquadro .numero { font-size: 1.2rem; }
+table.vincoli td.stato { white-space: nowrap; font-size: .82rem; }
+td.stato.vincolo { color: #1f5fbf; } td.stato.nessun_vincolo { color: #1e6b3e; } td.stato.non_noto { color: #8a6100; }
+.modulo-profilo { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: .8rem 1.2rem; background: var(--carta); border: 1px solid var(--bordo); border-radius: 8px; padding: 1rem; }
+.modulo-profilo fieldset { border: 1px solid var(--bordo); border-radius: 6px; padding: .6rem .8rem; margin: 0; }
+.modulo-profilo legend { font-weight: 600; font-size: .9rem; }
+.modulo-profilo label { display: block; font-size: .85rem; margin: .3rem 0; }
+.modulo-profilo input, .modulo-profilo select, .modulo-profilo textarea { padding: .35rem .5rem; border: 1px solid var(--bordo); border-radius: 6px; font: inherit; font-size: .9rem; max-width: 100%; }
+.modulo-profilo .scelte { display: flex; flex-wrap: wrap; gap: .2rem .8rem; }
+.modulo-profilo .scelte label { margin: 0; }
+.modulo-profilo .azioni { grid-column: 1 / -1; display: flex; gap: .6rem; align-items: center; }
