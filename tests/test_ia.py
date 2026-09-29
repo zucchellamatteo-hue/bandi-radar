@@ -245,3 +245,73 @@ def test_seconda_lettura_cita_la_scadenza_della_fonte():
 
     testo = ia.seconda_lettura(Segnali(aperto=["scadenza 30/09/2027 nei dati della fonte"]))
     assert "30/09/2027" in testo and "Seconda lettura" in testo
+
+
+class FintoBatch:
+    """La Batch API finta: tiene le richieste e restituisce le risposte preparate per custom_id."""
+
+    def __init__(self):
+        self.lotti, self.risposte = [], {}
+        self.batches = SimpleNamespace(create=self.create, retrieve=lambda i: SimpleNamespace(processing_status="ended"),
+                                       results=self.results)
+        self.messages = SimpleNamespace(batches=self.batches)
+
+    def create(self, requests):
+        self.lotti.append(requests)
+        return SimpleNamespace(id=f"lotto{len(self.lotti)}")
+
+    def results(self, batch_id):
+        for r in self.lotti[int(batch_id.removeprefix("lotto")) - 1]:
+            dati = self.risposte[r["custom_id"]]
+            msg = SimpleNamespace(stop_reason="end_turn", content=[SimpleNamespace(type="text", text=json.dumps(dati))],
+                                  usage=SimpleNamespace(input_tokens=1000, output_tokens=100))
+            yield SimpleNamespace(custom_id=r["custom_id"], result=SimpleNamespace(type="succeeded", message=msg))
+
+
+@pytest.mark.skipif(not __import__("os").environ.get("PGHOST"), reason="serve un database Postgres di prova (PGHOST)")
+def test_batch_preliminare_seconda_lettura_e_scheda(monkeypatch):
+    from app.db.connessione import connetti
+    from app.db.migrazioni import applica_migrazioni
+
+    finto = FintoBatch()
+    monkeypatch.setenv("ANTHROPIC_API_KEY", "prova")
+    monkeypatch.setattr(ia, "nuovo_client", lambda: finto)
+    with connetti() as conn:
+        applica_migrazioni(conn)
+        with conn.cursor() as cur:
+            cur.execute("INSERT INTO fonti (id, nome, ente, tipo, territorio, modalita, frequenza, stato) "
+                        "VALUES ('prova_batch', 'Prova', 'Ente', 'regione', 'LOM', 'api', 'settimanale', 'attiva') "
+                        "ON CONFLICT (id) DO NOTHING")
+            cur.execute("INSERT INTO bandi (titolo, url, pagina_stato, allegati_cercati_il) "
+                        "VALUES ('prova batch', 'https://esempio.it/b', 'trovata', now()) RETURNING id")
+            bando = cur.fetchone()["id"]
+            cur.execute("INSERT INTO annunci (fonte_id, url, titolo, impronta, dati, bando_id) VALUES "
+                        "('prova_batch', 'https://esempio.it/b', 'prova', 'x', '{\"scadenza\": \"2099-12-31\"}', %s)", (bando,))
+        conn.commit()
+        try:
+            chiuso = {"per_imprese": "si", "edizione_in_corso": "si", "stato": "chiuso", "testo_bando": "si", "motivo": "x"}
+            aperto = {**chiuso, "stato": "aperto", "motivo": "scadenza 31/12/2099"}
+            ia.cmd_schede_batch(conn)                           # 1. controllo preliminare
+            assert [r["custom_id"] for r in finto.lotti[-1]] == [f"pre-{bando}"]
+            finto.risposte[f"pre-{bando}"] = chiuso
+            ia.cmd_raccogli(conn)                               # l'IA dice chiuso, la fonte scrive 2099
+            ia.cmd_schede_batch(conn)                           # 2. seconda lettura
+            assert [r["custom_id"] for r in finto.lotti[-1]] == [f"pre2-{bando}"]
+            assert "Seconda lettura" in finto.lotti[-1][0]["params"]["messages"][0]["content"]
+            finto.risposte[f"pre2-{bando}"] = aperto
+            ia.cmd_raccogli(conn)
+            ia.cmd_schede_batch(conn)                           # 3. scheda
+            assert [r["custom_id"] for r in finto.lotti[-1]] == [f"sch-{bando}"]
+            ia.cmd_schede_batch(conn)                           # niente doppioni: la scheda e' gia' in volo
+            assert len(finto.lotti) == 3
+            with conn.cursor() as cur:
+                cur.execute("SELECT preliminare FROM bandi WHERE id = %s", (bando,))
+                pre = cur.fetchone()["preliminare"]
+            assert pre["stato"] == "aperto" and pre["prima_lettura"]["stato"] == "chiuso"
+        finally:
+            with conn.cursor() as cur:
+                cur.execute("DELETE FROM chiamate_ia WHERE riferimento LIKE %s", (f"%-{bando}",))
+                cur.execute("DELETE FROM annunci WHERE fonte_id = 'prova_batch'")
+                cur.execute("DELETE FROM bandi WHERE id = %s", (bando,))
+                cur.execute("DELETE FROM fonti WHERE id = 'prova_batch'")
+            conn.commit()

@@ -27,6 +27,8 @@ Uso (quando la chiave ci sara'):
   python -m app.schede.ia schede --bando 45
   python -m app.schede.ia smista --batch               # invia un lotto alla Batch API e si ferma
   python -m app.schede.ia raccogli                     # legge i risultati dei lotti inviati
+  python -m app.schede.ia schede --batch --limite 150  # controlli preliminari e schede con la Batch API
+  python -m app.schede.ia ciclo                        # il giro automatico (lo fa gia' la raccolta ogni ora)
 """
 
 from __future__ import annotations
@@ -604,6 +606,8 @@ def cmd_smista(conn, limite: int, batch: bool) -> int:
     oggi = date.today()
     aggiungi_inizio_pagina(annunci)
     if batch:
+        if not annunci:
+            return 0
         richieste, gruppi = [], []
         for n, lotto in enumerate(lotti(annunci)):
             istruzioni, messaggio = messaggio_smistamento(lotto, oggi)
@@ -627,9 +631,23 @@ def cmd_smista(conn, limite: int, batch: bool) -> int:
     return 0
 
 
+def _in_volo(conn) -> dict[str, list[int]]:
+    """Richieste inviate alla Batch API e non ancora raccolte, per lotto: {batch_id: [id delle righe]}."""
+    with conn.cursor() as cur:
+        cur.execute("SELECT id, batch_id FROM chiamate_ia WHERE batch AND esito = 'inviata'")
+        righe = cur.fetchall()
+    volo: dict[str, list[int]] = {}
+    for r in righe:
+        volo.setdefault(r["batch_id"], []).append(r["id"])
+    return volo
+
+
 def cmd_raccogli(conn) -> int:
-    """Legge i lotti inviati alla Batch API e salva le risposte, con gli stessi controlli degli id.
-    Gli annunci senza risposta restano "da_rivedere": un nuovo 'smista' li rimanda."""
+    """Legge i lotti inviati alla Batch API e salva le risposte, con gli stessi controlli della chiamata diretta.
+    Tre tipi di richiesta, dal custom_id: smista-N (lotto di annunci), pre-ID e pre2-ID (controllo preliminare e
+    seconda lettura del bando ID), sch-ID (scheda). Gli annunci senza risposta restano "da_rivedere"."""
+    from app.schede.segnali import segnali_del_bando
+
     client = nuovo_client()
     with conn.cursor() as cur:
         cur.execute("SELECT id, batch_id, riferimento FROM chiamate_ia WHERE batch AND esito = 'inviata'")
@@ -638,26 +656,62 @@ def cmd_raccogli(conn) -> int:
     for riga in inviati:
         custom_id, _, ids = riga["riferimento"].partition(":")
         per_lotto.setdefault(riga["batch_id"], {})[custom_id] = (riga["id"], [int(x) for x in ids.split(",") if x])
+    oggi = date.today()
     for batch_id, richieste in per_lotto.items():
         if client.messages.batches.retrieve(batch_id).processing_status != "ended":
             print(f"{batch_id}: ancora in lavorazione")
             continue
         registra = registratore(conn, True, batch_id)
         for risultato in client.messages.batches.results(batch_id):
-            riga_id, ids = richieste.get(risultato.custom_id, (None, []))
-            if risultato.result.type == "succeeded":
-                r = leggi_messaggio(risultato.result.message)
-                registra("smistamento", MODELLO_SMISTAMENTO, f"{risultato.custom_id}:" + ",".join(map(str, ids)), r)
-                controllo = controlla_smistamento(ids, r.dati)
-                salva_smistamento(conn, controllo.decisi, 0.0)
-                print(f"{risultato.custom_id}: {len(controllo.decisi)} decisi, {len(controllo.mancanti)} senza risposta")
+            cid = risultato.custom_id
+            riga_id, ids = richieste.get(cid, (None, []))
+            if risultato.result.type != "succeeded":
+                print(f"{cid}: {risultato.result.type} (si riprova a mano)")
+                registra(_scopo(cid), MODELLO_SMISTAMENTO, cid, Risposta(None, "errore", messaggio=risultato.result.type))
             else:
-                print(f"{risultato.custom_id}: {risultato.result.type} (restano da rivedere)")
+                r = leggi_messaggio(risultato.result.message)
+                if cid.startswith("smista-"):
+                    registra("smistamento", MODELLO_SMISTAMENTO, f"{cid}:" + ",".join(map(str, ids)), r)
+                    controllo = controlla_smistamento(ids, r.dati)
+                    salva_smistamento(conn, controllo.decisi, 0.0)
+                    print(f"{cid}: {len(controllo.decisi)} decisi, {len(controllo.mancanti)} senza risposta")
+                elif cid.startswith(("pre-", "pre2-")):
+                    registra("preliminare", MODELLO_PRELIMINARE, cid, r)
+                    if r.dati is not None:
+                        salva_preliminare_batch(conn, int(cid.split("-")[1]), r.dati, cid.startswith("pre2-"),
+                                                segnali_del_bando, oggi)
+                elif cid.startswith("sch-"):
+                    registra("scheda", MODELLO_SCHEDA, cid, r)
+                    bando_id = int(cid.split("-")[1])
+                    if r.dati is not None:
+                        documenti, _ = documenti_del_bando(conn, bando_id, MASSIMO_TESTO_SCHEDA)
+                        salva_scheda(conn, bando_id, r.dati, verifica_scheda(r.dati, documenti),
+                                     r.costo(MODELLO_SCHEDA, batch=True))
+                        print(f"{cid}: scheda salvata")
             if riga_id:
                 with conn.cursor() as cur:
                     cur.execute("UPDATE chiamate_ia SET esito = 'raccolta' WHERE id = %s", (riga_id,))
                 conn.commit()
     return 0
+
+
+def _scopo(custom_id: str) -> str:
+    return "smistamento" if custom_id.startswith("smista-") else "scheda" if custom_id.startswith("sch-") else "preliminare"
+
+
+def salva_preliminare_batch(conn, bando_id: int, dati: dict, seconda: bool, segnali_del_bando, oggi: date) -> None:
+    """Il preliminare arrivato dalla Batch API. Se dice chiuso ma la fonte dice aperto, si chiede la seconda
+    lettura al giro dopo (seconda_lettura: da_fare) e intanto la scheda aspetta."""
+    if seconda:
+        with conn.cursor() as cur:
+            cur.execute("SELECT preliminare FROM bandi WHERE id = %s", (bando_id,))
+            prima = (cur.fetchone() or {}).get("preliminare") or {}
+        dati["prima_lettura"] = {"stato": prima.get("stato"), "motivo": prima.get("motivo")}
+    elif dati.get("stato") == "chiuso" and segnali_del_bando(conn, bando_id, oggi).aperto:
+        dati["seconda_lettura"] = "da_fare"
+    with conn.cursor() as cur:
+        cur.execute("UPDATE bandi SET preliminare = %s WHERE id = %s AND dati IS NULL", (json.dumps(dati), bando_id))
+    conn.commit()
 
 
 def preliminare_dai_segnali(s) -> dict | None:
@@ -678,30 +732,61 @@ def seconda_lettura(segnali) -> str:
             "'non_noto', e spiega nel motivo quale data hai trovato.")
 
 
+@dataclass
+class Prompt:
+    istr_pre: str
+    mod_pre: str
+    istr_scheda: str
+    mod_scheda: str
+    oggi: date
+
+    @classmethod
+    def carica(cls, oggi: date) -> "Prompt":
+        istr_pre, mod_pre = leggi_prompt("prompt_preliminare.md")
+        istr_scheda, mod_scheda = leggi_prompt("prompt_scheda.md")
+        return cls(riempi(istr_pre, {"data_oggi": oggi.isoformat()}), mod_pre, istr_scheda, mod_scheda, oggi)
+
+    def preliminare(self, conn, b: dict) -> str:
+        corti, _ = documenti_del_bando(conn, b["id"], MASSIMO_TESTO_PRELIMINARE)
+        return riempi(self.mod_pre, {"data_oggi": self.oggi.isoformat(), "titolo": b["titolo"], "url": b["url"],
+                                     "documenti": corti})
+
+    def scheda(self, conn, b: dict) -> tuple[str, list[dict]]:
+        documenti, avvertenze = documenti_del_bando(conn, b["id"], MASSIMO_TESTO_SCHEDA)
+        with conn.cursor() as cur:
+            cur.execute("SELECT id, titolo FROM annunci WHERE bando_id = %s", (b["id"],))
+            collegati = "; ".join(f"{x['id']} {x['titolo'][:80]}" for x in cur.fetchall())
+        return riempi(self.mod_scheda, {
+            "data_oggi": self.oggi.isoformat(), "titolo": b["titolo"], "ente": b["ente"], "territorio": b["territorio"],
+            "url": b["url"], "pagina_motivo": b.get("pagina_motivo"), "annunci": collegati,
+            "avvertenze_documenti": "\n".join(f"- {a}" for a in avvertenze) or "- nessuna", "documenti": documenti}), documenti
+
+
+def ferma_con_segnali(conn, b: dict, segnali) -> bool:
+    gratuito = preliminare_dai_segnali(segnali)
+    if not gratuito:
+        return False
+    with conn.cursor() as cur:
+        cur.execute("UPDATE bandi SET preliminare = %s WHERE id = %s", (json.dumps(gratuito), b["id"]))
+    conn.commit()
+    print(f"[{b['id']}] niente scheda, fermato senza IA: {gratuito['motivo']}", flush=True)
+    return True
+
+
 def cmd_schede(conn, bando_id: int | None, limite: int) -> int:
     client = None     # si apre solo quando serve: i bandi fermati dai segnali gratuiti non chiamano l'API
-    oggi = date.today()
     registra = registratore(conn)
-    istr_pre, mod_pre = leggi_prompt("prompt_preliminare.md")
-    istr_pre = riempi(istr_pre, {"data_oggi": oggi.isoformat()})   # la data compare anche nelle istruzioni
-    istr_scheda, mod_scheda = leggi_prompt("prompt_scheda.md")
+    pr = Prompt.carica(date.today())
     from app.schede.segnali import segnali_del_bando
 
     for b in bandi_da_schedare(conn, bando_id, limite):
-        segnali = segnali_del_bando(conn, b["id"], oggi)
-        gratuito = preliminare_dai_segnali(segnali)
-        if gratuito:
-            with conn.cursor() as cur:
-                cur.execute("UPDATE bandi SET preliminare = %s WHERE id = %s", (json.dumps(gratuito), b["id"]))
-            conn.commit()
-            print(f"[{b['id']}] niente scheda, fermato senza IA: {gratuito['motivo']}", flush=True)
+        segnali = segnali_del_bando(conn, b["id"], pr.oggi)
+        if ferma_con_segnali(conn, b, segnali):
             continue
         client = client or nuovo_client()
         controlla_tetto(conn)
-        corti, _ = documenti_del_bando(conn, b["id"], MASSIMO_TESTO_PRELIMINARE)
-        messaggio_pre = riempi(mod_pre, {"data_oggi": oggi.isoformat(), "titolo": b["titolo"], "url": b["url"],
-                                         "documenti": corti})
-        r = chiama(client, parametri(MODELLO_PRELIMINARE, istr_pre, messaggio_pre, SCHEMA_PRELIMINARE, 8000,
+        messaggio_pre = pr.preliminare(conn, b)
+        r = chiama(client, parametri(MODELLO_PRELIMINARE, pr.istr_pre, messaggio_pre, SCHEMA_PRELIMINARE, 8000,
                                      EFFORT["preliminare"]))
         registra("preliminare", MODELLO_PRELIMINARE, str(b["id"]), r)
         if r.dati is None:
@@ -710,7 +795,7 @@ def cmd_schede(conn, bando_id: int | None, limite: int) -> int:
         if r.dati.get("stato") == "chiuso" and segnali.aperto:
             # Seconda lettura: l'IA dice chiuso ma la fonte scrive una scadenza futura (o "aperto"). Nella prova
             # del 26/09 cosi' si erano fermati bandi aperti (MATCHIN, intelligenza artificiale nelle PMI).
-            seconda = chiama(client, parametri(MODELLO_PRELIMINARE, istr_pre, messaggio_pre + seconda_lettura(segnali),
+            seconda = chiama(client, parametri(MODELLO_PRELIMINARE, pr.istr_pre, messaggio_pre + seconda_lettura(segnali),
                                                SCHEMA_PRELIMINARE, 16000, EFFORT["seconda_lettura"]))
             registra("preliminare", MODELLO_PRELIMINARE, f"{b['id']} seconda lettura", seconda)
             if seconda.dati is not None:
@@ -723,15 +808,8 @@ def cmd_schede(conn, bando_id: int | None, limite: int) -> int:
         if not ok:
             print(f"[{b['id']}] niente scheda: {perche} ({r.dati.get('motivo')})")
             continue
-        documenti, avvertenze = documenti_del_bando(conn, b["id"], MASSIMO_TESTO_SCHEDA)
-        with conn.cursor() as cur:
-            cur.execute("SELECT id, titolo FROM annunci WHERE bando_id = %s", (b["id"],))
-            collegati = "; ".join(f"{x['id']} {x['titolo'][:80]}" for x in cur.fetchall())
-        messaggio = riempi(mod_scheda, {
-            "data_oggi": oggi.isoformat(), "titolo": b["titolo"], "ente": b["ente"], "territorio": b["territorio"],
-            "url": b["url"], "pagina_motivo": b.get("pagina_motivo"), "annunci": collegati,
-            "avvertenze_documenti": "\n".join(f"- {a}" for a in avvertenze) or "- nessuna", "documenti": documenti})
-        r = chiama(client, parametri(MODELLO_SCHEDA, istr_scheda, messaggio, SCHEMA_SCHEDA, 64000, EFFORT["scheda"]))
+        messaggio, documenti = pr.scheda(conn, b)
+        r = chiama(client, parametri(MODELLO_SCHEDA, pr.istr_scheda, messaggio, SCHEMA_SCHEDA, 64000, EFFORT["scheda"]))
         registra("scheda", MODELLO_SCHEDA, str(b["id"]), r)
         if r.dati is None:
             print(f"[{b['id']}] scheda non riuscita: {r.messaggio}")
@@ -742,9 +820,86 @@ def cmd_schede(conn, bando_id: int | None, limite: int) -> int:
     return 0
 
 
+LIMITE_PRELIMINARI_BATCH = 150    # per giro: il costo di un lotto resta prevedibile (circa 2 $ in batch)
+LIMITE_SCHEDE_BATCH = 40          # circa 4-5 $ in batch
+
+
+def cmd_schede_batch(conn, limite_pre: int = LIMITE_PRELIMINARI_BATCH, limite_schede: int = LIMITE_SCHEDE_BATCH) -> int:
+    """Controlli preliminari, seconde letture e schede con la Batch API (meta' prezzo, risposte entro 24 ore).
+    Ogni bando si manda una volta sola per tipo di richiesta: se la risposta non va, si riprova a mano
+    (python -m app.schede.ia schede --bando ID). I bandi con soli segnali di chiusura si fermano gratis."""
+    from app.schede.segnali import segnali_del_bando
+
+    client = nuovo_client()
+    controlla_tetto(conn)
+    pr = Prompt.carica(date.today())
+    with conn.cursor() as cur:
+        cur.execute("SELECT riferimento FROM chiamate_ia WHERE scopo IN ('preliminare', 'scheda') AND batch")
+        gia = {r["riferimento"] for r in cur.fetchall()}
+        cur.execute("""SELECT * FROM bandi WHERE pagina_stato = 'trovata' AND allegati_cercati_il IS NOT NULL
+                       AND dati IS NULL AND (preliminare IS NULL OR preliminare->>'seconda_lettura' = 'da_fare'
+                            OR preliminare->>'deciso_da' IS DISTINCT FROM 'segnali') ORDER BY id""")
+        bandi = [dict(r) for r in cur.fetchall()]
+    richieste: list[dict] = []
+    n_pre = n_sch = 0
+    for b in bandi:
+        pre = b["preliminare"]
+        if pre is None and n_pre < limite_pre and f"pre-{b['id']}" not in gia:
+            segnali = segnali_del_bando(conn, b["id"], pr.oggi)
+            if ferma_con_segnali(conn, b, segnali):
+                continue
+            richieste.append({"custom_id": f"pre-{b['id']}", "params": parametri(
+                MODELLO_PRELIMINARE, pr.istr_pre, pr.preliminare(conn, b), SCHEMA_PRELIMINARE, 8000, EFFORT["preliminare"])})
+            n_pre += 1
+        elif pre and pre.get("seconda_lettura") == "da_fare" and f"pre2-{b['id']}" not in gia and n_pre < limite_pre:
+            segnali = segnali_del_bando(conn, b["id"], pr.oggi)
+            richieste.append({"custom_id": f"pre2-{b['id']}", "params": parametri(
+                MODELLO_PRELIMINARE, pr.istr_pre, pr.preliminare(conn, b) + seconda_lettura(segnali), SCHEMA_PRELIMINARE,
+                16000, EFFORT["seconda_lettura"])})
+            n_pre += 1
+        elif pre and passa_preliminare(pre)[0] and not pre.get("seconda_lettura") == "da_fare" \
+                and f"sch-{b['id']}" not in gia and n_sch < limite_schede:
+            messaggio, _ = pr.scheda(conn, b)
+            richieste.append({"custom_id": f"sch-{b['id']}", "params": parametri(
+                MODELLO_SCHEDA, pr.istr_scheda, messaggio, SCHEMA_SCHEDA, 64000, EFFORT["scheda"])})
+            n_sch += 1
+    if not richieste:
+        print("Batch: nessun bando da mandare.")
+        return 0
+    lotto = client.messages.batches.create(requests=richieste)
+    registra = registratore(conn, True, lotto.id)
+    for r in richieste:
+        registra(_scopo(r["custom_id"]), r["params"]["model"], r["custom_id"], Risposta(None, "inviata"))
+    print(f"Batch {lotto.id}: {n_pre} controlli preliminari, {n_sch} schede. Risposte entro 24 ore (ia raccogli).")
+    return 0
+
+
+def ciclo_catena() -> None:
+    """Il lavoro sui bandi nel giro orario della raccolta (app/raccolta/demone.py): smistamento a regole, deduplica,
+    pagina ufficiale e allegati a piccoli lotti; poi, se c'e' la chiave, l'IA con la Batch API: raccoglie le risposte
+    arrivate e manda i nuovi lotti (smistamento dei "da rivedere", controlli preliminari, schede)."""
+    from app.db.connessione import connetti
+    from app.schede import allegati, bandi, pagina_ufficiale, smista
+
+    smista.esegui(n_esempi=0)
+    bandi.esegui(n_esempi=0)
+    pagina_ufficiale.esegui(limite=int(os.environ.get("CATENA_PAGINE_PER_GIRO", "20")))
+    allegati.esegui(limite=int(os.environ.get("CATENA_ALLEGATI_PER_GIRO", "10")))
+    if not chiave_presente():
+        return
+    with connetti() as conn:
+        try:
+            cmd_raccogli(conn)
+            if not any(True for _ in _in_volo(conn)):   # un lotto alla volta: il costo resta sotto controllo
+                cmd_smista(conn, int(os.environ.get("CATENA_SMISTA_PER_GIRO", "400")), batch=True)
+                cmd_schede_batch(conn)
+        except IASpenta as exc:
+            print(exc)
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description="IA nelle schede (spenta senza ANTHROPIC_API_KEY).")
-    parser.add_argument("comando", choices=["stato", "smista", "schede", "raccogli"])
+    parser.add_argument("comando", choices=["stato", "smista", "schede", "raccogli", "ciclo"])
     parser.add_argument("--limite", type=int, default=100, metavar="N")
     parser.add_argument("--bando", type=int, metavar="ID")
     parser.add_argument("--batch", action="store_true", help="usa la Batch API (meta' prezzo, risposta entro 24 ore)")
@@ -761,6 +916,11 @@ def main(argv: list[str] | None = None) -> int:
                 return cmd_smista(conn, args.limite, args.batch)
             if args.comando == "raccogli":
                 return cmd_raccogli(conn)
+            if args.comando == "ciclo":
+                ciclo_catena()
+                return 0
+            if args.batch and not args.bando:
+                return cmd_schede_batch(conn, args.limite, min(args.limite, LIMITE_SCHEDE_BATCH))
             return cmd_schede(conn, args.bando, args.limite)
         except IASpenta as exc:
             print(exc)

@@ -1,5 +1,7 @@
-"""Servizio di raccolta: ogni ora controlla le fonti in scadenza; una volta al giorno ricalcola lo stato dei bandi;
-il lunedi' mattina manda il riepilogo della settimana.
+"""Servizio di raccolta: ogni ora controlla le fonti in scadenza e porta avanti la catena dei bandi (smistamento,
+deduplica, pagina ufficiale, allegati e, con la chiave API, l'IA con la Batch API: app/schede/ia.py, ciclo_catena);
+una volta al giorno ricalcola lo stato dei bandi; il lunedi' mattina manda il riepilogo della settimana.
+CATENA_AUTOMATICA=0 nel .env spegne la catena (resta solo la raccolta).
 Gira come container 'raccolta' in Docker Compose."""
 
 from __future__ import annotations
@@ -25,6 +27,13 @@ def main() -> int:
             esegui()
         except Exception:  # noqa: BLE001 - il servizio non deve morire per un errore di un giro
             traceback.print_exc()
+        if os.environ.get("CATENA_AUTOMATICA", "1") != "0":
+            try:
+                from app.schede.ia import ciclo_catena
+
+                ciclo_catena()
+            except Exception:  # noqa: BLE001
+                traceback.print_exc()
         adesso = datetime.now()
         if adesso.date() != ultimo_stato:   # una volta al giorno: stato dei bandi (aperto, chiuso, in arrivo) dalle date
             try:
