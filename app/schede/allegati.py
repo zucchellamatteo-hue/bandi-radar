@@ -17,6 +17,10 @@ Uso:
   python -m app.schede.allegati --limite 10   # solo i primi 10
   python -m app.schede.allegati --bando 45    # un bando preciso, anche se gia' cercato
   python -m app.schede.allegati --annuncio 123   # la pagina di un annuncio preciso, anche se non e' smistato
+  python -m app.schede.allegati --rileggi-illeggibili [--prova]   # rilegge con l'OCR i PDF senza testo leggibile
+
+I PDF senza testo leggibile (scansioni, font senza tabella dei caratteri) si leggono con l'OCR (tesseract,
+installato nell'immagine della raccolta); se neanche l'OCR da' un testo sensato, il testo resta vuoto.
 """
 
 from __future__ import annotations
@@ -261,16 +265,84 @@ def testo_html(html: str) -> str | None:
     return testo or None
 
 
+# Parole piu' comuni in italiano, inglese (documenti UE), tedesco (Alto Adige) e francese (Valle d'Aosta):
+# in un testo vero sono almeno un quinto delle parole.
+_PAROLE_COMUNI = frozenset(
+    "di e il la le lo i gli del della dei delle dello al alla ai alle a in per con da che un una non si sono "
+    "è o nel nella nei sul sulla come ed art the of and to in for on by with is are be "
+    "der die das und zu von mit für ist den des im auf sich nicht ein eine dem "
+    "les de et du pour au aux est".split())
+_PAROLE = re.compile(r"[a-zà-ÿ]+")
+_LETTERE = re.compile(r"[^\W\d_]")
+
+
+def testo_leggibile(testo: str | None) -> bool:
+    """False se il testo estratto da un PDF e' spazzatura: font senza la tabella dei caratteri (esce "TXLVLWL\\x03..."
+    o "ĐŽŵƉŽƐƚŽ" al posto delle parole) o font disegnati (Type3: "/63 /63 /71"). Si riconosce perche' mancano le
+    parole piu' comuni. I testi corti o fatti di sole tabelle di numeri non si giudicano: si tengono."""
+    if not testo:
+        return False
+    parole = _PAROLE.findall(testo.lower())
+    if len(parole) < 150:
+        pieni = len(re.sub(r"\s", "", testo))
+        return "\x03" not in testo and pieni > 0 and len(_LETTERE.findall(testo)) / pieni >= 0.3
+    comuni = sum(1 for p in parole if p in _PAROLE_COMUNI)
+    return comuni / len(parole) >= 0.05
+
+
+MASSIMO_PAGINE_OCR = 60     # oltre, si legge solo l'inizio: il bando vero sta nelle prime pagine
+SECONDI_OCR = 900           # tempo massimo per file
+
+
+def testo_ocr(dati: bytes) -> str | None:
+    """Legge il PDF come immagini (pdftoppm + tesseract, italiano e inglese). Solo per i PDF senza testo leggibile:
+    scansioni e font senza tabella dei caratteri (29/09/2026: Basket Bond Lazio, Puglia Titolo II, DM FER-X)."""
+    import shutil
+    import subprocess
+    import tempfile
+
+    if not (shutil.which("pdftoppm") and shutil.which("tesseract")):
+        return None
+    with tempfile.TemporaryDirectory() as cartella:
+        pdf = Path(cartella) / "doc.pdf"
+        pdf.write_bytes(dati)
+        try:
+            subprocess.run(["pdftoppm", "-r", "200", "-gray", "-png", "-l", str(MASSIMO_PAGINE_OCR), str(pdf),
+                            str(Path(cartella) / "p")], check=True, capture_output=True, timeout=SECONDI_OCR)
+            pagine = []
+            for immagine in sorted(Path(cartella).glob("p-*.png")):
+                # Priorita' bassa e un solo processore per file: l'OCR non deve rallentare il resto del server.
+                uscita = subprocess.run(["nice", "-n", "15", "tesseract", str(immagine), "-", "-l", "ita+eng"],
+                                        check=True, capture_output=True, timeout=SECONDI_OCR,
+                                        env={**os.environ, "OMP_THREAD_LIMIT": "1"})
+                pagine.append(uscita.stdout.decode("utf-8", "replace"))
+        except (subprocess.SubprocessError, OSError):
+            return None
+    testo = "\n".join(pagine).strip()
+    return testo or None
+
+
+def _testo_pdf_o_ocr(dati: bytes) -> str | None:
+    testo = testo_pdf(dati)
+    if testo_leggibile(testo):
+        return testo
+    letto = testo_ocr(dati)
+    if testo_leggibile(letto):
+        return letto
+    # Meglio nessun testo che spazzatura: l'IA la prenderebbe per il bando.
+    return None
+
+
 def estrai_testo(percorso: Path, tipo: str) -> str | None:
     dati = percorso.read_bytes()
     testo = None
     if tipo == "pdf":
-        testo = testo_pdf(dati)
+        testo = _testo_pdf_o_ocr(dati)
     elif tipo == "p7m":
         # Documento firmato: quasi sempre un PDF dentro la busta di firma, leggibile cosi' com'e'.
         inizio, fine = dati.find(b"%PDF-"), dati.rfind(b"%%EOF")
         if inizio >= 0 and fine > inizio:
-            testo = testo_pdf(dati[inizio:fine + 5])
+            testo = _testo_pdf_o_ocr(dati[inizio:fine + 5])
     elif tipo == "docx":
         try:
             with zipfile.ZipFile(io.BytesIO(dati)) as z:
@@ -781,13 +853,69 @@ def esegui(annuncio_id: int | None = None, limite: int = LIMITE_PREDEFINITO, car
     return 0
 
 
+def rileggi_illeggibili(cartella: Path = CARTELLA, bando_id: int | None = None, prova: bool = False,
+                        paralleli: int = 1) -> int:
+    """Rilegge i PDF gia' scaricati il cui testo e' vuoto o spazzatura (testo_leggibile), con l'OCR se serve.
+    Stampa i bandi toccati: le loro schede vanno rifatte."""
+    from app.db.connessione import connetti
+
+    from concurrent.futures import ThreadPoolExecutor
+
+    # La modulistica non va alla scheda e i bandi chiusi non servono: si saltano. Prima i bandi con la scheda.
+    condizione = ("a.tipo IN ('pdf', 'p7m') AND a.percorso_locale IS NOT NULL AND a.categoria IS DISTINCT FROM 'modulistica'"
+                  " AND b.stato IS DISTINCT FROM 'chiuso'" + (" AND a.bando_id = %s" if bando_id else ""))
+    with connetti() as conn:
+        with conn.cursor() as cur:
+            cur.execute(f"""SELECT a.id FROM allegati a JOIN bandi b ON b.id = a.bando_id WHERE {condizione}
+                            ORDER BY b.completezza IS NULL, b.stato IS NULL, a.bando_id, a.id""",
+                        (bando_id,) if bando_id else ())
+            ids = [r["id"] for r in cur.fetchall()]
+        da_rifare = []
+        for inizio in range(0, len(ids), 500):
+            with conn.cursor() as cur:
+                cur.execute("SELECT id, bando_id, percorso_locale, tipo, testo_estratto FROM allegati WHERE id = ANY(%s)",
+                            (ids[inizio:inizio + 500],))
+                trovati = {r["id"]: r for r in cur.fetchall() if not testo_leggibile(r["testo_estratto"])}
+            da_rifare += [dict(trovati[i], testo_estratto=None) for i in ids[inizio:inizio + 500] if i in trovati]
+        print(f"PDF controllati: {len(ids)}; senza testo leggibile: {len(da_rifare)}", flush=True)
+
+        def leggi(r: dict) -> tuple[dict, str | None, bool]:
+            percorso = cartella / r["percorso_locale"]
+            return (r, estrai_testo(percorso, r["tipo"]), True) if percorso.exists() else (r, None, False)
+
+        bandi_toccati: set[int] = set()
+        with ThreadPoolExecutor(max_workers=max(1, paralleli)) as esecutore:   # l'OCR gira in processi esterni
+            for r, testo, esiste in esecutore.map(leggi, da_rifare):
+                if not esiste:
+                    print(f"manca    [allegato {r['id']}] {r['percorso_locale']}")
+                    continue
+                print(f"{'letto   ' if testo else 'illeggib'} [allegato {r['id']}, bando {r['bando_id']}] "
+                      f"{r['percorso_locale'][:70]}: {len(testo or '')} caratteri", flush=True)
+                if prova:
+                    continue
+                with conn.cursor() as cur:
+                    cur.execute("UPDATE allegati SET testo_estratto = %s WHERE id = %s", (testo, r["id"]))
+                conn.commit()
+                if testo and r["bando_id"]:
+                    bandi_toccati.add(r["bando_id"])
+    print("Bandi con testo nuovo (schede da rifare):", " ".join(str(b) for b in sorted(bandi_toccati)) or "nessuno")
+    return 0
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description="Scarica allegati e FAQ dalla pagina ufficiale dei bandi.")
     parser.add_argument("--bando", type=int, metavar="ID", help="solo questo bando (anche se gia' cercato)")
     parser.add_argument("--annuncio", type=int, metavar="ID", help="la pagina di un annuncio preciso, come prima")
     parser.add_argument("--limite", type=int, default=LIMITE_PREDEFINITO, metavar="N",
                         help=f"al massimo N bandi per giro (default {LIMITE_PREDEFINITO})")
+    parser.add_argument("--rileggi-illeggibili", action="store_true",
+                        help="rilegge (anche con l'OCR) i PDF gia' scaricati senza testo leggibile, poi si ferma")
+    parser.add_argument("--prova", action="store_true", help="con --rileggi-illeggibili: mostra, non salva")
+    parser.add_argument("--paralleli", type=int, default=1, metavar="N",
+                        help="con --rileggi-illeggibili: N file letti insieme (l'OCR usa un processore per file)")
     args = parser.parse_args(argv)
+    if args.rileggi_illeggibili:
+        return rileggi_illeggibili(bando_id=args.bando, prova=args.prova, paralleli=args.paralleli)
     return esegui(args.annuncio, args.limite, bando_id=args.bando)
 
 
