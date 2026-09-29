@@ -179,7 +179,9 @@ def _territorio(b: dict, p: dict, e: Esito, parziale: bool) -> None:
     elif esito_migliore == "forse":
         e.verifica(f"il bando vale solo per {dove}: completare provincia e comune della sede")
     elif richiesta == "da_attivare":
-        e.da_controllare.append(f"aprire una sede operativa in {dove} prima dell'erogazione")
+        # Ammessa anche senza sede, ma solo aprendone una: e' una scelta da fare con il cliente, non un "compatibile".
+        e.fuori_zona = True
+        e.verifica(f"nessuna sede in {dove}: il bando chiede di aprirne una prima dell'erogazione")
     else:
         tipo_sede = {"legale": "sede legale", "operativa": "sede operativa"}.get(richiesta, "sede")
         e.escludi(f"serve una {tipo_sede} in {dove}")

@@ -76,8 +76,9 @@ def test_territorio_sede_operativa_e_da_attivare():
     legale = {**operativa, "sede_richiesta": "legale"}
     assert valuta(legale, due_sedi, OGGI).livello == ESCLUSO
     da_attivare = {**operativa, "sede_richiesta": "da_attivare"}
-    e = valuta(da_attivare, SRL_MILANO, OGGI)
-    assert e.livello == COMPATIBILE and any("aprire una sede" in x for x in e.da_controllare)
+    e = valuta(da_attivare, SRL_MILANO, OGGI)   # si puo' partecipare solo aprendo una sede: da decidere col cliente
+    assert e.livello == DA_VERIFICARE and e.fuori_zona and any("aprirne una" in x for x in e.da_verificare)
+    assert valuta(da_attivare, due_sedi, OGGI).livello == COMPATIBILE
 
 
 def test_territorio_ue_con_elenchi_vuoti():
