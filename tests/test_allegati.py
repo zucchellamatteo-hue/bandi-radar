@@ -115,6 +115,27 @@ def test_testo_dei_pdf_e_dei_p7m(tmp_path):
     assert "50.000 euro" in estrai_testo(busta, "p7m")
 
 
+def test_testo_leggibile_riconosce_i_font_senza_tabella_dei_caratteri():
+    vero = "Le domande di agevolazione possono essere presentate dalle micro, piccole e medie imprese " * 20
+    assert allegati.testo_leggibile(vero)
+    assert allegati.testo_leggibile("Das Ansuchen ist bei der Landesverwaltung und mit den Unterlagen einzureichen " * 20)
+    assert allegati.testo_leggibile("Graduatoria 2026\n1 Rossi srl 12.000\n2 Bianchi snc 8.500")
+    # Casi veri del 29/09/2026: glifi spostati di 29 (Basket Bond Lazio), glifi Calibri (Puglia), Type3 (MIMIT-MUR).
+    spostato = "/H\x03GRPDQGH\x03GL\x03DJHYROD]LRQH\x03SRVVRQR\x03HVVHUH\x03SUHVHQWDWH\x03GD\x03PLFURLPSUHVH " * 40
+    assert not allegati.testo_leggibile(spostato)
+    assert not allegati.testo_leggibile("ƉƌŽŵŽƐƐŝ\x03ĚĂ\x03ŐƌĂŶĚŝ\x03ŝŵƉƌĞƐĞ͗\x03 " * 40)
+    assert not allegati.testo_leggibile("/63 /63 /71 □ /64 /47 /55 /56 /48 /43")
+    assert not allegati.testo_leggibile(None)
+
+
+def test_pdf_illeggibile_passa_all_ocr(monkeypatch):
+    monkeypatch.setattr(allegati, "testo_pdf", lambda dati: "TXLVLWL\x03JHQHUDOL\x03GL\x03DPPLVVLELOLWj")
+    monkeypatch.setattr(allegati, "testo_ocr", lambda dati: "Requisiti generali di ammissibilità per le imprese")
+    assert allegati._testo_pdf_o_ocr(b"%PDF-") == "Requisiti generali di ammissibilità per le imprese"
+    monkeypatch.setattr(allegati, "testo_ocr", lambda dati: None)
+    assert allegati._testo_pdf_o_ocr(b"%PDF-") is None     # meglio niente che spazzatura
+
+
 def test_elabora_annuncio(tmp_path, monkeypatch):
     monkeypatch.setattr(allegati, "MASSIMO_FILE", 20_000)
     pagina = """<a href="/doc/bando.pdf">Bando</a> <a href="/doc/enorme.zip">Tutto in un file</a>
