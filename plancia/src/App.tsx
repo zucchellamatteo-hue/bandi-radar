@@ -2,6 +2,7 @@ import { NavLink, Route, Routes } from "react-router-dom";
 import Fonti from "./pagine/Fonti";
 import DettaglioFonte from "./pagine/DettaglioFonte";
 import Catalogo from "./pagine/Catalogo";
+import Annunci from "./pagine/Annunci";
 import DettaglioAnnuncio from "./pagine/DettaglioAnnuncio";
 import Novita from "./pagine/Novita";
 import Settimana from "./pagine/Settimana";
@@ -17,6 +18,7 @@ export default function App() {
         <nav>
           <NavLink to="/" end className={classe}>Fonti</NavLink>{" · "}
           <NavLink to="/catalogo" className={classe}>Catalogo</NavLink>{" · "}
+          <NavLink to="/annunci" end className={classe}>Annunci</NavLink>{" · "}
           <NavLink to="/doppioni" className={classe}>Doppioni</NavLink>{" · "}
           <NavLink to="/novita" className={classe}>Novità</NavLink>
         </nav>
@@ -26,6 +28,7 @@ export default function App() {
           <Route path="/" element={<Fonti />} />
           <Route path="/fonti/:id" element={<DettaglioFonte />} />
           <Route path="/catalogo" element={<Catalogo />} />
+          <Route path="/annunci" element={<Annunci />} />
           <Route path="/annunci/:id" element={<DettaglioAnnuncio />} />
           <Route path="/bandi/:id" element={<Bando />} />
           <Route path="/doppioni" element={<Doppioni />} />

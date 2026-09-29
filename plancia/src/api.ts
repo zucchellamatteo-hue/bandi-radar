@@ -36,6 +36,7 @@ export interface AnnuncioDelBando {
 export interface BandoBreve {
   id: number; titolo: string; ente: string | null; territorio: string | null; url: string | null;
   scadenza: string | null; codice_ufficiale: string | null; versione: number;
+  stato?: string | null; completezza?: string | null; sintesi?: string | null;
 }
 
 export interface DubbioAnnuncio { id: number; bando_id: number | null; somiglianza: number | null; motivo: string | null; bando_titolo: string | null }
@@ -54,6 +55,34 @@ export interface Bando extends BandoBreve {
   [campo: string]: unknown;
   chiave_titolo: string | null; creato_il: string; aggiornato_il: string;
   annunci: AnnuncioDelBando[]; allegati: Allegato[]; versioni: { versione: number; causa: string | null; salvata_il: string }[];
+}
+
+// Esito delle regole di abbinamento (app/abbinamento/regole.py): stesso formato nel catalogo e nei profili.
+export type Livello = "compatibile" | "da_verificare" | "escluso";
+export interface EsitoRegole {
+  livello: Livello; esclusioni: string[]; da_verificare: string[]; punti_a_favore: string[]; da_controllare: string[];
+  interessi: number; fuori_zona: boolean;
+}
+
+// Una riga del catalogo dei bandi.
+export interface BandoRiga {
+  id: number; titolo: string; ente: string | null; territorio: string | null; url: string | null;
+  stato: string | null; data_apertura: string | null; scadenza: string | null; ora_scadenza: string | null;
+  tipo_agevolazione: string | null; tipi_agevolazione: string[] | null; contributo_massimo: number | null;
+  percentuale: number | null; fondo_perduto_massimo: number | null; finanziamento_massimo: number | null;
+  dotazione: number | null; modalita_selezione: string | null; completezza: string | null; livelli: string[];
+  temi: string[] | null; qualita: number | null; sintesi: string; esito: EsitoRegole;
+}
+
+export interface RispostaCatalogo {
+  totale: number; conteggi: { compatibile: number; da_verificare: number }; pagina: number; per_pagina: number;
+  con_scheda: number; senza_scheda: number; bandi: BandoRiga[];
+}
+
+// Valori ammessi della scheda (app/schede/campi.py) e territori.
+export interface Valori {
+  [campo: string]: string[] | Record<string, string>;
+  regioni: Record<string, string>; province: Record<string, string>;
 }
 
 export interface Smistamento {
@@ -116,6 +145,9 @@ export const api = {
   decidiDubbio: (id: number, decisione: "stesso" | "diverso") =>
     chiama<{ bando_id: number }>(`/api/dubbi/${id}`, { method: "POST", body: JSON.stringify({ decisione }) }),
   bando: (id: string) => chiama<Bando>(`/api/bandi/${id}`),
+  bandi: (parametri: Record<string, string>) =>
+    chiama<RispostaCatalogo>("/api/bandi?" + new URLSearchParams(parametri).toString()),
+  valori: () => chiama<Valori>("/api/valori"),
   correggiSmistamento: (id: number, esito: Esito) =>
     chiama<{ esito: Esito; deciso_da: string }>(`/api/annunci/${id}/smistamento`, { method: "POST", body: JSON.stringify({ esito }) }),
   settimane: () => chiama<Settimana[]>("/api/novita/settimane"),
@@ -132,6 +164,38 @@ export const NOMI_ESITO: Record<Esito, string> = {
 };
 
 export const NOMI_DECISO_DA: Record<string, string> = { regole: "regole", ia: "IA", matteo: "Matteo" };
+
+// Nomi leggibili dei valori della scheda: quelli non elencati si mostrano togliendo i trattini bassi.
+export const NOMI_VALORI: Record<string, string> = {
+  impresa: "impresa", libero_professionista: "libero professionista", aspirante_imprenditore: "impresa da costituire",
+  ente_terzo_settore: "ente del terzo settore", ente_pubblico: "ente pubblico", persona_fisica: "persona fisica",
+  ditta_individuale: "ditta individuale", snc: "snc", sas: "sas", srl: "srl", srls: "srl semplificata", spa: "spa",
+  sapa: "sapa", societa_semplice: "società semplice", cooperativa: "cooperativa", consorzio: "consorzio",
+  rete_imprese: "rete d'imprese", associazione_professionale: "associazione professionale", stp: "società tra professionisti",
+  micro: "micro", piccola: "piccola", media: "media", grande: "grande",
+  femminile: "femminile", giovanile: "giovanile", startup_innovativa: "startup innovativa", pmi_innovativa: "PMI innovativa",
+  artigiana: "artigiana", agricola: "agricola", commerciale: "commerciale", turistica: "turistica",
+  impresa_sociale: "impresa sociale", rating_legalita: "rating di legalità",
+  certificazione_parita_genere: "certificazione parità di genere", esportatrice: "esportatrice", nuova_impresa: "nuova impresa",
+  fondo_perduto: "fondo perduto", credito_imposta: "credito d'imposta", finanziamento_agevolato: "finanziamento agevolato",
+  garanzia: "garanzia", voucher: "voucher", servizi: "servizi", premio: "premio", misto: "misto",
+  sportello: "a sportello", sportello_valutativo: "sportello valutativo", graduatoria: "graduatoria", click_day: "click day",
+  automatica: "automatica", negoziale: "negoziale",
+  de_minimis: "de minimis", de_minimis_agricolo: "de minimis agricolo", gber: "GBER (esenzione)", aber: "ABER (agricoltura)",
+  temporary_framework: "quadro temporaneo", notificato: "aiuto notificato", non_aiuto: "non è aiuto di Stato",
+  avvio_impresa: "avvio d'impresa", internazionalizzazione: "internazionalizzazione",
+  macchinari_attrezzature: "macchinari e attrezzature", opere_edili_impianti: "opere edili e impianti",
+  software_digitale: "software e digitale", fiere_eventi: "fiere ed eventi", marketing_promozione: "marketing e promozione",
+  brevetti_certificazioni: "brevetti e certificazioni", energia_efficienza: "energia ed efficienza",
+  scorte_circolante: "scorte e circolante", affitto_gestione: "affitto e gestione", ricerca_sviluppo: "ricerca e sviluppo",
+  aperto: "aperto", in_arrivo: "in arrivo", chiuso: "chiuso", altro: "altro",
+};
+export const nome = (v: string | null | undefined) => (v ? NOMI_VALORI[v] || v.replace(/_/g, " ") : "–");
+
+export function euro(n: number | null | undefined): string {
+  if (n == null) return "–";
+  return n.toLocaleString("it-IT", { maximumFractionDigits: 0 }) + " €";
+}
 
 export function dimensione(byte: number | null | undefined): string {
   if (byte == null) return "–";

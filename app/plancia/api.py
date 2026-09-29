@@ -229,18 +229,22 @@ def dettaglio_annuncio(annuncio_id: int) -> dict:
             raise HTTPException(404, "annuncio non trovato")
         cur.execute("SELECT * FROM smistamenti WHERE annuncio_id = %s", (annuncio_id,))
         smistamento = cur.fetchone()
+        # Dal 25/09 gli allegati appartengono al bando: si mostrano quelli del bando collegato, piu' gli eventuali
+        # vecchi allegati scaricati per l'annuncio.
         cur.execute(
             """
             SELECT id, url, nome, tipo, categoria, dimensione, impronta, scaricato_il, errore,
                    percorso_locale IS NOT NULL AS ha_file, length(testo_estratto) AS caratteri_testo
-            FROM allegati WHERE annuncio_id = %s ORDER BY errore IS NOT NULL, id
+            FROM allegati WHERE annuncio_id = %s OR (bando_id = %s AND %s IS NOT NULL)
+            ORDER BY errore IS NOT NULL, id
             """,
-            (annuncio_id,),
+            (annuncio_id, riga["bando_id"], riga["bando_id"]),
         )
         allegati = _righe(cur)
         bando, stesso_bando = None, []
         if riga["bando_id"]:
-            cur.execute("SELECT id, titolo, ente, territorio, url, scadenza, codice_ufficiale, versione FROM bandi WHERE id = %s",
+            cur.execute("""SELECT id, titolo, ente, territorio, url, scadenza, codice_ufficiale, versione, stato,
+                                  completezza, sintesi FROM bandi WHERE id = %s""",
                         (riga["bando_id"],))
             bando = cur.fetchone()
             cur.execute(
@@ -337,6 +341,53 @@ def decidi_dubbio(dubbio_id: int, corpo: Decisione) -> dict:
             raise HTTPException(400, "questo dubbio non ha un bando candidato: si puo' solo creare un bando a se'")
         bando = decisione_matteo(conn, dubbio["annuncio_id"], dubbio["bando_id"] if corpo.decisione == "stesso" else None)
     return {"dubbio_id": dubbio_id, "annuncio_id": dubbio["annuncio_id"], "bando_id": bando}
+
+
+@router.get("/valori")
+def valori_ammessi() -> dict:
+    """I valori ammessi dei campi della scheda (app/schede/campi.py) e i territori, per i menu della plancia."""
+    from app.abbinamento.territorio import NOMI_REGIONI, PROVINCE
+    from app.schede import campi
+
+    return {**{k: list(v) for k, v in campi.VALORI_AMMESSI.items()}, "stati_vincolo": list(campi.STATI_VINCOLO),
+            "regioni": NOMI_REGIONI, "province": PROVINCE}
+
+
+@router.get("/bandi")
+def catalogo_bandi(
+    q: str | None = None, stato: Literal["aperti", "aperto", "in_arrivo", "chiuso", "non_noto", "tutti"] = "aperti",
+    scadenza_entro: int | None = Query(None, ge=1, le=365), livello: str | None = None,
+    regione: str | None = None, provincia: str | None = None, comune: str | None = None,
+    soggetto: str | None = None, forma_giuridica: str | None = None, dimensione: str | None = None,
+    ateco: str | None = None, requisito: str | None = None, tipo_agevolazione: str | None = None,
+    tema: str | None = None, categoria_spesa: str | None = None, modalita: str | None = None,
+    regime: str | None = None, solo_ufficiale: bool = False,
+    pagina: int = Query(1, ge=1), per_pagina: int = Query(50, ge=1, le=200),
+) -> dict:
+    """Catalogo dei bandi con scheda. I filtri su chi puo' partecipare seguono i tre stati dei vincoli: passano i bandi
+    che ammettono il valore e quelli senza vincolo; quelli con il vincolo "non noto" (o scheda fatta su una sintesi)
+    escono con esito "da_verificare" e il motivo, dopo i compatibili. Gli esclusi non escono."""
+    from app.abbinamento import catalogo
+
+    filtri = catalogo.Filtri(
+        q=q, stato=stato, scadenza_entro=scadenza_entro, livello=livello, regione=regione,
+        provincia=provincia.upper() if provincia else None, comune=comune, soggetto=soggetto,
+        forma_giuridica=forma_giuridica, dimensione=dimensione, ateco=ateco, requisito=requisito,
+        tipo_agevolazione=tipo_agevolazione, tema=tema, categoria_spesa=categoria_spesa, modalita=modalita,
+        regime=regime, solo_ufficiale=solo_ufficiale)
+    with connetti() as conn:
+        bandi = catalogo.carica_bandi(conn)
+        with conn.cursor() as cur:
+            cur.execute("SELECT count(*) AS n FROM bandi WHERE completezza IS NULL")
+            senza_scheda = cur.fetchone()["n"]
+    trovati = catalogo.filtra(bandi, filtri)
+    conteggi = {"compatibile": 0, "da_verificare": 0}
+    for _, esito in trovati:
+        conteggi[esito.livello] += 1
+    inizio = (pagina - 1) * per_pagina
+    return {"totale": len(trovati), "conteggi": conteggi, "pagina": pagina, "per_pagina": per_pagina,
+            "con_scheda": len(bandi), "senza_scheda": senza_scheda,
+            "bandi": [catalogo.riga(b, e) for b, e in trovati[inizio:inizio + per_pagina]]}
 
 
 @router.get("/bandi/{bando_id}")

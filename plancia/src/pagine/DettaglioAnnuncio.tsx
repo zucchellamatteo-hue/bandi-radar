@@ -19,7 +19,7 @@ export default function DettaglioAnnuncio() {
   const mancati = dati.allegati.filter((a) => !a.ha_file);
   return (
     <>
-      <p><Link to="/catalogo">← Catalogo</Link></p>
+      <p><Link to="/annunci">← Annunci</Link></p>
       <h1>{dati.titolo}</h1>
       <p className="piccolo">
         <span className="etichetta-tipo">{NOMI_TIPO[dati.tipo] || dati.tipo}</span>
@@ -41,9 +41,11 @@ export default function DettaglioAnnuncio() {
         motivo={dati.collegamento_motivo ?? null}
         altri={dati.stesso_bando} dubbi={dati.dubbi} aggiorna={carica} />
 
-      <h2>Allegati scaricati</h2>
+      <h2>Documenti del bando</h2>
       {dati.allegati.length === 0 ? (
-        <p className="piccolo">Nessun allegato ancora. Si scaricano per gli annunci rilevanti con <code>python -m app.schede.allegati</code>.</p>
+        <p className="piccolo">{dati.bando
+          ? "Nessun documento ancora: si scaricano dalla pagina ufficiale del bando (python -m app.schede.allegati)."
+          : "Nessun documento: l'annuncio non è collegato a un bando."}</p>
       ) : (
         <TabellaAllegati allegati={scaricati} />
       )}
