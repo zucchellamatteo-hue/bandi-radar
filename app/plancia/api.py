@@ -390,6 +390,94 @@ def catalogo_bandi(
             "bandi": [catalogo.riga(b, e) for b, e in trovati[inizio:inizio + per_pagina]]}
 
 
+# --- Profili d'impresa anonimi e abbinamento (docs/PROFILO_IMPRESA.md) -------------------------------------------
+
+def _abbinamento(conn, profilo, anche_esclusi: bool = True) -> dict:
+    from app.abbinamento import catalogo
+
+    risultati = catalogo.abbina(catalogo.carica_bandi(conn), profilo.per_regole(), anche_esclusi=anche_esclusi)
+    conteggi = {"compatibile": 0, "da_verificare": 0, "escluso": 0}
+    for _, esito in risultati:
+        conteggi[esito.livello] += 1
+    return {"conteggi": conteggi, "bandi": [catalogo.riga(b, e) for b, e in risultati]}
+
+
+@router.get("/profili")
+def elenco_profili() -> list[dict]:
+    with connetti() as conn, conn.cursor() as cur:
+        cur.execute("SELECT codice, profilo, origine, creato_il, aggiornato_il FROM profili ORDER BY codice")
+        return _righe(cur)
+
+
+@router.get("/profili/{codice}")
+def leggi_profilo(codice: str) -> dict:
+    with connetti() as conn, conn.cursor() as cur:
+        cur.execute("SELECT codice, profilo, origine, creato_il, aggiornato_il FROM profili WHERE codice = %s", (codice,))
+        riga = cur.fetchone()
+    if not riga:
+        raise HTTPException(404, "profilo non trovato")
+    return dict(riga)
+
+
+def _modello_profilo():
+    from app.abbinamento.profilo import Profilo
+
+    return Profilo
+
+
+@router.put("/profili/{codice}")
+def salva_profilo(codice: str, corpo: dict) -> dict:
+    """Crea o aggiorna un profilo. Il corpo e' il profilo (docs/PROFILO_IMPRESA.md); il codice e' quello dell'indirizzo."""
+    from pydantic import ValidationError
+
+    try:
+        profilo = _modello_profilo().model_validate({**corpo, "codice": codice})
+    except ValidationError as exc:
+        raise HTTPException(422, "; ".join(str(e["msg"]).removeprefix("Value error, ") for e in exc.errors()))
+    with connetti() as conn, conn.cursor() as cur:
+        cur.execute(
+            """INSERT INTO profili (codice, profilo) VALUES (%s, %s::jsonb)
+               ON CONFLICT (codice) DO UPDATE SET profilo = EXCLUDED.profilo, aggiornato_il = now()
+               RETURNING codice, profilo, origine, creato_il, aggiornato_il""",
+            (codice, profilo.model_dump_json()),
+        )
+        riga = cur.fetchone()
+        conn.commit()
+    return dict(riga)
+
+
+@router.delete("/profili/{codice}")
+def cancella_profilo(codice: str) -> dict:
+    with connetti() as conn, conn.cursor() as cur:
+        cur.execute("DELETE FROM profili WHERE codice = %s RETURNING codice", (codice,))
+        if not cur.fetchone():
+            raise HTTPException(404, "profilo non trovato")
+        conn.commit()
+    return {"codice": codice, "cancellato": True}
+
+
+@router.get("/profili/{codice}/bandi")
+def bandi_del_profilo(codice: str) -> dict:
+    """I bandi aperti o in arrivo per il profilo: compatibili, da verificare (con i motivi) ed esclusi (con il motivo)."""
+    riga = leggi_profilo(codice)
+    profilo = _modello_profilo().model_validate(riga["profilo"])
+    with connetti() as conn:
+        return {"codice": codice, **_abbinamento(conn, profilo)}
+
+
+@router.post("/abbina")
+def abbina_profilo(corpo: dict) -> dict:
+    """Abbinamento di un profilo senza salvarlo (prove dalla plancia; piu' avanti Qiaro / Contract to Cash)."""
+    from pydantic import ValidationError
+
+    try:
+        profilo = _modello_profilo().model_validate({"codice": "prova", **corpo})
+    except ValidationError as exc:
+        raise HTTPException(422, "; ".join(str(e["msg"]).removeprefix("Value error, ") for e in exc.errors()))
+    with connetti() as conn:
+        return _abbinamento(conn, profilo)
+
+
 @router.get("/bandi/{bando_id}")
 def dettaglio_bando(bando_id: int) -> dict:
     with connetti() as conn, conn.cursor() as cur:
