@@ -550,13 +550,47 @@ def salva_smistamento(conn, decisi: dict[int, tuple[str, str]], costo_per_annunc
     conn.commit()
 
 
+# Scheda del catalogo nazionale incentivi.gov.it: campi dei dati grezzi dell'annuncio, con il nome per l'IA.
+_CAMPI_CATALOGO = (("titolo", "Titolo"), ("gestore", "Soggetto gestore"), ("riassunto", "Descrizione"),
+                   ("apertura", "Apertura"), ("scadenza", "Scadenza"), ("regioni", "Regioni"),
+                   ("soggetti", "Beneficiari"), ("dimensioni", "Dimensioni d'impresa"), ("forma", "Forma dell'agevolazione"),
+                   ("spese", "Spese ammesse"), ("settori", "Settori"), ("ateco", "Codici ATECO"),
+                   ("costo_min", "Spesa minima (euro)"), ("costo_max", "Spesa massima (euro)"),
+                   ("dotazione", "Dotazione (euro)"), ("link_ente", "Pagina dell'ente"), ("url", "Pagina del catalogo"))
+
+
+def scheda_catalogo(dati: dict) -> str:
+    righe = ["SCHEDA DEL CATALOGO NAZIONALE incentivi.gov.it (sintesi redatta dal Ministero, NON il testo del bando)"]
+    for chiave, nome in _CAMPI_CATALOGO:
+        v = dati.get(chiave)
+        if isinstance(v, list):
+            v = ", ".join(str(x) for x in v)
+        if v not in (None, "", "0"):
+            righe.append(f"{nome}: {v}")
+    return "\n".join(righe)
+
+
 def documenti_del_bando(conn, bando_id: int, massimo: int) -> tuple[list[dict], list[str]]:
+    """I documenti del bando in ordine. Se il bando e' anche nel catalogo incentivi.gov.it, si aggiunge in testa la
+    sua scheda (30/09): quando la pagina dell'ente e' vuota o bloccata e' l'unica fonte, e la scheda sara' "solo_sintesi"."""
     from app.schede.allegati import documenti_per_scheda
 
     with conn.cursor() as cur:
         cur.execute("""SELECT nome, url, tipo, categoria, testo_estratto, errore FROM allegati
                        WHERE bando_id = %s AND annuncio_id IS NULL""", (bando_id,))
-        return documenti_per_scheda([dict(r) for r in cur.fetchall()], massimo)
+        allegati = [dict(r) for r in cur.fetchall()]
+        cur.execute("""SELECT url, dati FROM annunci WHERE bando_id = %s AND fonte_id = 'incentivi_gov_ricerca'
+                       AND jsonb_typeof(dati) = 'object' ORDER BY id LIMIT 1""", (bando_id,))
+        catalogo = cur.fetchone()
+    if not catalogo:
+        return documenti_per_scheda(allegati, massimo)
+    # In testa: e' corta, e se la pagina dell'ente e' solo menu il limite del controllo preliminare la taglierebbe.
+    # Il prompt dice gia' che il bando vale piu' delle sintesi.
+    testo = scheda_catalogo(catalogo["dati"])[:max(0, massimo // 3)]
+    sintesi = {"nome": "Scheda del catalogo incentivi.gov.it (sintesi, non il bando)", "url": catalogo["url"],
+               "tipo": "pagina", "categoria": "altro", "testo_estratto": testo, "errore": None, "testo": testo}
+    documenti, avvertenze = documenti_per_scheda(allegati, massimo - len(testo))
+    return [sintesi, *documenti], avvertenze
 
 
 def bandi_da_schedare(conn, bando_id: int | None, limite: int) -> list[dict]:

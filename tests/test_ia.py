@@ -315,3 +315,11 @@ def test_batch_preliminare_seconda_lettura_e_scheda(monkeypatch):
                 cur.execute("DELETE FROM bandi WHERE id = %s", (bando,))
                 cur.execute("DELETE FROM fonti WHERE id = 'prova_batch'")
             conn.commit()
+
+
+def test_scheda_del_catalogo_incentivi():
+    testo = ia.scheda_catalogo({"titolo": "Voucher export", "riassunto": "Contributi alle PMI", "regioni": ["Marche"],
+                                "costo_min": "0", "costo_max": "50000", "ateco": "", "url": "https://incentivi.gov.it/x"})
+    assert testo.startswith("SCHEDA DEL CATALOGO NAZIONALE") and "NON il testo del bando" in testo
+    assert "Regioni: Marche" in testo and "Spesa massima (euro): 50000" in testo
+    assert "Spesa minima" not in testo and "Codici ATECO" not in testo
