@@ -531,7 +531,7 @@ def elabora_pagina(client: httpx.Client, sottocartella: str, url_pagina: str, ca
     if tipo_pagina:   # la pagina e' direttamente un documento
         candidati = [Candidato(pagina, _nome_da_url(pagina), tipo_pagina)]
     else:
-        pausa.attendi(pagina)
+        pausa.attendi(pagina, ignora_robots=ignora(pagina))
         risposta = scarica(client, pagina, accept="text/html,application/xhtml+xml", ignora_robots=ignora(pagina))
         risposta.raise_for_status()
         candidati = trova_allegati(risposta.text, str(risposta.url))
@@ -558,7 +558,7 @@ def elabora_pagina(client: httpx.Client, sottocartella: str, url_pagina: str, ca
             continue
         temporaneo = cartella_annuncio / f".in_corso_{os.getpid()}"
         try:
-            pausa.attendi(c.url)
+            pausa.attendi(c.url, ignora_robots=ignora(c.url))
             n, impronta, mime = scarica_file(client, c.url, temporaneo, min(MASSIMO_FILE, restano), ignora(c.url))
         except TroppoGrande as exc:
             r.errore = f"troppo grande: {exc}"
