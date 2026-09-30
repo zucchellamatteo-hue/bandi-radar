@@ -409,6 +409,8 @@
 
     '
   ignora_robots: true
+  pagina_ufficiale:
+    escludi: ["/category/"]   # 30/09: pagine di categoria = elenchi, non bandi
 
 - id: liguria_fesr_calendario_inviti
   nome: Regione Liguria - PR FESR 2021-2027, Calendario degli inviti (art. 49)
@@ -547,6 +549,10 @@
 
     
   ignora_robots: true
+  pagina_ufficiale:
+    # 30/09: l'annuncio salva /read/<id> (link interno dell'API, risponde 410); /openpa/object/<id> porta alla pagina
+    # del servizio /Servizi/<nome> (permessa da robots.txt). Verificato su 5 bandi.
+    sostituisci: {"provincia.tn.it/read/": "provincia.tn.it/openpa/object/"}
 
 - id: trento_fesr_calendario_avvisi
   nome: Provincia autonoma di Trento - FESR 2021-2027, Calendario degli avvisi (art. 49, CSV)
@@ -630,6 +636,10 @@
   note: 'OData pubblica di myCIVIS (GET senza token): value[] con ntt_name_italian, productnumber, modifiedon. 961
     servizi, circa 260 sono contributi. Niente date di apertura: serve a vedere servizi nuovi o modificati, poi
     si legge la scheda. Trovata il 24/09.'
+  pagina_ufficiale:
+    # 30/09: /it/Services/#3097 e' l'elenco riempito via JavaScript (solo menu). La scheda del servizio con tutto il
+    # testo (descrizione, requisiti, percentuali, scadenze, FAQ) e i link agli allegati sta in ServiceDetail/?id=<numero>.
+    sostituisci: {"/Services/#": "/Services/ServiceDetail/?id="}
 
 - id: bolzano_economia
   nome: Provincia autonoma di Bolzano - Ripartizione Economia

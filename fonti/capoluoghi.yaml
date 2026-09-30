@@ -764,6 +764,9 @@
     il 24/09.'
   richiesta:
     url_modello: https://www.comune.padova.it{path.alias}
+  pagina_ufficiale:
+    # 30/09: il sito e' Angular (HTML vuoto); il testo intero dell'avviso sta nei dati della fonte.
+    testo_dai_dati: news_body
 
 - id: comune_verona_avvisi
   nome: Comune di Verona - Novita' > Avvisi

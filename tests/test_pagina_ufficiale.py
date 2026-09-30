@@ -41,6 +41,9 @@ def test_valuta_pagina():
     assert valuta_pagina(LOGIN, "https://ente.it/login") == (False, "pagina di accesso (login)")
     ok, perche = valuta_pagina(MENU, "https://ente.it/menu")
     assert not ok and "vuota" in perche
+    # Portale del Veneto: finestra di accesso nascosta nella pagina del bando.
+    con_finestra = BANDO.replace("</body>", '<div class="modal fade" id="login"><input type="password"></div></body>')
+    assert valuta_pagina(con_finestra, "https://bandi.regione.veneto.it/Public/Dettaglio?idAtto=1")[0]
 
 
 def test_link_da_seguire_nella_notizia():
