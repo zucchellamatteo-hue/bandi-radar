@@ -71,10 +71,24 @@ class Esito:
 
 # --- controllo della pagina ------------------------------------------------------------------------
 
+def _nascosto(tag) -> bool:
+    """Il campo sta in una finestra a comparsa o in un blocco nascosto (modal, display:none, hidden)."""
+    for t in [tag, *tag.parents]:
+        if not getattr(t, "attrs", None):
+            continue
+        classi = " ".join(t.get("class") or []).lower()
+        stile = (t.get("style") or "").replace(" ", "").lower()
+        if ("modal" in classi or "display:none" in stile or t.has_attr("hidden")
+                or t.get("aria-hidden") == "true"):
+            return True
+    return False
+
+
 def valuta_pagina(html: str, url: str) -> tuple[bool, str]:
     """La pagina contiene un bando? (vero/falso, perche'). Solo regole, niente IA."""
     zuppa = BeautifulSoup(html, "html.parser")
-    ha_password = bool(zuppa.find("input", attrs={"type": "password"}))
+    # Una finestra di accesso nascosta (Portale bandi del Veneto, 30/09) non fa della pagina una pagina di login.
+    ha_password = any(not _nascosto(i) for i in zuppa.find_all("input", attrs={"type": "password"}))
     _togli_cornice(zuppa)
     testo = testo_html(str(zuppa)) or ""
     norm = normalizza(testo)
@@ -177,16 +191,20 @@ def esegui_regole(client, pausa, annunci: list[AnnuncioDelBando], regole_fonti: 
         if not chiave or chiave in visti:
             return None
         visti.add(chiave)
-        regole = regole_fonti.get(next((a.fonte_id for a in annunci if a.id == c.annuncio_id), ""), {})
+        fonte_id = next((a.fonte_id for a in annunci if a.id == c.annuncio_id), "")
+        regole = regole_fonti.get(fonte_id, {})
         escluso = _escluso(c.url, regole)
         if escluso:
             provati.append(f"{c.url} ({c.motivo}): {escluso}")
             return None
         if tipo_da_url(c.url):
             return Esito(c.url, "trovata", f"{c.motivo}: il link porta direttamente al documento", provati)
+        # ignora_robots di una fonte vale solo per il sito di quella fonte, come per gli allegati (Liguria, 30/09).
+        sito_fonte = urlsplit(indirizzi_fonti.get(fonte_id) or "").netloc.removeprefix("www.")
+        ignora = bool(regole.get("_ignora_robots")) and urlsplit(c.url).netloc.removeprefix("www.") == sito_fonte
         try:
-            pausa.attendi(c.url)
-            risposta = scarica(client, c.url, accept="text/html,application/xhtml+xml")
+            pausa.attendi(c.url, ignora_robots=ignora)
+            risposta = scarica(client, c.url, accept="text/html,application/xhtml+xml", ignora_robots=ignora)
             risposta.raise_for_status()
         except NonPermesso:
             provati.append(f"{c.url} ({c.motivo}): robots.txt vieta la pagina")
@@ -314,7 +332,8 @@ def esegui(bando_id: int | None = None, limite: int = LIMITE_PREDEFINITO, rifai_
     from app.raccolta.scarica import nuovo_client
 
     registro = carica_registro(CARTELLA_FONTI)
-    regole = {f.id: ({**f.pagina_ufficiale, "documenti": "plone_api"} if f.documenti_plone else f.pagina_ufficiale)
+    regole = {f.id: {**f.pagina_ufficiale, **({"documenti": "plone_api"} if f.documenti_plone else {}),
+                     **({"_ignora_robots": True} if f.ignora_robots else {})}
               for f in registro}
     indirizzi = {f.id: f.url for f in registro if f.url}
     conteggi: Counter = Counter()

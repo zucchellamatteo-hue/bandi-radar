@@ -51,6 +51,7 @@ MASSIMO_FILE = 25 * 1024 * 1024        # byte per singolo file
 MASSIMO_ANNUNCIO = 100 * 1024 * 1024   # byte in tutto per annuncio
 MASSIMO_FILE_ANNUNCIO = 30             # file per annuncio
 PAUSA_SECONDI = 2.0                    # tra due richieste allo stesso sito (di piu' se robots.txt chiede Crawl-delay)
+MASSIMA_PAUSA_IGNORANDO_ROBOTS = 10.0  # per le fonti con ignora_robots: il Crawl-delay conta fino a qui
 MASSIMO_TESTO = 200_000                # caratteri di testo estratto conservati per file
 LIMITE_PREDEFINITO = 50                # annunci per giro
 
@@ -69,7 +70,8 @@ TIPI_MIME = {
 _ESTENSIONE = re.compile(r"\.(" + "|".join(ESTENSIONI) + r")(?=/|$)")
 # Link di scaricamento senza estensione (Plone: .../allegati/bando-2026/download/file, .../@@download/file,
 # .../at_download/file): il tipo vero si legge dal Content-Type quando si scarica.
-_SCARICA = re.compile(r"/(?:@@download|at_download|download)(?:/[^/]+)?/?$")
+# .../download.aspx?...&Id=<GUID>: allegati di myCIVIS (Provincia di Bolzano, 30/09).
+_SCARICA = re.compile(r"/(?:@@download|at_download|download)(?:/[^/]+|\.aspx)?/?$", re.IGNORECASE)
 _FAQ = re.compile(r"(?<!\w)(faq|domande frequenti|domande e risposte)(?!\w)", re.IGNORECASE)
 _SPAZI = re.compile(r"\s+")
 # Testi dei link che non dicono nulla: meglio il nome del file.
@@ -134,6 +136,7 @@ def _nome_da_url(url: str) -> str:
 
 
 _CORNICE = re.compile(r"footer|navbar|menu|cookie|breadcrumb", re.IGNORECASE)
+_CONTENUTO = re.compile(r"contenut", re.IGNORECASE)   # non "content": "footer-content" e' davvero un pie' di pagina
 
 
 def _togli_cornice(zuppa: BeautifulSoup) -> None:
@@ -145,7 +148,8 @@ def _togli_cornice(zuppa: BeautifulSoup) -> None:
         if tag.decomposed or tag.name in ("html", "body", "main", "article"):
             continue
         nome = " ".join([tag.get("id") or "", *(tag.get("class") or [])])
-        if nome.strip() and _CORNICE.search(nome) and _e_cornice(tag):
+        # Liferay (MASE, 30/09): "lfr-layout-structure-item-breadcrumb-e-contenuto-std" contiene il testo del bando.
+        if nome.strip() and _CORNICE.search(nome) and not _CONTENUTO.search(nome) and _e_cornice(tag):
             tag.decompose()
 
 
@@ -186,9 +190,14 @@ class Pausa:
         self.client, self.minima, self.dormi = client, minima, dormi
         self._ultima: dict[str, float] = {}
 
-    def attendi(self, url: str) -> None:
+    def attendi(self, url: str, ignora_robots: bool = False) -> None:
         sito = urlsplit(url).netloc
-        attesa = max(self.minima, regole_robots(self.client, url).crawl_delay or 0)
+        ritardo = regole_robots(self.client, url).crawl_delay or 0
+        if ignora_robots:
+            # Fonte letta nonostante robots.txt (decisione di Matteo): il Crawl-delay di 600 s della Liguria fermerebbe
+            # tutto per 10 minuti a bando. Si tiene comunque una pausa ragionevole.
+            ritardo = min(ritardo, MASSIMA_PAUSA_IGNORANDO_ROBOTS)
+        attesa = max(self.minima, ritardo)
         if sito in self._ultima:
             resta = attesa - (time.monotonic() - self._ultima[sito])
             if resta > 0:
@@ -522,7 +531,7 @@ def elabora_pagina(client: httpx.Client, sottocartella: str, url_pagina: str, ca
     if tipo_pagina:   # la pagina e' direttamente un documento
         candidati = [Candidato(pagina, _nome_da_url(pagina), tipo_pagina)]
     else:
-        pausa.attendi(pagina)
+        pausa.attendi(pagina, ignora_robots=ignora(pagina))
         risposta = scarica(client, pagina, accept="text/html,application/xhtml+xml", ignora_robots=ignora(pagina))
         risposta.raise_for_status()
         candidati = trova_allegati(risposta.text, str(risposta.url))
@@ -549,7 +558,7 @@ def elabora_pagina(client: httpx.Client, sottocartella: str, url_pagina: str, ca
             continue
         temporaneo = cartella_annuncio / f".in_corso_{os.getpid()}"
         try:
-            pausa.attendi(c.url)
+            pausa.attendi(c.url, ignora_robots=ignora(c.url))
             n, impronta, mime = scarica_file(client, c.url, temporaneo, min(MASSIMO_FILE, restano), ignora(c.url))
         except TroppoGrande as exc:
             r.errore = f"troppo grande: {exc}"

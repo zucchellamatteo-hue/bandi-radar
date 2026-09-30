@@ -64,6 +64,22 @@ def test_tipo_da_url():
     assert allegati._nome_da_url(url) == "Allegato A bando.pdf"
 
 
+def test_pausa_con_ignora_robots_non_aspetta_dieci_minuti():
+    client = client_finto({}, robots="User-agent: *\nDisallow: /\nCrawl-delay: 600\n")
+    dormite: list[float] = []
+    pausa = Pausa(client, minima=2, dormi=dormite.append)
+    pausa.attendi("https://ente.it/a", ignora_robots=True)
+    pausa.attendi("https://ente.it/b", ignora_robots=True)
+    assert dormite and dormite[-1] <= allegati.MASSIMA_PAUSA_IGNORANDO_ROBOTS
+
+
+def test_allegati_mycivis_senza_estensione():
+    html = ('<div class="section-service-details"><a href="/File/download.aspx?Entity=msdyn_kbattachment&amp;'
+            'Attribute=msdyn_fileattachment&amp;Id=ab12">Brochure informativa</a></div>')
+    [c] = trova_allegati(html, "https://mycivis.civis.bz.it/it/Services/ServiceDetail/?id=3097")
+    assert c.tipo == "file" and c.nome == "Brochure informativa" and "Id=ab12" in c.url
+
+
 def test_trova_allegati_nella_pagina():
     candidati = trova_allegati(PAGINA, "https://ente.it/bandi/voucher")
     assert [(c.tipo, c.url) for c in candidati] == [
