@@ -65,7 +65,7 @@ class Esito:
     def come_dict(self) -> dict:
         return {"livello": self.livello, "esclusioni": self.esclusioni, "da_verificare": self.da_verificare,
                 "punti_a_favore": self.punti_a_favore, "da_controllare": self.da_controllare,
-                "interessi": self.interessi, "fuori_zona": self.fuori_zona}
+                "interessi": self.interessi, "fuori_zona": self.fuori_zona, "dubbi_pesanti": dubbi_pesanti(self)}
 
 
 def classe_dimensionale(profilo: dict) -> tuple[str | None, str | None]:
@@ -460,8 +460,21 @@ def valuta(bando: dict, profilo: dict, oggi: date | None = None, parziale: bool 
     return e.chiudi()
 
 
+# Dubbi "lievi": di solito il bando non pone davvero quel limite, o basta leggerlo. Gli altri (territorio, beneficiari,
+# settori, dimensione, requisiti che mancano al profilo) possono escludere l'impresa: sono "pesanti".
+_DUBBI_LIEVI = ("soglie di ", "scheda fatta solo su una sintesi", "scheda senza documenti", "età dell'impresa richiesta non nota",
+                "forme giuridiche ammesse non note", "requisiti speciali non noti", "stato del bando non noto",
+                "limite di età dell'impresa scritto solo a parole", "forme giuridiche scritte solo a parole")
+
+
+def dubbi_pesanti(esito: Esito) -> int:
+    return sum(1 for d in esito.da_verificare if not d.startswith(_DUBBI_LIEVI))
+
+
 def chiave_ordine(bando: dict, esito: Esito) -> tuple:
-    """Prima i compatibili, poi i da verificare (quelli di un'altra regione in fondo), poi gli esclusi; dentro ogni
-    gruppo per scadenza (senza scadenza in fondo) e, a parita', prima quelli con piu' interessi in comune."""
+    """Prima i compatibili, poi i da verificare, poi gli esclusi. Tra i da verificare: prima quelli della zona
+    dell'impresa, poi quelli con meno dubbi pesanti e meno dubbi in tutto (i piu' vicini a "compatibile"); a parita',
+    piu' interessi in comune e scadenza piu' vicina (senza scadenza in fondo)."""
     scadenza = bando.get("scadenza")
-    return (ORDINE_LIVELLI[esito.livello], esito.fuori_zona, scadenza is None, scadenza or date.max, -esito.interessi)
+    dubbi = (dubbi_pesanti(esito), len(esito.da_verificare)) if esito.livello == DA_VERIFICARE else (0, 0)
+    return (ORDINE_LIVELLI[esito.livello], esito.fuori_zona, *dubbi, -esito.interessi, scadenza is None, scadenza or date.max)
