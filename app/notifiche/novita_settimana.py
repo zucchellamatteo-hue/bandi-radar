@@ -114,27 +114,30 @@ def registra_invio(conn, nome: str, chiave: str, esito: str) -> None:
     conn.commit()
 
 
-def invia_riepilogo(solo_stampa: bool = False, forza: bool = False) -> int:
+def invia_riepilogo(solo_stampa: bool = False, forza: bool = False) -> str:
+    """Manda il riepilogo della settimana e dice com'e' andata (per la Supervisione). Senza destinatario o senza
+    servizio email non finge di averlo mandato: lo registra come "non inviato" con il motivo (una volta a settimana)."""
     a = datetime.now(timezone.utc)
     da = a - timedelta(days=7)
     chiave = date.today().isocalendar()
     chiave_settimana = f"{chiave.year}-W{chiave.week:02d}"
     with connetti() as conn:
         if not solo_stampa and not forza and gia_inviato(conn, "novita_settimana", chiave_settimana):
-            return 0
+            return "gia' inviato questa settimana"
         dati = raccogli_dati(conn, da)
         oggetto, testo, corpo_html = componi(dati, da, a)
         if solo_stampa:
             print(testo)
-            return 0
+            return "solo a schermo"
         destinatario = os.environ.get("EMAIL_MATTEO")
         if not destinatario:
             print("EMAIL_MATTEO non impostata: riepilogo solo a schermo.\n\n" + testo)
-            return 0
+            registra_invio(conn, "novita_settimana", chiave_settimana, "non inviata: manca EMAIL_MATTEO nel .env")
+            return "non inviato: manca EMAIL_MATTEO nel .env"
         esito = invia(destinatario, oggetto, testo, corpo_html)
         registra_invio(conn, "novita_settimana", chiave_settimana, esito)
         print(f"Riepilogo settimana {chiave_settimana}: {esito} a {destinatario}.")
-    return 0
+    return f"{esito} a {destinatario}"
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -142,7 +145,8 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--stampa", action="store_true", help="solo a schermo, senza email e senza registrare l'invio")
     parser.add_argument("--forza", action="store_true", help="invia anche se questa settimana e' gia' stato inviato")
     args = parser.parse_args(argv)
-    return invia_riepilogo(solo_stampa=args.stampa, forza=args.forza)
+    print(invia_riepilogo(solo_stampa=args.stampa, forza=args.forza))
+    return 0
 
 
 if __name__ == "__main__":

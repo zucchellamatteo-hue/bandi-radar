@@ -24,6 +24,7 @@ from __future__ import annotations
 import argparse
 import re
 import sys
+from app.db.blocchi import con_blocco
 
 MINIMO_CARATTERI = 3000
 MINIMO_SEGNI = 5
@@ -74,6 +75,7 @@ def valuta(allegati: list[dict]) -> tuple[str, str]:
     return "nessuno", "nessun documento leggibile"
 
 
+@con_blocco("filtro", 0)
 def esegui(bando_id: int | None = None, tutti: bool = False, prova: bool = False) -> int:
     from collections import Counter
 

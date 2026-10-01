@@ -45,6 +45,7 @@ from bs4 import BeautifulSoup
 from app.raccolta.lettori.html import _e_cornice, _pulisci
 from app.raccolta.robots import permesso
 from app.raccolta.scarica import NonPermesso, nuovo_client, regole_robots, scarica
+from app.db.blocchi import con_blocco
 
 CARTELLA = Path(os.environ.get("ALLEGATI_CARTELLA", "/srv/allegati"))
 MASSIMO_FILE = 25 * 1024 * 1024        # byte per singolo file
@@ -779,6 +780,7 @@ def segna_cercato(conn, annuncio_id: int | None = None, bando_id: int | None = N
     conn.commit()
 
 
+@con_blocco("allegati", 0)
 def esegui(annuncio_id: int | None = None, limite: int = LIMITE_PREDEFINITO, cartella: Path = CARTELLA,
            bando_id: int | None = None) -> int:
     """Senza --annuncio: i bandi con la pagina ufficiale trovata (Parte 2 del 25/09). Con --annuncio: la pagina

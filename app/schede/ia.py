@@ -43,6 +43,7 @@ from datetime import date
 from pathlib import Path
 
 from app.schede import campi
+from app.db.blocchi import con_blocco
 
 CARTELLA = Path(__file__).resolve().parent
 MODELLO_SMISTAMENTO = "claude-opus-5-5"
@@ -485,11 +486,23 @@ def spesa_del_mese(conn) -> float:
         return float(cur.fetchone()["c"])
 
 
+# Costo stimato di una richiesta in volo nella Batch API (misurato il 01-02/10, schede stimate): il tetto conta anche
+# i lotti mandati e non ancora pagati, altrimenti un lotto grande lo sfonderebbe.
+COSTO_STIMATO_IN_VOLO = {"smistamento": 0.05, "preliminare": 0.012, "scheda": 0.16, "doppione": 0.005}
+
+
+def spesa_in_volo(conn) -> float:
+    with conn.cursor() as cur:
+        cur.execute("SELECT scopo, count(*) AS n FROM chiamate_ia WHERE batch AND esito = 'inviata' GROUP BY 1")
+        return sum(COSTO_STIMATO_IN_VOLO.get(r["scopo"], 0.1) * r["n"] for r in cur.fetchall())
+
+
 def controlla_tetto(conn) -> None:
     tetto = float(os.environ.get("IA_TETTO_MESE_USD", TETTO_MESE_PREDEFINITO))
-    speso = spesa_del_mese(conn)
-    if speso >= tetto:
-        raise IASpenta(f"tetto di spesa del mese raggiunto: {speso:.2f} $ su {tetto:.2f} $ (IA_TETTO_MESE_USD)")
+    speso, in_volo = spesa_del_mese(conn), spesa_in_volo(conn)
+    if speso + in_volo >= tetto:
+        raise IASpenta(f"tetto di spesa del mese raggiunto: {speso:.2f} $ spesi + {in_volo:.2f} $ stimati per i lotti in "
+                       f"attesa, su {tetto:.2f} $ (IA_TETTO_MESE_USD)")
 
 
 def registratore(conn, batch: bool = False, batch_id: str | None = None):
@@ -633,6 +646,7 @@ def cmd_stato(conn) -> int:
     return 0
 
 
+@con_blocco("ia_smistamento", 0)
 def cmd_smista(conn, limite: int, batch: bool) -> int:
     client = nuovo_client()
     controlla_tetto(conn)
@@ -666,6 +680,13 @@ def cmd_smista(conn, limite: int, batch: bool) -> int:
     return 0
 
 
+def scopi_in_volo(conn) -> set[str]:
+    """Quali tipi di richiesta hanno un lotto ancora in attesa nella Batch API."""
+    with conn.cursor() as cur:
+        cur.execute("SELECT DISTINCT scopo FROM chiamate_ia WHERE batch AND esito = 'inviata'")
+        return {r["scopo"] for r in cur.fetchall()}
+
+
 def _in_volo(conn) -> dict[str, list[int]]:
     """Richieste inviate alla Batch API e non ancora raccolte, per lotto: {batch_id: [id delle righe]}."""
     with conn.cursor() as cur:
@@ -677,6 +698,7 @@ def _in_volo(conn) -> dict[str, list[int]]:
     return volo
 
 
+@con_blocco("ia_raccogli", 0)
 def cmd_raccogli(conn) -> int:
     """Legge i lotti inviati alla Batch API e salva le risposte, con gli stessi controlli della chiamata diretta.
     Tre tipi di richiesta, dal custom_id: smista-N (lotto di annunci), pre-ID e pre2-ID (controllo preliminare e
@@ -820,28 +842,12 @@ def cmd_schede(conn, bando_id: int | None, limite: int) -> int:
             continue
         client = client or nuovo_client()
         controlla_tetto(conn)
-        messaggio_pre = pr.preliminare(conn, b)
-        r = chiama(client, parametri(MODELLO_PRELIMINARE, pr.istr_pre, messaggio_pre, SCHEMA_PRELIMINARE, 8000,
-                                     EFFORT["preliminare"]))
-        registra("preliminare", MODELLO_PRELIMINARE, str(b["id"]), r)
-        if r.dati is None:
-            print(f"[{b['id']}] controllo preliminare non riuscito: {r.messaggio}")
+        pre = preliminare_diretto(conn, client, pr, b, segnali, registra)
+        if pre is None:
             continue
-        if r.dati.get("stato") == "chiuso" and segnali.aperto:
-            # Seconda lettura: l'IA dice chiuso ma la fonte scrive una scadenza futura (o "aperto"). Nella prova
-            # del 26/09 cosi' si erano fermati bandi aperti (MATCHIN, intelligenza artificiale nelle PMI).
-            seconda = chiama(client, parametri(MODELLO_PRELIMINARE, pr.istr_pre, messaggio_pre + seconda_lettura(segnali),
-                                               SCHEMA_PRELIMINARE, 16000, EFFORT["seconda_lettura"]))
-            registra("preliminare", MODELLO_PRELIMINARE, f"{b['id']} seconda lettura", seconda)
-            if seconda.dati is not None:
-                seconda.dati["prima_lettura"] = {"stato": r.dati.get("stato"), "motivo": r.dati.get("motivo")}
-                r = seconda
-        with conn.cursor() as cur:
-            cur.execute("UPDATE bandi SET preliminare = %s WHERE id = %s", (json.dumps(r.dati), b["id"]))
-        conn.commit()
-        ok, perche = passa_preliminare(r.dati)
+        ok, perche = passa_preliminare(pre)
         if not ok:
-            print(f"[{b['id']}] niente scheda: {perche} ({r.dati.get('motivo')})")
+            print(f"[{b['id']}] niente scheda: {perche} ({pre.get('motivo')})")
             continue
         messaggio, documenti = pr.scheda(conn, b)
         r = chiama(client, parametri(MODELLO_SCHEDA, pr.istr_scheda, messaggio, SCHEMA_SCHEDA, 64000, EFFORT["scheda"]))
@@ -855,10 +861,65 @@ def cmd_schede(conn, bando_id: int | None, limite: int) -> int:
     return 0
 
 
+def preliminare_diretto(conn, client, pr, b: dict, segnali, registra) -> dict | None:
+    """Controllo preliminare con una chiamata diretta (con la seconda lettura se l'IA dice chiuso ma la fonte scrive
+    una scadenza futura). Salva e rende la risposta, o None se non e' riuscito."""
+    messaggio_pre = pr.preliminare(conn, b)
+    r = chiama(client, parametri(MODELLO_PRELIMINARE, pr.istr_pre, messaggio_pre, SCHEMA_PRELIMINARE, 8000,
+                                 EFFORT["preliminare"]))
+    registra("preliminare", MODELLO_PRELIMINARE, str(b["id"]), r)
+    if r.dati is None:
+        print(f"[{b['id']}] controllo preliminare non riuscito: {r.messaggio}")
+        return None
+    if r.dati.get("stato") == "chiuso" and segnali.aperto:
+        # Seconda lettura: l'IA dice chiuso ma la fonte scrive una scadenza futura (o "aperto"). Nella prova
+        # del 26/09 cosi' si erano fermati bandi aperti (MATCHIN, intelligenza artificiale nelle PMI).
+        seconda = chiama(client, parametri(MODELLO_PRELIMINARE, pr.istr_pre, messaggio_pre + seconda_lettura(segnali),
+                                           SCHEMA_PRELIMINARE, 16000, EFFORT["seconda_lettura"]))
+        registra("preliminare", MODELLO_PRELIMINARE, f"{b['id']} seconda lettura", seconda)
+        if seconda.dati is not None:
+            seconda.dati["prima_lettura"] = {"stato": r.dati.get("stato"), "motivo": r.dati.get("motivo")}
+            r = seconda
+    with conn.cursor() as cur:
+        cur.execute("UPDATE bandi SET preliminare = %s WHERE id = %s", (json.dumps(r.dati), b["id"]))
+    conn.commit()
+    return r.dati
+
+
+PRELIMINARI_DIRETTI_PER_GIRO = 40   # circa 0,5 $: cosi' la scheda parte nello stesso giro, senza aspettare un lotto
+
+
+@con_blocco("ia_preliminari", 0)
+def cmd_preliminari_diretti(conn, limite: int = PRELIMINARI_DIRETTI_PER_GIRO) -> int:
+    """Controlli preliminari dei bandi nuovi con il testo ufficiale, con chiamate dirette (02/10/2026: con la Batch API
+    un bando aspettava circa 13 ore per il preliminare e altrettante per la scheda). Rende quanti ne ha fatti."""
+    from app.schede.segnali import segnali_del_bando
+
+    pr = Prompt.carica(date.today())
+    registra = registratore(conn)
+    client = None
+    with conn.cursor() as cur:
+        cur.execute("""SELECT * FROM bandi WHERE pagina_stato = 'trovata' AND allegati_cercati_il IS NOT NULL
+                       AND documentazione = 'bando' AND dati IS NULL AND preliminare IS NULL ORDER BY id DESC LIMIT %s""",
+                    (limite,))
+        bandi = [dict(r) for r in cur.fetchall()]
+    fatti = 0
+    for b in bandi:
+        segnali = segnali_del_bando(conn, b["id"], pr.oggi)
+        if ferma_con_segnali(conn, b, segnali):
+            continue
+        client = client or nuovo_client()
+        controlla_tetto(conn)
+        if preliminare_diretto(conn, client, pr, b, segnali, registra) is not None:
+            fatti += 1
+    return fatti
+
+
 LIMITE_PRELIMINARI_BATCH = 150    # per giro: il costo di un lotto resta prevedibile (circa 2 $ in batch)
 LIMITE_SCHEDE_BATCH = 40          # circa 4-5 $ in batch
 
 
+@con_blocco("ia_schede", 0)
 def cmd_schede_batch(conn, limite_pre: int = LIMITE_PRELIMINARI_BATCH, limite_schede: int = LIMITE_SCHEDE_BATCH) -> int:
     """Controlli preliminari, seconde letture e schede con la Batch API (meta' prezzo, risposte entro 24 ore).
     Ogni bando si manda una volta sola per tipo di richiesta: se la risposta non va, si riprova a mano
@@ -869,7 +930,12 @@ def cmd_schede_batch(conn, limite_pre: int = LIMITE_PRELIMINARI_BATCH, limite_sc
     controlla_tetto(conn)
     pr = Prompt.carica(date.today())
     with conn.cursor() as cur:
-        cur.execute("SELECT riferimento FROM chiamate_ia WHERE scopo IN ('preliminare', 'scheda') AND batch")
+        # Non si rimanda una richiesta ancora in volo; una risposta fallita (errore, scaduta, tagliata) si riprova
+        # una volta (02/10: prima restava per sempre "in attesa"). Quelle riuscite non tornano qui: il bando ha gia'
+        # preliminare o scheda.
+        cur.execute("""SELECT riferimento FROM chiamate_ia WHERE scopo IN ('preliminare', 'scheda') AND batch
+                       GROUP BY riferimento
+                       HAVING bool_or(esito = 'inviata') OR count(*) FILTER (WHERE esito IN ('inviata', 'raccolta')) >= 2""")
         gia = {r["riferimento"] for r in cur.fetchall()}
         cur.execute("""SELECT * FROM bandi WHERE pagina_stato = 'trovata' AND allegati_cercati_il IS NOT NULL
                        AND documentazione = 'bando'

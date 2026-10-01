@@ -11,7 +11,7 @@ import sys
 import time
 import traceback
 
-from datetime import datetime
+from datetime import datetime, timezone
 
 from app.notifiche.novita_settimana import invia_riepilogo
 from app.raccolta.esegui import esegui
@@ -28,7 +28,7 @@ def main() -> int:
     while True:
         try:
             with esecuzione("raccolta") as e:
-                inizio = datetime.now()
+                inizio = datetime.now(timezone.utc)   # il database confronta in UTC (02/10: prima contava sempre 0)
                 esegui()
                 e.riepilogo = riepilogo_raccolta(inizio)
         except Exception:  # noqa: BLE001 - il servizio non deve morire per un errore di un giro
@@ -56,8 +56,7 @@ def main() -> int:
         if adesso.weekday() == 0 and adesso.hour >= 7 and not riepilogo_gia_inviato():   # lunedi', dalle 7, una volta sola
             try:
                 with esecuzione("email_settimana") as e:
-                    invia_riepilogo()
-                    e.riepilogo = "riepilogo della settimana inviato"
+                    e.riepilogo = invia_riepilogo()
             except Exception:  # noqa: BLE001
                 traceback.print_exc()
         time.sleep(INTERVALLO_SECONDI)

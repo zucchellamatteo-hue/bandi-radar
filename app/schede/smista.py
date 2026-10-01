@@ -21,6 +21,7 @@ from dataclasses import dataclass, field
 from pathlib import Path
 
 import yaml
+from app.db.blocchi import con_blocco
 
 FILE_REGOLE = Path(__file__).resolve().parent / "regole_smistamento.yaml"
 SEZIONI = ("rilevante", "destinatari_imprese", "contributi_non_per_imprese", "non_rilevante")
@@ -180,6 +181,7 @@ def stampa_riepilogo(conteggi: Counter, esempi: dict[str, list[str]]) -> None:
                 print("  " + riga)
 
 
+@con_blocco("smistamento", 0)
 def esegui(rifai: bool = False, prova: bool = False, n_esempi: int = 10) -> int:
     from app.db.connessione import connetti
     from app.db.migrazioni import applica_migrazioni
