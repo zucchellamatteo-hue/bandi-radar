@@ -391,6 +391,27 @@ def catalogo_bandi(
             "bandi": [catalogo.riga(b, e) for b, e in trovati[inizio:inizio + per_pagina]]}
 
 
+# --- Supervisione: i sistemi automatici, le loro esecuzioni e i loro dati (app/sistemi.py) ------------------------
+
+@router.get("/sistemi")
+def elenco_sistemi() -> list[dict]:
+    from app import sistemi
+
+    with connetti() as conn:
+        return sistemi.elenco(conn)
+
+
+@router.get("/sistemi/{sistema_id}")
+def dettaglio_sistema(sistema_id: str) -> dict:
+    from app import sistemi
+
+    with connetti() as conn:
+        d = sistemi.dettaglio(conn, sistema_id)
+    if d is None:
+        raise HTTPException(404, "sistema sconosciuto")
+    return d
+
+
 # --- Lavorazione: a che punto e' la fase 2 (regista, docs/ORCHESTRAZIONE.md) ------------------------------------
 
 @router.get("/lavorazione")
