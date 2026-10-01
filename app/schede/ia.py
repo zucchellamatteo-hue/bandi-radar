@@ -598,9 +598,10 @@ def bandi_da_schedare(conn, bando_id: int | None, limite: int) -> list[dict]:
         if bando_id:
             cur.execute("SELECT * FROM bandi WHERE id = %s", (bando_id,))
         else:
+            # Solo i bandi con il testo ufficiale tra i documenti (app/schede/documentazione.py, 01/10).
             cur.execute(
                 """SELECT * FROM bandi WHERE pagina_stato = 'trovata' AND allegati_cercati_il IS NOT NULL
-                   AND dati IS NULL AND preliminare IS NULL ORDER BY id LIMIT %s""", (limite,))
+                   AND documentazione = 'bando' AND dati IS NULL AND preliminare IS NULL ORDER BY id LIMIT %s""", (limite,))
         return [dict(r) for r in cur.fetchall()]
 
 
@@ -871,6 +872,7 @@ def cmd_schede_batch(conn, limite_pre: int = LIMITE_PRELIMINARI_BATCH, limite_sc
         cur.execute("SELECT riferimento FROM chiamate_ia WHERE scopo IN ('preliminare', 'scheda') AND batch")
         gia = {r["riferimento"] for r in cur.fetchall()}
         cur.execute("""SELECT * FROM bandi WHERE pagina_stato = 'trovata' AND allegati_cercati_il IS NOT NULL
+                       AND documentazione = 'bando'
                        AND dati IS NULL AND (preliminare IS NULL OR preliminare->>'seconda_lettura' = 'da_fare'
                             OR preliminare->>'deciso_da' IS DISTINCT FROM 'segnali') ORDER BY id""")
         bandi = [dict(r) for r in cur.fetchall()]
@@ -913,12 +915,13 @@ def ciclo_catena() -> None:
     pagina ufficiale e allegati a piccoli lotti; poi, se c'e' la chiave, l'IA con la Batch API: raccoglie le risposte
     arrivate e manda i nuovi lotti (smistamento dei "da rivedere", controlli preliminari, schede)."""
     from app.db.connessione import connetti
-    from app.schede import allegati, bandi, pagina_ufficiale, smista
+    from app.schede import allegati, bandi, documentazione, pagina_ufficiale, smista
 
     smista.esegui(n_esempi=0)
     bandi.esegui(n_esempi=0)
     pagina_ufficiale.esegui(limite=int(os.environ.get("CATENA_PAGINE_PER_GIRO", "20")))
     allegati.esegui(limite=int(os.environ.get("CATENA_ALLEGATI_PER_GIRO", "10")))
+    documentazione.esegui()   # c'e' il bando tra i documenti? Solo quelli vanno all'IA (01/10)
     if not chiave_presente():
         return
     with connetti() as conn:

@@ -361,7 +361,7 @@ def catalogo_bandi(
     soggetto: str | None = None, forma_giuridica: str | None = None, dimensione: str | None = None,
     ateco: str | None = None, requisito: str | None = None, tipo_agevolazione: str | None = None,
     tema: str | None = None, categoria_spesa: str | None = None, modalita: str | None = None,
-    regime: str | None = None, solo_ufficiale: bool = False,
+    regime: str | None = None, in_disparte: Literal["no", "anche", "solo"] = "no",
     pagina: int = Query(1, ge=1), per_pagina: int = Query(50, ge=1, le=200),
 ) -> dict:
     """Catalogo dei bandi con scheda. I filtri su chi puo' partecipare seguono i tre stati dei vincoli: passano i bandi
@@ -374,7 +374,7 @@ def catalogo_bandi(
         provincia=provincia.upper() if provincia else None, comune=comune, soggetto=soggetto,
         forma_giuridica=forma_giuridica, dimensione=dimensione, ateco=ateco, requisito=requisito,
         tipo_agevolazione=tipo_agevolazione, tema=tema, categoria_spesa=categoria_spesa, modalita=modalita,
-        regime=regime, solo_ufficiale=solo_ufficiale)
+        regime=regime, in_disparte=in_disparte)
     with connetti() as conn:
         bandi = catalogo.carica_bandi(conn)
         with conn.cursor() as cur:
@@ -387,6 +387,7 @@ def catalogo_bandi(
     inizio = (pagina - 1) * per_pagina
     return {"totale": len(trovati), "conteggi": conteggi, "pagina": pagina, "per_pagina": per_pagina,
             "con_scheda": len(bandi), "senza_scheda": senza_scheda,
+            "proponibili": sum(1 for b in bandi if catalogo.proponibile(b)),
             "bandi": [catalogo.riga(b, e) for b, e in trovati[inizio:inizio + per_pagina]]}
 
 
@@ -395,11 +396,15 @@ def catalogo_bandi(
 def _abbinamento(conn, profilo, anche_esclusi: bool = True) -> dict:
     from app.abbinamento import catalogo
 
-    risultati = catalogo.abbina(catalogo.carica_bandi(conn), profilo.per_regole(), anche_esclusi=anche_esclusi)
+    bandi = catalogo.carica_bandi(conn)
+    risultati = catalogo.abbina(bandi, profilo.per_regole(), anche_esclusi=anche_esclusi)
     conteggi = {"compatibile": 0, "da_verificare": 0, "escluso": 0}
     for _, esito in risultati:
         conteggi[esito.livello] += 1
-    return {"conteggi": conteggi, "bandi": [catalogo.riga(b, e) for b, e in risultati]}
+    # In disparte: bandi che passerebbero ma la cui scheda non e' fatta sul bando ufficiale (non proponibili).
+    disparte = catalogo.abbina(bandi, profilo.per_regole(), in_disparte=True)
+    return {"conteggi": conteggi, "bandi": [catalogo.riga(b, e) for b, e in risultati],
+            "in_disparte": [catalogo.riga(b, e) for b, e in disparte]}
 
 
 @router.get("/profili")

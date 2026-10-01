@@ -104,6 +104,8 @@ cd /srv/bandi-radar && sudo -u deploy docker compose run --rm raccolta python -m
 ```
 **Segnali di stato gratuiti** (dal 28/09): prima di chiamare l'IA per il controllo preliminare, il sistema guarda cosa sa gia' del bando (scadenza nei dati della fonte, "Bando Chiuso" o "Stato: Valutazione" in testa alla pagina, "In vigore dal ... al ...", data barrata con la nuova accanto, indirizzo tra i "bandi chiusi"): se tutto dice "chiuso" il bando si ferma senza spesa, con `deciso_da: segnali` nel preliminare. Per vedere i segnali di un bando: `python -m app.schede.segnali --bando 45`; su tutti: `--prova`.
 
+**C'è il bando?** (dal 01/10) Dopo gli allegati, un filtro senza IA guarda i documenti scaricati: "bando" se c'è il testo ufficiale (un PDF o Word lungo e scritto come un regolamento), "sintesi" se ci sono solo pagine web o notizie, "nessuno" se non c'è niente di leggibile. Solo i "bando" vanno all'IA per la scheda; gli altri restano in disparte e non si propongono ai clienti. Gira da solo nel giro orario; a mano: `cd /srv/bandi-radar && sudo -u deploy docker compose run --rm raccolta python -m app.schede.documentazione --tutti`.
+
 **Stato dei bandi**: aperto, chiuso o in arrivo lo calcola il sistema dalle date della scheda, da solo, una volta al giorno (nel servizio `raccolta`). Ogni cambio resta nello storico del bando. A mano: `cd /srv/bandi-radar && sudo -u deploy docker compose run --rm raccolta python -m app.schede.stato`.
 
 ### Dagli annunci ai bandi (deduplica e pagina ufficiale)

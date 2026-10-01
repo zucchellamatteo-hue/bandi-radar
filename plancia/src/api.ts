@@ -76,7 +76,7 @@ export interface BandoRiga {
 
 export interface RispostaCatalogo {
   totale: number; conteggi: { compatibile: number; da_verificare: number }; pagina: number; per_pagina: number;
-  con_scheda: number; senza_scheda: number; bandi: BandoRiga[];
+  con_scheda: number; senza_scheda: number; proponibili: number; bandi: BandoRiga[];
 }
 
 // Valori ammessi della scheda (app/schede/campi.py) e territori.
@@ -97,6 +97,7 @@ export interface Profilo {
 export interface ProfiloSalvato { codice: string; profilo: Profilo; origine: string; creato_il: string; aggiornato_il: string }
 export interface RispostaAbbinamento {
   conteggi: { compatibile: number; da_verificare: number; escluso: number }; bandi: BandoRiga[];
+  in_disparte?: BandoRiga[];   // passerebbero, ma la scheda non e' fatta sul bando ufficiale: non proponibili
 }
 
 export interface Smistamento {

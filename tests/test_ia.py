@@ -282,9 +282,13 @@ def test_batch_preliminare_seconda_lettura_e_scheda(monkeypatch):
             cur.execute("INSERT INTO fonti (id, nome, ente, tipo, territorio, modalita, frequenza, stato) "
                         "VALUES ('prova_batch', 'Prova', 'Ente', 'regione', 'LOM', 'api', 'settimanale', 'attiva') "
                         "ON CONFLICT (id) DO NOTHING")
-            cur.execute("INSERT INTO bandi (titolo, url, pagina_stato, allegati_cercati_il) "
-                        "VALUES ('prova batch', 'https://esempio.it/b', 'trovata', now()) RETURNING id")
+            cur.execute("INSERT INTO bandi (titolo, url, pagina_stato, allegati_cercati_il, documentazione) "
+                        "VALUES ('prova batch', 'https://esempio.it/b', 'trovata', now(), 'bando') RETURNING id")
             bando = cur.fetchone()["id"]
+            # Un bando senza il testo ufficiale (01/10): non va all'IA.
+            cur.execute("INSERT INTO bandi (titolo, url, pagina_stato, allegati_cercati_il, documentazione) "
+                        "VALUES ('prova sintesi', 'https://esempio.it/s', 'trovata', now(), 'sintesi') RETURNING id")
+            sintesi = cur.fetchone()["id"]
             cur.execute("INSERT INTO annunci (fonte_id, url, titolo, impronta, dati, bando_id) VALUES "
                         "('prova_batch', 'https://esempio.it/b', 'prova', 'x', '{\"scadenza\": \"2099-12-31\"}', %s)", (bando,))
         conn.commit()
@@ -312,7 +316,7 @@ def test_batch_preliminare_seconda_lettura_e_scheda(monkeypatch):
             with conn.cursor() as cur:
                 cur.execute("DELETE FROM chiamate_ia WHERE riferimento LIKE %s", (f"%-{bando}",))
                 cur.execute("DELETE FROM annunci WHERE fonte_id = 'prova_batch'")
-                cur.execute("DELETE FROM bandi WHERE id = %s", (bando,))
+                cur.execute("DELETE FROM bandi WHERE id IN (%s, %s)", (bando, sintesi))
                 cur.execute("DELETE FROM fonti WHERE id = 'prova_batch'")
             conn.commit()
 

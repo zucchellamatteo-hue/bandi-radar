@@ -49,7 +49,9 @@ export default function Catalogo() {
       <div className="avviso">Un bando per riga, con la sua scheda. I filtri su <b>chi può partecipare</b> (territorio, soggetto,
         forma giuridica, dimensione, ATECO) mostrano i bandi che lo ammettono e quelli senza limiti: <b>✓ compatibile</b>.
         Se la scheda non lo dice, o è fatta solo su una sintesi, il bando esce lo stesso con <b>? da verificare</b> e il motivo.
-        {risposta && <> Schede: {risposta.con_scheda}; bandi ancora senza scheda: {risposta.senza_scheda}.</>}</div>
+        {risposta && <> Schede: {risposta.con_scheda}, di cui <b>{risposta.proponibili} proponibili</b> (fatte sul bando ufficiale);
+          le altre, fatte solo su una sintesi, stanno <b>in disparte</b> e si vedono scegliendolo nei filtri.
+          Bandi ancora senza scheda: {risposta.senza_scheda}.</>}</div>
 
       <form className="filtri" onSubmit={(e) => { e.preventDefault(); imposta("q", testo); }}>
         <input type="text" placeholder="Cerca nel titolo, nell'ente o nella sintesi…" value={testo} onChange={(e) => setTesto(e.target.value)} />
@@ -84,8 +86,12 @@ export default function Catalogo() {
         {menu("categoria_spesa", "Spese finanziate", elenco("categorie_spesa"))}
         {menu("modalita", "Selezione", elenco("modalita_selezione"))}
         {menu("regime", "Regime d'aiuto", elenco("regime_aiuto"))}
-        <label className="piccolo"><input type="checkbox" checked={parametri.get("solo_ufficiale") === "true"}
-          onChange={(e) => imposta("solo_ufficiale", e.target.checked ? "true" : "")} /> solo schede sul bando ufficiale</label>
+        <select value={parametri.get("in_disparte") || "no"} onChange={(e) => imposta("in_disparte", e.target.value === "no" ? "" : e.target.value)}
+          className={parametri.get("in_disparte") ? "filtro-attivo" : ""}>
+          <option value="no">Solo bandi proponibili (scheda sul bando ufficiale)</option>
+          <option value="anche">Anche quelli in disparte</option>
+          <option value="solo">Solo quelli in disparte (senza bando ufficiale)</option>
+        </select>
         {filtriAttivi && <button type="button" onClick={() => { setTesto(""); setAteco(""); setParametri(new URLSearchParams()); }}>Azzera filtri</button>}
       </div>
 

@@ -172,6 +172,8 @@ function Risultati({ r }: { r: RispostaAbbinamento }) {
       <Gruppo titolo="? Da verificare, con dubbi importanti (territorio, beneficiari, settore, dimensione, requisiti)" bandi={importanti} />
       <Gruppo titolo="? Di altre regioni: servirebbe una sede o un progetto lì" bandi={altrove} />
       <Gruppo titolo="✗ Esclusi, con il motivo" bandi={gruppo("escluso")} />
+      <Gruppo titolo="In disparte: bandi senza il testo ufficiale (scheda fatta su una sintesi), non proponibili"
+        bandi={(r.in_disparte || []).filter((b) => b.esito.livello !== "escluso")} />
     </>
   );
 }

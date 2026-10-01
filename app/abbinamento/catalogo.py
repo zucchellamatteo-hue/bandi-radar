@@ -61,7 +61,9 @@ class Filtri:
     categoria_spesa: str | None = None
     modalita: str | None = None
     regime: str | None = None
-    solo_ufficiale: bool = False            # solo schede fatte sul bando ufficiale
+    # Bandi "in disparte" (01/10, Matteo): scheda non fatta sul bando ufficiale, quindi non proponibile ai clienti.
+    # "no" = solo i proponibili (di base), "anche" = tutti, "solo" = solo quelli in disparte.
+    in_disparte: str = "no"
 
     def profilo(self) -> dict:
         """I filtri su chi puo' partecipare diventano un profilo parziale."""
@@ -90,7 +92,7 @@ def _passa_campi(b: dict, f: Filtri, oggi: date) -> bool:
             return False
     if f.modalita and b["modalita_selezione"] != f.modalita:
         return False
-    if f.solo_ufficiale and b["completezza"] != "bando_ufficiale":
+    if f.in_disparte != "anche" and proponibile(b) != (f.in_disparte == "no"):
         return False
     return True
 
@@ -111,13 +113,20 @@ def filtra(bandi: list[dict], f: Filtri, oggi: date | None = None) -> list[tuple
     return risultato
 
 
-def abbina(bandi: list[dict], profilo: dict, oggi: date | None = None, anche_esclusi: bool = False
-           ) -> list[tuple[dict, regole.Esito]]:
-    """I bandi aperti o in arrivo (o senza stato noto) per un profilo vero, compatibili prima."""
+def proponibile(b: dict) -> bool:
+    """Si propone ai clienti solo un bando con la scheda fatta sul bando ufficiale (Matteo, 01/10/2026): una sintesi,
+    una notizia o la scheda del catalogo non bastano. Gli altri restano "in disparte"."""
+    return b.get("completezza") == "bando_ufficiale"
+
+
+def abbina(bandi: list[dict], profilo: dict, oggi: date | None = None, anche_esclusi: bool = False,
+           in_disparte: bool = False) -> list[tuple[dict, regole.Esito]]:
+    """I bandi aperti o in arrivo (o senza stato noto) per un profilo vero, compatibili prima. Con `in_disparte`, i
+    bandi non proponibili (scheda senza bando ufficiale) invece di quelli proponibili."""
     oggi = oggi or date.today()
     risultato = []
     for b in bandi:
-        if b["stato"] == "chiuso":
+        if b["stato"] == "chiuso" or proponibile(b) == in_disparte:
             continue
         esito = regole.valuta(b, profilo, oggi)
         if anche_esclusi or esito.livello != regole.ESCLUSO:

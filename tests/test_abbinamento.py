@@ -135,7 +135,9 @@ def test_stato_e_ordine():
     tardi = bando(id=3, scadenza=date(2026, 11, 10))
     dubbio = bando(id=4, scadenza=date(2026, 10, 1), completezza="solo_sintesi")
     risultato = catalogo.abbina([tardi, dubbio, presto, chiuso], SRL_MILANO, OGGI)
-    assert [b["id"] for b, _ in risultato] == [2, 3, 4]
+    assert [b["id"] for b, _ in risultato] == [2, 3]   # la scheda su una sintesi non si propone (01/10)
+    disparte = catalogo.abbina([tardi, dubbio, presto, chiuso], SRL_MILANO, OGGI, in_disparte=True)
+    assert [b["id"] for b, _ in disparte] == [4]
 
 
 def test_catalogo_filtri_parziali():
