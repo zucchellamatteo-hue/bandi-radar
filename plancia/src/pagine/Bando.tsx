@@ -33,6 +33,9 @@ export default function Bando() {
           <div className="piccolo">{b.pagina_motivo}</div></div>
       )}
       {!b.completezza && b.pagina_stato !== "non_trovata" && <div className="avviso">Scheda non ancora fatta.</div>}
+      {b.documentazione ? <p className="piccolo">Documenti: <b>{b.documentazione === "bando" ? "c'è il testo del bando"
+        : b.documentazione === "sintesi" ? "solo sintesi o pagine web (in disparte)" : "nessun documento leggibile (in disparte)"}</b>
+        {b.documentazione_motivo ? ` — ${String(b.documentazione_motivo)}` : ""}</p> : null}
       {b.completezza && b.completezza !== "bando_ufficiale" && (
         <div className="avviso"><b>{NOMI_COMPLETEZZA[b.completezza]}</b>: i dati vanno controllati sul bando ufficiale.</div>
       )}

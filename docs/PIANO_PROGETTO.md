@@ -350,6 +350,14 @@ Alcune fasi si sovrappongono di una settimana, apposta. Nella **Fase 0** e nella
 | Profili | Formato in `docs/PROFILO_IMPRESA.md`, lo stesso che arriverà dalle anagrafiche e da Qiaro. Solo un codice interno; il sistema rifiuta codici fiscali, partite IVA, email e telefoni; per i soci solo il risultato (femminile, giovanile sì/no). Un requisito non indicato vale "non lo so", mai "no". |
 | PDF illeggibili | Font senza tabella dei caratteri e scansioni: si riconoscono dalla mancanza delle parole più comuni e si leggono con l'OCR (tesseract) nell'immagine della raccolta; se neanche l'OCR funziona il testo resta vuoto. PR #32. |
 
+**Decise il 01/10/2026 (Matteo):**
+
+| Tema | Decisione |
+|---|---|
+| Solo bandi con le regole ufficiali | Un bando si analizza e si propone ai clienti solo se tra i documenti c'è il testo ufficiale. Filtro senza IA (`app/schede/documentazione.py`): "bando" se c'è un documento (PDF, Word; non pagine web, modulistica, graduatorie) di almeno 3.000 caratteri con almeno 5 segni di un regolamento; altrimenti "sintesi" o "nessuno". Tarato sulle 3.475 decisioni già prese dall'IA (riconosce il 91% dei bandi veri). Solo i "bando" vanno al controllo preliminare e alla scheda, con l'API o in sessione. |
+| In disparte | Le schede fatte su una sintesi (pagina, notizia, catalogo incentivi.gov.it) non si propongono: nel catalogo si vedono solo scegliendo "in disparte", nei profili stanno in un gruppo a parte. |
+| API | Chiave attiva dal 01/10, tetto 30 $ al mese nel programma e sulla Console. La catena oraria manda all'IA solo i bandi nuovi con il testo ufficiale. |
+
 **Ancora aperti:**
 
 1. **Struttura delle anagrafiche in Postgres**: schema ricevuto il 25/09 (`docs/ricerche/2026-09-25_schema_anagrafiche_leadgen.md`). Copre bene ATECO e fatturato; mancano data di costituzione, totale di bilancio, ULA, requisiti speciali. È un archivio di prospect: serve sapere dove stanno i clienti. Seconda richiesta pronta in `docs/RICHIESTA_SCHEMA_ANAGRAFICHE.md`.
