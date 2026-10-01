@@ -42,6 +42,7 @@ from app.schede.bandi import _e_pagina_di_servizio, url_chiave
 from app.schede.smista import normalizza
 
 LIMITE_PREDEFINITO = 100
+RIPROVA_NON_TROVATI_GIORNI = 14
 TESTO_MINIMO = 400          # caratteri di testo utile sotto i quali una pagina e' "vuota"
 
 # Parole che in una pagina di un bando ci sono quasi sempre.
@@ -285,9 +286,12 @@ def bandi_da_cercare(conn, bando_id: int | None, limite: int, rifai_non_trovati:
             cur.execute("SELECT id, titolo FROM bandi WHERE id = %s", (bando_id,))
         else:
             # Dopo un errore di rete pagina_stato resta vuoto con la data del tentativo: si riprova dopo un giorno.
+            # I "non trovati" si riprovano dopo RIPROVA_NON_TROVATI_GIORNI (regista, 01/10): nel frattempo possono
+            # essere arrivati altri annunci dello stesso bando o regole nuove nel registro. Prima i bandi mai cercati.
             condizione = ("(pagina_stato IS NULL AND (pagina_cercata_il IS NULL OR pagina_cercata_il < now() - interval '1 day'))"
-                          + (" OR pagina_stato = 'non_trovata'" if rifai_non_trovati else ""))
-            cur.execute(f"SELECT id, titolo FROM bandi WHERE {condizione} ORDER BY id LIMIT %s", (limite,))
+                          + (" OR pagina_stato = 'non_trovata'" if rifai_non_trovati else
+                             f" OR (pagina_stato = 'non_trovata' AND pagina_cercata_il < now() - interval '{RIPROVA_NON_TROVATI_GIORNI} days')"))
+            cur.execute(f"SELECT id, titolo FROM bandi WHERE {condizione} ORDER BY pagina_stato NULLS FIRST, id LIMIT %s", (limite,))
         return list(cur.fetchall())
 
 

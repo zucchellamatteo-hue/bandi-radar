@@ -357,6 +357,7 @@ Alcune fasi si sovrappongono di una settimana, apposta. Nella **Fase 0** e nella
 | Solo bandi con le regole ufficiali | Un bando si analizza e si propone ai clienti solo se tra i documenti c'è il testo ufficiale. Filtro senza IA (`app/schede/documentazione.py`): "bando" se c'è un documento (PDF, Word; non pagine web, modulistica, graduatorie) di almeno 3.000 caratteri con almeno 5 segni di un regolamento; altrimenti "sintesi" o "nessuno". Tarato sulle 3.475 decisioni già prese dall'IA (riconosce il 91% dei bandi veri). Solo i "bando" vanno al controllo preliminare e alla scheda, con l'API o in sessione. |
 | In disparte | Le schede fatte su una sintesi (pagina, notizia, catalogo incentivi.gov.it) non si propongono: nel catalogo si vedono solo scegliendo "in disparte", nei profili stanno in un gruppo a parte. |
 | API | Chiave attiva dal 01/10, tetto 30 $ al mese nel programma e sulla Console. La catena oraria manda all'IA solo i bandi nuovi con il testo ufficiale. |
+| Regista della fase 2 | `app/catena/regista.py` guida ogni ora i passi dalla raccolta alla scheda, riprova i fermi (pagine non trovate dopo 14 giorni, documenti dei bandi aperti ogni 14 giorni), chiede di aggiornare le schede (documenti nuovi, proroghe, rettifiche, chiusure) e sblocca i blocchi: doppioni con regole e, per i dubbi, con l'IA (scelta di Matteo: "regole + IA"); annunci incerti anche per l'IA mandati avanti (li filtrano i documenti e il controllo preliminare). Pagina Lavorazione nella plancia. Dettagli in `docs/ORCHESTRAZIONE.md`. |
 
 **Ancora aperti:**
 

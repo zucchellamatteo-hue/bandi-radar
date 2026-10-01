@@ -541,30 +541,37 @@ def decisione_matteo(conn, annuncio_id: int, bando_id: int | None) -> int:
     """Matteo decide dalla plancia: l'annuncio va nel bando `bando_id` (unire, "stesso bando"),
     oppure, con None, diventa un bando a se' (separare, "bandi diversi"). I dubbi dell'annuncio si chiudono.
     Ritorna il bando dell'annuncio. Il legame e' di Matteo: la deduplica automatica non lo cambiera' piu'."""
+    return decidi_collegamento(conn, annuncio_id, bando_id, "matteo")
+
+
+def decidi_collegamento(conn, annuncio_id: int, bando_id: int | None, da: str, motivo: str | None = None) -> int:
+    """Come decisione_matteo, ma la decisione puo' venire anche dalle regole o dall'IA (regista, 01/10/2026).
+    Un legame deciso da Matteo non viene mai cambiato da regole o IA."""
     with conn.cursor() as cur:
         a = leggi_annuncio(cur, annuncio_id)
         if a is None:
             raise LookupError("annuncio non trovato")
         vecchio = a.bando_id
-        cur.execute("SELECT set_config('bandi_radar.causa', %s, true)", (f"annuncio {annuncio_id}: decisione di Matteo",))
+        chi = {"matteo": "decisione di Matteo", "ia": "decisione dell'IA", "regole": "decisione delle regole"}[da]
+        cur.execute("SELECT set_config('bandi_radar.causa', %s, true)", (f"annuncio {annuncio_id}: {chi}",))
         if bando_id is None:
             altri = 0
             if vecchio is not None:
                 cur.execute("SELECT count(*) AS n FROM annunci WHERE bando_id = %s AND id <> %s", (vecchio, annuncio_id))
                 altri = cur.fetchone()["n"]
             nuovo = vecchio if vecchio is not None and altri == 0 else crea_bando(cur, a)
-            collega(cur, annuncio_id, nuovo, "origine", "separato a mano dalla plancia", "matteo")
+            collega(cur, annuncio_id, nuovo, "origine", motivo or "separato a mano dalla plancia", da)
         else:
             cur.execute("SELECT 1 FROM bandi WHERE id = %s", (bando_id,))
             if not cur.fetchone():
                 raise LookupError("bando non trovato")
             nuovo = bando_id
-            collega(cur, annuncio_id, nuovo, a.ruolo or "doppione", "unito a mano dalla plancia", "matteo")
+            collega(cur, annuncio_id, nuovo, a.ruolo or "doppione", motivo or "unito a mano dalla plancia", da)
         cur.execute(
             """UPDATE bandi_dubbi SET decisione = CASE WHEN bando_id = %s THEN 'stesso' ELSE 'diverso' END,
-                      deciso_da = 'matteo', deciso_il = now()
+                      deciso_da = %s, deciso_il = now()
                WHERE annuncio_id = %s AND decisione IS NULL""",
-            (nuovo, annuncio_id),
+            (nuovo, da, annuncio_id),
         )
         if vecchio is not None and vecchio != nuovo:
             _togli_bandi_vuoti(cur, {vecchio})

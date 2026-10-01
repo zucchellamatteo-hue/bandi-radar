@@ -100,6 +100,18 @@ export interface RispostaAbbinamento {
   in_disparte?: BandoRiga[];   // passerebbero, ma la scheda non e' fatta sul bando ufficiale: non proponibili
 }
 
+// Pagina Lavorazione (app/catena/stato.py).
+export interface FaseLavorazione { fase: string; nome: string; prossimo: string; n: number }
+export interface Lavorazione {
+  bandi: FaseLavorazione[]; annunci: FaseLavorazione[];
+  eventi: { quando: string; oggetto: string; oggetto_id: number | null; passo: string; esito: string; motivo: string | null }[];
+  ia: { chiamate_mese: number; costo_mese: number; in_volo: number };
+}
+export interface RigaLavorazione {
+  id: number; titolo: string; ente?: string | null; fonte?: string; stato?: string | null; scadenza?: string | null;
+  motivo: string | null; ultimo: string | null;
+}
+
 export interface Smistamento {
   esito: Esito; motivo: string | null; deciso_da: "regole" | "ia" | "matteo"; costo: number | null; deciso_il: string;
   proposta_esito: Esito | null; proposta_motivo: string | null; proposta_da: string | null;
@@ -167,6 +179,8 @@ export const api = {
   bandi: (parametri: Record<string, string>) =>
     chiama<RispostaCatalogo>("/api/bandi?" + new URLSearchParams(parametri).toString()),
   valori: () => chiama<Valori>("/api/valori"),
+  lavorazione: () => chiama<Lavorazione>("/api/lavorazione"),
+  lavorazioneFase: (tipo: "bandi" | "annunci", fase: string) => chiama<RigaLavorazione[]>(`/api/lavorazione/${tipo}/${fase}`),
   profili: () => chiama<ProfiloSalvato[]>("/api/profili"),
   profilo: (codice: string) => chiama<ProfiloSalvato>(`/api/profili/${encodeURIComponent(codice)}`),
   salvaProfilo: (p: Profilo) =>

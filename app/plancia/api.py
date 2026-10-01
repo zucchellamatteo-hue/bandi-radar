@@ -391,6 +391,28 @@ def catalogo_bandi(
             "bandi": [catalogo.riga(b, e) for b, e in trovati[inizio:inizio + per_pagina]]}
 
 
+# --- Lavorazione: a che punto e' la fase 2 (regista, docs/ORCHESTRAZIONE.md) ------------------------------------
+
+@router.get("/lavorazione")
+def lavorazione() -> dict:
+    """Imbuto di annunci e bandi per fase, ultime azioni del regista, spesa IA del mese."""
+    from app.catena import stato
+
+    with connetti() as conn:
+        return stato.imbuto(conn)
+
+
+@router.get("/lavorazione/{tipo}/{fase}")
+def lavorazione_fase(tipo: Literal["bandi", "annunci"], fase: str) -> list[dict]:
+    from app.catena import stato
+
+    validi = {k for k, _, _ in (stato.FASI_BANDO if tipo == "bandi" else stato.FASI_ANNUNCIO)}
+    if fase not in validi:
+        raise HTTPException(404, "fase sconosciuta")
+    with connetti() as conn:
+        return stato.elenco(conn, tipo, fase)
+
+
 # --- Profili d'impresa anonimi e abbinamento (docs/PROFILO_IMPRESA.md) -------------------------------------------
 
 def _abbinamento(conn, profilo, anche_esclusi: bool = True) -> dict:
