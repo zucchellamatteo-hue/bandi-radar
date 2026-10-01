@@ -100,6 +100,19 @@ export interface RispostaAbbinamento {
   in_disparte?: BandoRiga[];   // passerebbero, ma la scheda non e' fatta sul bando ufficiale: non proponibili
 }
 
+// Pagina Supervisione (app/sistemi.py).
+export interface Esecuzione { id: number; iniziato_il: string; finito_il: string | null; esito: string; riepilogo: string | null; errore: string | null }
+export interface Sistema {
+  id: string; nome: string; spiegazione: string; programmazione: string; gruppo: string; esterno: boolean;
+  stato: string; prossima: string | null; numeri: string | null; ultima: Esecuzione | null;
+  ultime_24_ore: { esecuzioni: number; errori: number };
+}
+export interface SistemaDettaglio {
+  id: string; nome: string; spiegazione: string; programmazione: string; esterno: boolean;
+  esecuzioni: (Esecuzione & { secondi: number })[];
+  dati: { titolo: string; colonne: string[]; righe: Record<string, unknown>[] } | null;
+}
+
 // Pagina Lavorazione (app/catena/stato.py).
 export interface FaseLavorazione { fase: string; nome: string; prossimo: string; n: number }
 export interface Lavorazione {
@@ -179,6 +192,8 @@ export const api = {
   bandi: (parametri: Record<string, string>) =>
     chiama<RispostaCatalogo>("/api/bandi?" + new URLSearchParams(parametri).toString()),
   valori: () => chiama<Valori>("/api/valori"),
+  sistemi: () => chiama<Sistema[]>("/api/sistemi"),
+  sistema: (id: string) => chiama<SistemaDettaglio>(`/api/sistemi/${id}`),
   lavorazione: () => chiama<Lavorazione>("/api/lavorazione"),
   lavorazioneFase: (tipo: "bandi" | "annunci", fase: string) => chiama<RigaLavorazione[]>(`/api/lavorazione/${tipo}/${fase}`),
   profili: () => chiama<ProfiloSalvato[]>("/api/profili"),

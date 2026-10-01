@@ -215,25 +215,76 @@ def segna_aggiornamenti(conn) -> int:
 
 # --- il giro --------------------------------------------------------------------------------------------
 
+def _conta(sql: str, *parametri) -> dict:
+    from app.db.connessione import connetti
+
+    with connetti() as conn, conn.cursor() as cur:
+        cur.execute(sql, parametri)
+        return dict(cur.fetchone())
+
+
+def _passo(sistema: str, lavoro) -> None:
+    """Un passo del giro, registrato nella Supervisione (app/sistemi.py). Se fallisce, il giro va avanti."""
+    import traceback
+    from datetime import datetime, timezone
+
+    from app.sistemi import esecuzione
+
+    try:
+        with esecuzione(sistema) as e:
+            e.riepilogo = lavoro(datetime.now(timezone.utc))
+    except Exception:  # noqa: BLE001 - un passo rotto non ferma gli altri
+        traceback.print_exc()
+
+
 def giro() -> dict:
     from app.db.connessione import connetti
     from app.schede import allegati, bandi, documentazione, ia, pagina_ufficiale, smista
+    from app.sistemi import esecuzione
 
     riepilogo: dict = {}
-    smista.esegui(n_esempi=0)
-    with connetti() as conn:
-        riepilogo["ripiego"] = ripiego_da_rivedere(conn)
-    bandi.esegui(n_esempi=0)
-    with connetti() as conn:
-        riepilogo["doppioni"] = sblocca_dubbi(conn, usa_ia=ia.chiave_presente())
-    bandi.esegui(n_esempi=0)        # gli annunci appena sbloccati diventano bandi
-    pagina_ufficiale.esegui(limite=int(os.environ.get("CATENA_PAGINE_PER_GIRO", "50")))
-    allegati.esegui(limite=int(os.environ.get("CATENA_ALLEGATI_PER_GIRO", "25")))
-    with connetti() as conn:
-        riepilogo["documenti_nuovi"] = ricontrolla_documenti(conn)
-        riepilogo["schede_da_aggiornare"] = segna_aggiornamenti(conn)
-    documentazione.esegui()
-    if ia.chiave_presente():
+
+    def smistamento(inizio):
+        smista.esegui(n_esempi=0)
+        with connetti() as conn:
+            riepilogo["ripiego"] = ripiego_da_rivedere(conn)
+        n = _conta("SELECT count(*) FILTER (WHERE esito = 'rilevante') AS r, count(*) FILTER (WHERE esito = 'non_rilevante') AS nr, "
+                   "count(*) FILTER (WHERE esito = 'da_rivedere') AS dr FROM smistamenti WHERE deciso_il >= %s", inizio)
+        return (f"{n['r']} rilevanti, {n['nr']} non rilevanti, {n['dr']} da rivedere "
+                f"(di cui {riepilogo['ripiego']} incerti dell'IA mandati avanti)")
+
+    def doppioni(inizio):
+        bandi.esegui(n_esempi=0)
+        with connetti() as conn:
+            c = riepilogo["doppioni"] = sblocca_dubbi(conn, usa_ia=ia.chiave_presente())
+        bandi.esegui(n_esempi=0)        # gli annunci appena sbloccati diventano bandi
+        return (f"{c['stesso']} uniti a un bando, {c['diverso']} bandi nuovi, {c['archivia']} archiviati "
+                f"({c['ia']} decisi dall'IA); {c['in_attesa']} ancora da decidere")
+
+    def pagine(inizio):
+        pagina_ufficiale.esegui(limite=int(os.environ.get("CATENA_PAGINE_PER_GIRO", "50")))
+        n = _conta("SELECT count(*) FILTER (WHERE pagina_stato = 'trovata') AS t, count(*) FILTER (WHERE pagina_stato = 'non_trovata') AS nt, "
+                   "count(*) FILTER (WHERE pagina_stato IS NULL) AS r FROM bandi WHERE pagina_cercata_il >= %s", inizio)
+        return f"{n['t']} pagine trovate, {n['nt']} non trovate, {n['r']} errori di rete (si riprova)"
+
+    def documenti(inizio):
+        allegati.esegui(limite=int(os.environ.get("CATENA_ALLEGATI_PER_GIRO", "25")))
+        with connetti() as conn:
+            riepilogo["documenti_nuovi"] = ricontrolla_documenti(conn)
+            riepilogo["schede_da_aggiornare"] = segna_aggiornamenti(conn)
+        n = _conta("SELECT count(DISTINCT bando_id) AS b, count(*) FILTER (WHERE errore IS NULL) AS f, "
+                   "count(*) FILTER (WHERE errore IS NOT NULL) AS e FROM allegati WHERE scaricato_il >= %s", inizio)
+        return (f"{n['f']} file scaricati per {n['b']} bandi ({n['e']} non scaricati); ricontrollo: "
+                f"{riepilogo['documenti_nuovi']} bandi con documenti nuovi; {riepilogo['schede_da_aggiornare']} schede da aggiornare")
+
+    def filtro(inizio):
+        prima = _conta("SELECT count(*) AS n FROM bandi WHERE allegati_cercati_il IS NOT NULL AND documentazione IS NULL")["n"]
+        documentazione.esegui()
+        return f"{prima} bandi valutati"
+
+    def intelligenza(inizio):
+        if not ia.chiave_presente():
+            return "spenta: manca la chiave API"
         with connetti() as conn:
             try:
                 ia.cmd_raccogli(conn)
@@ -241,10 +292,20 @@ def giro() -> dict:
                     ia.cmd_smista(conn, int(os.environ.get("CATENA_SMISTA_PER_GIRO", "400")), batch=True)
                     ia.cmd_schede_batch(conn)
             except ia.IASpenta as exc:
-                print(exc)
-    with connetti() as conn, conn.cursor() as cur:
-        evento(cur, "giro", None, "giro", "fatto", str(riepilogo))
-        conn.commit()
+                return str(exc)
+        n = _conta("SELECT count(*) FILTER (WHERE esito = 'inviata') AS inviate, count(*) FILTER (WHERE esito <> 'inviata') AS altre, "
+                   "coalesce(sum(costo_usd), 0) AS costo FROM chiamate_ia WHERE fatta_il >= %s", inizio)
+        return f"{n['inviate']} richieste mandate alla Batch API, {n['altre']} risposte registrate, {float(n['costo']):.2f} $"
+
+    with esecuzione("regista") as giro_intero:
+        for nome, lavoro in (("smistamento", smistamento), ("doppioni", doppioni), ("pagine", pagine),
+                             ("documenti", documenti), ("filtro", filtro), ("ia", intelligenza)):
+            _passo(nome, lavoro)
+        giro_intero.riepilogo = (f"{riepilogo.get('ripiego', 0)} incerti mandati avanti; doppioni: "
+                                 f"{riepilogo.get('doppioni', {})}; {riepilogo.get('schede_da_aggiornare', 0)} schede da aggiornare")
+        with connetti() as conn, conn.cursor() as cur:
+            evento(cur, "giro", None, "giro", "fatto", str(riepilogo))
+            conn.commit()
     print("Regista:", riepilogo)
     return riepilogo
 
