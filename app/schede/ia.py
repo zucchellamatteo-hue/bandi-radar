@@ -619,7 +619,7 @@ def salva_scheda(conn, bando_id: int, scheda: dict, problemi: list[str], costo_u
     assegnazioni = ", ".join(f"{c} = %s" for c in valori)
     with conn.cursor() as cur:
         cur.execute("SELECT set_config('bandi_radar.causa', %s, true)", (f"scheda compilata da {MODELLO_SCHEDA}",))
-        cur.execute(f"UPDATE bandi SET {assegnazioni}, dati = %s WHERE id = %s",
+        cur.execute(f"UPDATE bandi SET {assegnazioni}, dati = %s, scheda_il = now(), da_aggiornare = NULL WHERE id = %s",
                     (*valori.values(), json.dumps(dati), bando_id))
     conn.commit()
 
@@ -873,13 +873,24 @@ def cmd_schede_batch(conn, limite_pre: int = LIMITE_PRELIMINARI_BATCH, limite_sc
         gia = {r["riferimento"] for r in cur.fetchall()}
         cur.execute("""SELECT * FROM bandi WHERE pagina_stato = 'trovata' AND allegati_cercati_il IS NOT NULL
                        AND documentazione = 'bando'
-                       AND dati IS NULL AND (preliminare IS NULL OR preliminare->>'seconda_lettura' = 'da_fare'
-                            OR preliminare->>'deciso_da' IS DISTINCT FROM 'segnali') ORDER BY id""")
+                       AND ((dati IS NULL AND (preliminare IS NULL OR preliminare->>'seconda_lettura' = 'da_fare'
+                             OR preliminare->>'deciso_da' IS DISTINCT FROM 'segnali'))
+                            OR (dati IS NOT NULL AND da_aggiornare IS NOT NULL))
+                       ORDER BY id""")
         bandi = [dict(r) for r in cur.fetchall()]
     richieste: list[dict] = []
     n_pre = n_sch = 0
     for b in bandi:
         pre = b["preliminare"]
+        if b["dati"] is not None:
+            # Scheda da aggiornare (regista: documenti nuovi, proroga, rettifica, chiusura). Una richiesta per versione.
+            cid = f"sch-{b['id']}-v{b['versione']}"
+            if cid not in gia and n_sch < limite_schede:
+                messaggio, _ = pr.scheda(conn, b)
+                richieste.append({"custom_id": cid, "params": parametri(
+                    MODELLO_SCHEDA, pr.istr_scheda, messaggio, SCHEMA_SCHEDA, 64000, EFFORT["scheda"])})
+                n_sch += 1
+            continue
         if pre is None and n_pre < limite_pre and f"pre-{b['id']}" not in gia:
             segnali = segnali_del_bando(conn, b["id"], pr.oggi)
             if ferma_con_segnali(conn, b, segnali):
@@ -914,24 +925,10 @@ def ciclo_catena() -> None:
     """Il lavoro sui bandi nel giro orario della raccolta (app/raccolta/demone.py): smistamento a regole, deduplica,
     pagina ufficiale e allegati a piccoli lotti; poi, se c'e' la chiave, l'IA con la Batch API: raccoglie le risposte
     arrivate e manda i nuovi lotti (smistamento dei "da rivedere", controlli preliminari, schede)."""
-    from app.db.connessione import connetti
-    from app.schede import allegati, bandi, documentazione, pagina_ufficiale, smista
+    # Dal 01/10 la sequenza la decide il regista (app/catena/regista.py): passi, riprove, sblocchi e aggiornamenti.
+    from app.catena import regista
 
-    smista.esegui(n_esempi=0)
-    bandi.esegui(n_esempi=0)
-    pagina_ufficiale.esegui(limite=int(os.environ.get("CATENA_PAGINE_PER_GIRO", "20")))
-    allegati.esegui(limite=int(os.environ.get("CATENA_ALLEGATI_PER_GIRO", "10")))
-    documentazione.esegui()   # c'e' il bando tra i documenti? Solo quelli vanno all'IA (01/10)
-    if not chiave_presente():
-        return
-    with connetti() as conn:
-        try:
-            cmd_raccogli(conn)
-            if not any(True for _ in _in_volo(conn)):   # un lotto alla volta: il costo resta sotto controllo
-                cmd_smista(conn, int(os.environ.get("CATENA_SMISTA_PER_GIRO", "400")), batch=True)
-                cmd_schede_batch(conn)
-        except IASpenta as exc:
-            print(exc)
+    regista.giro()
 
 
 def main(argv: list[str] | None = None) -> int:
