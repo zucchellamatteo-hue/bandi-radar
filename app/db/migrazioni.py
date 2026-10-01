@@ -18,6 +18,9 @@ def applica_migrazioni(conn) -> list[str]:
     """Applica le migrazioni mancanti e ritorna i nomi di quelle applicate adesso."""
     applicate: list[str] = []
     with conn.cursor() as cur:
+        # Un processo alla volta (app e raccolta partono insieme dopo ogni aggiornamento): gli altri aspettano qui e
+        # poi trovano le migrazioni gia' fatte. Il blocco si libera al commit.
+        cur.execute("SELECT pg_advisory_xact_lock(424242)")
         cur.execute(
             "CREATE TABLE IF NOT EXISTS schema_migrazioni ("
             " nome text PRIMARY KEY, applicata_il timestamptz NOT NULL DEFAULT now())"

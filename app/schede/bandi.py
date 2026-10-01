@@ -31,6 +31,7 @@ from datetime import date
 from urllib.parse import parse_qsl, urlencode, urlsplit
 
 from app.schede.smista import normalizza
+from app.db.blocchi import con_blocco
 
 # --- codici ufficiali -----------------------------------------------------------------------------
 
@@ -633,6 +634,7 @@ def stampa(piano: list[tuple[Annuncio, Esito]], annunci: list[Annuncio], n_esemp
         print(f"      ({e.motivo})")
 
 
+@con_blocco("deduplica", 0)
 def esegui(prova: bool = False, n_esempi: int = 20) -> int:
     from app.db.connessione import connetti
     from app.db.migrazioni import applica_migrazioni

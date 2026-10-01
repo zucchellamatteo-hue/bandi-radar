@@ -20,6 +20,7 @@ from __future__ import annotations
 import os
 import re
 import sys
+from app.db.blocchi import con_blocco
 
 SOGLIA_STESSO = 0.9            # titoli quasi uguali: con lo stesso ente e' lo stesso bando
 SOGLIA_DIVERSO = 0.5           # sotto: bandi diversi. Tra le due soglie decide l'IA (gestore ed ente danno titoli diversi
@@ -116,6 +117,7 @@ def chiedi_ia(client, d: dict, registra) -> tuple[str, str] | None:
     return ("stesso" if r.dati.get("stesso") else "diverso"), "IA: " + str(r.dati.get("motivo") or "")[:200]
 
 
+@con_blocco("doppioni", {"stesso": 0, "diverso": 0, "archivia": 0, "ia": 0, "in_attesa": 0})
 def sblocca_dubbi(conn, usa_ia: bool, limite_ia: int = DOPPIONI_IA_PER_GIRO) -> dict:
     from app.schede import ia
     from app.schede.bandi import decidi_collegamento
@@ -169,6 +171,7 @@ def _documenti_utili(cur, bando_id: int) -> set[str]:
     return {r["impronta"] for r in cur.fetchall()}
 
 
+@con_blocco("ricontrollo", 0)
 def ricontrolla_documenti(conn, limite: int = RICONTROLLI_PER_GIRO) -> int:
     """Bandi aperti o in arrivo con la scheda e i documenti guardati piu' di RICONTROLLO_GIORNI fa: si riapre la
     pagina ufficiale e si scaricano i documenti nuovi. Se ce ne sono, la scheda va aggiornata."""
@@ -237,6 +240,7 @@ def _passo(sistema: str, lavoro) -> None:
         traceback.print_exc()
 
 
+@con_blocco("regista", {})
 def giro() -> dict:
     from app.db.connessione import connetti
     from app.schede import allegati, bandi, documentazione, ia, pagina_ufficiale, smista
@@ -285,17 +289,25 @@ def giro() -> dict:
     def intelligenza(inizio):
         if not ia.chiave_presente():
             return "spenta: manca la chiave API"
+        preliminari = 0
         with connetti() as conn:
             try:
                 ia.cmd_raccogli(conn)
-                if not any(True for _ in ia._in_volo(conn)):   # un lotto alla volta: il costo resta sotto controllo
-                    ia.cmd_smista(conn, int(os.environ.get("CATENA_SMISTA_PER_GIRO", "400")), batch=True)
+                # Controlli preliminari con chiamate dirette: la scheda parte gia' in questo giro (02/10).
+                preliminari = ia.cmd_preliminari_diretti(conn)
+                # Un lotto in volo per tipo (prima uno solo per tutto: un lotto di smistamento bloccava le schede
+                # per 13 ore). Il costo resta sotto controllo con il tetto, che conta anche i lotti in volo.
+                in_volo = ia.scopi_in_volo(conn)
+                if "smistamento" not in in_volo:
+                    ia.cmd_smista(conn, int(os.environ.get("CATENA_SMISTA_PER_GIRO", "100")), batch=True)
+                if not in_volo & {"preliminare", "scheda"}:
                     ia.cmd_schede_batch(conn)
             except ia.IASpenta as exc:
-                return str(exc)
+                return f"{preliminari} controlli preliminari diretti; poi fermata: {exc}"
         n = _conta("SELECT count(*) FILTER (WHERE esito = 'inviata') AS inviate, count(*) FILTER (WHERE esito <> 'inviata') AS altre, "
                    "coalesce(sum(costo_usd), 0) AS costo FROM chiamate_ia WHERE fatta_il >= %s", inizio)
-        return f"{n['inviate']} richieste mandate alla Batch API, {n['altre']} risposte registrate, {float(n['costo']):.2f} $"
+        return (f"{preliminari} controlli preliminari diretti; {n['inviate']} richieste mandate alla Batch API, "
+                f"{n['altre']} risposte registrate, {float(n['costo']):.2f} $")
 
     with esecuzione("regista") as giro_intero:
         for nome, lavoro in (("smistamento", smistamento), ("doppioni", doppioni), ("pagine", pagine),

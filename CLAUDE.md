@@ -14,11 +14,13 @@ Sistema che raccoglie i bandi di finanza agevolata per imprese (UE, nazionali, r
 - Commit piccoli, con messaggio in italiano che dice cosa cambia e perché.
 - Prima di dichiarare finito un lavoro: test eseguiti, esito riportato con onestà. Se qualcosa è stato saltato, dirlo.
 - Le mappature manuali delle fonti vanno in `docs/ricerche/` seguendo `docs/ricerche/README.md`.
+- Gli strumenti delle sessioni sul server (agenti che fanno smistamento, doppioni e schede al posto dell'API) stanno in `strumenti/sessione/` (README per installarli in `/tmp/claude-1000/`).
+- La catena della fase 2 la guida il regista (`app/catena/regista.py`, `docs/ORCHESTRAZIONE.md`); i sistemi automatici e le loro esecuzioni sono in `app/sistemi.py` e nella pagina Supervisione.
 
 ## Scelte tecniche (decise, non riaprirle senza motivo)
 
 - Python per raccolta, schede e abbinamento; Postgres come database; React per plancia e cruscotto; tutto in **Docker Compose**; Caddy davanti per HTTPS.
-- **L'osservatore delle pagine non usa l'IA**: scarica, confronta con la versione precedente, passa all'IA solo il frammento cambiato. IA (API Anthropic, Haiku per smistare, Sonnet per le schede) solo dalla Fase 3.
+- **L'osservatore delle pagine non usa l'IA**: scarica, confronta con la versione precedente, passa all'IA solo il frammento cambiato. IA (API Anthropic, Claude Opus 5.5 per smistamento, controllo preliminare e schede: decisione del 28/09) solo dalla Fase 3, e solo sui bandi con il testo ufficiale tra i documenti (filtro senza IA, 01/10).
 - I profili clienti sono **anonimi**: niente nomi, email o dati identificativi in Bandi Radar né nelle chiamate all'IA.
 - Email transazionali con Resend, dal dominio `finanzagevolata.qiaro.it`.
 - Il registro delle fonti (~180 voci) è un file di configurazione: aggiungere una fonte è aggiungere una riga, non scrivere codice. Ogni fonte ha modalità di lettura (API, RSS, HTML, browser senza interfaccia), frequenza, e data dell'ultimo record trovato.

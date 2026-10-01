@@ -4,12 +4,20 @@
 
 name: bandi-radar
 
+# Log dei container: al massimo 5 file da 20 MB per servizio (02/10: prima crescevano senza limite).
+x-log: &log
+  driver: json-file
+  options:
+    max-size: "20m"
+    max-file: "5"
+
 services:
 
   # Database: tutti i dati (bandi, fonti, profili) stanno qui.
   db:
     image: postgres:16-alpine
     restart: unless-stopped
+    logging: *log
     environment:
       # Il backup notturno (deploy/bootstrap.sh) usa l'utente "postgres": lascia il default.
       POSTGRES_USER: ${POSTGRES_USER:-postgres}
@@ -30,6 +38,7 @@ services:
   app:
     build: .
     restart: unless-stopped
+    logging: *log
     command: sh -c "python -m app.db.migrazioni && uvicorn app.main:app --host 0.0.0.0 --port 8000"
     environment:
       # Dati di accesso al database passati separati (non in un URL): cosi' la password
@@ -64,6 +73,7 @@ services:
       context: .
       dockerfile: deploy/Dockerfile.raccolta   # immagine con Chromium per le fonti JavaScript
     restart: unless-stopped
+    logging: *log
     command: sh -c "python -m app.db.migrazioni && python -m app.raccolta.demone"
     shm_size: 512m                              # Chromium ne ha bisogno
     networks: [default, ipv6]                   # ipv6: per le fonti con richiesta.ipv6 (siti che rifiutano l'IPv4 del server)
@@ -92,6 +102,7 @@ services:
   caddy:
     image: caddy:2-alpine
     restart: unless-stopped
+    logging: *log
     ports:
       - "80:80"
       - "443:443"

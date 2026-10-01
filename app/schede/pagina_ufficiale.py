@@ -40,8 +40,11 @@ from app.raccolta.scarica import NonPermesso, regole_robots, scarica
 from app.schede.allegati import _SCARICA, Pausa, _togli_cornice, candidati_plone, testo_html, testo_plone, tipo_da_url
 from app.schede.bandi import _e_pagina_di_servizio, url_chiave
 from app.schede.smista import normalizza
+from app.db.blocchi import con_blocco
 
 LIMITE_PREDEFINITO = 100
+# Portali generali degli enti: la loro homepage non e' mai la pagina di un bando.
+_PORTALE_ENTE = re.compile(r"(^|\.)(comune|camcom|regione|provincia|invitalia|ministero)\w*\.", re.IGNORECASE)
 RIPROVA_NON_TROVATI_GIORNI = 14
 TESTO_MINIMO = 400          # caratteri di testo utile sotto i quali una pagina e' "vuota"
 
@@ -198,6 +201,12 @@ def esegui_regole(client, pausa, annunci: list[AnnuncioDelBando], regole_fonti: 
         if escluso:
             provati.append(f"{c.url} ({c.motivo}): {escluso}")
             return None
+        parti = urlsplit(c.url)
+        if parti.path.strip("/") == "" and not parti.query and _PORTALE_ENTE.search(parti.netloc):
+            # La homepage del portale di un ente non e' il bando (02/10: bs.camcom.it per 3 bandi). Un sito dedicato a
+            # una sola misura (taxcreditlibrerie.cultura.gov.it, mettersinproprio.it) invece si': non si scarta.
+            provati.append(f"{c.url} ({c.motivo}): homepage del portale dell'ente, non la pagina del bando")
+            return None
         if tipo_da_url(c.url):
             return Esito(c.url, "trovata", f"{c.motivo}: il link porta direttamente al documento", provati)
         # ignora_robots di una fonte vale solo per il sito di quella fonte, come per gli allegati (Liguria, 30/09).
@@ -326,6 +335,7 @@ def salva(conn, bando_id: int, esito: Esito) -> None:
     conn.commit()
 
 
+@con_blocco("pagine", 0)
 def esegui(bando_id: int | None = None, limite: int = LIMITE_PREDEFINITO, rifai_non_trovati: bool = False,
            prova: bool = False) -> int:
     from collections import Counter
