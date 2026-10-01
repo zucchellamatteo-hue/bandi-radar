@@ -15,7 +15,7 @@
 | 1 | Smistamento a regole degli annunci nuovi (rilevante, non rilevante, da rivedere) | sì | — |
 | 2 | Ripiego: gli annunci incerti anche per l'IA vanno avanti come possibili bandi | sì | li filtrano i passi 6 e 7 |
 | 3 | Deduplica e doppioni dubbi: titoli quasi uguali (≥ 0,9), stesso ente, stesso anno ed edizione → stesso bando; titoli poco simili (< 0,5) → bandi diversi; graduatorie o proroghe di bandi che non abbiamo → archiviate; gli altri all'IA (Opus 5.5, effort basso, 40 per giro) | in parte | le decisioni di Matteo non si toccano |
-| 4 | Pagina ufficiale (20 per giro) e documenti (10 per giro) | sì | errore di rete: il giorno dopo; pagina non trovata: dopo 14 giorni |
+| 4 | Pagina ufficiale (50 per giro) e documenti (25 per giro) | sì | errore di rete: il giorno dopo; pagina non trovata: dopo 14 giorni |
 | 5 | Ricontrollo dei documenti dei bandi aperti con la scheda, ogni 14 giorni (5 per giro); proroghe, rettifiche, chiusure e FAQ arrivate dopo la scheda | sì | la scheda diventa "da aggiornare" |
 | 6 | Filtro "c'è il bando?" sui documenti | sì | si rifà quando arrivano documenti nuovi |
 | 7 | IA con la Batch API (metà prezzo): smistamento dei "da rivedere", controllo preliminare, schede nuove e da aggiornare, solo per i bandi con il testo ufficiale | no | un lotto alla volta; tetto di spesa del mese |

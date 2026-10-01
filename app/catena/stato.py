@@ -5,9 +5,9 @@ from __future__ import annotations
 
 # (chiave, nome per Matteo, prossimo passo). L'ordine e' quello della catena.
 FASI_BANDO = [
-    ("pagina_da_cercare", "Pagina ufficiale da cercare", "ricerca della pagina al prossimo giro (20 per giro)"),
+    ("pagina_da_cercare", "Pagina ufficiale da cercare", "ricerca della pagina al prossimo giro (50 per giro)"),
     ("pagina_non_trovata", "Pagina ufficiale non trovata", "si riprova dopo 14 giorni; serve una regola per la fonte"),
-    ("documenti_da_scaricare", "Documenti da scaricare", "scaricamento al prossimo giro (10 per giro)"),
+    ("documenti_da_scaricare", "Documenti da scaricare", "scaricamento al prossimo giro (25 per giro)"),
     ("filtro_da_fare", "Documenti da valutare", "filtro \"c'e' il bando?\" al prossimo giro"),
     ("in_disparte_sintesi", "In disparte: solo sintesi o pagine web", "nessuno: non si propone; si riguarda se arrivano documenti"),
     ("in_disparte_nessuno", "In disparte: nessun documento leggibile", "nessuno: non si propone"),

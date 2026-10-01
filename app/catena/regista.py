@@ -227,8 +227,8 @@ def giro() -> dict:
     with connetti() as conn:
         riepilogo["doppioni"] = sblocca_dubbi(conn, usa_ia=ia.chiave_presente())
     bandi.esegui(n_esempi=0)        # gli annunci appena sbloccati diventano bandi
-    pagina_ufficiale.esegui(limite=int(os.environ.get("CATENA_PAGINE_PER_GIRO", "20")))
-    allegati.esegui(limite=int(os.environ.get("CATENA_ALLEGATI_PER_GIRO", "10")))
+    pagina_ufficiale.esegui(limite=int(os.environ.get("CATENA_PAGINE_PER_GIRO", "50")))
+    allegati.esegui(limite=int(os.environ.get("CATENA_ALLEGATI_PER_GIRO", "25")))
     with connetti() as conn:
         riepilogo["documenti_nuovi"] = ricontrolla_documenti(conn)
         riepilogo["schede_da_aggiornare"] = segna_aggiornamenti(conn)
