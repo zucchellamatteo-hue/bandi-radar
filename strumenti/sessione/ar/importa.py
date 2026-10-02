@@ -30,7 +30,7 @@ def main() -> int:
         for cartella in sorted(OUT.iterdir(), key=lambda p: int(p.name)):
             bando_id = int(cartella.name)
             with conn.cursor() as cur:
-                cur.execute("SELECT id, url, dati, preliminare FROM bandi WHERE id = %s", (bando_id,))
+                cur.execute("SELECT id, url, dati, preliminare, da_aggiornare, scheda_il FROM bandi WHERE id = %s", (bando_id,))
                 b = cur.fetchone()
             if not b:
                 continue
@@ -56,7 +56,8 @@ def main() -> int:
             fs = cartella / "scheda.json"
             if not fs.exists():
                 continue
-            if b["dati"] is not None:
+            vecchio = b["dati"] is not None and b["scheda_il"] is not None and fs.stat().st_mtime <= b["scheda_il"].timestamp()
+            if b["dati"] is not None and (not b["da_aggiornare"] or vecchio):
                 conteggi["gia_fatte"] += 1
                 continue
             try:
@@ -84,7 +85,7 @@ def main() -> int:
             try:
                 with conn.cursor() as cur:
                     cur.execute("SELECT set_config('bandi_radar.causa', %s, true)", (CAUSA,))
-                    cur.execute(f"UPDATE bandi SET {assegnazioni}, dati = %s, scheda_il = now() WHERE id = %s AND dati IS NULL",
+                    cur.execute(f"UPDATE bandi SET {assegnazioni}, dati = %s, scheda_il = now(), da_aggiornare = NULL WHERE id = %s AND (dati IS NULL OR da_aggiornare IS NOT NULL)",
                                 (*valori.values(), json.dumps(dati), bando_id))
                 conn.commit()
             except Exception as exc:   # un valore che il database rifiuta: si segnala e si passa oltre

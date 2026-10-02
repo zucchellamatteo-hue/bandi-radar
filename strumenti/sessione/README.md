@@ -6,7 +6,7 @@ Servono alle sessioni di Claude Code **sul server** per fare a mano, con gli age
 
 ## Installazione all'inizio di una sessione
 
-Gli script usano percorsi fissi in `/tmp/claude-1000/` (la cartella di lavoro di Claude Code sul server):
+Gli script usano percorsi fissi in `/tmp/claude-1000/` (la cartella di lavoro di Claude Code sul server). Basta `bash strumenti/sessione/installa.sh`, che fa questo:
 
 ```
 mkdir -p /tmp/claude-1000/ar /tmp/claude-1000/fd /tmp/claude-1000/cp
@@ -16,6 +16,15 @@ cp strumenti/sessione/sh/controlli.sh /tmp/claude-1000/fd/
 cp strumenti/sessione/sh/foto.py /tmp/claude-1000/cp/
 chmod +x /tmp/claude-1000/*.sh /tmp/claude-1000/fd/*.sh
 ```
+
+## Il lavoro tipico: "fai le schede in attesa"
+
+Finché `IA_SCHEDE_API` non è 1 nel `.env` (decisione di Matteo del 02/10), l'API fa smistamento, doppioni e controlli preliminari; **le schede si scrivono in sessione**. Dopo `installa.sh`:
+
+1. `/tmp/claude-1000/ar.sh esporta.py` → fascicoli dei bandi con il testo ufficiale: nuovi, già passati dal controllo preliminare dell'API, e con la scheda "da aggiornare";
+2. `python3 /tmp/claude-1000/ar/coda.py conta` → quanti per la Fase A e la Fase B;
+3. agenti (al massimo 5 insieme) con il prompt "Leggi /tmp/claude-1000/ar/ISTRUZIONI_AGENTI.md e fai la Fase A (o B)…";
+4. **`/tmp/claude-1000/ar.sh importa.py` appena ogni agente finisce** (il 02/10 un riavvio del server ha cancellato 49 schede non ancora importate).
 
 ## Cosa c'è
 

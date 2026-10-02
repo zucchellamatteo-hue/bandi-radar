@@ -16,7 +16,7 @@ FASI_BANDO = [
     ("fermato_non_imprese", "Fermato: non per imprese", "nessuno"),
     ("fermato_edizione", "Fermato: edizione vecchia", "nessuno"),
     ("fermato_senza_testo", "Fermato: senza testo del bando", "si riguarda se arrivano documenti"),
-    ("scheda_in_attesa", "Scheda in attesa (IA)", "prossimo lotto della Batch API"),
+    ("scheda_in_attesa", "Scheda in attesa", "prossima sessione di Claude Code (o l'API, se IA_SCHEDE_API=1)"),
     ("scheda_da_aggiornare", "Scheda da aggiornare", "nuova scheda al prossimo lotto"),
     ("proponibile", "Proponibile: scheda sul bando ufficiale", "abbinamento ai profili"),
     ("scheda_su_sintesi", "In disparte: scheda fatta su una sintesi", "nessuno: non si propone"),
