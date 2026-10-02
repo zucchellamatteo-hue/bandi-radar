@@ -1,0 +1,20 @@
+{
+ "id": 4043,
+ "campi": {
+  "stato": {"esito": "giusto", "nota": "Pagina: 'Aperto' (aggiornamento 6 lug 2026); sportello 'fino ad esaurimento delle risorse disponibili'."},
+  "data_apertura": {"esito": "giusto", "nota": "Avviso par. 4.3: 'a partire dalle ore 10:00 del giorno 29.06.2026'."},
+  "scadenza": {"esito": "giusto", "nota": "Null corretto: nessuna data, sportello fino a esaurimento dei 4.500.000 euro; annualita' di assunzione fino al 31/12/2028."},
+  "tipo_agevolazione": {"esito": "giusto", "nota": "'contributo in conto capitale' sui costi salariali (fondo perduto)."},
+  "contributo_massimo": {"esito": "giusto", "nota": "Null corretto: l'Avviso non fissa un importo massimo per lavoratore o impresa, solo le intensita' sui costi salariali di 12 mesi (salvo massimali de minimis)."},
+  "percentuale": {"esito": "giusto", "nota": "50% svantaggiati/molto svantaggiati, 75% disabili, in GBER e de minimis; il campo principale 75 e' il massimo, la scheda spiega entrambe."},
+  "a_chi_si_rivolge": {"esito": "giusto", "nota": "Avviso par. 2.1: imprese 'di qualsiasi dimensione, ivi incluse le micro, piccole, medie e grandi imprese, purche' operanti nei settori di cui all'Allegato 3'."},
+  "territorio": {"esito": "giusto", "nota": "Sede operativa/unita' produttiva in Calabria (anche da attivare entro il primo pagamento); lavoratori residenti o domiciliati in Calabria."},
+  "dimensioni_ammesse": {"esito": "giusto", "nota": "Micro, piccole, medie e grandi."},
+  "codici_ateco": {"esito": "giusto", "nota": "Elenco coerente con l'Allegato 3 (ATECO 2025: 49.31.01 ... 93.29.90); il codice '90.20.0' e' riportato cosi' anche nel documento."},
+  "cosa_finanzia": {"esito": "impreciso", "nota": "Scheda: assunzioni 'effettuate dal 1° marzo 2025'. Decreto 11363/2026 (par. 3.2 sostituito): per quelle precedenti alla domanda l'incentivo vale 'esclusivamente per rapporti di lavoro che risultino ancora in essere alla data di presentazione della domanda'; FAQ 1-2: DID 'rilasciata ... in data antecedente l'assunzione', non basta un'autodichiarazione. Esclusi quindi gli stagionali 2025 gia' cessati."},
+  "sintesi": {"esito": "impreciso", "nota": "Corretta nei numeri, ma omette le due condizioni sopra (rapporto ancora in essere alla domanda, DID anteriore all'assunzione), decisive per le imprese turistiche con stagionali."}
+ },
+ "voto": 4,
+ "davvero_per_imprese_e_aperto": true,
+ "nota_generale": "Scheda solida su importi, settori ATECO, regimi (de minimis o GBER con incremento ULA) e modalita'. Pero' e' stata scritta senza leggere il decreto di rettifica 11363/2026 e le FAQ del 05/07/2026, che ora sono nel fascicolo (la scheda stessa lo avverte): vanno aggiunte la regola dei contratti ancora attivi alla data della domanda e l'obbligo della DID anteriore all'assunzione. Dalle FAQ anche: una domanda per annualita' in base alla data di assunzione (oggi presentabili 2025 e 2026), orario minimo 50% non sanabile con aumenti successivi. Conviene rigenerarla. Incentivo per imprese aperto a sportello."
+}

@@ -1,0 +1,20 @@
+{
+  "id": 3659,
+  "campi": {
+    "stato": {"esito": "giusto", "nota": "In arrivo: domande dal 6 ottobre 2026, oggi e' il 02/10."},
+    "data_apertura": {"esito": "giusto", "nota": "Decreto e Allegato A: 'decorreranno dal giorno 6 ottobre 2026'; ore 10:00 dalla pagina."},
+    "scadenza": {"esito": "giusto", "nota": "'fino al 21 dicembre 2026'; ore 23:59 dalla pagina."},
+    "tipo_agevolazione": {"esito": "giusto", "nota": "Contributo a fondo perduto in percentuale sulla spesa, piu' premio fisso di 15.000 euro (Azione 7), entrambi rilevati."},
+    "contributo_massimo": {"esito": "giusto", "nota": "Il bando non fissa un massimo in euro (par. 5: aliquote per intervento, spesa 2.000-100.000 euro); la scheda lo lascia vuoto e lo spiega nelle avvertenze."},
+    "percentuale": {"esito": "impreciso", "nota": "Scheda: 100 come campo unico; documento par. 5: '100% valore aggiunto, sicurezza... 50% diversificazione, 40% prima imbarcazione'. Il dettaglio e' corretto in sintesi e linee, ma il campo da solo sovrastima per diversificazione e barca."},
+    "a_chi_si_rivolge": {"esito": "giusto", "nota": "Par. 3: 'Imprese di piccola pesca, singole e associate, di acque interne; Giovani pescatori professionisti; Nuove imprese di pesca', con note 18-40 anni e P.IVA da meno di 12 mesi."},
+    "territorio": {"esito": "giusto", "nota": "Par. 3: 'Sede operativa nel territorio regionale' (Lombardia)."},
+    "dimensioni_ammesse": {"esito": "giusto", "nota": "Nessun vincolo di dimensione: l'essere PMI da' solo punteggio (criterio SR1)."},
+    "codici_ateco": {"esito": "giusto", "nota": "Par. 3: 'Codice ATECO 03.12' obbligatorio."},
+    "cosa_finanzia": {"esito": "giusto", "nota": "Coerente con par. 7.1-7.3 (codici 12, 54-55, 66, 06, 64). Piccola approssimazione: 'pesca-turismo' dove il bando dice 'turismo legato alla pesca sportiva'."},
+    "sintesi": {"esito": "giusto", "nota": "Aliquote, limiti di spesa 2.000-100.000 euro, dotazione 350.000 euro, date e graduatoria corrispondono ai documenti."}
+  },
+  "voto": 5,
+  "davvero_per_imprese_e_aperto": true,
+  "nota_generale": "Scheda accurata e completa per un bando FEAMPA di Regione Lombardia riservato alle imprese di pesca professionale nelle acque interne (ATECO 03.12), in apertura il 6/10/2026; unico limite il campo percentuale unico a 100% che va letto insieme alle aliquote per azione."
+}

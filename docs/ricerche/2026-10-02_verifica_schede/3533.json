@@ -1,0 +1,56 @@
+{
+  "id": 3533,
+  "campi": {
+    "stato": {
+      "esito": "impreciso",
+      "nota": "Scheda: 'aperto'. La pagina dice 'A sportello - Aperto - dal 15/06/2015', ma e' la pagina del POR Puglia 2014-2020 e l'ultimo aggiornamento e' la modifica del 07/04/2022; nessun documento conferma che lo sportello sia ancora operativo nel 2026 (programma 2014-2020 chiuso, possibile sostituzione con l'avviso del PR 2021-2027). La scheda lo segnala solo in avvertenza."
+    },
+    "data_apertura": {
+      "esito": "giusto",
+      "nota": "Art. 2 c.1: 'possono essere presentate a partire dal 15 giugno 2015'."
+    },
+    "scadenza": {
+      "esito": "giusto",
+      "nota": "Nessuna scadenza nei documenti; sportello fino a esaurimento (art. 12 c.15)."
+    },
+    "tipo_agevolazione": {
+      "esito": "giusto",
+      "nota": "Sovvenzione in conto impianti / contributo a fondo perduto."
+    },
+    "contributo_massimo": {
+      "esito": "impreciso",
+      "nota": "Scheda: 20.000.000. Il documento fissa 20 mln solo per la ricerca industriale della grande impresa ('20 milioni di Euro per impresa e per progetto'); per gli attivi materiali della grande impresa vale l''importo di aiuto corretto' (formula R x (A+0,50xB)), per le PMI aderenti 10 mln (medie) / 5 mln (piccole). Non e' un tetto unico del bando."
+    },
+    "percentuale": {
+      "esito": "impreciso",
+      "nota": "Scheda: 80%. E' il massimo solo per la ricerca industriale delle piccole imprese con maggiorazione (70%+15 entro 80%); per gli investimenti produttivi le intensita' sono 15-45% ('15% per le grandi imprese... 45% per le piccole imprese'). Spiegato nella sintesi e nelle avvertenze, ma il campo da solo e' fuorviante."
+    },
+    "a_chi_si_rivolge": {
+      "esito": "giusto",
+      "nota": "Coerente con art. 3: grande impresa proponente con due bilanci approvati, PMI aderenti in contabilita' ordinaria, 2/3 delle imprese attive."
+    },
+    "territorio": {
+      "esito": "giusto",
+      "nota": "Unita' locali ubicate o da ubicare in Puglia (art. 5)."
+    },
+    "dimensioni_ammesse": {
+      "esito": "impreciso",
+      "nota": "Scheda: micro, piccola, media, grande alla pari. Il documento ammette come proponente solo la grande impresa ('Puo' presentare domanda... una impresa di grande dimensione'); le PMI solo come aderenti al contratto di una grande impresa, con almeno 1 mln di investimento. Una micro/PMI da sola non puo' accedere: rischio di abbinamenti sbagliati."
+    },
+    "codici_ateco": {
+      "esito": "impreciso",
+      "nota": "Settori e codici di servizio corrispondono all'Allegato 1 (52, 58, 59, 61, 62, 63.11.20/30, 63.12, 63.91, 71.20, 72, 82.20, 38.xx) ed esclusioni corrette; ma 'C' intera e' piu' larga dell'Allegato 1 a sei cifre (avvertenza presente nella scheda)."
+    },
+    "cosa_finanzia": {
+      "esito": "giusto",
+      "nota": "Coerente con artt. 2, 6-10 e con la pagina: R&S e progetti industriali innovativi per le grandi, attivi materiali integrati con R&S/innovazione per le PMI aderenti, consulenze e fiere; spese ammesse e limiti (suolo 5%, immateriali 50% grandi, studi 1,5%, progettazione 6%) corretti."
+    },
+    "sintesi": {
+      "esito": "giusto",
+      "nota": "Chiara e fedele: programmi 5-100 mln, PMI aderenti da 1 mln, 15-45% investimenti, fino a 80% ricerca, dotazione 80 mln, sportello dal 15/06/2015."
+    }
+  },
+  "voto": 3,
+  "davvero_per_imprese_e_aperto": false,
+  "nota_generale": "Scheda accurata e ben documentata sul contenuto dell'avviso (versione BURP 41/2022), ma tre problemi per il commercialista: (1) lo stato 'aperto' poggia solo sull'etichetta della vecchia pagina POR 2014-2020, senza atti successivi al 2022: non e' dimostrato che lo sportello accetti domande al 02/10/2026; (2) dimensioni_ammesse include micro/PMI come se potessero chiedere da sole, mentre sono solo aderenti al contratto di una grande impresa; (3) contributo_massimo 20 mln e percentuale 80% sono valori di casi particolari (ricerca), non tetti generali. Da proporre solo dopo verifica su sistema.puglia.it e solo a grandi imprese (o PMI agganciate a una grande)."
+}

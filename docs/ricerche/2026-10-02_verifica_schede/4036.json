@@ -1,0 +1,20 @@
+{
+  "id": 4036,
+  "campi": {
+    "stato": {"esito": "giusto", "nota": "La pagina di Sviluppo Toscana indica 'Stato: Aperto'; finestra 07/09/2026-23/10/2026, oggi 02/10/2026 rientra."},
+    "data_apertura": {"esito": "giusto", "nota": "Bando par. 6.1: 'dalle ore 9:00 del 07/09/2026'."},
+    "scadenza": {"esito": "giusto", "nota": "Bando par. 6.1: 'fino alle ore 12:00 del 23/10/2026'; l'orario delle 12:00 e' riportato in sintesi e avvertenze."},
+    "tipo_agevolazione": {"esito": "giusto", "nota": "Par. 5.7: 'sovvenzione in conto capitale ai sensi dell'art. 47 comma 8' del Reg. 651/2014."},
+    "contributo_massimo": {"esito": "giusto", "nota": "Par. 5.6: massimali da 300.000 a 3.000.000 euro secondo la capacita' di riciclo (3.000.000 per almeno 30.000 t/anno); la scheda li riporta tutti."},
+    "percentuale": {"esito": "giusto", "nota": "Par. 5.7: 'Micro e Piccola 60%, Media 50%'; il campo indica 60 come massimo e il dettaglio per dimensione e' nella sintesi e in intensita'."},
+    "a_chi_si_rivolge": {"esito": "giusto", "nota": "Par. 3 e 3.1: MPMI 'che operano nel settore del trattamento e dei servizi di recupero/riciclaggio dei rifiuti' con ATECO prevalente ammesso; neocostituite ammesse (FAQ 1-2); codice secondario non basta (FAQ 6)."},
+    "territorio": {"esito": "giusto", "nota": "Par. 4.2.2: progetto localizzato in Toscana in un'unita' produttiva del beneficiario."},
+    "dimensioni_ammesse": {"esito": "giusto", "nota": "Par. 3: 'Sono ammesse le micro, piccole e medie imprese (MPMI)'; esclusa la PMI controllata da enti pubblici (FAQ 4), segnalato nei requisiti."},
+    "codici_ateco": {"esito": "giusto", "nota": "Par. 3.1: 'sezione B, sezione C, codici 38, 39, 41, 42, 43 e 46 di cui alla Delibera G.R. n. 704 del 3/6/2025', come attivita' prevalente; FAQ 5 conferma le sottocategorie delle divisioni ammesse."},
+    "cosa_finanzia": {"esito": "giusto", "nota": "Corrisponde a par. 5.2/5.4 e FAQ 3, 36, 38 (vaglio e tritatore si', escavatori, pale, muletti no). Le voci di spesa a)-d), il minimo di 200.000 euro e le esclusioni del par. 5.5 sono riportati nei campi di dettaglio."},
+    "sintesi": {"esito": "giusto", "nota": "Fedele al bando: fondo perduto, 60%/50%, massimali 300.000-3.000.000, spesa minima oltre 200.000 euro (par. 5.4), date e orari, graduatoria, dotazione 15 milioni (par. 2)."}
+  },
+  "voto": 5,
+  "davvero_per_imprese_e_aperto": true,
+  "nota_generale": "Scheda accurata e completa, confrontata con bando (Allegato 1), pagina di Sviluppo Toscana e FAQ aggiornate all'11/09/2026. Nessun errore trovato sui campi chiave. Il decreto correttivo del 04/09/2026 presente nei documenti modifica solo il modello di domanda (dichiarazioni su polizza e cumulo, tabella voci di spesa), non i requisiti ne' le date. Bando di nicchia: adatto solo a PMI toscane che gestiscono impianti di recupero/riciclaggio rifiuti, con investimenti oltre 200.000 euro."
+}

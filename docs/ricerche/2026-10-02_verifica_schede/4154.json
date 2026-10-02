@@ -1,0 +1,20 @@
+{
+  "id": 4154,
+  "campi": {
+    "stato": {"esito": "giusto", "nota": "La pagina del bando indica 'Aperto'; chiusura prevista il 10/12/2026, nessuna notizia di esaurimento fondi nelle FAQ del 24/06/2026."},
+    "data_apertura": {"esito": "giusto", "nota": "Avviso: 'DATA APERTURA 11 dicembre 2025', pagina: 'Domande dal 11/12/2025, ore 12:00'."},
+    "scadenza": {"esito": "giusto", "nota": "Avviso: 'DATA CHIUSURA 10 dicembre 2026', con possibile chiusura anticipata per esaurimento risorse (riportata nelle avvertenze)."},
+    "tipo_agevolazione": {"esito": "giusto", "nota": "Pagina: 'Sovvenzione a fondo perduto'."},
+    "contributo_massimo": {"esito": "giusto", "nota": "Tabelle 1 e 2: tempo indeterminato fascia 4 '19.200,00 €'; tirocini fino a 4.000 euro riportati a parte."},
+    "percentuale": {"esito": "giusto", "nota": "Asse I a importi fissi per fascia e durata, non percentuale di spesa: null corretto."},
+    "a_chi_si_rivolge": {"esito": "giusto", "nota": "Coerente con par. 4.1 e Scheda informativa: imprese private di qualsiasi dimensione e settore, enti pubblici economici, partecipate, enti pubblici solo per tirocini; FAQ 4 conferma il contributo all'impresa utilizzatrice in somministrazione."},
+    "territorio": {"esito": "giusto", "nota": "L'avviso dice 'sede operativa nel territorio della Regione Lombardia', la pagina 'sede operativa nel territorio della Provincia di Lecco'; la scheda concilia correttamente: domanda alla Provincia dove ha sede l'unita' produttiva (Lecco)."},
+    "dimensioni_ammesse": {"esito": "giusto", "nota": "'imprese private di qualsiasi dimensione e settore di attivita''."},
+    "codici_ateco": {"esito": "giusto", "nota": "Nessun vincolo ATECO nei documenti ('qualsiasi ... settore di attivita'')."},
+    "cosa_finanzia": {"esito": "giusto", "nota": "Incentivi all'assunzione e rimborso indennita' tirocini (max 4.000 euro, intero con presenza >= 80%), importi delle tabelle riportati fedelmente in spese_ammesse, inclusa la formula part-time."},
+    "sintesi": {"esito": "giusto", "nota": "Importi 2.750-19.200 euro, tirocini fino a 4.000, sportello dalle 12:00 dell'11/12/2025 al 10/12/2026, dotazione Asse I 668.549,97 euro: tutto conforme (Det. 1406 e par. 6 dell'avviso)."}
+  },
+  "voto": 5,
+  "davvero_per_imprese_e_aperto": true,
+  "nota_generale": "Scheda accurata e completa: date, importi delle tabelle, dotazione, beneficiari e vincoli corrispondono ai documenti. Bando a sportello per imprese che assumono persone con disabilita' in provincia di Lecco, aperto oggi (02/10/2026) fino al 10/12/2026 salvo esaurimento fondi. Le avvertenze dicono che FAQ e allegati non erano stati letti: le FAQ del 24/06/2026 non cambiano date ne' importi. Unico appunto minore: il 'Lombardia' nel territorio potrebbe far pensare a imprese fuori provincia, ma la scheda precisa che la domanda va alla Provincia di Lecco."
+}

@@ -1,0 +1,20 @@
+{
+  "id": 3629,
+  "campi": {
+    "stato": {"esito": "giusto", "nota": "Candidature aperte dal 24/09/2026 al 20/11/2026: oggi 02/10/2026 il bando e' aperto."},
+    "data_apertura": {"esito": "giusto", "nota": "'Le candidature sono aperte dal 24 settembre 2026'."},
+    "scadenza": {"esito": "giusto", "nota": "'scadenza fissata al 20 novembre 2026 entro le ore 12:00'; ora 12:00 riportata nella scheda. La data 07-01-2027 del modulo di test e' solo un metadato del form."},
+    "tipo_agevolazione": {"esito": "giusto", "nota": "'concesso a fondo perduto' (art. 4), piu' servizi dei partner."},
+    "contributo_massimo": {"esito": "giusto", "nota": "'importo non superiore a 12.500,00 euro'."},
+    "percentuale": {"esito": "giusto", "nota": "'nella misura del 100% della spesa ritenuta ammissibile'."},
+    "a_chi_si_rivolge": {"esito": "giusto", "nota": "Micro e piccole imprese, qualsiasi forma giuridica, iscritte al Registro imprese/REA 'comprese le organizzazioni del Terzo Settore che svolgono attivita' economica', giovanili (under 36, 51%), settori di interesse strategico con gli stessi esempi del bando."},
+    "territorio": {"esito": "giusto", "nota": "Sede legale e/o unita' locale nella Citta' metropolitana di Bologna al 1° agosto 2026, oppure sede legale in Emilia-Romagna con unita' operativa nella CM; progetto realizzato solo in sedi della CM."},
+    "dimensioni_ammesse": {"esito": "giusto", "nota": "'micro e piccola impresa secondo la definizione dell'allegato 1 del Regolamento UE n. 651/2014'."},
+    "codici_ateco": {"esito": "giusto", "nota": "Nessun elenco ATECO nel bando; la scheda segnala correttamente solo le esclusioni per rinvio (allegato V Reg. UE 2021/523, DNSH, settori esclusi dal de minimis)."},
+    "cosa_finanzia": {"esito": "giusto", "nota": "Progetti di sviluppo sostenibile di imprese giovanili; spese ammesse (beni strumentali, software, opere murarie 'indicativamente nella misura del 20%', consulenze, promozione) e periodo 01/01/2027-31/12/2027 corrispondono al bando."},
+    "sintesi": {"esito": "giusto", "nota": "Dotazione 50.000 euro per quattro imprese, 12.500 a impresa, prime tre piu' prima impresa femminile, soglia 60/100, PN Metro Plus: tutto coerente con il bando."}
+  },
+  "voto": 5,
+  "davvero_per_imprese_e_aperto": true,
+  "nota_generale": "Scheda accurata e completa, con avvertenze utili (spese solo nel 2027, ora di scadenza 12:00, sede al 1° agosto 2026, requisito giovanile alla scadenza). Unico limite pratico: premio a graduatoria per sole 4 imprese, da far presente al cliente."
+}

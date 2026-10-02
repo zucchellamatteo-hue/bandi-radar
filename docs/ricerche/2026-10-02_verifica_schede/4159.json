@@ -1,0 +1,20 @@
+{
+  "id": 4159,
+  "campi": {
+    "stato": {"esito": "giusto", "nota": "Sportello aperto fino a esaurimento risorse e comunque entro il 31/12/2026; nessun avviso di chiusura o esaurimento nei documenti."},
+    "data_apertura": {"esito": "giusto", "nota": "Avviso Asse III par. 4: 'a partire dalle ore 12:00 del 01/01/2026'. La pagina regionale indica 11/12/2025; la discrepanza e' segnalata nelle avvertenze."},
+    "scadenza": {"esito": "giusto", "nota": "'comunque non oltre le ore 23:59 del 31/12/2026' (Asse III par. 4), coincide con la pagina."},
+    "tipo_agevolazione": {"esito": "giusto", "nota": "Misto: contributo a fondo perduto (linea costituzione) e voucher di 6.000 euro (linea transizione, par. 7)."},
+    "contributo_massimo": {"esito": "giusto", "nota": "Par. 7.1: '€ 45.000, subordinato all'assunzione di almeno tre persone con disabilita''."},
+    "percentuale": {"esito": "giusto", "nota": "'l'80% del valore del progetto verra' concesso come contributo pubblico, mentre il 20% ... cofinanziamento' (vale per la linea costituzione)."},
+    "a_chi_si_rivolge": {"esito": "giusto", "nota": "Cooperative sociali di tipo B L. 381/1991 iscritte all'albo; nuove coop costituite dopo l'avviso, nuovi rami con ATECO diverso, transizione di lavoratori occupati da 12 mesi o tirocinanti 12-24 mesi: tutto conforme."},
+    "territorio": {"esito": "giusto", "nota": "Sede operativa in Lombardia, domanda alla Provincia dell'unita' produttiva (avviso par. 4.1); pagina: 'sede operativa in Provincia di Brescia'. Scheda riporta entrambe e province=BS."},
+    "dimensioni_ammesse": {"esito": "giusto", "nota": "Avviso par. 4.1: 'imprese private di qualsiasi dimensione e settore'."},
+    "codici_ateco": {"esito": "giusto", "nota": "Nessun vincolo ATECO; l'unico riferimento (nuovo ramo con ATECO diverso da quelli esistenti) e' correttamente riportato nei requisiti."},
+    "cosa_finanzia": {"esito": "giusto", "nota": "Spese di primo impianto/investimento almeno 70%, costituzione max 30%; voucher forfettario 6.000 per accompagnamento: conforme ai par. 3 e 7. Segnalata anche la contraddizione del testo sulla decorrenza delle spese."},
+    "sintesi": {"esito": "giusto", "nota": "Riassume correttamente linee, importi, finestra, sportello valutativo con minimo 60/100, dotazione 100.000 euro e de minimis."}
+  },
+  "voto": 5,
+  "davvero_per_imprese_e_aperto": true,
+  "nota_generale": "Scheda accurata e ben documentata: date, importi, percentuale, beneficiari e spese coincidono con l'avviso Asse III; le incongruenze dei documenti (apertura 11/12/2025 vs 01/01/2026, decorrenza spese, sede Lombardia vs Brescia) sono segnalate nelle avvertenze. Platea ristretta alle cooperative sociali di tipo B, ma sono imprese e lo sportello e' aperto al 02/10/2026."
+}
