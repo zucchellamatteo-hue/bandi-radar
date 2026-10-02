@@ -8,6 +8,7 @@ from dataclasses import dataclass
 from datetime import date, timedelta
 
 from app.abbinamento import regole
+from app.abbinamento.territorio import regione_della_provincia
 from app.schede.campi import REGIONI
 
 # Campi della scheda che servono all'abbinamento e all'elenco (niente testi lunghi, salvo la sintesi).
@@ -67,8 +68,16 @@ class Filtri:
 
     def profilo(self) -> dict:
         """I filtri su chi puo' partecipare diventano un profilo parziale."""
-        sede = {k: v for k, v in (("regione", self.regione), ("provincia", self.provincia), ("comune", self.comune)) if v}
-        return {"sedi": [sede] if sede else [], "soggetto": self.soggetto, "forma_giuridica": self.forma_giuridica,
+        # Piu' regioni (scelta multipla, "LOM,PIE"): una sede per regione, quindi passa il bando di almeno una.
+        # Provincia e comune restano uno solo e completano la loro regione.
+        regioni = [r for r in (self.regione or "").split(",") if r]
+        principale = {k: v for k, v in (("provincia", self.provincia), ("comune", self.comune)) if v}
+        if principale:
+            principale["regione"] = regione_della_provincia(self.provincia) if self.provincia else (regioni[:1] or [None])[0]
+            principale = {k: v for k, v in principale.items() if v}
+        sedi = [principale] if principale else []
+        sedi += [{"regione": r} for r in regioni if r != (principale or {}).get("regione")]
+        return {"sedi": sedi,"soggetto": self.soggetto, "forma_giuridica": self.forma_giuridica,
                 "dimensione": self.dimensione, "ateco": [self.ateco] if self.ateco else []}
 
 

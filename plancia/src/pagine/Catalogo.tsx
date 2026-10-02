@@ -21,6 +21,14 @@ export default function Catalogo() {
     setParametri(p);
   };
   useEffect(() => { api.valori().then(setValori); }, []);
+  // Il menu a scelta multipla si chiude cliccando fuori.
+  useEffect(() => {
+    const chiudi = (e: MouseEvent) => document.querySelectorAll("details.multiplo[open]").forEach((d) => {
+      if (!d.contains(e.target as Node)) d.removeAttribute("open");
+    });
+    document.addEventListener("click", chiudi);
+    return () => document.removeEventListener("click", chiudi);
+  }, []);
   useEffect(() => {
     const p: Record<string, string> = {};
     parametri.forEach((v, k) => (p[k] = v));
@@ -35,9 +43,27 @@ export default function Catalogo() {
       {voci.map(([k, v]) => <option key={k} value={k}>{v}</option>)}
     </select>
   );
+  // Scelta multipla (regioni): un menu a tendina con le caselle; il valore va nell'indirizzo separato da virgole.
+  const multiplo = (chiave: string, vuoto: string, voci: [string, string][]) => {
+    const scelti = (parametri.get(chiave) || "").split(",").filter(Boolean);
+    const cambia = (k: string) => imposta(chiave, (scelti.includes(k) ? scelti.filter((x) => x !== k) : [...scelti, k]).join(","));
+    const testo = scelti.length === 0 ? vuoto : scelti.length <= 2 ? scelti.map((k) => voci.find(([v]) => v === k)?.[1] || k).join(", ")
+      : `${scelti.length} regioni`;
+    return (
+      <details className={`multiplo ${scelti.length ? "filtro-attivo" : ""}`}>
+        <summary>{testo}</summary>
+        <div className="multiplo-voci">
+          {scelti.length > 0 && <button type="button" onClick={() => imposta(chiave, "")}>Togli tutte</button>}
+          {voci.map(([k, v]) => (
+            <label key={k}><input type="checkbox" checked={scelti.includes(k)} onChange={() => cambia(k)} /> {v}</label>
+          ))}
+        </div>
+      </details>
+    );
+  };
   const elenco = (campo: string) => ((valori?.[campo] as string[]) || []).map((v) => [v, nome(v)] as [string, string]);
-  const regione = parametri.get("regione");
-  const province = Object.entries(valori?.province || {}).filter(([, r]) => !regione || r === regione)
+  const regioni = (parametri.get("regione") || "").split(",").filter(Boolean);
+  const province = Object.entries(valori?.province || {}).filter(([, r]) => !regioni.length || regioni.includes(r))
     .map(([p]) => [p, p] as [string, string]).sort();
 
   const perPagina = 50;
@@ -67,7 +93,7 @@ export default function Catalogo() {
 
       <div className="filtri">
         <span className="piccolo etichetta-filtri">Chi partecipa</span>
-        {menu("regione", "Tutte le regioni", Object.entries(valori?.regioni || {}).sort((a, b) => a[1].localeCompare(b[1])))}
+        {multiplo("regione", "Tutte le regioni", Object.entries(valori?.regioni || {}).sort((a, b) => a[1].localeCompare(b[1])))}
         {menu("provincia", "Provincia", province)}
         {menu("soggetto", "Tipo di soggetto", elenco("soggetti_ammessi").filter(([k]) => k !== "altro"))}
         {menu("forma_giuridica", "Forma giuridica", elenco("forme_giuridiche_ammesse").filter(([k]) => k !== "altro"))}
