@@ -52,7 +52,7 @@ MODELLO_SCHEDA = "claude-opus-5-5"
 # Quanto ragiona il modello (output_config.effort). Opus 5.5 ha "medium" di base: lo si scrive sempre, esplicito.
 EFFORT = {"smistamento": "medium", "preliminare": "medium", "seconda_lettura": "high", "scheda": "medium"}
 DIMENSIONE_LOTTO = 20            # la prova del 25/09 ha perso 2 annunci su lotti da 45
-MASSIMO_TESTO_SCHEDA = 150_000   # caratteri di documenti per la scheda (circa 40.000 token)
+MASSIMO_TESTO_SCHEDA = 300_000   # caratteri di documenti per la scheda (circa 75.000 token; 02/10: con 150.000 i bandi a piu' assi perdevano le ultime parti)
 MASSIMO_TESTO_PRELIMINARE = 18_000   # circa 3.000 parole
 # Prezzi in dollari per milione di token (ingresso, uscita, lettura dalla cache), verificati il 28/09/2026;
 # con la Batch API la meta'. La scrittura in cache costa 1,25 volte l'ingresso.

@@ -53,7 +53,7 @@ MASSIMO_ANNUNCIO = 100 * 1024 * 1024   # byte in tutto per annuncio
 MASSIMO_FILE_ANNUNCIO = 30             # file per annuncio
 PAUSA_SECONDI = 2.0                    # tra due richieste allo stesso sito (di piu' se robots.txt chiede Crawl-delay)
 MASSIMA_PAUSA_IGNORANDO_ROBOTS = 10.0  # per le fonti con ignora_robots: il Crawl-delay conta fino a qui
-MASSIMO_TESTO = 200_000                # caratteri di testo estratto conservati per file
+MASSIMO_TESTO = 600_000                # caratteri di testo estratto conservati per file (02/10: 200.000 tagliava 263 bandi lunghi)
 LIMITE_PREDEFINITO = 50                # annunci per giro
 
 ESTENSIONI = ("pdf", "doc", "docx", "xls", "xlsx", "odt", "zip", "p7m")
