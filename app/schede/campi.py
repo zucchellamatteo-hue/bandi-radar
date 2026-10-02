@@ -67,6 +67,10 @@ CATEGORIE_SPESA = (
     "energia_efficienza", "scorte_circolante", "immobili", "affitto_gestione", "ricerca_sviluppo", "altro",
 )
 
+# Forma dell'incentivo (richiesta di Matteo del 02/10): le forme che compongono l'aiuto, con quota e massimale,
+# anche diverse per gruppi di beneficiari. Le stesse dei tipi di agevolazione, piu' il contributo in conto interessi.
+FORME_INCENTIVO = (*TIPI_AGEVOLAZIONE[:-1], "contributo_interessi", "altro")
+
 MODALITA_SELEZIONE = ("sportello", "sportello_valutativo", "graduatoria", "click_day", "automatica", "negoziale",
                       "altro")
 

@@ -87,3 +87,14 @@ td.stato.vincolo { color: #1f5fbf; } td.stato.nessun_vincolo { color: #1e6b3e; }
 .multiplo-voci { position: absolute; z-index: 3; top: calc(100% + 4px); left: 0; background: #fff; border: 1px solid var(--bordo); border-radius: 8px; box-shadow: 0 6px 18px rgba(31, 95, 191, .15); padding: .5rem .75rem; max-height: 22rem; overflow-y: auto; min-width: 14rem; }
 .multiplo-voci label { display: block; padding: .2rem 0; white-space: nowrap; cursor: pointer; }
 .multiplo-voci button { margin-bottom: .4rem; }
+/* Forma dell'incentivo nella pagina del bando */
+.forma-incentivo .forma-chip { display: flex; flex-wrap: wrap; gap: .4rem; margin-bottom: .6rem; }
+.chip-forma { display: inline-block; padding: .25rem .7rem; border-radius: 999px; font-weight: 700; font-size: .85rem; background: #d9e6f6; color: var(--blu-scuro); }
+.chip-forma.fondo_perduto { background: #dff3e7; color: #1e6b3e; }
+.chip-forma.finanziamento_agevolato { background: #e3e9fb; color: #2b3f9e; }
+.chip-forma.credito_imposta { background: #f3e8fb; color: #6b2fa0; }
+.chip-forma.garanzia { background: #fff1d6; color: #8a5a00; }
+.chip-forma.servizi, .chip-forma.voucher { background: #dff4f6; color: #12616b; }
+.forma-descrizione { font-size: 1.05rem; font-weight: 600; margin: .2rem 0 .8rem; }
+.tabella-forma td { min-width: 9rem; }
+.forma-percentuale { font-size: 1.15rem; font-weight: 750; color: var(--blu-scuro); }

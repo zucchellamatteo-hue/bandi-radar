@@ -1,6 +1,6 @@
 import { ReactNode, useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { api, Bando as TipoBando, data, dimensione, euro, nome, NOMI_CATEGORIA, NOMI_DECISO_DA, NOMI_RUOLO } from "../api";
+import { api, Bando as TipoBando, FormaIncentivo as TipoForma, data, dimensione, euro, nome, NOMI_CATEGORIA, NOMI_DECISO_DA, NOMI_RUOLO } from "../api";
 import { Importo } from "./Catalogo";
 
 // La scheda completa del bando (docs/SCHEDA_BANDO.md), i documenti, gli annunci che ne parlano e le versioni.
@@ -55,6 +55,7 @@ export default function Bando() {
         </div>
       )}
       {b.sintesi && <p className="testo-lungo">{b.sintesi}</p>}
+      <FormaIncentivo f={b.forma_incentivo} />
 
       <Testo titolo="A chi si rivolge" testo={b.a_chi_si_rivolge} />
       <Testo titolo="Cosa finanzia" testo={b.cosa_finanzia} />
@@ -182,6 +183,56 @@ function Vincoli({ b }: { b: TipoBando }) {
       })}</tbody></table>
       <p className="piccolo">"Limitato": il bando pone un limite. "Nessun limite": il bando dice che non ce ne sono. "Non noto": la scheda non lo sa (per esempio perché fatta su una sintesi): da verificare sul bando.</p>
     </>
+  );
+}
+
+// Forma dell'incentivo (richiesta di Matteo del 02/10): che aiuto e', in che quota e fino a quanto, per chi.
+const NOMI_FORMA: Record<string, string> = {
+  fondo_perduto: "Fondo perduto", finanziamento_agevolato: "Finanziamento agevolato", credito_imposta: "Credito d'imposta",
+  garanzia: "Garanzia", voucher: "Voucher", servizi: "Servizi gratuiti", premio: "Premio",
+  contributo_interessi: "Contributo in conto interessi", altro: "Altra forma",
+};
+
+function FormaIncentivo({ f }: { f: TipoForma | null }) {
+  if (!f || !f.righe?.length) return null;
+  const forme = [...new Set(f.righe.flatMap((r) => r.forme.map((x) => x.forma)))];
+  const conSpesa = f.righe.some((r) => r.spesa_minima != null || r.spesa_massima != null);
+  const conMassima = f.righe.some((r) => r.agevolazione_massima != null);
+  const conNote = f.righe.some((r) => r.note);
+  const spesa = (r: TipoForma["righe"][number]) =>
+    `${r.spesa_minima != null ? "da " + euro(r.spesa_minima) : ""}${r.spesa_massima != null ? " a " + euro(r.spesa_massima) : ""}`.trim() || "—";
+  return (
+    <section className="forma-incentivo">
+      <h2>Forma dell'incentivo</h2>
+      <div className="forma-chip">{forme.map((x) => <span key={x} className={`chip-forma ${x}`}>{NOMI_FORMA[x] || x}</span>)}</div>
+      {f.descrizione && <p className="forma-descrizione">{f.descrizione}</p>}
+      <table className="tabella-forma">
+        <thead><tr><th>Per chi</th>{forme.map((x) => <th key={x}>{NOMI_FORMA[x] || x}</th>)}
+          {conSpesa && <th>Progetto ammesso</th>}{conMassima && <th>Agevolazione massima</th>}{conNote && <th>Note</th>}</tr></thead>
+        <tbody>{f.righe.map((r, i) => (
+          <tr key={i}>
+            <td><b>{r.per_chi}</b></td>
+            {forme.map((x) => {
+              const c = r.forme.find((y) => y.forma === x);
+              if (!c) return <td key={x} className="piccolo">—</td>;
+              return (
+                <td key={x}>
+                  {c.percentuale != null && <div className="forma-percentuale">{c.percentuale}%{x === "garanzia" ? "" : " della spesa"}</div>}
+                  {c.massimale != null && <div>fino a <b>{euro(c.massimale)}</b></div>}
+                  {c.percentuale == null && c.massimale == null && !c.condizioni && <div className="piccolo">sì</div>}
+                  {c.condizioni && <div className="piccolo">{c.condizioni}</div>}
+                </td>
+              );
+            })}
+            {conSpesa && <td>{spesa(r)}</td>}
+            {conMassima && <td>{r.agevolazione_massima != null ? euro(r.agevolazione_massima) : "—"}</td>}
+            {conNote && <td className="piccolo">{r.note}</td>}
+          </tr>
+        ))}</tbody>
+      </table>
+      {f.note && <p className="piccolo">{f.note}</p>}
+      {f.ricavata && <p className="piccolo">Ricavata dai campi della scheda: sarà compilata dai documenti al prossimo aggiornamento della scheda.</p>}
+    </section>
   );
 }
 

@@ -47,11 +47,19 @@ export interface Dubbio {
   bando_titolo: string | null; bando_ente: string | null; bando_url: string | null; bando_annunci: number;
 }
 
+// Forma dell'incentivo (02/10): una riga per gruppo di beneficiari o linea, con le forme che compongono l'aiuto.
+export interface FormaIncentivo {
+  descrizione: string | null; note: string | null; ricavata: boolean;
+  righe: { per_chi: string; forme: { forma: string; percentuale: number | null; massimale: number | null; condizioni: string | null }[];
+    spesa_minima?: number | null; spesa_massima?: number | null; agevolazione_massima?: number | null; note?: string | null }[];
+}
+
 export interface Bando extends BandoBreve {
   stato: string | null; data_apertura: string | null; sintesi: string | null; url_chiave: string | null;
   pagina_stato: "trovata" | "non_trovata" | null; pagina_motivo: string | null; pagina_cercata_il: string | null;
   completezza: "bando_ufficiale" | "solo_sintesi" | "nessun_documento" | null; vincoli: Record<string, string> | null;
   linee: { nome: string; a_chi_si_rivolge?: string; contributo_massimo?: number | null }[] | null;
+  forma_incentivo: FormaIncentivo | null;
   [campo: string]: unknown;
   chiave_titolo: string | null; creato_il: string; aggiornato_il: string;
   annunci: AnnuncioDelBando[]; allegati: Allegato[]; versioni: { versione: number; causa: string | null; salvata_il: string }[];
@@ -247,9 +255,12 @@ export const NOMI_VALORI: Record<string, string> = {
 };
 export const nome = (v: string | null | undefined) => (v ? NOMI_VALORI[v] || v.replace(/_/g, " ") : "–");
 
-export function euro(n: number | null | undefined): string {
+export function euro(n: number | string | null | undefined): string {
   if (n == null) return "–";
-  return n.toLocaleString("it-IT", { maximumFractionDigits: 0 }) + " €";
+  // I numeri del database (numeric) arrivano come testo: senza conversione mancherebbero i punti delle migliaia.
+  const v = Number(n);
+  if (Number.isNaN(v)) return `${n} €`;
+  return v.toLocaleString("it-IT", { maximumFractionDigits: 0 }) + " €";
 }
 
 export function dimensione(byte: number | null | undefined): string {
