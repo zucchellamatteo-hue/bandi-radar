@@ -31,6 +31,7 @@ Verifica di 20 schede proponibili aperte: 87% dei campi giusti, 1% sbagliati, vo
 
 ### 3. Fascicoli incompleti ("manca l'allegato" quando c'è)
 
+- **Causa già trovata il 02/10 per 4109**: gli "Avviso Asse II Allegato B)" e "Asse III Allegato C)" sono nel database ma con `categoria = 'modulistica'` (il nome "Allegato" li fa sembrare moduli), e `documenti_per_scheda` (`app/schede/allegati.py`) lascia fuori la modulistica. Correggere la classificazione (un "Allegato" che contiene un avviso, articoli, intensità o beneficiari non è modulistica: guardare il testo, non solo il nome), riclassificare i documenti già scaricati, poi verificare se spiega anche 833, 3603, 4043, 4163.
 - Capire la causa su 833, 3603, 4043, 4109, 4163: confronta i documenti nel database con quelli che `esporta.py` mette nel fascicolo (troncamento prima della PR #43 del 02/10? documenti di categoria `modulistica` esclusi? limite di caratteri?). Correggere l'esportazione se serve.
 - Trovare tutte le schede proponibili aperte le cui avvertenze dicono che manca un documento che invece c'è (cerca nelle avvertenze "non è tra i documenti", "non disponibile", "manca" e confronta con i nomi degli allegati) e rifarle con `rifai_scheda.py`.
 
@@ -46,7 +47,13 @@ Una PR su `app/schede/prompt_scheda.md` (lo usano sia la sessione sia l'API) e s
 
 Le 241 schede del 26/09 (99 aperte) hanno problemi segnalati nel 90% dei casi: istruzioni più vecchie. Rifare con `rifai_scheda.py` **prima le 99 aperte**, a gruppi di 10 per agente, importando dopo ogni agente. Le chiuse possono aspettare.
 
-### 6. Misurare di nuovo
+### 6. Forma dell'incentivo sulle schede aperte
+
+Dal 02/10 la scheda ha la sezione "Forma dell'incentivo" (blocco `forma_incentivo`: forme dell'aiuto, quota della spesa, massimale, una riga per gruppo di beneficiari o linea). Le schede nuove o rifatte la compilano da sole; per le altre la plancia la ricava dai campi, in modo meno preciso. Prova del 02/10 su 10 bandi (599, 607, 833, 1008, 2476, 3603, 3659, 4105, 4109, 4159): molto meglio della versione ricavata (per esempio 3659: quattro intensità e il premio fisso, dove la ricavata aveva un numero solo).
+- **Dopo il punto 3** (così gli allegati riclassificati entrano nei testi): `ar.sh esporta_forma.py` (tutte le proponibili aperte senza la sezione compilata, circa 375), agenti con il prompt "Leggi /tmp/claude-1000/ar/ISTRUZIONI_FORMA.md e app/schede/prompt_scheda.md (punto 12, forma_incentivo), poi seguile per i bandi …" (10 bandi per agente, lavoro da solo), `ar.sh importa_forma.py` dopo ogni agente. Le schede rifatte al punto 5 non servono: la compilano già.
+- Rifare con `esporta_forma.py <id>` i 10 della prova se il punto 3 cambia i loro documenti (4109 e 833 di sicuro).
+
+### 7. Misurare di nuovo
 
 - Nuovo campione di 20 (cambia il seme in `esporta_verifica.py`, per esempio `'verifica-03-10'`) più i 4 bandi sbagliati del 02/10, stesse istruzioni (`/tmp/claude-1000/ar/verifica/ISTRUZIONI.md`, la copia è nei verdetti del 02/10). Riporta i numeri a confronto con il 02/10 nello stesso file di ricerca.
 - Chiedi a Matteo di votare 10 schede nella plancia (campo `qualita`, oggi 0 voti): è l'unico giudizio esperto che abbiamo.
