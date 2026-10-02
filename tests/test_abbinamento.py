@@ -158,3 +158,18 @@ def test_catalogo_filtri_parziali():
     # Senza filtri su chi partecipa, nessun vincolo si guarda.
     assert len(catalogo.filtra(bandi, catalogo.Filtri(), OGGI)) == 4
     assert [b["id"] for b, _ in catalogo.filtra(bandi, catalogo.Filtri(livello="camera"), OGGI)] == [2]
+
+
+def test_catalogo_piu_regioni():
+    """Scelta multipla delle regioni: una sede per regione, provincia e comune completano la loro."""
+    assert catalogo.Filtri(regione="LOM,PIE").profilo()["sedi"] == [{"regione": "LOM"}, {"regione": "PIE"}]
+    assert catalogo.Filtri(regione="LOM,PIE", provincia="TO").profilo()["sedi"] == [
+        {"provincia": "TO", "regione": "PIE"}, {"regione": "LOM"}]
+    assert catalogo.Filtri().profilo()["sedi"] == []
+    piemonte = {**bando(id=1, vincoli={"territorio": "vincolo"}, territorio_regioni=["PIE"]), "livelli": ["regione"]}
+    veneto = {**bando(id=2, vincoli={"territorio": "vincolo"}, territorio_regioni=["VEN"]), "livelli": ["regione"]}
+    for b in (piemonte, veneto):
+        b.update(requisiti_speciali_obbligatori=[], requisiti_speciali_premiali=[], tipi_agevolazione=[], temi=[],
+                 categorie_spesa=[], regime_aiuto=[], modalita_selezione=None)
+    trovati = catalogo.filtra([piemonte, veneto], catalogo.Filtri(regione="LOM,PIE"), OGGI)
+    assert [b["id"] for b, _ in trovati] == [1]
