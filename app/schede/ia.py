@@ -384,18 +384,23 @@ def costo(modello: str, token_in: int, token_out: int, batch: bool = False, cach
     return c / 2 if batch else c
 
 
-def parametri(modello: str, istruzioni: str, messaggio: str, schema: dict, max_tokens: int,
+def parametri(modello: str, istruzioni: str, messaggio: str, schema: dict | None, max_tokens: int,
               effort: str = "medium") -> dict:
     """I parametri di una richiesta, uguali per la chiamata diretta e per la Batch API. Istruzioni in cache.
     Opus 5.5: niente `thinking` (il ragionamento e' sempre acceso, si regola con effort), niente tool_choice
-    forzato; la risposta e' JSON vincolato dallo schema (output_config.format). max_tokens comprende anche il
+    forzato; con uno schema la risposta e' JSON vincolato (output_config.format). La scheda NON usa lo schema
+    (02/10/2026: 79 campi facoltativi, l'API ne accetta al massimo 16 e rifiutava ogni richiesta): il formato lo
+    descrive il prompt e la risposta passa da prepara_scheda e verifica_scheda. max_tokens comprende anche il
     ragionamento: va lasciato largo."""
+    config: dict = {"effort": effort}
+    if schema is not None:
+        config["format"] = {"type": "json_schema", "schema": schema}
     return {
         "model": modello,
         "max_tokens": max_tokens,
         "system": [{"type": "text", "text": istruzioni, "cache_control": {"type": "ephemeral"}}],
         "messages": [{"role": "user", "content": messaggio}],
-        "output_config": {"format": {"type": "json_schema", "schema": schema}, "effort": effort},
+        "output_config": config,
     }
 
 
@@ -428,11 +433,95 @@ def leggi_messaggio(msg) -> Risposta:
                         "il modello ha rifiutato la richiesta" + (f" ({categoria})" if categoria else ""), **cache)
     if msg.stop_reason == "max_tokens":
         return Risposta(None, "incompleta", token_in, token_out, "risposta tagliata (max_tokens)", **cache)
-    testo = next((b.text for b in msg.content if getattr(b, "type", "") == "text"), "")
+    testo = "".join(b.text for b in msg.content if getattr(b, "type", "") == "text")
     try:
-        return Risposta(json.loads(testo), "ok", token_in, token_out, **cache)
+        return Risposta(estrai_json(testo), "ok", token_in, token_out, **cache)
     except json.JSONDecodeError as exc:
         return Risposta(None, "errore", token_in, token_out, f"JSON non valido: {exc}", **cache)
+
+
+def estrai_json(testo: str) -> dict:
+    """Il JSON della risposta. Senza schema vincolato (la scheda) il modello puo' aggiungere un blocco ```json o una
+    frase prima: si prende l'oggetto dalla prima { all'ultima }."""
+    testo = testo.strip()
+    try:
+        return json.loads(testo)
+    except json.JSONDecodeError:
+        inizio, fine = testo.find("{"), testo.rfind("}")
+        if inizio < 0 or fine <= inizio:
+            raise
+        return json.loads(testo[inizio:fine + 1])
+
+
+def _vuoto(schema: dict):
+    if schema.get("type") == "array" or (isinstance(schema.get("type"), list) and "array" in schema["type"]):
+        return []
+    if schema.get("type") == "object" and "properties" in schema:
+        return {k: _vuoto(v) for k, v in schema["properties"].items()}
+    return None
+
+
+def _completa(dati: dict, schema: dict) -> dict:
+    """Aggiunge le chiavi mancanti (vuote) e toglie quelle in piu', ricorsivamente sugli oggetti."""
+    fuori = {}
+    for k, s in schema["properties"].items():
+        v = dati.get(k)
+        if s.get("type") == "object" and "properties" in s and isinstance(v, dict):
+            fuori[k] = _completa(v, s)
+        elif v is None:
+            fuori[k] = _vuoto(s)
+        else:
+            fuori[k] = v
+    return fuori
+
+
+def prepara_scheda(grezza: dict) -> tuple[dict, list[str]]:
+    """Senza schema vincolato: completa le chiavi e toglie i valori che il database o i filtri non accettano
+    (fuori dagli elenchi, date e ore non valide, numeri non plausibili). Rende (scheda, cosa e' stato tolto).
+    Lo usano l'API e l'importazione delle schede scritte in sessione (strumenti/sessione/ar/importa.py)."""
+    s = _completa(grezza if isinstance(grezza, dict) else {}, SCHEMA_SCHEDA)
+    tolti = []
+    for nome, ammessi in campi.VALORI_AMMESSI.items():
+        v = s.get(nome)
+        if isinstance(v, list):
+            buoni = [x for x in v if x in ammessi]
+            if len(buoni) != len(v):
+                tolti.append(f"{nome}: tolti {[x for x in v if x not in ammessi]}")
+                s[nome] = buoni
+        elif v is not None and v not in ammessi:
+            tolti.append(f"{nome}: tolto {v!r}")
+            s[nome] = None
+    if s.get("tipo_agevolazione") not in (None, *campi.TIPI_AGEVOLAZIONE, "misto"):
+        tolti.append(f"tipo_agevolazione: tolto {s['tipo_agevolazione']!r}")
+        s["tipo_agevolazione"] = None
+    if s.get("tema") not in (None, *campi.TEMI):
+        tolti.append(f"tema: tolto {s['tema']!r}")
+        s["tema"] = None
+    for nome in ("data_apertura", "scadenza", "chiuso_il"):
+        if s.get(nome) is not None and _data(s[nome]) is None:
+            tolti.append(f"{nome}: tolta data non valida {s[nome]!r}")
+            s[nome] = None
+    for nome in ("ora_apertura", "ora_scadenza"):
+        if s.get(nome) is not None and not _ORA.match(str(s[nome])):
+            tolti.append(f"{nome}: tolta ora non valida {s[nome]!r}")
+            s[nome] = None
+    for nome in campi.NUMERICI:
+        v = s.get(nome)
+        if v is not None and (not isinstance(v, (int, float)) or isinstance(v, bool) or v < 0 or v > _IMPORTO_MASSIMO):
+            tolti.append(f"{nome}: tolto numero non plausibile {v!r}")
+            s[nome] = None
+    for nome in ("eta_impresa_min_mesi", "eta_impresa_max_mesi"):
+        if isinstance(s.get(nome), float):
+            s[nome] = round(s[nome])
+    vincoli = s.get("vincoli") if isinstance(s.get("vincoli"), dict) else {}
+    for v in campi.VINCOLI:
+        if vincoli.get(v) not in campi.STATI_VINCOLO:
+            vincoli[v] = "non_noto"
+    s["vincoli"] = vincoli
+    if s.get("completezza") not in campi.COMPLETEZZA:
+        tolti.append(f"completezza: {s.get('completezza')!r} sostituito con nessun_documento")
+        s["completezza"] = "nessun_documento"
+    return s, tolti
 
 
 def chiama(client, p: dict) -> Risposta:
@@ -488,7 +577,7 @@ def spesa_del_mese(conn) -> float:
 
 # Costo stimato di una richiesta in volo nella Batch API (misurato il 01-02/10, schede stimate): il tetto conta anche
 # i lotti mandati e non ancora pagati, altrimenti un lotto grande lo sfonderebbe.
-COSTO_STIMATO_IN_VOLO = {"smistamento": 0.05, "preliminare": 0.012, "scheda": 0.16, "doppione": 0.005}
+COSTO_STIMATO_IN_VOLO = {"smistamento": 0.05, "preliminare": 0.012, "scheda": 0.35, "doppione": 0.005}   # scheda: misurata 0,43 $ in batch per un bando lungo (02/10)
 
 
 def spesa_in_volo(conn) -> float:
@@ -742,7 +831,8 @@ def cmd_raccogli(conn) -> int:
                     bando_id = int(cid.split("-")[1])
                     if r.dati is not None:
                         documenti, _ = documenti_del_bando(conn, bando_id, MASSIMO_TESTO_SCHEDA)
-                        salva_scheda(conn, bando_id, r.dati, verifica_scheda(r.dati, documenti),
+                        scheda, tolti = prepara_scheda(r.dati)
+                        salva_scheda(conn, bando_id, scheda, tolti + verifica_scheda(scheda, documenti),
                                      r.costo(MODELLO_SCHEDA, batch=True))
                         print(f"{cid}: scheda salvata")
             if riga_id:
@@ -850,13 +940,14 @@ def cmd_schede(conn, bando_id: int | None, limite: int) -> int:
             print(f"[{b['id']}] niente scheda: {perche} ({pre.get('motivo')})")
             continue
         messaggio, documenti = pr.scheda(conn, b)
-        r = chiama(client, parametri(MODELLO_SCHEDA, pr.istr_scheda, messaggio, SCHEMA_SCHEDA, 64000, EFFORT["scheda"]))
+        r = chiama(client, parametri(MODELLO_SCHEDA, pr.istr_scheda, messaggio, None, 64000, EFFORT["scheda"]))
         registra("scheda", MODELLO_SCHEDA, str(b["id"]), r)
         if r.dati is None:
             print(f"[{b['id']}] scheda non riuscita: {r.messaggio}")
             continue
-        problemi = verifica_scheda(r.dati, documenti)
-        salva_scheda(conn, b["id"], r.dati, problemi, r.costo(MODELLO_SCHEDA))
+        scheda, tolti = prepara_scheda(r.dati)
+        problemi = tolti + verifica_scheda(scheda, documenti)
+        salva_scheda(conn, b["id"], scheda, problemi, r.costo(MODELLO_SCHEDA))
         print(f"[{b['id']}] scheda salvata{'' if not problemi else f', {len(problemi)} problemi da controllare'}", flush=True)
     return 0
 
@@ -954,7 +1045,7 @@ def cmd_schede_batch(conn, limite_pre: int = LIMITE_PRELIMINARI_BATCH, limite_sc
             if cid not in gia and n_sch < limite_schede:
                 messaggio, _ = pr.scheda(conn, b)
                 richieste.append({"custom_id": cid, "params": parametri(
-                    MODELLO_SCHEDA, pr.istr_scheda, messaggio, SCHEMA_SCHEDA, 64000, EFFORT["scheda"])})
+                    MODELLO_SCHEDA, pr.istr_scheda, messaggio, None, 64000, EFFORT["scheda"])})
                 n_sch += 1
             continue
         if pre is None and n_pre < limite_pre and f"pre-{b['id']}" not in gia:
@@ -974,7 +1065,7 @@ def cmd_schede_batch(conn, limite_pre: int = LIMITE_PRELIMINARI_BATCH, limite_sc
                 and f"sch-{b['id']}" not in gia and n_sch < limite_schede:
             messaggio, _ = pr.scheda(conn, b)
             richieste.append({"custom_id": f"sch-{b['id']}", "params": parametri(
-                MODELLO_SCHEDA, pr.istr_scheda, messaggio, SCHEMA_SCHEDA, 64000, EFFORT["scheda"])})
+                MODELLO_SCHEDA, pr.istr_scheda, messaggio, None, 64000, EFFORT["scheda"])})
             n_sch += 1
     if not richieste:
         print("Batch: nessun bando da mandare.")
