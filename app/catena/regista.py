@@ -300,7 +300,10 @@ def giro() -> dict:
                 in_volo = ia.scopi_in_volo(conn)
                 if "smistamento" not in in_volo:
                     ia.cmd_smista(conn, int(os.environ.get("CATENA_SMISTA_PER_GIRO", "100")), batch=True)
-                if not in_volo & {"preliminare", "scheda"}:
+                # Le schede con l'API solo se IA_SCHEDE_API=1 nel .env (decisione di Matteo del 02/10: finche' il
+                # servizio non e' venduto le schede si scrivono nelle sessioni di Claude Code, a costo zero; l'API fa
+                # smistamento, doppioni e controlli preliminari, che costano poco).
+                if os.environ.get("IA_SCHEDE_API", "0") == "1" and not in_volo & {"preliminare", "scheda"}:
                     ia.cmd_schede_batch(conn)
             except ia.IASpenta as exc:
                 return f"{preliminari} controlli preliminari diretti; poi fermata: {exc}"

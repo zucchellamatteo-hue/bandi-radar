@@ -359,6 +359,13 @@ Alcune fasi si sovrappongono di una settimana, apposta. Nella **Fase 0** e nella
 | API | Chiave attiva dal 01/10, tetto 30 $ al mese nel programma e sulla Console. La catena oraria manda all'IA solo i bandi nuovi con il testo ufficiale. |
 | Regista della fase 2 | `app/catena/regista.py` guida ogni ora i passi dalla raccolta alla scheda, riprova i fermi (pagine non trovate dopo 14 giorni, documenti dei bandi aperti ogni 14 giorni), chiede di aggiornare le schede (documenti nuovi, proroghe, rettifiche, chiusure) e sblocca i blocchi: doppioni con regole e, per i dubbi, con l'IA (scelta di Matteo: "regole + IA"); annunci incerti anche per l'IA mandati avanti (li filtrano i documenti e il controllo preliminare). Pagina Lavorazione nella plancia. Dettagli in `docs/ORCHESTRAZIONE.md`. |
 
+**Decise il 02/10/2026 (Matteo):**
+
+| Tema | Decisione |
+|---|---|
+| Schede e costi | Una scheda con l'API costa da pochi centesimi a 0,43 $ (misurato, Batch API) per i bandi lunghi, che sono più della metà. Finché il servizio non è venduto **le schede si scrivono nelle sessioni di Claude Code** (strumenti in `strumenti/sessione/`); l'API fa solo smistamento, doppioni e controlli preliminari. Quando il servizio sarà venduto: `IA_SCHEDE_API=1` e tetto adeguato (stima 40-80 $ al mese). Testo letto per la scheda: fino a 300.000 caratteri (qualità piena). |
+| Robustezza | Dall'analisi del 02/10 (`docs/ricerche/2026-10-02_analisi_struttura.md`): blocchi nel database tra i passi, test automatici su GitHub a ogni pull request, strumenti di sessione nel repository. |
+
 **Ancora aperti:**
 
 1. **Struttura delle anagrafiche in Postgres**: schema ricevuto il 25/09 (`docs/ricerche/2026-09-25_schema_anagrafiche_leadgen.md`). Copre bene ATECO e fatturato; mancano data di costituzione, totale di bilancio, ULA, requisiti speciali. È un archivio di prospect: serve sapere dove stanno i clienti. Seconda richiesta pronta in `docs/RICHIESTA_SCHEMA_ANAGRAFICHE.md`.
