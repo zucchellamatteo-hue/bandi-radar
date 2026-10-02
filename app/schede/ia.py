@@ -174,6 +174,18 @@ _DETTAGLI_SCHEDA: dict[str, dict] = {
             "punti_percentuali": _o_null(_NUMERO), "note": _o_null(_TESTO)})},
     ),
     "finanziamento": _blocco("finanziamento", tasso_tipo=_o_null({"type": "string", "enum": list(campi.TIPI_TASSO)})),
+    # Forma dell'incentivo (02/10): una frase chiara e una riga per gruppo di beneficiari (o linea) con le sue forme.
+    "forma_incentivo": _oggetto({
+        "descrizione": _o_null(_TESTO),
+        "righe": {"type": "array", "items": _oggetto({
+            "per_chi": _TESTO,
+            "forme": {"type": "array", "items": _oggetto({
+                "forma": {"type": "string", "enum": list(campi.FORME_INCENTIVO)},
+                "percentuale": _o_null(_NUMERO), "massimale": _o_null(_NUMERO), "condizioni": _o_null(_TESTO)})},
+            "spesa_minima": _o_null(_NUMERO), "spesa_massima": _o_null(_NUMERO),
+            "agevolazione_massima": _o_null(_NUMERO), "note": _o_null(_TESTO)})},
+        "note": _o_null(_TESTO),
+    }),
     "vincoli_spese": _oggetto({v: _oggetto({"stato": {"type": "string", "enum": list(campi.STATI_VINCOLO)},
                                            "dettaglio": _o_null(_TESTO)}) for v in campi.VINCOLI_SPESA}),
     "esclusioni": _blocco("esclusioni", soggetti=_elenco(campi.ESCLUSIONI_SOGGETTI)),
@@ -312,12 +324,43 @@ def _verifica_dettagli(s: dict) -> list[str]:
                 problemi.append(f"{blocco}.{n}: numero non plausibile {v!r}")
             elif f"{blocco}.{n}" in campi.PERCENTUALI_DETTAGLI and v > 100:
                 problemi.append(f"{blocco}.{n}: percentuale oltre 100 ({v})")
+    problemi += verifica_forma_incentivo(s.get("forma_incentivo"))
     base, massima = (s.get("intensita") or {}).get("percentuale_base"), s.get("percentuale")
     if isinstance(base, (int, float)) and isinstance(massima, (int, float)) and base > massima:
         problemi.append("intensita.percentuale_base superiore alla percentuale massima")
     for voce, v in (s.get("vincoli_spese") or {}).items():
         if isinstance(v, dict) and v.get("stato") == "vincolo" and not v.get("dettaglio"):
             problemi.append(f"vincoli_spese.{voce} = vincolo, ma manca il dettaglio")
+    return problemi
+
+
+def verifica_forma_incentivo(fi) -> list[str]:
+    """Forma dell'incentivo: forme ammesse, percentuali entro 100 (anche sommate nella stessa riga), importi plausibili."""
+    problemi: list[str] = []
+    if not isinstance(fi, dict):
+        return problemi
+    for i, riga in enumerate(fi.get("righe") or [], 1):
+        if not isinstance(riga, dict):
+            problemi.append(f"forma_incentivo.righe[{i}]: non e' un oggetto")
+            continue
+        if not riga.get("per_chi"):
+            problemi.append(f"forma_incentivo.righe[{i}]: manca per_chi")
+        somma = 0
+        for f in riga.get("forme") or []:
+            if not isinstance(f, dict) or f.get("forma") not in campi.FORME_INCENTIVO:
+                problemi.append(f"forma_incentivo.righe[{i}]: forma non ammessa {f.get('forma') if isinstance(f, dict) else f!r}")
+                continue
+            pc = f.get("percentuale")
+            if pc is not None and (not isinstance(pc, (int, float)) or pc < 0 or pc > 100):
+                problemi.append(f"forma_incentivo.righe[{i}].{f['forma']}: percentuale non plausibile {pc!r}")
+            elif isinstance(pc, (int, float)) and f["forma"] in ("fondo_perduto", "finanziamento_agevolato", "credito_imposta", "voucher"):
+                somma += pc
+        if somma > 100:
+            problemi.append(f"forma_incentivo.righe[{i}]: le quote sulla spesa sommano {somma}% (oltre 100)")
+        for n in ("spesa_minima", "spesa_massima", "agevolazione_massima"):
+            v = riga.get(n)
+            if v is not None and (not isinstance(v, (int, float)) or v < 0 or v > _IMPORTO_MASSIMO):
+                problemi.append(f"forma_incentivo.righe[{i}].{n}: importo non plausibile {v!r}")
     return problemi
 
 
@@ -491,6 +534,16 @@ def prepara_scheda(grezza: dict) -> tuple[dict, list[str]]:
         elif v is not None and v not in ammessi:
             tolti.append(f"{nome}: tolto {v!r}")
             s[nome] = None
+    fi = s.get("forma_incentivo")
+    if isinstance(fi, dict):
+        righe = [r for r in fi.get("righe") or [] if isinstance(r, dict)]
+        for r in righe:
+            forme = [f for f in r.get("forme") or [] if isinstance(f, dict)]
+            buone = [f for f in forme if f.get("forma") in campi.FORME_INCENTIVO]
+            if len(buone) != len(forme):
+                tolti.append(f"forma_incentivo: tolte forme {[f.get('forma') for f in forme if f not in buone]}")
+            r["forme"] = buone
+        fi["righe"] = righe
     if s.get("tipo_agevolazione") not in (None, *campi.TIPI_AGEVOLAZIONE, "misto"):
         tolti.append(f"tipo_agevolazione: tolto {s['tipo_agevolazione']!r}")
         s["tipo_agevolazione"] = None
