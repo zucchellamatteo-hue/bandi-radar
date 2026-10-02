@@ -23,74 +23,6 @@ MODELLO = "claude-code (sessione del 28/09/2026, Opus, senza API)"
 CAUSA = "scheda compilata nella sessione di Claude Code del 28/09/2026 (Opus, senza API)"
 
 
-def vuoto(schema: dict):
-    if schema.get("type") == "array":
-        return []
-    if schema.get("type") == "object":
-        return {k: vuoto(v) for k, v in schema["properties"].items()}
-    return None
-
-
-def completa(dati: dict, schema: dict) -> dict:
-    """Aggiunge le chiavi mancanti (vuote) e toglie quelle in piu', ricorsivamente sugli oggetti."""
-    fuori = {}
-    for k, s in schema["properties"].items():
-        v = dati.get(k)
-        if s.get("type") == "object" and isinstance(v, dict):
-            fuori[k] = completa(v, s)
-        elif v is None:
-            fuori[k] = vuoto(s)
-        else:
-            fuori[k] = v
-    return fuori
-
-
-def pulisci(s: dict) -> list[str]:
-    """Toglie i valori che il database o i filtri non possono accettare. Ritorna cosa e' stato tolto."""
-    tolti = []
-    for nome, ammessi in campi.VALORI_AMMESSI.items():
-        v = s.get(nome)
-        if isinstance(v, list):
-            buoni = [x for x in v if x in ammessi]
-            if len(buoni) != len(v):
-                tolti.append(f"{nome}: tolti {[x for x in v if x not in ammessi]}")
-                s[nome] = buoni
-        elif v is not None and v not in ammessi:
-            tolti.append(f"{nome}: tolto {v!r}")
-            s[nome] = None
-    if s.get("tipo_agevolazione") not in (None, *campi.TIPI_AGEVOLAZIONE, "misto"):
-        tolti.append(f"tipo_agevolazione: tolto {s['tipo_agevolazione']!r}")
-        s["tipo_agevolazione"] = None
-    if s.get("tema") not in (None, *campi.TEMI):
-        tolti.append(f"tema: tolto {s['tema']!r}")
-        s["tema"] = None
-    for nome in ("data_apertura", "scadenza", "chiuso_il"):
-        if s.get(nome) is not None and ia._data(s[nome]) is None:
-            tolti.append(f"{nome}: tolta data non valida {s[nome]!r}")
-            s[nome] = None
-    for nome in ("ora_apertura", "ora_scadenza"):
-        if s.get(nome) is not None and not ia._ORA.match(str(s[nome])):
-            tolti.append(f"{nome}: tolta ora non valida {s[nome]!r}")
-            s[nome] = None
-    for nome in campi.NUMERICI:
-        v = s.get(nome)
-        if v is not None and (not isinstance(v, (int, float)) or isinstance(v, bool) or v < 0 or v > ia._IMPORTO_MASSIMO):
-            tolti.append(f"{nome}: tolto numero non plausibile {v!r}")
-            s[nome] = None
-    for nome in ("eta_impresa_min_mesi", "eta_impresa_max_mesi"):
-        if isinstance(s.get(nome), float):
-            s[nome] = round(s[nome])
-    vincoli = s.get("vincoli") or {}
-    for v in campi.VINCOLI:
-        if vincoli.get(v) not in campi.STATI_VINCOLO:
-            vincoli[v] = "non_noto"
-    s["vincoli"] = vincoli
-    if s.get("completezza") not in campi.COMPLETEZZA:
-        tolti.append(f"completezza: {s.get('completezza')!r} sostituito con nessun_documento")
-        s["completezza"] = "nessun_documento"
-    return tolti
-
-
 def main() -> int:
     prova = "--prova" in sys.argv
     conteggi = {"preliminari": 0, "schede": 0, "con_problemi": 0, "json_rotti": 0, "gia_fatte": 0}
@@ -133,9 +65,8 @@ def main() -> int:
                 print(f"[{bando_id}] scheda.json non valido: {exc}")
                 conteggi["json_rotti"] += 1
                 continue
-            scheda = completa(grezza, ia.SCHEMA_SCHEDA)
+            scheda, tolti = ia.prepara_scheda(grezza)   # stessa pulizia dell'API (app/schede/ia.py)
             scheda["url"] = scheda.get("url") or b["url"]
-            tolti = pulisci(scheda)
             documenti, _ = ia.documenti_del_bando(conn, bando_id, ia.MASSIMO_TESTO_SCHEDA)
             problemi = tolti + ia.verifica_scheda(scheda, documenti)
             conteggi["schede"] += 1

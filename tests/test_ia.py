@@ -327,3 +327,17 @@ def test_scheda_del_catalogo_incentivi():
     assert testo.startswith("SCHEDA DEL CATALOGO NAZIONALE") and "NON il testo del bando" in testo
     assert "Regioni: Marche" in testo and "Spesa massima (euro): 50000" in testo
     assert "Spesa minima" not in testo and "Codici ATECO" not in testo
+
+
+def test_scheda_senza_schema_vincolato_e_pulizia():
+    # 02/10/2026: lo schema della scheda ha 79 campi facoltativi, l'API ne accetta 16 e rifiutava ogni richiesta.
+    p = ia.parametri(ia.MODELLO_SCHEDA, "istruzioni", "messaggio", None, 64000, "medium")
+    assert "format" not in p["output_config"] and p["output_config"]["effort"] == "medium"
+    assert "format" in ia.parametri(ia.MODELLO_PRELIMINARE, "i", "m", ia.SCHEMA_PRELIMINARE, 8000)["output_config"]
+    assert ia.estrai_json('Ecco la scheda:\n```json\n{"titolo": "Bando"}\n```') == {"titolo": "Bando"}
+    scheda, tolti = ia.prepara_scheda({"titolo": "Bando", "temi": ["digitale", "inventato"], "completezza": "boh",
+                                       "scadenza": "31/12/2026", "contributo_massimo": "tanti"})
+    assert set(scheda) == set(ia.SCHEMA_SCHEDA["properties"])          # tutte le chiavi, anche vuote
+    assert scheda["temi"] == ["digitale"] and scheda["scadenza"] is None and scheda["contributo_massimo"] is None
+    assert scheda["completezza"] == "nessun_documento" and set(scheda["vincoli"]) == set(campi.VINCOLI)
+    assert any("inventato" in t for t in tolti)
