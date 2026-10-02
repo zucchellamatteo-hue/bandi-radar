@@ -1,0 +1,20 @@
+{
+  "id": 833,
+  "campi": {
+    "stato": {"esito": "giusto", "nota": "Pagina Finpiemonte: 'Aperto', in vigore dal 03/02/2026 al 11/02/2027."},
+    "data_apertura": {"esito": "giusto", "nota": "'a partire dalle ore 9.00 del giorno 3 febbraio 2026' (pagina e Bando A)."},
+    "scadenza": {"esito": "giusto", "nota": "'fino alle ore 12:00 del 11 febbraio 2027' (DD n. 331 del 22/07/2026, proroga dal 10/09/2026). Sportello con possibile chiusura anticipata per esaurimento fondi, segnalata nella scheda."},
+    "tipo_agevolazione": {"esito": "giusto", "nota": "Misto: finanziamento 70% tasso zero + 30% bancario, piu' fondo perduto solo per PMI (par. 1.3 e 2.12.1); Bando B fondo perduto de minimis."},
+    "contributo_massimo": {"esito": "impreciso", "nota": "Scheda: null. Documenti: Bando B 'importo complessivo non superiore a euro 200.000,00' (25.000 per ULA); per il Bando A finanziamento fino a 3.000.000 (costi max) e fondo perduto legato all'ESL. Il tetto 200.000 c'e' solo nelle linee, non nel campo principale."},
+    "percentuale": {"esito": "non verificabile", "nota": "La tabella delle intensita' al par. 2.12.4 non e' presente nel testo estratto (probabilmente immagine); la scheda lo dichiara correttamente. Copertura fino al 100% dei costi ammissibili tra finanziamento e contributo."},
+    "a_chi_si_rivolge": {"esito": "impreciso", "nota": "Corretti i tre casi a/b/c e il processo produttivo industriale o logistico. Manca un requisito escludente: Bando A par. 2.1 'iscritte da almeno due anni al registro delle imprese ... ed essere in possesso di almeno un bilancio chiuso ed approvato' (la scheda lo attribuisce solo alle imprese estere; eta_impresa 'non_noto'). Anche la spesa minima e' differenziata: 150.000 micro/piccole, 300.000 medie, 750.000 mid-cap (la scheda riporta solo 150.000)."},
+    "territorio": {"esito": "giusto", "nota": "Sedi 'site e operative in Piemonte, in aree a destinazione produttiva', maggiorazione per aree 107.3.c (par. 2.1, 2.12.3)."},
+    "dimensioni_ammesse": {"esito": "impreciso", "nota": "Scheda: micro, piccola, media, grande. Bando: 'PMI e imprese a media capitalizzazione' (mid-cap 'fino a 3000 ULA'); le grandi imprese oltre la soglia mid-cap non sono ammesse. dipendenti_max=3000 attenua ma 'grande' generico e' fuorviante."},
+    "codici_ateco": {"esito": "impreciso", "nota": "Scheda: nessun codice escluso e 'Allegato 4 non incluso'. In realta' l'Allegato 4 e' nei documenti ed esclude: tabacco e alcolici distillati, armi, case da gioco, pesca/acquacoltura/silvicoltura, produzione primaria agricola, attivita' finanziarie e assicurative; in aree 107.3.c anche siderurgia, carbone, trasporti, energia. FAQ: 'non siano previste esclusioni di specifici codici ATECO', ma le esclusioni di settore andavano riportate."},
+    "cosa_finanzia": {"esito": "giusto", "nota": "Spese e tetti coincidono con par. 2.10 (macchinari, installazione 20%, proprieta' intellettuale 10%, progettazione 20%, terreni 15%, voci 5-6-7 entro 50%), durata 30 mesi. Non riportate le spese escluse del par. 2.11 (usato, leasing, beni < 500 euro, PC portatili), che sono nel testo nonostante l'avvertenza dica il contrario."},
+    "sintesi": {"esito": "giusto", "nota": "Fedele a pagina e bando; unica imprecisione: 'prorogato dal 22 luglio 2026' e' la data della DD, la scadenza originaria era il 10 settembre 2026."}
+  },
+  "voto": 4,
+  "davvero_per_imprese_e_aperto": true,
+  "nota_generale": "Scheda affidabile su date, forma dell'aiuto, spese e territorio; da correggere le avvertenze (testo e Allegato 4 ora disponibili), aggiungere il requisito di 2 anni di iscrizione con un bilancio approvato, le esclusioni settoriali, la spesa minima per dimensione e togliere 'grande' generico (solo mid-cap fino a 3000 ULA)."
+}

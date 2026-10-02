@@ -1,0 +1,20 @@
+{
+  "id": 3677,
+  "campi": {
+    "stato": {"esito": "giusto", "nota": "Pagina: 'Aperto'; sportello per concessionari 'in qualsiasi momento dell'anno solare' (DGR 5482/2025, par. 4.1.b), con stanziamento di 300.000 euro per il 2026 e il 2027."},
+    "data_apertura": {"esito": "giusto", "nota": "Pagina: 'Domande dal: 19/12/2019, ore 10:00'. Correttamente avvertito che dal 2026 valgono i criteri della DGR 5482/2025."},
+    "scadenza": {"esito": "giusto", "nota": "Nessuna data di chiusura: per i concessionari la domanda va presentata entro 6 mesi dall'approvazione dei lavori da parte dell'ente locale (par. 4.1.b). Riportato nella sintesi e nelle avvertenze."},
+    "tipo_agevolazione": {"esito": "giusto", "nota": "Pagina: 'Sovvenzione a fondo perduto'; erogato in un'unica soluzione al concessionario (par. 9.1.b)."},
+    "contributo_massimo": {"esito": "giusto", "nota": "200.000 euro per immobile, 250.000 per progetti di interesse sovracomunale (par. 3 punti 6-7, come integrati dalla DGR 5753/2026). Il campo riporta 250.000, la sintesi distingue i due tetti."},
+    "percentuale": {"esito": "giusto", "nota": "Null è corretto: la DGR 5753/2026 precisa che le percentuali 90/80/60% valgono 'per i soli comuni'; per i concessionari vale solo il limite del costo totale in caso di altri contributi (par. 3.11)."},
+    "a_chi_si_rivolge": {"esito": "giusto", "nota": "Par. 2.1.b: 'i soggetti, pubblici o privati, ai quali gli enti di cui alla lettera a) abbiano concesso in uso tali beni per fini sociali e/o istituzionali'."},
+    "territorio": {"esito": "impreciso", "nota": "La scheda nel testo parla di enti locali lombardi, ma nei campi strutturati territorio_regioni è vuoto e vincoli.territorio = 'nessun_vincolo'. In realtà il contributo è della Regione Lombardia per beni trasferiti a enti locali sul cui territorio è sito il bene (par. 2.1.a): di fatto vale solo per immobili in Lombardia."},
+    "dimensioni_ammesse": {"esito": "giusto", "nota": "Nessun vincolo di dimensione d'impresa nei documenti."},
+    "codici_ateco": {"esito": "giusto", "nota": "Nessun vincolo ATECO nei documenti."},
+    "cosa_finanzia": {"esito": "giusto", "nota": "Par. 3.2: ai concessionari 'per lavori già realizzati' di manutenzione straordinaria, restauro e risanamento conservativo, ristrutturazione edilizia, nuova costruzione; spese ammesse (tecniche fino al 10%, allacciamenti, sicurezza, collaudo, IVA non recuperabile, esclusa in regime forfetario) riportate fedelmente (par. 3.3-3.5)."},
+    "sintesi": {"esito": "giusto", "nota": "Fedele: beneficiari, rimborso di lavori già eseguiti, tetti 200/250 mila euro, unica soluzione, sportello entro 6 mesi, ordine cronologico, 300.000 euro nel 2026, de minimis se c'è attività economica (par. 14). Piccola sfumatura: la pagina indica 'Valutativa a Graduatoria' ma la DGR dice ordine cronologico, e la scheda segue giustamente la DGR."}
+  },
+  "voto": 4,
+  "davvero_per_imprese_e_aperto": true,
+  "nota_generale": "Scheda accurata e ben documentata. Lo sportello è aperto (fondi 2026), ma il bando interessa le imprese solo marginalmente: riguarda soltanto chi ha già in concessione un bene confiscato in Lombardia (di solito cooperative sociali o enti del terzo settore) e rimborsa lavori già fatti. L'unico difetto è il territorio, che nei campi strutturati non è legato alla Lombardia."
+}

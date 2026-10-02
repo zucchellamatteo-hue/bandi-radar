@@ -1,0 +1,20 @@
+{
+ "id": 2147,
+ "campi": {
+  "stato": {"esito": "giusto", "nota": "Pagina: 'Presentazione domanda Dal 24/09/2026 Al 23/10/2026'."},
+  "data_apertura": {"esito": "giusto", "nota": "24/09/2026 (giorno dopo la pubblicazione, Avviso par. 6.2)."},
+  "scadenza": {"esito": "giusto", "nota": "23/10/2026 dalla pagina; Avviso: 'scadono inderogabilmente al 30° (trentesimo) giorno solare successivo' alla pubblicazione sul BUR, coerente."},
+  "tipo_agevolazione": {"esito": "giusto", "nota": "Contributo a fondo perduto in tre quote annuali."},
+  "contributo_massimo": {"esito": "giusto", "nota": "102.000 euro = 85% di 120.000 (reti), sul triennio; singoli 7.200 (80% di 9.000), riportato nelle linee."},
+  "percentuale": {"esito": "impreciso", "nota": "Campo principale 85%; Avviso par. 4.1: 85% per le reti, 'nel limite massimo dell'80% ai soggetti che presentano domanda in forma singola'. La distinzione c'e' in sintesi e linee."},
+  "a_chi_si_rivolge": {"esito": "giusto", "nota": "Avviso par. 3.1: 'soggetti pubblici e privati titolari di musei o biblioteche o archivi storici ... non appartenenti allo Stato', piu' requisiti SBN e Soprintendenza."},
+  "territorio": {"esito": "giusto", "nota": "Istituti situati nel territorio della Regione Umbria."},
+  "dimensioni_ammesse": {"esito": "giusto", "nota": "Nessun vincolo dimensionale: i beneficiari non sono definiti come imprese."},
+  "codici_ateco": {"esito": "giusto", "nota": "Nessun vincolo ATECO nell'Avviso."},
+  "cosa_finanzia": {"esito": "giusto", "nota": "Progetti triennali con almeno due tipologie di intervento (educazione, accessibilita', digitale, catalogazione, gestione), costi indiretti forfettari 7%."},
+  "sintesi": {"esito": "giusto", "nota": "Fedele all'Avviso: importi, percentuali, rete di almeno 6 istituti, PEC, punteggio minimo, dotazione 1.485.000 euro."}
+ },
+ "voto": 4,
+ "davvero_per_imprese_e_aperto": false,
+ "nota_generale": "Scheda accurata e ben costruita, ma il bando non e' un'agevolazione per imprese: la pagina indica come beneficiari 'Enti privati ed Associazioni, Enti Locali, Enti Pubblici' titolari di musei, biblioteche e archivi storici. La scheda lo segnala nelle avvertenze. E' aperto fino al 23/10/2026, ma interessa un'impresa solo nel caso raro in cui sia titolare di un museo o archivio con i requisiti. Regime di aiuto non indicato nei documenti."
+}

@@ -1,0 +1,20 @@
+{
+  "id": 2138,
+  "campi": {
+    "stato": {"esito": "giusto", "nota": "Al 02/10/2026 il termine (5/10/2026) non e' scaduto: aperto."},
+    "data_apertura": {"esito": "giusto", "nota": "Pagina: 'Data di Pubblicazione 23 set/2026'; determinazione del 23/09/2026."},
+    "scadenza": {"esito": "giusto", "nota": "Avviso art. 5: 'entro il 5 ottobre 2026'; determinazione art. 3: 'fissato al 5.10.2026'; pagina: ore 23:59."},
+    "tipo_agevolazione": {"esito": "giusto", "nota": "Contributo/finanziamento a fondo perduto per l'organizzazione delle manifestazioni (modulo: 'Contributo richiesto')."},
+    "contributo_massimo": {"esito": "giusto", "nota": "Nessun massimale per domanda nei documenti; indicata solo la dotazione di 650.000 euro per annualita'. Lasciato vuoto correttamente."},
+    "percentuale": {"esito": "giusto", "nota": "I documenti non indicano una percentuale; campo vuoto corretto."},
+    "a_chi_si_rivolge": {"esito": "sbagliato", "nota": "Scheda: 'Organizzatori di rally... con cinque anni di esperienza' e soggetti_ammessi include 'impresa'. Modulo di domanda: il sodalizio 'FRUISCE del regime fiscale di cui alla L. n. 398/1991 ... e che pertanto NON E' un ente commerciale'. Di fatto si rivolge ad associazioni/societa' sportive dilettantistiche, non a imprese commerciali."},
+    "territorio": {"esito": "giusto", "nota": "Avviso art. 3: 'sede legale e operativa in Sardegna'; manifestazioni in Sardegna da almeno tre anni (art. 1). Avvertenza sulla legge ('legale o operativa') corretta."},
+    "dimensioni_ammesse": {"esito": "giusto", "nota": "Nessun vincolo dimensionale nei documenti."},
+    "codici_ateco": {"esito": "giusto", "nota": "Nessun vincolo ATECO nei documenti."},
+    "cosa_finanzia": {"esito": "impreciso", "nota": "Scheda/spese_ammesse: 'L'Avviso non elenca le spese ammissibili'. Il modulo (piano finanziario) elenca le voci: 'vitto e alloggio, viaggio e trasporto, tasse federali, spese arbitrali, comunicazione, premiazioni, compensi e/o premi in denaro, altre spese'. Il resto (manifestazioni nell'anno solare, 2026 anche gia' svolte, progetti biennali/triennali) e' corretto."},
+    "sintesi": {"esito": "impreciso", "nota": "Corretta su oggetto, requisiti, dotazione (650.000 euro per annualita'), PEC entro il 5/10/2026 e ruolo della Giunta, ma non dice che il richiedente deve dichiararsi ente non commerciale in regime L. 398/1991, elemento decisivo per un'impresa."}
+  },
+  "voto": 3,
+  "davvero_per_imprese_e_aperto": false,
+  "nota_generale": "Scheda accurata su date, dotazione, territorio e requisiti di esperienza, ma tratta il bando come aperto alle imprese: il modulo di domanda richiede di dichiarare il regime L. 398/1991 e di NON essere ente commerciale, quindi e' riservato a sodalizi sportivi dilettantistici (ASD/SSD) organizzatori di rally. Aperto fino al 5/10/2026 ore 23:59, ma non e' un'agevolazione per imprese commerciali; inoltre le voci di spesa sono indicate nel piano finanziario del modulo, contrariamente a quanto scrive la scheda."
+}

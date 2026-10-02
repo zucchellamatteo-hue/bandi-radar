@@ -1,0 +1,20 @@
+{
+  "id": 4109,
+  "campi": {
+    "stato": {"esito": "giusto", "nota": "Sportello aperto dal 27/10/2025 fino al 31/10/2026 o a esaurimento fondi; i documenti non dicono che i fondi siano finiti."},
+    "data_apertura": {"esito": "giusto", "nota": "'a partire dalle ore 12:00 del 27/10/2025' (Allegato A e B/C)."},
+    "scadenza": {"esito": "giusto", "nota": "'comunque non oltre le ore 12.00 del 31/10/2026'; ora 12:00 riportata correttamente."},
+    "tipo_agevolazione": {"esito": "giusto", "nota": "Contributi a fondo perduto (incentivi, rimborsi, contributi a progetto)."},
+    "contributo_massimo": {"esito": "impreciso", "nota": "La scheda dice 19.200 euro (massimo per una singola assunzione dell'Asse I). Per singola domanda l'Allegato B prevede di più: consulenza '4.000 [per persona], fino a un massimo di € 20.000'; isola formativa '15.000,00 per ciascun partecipante, fino a un massimo di 5 partecipanti' (75.000); Asse III '15.000 per ogni destinatario (massimo 3)'; ausili fino a 15.000."},
+    "percentuale": {"esito": "impreciso", "nota": "La scheda dice null. L'Asse I è a importo fisso (va bene), ma per gli ausili 'Il contributo è riconosciuto nella misura dell'80% fino a un importo massimo di € 15.000' e per l'Asse III 'l'80% del valore del progetto verrà concesso come contributo pubblico'."},
+    "a_chi_si_rivolge": {"esito": "giusto", "nota": "'imprese private di qualsiasi dimensione e settore di attività, con sede operativa nel territorio della Regione Lombardia ove lavora il destinatario'; ETS, enti pubblici (solo per i tirocini) e cooperative B per l'Asse III riportati correttamente."},
+    "territorio": {"esito": "giusto", "nota": "Sede operativa in Lombardia; domanda alla Provincia 'in base all'unità produttiva ove lavora/lavorerà il destinatario' (qui Pavia)."},
+    "dimensioni_ammesse": {"esito": "giusto", "nota": "'di qualsiasi dimensione'."},
+    "codici_ateco": {"esito": "giusto", "nota": "Nessun vincolo ATECO; il codice ATECO compare solo come requisito del nuovo ramo d'impresa delle cooperative B (Asse III)."},
+    "cosa_finanzia": {"esito": "impreciso", "nota": "Asse I corretto e dettagliato (tabelle importi giuste, 13.200-19.200 a tempo indeterminato; tirocini fino a 4.000). Asse II e III descritti solo in modo sommario perché la scheda crede che gli Allegati B e C manchino, invece ci sono: ad es. isola formativa con tutoraggio fino a 11.000 e indennità tirocinio fino a 7.200 per partecipante; Asse III con spese di primo impianto 'almeno il 70%' del progetto."},
+    "sintesi": {"esito": "giusto", "nota": "Corretta su ente, assi, importi Asse I, piattaforma, date e dotazione 952.402,91 euro. Unica pecca: non dà gli importi degli Assi II e III."}
+  },
+  "voto": 4,
+  "davvero_per_imprese_e_aperto": true,
+  "nota_generale": "Scheda affidabile per l'Asse I (assunzioni e tirocini), che è il cuore del bando; sbaglia nel dire che gli Allegati B e C mancano (sono tra i documenti), per cui contributo massimo (19.200) e percentuale (null) sottostimano Assi II e III (fino a 20.000/75.000 euro, 80%). Bando aperto a sportello fino alle 12:00 del 31/10/2026 salvo esaurimento fondi."
+}

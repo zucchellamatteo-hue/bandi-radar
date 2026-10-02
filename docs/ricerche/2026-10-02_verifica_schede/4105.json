@@ -1,0 +1,20 @@
+{
+  "id": 4105,
+  "campi": {
+    "stato": {"esito": "giusto", "nota": "Sportello aperto dal 24/10/2024 'fino al totale impegno delle risorse disponibili e comunque non oltre il 31 dicembre 2029'; nessuna chiusura nei documenti, foglio informativo aggiornato al 10/02/2026. Dotazione piccola (2,5 mln): l'avvertenza di verificare l'esaurimento e' opportuna."},
+    "data_apertura": {"esito": "giusto", "nota": "Art. 5: 'a partire dalle ore 10 del 24 ottobre 2024'."},
+    "scadenza": {"esito": "giusto", "nota": "Art. 5: 'comunque non oltre il 31 dicembre 2029', salvo esaurimento fondi (riportato nella sintesi)."},
+    "tipo_agevolazione": {"esito": "giusto", "nota": "Garanzia gratuita fino al 50% del credito, senza commissioni (art. 1)."},
+    "contributo_massimo": {"esito": "impreciso", "nota": "Scheda: null. Documento: garanzia max 50% su finanziamento max 1.500.000, quindi garanzia fino a 750.000 euro; l'informazione c'e' comunque in sintesi e cosa_finanzia (spesa_minima/massima 20.000-1.500.000)."},
+    "percentuale": {"esito": "impreciso", "nota": "Scheda: null. Documento: 'percentuale massima di garanzia: 50%'; il dato e' nel campo finanziamento.garanzia_pubblica_copertura e nel testo, non qui (accettabile per una garanzia)."},
+    "a_chi_si_rivolge": {"esito": "giusto", "nota": "Art. 2: PMI iscritte al Registro imprese con unita' locale in Umbria censita in CCIAA, attivita' non nei settori esclusi (App. 8); requisiti completi riportati in 'requisiti'."},
+    "territorio": {"esito": "giusto", "nota": "Art. 2: 'almeno un'unita' locale ubicata nel territorio della regione Umbria ... sede di realizzazione dell'investimento/piano di sviluppo'."},
+    "dimensioni_ammesse": {"esito": "giusto", "nota": "Art. 2: 'le PMI (Micro, piccole e medie imprese)'."},
+    "codici_ateco": {"esito": "giusto", "nota": "Nessun elenco ATECO ammessi; vincolo 'ateco' segnato e settori esclusi dell'Appendice 8 riportati correttamente in esclusioni.settori (piccola semplificazione: la produzione primaria agricola e' esclusa sempre, non solo 'in casi particolari')."},
+    "cosa_finanzia": {"esito": "giusto", "nota": "Corrisponde all'art. 4 lettere a-d, piano di sviluppo per b-d, erogazione entro 31/12/2029 (art. 1); preammortamento 6 mesi dal foglio informativo, segnalato in avvertenze."},
+    "sintesi": {"esito": "giusto", "nota": "Fedele ad artt. 1, 3, 4, 5: garanzia 50%, 20.000-1.500.000, 12-120 mesi, nessuna commissione, de minimis, sportello dal 24/10/2024 fino a esaurimento e non oltre 31/12/2029."}
+  },
+  "voto": 5,
+  "davvero_per_imprese_e_aperto": true,
+  "nota_generale": "Scheda accurata e completa, coerente con l'avviso (BUR Umbria S.O. n. 4 al n. 49 del 25/09/2024) e il foglio informativo Gepafin 2026. Unici rilievi: contributo_massimo e percentuale vuoti (la garanzia arriva al 50%, max 750.000 euro), ma il dato e' in sintesi. Sportello a esaurimento con dotazione di 2,5 mln: conviene verificare su Gepafin che non sia stato chiuso per esaurimento."
+}

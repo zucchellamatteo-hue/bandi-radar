@@ -1,0 +1,20 @@
+{
+ "id": 3603,
+ "campi": {
+  "stato": {"esito": "giusto", "nota": "Pagina: 'Stato Aperto'; domande fino al 09/10/2026."},
+  "data_apertura": {"esito": "giusto", "nota": "Pagina: 'Domande dal Mar, 01/09/2026 - 12:00'."},
+  "scadenza": {"esito": "giusto", "nota": "Pagina: 'Scadenza Ven, 09/10/2026 - 23:59'; All. 1 punto 3 'entro il 9 ottobre 2026'."},
+  "tipo_agevolazione": {"esito": "giusto", "nota": "Indennizzo a fondo perduto (art. 29 Reg. UE 2022/2472)."},
+  "contributo_massimo": {"esito": "giusto", "nota": "Null corretto: non c'e' massimale per allevatore; 743.957,77 e' la dotazione. Il valore dipende dalla tabella dell'All. 2 (es. bovina razza piemontese LG 2.200 euro)."},
+  "percentuale": {"esito": "impreciso", "nota": "Scheda: 100%. All. 1 punto 10-11: 100% del valore commerciale da tabella, 'aumentato del 15% qualora ... animale gravido'; danni indiretti nei limiti dell'art. 4.2 della DGR."},
+  "a_chi_si_rivolge": {"esito": "impreciso", "nota": "Corretto sui soggetti, ma manca il requisito decisivo: All. 1 punto 9 'devono obbligatoriamente aver messo in atto almeno un sistema di difesa'; inoltre verbale registrato su ARVET (punto 6) e capi non assicurati (punto 14)."},
+  "territorio": {"esito": "giusto", "nota": "Allevatori sul territorio della Regione Piemonte iscritti all'Anagrafe Agricola."},
+  "dimensioni_ammesse": {"esito": "giusto", "nota": "Micro, piccole e medie (ABER); la scheda segnala anche l'eccezione per gli allevatori non imprese."},
+  "codici_ateco": {"esito": "giusto", "nota": "Nessun elenco ATECO nei documenti; il vincolo e' di fatto settoriale (allevatori/apicoltori), segnalato come requisito 'agricola'."},
+  "cosa_finanzia": {"esito": "giusto", "nota": "Danni diretti (valore capo predato/disperso), spese veterinarie e farmaceutiche, perdite di produzione, danni da orso agli apiari."},
+  "sintesi": {"esito": "giusto", "nota": "Fedele a pagina e determina. Unico difetto: non cita l'obbligo dei sistemi di difesa."}
+ },
+ "voto": 4,
+ "davvero_per_imprese_e_aperto": true,
+ "nota_generale": "Scheda affidabile su date, dotazione e soggetti. Le avvertenze sono superate: gli Allegati 1 e 2 ci sono nel fascicolo, e il criterio di assegnazione e' indicato (All. 1 punto 5: 'ordine cronologico di ricevimento ... fino ad esaurimento risorse', da segnalare perche' conviene presentare presto). Mancano i requisiti pratici che escludono molti allevatori: sistema di difesa obbligatorio, verbale ASL su ARVET, niente polizza sui capi, non cumulabilita' con altri risarcimenti. E' un indennizzo danni, non un incentivo agli investimenti, ma e' un aiuto alle imprese agricole aperto fino al 09/10/2026."
+}

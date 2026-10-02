@@ -1,0 +1,20 @@
+{
+  "id": 4163,
+  "campi": {
+    "stato": {"esito": "giusto", "nota": "La pagina indica 'Aperto'; sportello dal 27/10/2025 al 31/10/2026, oggi 02/10/2026 ancora nei termini (salvo esaurimento fondi)."},
+    "data_apertura": {"esito": "giusto", "nota": "'a partire dalle ore 12:00 del 27/10/2025' (Asse I, Linea incentivi par. 2 e Linea tirocini par. 2)."},
+    "scadenza": {"esito": "giusto", "nota": "'comunque non oltre le ore 12:00 del 31/10/2026', con chiusura anticipata possibile per esaurimento della dotazione: la scheda lo segnala."},
+    "tipo_agevolazione": {"esito": "giusto", "nota": "Pagina: 'Sovvenzione a fondo perduto'; incentivi a importo fisso e rimborso tirocini."},
+    "contributo_massimo": {"esito": "giusto", "nota": "19.200 euro per tempo indeterminato in fascia 4 (Tabelle 1 e 2); 4.000 euro per i tirocini, indicato nella sintesi e nelle linee."},
+    "percentuale": {"esito": "giusto", "nota": "Nessuna percentuale: importi fissi per fascia e contratto, ridotti in proporzione per il tempo parziale con maggiorazione del 50% della differenza."},
+    "a_chi_si_rivolge": {"esito": "giusto", "nota": "Corrisponde al par. 4.1 e 4.3: imprese private di qualsiasi dimensione e settore, enti pubblici economici, partecipate; enti pubblici solo per i tirocini; enti RUNTS ammessi; destinatari iscritti L. 68/99 e giovani con disabilita' entro 6 mesi dalla fine della scuola."},
+    "territorio": {"esito": "giusto", "nota": "L'avviso generale parla di sede operativa in Lombardia, ma la domanda va alla Provincia dove lavora la persona: questo sportello e' quello di Mantova, quindi sede operativa in provincia di Mantova e' corretto (come la pagina: 'con sede operativa in Provincia di Mantova')."},
+    "dimensioni_ammesse": {"esito": "giusto", "nota": "Lista vuota coerente con 'imprese private di qualsiasi dimensione'."},
+    "codici_ateco": {"esito": "giusto", "nota": "Nessun vincolo ATECO: 'qualsiasi ... settore di attivita''."},
+    "cosa_finanzia": {"esito": "giusto", "nota": "Contratti ammessi, durate minime (90 gg se non in obbligo; 180 gg o 360 in somministrazione se in obbligo), decorrenza dalla pubblicazione e tirocini DGR 7763/2018 corrispondono all'Allegato A; esclusioni contrattuali riportate correttamente."},
+    "sintesi": {"esito": "giusto", "nota": "Importi 2.750-19.200 euro, rimborso tirocini fino a 4.000 euro, finestra 27/10/2025-31/10/2026 ore 12, sportello e dotazione Asse I di 1.285.785,27 euro: tutto confermato dai documenti."}
+  },
+  "voto": 5,
+  "davvero_per_imprese_e_aperto": true,
+  "nota_generale": "Scheda accurata e completa, fedele all'avviso Dote Impresa Collocamento Mirato 2025-2026 (Asse I, Provincia di Mantova). Unica imprecisione minore nelle avvertenze: dice che la determina n. 960/2025 non e' tra i documenti, mentre e' presente (non cambia nulla di sostanziale). Bando aperto oggi per imprese che assumono persone con disabilita' o ne ospitano tirocini; rischio di chiusura anticipata per esaurimento fondi da verificare sul portale prima di proporlo."
+}

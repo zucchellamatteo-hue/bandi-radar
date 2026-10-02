@@ -1,0 +1,20 @@
+{
+ "id": 599,
+ "campi": {
+  "stato": {"esito": "giusto", "nota": "Sportello aperto fino al 12/10/2026; nessuna notizia di chiusura anticipata nei documenti (lo sportello resta aperto anche oltre 13 milioni di richieste, art. 17 c. 2)."},
+  "data_apertura": {"esito": "giusto", "nota": "Art. 15: 'dalle ore 10:00:00 del 21 settembre 2026'."},
+  "scadenza": {"esito": "giusto", "nota": "Art. 15: 'fino alle ore 10:00:00 del 12 ottobre 2026' (attenzione: ore 10 del mattino, riportato in ora_scadenza)."},
+  "tipo_agevolazione": {"esito": "giusto", "nota": "Art. 11: 'la forma di sostegno e' la sovvenzione', de minimis Reg. UE 2023/2831."},
+  "contributo_massimo": {"esito": "giusto", "nota": "Art. 11 c. 3: contributo 'non puo' essere superiore ad Euro 100.000,00'."},
+  "percentuale": {"esito": "giusto", "nota": "Art. 11: 'da un minimo del 40% ad un massimo pari al 70%', scelta dal richiedente; la scheda spiega che una percentuale piu' bassa da' piu' punti."},
+  "a_chi_si_rivolge": {"esito": "giusto", "nota": "mPMI incluse ditte individuali e liberi professionisti con partita IVA iscritti ad albo, sede legale o unita' locale in Abruzzo."},
+  "territorio": {"esito": "giusto", "nota": "Regione Abruzzo."},
+  "dimensioni_ammesse": {"esito": "giusto", "nota": "Art. 8: 'imprese (solo mPMI)'."},
+  "codici_ateco": {"esito": "giusto", "nota": "Nessun elenco ATECO: esclusi solo i settori fuori dal de minimis (art. 1 Reg. 2023/2831), come indicato nella scheda."},
+  "cosa_finanzia": {"esito": "giusto", "nota": "Canali di vendita digitali, gestionali, automazione, cloud/IA, cybersecurity, IoT; tetti consulenze 10%, perizia 2% max 5.000, forfait 5%; esclusioni (PC singole postazioni, leasing, usato) corrette."},
+  "sintesi": {"esito": "giusto", "nota": "Completa: dotazione 10 milioni FESR, 40-70%, max 100.000, spesa minima 10.000, graduatorie giornaliere fino al 130% e valutazione di merito con soglia 40/75."}
+ },
+ "voto": 5,
+ "davvero_per_imprese_e_aperto": true,
+ "nota_generale": "Scheda molto affidabile e coerente con l'Avviso in tutti i punti verificati, con dettagli utili al commercialista (scelta della percentuale che incide sul punteggio, premialita' artigiane/aree interne/ESG, spese dalla data della domanda, anticipo 40% con fideiussione). Bando per PMI aperto fino alle 10:00 del 12/10/2026: conviene presentare presto perche' le graduatorie parziali sono giornaliere."
+}

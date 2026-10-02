@@ -1,0 +1,20 @@
+{
+  "id": 2476,
+  "campi": {
+    "stato": {"esito": "giusto", "nota": "La pagina regionale riporta 'Stato: Aperto'; sportello fino a esaurimento delle risorse, nessuna comunicazione di chiusura tra i documenti."},
+    "data_apertura": {"esito": "giusto", "nota": "'La domanda può essere inoltrata dalle ore 9.00 di lunedì 9 febbraio 2026'."},
+    "scadenza": {"esito": "giusto", "nota": "Nessuna data di chiusura: 'fino alla concorrenza delle risorse disponibili, comunicata sul sito di Finpiemonte'. Null è corretto e l'avvertenza lo spiega."},
+    "tipo_agevolazione": {"esito": "giusto", "nota": "Finanziamento a tasso agevolato (70% regionale a tasso 0, 30% bancario) con garanzia opzionale dell'80% sulla quota bancaria; tipi_agevolazione include anche 'garanzia'."},
+    "contributo_massimo": {"esito": "giusto", "nota": "Null corretto: non c'è fondo perduto. Il massimo del finanziamento (120.000 euro imprese, 60.000 autonomi) è riportato in finanziamento_massimo, nelle linee e nella sintesi."},
+    "percentuale": {"esito": "giusto", "nota": "Null corretto per un prestito senza quota a fondo perduto; la copertura 'fino al 100% delle spese ritenute ammissibili' è in finanziamento.percentuale_finanziamento e nella sintesi."},
+    "a_chi_si_rivolge": {"esito": "giusto", "nota": "Corrisponde al par. 4.1 dell'Avviso: autonomi, ditte individuali, società di persone e di capitali entro 24 mesi (36 per donne), titolari/soci nelle categorie a-d dell'art. 35 c.4 L.R. 32/2023, cooperative escluse, ammesse anche imprese inattive. Anche le soglie 60% soci e due terzi delle quote sono confermate (note 3 e 4 dell'Avviso)."},
+    "territorio": {"esito": "giusto", "nota": "'sede legale, amministrativa e prevalente attività operativa in Piemonte'; autonomi 'residente o domiciliato in Piemonte e con sede operativa fissa in Piemonte'."},
+    "dimensioni_ammesse": {"esito": "giusto", "nota": "L'Avviso non pone limiti di dimensione (vincolo dimensioni: nessun_vincolo); il filtro reale è l'età dell'impresa e la condizione dei soci."},
+    "codici_ateco": {"esito": "giusto", "nota": "Nessun vincolo o esclusione ATECO nei documenti; regime de minimis (Reg. UE 2023/2831) correttamente indicato."},
+    "cosa_finanzia": {"esito": "giusto", "nota": "Coincide con il par. 4.3: beni strumentali, software e sito, proprietà intellettuale, autocarro categoria N, opere murarie e impianti fino al 40%; soglie fatture 500/1.000 euro e decorrenza spese riportate in spese_ammesse."},
+    "sintesi": {"esito": "giusto", "nota": "Fedele e completa: 100% delle spese, 70/30, garanzia 80%, importi 15.000-120.000 e 7.500-60.000, rimborso 36-60 mesi, apertura 09/02/2026, sportello, dotazione circa 4,7 milioni, gestore Finpiemonte."}
+  },
+  "voto": 5,
+  "davvero_per_imprese_e_aperto": true,
+  "nota_generale": "Scheda accurata e ben documentata. Tutti i dati chiave trovano riscontro nell'Avviso (D.D. 832/2025) e nella D.G.R. 4-1990/2025. È un prestito agevolato (non fondo perduto) per nuove imprese e autonomi piemontesi costituiti da meno di 24/36 mesi, avviati da disoccupati o persone in condizioni equiparate: le avvertenze lo chiariscono bene. Sportello aperto dal 09/02/2026 fino a esaurimento fondi; al 02/10/2026 i documenti non segnalano chiusura, ma conviene verificare sul sito di Finpiemonte che le risorse non siano esaurite."
+}

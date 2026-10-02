@@ -1,0 +1,20 @@
+{
+ "id": 607,
+ "campi": {
+  "stato": {"esito": "giusto", "nota": "Sportello aperto fino al 30/10/2026; la scheda segnala correttamente che la Misura A e' chiusa dal 22/09/2026 ('NOTA del 22 settembre 2026: e' stata disposta la chiusura della Misura A')."},
+  "data_apertura": {"esito": "giusto", "nota": "Invio 'dalle ore 12:00 dell'8 settembre 2026' (compilazione dall'8 luglio, riportata nelle note)."},
+  "scadenza": {"esito": "giusto", "nota": "'ore 16:00 del 30 ottobre 2026'."},
+  "tipo_agevolazione": {"esito": "giusto", "nota": "'contributo a fondo perduto (voucher)'."},
+  "contributo_massimo": {"esito": "giusto", "nota": "5.000 euro, 'elevabile a 5.250 euro con premialita'' (riportato in sintesi e maggiorazioni)."},
+  "percentuale": {"esito": "giusto", "nota": "'fino al 70% delle spese ammissibili', minimo 3.000 euro di spesa."},
+  "a_chi_si_rivolge": {"esito": "giusto", "nota": "MPMI con sede legale o unita' locale operativa nella circoscrizione; i requisiti (diritto annuale 2023-2025, DURC, esclusione beneficiari bandi 2023-2025, polizza catastrofale) sono nel campo requisiti."},
+  "territorio": {"esito": "giusto", "nota": "Circoscrizione CCIAA Chieti Pescara (province CH e PE)."},
+  "dimensioni_ammesse": {"esito": "giusto", "nota": "Micro, piccole e medie."},
+  "codici_ateco": {"esito": "giusto", "nota": "Nessun vincolo ATECO nella pagina e nelle FAQ."},
+  "cosa_finanzia": {"esito": "giusto", "nota": "Elenco delle due misure fedele alla pagina; esclusioni dalle FAQ (fotovoltaico, PC, siti web, SEO, costi dell'organismo di certificazione) corrette."},
+  "sintesi": {"esito": "giusto", "nota": "Completa e corretta, compresa la chiusura anticipata della Misura A e la valutazione a sportello."}
+ },
+ "voto": 5,
+ "davvero_per_imprese_e_aperto": true,
+ "nota_generale": "Scheda accurata e utile, con la chiusura della Misura A ben evidenziata: oggi si puo' proporre solo la Misura B (ESG, 100.000 euro a sportello, rischio di esaurimento anticipato). Unico limite: il testo integrale del bando non e' nel fascicolo, quindi i dettagli dell'art. 7 (elenco tassativo lett. a-p) sono ricostruiti da pagina e FAQ; la scheda lo dichiara nelle avvertenze, anche se 'completezza' dice 'bando_ufficiale'."
+}

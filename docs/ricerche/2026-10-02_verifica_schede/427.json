@@ -1,0 +1,20 @@
+{
+  "id": 427,
+  "campi": {
+    "stato": {"esito": "sbagliato", "nota": "Scheda: 'aperto'. Pagina ufficiale: 'la piattaforma dedicata alla presentazione delle domande è stata chiusa in data 13/03/2026 alle ore 12:00'; l'Atto 12926 del 22/07/2026 conferma lo sportello 'dalle ore 12:00 del 28 gennaio 2026 alle ore 12:00 del 13 marzo 2026' e approva la graduatoria provvisoria. Il bando è chiuso."},
+    "data_apertura": {"esito": "giusto", "nota": "28/01/2026 ore 12:00 (pagina, par. 5.3; Decreto n. 545 del 21/01/2026)."},
+    "scadenza": {"esito": "sbagliato", "nota": "Scheda: null (sportello fino a esaurimento, 'non è stato trovato un decreto esplicito di chiusura'). Documenti: chiusura alle 12:00 del 13/03/2026 (avviso in pagina e Decreto n. 931 del 28/01/2026 richiamato nell'Atto 12926)."},
+    "tipo_agevolazione": {"esito": "giusto", "nota": "Contributo in conto capitale (par. 4.4.1) = fondo perduto."},
+    "contributo_massimo": {"esito": "giusto", "nota": "Nessun tetto per domanda: UCS 20,92 euro/ora per dipendente, max 300 ore per corso; unico limite il massimale de minimis 300.000 euro in tre anni (riportato nelle note di intensità)."},
+    "percentuale": {"esito": "impreciso", "nota": "Scheda: 70. Avviso par. 4.4.1: in de minimis 'l'importo del contributo pari a € 20,92/ora è concesso interamente' (100% dell'UCS); il 70/60/50% vale solo in esenzione GBER (par. 4.4.2). Le avvertenze lo spiegano, ma il campo da solo sottostima."},
+    "a_chi_si_rivolge": {"esito": "giusto", "nota": "Par. 3.1: 'tutti i datori di lavoro ovvero le imprese del settore privato, ivi inclusi i lavoratori autonomi ed i liberi professionisti, con sede operativa in Calabria'; destinatari dipendenti a tempo det./indet. e titolari/soci (nota refuso 18/12/2025)."},
+    "territorio": {"esito": "giusto", "nota": "Sede operativa in Calabria alla data di concessione dell'aiuto (par. 3.1, 3.2 lett. n)."},
+    "dimensioni_ammesse": {"esito": "giusto", "nota": "Ammesse tutte le dimensioni, incluse grandi imprese (par. 4.4.2: 70% micro/piccola, 60% media, 50% grande)."},
+    "codici_ateco": {"esito": "impreciso", "nota": "codici_ateco vuoto è corretto, ma vincoli.ateco = 'vincolo' esagera: l'unica limitazione è che in de minimis l'aiuto non copre produzione primaria agricola e pesca/acquacoltura (par. 4.4.1 c.5), mentre in esenzione 'non sono presenti limitazioni' (par. 4.4.2 c.6)."},
+    "cosa_finanzia": {"esito": "giusto", "nota": "Formazione continua su Aree del Repertorio regionale, coerente con le 9 aree S3 e/o STEP, UCS 20,92 euro/ora, corsi 16/30/40-300 ore, FAD sincrona max 50%, esclusi corsi obbligatori sicurezza/ordini (par. 4.1-4.3)."},
+    "sintesi": {"esito": "impreciso", "nota": "Contenuti corretti e dettagliati, ma non dice che lo sportello si è chiuso il 13/03/2026 ('si potevano presentare dalle ore 12:00 del 28 gennaio 2026' senza data di chiusura) e insieme a stato 'aperto' lascia intendere che si possa ancora fare domanda."}
+  },
+  "voto": 2,
+  "davvero_per_imprese_e_aperto": false,
+  "nota_generale": "Scheda accurata sui contenuti (beneficiari, UCS 20,92 euro/ora, intensità, requisiti, spese), ma sbaglia l'informazione decisiva: il bando risulta 'aperto' senza scadenza mentre la pagina ufficiale e l'Atto 12926 dicono che la piattaforma è stata chiusa il 13/03/2026 alle 12:00 ed è già stata approvata la graduatoria provvisoria (22/07/2026). Un commercialista proporrebbe un bando non più accessibile. È un'agevolazione per imprese, ma oggi (02/10/2026) è chiusa."
+}

@@ -1,0 +1,20 @@
+{
+  "id": 1008,
+  "campi": {
+    "stato": {"esito": "giusto", "nota": "Aperto fino al 23/10/2026; la dotazione risulta raggiunta e le nuove domande vanno in lista d'attesa (pagina del bando: 'le imprese interessate potranno, comunque, procedere alla presentazione delle domande ... fino alla data di chiusura'). La scheda lo segnala in sintesi e avvertenze."},
+    "data_apertura": {"esito": "giusto", "nota": "Art. 8: 'dalle ore 9:00 del 8.7.2026'."},
+    "scadenza": {"esito": "giusto", "nota": "Art. 8: 'entro e non oltre le ore 23:59 del 23.10.2026'."},
+    "tipo_agevolazione": {"esito": "giusto", "nota": "Art. 2: 'contributi a fondo perduto'."},
+    "contributo_massimo": {"esito": "giusto", "nota": "Art. 4 c.3: Misura 1 30.000, Misura 2a 5.000, Misura 2b 5.000, 'Importo massimo del contributo erogabile 40.000,00'."},
+    "percentuale": {"esito": "impreciso", "nota": "Scheda: 60. Bando art. 4: 'intensita' ... pari al 50%' + 5% rating di legalita' + 5% parita' di genere; 60% e' il massimo con entrambe le premialita', la base e' 50% (correttamente indicata in sintesi e intensita')."},
+    "a_chi_si_rivolge": {"esito": "giusto", "nota": "Art. 5: MPMI 'regolarmente iscritte nel Registro delle Imprese della Camera di commercio di Treviso-Belluno, inclusa/e ... unita' locale/i', attive e in regola col diritto annuale; escluse le beneficiarie dell'edizione 2025 (riportato nei requisiti)."},
+    "territorio": {"esito": "giusto", "nota": "Circoscrizione CCIAA Treviso-Belluno (art. 5 e art. 7 c.6)."},
+    "dimensioni_ammesse": {"esito": "giusto", "nota": "Art. 5: 'microimprese, piccole imprese e medie imprese' (All. I Reg. 651/2014)."},
+    "codici_ateco": {"esito": "giusto", "nota": "Nessun vincolo ATECO nel bando; regimi de minimis generale, agricolo e pesca (art. 3) consentono tutti i settori."},
+    "cosa_finanzia": {"esito": "giusto", "nota": "Coerente con art. 2 e 7: beni All. IV-V L. 199/2025, software energetici e gestionali solo se collegati, consulenza 4.0 solo collegata a Misura 1, consulenza/formazione energetica (formazione per qualifica Energy Manager interno, min. 40 ore). Fase unica con intervento concluso (art. 7 c.6)."},
+    "sintesi": {"esito": "impreciso", "nota": "Corretta nel complesso; omette che la lista d'attesa e' prevista 'fino al raggiungimento di un importo aggiuntivo indicativamente pari al 20% della dotazione' (art. 4 c.9), quindi le possibilita' di finanziamento per nuove domande sono incerte. La data 'aggiornata al 24/09/2026' nelle avvertenze non e' verificabile dai documenti."}
+  },
+  "voto": 4,
+  "davvero_per_imprese_e_aperto": true,
+  "nota_generale": "Scheda accurata e ben documentata (date, massimali, spese, esclusioni corrispondono al bando); unico limite pratico: il bando e' formalmente aperto fino al 23/10/2026 ma la dotazione e' gia' esaurita e le nuove domande finiscono in lista d'attesa, e il campo percentuale riporta il 60% massimo invece del 50% base."
+}
