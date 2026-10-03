@@ -620,14 +620,43 @@ CATEGORIE = [
 ORDINE_CATEGORIE = {"bando": 0, "pagina": 1, "faq": 2, "decreto": 3, "graduatoria": 4, "altro": 5, "modulistica": 9}
 
 
-def categoria_allegato(nome: str, url: str, tipo: str) -> str:
+# Verifica del 02/10 (4109, 3603): "Avviso Asse II Allegato B)" e "Allegato I" (istruzioni e massimali) finivano
+# nella modulistica per il solo nome "Allegato X", e la scheda li perdeva. Se il nome e' modulistica solo per
+# "Allegato X", decide il testo: un modulo ha "il sottoscritto", "dichiara", la firma; un atto ha articoli,
+# beneficiari, intensita', spese ammissibili.
+_ALLEGATO_LETTERA = re.compile(r"(?<![a-z])(allegato [b-z]\b|all[ ._-]?[b-z][ ._-]|allegato [ivx]+\b)")
+_NOME_DECRETO = re.compile(r"^\s*(d\.? ?d\.?|d\.? ?g\.? ?r\.?|ddg|ddpf|decreto|determin|delibera)\b[ .]*(n\.?|nr\.?|num)?\s*\d")
+_SEGNI_MODULO = re.compile(r"sottoscritt|dichiara\b|dichiaro\b|chiede (?:di|la concessione|l'ammissione)|luogo e data|"
+                           r"firma (?:digitale )?del (?:legale|titolare|richiedente)|timbro e firma", re.IGNORECASE)
+_SEGNI_ATTO = re.compile(r"\bart(?:icolo|\.)\s*\d|beneficiar|intensit[aà]|spese ammissibili|dotazione finanziaria|"
+                         r"criteri di (?:valutazione|selezione)|massimal[ei]|contributo concedibile|soggetti ammessi", re.IGNORECASE)
+
+
+def sembra_atto(testo: str | None) -> bool:
+    """Il testo e' un atto (bando, avviso, istruzioni con importi) e non un modulo da compilare."""
+    if not testo or len(testo) < 3000 or _SEGNI_MODULO.search(testo[:4000]):
+        return False
+    return len({m.group(0).lower()[:5] for m in _SEGNI_ATTO.finditer(testo[:40000])}) >= 3
+
+
+def categoria_allegato(nome: str, url: str, tipo: str, testo: str | None = None) -> str:
+    """Categoria dal nome e dall'indirizzo; con il testo, corregge i falsi "modulistica" (vedi sopra)."""
     if tipo == "pagina":
         return "pagina"
     if tipo == "faq":
         return "faq"
-    testo = f"{nome} {_nome_da_url(url)}".lower().replace("_", " ")
+    nome_l = (nome or "").lower()
+    if _NOME_DECRETO.search(nome_l) and not re.search(r"allegat|modul|fac[ ._-]?simile", nome_l):
+        return "decreto"     # "DD n. 331 ... Proroga" con "modulistica" nell'indirizzo restava tra i moduli (833)
+    testo_nome = f"{nome} {_nome_da_url(url)}".lower().replace("_", " ")
     for categoria, regola in CATEGORIE:
-        if regola.search(testo):
+        if regola.search(testo_nome):
+            if categoria == "modulistica" and testo is not None and sembra_atto(testo):
+                senza_lettera = _ALLEGATO_LETTERA.sub(" ", testo_nome)
+                if not CATEGORIE[1][1].search(senza_lettera):
+                    if CATEGORIE[4][1].search(_ALLEGATO_LETTERA.sub(" ", nome_l)):
+                        return "bando"     # il nome dice bando o avviso: vince sull'indirizzo
+                    return next((c for c, r in CATEGORIE[2:] if r.search(senza_lettera)), "altro")
             return categoria
     return "altro"
 
@@ -661,21 +690,37 @@ def _invertito(data: str) -> str:
     return "".join(str(9 - int(c)) for c in data)
 
 
+RISERVA_DOCUMENTO = 30_000   # caratteri garantiti a ogni documento prima di allungare i primi
+
+
 def documenti_per_scheda(allegati: list[dict], massimo: int = 150_000) -> tuple[list[dict], list[str]]:
-    """I documenti per la scheda, gia' in ordine, con il testo tagliato **dal fondo**: se non c'e' spazio si
-    accorciano gli ultimi documenti, mai il bando. Ritorna (documenti con 'testo', avvertenze da dire a Sonnet)."""
-    documenti, avvertenze, restano = [], [], massimo
-    for a in ordina_per_scheda(allegati):
+    """I documenti per la scheda, gia' in ordine. Ogni documento ha l'inizio garantito; il resto dello spazio va ai
+    documenti in ordine (prima il bando), quindi si accorcia la coda dei documenti piu' lunghi. Ritorna
+    (documenti con 'testo', avvertenze da dire a chi scrive la scheda)."""
+    ordinati = ordina_per_scheda(allegati)
+    lunghezze = [len(a.get("testo_estratto") or "") for a in ordinati]
+    # Prima ogni documento ha i suoi primi RISERVA_DOCUMENTO caratteri, poi il resto va in ordine (03/10: in 4163
+    # un avviso di 296.000 caratteri lasciava fuori la determina e le FAQ). Se nemmeno le riserve ci stanno, si
+    # torna al taglio dal fondo.
+    quote = [min(n, RISERVA_DOCUMENTO) for n in lunghezze]
+    if sum(quote) > massimo:
+        quote = [0] * len(ordinati)
+    restano = massimo - sum(quote)
+    for i, n in enumerate(lunghezze):
+        aggiunta = max(0, min(n - quote[i], restano))
+        quote[i] += aggiunta
+        restano -= aggiunta
+    documenti, avvertenze = [], []
+    for a, n, quota in zip(ordinati, lunghezze, quote):
         testo = a.get("testo_estratto") or ""
         if not testo and a["tipo"] not in ("pagina", "faq"):
             avvertenze.append(f"{a.get('nome')}: nessun testo leggibile (scansione o formato non letto)")
-        if restano <= 0:
+        if n and not quota:
             avvertenze.append(f"{a.get('nome')}: escluso per lunghezza")
             continue
-        if len(testo) > restano:
-            avvertenze.append(f"{a.get('nome')}: tagliato dopo {restano} caratteri su {len(testo)}")
-            testo = testo[:restano]
-        restano -= len(testo)
+        if n > quota:
+            avvertenze.append(f"{a.get('nome')}: tagliato dopo {quota} caratteri su {n}")
+            testo = testo[:quota]
         documenti.append({**a, "testo": testo})
     return documenti, avvertenze
 
@@ -744,7 +789,7 @@ def salva(conn, annuncio_id: int, risultati: list[Risultato]) -> None:
                     impronta = EXCLUDED.impronta, percorso_locale = EXCLUDED.percorso_locale,
                     testo_estratto = EXCLUDED.testo_estratto, errore = EXCLUDED.errore, scaricato_il = now()
                 """,
-                (annuncio_id, bando, r.url, r.nome, r.tipo, categoria_allegato(r.nome, r.url, r.tipo), r.dimensione,
+                (annuncio_id, bando, r.url, r.nome, r.tipo, categoria_allegato(r.nome, r.url, r.tipo, r.testo_estratto), r.dimensione,
                  r.impronta, r.percorso_locale, r.testo_estratto, r.errore),
             )
         cur.execute("UPDATE annunci SET allegati_cercati_il = now() WHERE id = %s", (annuncio_id,))
@@ -764,7 +809,7 @@ def salva_bando(conn, bando_id: int, risultati: list[Risultato]) -> None:
                     impronta = EXCLUDED.impronta, percorso_locale = EXCLUDED.percorso_locale,
                     testo_estratto = EXCLUDED.testo_estratto, errore = EXCLUDED.errore, scaricato_il = now()
                 """,
-                (bando_id, r.url, r.nome, r.tipo, categoria_allegato(r.nome, r.url, r.tipo), r.dimensione,
+                (bando_id, r.url, r.nome, r.tipo, categoria_allegato(r.nome, r.url, r.tipo, r.testo_estratto), r.dimensione,
                  r.impronta, r.percorso_locale, r.testo_estratto, r.errore),
             )
         cur.execute("UPDATE bandi SET allegati_cercati_il = now() WHERE id = %s", (bando_id,))

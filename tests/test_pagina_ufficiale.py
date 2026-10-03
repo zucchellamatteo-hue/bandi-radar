@@ -150,6 +150,28 @@ def test_ordine_e_testo_per_la_scheda():
     assert any("Scansione" in x and "nessun testo" in x for x in avvertenze)
 
 
+def test_documenti_brevi_non_spariscono_dietro_un_bando_lunghissimo():
+    allegati = [{"nome": "Avviso", "url": "a.pdf", "tipo": "pdf", "testo_estratto": "A" * 290_000},
+                {"nome": "Determina n. 960 del 23/10/2025", "url": "d.pdf", "tipo": "pdf", "testo_estratto": "D" * 29_000},
+                {"nome": "FAQ", "url": "f.pdf", "tipo": "pdf", "testo_estratto": "F" * 10_000}]
+    documenti, avvertenze = documenti_per_scheda(allegati, massimo=300_000)
+    testi = {d["nome"]: d["testo"] for d in documenti}
+    assert len(testi["FAQ"]) == 10_000 and len(testi["Determina n. 960 del 23/10/2025"]) == 29_000
+    assert len(testi["Avviso"]) == 300_000 - 39_000 and any("Avviso: tagliato" in x for x in avvertenze)
+
+
+def test_allegato_con_lettera_che_e_un_atto_non_un_modulo():
+    avviso = ("Art. 1 Finalita'. Art. 2 Soggetti beneficiari: le PMI. Art. 3 Intensita' dell'aiuto: 50%. "
+              "Art. 4 Spese ammissibili. Art. 5 Criteri di valutazione. ") * 60
+    modulo = "Il sottoscritto ... in qualita' di legale rappresentante DICHIARA ... " + "Art. 1 beneficiari intensita' " * 200
+    assert categoria_allegato("Avviso Asse II Allegato B)", "x.pdf", "pdf") == "modulistica"       # solo il nome
+    assert categoria_allegato("Avviso Asse II Allegato B)", "x.pdf", "pdf", avviso) == "bando"
+    assert categoria_allegato("Bando danni 1/2026 - Allegato I", "x.pdf", "pdf", avviso) == "bando"
+    assert categoria_allegato("Allegato C", "x.pdf", "pdf", modulo) == "modulistica"              # e' un modulo
+    assert categoria_allegato("Modulo di domanda Allegato B", "x.pdf", "pdf", avviso) == "modulistica"  # il nome lo dice
+    assert categoria_allegato("DD n. 331 del 22 luglio 2026 Proroga", "https://x.it/modulistica/dd331.pdf", "pdf") == "decreto"
+
+
 def test_testo_delle_pagine_volto_dall_api():
     import json
 
