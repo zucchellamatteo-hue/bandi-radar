@@ -373,3 +373,4 @@ Alcune fasi si sovrappongono di una settimana, apposta. Nella **Fase 0** e nella
 4. **Dominio**: deciso, `finanzagevolata.qiaro.it`, record attivo.
 5. **Rete della sessione cloud**: risolto. Il 24/09 la sessione cloud raggiunge i siti delle Regioni, delle Camere e dei Comuni (non incentivi.gov.it, che però risponde dal server).
 3. **Modello commerciale**: resta da decidere, non blocca lo sviluppo.
+6. **Pratiche** (proposta del 03/10, `docs/PIANO_PRATICHE.md`): checklist dei documenti per bando generata su richiesta, area riservata dell'impresa per il caricamento, controlli dei documenti, compilazione dei moduli, notifiche e chat per pratica. Prima di costruirla servono decisioni di Matteo: IA sui documenti con dati personali (cambia la regola dei profili anonimi), dove vive l'area riservata (Bandi Radar o Contract to Cash), cosa sta nell'abbonamento base.
