@@ -23,6 +23,7 @@ FASI_BANDO = [
 ]
 
 FASE_BANDO_SQL = """CASE
+    WHEN b.completezza IS NOT NULL AND b.preliminare->>'per_imprese' = 'no' THEN 'fermato_non_imprese'
     WHEN b.completezza = 'bando_ufficiale' AND b.da_aggiornare IS NOT NULL THEN 'scheda_da_aggiornare'
     WHEN b.completezza = 'bando_ufficiale' THEN 'proponibile'
     WHEN b.completezza IS NOT NULL THEN 'scheda_su_sintesi'
@@ -57,6 +58,7 @@ FASE_ANNUNCIO_SQL = """CASE
     ELSE 'rilevante_senza_bando' END"""
 
 MOTIVO_BANDO_SQL = """CASE
+    WHEN b.preliminare->>'per_imprese' = 'no' THEN b.preliminare->>'motivo'
     WHEN b.da_aggiornare IS NOT NULL THEN b.da_aggiornare
     WHEN b.completezza IS NOT NULL THEN NULL
     WHEN b.pagina_stato = 'non_trovata' THEN b.pagina_motivo

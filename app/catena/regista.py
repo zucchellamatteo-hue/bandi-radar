@@ -200,6 +200,13 @@ def ricontrolla_documenti(conn, limite: int = RICONTROLLI_PER_GIRO) -> int:
     return nuovi_bandi
 
 
+@con_blocco("ricontrollo_stato", {})
+def ricontrolla_stato(conn, modulo) -> dict:
+    """Pagine ufficiali dei bandi proponibili non chiusi, una volta a settimana: un avviso di chiusura comparso dopo
+    la scheda la rende "da aggiornare" (app/schede/ricontrollo_stato.py)."""
+    return modulo.ricontrolla(conn, modulo.da_ricontrollare(conn))
+
+
 def segna_aggiornamenti(conn) -> int:
     """Proroghe, rettifiche, chiusure e FAQ collegate al bando dopo la scheda: la scheda va aggiornata."""
     with conn.cursor() as cur:
@@ -281,6 +288,16 @@ def giro() -> dict:
         return (f"{n['f']} file scaricati per {n['b']} bandi ({n['e']} non scaricati); ricontrollo: "
                 f"{riepilogo['documenti_nuovi']} bandi con documenti nuovi; {riepilogo['schede_da_aggiornare']} schede da aggiornare")
 
+    def stato_pagine(inizio):
+        from app.schede import ricontrollo_stato
+
+        with connetti() as conn:
+            c = riepilogo["ricontrollo_stato"] = ricontrolla_stato(conn, ricontrollo_stato)
+        if not c:
+            return "saltato: un altro ricontrollo e' in corso"
+        return (f"{c['controllati']} pagine ufficiali ricontrollate, {c['chiusure']} con un possibile avviso di chiusura "
+                f"(scheda da aggiornare), {c['cambiati']} cambiate, {c['errori']} non scaricate")
+
     def filtro(inizio):
         prima = _conta("SELECT count(*) AS n FROM bandi WHERE allegati_cercati_il IS NOT NULL AND documentazione IS NULL")["n"]
         documentazione.esegui()
@@ -314,7 +331,8 @@ def giro() -> dict:
 
     with esecuzione("regista") as giro_intero:
         for nome, lavoro in (("smistamento", smistamento), ("doppioni", doppioni), ("pagine", pagine),
-                             ("documenti", documenti), ("filtro", filtro), ("ia", intelligenza)):
+                             ("documenti", documenti), ("stato_pagine", stato_pagine), ("filtro", filtro),
+                             ("ia", intelligenza)):
             _passo(nome, lavoro)
         giro_intero.riepilogo = (f"{riepilogo.get('ripiego', 0)} incerti mandati avanti; doppioni: "
                                  f"{riepilogo.get('doppioni', {})}; {riepilogo.get('schede_da_aggiornare', 0)} schede da aggiornare")
