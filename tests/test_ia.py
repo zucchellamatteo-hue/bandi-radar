@@ -175,6 +175,18 @@ def test_misto_al_cento_per_cento():
     assert any("mista al 100%" in p for p in ia.verifica_scheda(s))
 
 
+def test_percentuale_base_e_territorio_a_parole():
+    # Verifica del 02/10: 60% che era la base 50% piu' due premialita' (1008); Umbria solo nel testo (3677).
+    s = {**SCHEDA_FIERE, "percentuale": 60,
+         "intensita": {"percentuale_base": 50, "maggiorazioni": [{"motivo": "femminile", "punti_percentuali": 10}]}}
+    assert any("oltre la base 50" in p for p in ia.verifica_scheda(s))
+    assert not any("oltre la base" in p for p in ia.verifica_scheda({**s, "percentuale": 50}))
+    t = {**SCHEDA_FIERE, "territorio": "imprese con sede operativa in Umbria", "territorio_regioni": [],
+         "territorio_province": [], "vincoli": {**SCHEDA_FIERE["vincoli"], "territorio": "vincolo"}}
+    assert any("nomina Umbria" in p for p in ia.verifica_scheda(t))
+    assert not any("nomina" in p for p in ia.verifica_scheda({**t, "territorio_regioni": ["UMB"]}))
+
+
 def test_colonne_della_scheda_esistono():
     # ogni campo salvato ha una colonna (migrazioni 004 e 007): nessun UPDATE su colonne inesistenti
     from pathlib import Path
@@ -227,7 +239,7 @@ def test_dettagli_per_il_commercialista_nello_schema_e_nei_controlli():
     assert "intensita.maggiorazioni.motivo: valore non ammesso 'simpatia'" in problemi
     assert "esclusioni.soggetti: valore non ammesso 'antipatia'" in problemi
     assert "finanziamento.quota_fondo_perduto: percentuale oltre 100 (130)" in problemi
-    assert "intensita.percentuale_base superiore alla percentuale massima" in problemi
+    assert "percentuale 60 sotto la percentuale base 70" in problemi
     assert "vincoli_spese.fornitore = vincolo, ma manca il dettaglio" in problemi
     assert not ia._pieno({"iva": {"stato": "non_noto", "dettaglio": None}})
 

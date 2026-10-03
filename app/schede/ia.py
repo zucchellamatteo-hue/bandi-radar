@@ -325,9 +325,17 @@ def _verifica_dettagli(s: dict) -> list[str]:
             elif f"{blocco}.{n}" in campi.PERCENTUALI_DETTAGLI and v > 100:
                 problemi.append(f"{blocco}.{n}: percentuale oltre 100 ({v})")
     problemi += verifica_forma_incentivo(s.get("forma_incentivo"))
-    base, massima = (s.get("intensita") or {}).get("percentuale_base"), s.get("percentuale")
-    if isinstance(base, (int, float)) and isinstance(massima, (int, float)) and base > massima:
-        problemi.append("intensita.percentuale_base superiore alla percentuale massima")
+    # Dal 03/10 `percentuale` e' la percentuale base (la piu' alta tra le basi), non quella con le maggiorazioni.
+    intensita = s.get("intensita") or {}
+    basi = [v for v in [intensita.get("percentuale_base"), *(intensita.get("per_dimensione") or {}).values()]
+            if isinstance(v, (int, float))]
+    percentuale = s.get("percentuale")
+    if basi and isinstance(percentuale, (int, float)):
+        if percentuale > max(basi) and intensita.get("maggiorazioni"):
+            problemi.append(f"percentuale {percentuale} oltre la base {max(basi)}: deve essere la percentuale base, "
+                            "le maggiorazioni vanno in intensita e nelle avvertenze")
+        elif percentuale < max(basi):
+            problemi.append(f"percentuale {percentuale} sotto la percentuale base {max(basi)}")
     for voce, v in (s.get("vincoli_spese") or {}).items():
         if isinstance(v, dict) and v.get("stato") == "vincolo" and not v.get("dettaglio"):
             problemi.append(f"vincoli_spese.{voce} = vincolo, ma manca il dettaglio")
@@ -406,6 +414,14 @@ def verifica_scheda(s: dict, documenti: list[dict] | None = None) -> list[str]:
         elif stato == "vincolo" and not any(s.get(e) not in (None, []) for e in elenchi):
             if not (v == "territorio" and s.get("territorio")):
                 problemi.append(f"vincoli.{v} = vincolo, ma i campi {', '.join(elenchi)} sono vuoti")
+    # Una regione scritta solo a parole non serve all'abbinamento (verifica del 02/10, 3677).
+    if vincoli.get("territorio") == "vincolo" and not s.get("territorio_regioni") and not s.get("territorio_province"):
+        from app.abbinamento.territorio import NOMI_REGIONI
+
+        nominata = next((nome for nome in NOMI_REGIONI.values()
+                         if re.search(rf"\b{re.escape(nome)}\b", s.get("territorio") or "", re.IGNORECASE)), None)
+        if nominata:
+            problemi.append(f"territorio: nomina {nominata}, ma territorio_regioni e' vuoto")
     fonti = {f.get("campo") for f in s.get("fonti") or [] if isinstance(f, dict)}
     senza = [n for n, v in s.items() if n not in _SENZA_FONTE and _pieno(v) and n not in fonti]
     if senza:

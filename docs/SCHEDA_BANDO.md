@@ -71,7 +71,7 @@ Tutta Italia: elenchi vuoti e `vincoli.territorio = nessun_vincolo`.
 | `temi` | `digitale`, `green`, `internazionalizzazione`, `investimenti`, `formazione`, `ricerca`, `assunzioni`, `avvio_impresa`, `turismo`, `commercio`, `agricoltura`, `cultura`, `credito`, `sicurezza`, `altro` (`tema` resta il principale) | elenco |
 | `categorie_spesa` | `macchinari_attrezzature`, `opere_edili_impianti`, `software_digitale`, `consulenze`, `formazione`, `personale`, `fiere_eventi`, `marketing_promozione`, `brevetti_certificazioni`, `veicoli`, `energia_efficienza`, `scorte_circolante`, `immobili`, `affitto_gestione`, `ricerca_sviluppo`, `altro` | elenco |
 | `contributo_massimo` | Massimo per singola impresa, in euro, contributo base più alto (i premi aggiuntivi vanno nella sintesi) | numero |
-| `percentuale` | Percentuale massima delle spese coperta, comprese le maggiorazioni | 0-100 |
+| `percentuale` | Percentuale **base** delle spese coperta, senza maggiorazioni né premialità (dal 03/10; prima era la massima con le maggiorazioni); se la base cambia per dimensione o misura, la più alta | 0-100 |
 | `fondo_perduto_massimo`, `percentuale_fondo_perduto` | **Solo la quota a fondo perduto**, quando l'aiuto unisce prestito e fondo perduto | numero, 0-100 |
 | `finanziamento_massimo` | La parte a prestito, se c'è | numero |
 | `spesa_minima`, `spesa_massima` | Progetto minimo e massimo ammesso | numeri |
@@ -97,7 +97,7 @@ Tutta Italia: elenchi vuoti e `vincoli.territorio = nessun_vincolo`.
 | Blocco | Cosa contiene |
 |---|---|
 | `forma_incentivo` | Richiesta di Matteo del 02/10. `descrizione` (una o due frasi chiare); `righe`, una per gruppo di beneficiari o linea con regole diverse (`per_chi`), con `forme` (`fondo_perduto`, `finanziamento_agevolato`, `credito_imposta`, `garanzia`, `voucher`, `servizi`, `premio`, `contributo_interessi`, `altro`), ognuna con `percentuale` della spesa ammessa, `massimale` e `condizioni`; poi `spesa_minima`, `spesa_massima`, `agevolazione_massima`, `note`. Per le schede scritte prima la plancia la ricava dai campi esistenti (`app/schede/forma_incentivo.py`) e lo dice |
-| `intensita` | `percentuale_base` (senza maggiorazioni); `per_dimensione` (percentuale base per `micro`, `piccola`, `media`, `grande`, quando cambia con la dimensione); `maggiorazioni`, una per motivo con i punti percentuali in più. Motivi: `micro`, `piccola`, `zona_assistita`, `area_interna_montana`, `femminile`, `giovanile`, `nuova_impresa`, `startup_innovativa`, `rating_legalita`, `certificazione_parita_genere`, `aggregazione`, `assunzioni`, `altro`. `percentuale` resta la massima possibile |
+| `intensita` | `percentuale_base` (senza maggiorazioni); `per_dimensione` (percentuale base per `micro`, `piccola`, `media`, `grande`, quando cambia con la dimensione); `maggiorazioni`, una per motivo con i punti percentuali in più. Motivi: `micro`, `piccola`, `zona_assistita`, `area_interna_montana`, `femminile`, `giovanile`, `nuova_impresa`, `startup_innovativa`, `rating_legalita`, `certificazione_parita_genere`, `aggregazione`, `assunzioni`, `altro`. Dal 03/10 `percentuale` è la base: le maggiorazioni stanno solo qui e nelle avvertenze |
 | `finanziamento` | Quando c'è una parte a prestito o una garanzia: `quota_fondo_perduto` (quanto dell'aiuto è a fondo perduto, 0-100) e `percentuale_finanziamento` (quanto della spesa copre il prestito); `tasso_tipo` (`zero`, `fisso`, `variabile`, `riferimento_ue`, `altro`), `tasso_valore` (percentuale annua), `tasso_note`; `durata_mesi`, `preammortamento_mesi`; `garanzie_richieste` a parole; `garanzia_pubblica_copertura` (0-100) |
 | `vincoli_spese` | Per ogni voce uno stato (`vincolo`, `nessun_vincolo`, `non_noto`) e il dettaglio a parole: `fornitore` (niente parti correlate, soci o parenti; fornitori accreditati), `bene_nuovo`, `bene_usato`, `origine_bene` (origine UE, "made in", prodotto nel territorio), `leasing_noleggio`, `pagamento` (tracciabile, conto dedicato), `decorrenza` (da quando valgono le spese), `iva`, `tetti_per_voce` (es. consulenze al massimo il 20%), `forfait` |
 | `esclusioni` | `soggetti`: `impresa_difficolta`, `procedure_concorsuali`, `liquidazione`, `aiuti_illegali_da_restituire`, `irregolarita_contributiva`, `sanzioni_interdittive`, `antimafia`, `altri_aiuti_stesse_spese`, `altro`; `settori` a parole (i codici restano in `codici_ateco_esclusi`); `spese` escluse a parole |
@@ -175,7 +175,7 @@ Il profilo anonimo del cliente arriva dalle anagrafiche di Matteo (`docs/RICHIES
 | `temi` | `["internazionalizzazione"]` | pagina |
 | `categorie_spesa` | `["fiere_eventi", "personale"]` | bando, art. B.3 |
 | `contributo_massimo` | 15000 (nuovi espositori; vedi `linee`) | bando, art. B.1.b.1 |
-| `percentuale` | 60 (50% più 5% micro più 5% startup) | bando, art. B.1.b.5-6 |
+| `percentuale` | 50 (base; con le maggiorazioni 5% micro e 5% startup si arriva al 60%, in `intensita`) | bando, art. B.1.b.5-6 |
 | `fondo_perduto_massimo`, `percentuale_fondo_perduto` | 15000, 60 | bando, art. B.1.b |
 | `finanziamento_massimo` | `null` | |
 | `spesa_minima` | 6000 | bando, art. B.1.b.2 |
