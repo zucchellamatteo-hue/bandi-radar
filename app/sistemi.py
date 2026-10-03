@@ -54,6 +54,11 @@ SISTEMI: list[Sistema] = [
             "per le scansioni) e li conserva. Ogni 14 giorni ricontrolla i documenti dei bandi aperti con la scheda: se "
             "ne arrivano di nuovi, la scheda va aggiornata.", "ogni ora, nel giro del regista (25 bandi)", 60,
             dati="documenti"),
+    Sistema("stato_pagine", "Ricontrollo dello stato",
+            "Senza IA, una volta a settimana per ogni bando proponibile non chiuso: riscarica la pagina ufficiale, la "
+            "confronta con quella salvata e cerca nelle righe nuove gli avvisi di chiusura ('piattaforma chiusa', "
+            "'dotazione esaurita', 'bando chiuso'). Se ne trova uno, la scheda va aggiornata con il motivo.",
+            "ogni ora, nel giro del regista (10 pagine)", 60, dati="stato_pagine"),
     Sistema("filtro", "C'e' il bando?",
             "Senza IA: guarda i documenti scaricati e decide se c'e' il testo ufficiale del bando. Solo quelli vanno "
             "all'IA per la scheda; gli altri (solo sintesi o pagine web) restano in disparte e non si propongono.",
@@ -149,6 +154,10 @@ DATI: dict[str, tuple[str, str]] = {
                   """SELECT al.scaricato_il AS quando, left(b.titolo, 80) AS bando, left(al.nome, 80) AS documento,
                             al.categoria, coalesce(al.errore, 'ok') AS esito
                      FROM allegati al LEFT JOIN bandi b ON b.id = al.bando_id ORDER BY al.scaricato_il DESC LIMIT 100"""),
+    "stato_pagine": ("Ultimi ricontrolli dello stato sulla pagina ufficiale",
+                     """SELECT e.quando, left(b.titolo, 100) AS bando, e.esito, left(e.motivo, 200) AS motivo
+                        FROM eventi_catena e LEFT JOIN bandi b ON b.id = e.oggetto_id
+                        WHERE e.passo = 'ricontrollo stato' ORDER BY e.id DESC LIMIT 100"""),
     "filtro": ("Esito del filtro sui bandi",
                """SELECT coalesce(documentazione, 'non ancora valutati') AS esito, count(*) AS bandi,
                          count(*) FILTER (WHERE completezza = 'bando_ufficiale') AS con_scheda_proponibile
@@ -184,6 +193,10 @@ NUMERI: dict[str, str] = {
     "documenti": """SELECT format('%s bandi con documenti da scaricare; %s file in tutto',
                            (SELECT count(*) FROM bandi WHERE pagina_stato = 'trovata' AND allegati_cercati_il IS NULL),
                            count(*)) AS t FROM allegati WHERE errore IS NULL""",
+    "stato_pagine": """SELECT format('%s proponibili da ricontrollare questa settimana, %s ricontrollati negli ultimi 7 giorni',
+                              count(*) FILTER (WHERE stato_ricontrollato_il IS NULL OR stato_ricontrollato_il < now() - interval '7 days'),
+                              count(*) FILTER (WHERE stato_ricontrollato_il >= now() - interval '7 days')) AS t
+                       FROM bandi WHERE completezza = 'bando_ufficiale' AND coalesce(stato, '') <> 'chiuso'""",
     "filtro": """SELECT format('%s con il bando, %s solo sintesi, %s senza documenti', count(*) FILTER (WHERE documentazione = 'bando'),
                         count(*) FILTER (WHERE documentazione = 'sintesi'), count(*) FILTER (WHERE documentazione = 'nessuno')) AS t
                  FROM bandi""",

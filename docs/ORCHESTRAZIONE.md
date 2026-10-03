@@ -17,6 +17,7 @@
 | 3 | Deduplica e doppioni dubbi: titoli quasi uguali (≥ 0,9), stesso ente, stesso anno ed edizione → stesso bando; titoli poco simili (< 0,5) → bandi diversi; graduatorie o proroghe di bandi che non abbiamo → archiviate; gli altri all'IA (Opus 5.5, effort basso, 40 per giro) | in parte | le decisioni di Matteo non si toccano |
 | 4 | Pagina ufficiale (50 per giro) e documenti (25 per giro) | sì | errore di rete: il giorno dopo; pagina non trovata: dopo 14 giorni |
 | 5 | Ricontrollo dei documenti dei bandi aperti con la scheda, ogni 14 giorni (5 per giro); proroghe, rettifiche, chiusure e FAQ arrivate dopo la scheda | sì | la scheda diventa "da aggiornare" |
+| 5b | Ricontrollo dello stato (dal 03/10): ogni settimana la pagina ufficiale di ogni bando proponibile non chiuso si riscarica e si confronta con quella salvata; un avviso di chiusura nelle righe nuove ("piattaforma chiusa", "dotazione esaurita", "bando chiuso") rende la scheda "da aggiornare" (10 pagine per giro, `app/schede/ricontrollo_stato.py`) | sì | errore di rete: la settimana dopo |
 | 6 | Filtro "c'è il bando?" sui documenti | sì | si rifà quando arrivano documenti nuovi |
 | 7 | IA con la Batch API (metà prezzo): smistamento dei "da rivedere", controllo preliminare, schede nuove e da aggiornare, solo per i bandi con il testo ufficiale | no | un lotto alla volta; tetto di spesa del mese |
 
@@ -24,7 +25,7 @@ Ogni azione del regista resta in `eventi_catena`.
 
 ## A che punto è ogni bando
 
-Le fasi si calcolano dai dati (`app/catena/stato.py`), quindi non c'è uno stato da tenere in ordine: pagina da cercare → pagina non trovata → documenti da scaricare → documenti da valutare → (in disparte: solo sintesi / nessun documento) → controllo preliminare → (fermato: chiuso, non per imprese, edizione vecchia, senza testo) → scheda in attesa → **proponibile** (scheda sul bando ufficiale) → scheda da aggiornare. Per gli annunci: da smistare → da rivedere → forse doppione → collegato a un bando, oppure non rilevante.
+Le fasi si calcolano dai dati (`app/catena/stato.py`), quindi non c'è uno stato da tenere in ordine: pagina da cercare → pagina non trovata → documenti da scaricare → documenti da valutare → (in disparte: solo sintesi / nessun documento) → controllo preliminare → (fermato: chiuso, non per imprese, edizione vecchia, senza testo) → scheda in attesa → **proponibile** (salvo i bandi con la scheda ma segnati "non per imprese" dal ricontrollo del 03/10: tornano tra i fermati e escono dal catalogo) (scheda sul bando ufficiale) → scheda da aggiornare. Per gli annunci: da smistare → da rivedere → forse doppione → collegato a un bando, oppure non rilevante.
 
 La pagina **Lavorazione** mostra i due imbuti con i numeri; cliccando una fase si vedono gli oggetti fermi lì, con il motivo e la data dell'ultimo passo, più le ultime azioni del regista e la spesa IA del mese.
 

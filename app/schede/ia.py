@@ -748,6 +748,30 @@ def documenti_del_bando(conn, bando_id: int, massimo: int) -> tuple[list[dict], 
     return [sintesi, *documenti], avvertenze
 
 
+MODULO_PRELIMINARE = 3_000   # caratteri dell'inizio del modulo di domanda dati al controllo preliminare
+_MODULO_DOMANDA = re.compile(r"domanda|istanza|adesione|dichiarazion|richiesta di (?:contributo|agevolazione)", re.IGNORECASE)
+
+
+def documenti_preliminare(conn, bando_id: int) -> list[dict]:
+    """I documenti del controllo preliminare: l'inizio del bando e, in fondo, l'inizio del modulo di domanda (03/10).
+    La verifica del 02/10 ha trovato bandi per societa' sportive e per enti che si vedevano solo dal modulo
+    ("regime L. 398/1991", "non ente commerciale"): il modulo dice chi puo' davvero firmare la domanda."""
+    from app.schede.allegati import categoria_allegato
+
+    documenti, _ = documenti_del_bando(conn, bando_id, MASSIMO_TESTO_PRELIMINARE)
+    with conn.cursor() as cur:
+        cur.execute("""SELECT nome, url, tipo, categoria, testo_estratto FROM allegati WHERE bando_id = %s
+                       AND annuncio_id IS NULL AND errore IS NULL AND testo_estratto IS NOT NULL ORDER BY id""", (bando_id,))
+        for a in cur.fetchall():
+            categoria = a["categoria"] or categoria_allegato(a["nome"] or "", a["url"] or "", a["tipo"] or "")
+            if categoria == "modulistica" and _MODULO_DOMANDA.search(f"{a['nome']} {a['url']}"):
+                testo = a["testo_estratto"][:MODULO_PRELIMINARE]
+                documenti.append({**a, "categoria": "modulistica", "nome": f"Modulo di domanda (inizio): {a['nome']}",
+                                  "testo": testo})
+                break
+    return documenti
+
+
 def bandi_da_schedare(conn, bando_id: int | None, limite: int) -> list[dict]:
     with conn.cursor() as cur:
         if bando_id:
@@ -947,7 +971,7 @@ class Prompt:
         return cls(riempi(istr_pre, {"data_oggi": oggi.isoformat()}), mod_pre, istr_scheda, mod_scheda, oggi)
 
     def preliminare(self, conn, b: dict) -> str:
-        corti, _ = documenti_del_bando(conn, b["id"], MASSIMO_TESTO_PRELIMINARE)
+        corti = documenti_preliminare(conn, b["id"])
         return riempi(self.mod_pre, {"data_oggi": self.oggi.isoformat(), "titolo": b["titolo"], "url": b["url"],
                                      "documenti": corti})
 

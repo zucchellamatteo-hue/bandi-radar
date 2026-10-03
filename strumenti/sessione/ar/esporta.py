@@ -91,7 +91,7 @@ def main() -> int:
             if s.aperto:
                 (cartella / "aperto").write_text("; ".join(s.aperto) + "\n")
                 aperti += s.stato == "aperto"
-            corti, _ = ia.documenti_del_bando(conn, b["id"], ia.MASSIMO_TESTO_PRELIMINARE)
+            corti = ia.documenti_preliminare(conn, b["id"])
             pre = ia.riempi(mod_pre, {"data_oggi": oggi.isoformat(), "titolo": b["titolo"], "url": b["url"],
                                       "documenti": corti})
             documenti, avvertenze = ia.documenti_del_bando(conn, b["id"], ia.MASSIMO_TESTO_SCHEDA)

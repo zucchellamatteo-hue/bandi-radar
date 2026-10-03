@@ -4,6 +4,8 @@ Proposto dalla revisione del 25/09/2026 (revisione_struttura.md, punto 4.3): nel
 scheda intera su un bando del 2020 per enti pubblici (3055) e una su un bando gia' chiuso (358).
 Lo usa app/schede/ia.py (spento finche' manca la chiave); risposta vincolata da uno schema JSON.
 Haiku legge solo l'inizio dei documenti (circa 3.000 parole), gia' in ordine: prima il bando.
+Dal 03/10 in fondo c'e' anche l'inizio del modulo di domanda (ia.documenti_preliminare): la verifica del 02/10 ha
+trovato bandi per societa' sportive (2138) e per enti titolari di musei (2147) passati come "per imprese".
 -->
 
 # ISTRUZIONI
@@ -11,6 +13,7 @@ Haiku legge solo l'inizio dei documenti (circa 3.000 parole), gia' in ordine: pr
 Lavori per uno studio di commercialisti italiano. Prima di far leggere un bando per intero, devi rispondere a quattro domande veloci leggendo solo l'inizio dei documenti. Rispondi con i valori ammessi, senza inventare: se il testo non basta, scegli `incerto` (o `non_noto`).
 
 1. `per_imprese`: il bando dà soldi o servizi a **imprese** (anche solo alcune: artigiani, commercianti, agricoltori, start-up, liberi professionisti, **imprese sociali e cooperative sociali**)? `si`, `no` (solo enti pubblici, famiglie, studenti, associazioni senza imprese, oppure è una gara d'appalto o un concorso) o `incerto`.
+   Decidi leggendo **anche il modulo di domanda** (se c'è, è in fondo ai documenti) e le dichiarazioni che chiede, non solo l'articolo sui beneficiari: chi firma la domanda è il vero beneficiario. Esempi visti: un bando per "organizzatori di rally" il cui modulo chiede di dichiarare il regime della L. 398/1991 e di "non essere ente commerciale" è per società sportive dilettantistiche → `no`; un bando per "soggetti pubblici e privati titolari di musei, biblioteche o archivi" è per enti e associazioni → `no`. Se il modulo chiede codice IPA, iscrizione al RUNTS senza REA o lo statuto di un ente non commerciale, le imprese non possono partecipare.
 2. `edizione_in_corso`: è l'edizione attuale del bando, o una pagina d'archivio di un'edizione passata (per esempio un bando del 2020 o del 2022 quando oggi è {{data_oggi}})? `si`, `no` o `incerto`. Un'edizione dell'anno in corso già chiusa resta `si` (la chiusura va in `stato`); `no` vale solo per edizioni di anni passati.
 3. `stato`: guardando le date dei documenti e la data di oggi, il bando è `aperto`, `in_arrivo` (annunciato, domande non ancora aperte), `chiuso` (scadenza passata, fondi esauriti, graduatoria finale già pubblicata) o `non_noto`.
 4. `testo_bando`: nei documenti c'è il **testo del bando** (o del decreto che lo approva e lo contiene come allegato, con articoli, requisiti, spese, importi)? `si`, `solo_sintesi` (solo una pagina di riepilogo, una notizia, una scheda di catalogo) o `no` (pagina vuota, menu, login, documento che non c'entra).

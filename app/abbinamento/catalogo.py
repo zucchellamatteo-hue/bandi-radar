@@ -36,7 +36,9 @@ def carica_bandi(conn) -> list[dict]:
                              WHERE a.bando_id = b.id), '{{}}') AS livelli,
                    coalesce((SELECT array_agg(DISTINCT f.territorio) FROM annunci a JOIN fonti f ON f.id = a.fonte_id
                              WHERE a.bando_id = b.id), '{{}}') AS territori_fonti
-            FROM bandi b WHERE b.completezza IS NOT NULL""")
+            FROM bandi b WHERE b.completezza IS NOT NULL
+              -- non per imprese (preliminare o ricontrollo del 03/10): fuori dal catalogo, la scheda resta nello storico
+              AND coalesce(b.preliminare->>'per_imprese', '') <> 'no'""")
         bandi = [dict(r) for r in cur.fetchall()]
     for b in bandi:
         b["regioni_fonti"] = [t for t in b["territori_fonti"] if t in REGIONI]
