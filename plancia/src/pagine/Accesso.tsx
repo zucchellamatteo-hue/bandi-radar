@@ -24,7 +24,7 @@ export function Accesso({ entrato }: { entrato: (u: Utente) => void }) {
   return (
     <div className="accesso">
       <div className="logo-accesso">Bandi Radar</div>
-      <p className="piccolo">Finanza agevolata per le imprese</p>
+      <p className="piccolo">Finanza agevolata per le imprese · <a href="/presentazione">cos'è</a></p>
       <form onSubmit={invia}>
         <label>Email<input type="text" inputMode="email" autoComplete="username" required value={email} onChange={(e) => setEmail(e.target.value)} /></label>
         {!recupero && <label>Password<input type="password" autoComplete="current-password" required value={password}

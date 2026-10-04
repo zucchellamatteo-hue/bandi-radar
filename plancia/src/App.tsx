@@ -73,6 +73,8 @@ export default function App() {
         {admin ? (
           <Routes>
             <Route path="/" element={<Fonti />} />
+            <Route path="/accedi" element={<Navigate to="/" replace />} />
+            <Route path="/registrati" element={<Navigate to="/" replace />} />
             <Route path="/fonti/:id" element={<DettaglioFonte />} />
             <Route path="/catalogo" element={<Catalogo />} />
             <Route path="/annunci" element={<Annunci />} />

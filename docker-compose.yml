@@ -58,6 +58,9 @@ services:
       EMAIL_MATTEO: ${EMAIL_MATTEO:-}
       REGISTRAZIONE_APERTA: ${REGISTRAZIONE_APERTA:-0}             # 1 = le imprese possono registrarsi da sole
       EMAIL_IMPRESE_APPROVAZIONE: ${EMAIL_IMPRESE_APPROVAZIONE:-1} # 1 = le email alle imprese partono dopo l'ok di Matteo
+      PAGINA_PUBBLICA: ${PAGINA_PUBBLICA:-0}       # 1 = "/" mostra la presentazione a chi non ha fatto l'accesso
+      GOOGLE_ADS_ID: ${GOOGLE_ADS_ID:-}            # es. AW-123456789: misurazione delle campagne, solo con il consenso
+      ESEMPI_BANDI: ${ESEMPI_BANDI:-}              # schede di esempio nella presentazione (id separati da virgola)
       ALLEGATI_CARTELLA: /srv/allegati
     volumes:
       - allegati:/srv/allegati:ro         # sola lettura: scrive solo la raccolta
