@@ -14,7 +14,7 @@ export const CAMPI_SCHEDA: Record<string, string> = {
 };
 
 // Voto e problemi sulla scheda (revisori e amministratori). Un giudizio per persona e versione, si puo' cambiare.
-export default function Giudizio({ bandoId, admin }: { bandoId: number; admin: boolean }) {
+export default function Giudizio({ bandoId, admin, perImpresa }: { bandoId: number; admin: boolean; perImpresa?: boolean }) {
   const [fb, setFb] = useState<FeedbackBando | null>(null);
   const [voto, setVoto] = useState<number | null>(null);
   const [problemi, setProblemi] = useState<ProblemaFeedback[]>([]);
@@ -43,14 +43,14 @@ export default function Giudizio({ bandoId, admin }: { bandoId: number; admin: b
 
   return (
     <div className="giudizio" id="giudizio">
-      <h2>Il tuo giudizio sulla scheda</h2>
+      <h2>{perImpresa ? "Ti è utile questa scheda? Hai trovato un errore?" : "Il tuo giudizio sulla scheda"}</h2>
       {vecchio && <p className="piccolo">Avevi giudicato la versione {vecchio.versione} (voto {vecchio.voto ?? "–"}): la scheda è
         cambiata, il giudizio va rifatto sulla versione {fb.versione}.</p>}
       {fb.mio && fb.mio.versione === fb.versione && fb.mio.stato !== "nuovo" && (
         <div className="avviso">Stato della tua segnalazione: <b>{NOMI_STATO_FEEDBACK[fb.mio.stato]}</b>
           {fb.mio.risposta && <> — {fb.mio.risposta}</>}</div>)}
       <div className="voto">
-        <span>Mi fiderei a proporlo a un cliente?</span>
+        <span>{perImpresa ? "Quanto è chiara e utile?" : "Mi fiderei a proporlo a un cliente?"}</span>
         {[1, 2, 3, 4, 5].map((n) => (
           <button key={n} type="button" className={voto != null && n <= voto ? "stella piena" : "stella"} title={`${n} su 5`}
             onClick={() => setVoto(voto === n ? null : n)}>★</button>))}

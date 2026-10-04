@@ -453,7 +453,9 @@ def _abbinamento(conn, profilo, anche_esclusi: bool = True) -> dict:
 @router.get("/profili")
 def elenco_profili() -> list[dict]:
     with connetti() as conn, conn.cursor() as cur:
-        cur.execute("SELECT codice, profilo, origine, creato_il, aggiornato_il FROM profili ORDER BY codice")
+        # I profili delle imprese iscritte (origine 'impresa') li gestisce l'impresa dalla sua area.
+        cur.execute("SELECT codice, profilo, origine, creato_il, aggiornato_il FROM profili WHERE origine <> 'impresa' "
+                    "ORDER BY codice")
         return _righe(cur)
 
 
@@ -486,10 +488,13 @@ def salva_profilo(codice: str, corpo: dict) -> dict:
         cur.execute(
             """INSERT INTO profili (codice, profilo) VALUES (%s, %s::jsonb)
                ON CONFLICT (codice) DO UPDATE SET profilo = EXCLUDED.profilo, aggiornato_il = now()
+               WHERE profili.origine <> 'impresa'
                RETURNING codice, profilo, origine, creato_il, aggiornato_il""",
             (codice, profilo.model_dump_json()),
         )
         riga = cur.fetchone()
+        if not riga:
+            raise HTTPException(409, "codice gia' usato da un'impresa iscritta: scegline un altro")
         conn.commit()
     return dict(riga)
 
@@ -497,7 +502,7 @@ def salva_profilo(codice: str, corpo: dict) -> dict:
 @router.delete("/profili/{codice}")
 def cancella_profilo(codice: str) -> dict:
     with connetti() as conn, conn.cursor() as cur:
-        cur.execute("DELETE FROM profili WHERE codice = %s RETURNING codice", (codice,))
+        cur.execute("DELETE FROM profili WHERE codice = %s AND origine <> 'impresa' RETURNING codice", (codice,))
         if not cur.fetchone():
             raise HTTPException(404, "profilo non trovato")
         conn.commit()

@@ -120,3 +120,8 @@ button.stella.piena { color: #e0a800; }
 .giudizio .problema input { flex: 1; min-width: 240px; }
 .giudizio select, .giudizio input, .giudizio textarea, td textarea, td select { padding: .4rem .55rem; border: 1px solid var(--bordo); border-radius: 6px; font: inherit; }
 .giudizio textarea, td textarea { width: 100%; margin-top: .3rem; }
+
+/* Area impresa (05/10): riquadro "Richiedi supporto". */
+.riquadro.supporto { border-top-color: var(--verde); margin: 1rem 0 1.5rem; display: block; }
+.riquadro.supporto button.primario { margin-left: .5rem; }
+.riquadro.supporto textarea { width: 100%; padding: .4rem .55rem; border: 1px solid var(--bordo); border-radius: 6px; font: inherit; }

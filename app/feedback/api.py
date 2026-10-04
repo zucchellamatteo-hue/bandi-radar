@@ -31,15 +31,22 @@ class Gestione(BaseModel):
     risposta: str | None = None
 
 
-def _puo_giudicare(utente: dict) -> None:
-    # L'impresa giudichera' le schede dalla sua area (tappa 3), solo sui bandi che vede: per ora admin e revisori.
-    if utente["ruolo"] not in ("admin", "revisore"):
-        raise HTTPException(status_code=403, detail="Il tuo profilo non permette questa operazione.")
+def _puo_giudicare(utente: dict, bando_id: int | None = None) -> None:
+    """Admin e revisori giudicano tutte le schede; l'impresa solo quelle dei bandi adatti alle sue imprese."""
+    if utente["ruolo"] in ("admin", "revisore"):
+        return
+    if utente["ruolo"] == "impresa" and bando_id is not None:
+        from app.impresa import imprese_per_bando
+
+        with connetti() as conn:
+            if imprese_per_bando(conn, utente["id"], bando_id):
+                return
+    raise HTTPException(status_code=403, detail="Il tuo profilo non permette questa operazione.")
 
 
 @router.get("/bandi/{bando_id}/feedback")
 def feedback_del_bando(bando_id: int, utente: dict = Depends(utente_corrente)) -> dict:
-    _puo_giudicare(utente)
+    _puo_giudicare(utente, bando_id)
     with connetti() as conn:
         try:
             return fb.del_bando(conn, bando_id, utente)
@@ -49,7 +56,7 @@ def feedback_del_bando(bando_id: int, utente: dict = Depends(utente_corrente)) -
 
 @router.put("/bandi/{bando_id}/feedback")
 def giudica(bando_id: int, dati: Giudizio, utente: dict = Depends(utente_corrente)) -> dict:
-    _puo_giudicare(utente)
+    _puo_giudicare(utente, bando_id)
     with connetti() as conn:
         try:
             r = fb.salva(conn, bando_id, utente, dati.voto, [p.model_dump() for p in dati.problemi], dati.commento)
@@ -62,8 +69,7 @@ def giudica(bando_id: int, dati: Giudizio, utente: dict = Depends(utente_corrent
 @router.get("/feedback")
 def elenco_feedback(stato: str | None = None, ruolo: str | None = None, categoria: str | None = None,
                     bando: int | None = None, pagina: int = Query(1, ge=1), utente: dict = Depends(utente_corrente)) -> dict:
-    """Tutti i giudizi per l'admin; per il revisore solo i suoi, con lo stato e la risposta."""
-    _puo_giudicare(utente)
+    """Tutti i giudizi per l'admin; per revisori e imprese solo i loro, con lo stato e la risposta."""
     solo_miei = utente["id"] if utente["ruolo"] != "admin" else None
     with connetti() as conn:
         return fb.elenco(conn, stato or None, ruolo or None, categoria or None, bando, pagina, utente_id=solo_miei) | {

@@ -15,7 +15,9 @@ import Lavorazione from "./pagine/Lavorazione";
 import Supervisione from "./pagine/Supervisione";
 import Utenti from "./pagine/Utenti";
 import Feedback from "./pagine/Feedback";
-import { Accesso, ImpostaPassword } from "./pagine/Accesso";
+import { Accesso, ConfermaEmail, Disiscrizione, ImpostaPassword, Registrati } from "./pagine/Accesso";
+import Imprese from "./pagine/Imprese";
+import { MieImprese, MieiBandi, MieRichieste, ModuloImpresa, SchedaImpresa } from "./pagine/AreaImpresa";
 import { ContestoUtente } from "./utente";
 
 
@@ -25,7 +27,11 @@ export default function App() {
   const vai = useNavigate();
   useEffect(() => { api.io().then(setUtente).catch(() => setUtente(null)); }, []);
 
+  // Pagine raggiungibili dai link delle email, anche senza accesso.
   if (posizione.pathname === "/imposta-password") return <ImpostaPassword entrato={setUtente} />;
+  if (posizione.pathname === "/conferma-email") return <ConfermaEmail entrato={setUtente} />;
+  if (posizione.pathname === "/disiscrizione") return <Disiscrizione />;
+  if (posizione.pathname === "/registrati" && utente === null) return <Registrati />;
   if (utente === undefined) return null;
   if (utente === null) return <Accesso entrato={setUtente} />;
 
@@ -46,7 +52,13 @@ export default function App() {
           <NavLink to="/doppioni" className={classe}>Doppioni</NavLink>{" · "}
           <NavLink to="/novita" className={classe}>Novità</NavLink>{" · "}
           <NavLink to="/feedback" className={classe}>Feedback</NavLink>{" · "}
+          <NavLink to="/imprese" className={classe}>Imprese</NavLink>{" · "}
           <NavLink to="/utenti" className={classe}>Utenti</NavLink>
+        </nav>}
+        {utente.ruolo === "impresa" && <nav>
+          <NavLink to="/impresa" end className={classe}>I miei bandi</NavLink>{" · "}
+          <NavLink to="/impresa/imprese" className={classe}>Le mie imprese</NavLink>{" · "}
+          <NavLink to="/impresa/richieste" className={classe}>Richieste di supporto</NavLink>
         </nav>}
         {utente.ruolo === "revisore" && <nav>
           <NavLink to="/catalogo" className={classe}>Catalogo</NavLink>{" · "}
@@ -76,6 +88,12 @@ export default function App() {
             <Route path="/novita/:chiave" element={<Settimana />} />
             <Route path="/utenti" element={<Utenti />} />
             <Route path="/feedback" element={<Feedback />} />
+            <Route path="/imprese" element={<Imprese />} />
+            <Route path="/impresa" element={<MieiBandi />} />
+            <Route path="/impresa/imprese" element={<MieImprese />} />
+            <Route path="/impresa/imprese/:id" element={<ModuloImpresa />} />
+            <Route path="/impresa/bandi/:id" element={<SchedaImpresa />} />
+            <Route path="/impresa/richieste" element={<MieRichieste />} />
           </Routes>
         ) : utente.ruolo === "revisore" ? (
           <Routes>
@@ -85,10 +103,14 @@ export default function App() {
             <Route path="*" element={<Navigate to="/catalogo" replace />} />
           </Routes>
         ) : (
-          <>
-            <h1>Area impresa</h1>
-            <p>L'area per le imprese è in preparazione: a breve qui troverai i bandi adatti alla tua impresa.</p>
-          </>
+          <Routes>
+            <Route path="/impresa" element={<MieiBandi />} />
+            <Route path="/impresa/imprese" element={<MieImprese />} />
+            <Route path="/impresa/imprese/:id" element={<ModuloImpresa />} />
+            <Route path="/impresa/bandi/:id" element={<SchedaImpresa />} />
+            <Route path="/impresa/richieste" element={<MieRichieste />} />
+            <Route path="*" element={<Navigate to="/impresa" replace />} />
+          </Routes>
         )}
       </main>
     </ContestoUtente.Provider>

@@ -25,6 +25,9 @@ REVISORE_PUO = {
     ("GET", "/api/allegati/{allegato_id}/file"),
 }
 
+# Rotte che ogni utente entrato puo' usare (elenchi dei valori ammessi: servono al modulo dell'impresa).
+TUTTI_POSSONO = {("GET", "/api/valori")}
+
 router = APIRouter(prefix="/api")
 
 
@@ -62,7 +65,8 @@ def controlla_plancia(request: Request, utente: dict = Depends(utente_corrente))
     if utente["ruolo"] == "admin":
         return utente
     rotta = request.scope.get("route")
-    if utente["ruolo"] == "revisore" and rotta is not None and (request.method, rotta.path) in REVISORE_PUO:
+    chiave = (request.method, rotta.path) if rotta is not None else None
+    if chiave in TUTTI_POSSONO or (utente["ruolo"] == "revisore" and chiave in REVISORE_PUO):
         return utente
     raise HTTPException(status_code=403, detail="Il tuo profilo non permette questa operazione.")
 
@@ -151,6 +155,56 @@ def nuova_password(dati: NuovaPassword, response: Response, request: Request) ->
     response.set_cookie(COOKIE, codice, max_age=int(u.DURATA_SESSIONE.total_seconds()), httponly=True,
                         secure=_cookie_sicuro(), samesite="lax", path="/")
     return pubblico
+
+
+class Registrazione(BaseModel):
+    email: str
+    password: str
+    nome: str | None = None
+
+
+class Conferma(BaseModel):
+    codice: str
+
+
+def _metti_cookie(response: Response, codice: str) -> None:
+    response.set_cookie(COOKIE, codice, max_age=int(u.DURATA_SESSIONE.total_seconds()), httponly=True,
+                        secure=_cookie_sicuro(), samesite="lax", path="/")
+
+
+@router.get("/accesso/registrazione")
+def stato_registrazione() -> dict:
+    return {"aperta": u.registrazioni_aperte()}
+
+
+@router.post("/accesso/registrazione")
+def registrazione(dati: Registrazione, request: Request) -> dict:
+    """Registrazione di un'impresa: l'accesso arriva dopo la conferma dell'indirizzo (link via email)."""
+    if not u.registrazioni_aperte():
+        raise HTTPException(status_code=403, detail="Le registrazioni non sono ancora aperte: scrivici per avere un invito.")
+    with connetti() as conn:
+        if u.bloccato(conn, dati.email, _ip(request)):
+            raise HTTPException(status_code=429, detail="Troppi tentativi: riprova tra 15 minuti.")
+        try:
+            utente, link = u.registra(conn, dati.email, dati.password, dati.nome)
+        except u.ErroreUtenti as e:
+            raise HTTPException(status_code=422, detail=str(e)) from e
+        conn.commit()
+    u.manda(utente["email"], *u.email_conferma(link))
+    return {"ok": True, "messaggio": "Ti abbiamo mandato un'email: apri il link per confermare l'indirizzo ed entrare."}
+
+
+@router.post("/accesso/conferma")
+def conferma(dati: Conferma, response: Response) -> dict:
+    with connetti() as conn:
+        try:
+            utente = u.usa_link(conn, dati.codice, ("conferma",))
+        except u.ErroreUtenti as e:
+            raise HTTPException(status_code=422, detail=str(e)) from e
+        codice = u.apri_sessione(conn, utente["id"])
+        conn.commit()
+    _metti_cookie(response, codice)
+    return u._pubblico(utente)
 
 
 # --- pagina Utenti (solo admin) ---

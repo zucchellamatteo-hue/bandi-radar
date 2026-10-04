@@ -25,7 +25,9 @@ def accesso_di_prova(ruolo: str = "admin") -> CookieSessione:
     with connetti() as conn:
         applica_migrazioni(conn)
         email = f"prova-{ruolo}-{uuid.uuid4().hex[:8]}@esempio.it"
-        u.crea_utente(conn, email, ruolo, password="password-di-prova")
+        utente = u.crea_utente(conn, email, ruolo, password="password-di-prova")
+        with conn.cursor() as cur:   # come se avesse aperto il link dell'invito
+            cur.execute("UPDATE utenti SET email_confermata_il = now() WHERE id = %s", (utente["id"],))
         _, codice = u.accedi(conn, email, "password-di-prova")
         conn.commit()
     return CookieSessione(codice)

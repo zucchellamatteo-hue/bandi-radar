@@ -16,6 +16,8 @@ from fastapi import Depends, FastAPI, HTTPException
 from fastapi.responses import FileResponse, HTMLResponse, JSONResponse
 
 from app.feedback.api import router as api_feedback
+from app.notifiche.api import router as api_notifiche
+from app.impresa.api import router as api_impresa
 from app.plancia.api import router as api_plancia
 from app.utenti.api import controlla_plancia
 from app.utenti.api import router as api_utenti
@@ -50,6 +52,8 @@ _PAGINA_IN_COSTRUZIONE = """<!doctype html><html lang="it"><head><meta charset="
 
 app.include_router(api_utenti)
 app.include_router(api_feedback)
+app.include_router(api_notifiche)   # email alle imprese (solo admin) e disiscrizione pubblica
+app.include_router(api_impresa)
 app.include_router(api_plancia, dependencies=[Depends(controlla_plancia)])
 
 
