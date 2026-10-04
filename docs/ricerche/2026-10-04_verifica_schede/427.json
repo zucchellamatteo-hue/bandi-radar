@@ -1,0 +1,19 @@
+{"id": 427,
+ "campi": {
+  "stato": {"esito": "giusto", "nota": "stato=chiuso e' corretto: la pagina dice 'la piattaforma dedicata alla presentazione delle domande e' stata chiusa in data 13/03/2026 alle ore 12:00'. Pero' la scheda non lo sa: avvertenze e note dicono 'non e' stato trovato un decreto esplicito di chiusura' e 'lo sportello potrebbe essere gia' chiuso'."},
+  "data_apertura": {"esito": "giusto", "nota": "'a partire dalle ore 12:00 del giorno 28/01/2026'."},
+  "scadenza": {"esito": "impreciso", "nota": "Scheda: null (sportello a esaurimento). Pagina: sportello chiuso il 13/03/2026 ore 12:00; chiuso_il andrebbe valorizzato a 2026-03-13."},
+  "tipo_agevolazione": {"esito": "giusto", "nota": "Contributo a fondo perduto a costo standard (UCS 20,92 euro/ora)."},
+  "contributo_massimo": {"esito": "giusto", "nota": "Nessun massimale per domanda nell'avviso, solo limite de minimis 300.000 euro; null accettabile."},
+  "percentuale": {"esito": "impreciso", "nota": "Scheda: 70. Avviso: UCS 20,92 euro/ora concessa interamente in de minimis; in GBER 70% micro/piccola, 60% media, 50% grande. 70 e' il massimo per dimensione, non una base unica; spiegato nelle avvertenze."},
+  "a_chi_si_rivolge": {"esito": "giusto", "nota": "'tutti i datori di lavoro ovvero le imprese del settore privato, ivi inclusi i lavoratori autonomi ed i liberi professionisti, con sede operativa in Calabria'."},
+  "territorio": {"esito": "giusto", "nota": "CAL, sede operativa alla concessione."},
+  "dimensioni_ammesse": {"esito": "giusto", "nota": "Tutte le dimensioni, incluse le grandi."},
+  "codici_ateco": {"esito": "giusto", "nota": "Nessun elenco ATECO; esclusioni settoriali solo in de minimis (pesca, produzione agricola primaria). vincoli.ateco='vincolo' e' un po' forzato ma coerente con queste esclusioni."},
+  "cosa_finanzia": {"esito": "giusto", "nota": "Formazione continua coerente con S3 e STEP, 16-300 ore."},
+  "sintesi": {"esito": "impreciso", "nota": "Corretta nei contenuti ma usa 'si potevano presentare' senza dire che lo sportello e' chiuso dal 13/03/2026."}
+ },
+ "voto": 3,
+ "davvero_per_imprese_e_aperto": false,
+ "avvertenza_falsa_allegato": true,
+ "nota_generale": "Il sistema oggi lo tratta correttamente: stato=chiuso e per_imprese=si (e' un incentivo per imprese, ma chiuso). La scheda pero' ha due avvertenze sbagliate: dice di aver letto solo la 'Bozza' dell'avviso in pre-informazione, mentre tra i documenti c'e' l'Avviso Pubblico definitivo (Decreto 19677 del 17/12/2025) con allegati; e dice che non risulta una chiusura esplicita, mentre la pagina riporta la chiusura della piattaforma il 13/03/2026 alle 12:00. I contenuti tecnici (UCS 20,92, intensita' GBER, durate) coincidono con l'avviso definitivo."}

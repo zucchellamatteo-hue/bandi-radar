@@ -1,0 +1,19 @@
+{"id": 2657,
+ "campi": {
+  "stato": {"esito": "giusto", "nota": "Bando aperto dal 2/1/2026 al 18/12/2026."},
+  "data_apertura": {"esito": "giusto", "nota": "Regolamento p.2: 'da venerdi' 2 gennaio 2026'."},
+  "scadenza": {"esito": "giusto", "nota": "Regolamento p.2: 'a venerdi' 18 dicembre 2026'. Termini individuali (2 mesi prima della fiera / 30 gg dal contratto) correttamente in avvertenze."},
+  "tipo_agevolazione": {"esito": "giusto", "nota": "Voucher scontato in fattura (p.1)."},
+  "contributo_massimo": {"esito": "giusto", "nota": "6.000 euro per le fiere (nuove fiere/nuove aziende); linee per misura riportate correttamente (5.000/6.000, servizi 520-2.600)."},
+  "percentuale": {"esito": "giusto", "nota": "50% del costo, base senza premialita'."},
+  "a_chi_si_rivolge": {"esito": "giusto", "nota": "MPMI bresciane, consorzi, cooperative, reti di almeno 3 imprese; vincolo di partecipazione agli eventi preparatori Pro Brixia riportato."},
+  "territorio": {"esito": "giusto", "nota": "Sede legale e/o unita' operativa in provincia di Brescia; LOM / BS."},
+  "dimensioni_ammesse": {"esito": "giusto", "nota": "Micro, piccola, media (Allegato I Reg. 651/2014)."},
+  "codici_ateco": {"esito": "giusto", "nota": "Nessun vincolo ATECO: 'imprese bresciane di tutti i settori'."},
+  "cosa_finanzia": {"esito": "giusto", "nota": "Stand base fiere Pro Brixia, Misura 1 e Misura 2 come da p.6; esclusione viaggio/soggiorno riportata."},
+  "sintesi": {"esito": "giusto", "nota": "Completa e fedele: importi, premialita', modalita', date, dotazione."}
+ },
+ "voto": 5,
+ "davvero_per_imprese_e_aperto": true,
+ "avvertenza_falsa_allegato": false,
+ "nota_generale": "Scheda accurata e completa, piu' misure rese come linee separate. Unico appunto: l'avvertenza 'Il Regolamento non dice se il 50% e' calcolato con o senza IVA' e' vera per il Regolamento, ma il modulo principale (presente tra i documenti) chiede il 'costo complessivo sostenuto al netto di IVA': il dato era ricavabile. Aperto oggi (scadenza 18/12/2026), a sportello cronologico con fondo di 650.000 euro; nessuna notizia di esaurimento fondi nei documenti."}

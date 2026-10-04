@@ -1,0 +1,19 @@
+{"id": 1542,
+ "campi": {
+  "stato": {"esito": "giusto", "nota": "Sportello 'a partire dalle ore 9:00 del giorno 14/07/2025 fino a chiusura dell'Avviso per esaurimento della dotazione'; nessun atto di chiusura tra i documenti, istruttorie ancora in corso (disciplinare approvato 14/07/2026)."},
+  "data_apertura": {"esito": "giusto", "nota": "14/07/2025 ore 9:00."},
+  "scadenza": {"esito": "giusto", "nota": "Nessuna data: fino a esaurimento dotazione e/o conclusione del programma."},
+  "tipo_agevolazione": {"esito": "giusto", "nota": "Contributo a fondo perduto in conto impianti."},
+  "contributo_massimo": {"esito": "giusto", "nota": "600.000 euro nel regime in esenzione (300.000 in de minimis), come par. 3.2.2."},
+  "percentuale": {"esito": "impreciso", "nota": "Scheda: 100 come base. Avviso: 100% solo in de minimis entro 300.000 euro; in esenzione 'il 50%... e per le piccole/micro imprese il 60%'. Il campo unico non distingue i due regimi (le linee e l'avvertenza lo fanno)."},
+  "a_chi_si_rivolge": {"esito": "giusto", "nota": "ETS iscritti al RUNTS (imprese sociali, coop sociali e consorzi, ODV, APS ecc.), escluse Reti associative, iscritti a RI/REA da almeno un anno."},
+  "territorio": {"esito": "giusto", "nota": "Strutture ubicate nel territorio della Regione Puglia; PUG."},
+  "dimensioni_ammesse": {"esito": "impreciso", "nota": "Scheda: elenco vuoto e avvertenza 'il bando non dice da solo i limiti dimensionali per il de minimis'. Avviso par. 4.2: tutti i soggetti devono 'a) avere dimensione piccola, media o micro impresa'. Grandi enti esclusi."},
+  "codici_ateco": {"esito": "sbagliato", "nota": "Scheda: 87.30, 87.91, 87.99, 88.10, 88.91, 88.99, 93.21, 93.29 (presi da incentivi.gov.it). Avviso par. 4.2 elenca solo 87.30.00, 87.99.00, 88.10.00, 88.91.00, 88.99.00, 93.29.90 (quest'ultimo solo per ludoteche art. 89): 87.91 e 93.21 non sono ammessi e farebbero abbinare enti non eleggibili."},
+  "cosa_finanzia": {"esito": "giusto", "nota": "Manutenzione straordinaria, restauro, ristrutturazione di edifici esistenti per strutture R.R. 4/2007 e sperimentali, piu' forniture e servizi tecnici; escluse nuove costruzioni."},
+  "sintesi": {"esito": "giusto", "nota": "Chiara su due regimi, massimali, progetto minimo 100.000, sportello e dotazione 5 mln."}
+ },
+ "voto": 3,
+ "davvero_per_imprese_e_aperto": true,
+ "avvertenza_falsa_allegato": true,
+ "nota_generale": "Prima avvertenza falsa: dice che 'il testo dell'Avviso ricevuto si interrompe al paragrafo 4.1' e che requisiti (4.2), spese (9.1) e griglia (7.2.3) sono ricostruiti da FAQ; invece l'Avviso integrale e' presente tre volte (nelle determinazioni 859, 1081 e 1178), con par. 4.2, 7.2.3 e 9.1 leggibili. Proprio per non averlo letto, i codici ATECO sono presi dal catalogo nazionale e ne includono due non ammessi (87.91, 93.21), e manca il requisito di micro/piccola/media dimensione per tutti i proponenti. Il resto e' corretto. Destinatari: enti del Terzo settore e imprese sociali, non imprese ordinarie; sportello ancora aperto secondo la pagina."}

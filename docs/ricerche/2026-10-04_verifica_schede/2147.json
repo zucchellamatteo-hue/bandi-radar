@@ -1,0 +1,19 @@
+{"id": 2147,
+ "campi": {
+  "stato": {"esito": "giusto", "nota": "aperto: pagina 'Presentazione domanda Dal 24/09/2026 Al 23/10/2026'."},
+  "data_apertura": {"esito": "giusto", "nota": "24/09/2026."},
+  "scadenza": {"esito": "giusto", "nota": "23/10/2026 dalla pagina; l'avviso dice '30° (trentesimo) giorno solare successivo' alla pubblicazione sul BUR, segnalato nelle avvertenze."},
+  "tipo_agevolazione": {"esito": "giusto", "nota": ""},
+  "contributo_massimo": {"esito": "giusto", "nota": "102.000 = 85% di 120.000 (reti, triennio); 7.200 per i singoli nelle linee."},
+  "percentuale": {"esito": "impreciso", "nota": "Campo percentuale 85; per la regola della percentuale base andrebbe 80 ('nel limite massimo dell'80% ai soggetti che presentano domanda in forma singola', 85% per le reti). percentuale_base=80 e le linee sono corrette."},
+  "a_chi_si_rivolge": {"esito": "giusto", "nota": "'soggetti pubblici e privati titolari di musei o biblioteche o archivi storici'; pagina: tipo beneficiario 'Enti privati ed Associazioni, Enti Locali, Enti Pubblici'."},
+  "territorio": {"esito": "giusto", "nota": "UMB."},
+  "dimensioni_ammesse": {"esito": "giusto", "nota": "Non pertinente."},
+  "codici_ateco": {"esito": "giusto", "nota": "Nessun vincolo ATECO."},
+  "cosa_finanzia": {"esito": "giusto", "nota": "Progetti triennali con almeno due tipologie di intervento."},
+  "sintesi": {"esito": "giusto", "nota": "Importi 6.000-9.000 e 60.000-120.000, 80%/85%, dotazione 1.485.000: coerenti."}
+ },
+ "voto": 4,
+ "davvero_per_imprese_e_aperto": false,
+ "avvertenza_falsa_allegato": false,
+ "nota_generale": "Il sistema oggi lo tratta correttamente come non per imprese (per_imprese=no): i beneficiari sono titolari di musei, biblioteche e archivi (enti pubblici, enti privati, associazioni), nonostante la legge citata parli di 'imprese culturali e creative'. Bando aperto fino al 23/10/2026 ma non e' un'agevolazione per imprese. Scheda accurata, con bando a piu' misure correttamente scomposto in 4 linee; unico neo il campo percentuale (85 invece della base 80)."}

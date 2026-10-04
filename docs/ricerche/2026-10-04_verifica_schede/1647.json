@@ -1,0 +1,19 @@
+{"id": 1647,
+ "campi": {
+  "stato": {"esito": "giusto", "nota": "Pagina: 'Aperto', stato aggiornato al 28 set 2026; sportello 'fino alla comunicazione di chiusura', nessuna chiusura nei documenti."},
+  "data_apertura": {"esito": "giusto", "nota": "Avviso definitivo e decreto 15164: 'a partire dalle ore 10 del 30 ottobre 2025'."},
+  "scadenza": {"esito": "giusto", "nota": "Nessuna data: sportello fino a comunicazione di chiusura / esaurimento risorse."},
+  "tipo_agevolazione": {"esito": "giusto", "nota": "Contributo in conto capitale / sovvenzione."},
+  "contributo_massimo": {"esito": "giusto", "nota": "Nessun massimale in euro nell'avviso (solo intensita' e spesa min 750.000, max 3 mln per solo sviluppo sperimentale)."},
+  "percentuale": {"esito": "impreciso", "nota": "Scheda: 70 unico. Avviso, tabella art. 14: '70% 60% 50%' per piccole/medie/grandi; il 70% vale solo per le piccole (per_dimensione e sintesi lo riportano correttamente)."},
+  "a_chi_si_rivolge": {"esito": "giusto", "nota": "Imprese di qualsiasi dimensione, singole o in consorzi/societa' consortili/reti con soggettivita' giuridica."},
+  "territorio": {"esito": "giusto", "nota": "Sede operativa o unita' produttiva in Calabria, anche da attivare entro il primo pagamento; CAL."},
+  "dimensioni_ammesse": {"esito": "giusto", "nota": "Tutte le dimensioni."},
+  "codici_ateco": {"esito": "giusto", "nota": "Nessun ATECO richiesto; esclusioni settoriali GBER tradotte in codici (01, 03, 05, 11.01, 12, 24.1, 25.4, 35, H, 92) in modo ragionevole e dichiarato in avvertenza."},
+  "cosa_finanzia": {"esito": "giusto", "nota": "Investimenti produttivi iniziali e sviluppo sperimentale (+ ricerca industriale fino al 30%) in tecnologie critiche STEP, due azioni da 40 mln."},
+  "sintesi": {"esito": "giusto", "nota": "Fedele all'avviso definitivo: due misure, intensita' per dimensione, spesa minima, sportello valutativo, 60 punti minimi."}
+ },
+ "voto": 4,
+ "davvero_per_imprese_e_aperto": true,
+ "avvertenza_falsa_allegato": true,
+ "nota_generale": "Contenuti corretti e coerenti con l'avviso definitivo (che tra i documenti c'e': 'Avviso aiuti per Tecnologie STEP' del 21/10/2025). Ma la prima avvertenza e' falsa: dice che non e' stato possibile leggere il decreto n. 15164 del 23/10/2025, l'aggiornamento del 14/10/2025 e le FAQ di ottobre, che invece sono tutti presenti; anche le graduatorie provvisorie (I-IV elenco, l'ultima del 28/09/2026) dichiarate 'non leggibili' sono tra i documenti. Le fonti citate sono solo la pre-informazione di settembre. Percentuale unica 70 vale solo per le piccole imprese. Bando a due misure reso bene. Sportello ancora aperto secondo la pagina (28/09/2026), con quattro elenchi gia' finanziati: le risorse residue vanno verificate."}

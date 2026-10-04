@@ -41,6 +41,44 @@ Voti: 11 da 5, 7 da 4, 2 da 3, 1 da 2 (media 4,3). **4 bandi su 20 non andrebber
 - **Fondi esauriti / lista d'attesa** non messi in evidenza (1008).
 - **Territorio nei campi strutturati** vuoto quando è solo nel testo (3677).
 
+## Seconda misura, dopo le correzioni (04/10/2026)
+
+Sessione del 03-04/10 (piano `docs/sessioni/2026-10-03_qualita_schede.md`), con gli agenti in sessione (niente API, decisione di Matteo del 03/10):
+
+| Lavoro | Risultato |
+|---|---|
+| Stato sulla pagina ufficiale di oggi (regole senza IA + 119 bandi ricontrollati dagli agenti) | 26 chiusi o esauriti, date mancanti aggiunte; passo settimanale "Ricontrollo dello stato" nel regista (PR #51), 260 pagine già ricontrollate il 04/10 |
+| Bandi non per imprese (regole su tutti i testi, modulistica compresa; 185 candidati letti dagli agenti; verifica) | 34 bandi fuori dal catalogo, scheda nello storico; il preliminare legge anche il modulo di domanda |
+| Fascicoli incompleti | 217 documenti tolti dalla modulistica (PR #52); spazio garantito ai documenti brevi; versioni superate dopo quelle in vigore e testi doppi una volta sola (PR #55) |
+| Istruzioni della scheda (PR #53) | percentuale base, più misure in prima riga, fondi esauriti in evidenza, settori a parole in codici ATECO, regioni negli elenchi |
+| Schede rifatte con le istruzioni nuove | 223 (tutte le 100 aperte del 26/09 comprese), di cui 34 una seconda volta con il fascicolo corretto |
+| Complemento delle altre schede (forma dell'incentivo, ATECO, regioni) | 209 bandi letti; forma dell'incentivo su 408 proponibili su 421 |
+
+**Numeri dei proponibili non chiusi** (scheda sul bando ufficiale, per imprese):
+
+| | 02/10 | 04/10 |
+|---|---|---|
+| Totale | 474 (387 aperti o in arrivo, 97 senza stato) | 421 (380 aperti o in arrivo, 41 senza stato) |
+| Schede del 26/09 (istruzioni vecchie) | 100 | 0 |
+| Con la forma dell'incentivo compilata | 10 | 408 |
+| ATECO "vincolo" senza codici ammessi | 216 | 167, di cui 106 con le esclusioni ("tutti i settori tranne..."): il buco vero è 61 |
+| Con almeno un problema segnalato da `verifica_scheda` | 296 | 214 (i controlli sono più severi dal 03/10) |
+
+**Nuovo campione** (seme `verifica-03-10`, 20 schede proponibili aperte, stesse istruzioni; verdetti in `2026-10-04_verifica_schede/`):
+
+| Esito sui campi | 02/10 | 04/10 |
+|---|---|---|
+| giusto | 87% | **90%** (216 su 240) |
+| impreciso | 12% | 8% |
+| sbagliato | 1% | 1% (2: 180 contributo massimo, 1542 due codici ATECO in più) |
+| Voto medio | 4,3 | 4,35 (10 da 5, 7 da 4, 3 da 3) |
+| Bandi da non proporre | 4 su 20 (2 chiusi, 2 non per imprese) | 3 su 20, nessun chiuso: 804 e 4095 non per imprese (tolti il 04/10), 3055 progetto UE di coordinamento (imprese ammesse in consorzio) |
+| Avvertenze "manca/tagliato" false | 5 su 20 | 5 su 20, ma vere rispetto al fascicolo: causa trovata e corretta (PR #55), 34 schede rifatte |
+
+I 4 bandi sbagliati del 02/10: 427 chiuso, 2138 e 2147 fuori dal catalogo (non per imprese); **3533 resta "aperto"**: la pagina dice "Aperto dal 15/06/2015" e nessun documento parla di chiusura, ma è un avviso del 2015 su fondi 2007-2013. Va chiesto a Puglia Sviluppo.
+
+**Cosa resta.** I bandi molto lunghi (4180, 1276, 4160, 4162, 180) superano i 300.000 caratteri del fascicolo anche dopo le correzioni: le parti in fondo restano tagliate e la scheda lo dice. Il voto di Matteo su 10 schede (campo `qualita`) è ancora a zero ed è l'unico giudizio esperto.
+
 ## Sintesi
 
 Le schede sono affidabili nel contenuto (87% dei campi giusti, 1% sbagliati); il rischio vero è a monte: **1 bando su 5 tra i "proponibili aperti" è chiuso o non è per imprese**. I due errori hanno una causa comune: lo stato e i beneficiari si decidono sul testo del bando, mentre la smentita sta altrove (avviso di chiusura sulla pagina, modulo di domanda). Seconda debolezza: le schede scritte con fascicoli incompleti. Piano di correzione: `docs/sessioni/2026-10-03_qualita_schede.md`.

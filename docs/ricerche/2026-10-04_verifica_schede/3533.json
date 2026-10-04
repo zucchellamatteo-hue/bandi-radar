@@ -1,0 +1,19 @@
+{"id": 3533,
+ "campi": {
+  "stato": {"esito": "impreciso", "nota": "Scheda: aperto. La pagina dice 'A sportello - Aperto - dal 15/06/2015' e nessun documento riporta una chiusura, quindi e' coerente con le fonti. Pero' e' un avviso del 2015 (FSC 2007-2013 / POR Puglia 2014-2020) pubblicato sul portale del POR 2014-2020; l'ultima modifica e' del 04/2022 (Det. 252, BURP n. 41 del 7/4/2022). Lo stato 'Aperto' di un portale di programmazione chiusa puo' essere non aggiornato: va confermato con Puglia Sviluppo prima di proporlo."},
+  "data_apertura": {"esito": "giusto", "nota": "'dal 15/06/2015'."},
+  "scadenza": {"esito": "giusto", "nota": "Nessuna scadenza: sportello fino a esaurimento degli 80 milioni FSC (art. 1)."},
+  "tipo_agevolazione": {"esito": "giusto", "nota": "Contributi in conto impianti a fondo perduto."},
+  "contributo_massimo": {"esito": "impreciso", "nota": "Scheda: 20.000.000. E' il tetto per la R&S prevalentemente di ricerca industriale ('20 milioni di Euro per impresa e per progetto'); gli attivi materiali non hanno questo tetto. Spiegato nelle avvertenze."},
+  "percentuale": {"esito": "impreciso", "nota": "Scheda: 70 (ricerca industriale delle piccole aderenti). Per la grande impresa proponente le basi sono 15%/25% sugli attivi materiali ('15% per le grandi imprese' ... '25% per le grandi imprese'), 50% ricerca industriale, 25% sviluppo sperimentale. Il 70% sopravvaluta l'agevolazione tipica; le linee e la sintesi lo chiariscono."},
+  "a_chi_si_rivolge": {"esito": "giusto", "nota": "Proponente solo grande impresa con due bilanci approvati; PMI solo come aderenti."},
+  "territorio": {"esito": "giusto", "nota": "PUG, unita' locali ubicate o da ubicare in Puglia."},
+  "dimensioni_ammesse": {"esito": "impreciso", "nota": "Scheda: micro, piccola, media, grande senza distinzione. Le PMI (micro comprese) possono solo aderire a un contratto proposto da una grande impresa: per l'abbinamento una PMI da sola non e' ammessa. Lo dicono le avvertenze, non il campo."},
+  "codici_ateco": {"esito": "giusto", "nota": "Sezione C con esclusioni (12, 20.6, 24.1, 24.2, 30.11.02, 33.15) e servizi elencati; 38.21.01 e 38.21.09 aggiunti nel 2022. Avvertenza corretta sulla lista a sei cifre dell'Allegato 1."},
+  "cosa_finanzia": {"esito": "giusto", "nota": "Nuove unita' produttive, ampliamento, diversificazione, cambiamento fondamentale del processo; R&S, innovazione e consulenze per le PMI aderenti."},
+  "sintesi": {"esito": "giusto", "nota": "Intensita' per misura, 5-100 milioni, apporto proprio 25%, 80 milioni FSC: coerenti con l'avviso."}
+ },
+ "voto": 3,
+ "davvero_per_imprese_e_aperto": true,
+ "avvertenza_falsa_allegato": false,
+ "nota_generale": "Il sistema oggi lo tratta come aperto e per imprese (per_imprese=si). Per imprese e' corretto. Aperto e' coerente con la pagina ('Aperto, dal 15/06/2015') e nessun documento riporta una chiusura, ma ho un forte dubbio sulla validita' reale nel 2026: avviso del 2015 su FSC 2007-2013, portale POR 2014-2020, ultima modifica 04/2022. Va verificato con la Regione o con Puglia Sviluppo (possibile sostituzione con avvisi PR Puglia 2021-2027). Scheda tecnicamente buona e bando a piu' misure ben scomposto in linee; i campi percentuale (70) e contributo_massimo (20 mln) prendono il valore piu' alto tra le misure e non quello della grande impresa proponente."}

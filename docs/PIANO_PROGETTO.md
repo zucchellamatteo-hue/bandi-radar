@@ -366,6 +366,14 @@ Alcune fasi si sovrappongono di una settimana, apposta. Nella **Fase 0** e nella
 | Schede e costi | Una scheda con l'API costa da pochi centesimi a 0,43 $ (misurato, Batch API) per i bandi lunghi, che sono più della metà. Finché il servizio non è venduto **le schede si scrivono nelle sessioni di Claude Code** (strumenti in `strumenti/sessione/`); l'API fa solo smistamento, doppioni e controlli preliminari. Quando il servizio sarà venduto: `IA_SCHEDE_API=1` e tetto adeguato (stima 40-80 $ al mese). Testo letto per la scheda: fino a 300.000 caratteri (qualità piena). |
 | Robustezza | Dall'analisi del 02/10 (`docs/ricerche/2026-10-02_analisi_struttura.md`): blocchi nel database tra i passi, test automatici su GitHub a ogni pull request, strumenti di sessione nel repository. |
 
+**Decise il 03-04/10/2026 (qualità delle schede):**
+
+| Tema | Decisione |
+|---|---|
+| Stato e beneficiari | Ricontrollo settimanale senza IA della pagina ufficiale dei proponibili (passo del regista); i bandi non per imprese escono dal catalogo anche con la scheda; il controllo preliminare legge anche il modulo di domanda. |
+| Scheda | Percentuale = base; più misure nella prima riga della sintesi; fondi esauriti in evidenza; settori a parole tradotti in ATECO con avvertenza; regioni negli elenchi anche se solo nel testo. |
+| Spesa | Le schede da rifare restano in sessione anche quando il limite dell'abbonamento ferma gli agenti: niente Batch API oltre il tetto (Matteo, 03/10). |
+
 **Ancora aperti:**
 
 1. **Struttura delle anagrafiche in Postgres**: schema ricevuto il 25/09 (`docs/ricerche/2026-09-25_schema_anagrafiche_leadgen.md`). Copre bene ATECO e fatturato; mancano data di costituzione, totale di bilancio, ULA, requisiti speciali. È un archivio di prospect: serve sapere dove stanno i clienti. Seconda richiesta pronta in `docs/RICHIESTA_SCHEMA_ANAGRAFICHE.md`.

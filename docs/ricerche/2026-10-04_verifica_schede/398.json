@@ -1,0 +1,19 @@
+{"id": 398,
+ "campi": {
+  "stato": {"esito": "giusto", "nota": "Pagina: 'Aperto - Scade 10/11/2026 salvo chiusura anticipata per esaurimento risorse'."},
+  "data_apertura": {"esito": "giusto", "nota": "'a partire dalle ore 12.00 dell'8 luglio 2026'."},
+  "scadenza": {"esito": "giusto", "nota": "'sino alle ore 23.59 del 10 novembre 2026'."},
+  "tipo_agevolazione": {"esito": "giusto", "nota": ""},
+  "contributo_massimo": {"esito": "giusto", "nota": "5.000 euro (2.000 per sola consulenza/formazione), premialita' fisse di 300 euro descritte."},
+  "percentuale": {"esito": "giusto", "nota": "'pari al 60% delle spese sostenute e ritenute ammissibili'."},
+  "a_chi_si_rivolge": {"esito": "giusto", "nota": "MPMI, cooperative e consorzi, sede legale e/o unita' operativa a Livorno o Grosseto (art. 3)."},
+  "territorio": {"esito": "giusto", "nota": "TOS, province LI e GR."},
+  "dimensioni_ammesse": {"esito": "giusto", "nota": ""},
+  "codici_ateco": {"esito": "giusto", "nota": "Nessun vincolo ATECO ('di tutti i settori economici')."},
+  "cosa_finanzia": {"esito": "giusto", "nota": "Tecnologie Scheda A, consulenza e formazione, spese gia' sostenute dal 1/1/2026."},
+  "sintesi": {"esito": "giusto", "nota": "Completa: 60%, 5.000/2.000, spesa minima 2.000, sportello, 230.000 euro dopo rifinanziamento."}
+ },
+ "voto": 5,
+ "davvero_per_imprese_e_aperto": true,
+ "avvertenza_falsa_allegato": false,
+ "nota_generale": "Scheda accurata e ben aggiornata al rifinanziamento del 14/09/2026. Fondi in evidenza nelle avvertenze: risorse disponibili 70.524,21 euro al 15/09/2026 (scheda di avanzamento). Sportello aperto fino al 10/11/2026 salvo esaurimento."}

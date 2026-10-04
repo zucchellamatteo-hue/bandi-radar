@@ -1,0 +1,20 @@
+{"id": 4095,
+ "campi": {
+  "stato": {"esito": "giusto", "nota": "Pubblicato BURC 52 del 30/09/2026, scadenza 30/10/2026: aperto."},
+  "data_apertura": {"esito": "giusto", "nota": "30/09/2026, data di pubblicazione sul BURC."},
+  "scadenza": {"esito": "giusto", "nota": "Avviso: 'ore 23:59 del trentesimo giorno' dalla pubblicazione; pagina: 30 ottobre 2026."},
+  "tipo_agevolazione": {"esito": "giusto", "nota": ""},
+  "contributo_massimo": {"esito": "giusto", "nota": "60.000 euro per progetto."},
+  "percentuale": {"esito": "giusto", "nota": "100% delle spese ammissibili (de minimis)."},
+  "a_chi_si_rivolge": {"esito": "giusto", "nota": "Enti senza scopo di lucro iscritti al RUNTS, assegnatari di bene confiscato in Campania."},
+  "territorio": {"esito": "giusto", "nota": "Campania (CAM)."},
+  "dimensioni_ammesse": {"esito": "giusto", "nota": "Nessun vincolo dimensionale: elenco vuoto coerente."},
+  "codici_ateco": {"esito": "giusto", "nota": "Nessun elenco; solo settori ammessi dal de minimis per chi svolge attivita' d'impresa (segnalato)."},
+  "cosa_finanzia": {"esito": "giusto", "nota": "Tre linee di intervento sul bene confiscato, durata 12 mesi."},
+  "sintesi": {"esito": "giusto", "nota": ""}
+ },
+ "voto": 4,
+ "davvero_per_imprese_e_aperto": false,
+ "avvertenza_falsa_allegato": false,
+ "nota_generale": "Scheda accurata, ma il bando e' riservato a enti del Terzo Settore senza scopo di lucro iscritti al RUNTS e assegnatari di un bene confiscato (art. 4-5 dell'avviso): le imprese ordinarie non possono partecipare. per_imprese='si' e' quindi discutibile; la scheda lo dice chiaramente in avvertenza. Aperto fino al 30/10/2026."
+}
