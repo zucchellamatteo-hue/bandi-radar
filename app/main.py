@@ -12,14 +12,16 @@ import os
 from pathlib import Path
 
 import psycopg
-from fastapi import Depends, FastAPI, HTTPException
+from fastapi import Depends, FastAPI, HTTPException, Request
 from fastapi.responses import FileResponse, HTMLResponse, JSONResponse
 
 from app.feedback.api import router as api_feedback
 from app.notifiche.api import router as api_notifiche
 from app.impresa.api import router as api_impresa
 from app.plancia.api import router as api_plancia
-from app.utenti.api import controlla_plancia
+from app import pubblico
+from app.db.connessione import connetti
+from app.utenti.api import COOKIE, controlla_plancia
 from app.utenti.api import router as api_utenti
 
 app = FastAPI(title="Bandi Radar", docs_url=None, redoc_url=None, openapi_url=None)
@@ -57,11 +59,33 @@ app.include_router(api_impresa)
 app.include_router(api_plancia, dependencies=[Depends(controlla_plancia)])
 
 
+def _presentazione() -> HTMLResponse:
+    with connetti() as conn:
+        return HTMLResponse(pubblico.presentazione(conn))
+
+
+@app.get("/presentazione", response_class=HTMLResponse)
+def presentazione():
+    """La pagina pubblica (app/pubblico): sempre visibile qui, anche quando non e' ancora accesa su "/"."""
+    return _presentazione()
+
+
+@app.get("/termini", response_class=HTMLResponse)
+@app.get("/privacy", response_class=HTMLResponse)
+@app.get("/cookie", response_class=HTMLResponse)
+@app.get("/condizioni-supporto", response_class=HTMLResponse)
+def testo_legale(request: Request):
+    return HTMLResponse(pubblico.legale(request.url.path.strip("/")))
+
+
 @app.get("/{percorso:path}", response_class=HTMLResponse)
-def plancia(percorso: str):
-    """Serve la plancia: i file costruiti da Vite; qualunque altro percorso torna index.html (app a pagina singola)."""
+def plancia(percorso: str, request: Request):
+    """Serve la plancia: i file costruiti da Vite; qualunque altro percorso torna index.html (app a pagina singola).
+    Con PAGINA_PUBBLICA=1 chi arriva su "/" senza aver fatto l'accesso vede la presentazione."""
     if percorso.startswith("api/"):
         raise HTTPException(status_code=404, detail="non trovato")
+    if percorso == "" and pubblico.pubblica() and not request.cookies.get(COOKIE):
+        return _presentazione()
     if CARTELLA_PLANCIA.is_dir():
         candidato = (CARTELLA_PLANCIA / percorso).resolve() if percorso else None
         if candidato and candidato.is_file() and CARTELLA_PLANCIA in candidato.parents:
