@@ -48,15 +48,11 @@ def test_soglia_silenzio_dipende_dalla_frequenza():
 def test_api_plancia_risponde():
     from fastapi.testclient import TestClient
 
-    os.environ.setdefault("BASIC_AUTH_USER", "prova")
-    os.environ.setdefault("BASIC_AUTH_PASSWORD", "prova")
-    from app.db.connessione import connetti
-    from app.db.migrazioni import applica_migrazioni
+    from conftest import accesso_di_prova
+
     from app.main import app
 
-    with connetti() as conn:
-        applica_migrazioni(conn)
-    auth = (os.environ["BASIC_AUTH_USER"], os.environ["BASIC_AUTH_PASSWORD"])
+    auth = accesso_di_prova()
     c = TestClient(app)
     assert c.get("/api/fonti").status_code == 401
     assert c.get("/api/riepilogo", auth=auth).status_code == 200
@@ -108,18 +104,27 @@ class _ConnessioneFinta:
 
 @pytest.fixture
 def client_plancia(monkeypatch, tmp_path):
+    from fastapi import HTTPException, Request
     from fastapi.testclient import TestClient
 
     from app.main import app
+    from app.utenti.api import utente_corrente
+    from conftest import CookieSessione
 
-    monkeypatch.setenv("BASIC_AUTH_USER", "prova")
-    monkeypatch.setenv("BASIC_AUTH_PASSWORD", "segreta")
+    # Senza database: il cookie "admin-finto" vale come accesso di un amministratore, nessun cookie = 401.
+    def utente_finto(request: Request) -> dict:
+        if request.cookies.get("br_sessione") != "admin-finto":
+            raise HTTPException(status_code=401, detail="Accesso richiesto.")
+        return {"id": 1, "email": "admin@esempio.it", "nome": None, "ruolo": "admin"}
+
+    app.dependency_overrides[utente_corrente] = utente_finto
     monkeypatch.setenv("ALLEGATI_CARTELLA", str(tmp_path / "allegati"))
     (tmp_path / "allegati" / "7").mkdir(parents=True)
     (tmp_path / "allegati" / "7" / "abcdef123456_bando.pdf").write_bytes(b"%PDF-1.4 finto")
     (tmp_path / "allegati" / "7" / "abcdef123456_faq.html").write_text("<script>alert(1)</script>FAQ")
     (tmp_path / "fuori.txt").write_text("segreto")
-    return TestClient(app), ("prova", "segreta")
+    yield TestClient(app), CookieSessione("admin-finto")
+    app.dependency_overrides.pop(utente_corrente, None)
 
 
 def _db(monkeypatch, *righe):

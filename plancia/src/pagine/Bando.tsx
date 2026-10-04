@@ -2,12 +2,14 @@ import { ReactNode, useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { api, Bando as TipoBando, FormaIncentivo as TipoForma, data, dimensione, euro, nome, NOMI_CATEGORIA, NOMI_DECISO_DA, NOMI_RUOLO } from "../api";
 import { Importo } from "./Catalogo";
+import { eAdmin, useUtente } from "../utente";
 
 // La scheda completa del bando (docs/SCHEDA_BANDO.md), i documenti, gli annunci che ne parlano e le versioni.
 export default function Bando() {
   const { id } = useParams();
   const [b, setB] = useState<TipoBando | null>(null);
   const [errore, setErrore] = useState<string | null>(null);
+  const admin = eAdmin(useUtente());
   useEffect(() => { if (id) api.bando(id).then(setB).catch((e) => setErrore(String(e))); }, [id]);
   if (errore) return <div className="allarme">{errore}</div>;
   if (!b) return <div className="caricamento">Caricamento…</div>;
@@ -106,7 +108,7 @@ export default function Bando() {
         <thead><tr><th>Annuncio</th><th>Ruolo</th><th className="nascondi-mobile">Fonte</th><th className="nascondi-mobile">Trovato</th></tr></thead>
         <tbody>{b.annunci.map((a) => (
           <tr key={a.id}>
-            <td><Link to={`/annunci/${a.id}`}>{a.titolo}</Link> <a href={a.url} target="_blank" rel="noreferrer" className="piccolo">originale ↗</a></td>
+            <td>{admin ? <Link to={`/annunci/${a.id}`}>{a.titolo}</Link> : a.titolo} <a href={a.url} target="_blank" rel="noreferrer" className="piccolo">originale ↗</a></td>
             <td>{a.ruolo ? NOMI_RUOLO[a.ruolo] : "–"}
               <div className="piccolo">{a.collegato_da ? `da ${NOMI_DECISO_DA[a.collegato_da] || a.collegato_da}` : ""}{a.collegamento_motivo ? `: ${a.collegamento_motivo}` : ""}</div></td>
             <td className="nascondi-mobile piccolo">{a.fonte}</td>

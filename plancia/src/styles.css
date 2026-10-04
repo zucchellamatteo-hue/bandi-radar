@@ -98,3 +98,14 @@ td.stato.vincolo { color: #1f5fbf; } td.stato.nessun_vincolo { color: #1e6b3e; }
 .forma-descrizione { font-size: 1.05rem; font-weight: 600; margin: .2rem 0 .8rem; }
 .tabella-forma td { min-width: 9rem; }
 .forma-percentuale { font-size: 1.15rem; font-weight: 750; color: var(--blu-scuro); }
+
+/* Accesso (05/10): pagina di login e scelta della password, nome di chi e' entrato nella barra. */
+.accesso { max-width: 380px; margin: 10vh auto; background: var(--carta); border: 1px solid var(--bordo); border-top: 4px solid var(--accento); border-radius: 12px; box-shadow: var(--ombra); padding: 2rem; }
+.accesso .logo-accesso { font-weight: 800; font-size: 1.6rem; color: var(--blu-scuro); }
+.accesso form { display: flex; flex-direction: column; gap: .9rem; margin: 1.2rem 0 .6rem; }
+.accesso label { display: flex; flex-direction: column; gap: .3rem; font-weight: 600; font-size: .88rem; color: var(--grigio); }
+.accesso input { padding: .55rem .7rem; border: 1px solid var(--bordo); border-radius: 6px; font: inherit; }
+button.primario { background: var(--accento); color: #fff; border-color: var(--accento); padding: .55rem 1rem; font-size: .95rem; font-weight: 600; }
+button.primario:hover { background: var(--blu-scuro); color: #fff; }
+header.barra .chi-sono { margin-left: auto; white-space: nowrap; font-size: .88rem; }
+code.link-invito { word-break: break-all; background: #fff; padding: .1rem .3rem; border-radius: 4px; }

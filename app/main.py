@@ -2,25 +2,25 @@
 
 Espone:
 - GET /health  : stato dell'applicazione e del database, senza autenticazione (usato dal healthcheck)
-- /api/...     : API della plancia (app/plancia/api.py), protetta da autenticazione base
-- /            : la plancia (React, cartella plancia/dist costruita nel Dockerfile), protetta da autenticazione base
+- /api/accesso : login con email e password, cookie di sessione (app/utenti/api.py, 05/10/2026)
+- /api/...     : API della plancia (app/plancia/api.py), solo per chi ha fatto l'accesso, secondo il ruolo
+- /            : la plancia (React, cartella plancia/dist costruita nel Dockerfile). I file della pagina sono pubblici
+                 (contengono solo il programma, la pagina di accesso compresa); i dati arrivano solo dall'API protetta.
 """
 
 import os
-import secrets
 from pathlib import Path
 
 import psycopg
-from fastapi import Depends, FastAPI, HTTPException, status
+from fastapi import Depends, FastAPI, HTTPException
 from fastapi.responses import FileResponse, HTMLResponse, JSONResponse
-from fastapi.security import HTTPBasic, HTTPBasicCredentials
 
 from app.plancia.api import router as api_plancia
+from app.utenti.api import controlla_plancia
+from app.utenti.api import router as api_utenti
 
 app = FastAPI(title="Bandi Radar", docs_url=None, redoc_url=None, openapi_url=None)
 CARTELLA_PLANCIA = Path(__file__).resolve().parents[1] / "plancia" / "dist"
-
-_basic = HTTPBasic(realm="Bandi Radar")
 
 
 def _check_database() -> str | None:
@@ -36,29 +36,6 @@ def _check_database() -> str | None:
     return None
 
 
-def require_user(credentials: HTTPBasicCredentials = Depends(_basic)) -> str:
-    """Autenticazione base: utente e password letti dalle variabili d'ambiente.
-
-    Se le variabili mancano, l'accesso viene negato: mai una pagina aperta a tutti per sbaglio.
-    """
-    expected_user = os.environ.get("BASIC_AUTH_USER", "")
-    expected_password = os.environ.get("BASIC_AUTH_PASSWORD", "")
-    if not expected_user or not expected_password:
-        raise HTTPException(
-            status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
-            detail="Autenticazione non configurata (BASIC_AUTH_USER / BASIC_AUTH_PASSWORD).",
-        )
-    user_ok = secrets.compare_digest(credentials.username.encode(), expected_user.encode())
-    password_ok = secrets.compare_digest(credentials.password.encode(), expected_password.encode())
-    if not (user_ok and password_ok):
-        raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Credenziali non valide.",
-            headers={"WWW-Authenticate": 'Basic realm="Bandi Radar"'},
-        )
-    return credentials.username
-
-
 @app.get("/health")
 def health() -> JSONResponse:
     db_error = _check_database()
@@ -70,11 +47,12 @@ _PAGINA_IN_COSTRUZIONE = """<!doctype html><html lang="it"><head><meta charset="
 <title>Bandi Radar</title></head><body style="font-family:system-ui;padding:2rem"><h1>Bandi Radar</h1>
 <p>La plancia non e' stata costruita in questa immagine (manca plancia/dist).</p></body></html>"""
 
-app.include_router(api_plancia, dependencies=[Depends(require_user)])
+app.include_router(api_utenti)
+app.include_router(api_plancia, dependencies=[Depends(controlla_plancia)])
 
 
 @app.get("/{percorso:path}", response_class=HTMLResponse)
-def plancia(percorso: str, _: str = Depends(require_user)):
+def plancia(percorso: str):
     """Serve la plancia: i file costruiti da Vite; qualunque altro percorso torna index.html (app a pagina singola)."""
     if percorso.startswith("api/"):
         raise HTTPException(status_code=404, detail="non trovato")
