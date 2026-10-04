@@ -1,16 +1,17 @@
 import { Fragment, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { api, data, EmailImpresa, ImpresaIscritta, NOMI_STATO_RICHIESTA, RichiestaSupporto, StatoRichiesta } from "../api";
+import { api, data, EmailImpresa, ImpresaIscritta, NOMI_STATO_ABBONAMENTO, NOMI_STATO_RICHIESTA, RichiestaSupporto, RigaAbbonamento, StatoRichiesta } from "../api";
 
 // Pagina Imprese (solo amministratori): richieste di supporto, email settimanali da approvare, imprese iscritte.
 export default function Imprese() {
   const [richieste, setRichieste] = useState<RichiestaSupporto[]>([]);
   const [email, setEmail] = useState<EmailImpresa[]>([]);
   const [imprese, setImprese] = useState<ImpresaIscritta[]>([]);
+  const [abbonamenti, setAbbonamenti] = useState<RigaAbbonamento[]>([]);
   const [errore, setErrore] = useState<string | null>(null);
   const [avviso, setAvviso] = useState<string | null>(null);
   const [aperta, setAperta] = useState<number | null>(null);
-  const ricarica = () => Promise.all([api.richieste().then(setRichieste), api.emailImprese().then(setEmail), api.impreseIscritte().then(setImprese)])
+  const ricarica = () => Promise.all([api.richieste().then(setRichieste), api.emailImprese().then(setEmail), api.impreseIscritte().then(setImprese), api.abbonamenti().then(setAbbonamenti)])
     .catch((e) => setErrore(String(e.message || e)));
   useEffect(() => { ricarica(); }, []);
   const azione = async (f: () => Promise<unknown>, testo?: string) => {
@@ -59,6 +60,24 @@ export default function Imprese() {
         <table><tbody>{decise.map((e) => (
           <tr key={e.id}><td>{e.impresa_nome}</td><td>{e.oggetto}</td><td>{e.stato}{e.errore ? `: ${e.errore}` : ""}</td>
             <td className="piccolo">{e.decisa_da} {data(e.decisa_il, true)}</td></tr>))}</tbody></table></details>}
+
+      <h2>Abbonamenti</h2>
+      <p className="piccolo">Prova gratuita, abbonamenti pagati con Stripe e gratuiti (imprese amiche). Contano solo quando gli abbonamenti
+        sono accesi (ABBONAMENTI_ATTIVI=1); prima entrano tutti.</p>
+      {abbonamenti.length > 0 && (
+        <table>
+          <thead><tr><th>Utente</th><th>Stato</th><th>Imprese</th><th>Scadenze</th><th></th></tr></thead>
+          <tbody>{abbonamenti.map((a) => (
+            <tr key={a.utente_id}><td>{a.nome || ""} {a.email}</td>
+              <td>{a.stato ? NOMI_STATO_ABBONAMENTO[a.stato] || a.stato : "non ancora entrato"}{a.piano ? ` (${a.piano})` : ""}{a.nota && <div className="piccolo">{a.nota}</div>}</td>
+              <td>{a.imprese}</td>
+              <td className="piccolo">{a.stato === "prova" && a.prova_fino_al ? `prova fino al ${data(a.prova_fino_al)}` : ""}
+                {a.fine_impegno ? ` impegno fino al ${data(a.fine_impegno)}` : ""}</td>
+              <td>{a.stato !== "gratuito" && <button onClick={() => azione(() => api.modificaAbbonamento(a.utente_id, { stato: "gratuito", nota: "gratuito impostato da Matteo" }))}>Rendi gratuito</button>}{" "}
+                {(a.stato === "prova" || !a.stato) && <button onClick={() => azione(() => api.modificaAbbonamento(a.utente_id, { giorni_prova_in_piu: 14 }))}>+14 giorni di prova</button>}
+                {a.stato === "gratuito" && <button onClick={() => azione(() => api.modificaAbbonamento(a.utente_id, { stato: "prova" }))}>Togli gratuito</button>}</td>
+            </tr>))}</tbody>
+        </table>)}
 
       <h2>Imprese iscritte ({imprese.length})</h2>
       <p className="piccolo">Per invitare un'impresa: pagina <Link to="/utenti">Utenti</Link>, ruolo "impresa". L'impresa poi descrive da sola

@@ -17,7 +17,7 @@ import Utenti from "./pagine/Utenti";
 import Feedback from "./pagine/Feedback";
 import { Accesso, ConfermaEmail, Disiscrizione, ImpostaPassword, Registrati } from "./pagine/Accesso";
 import Imprese from "./pagine/Imprese";
-import { MieImprese, MieiBandi, MieRichieste, ModuloImpresa, SchedaImpresa } from "./pagine/AreaImpresa";
+import { Abbonamento, MieImprese, MieiBandi, MieRichieste, ModuloImpresa, SchedaImpresa } from "./pagine/AreaImpresa";
 import { ContestoUtente } from "./utente";
 
 
@@ -58,7 +58,8 @@ export default function App() {
         {utente.ruolo === "impresa" && <nav>
           <NavLink to="/impresa" end className={classe}>I miei bandi</NavLink>{" · "}
           <NavLink to="/impresa/imprese" className={classe}>Le mie imprese</NavLink>{" · "}
-          <NavLink to="/impresa/richieste" className={classe}>Richieste di supporto</NavLink>
+          <NavLink to="/impresa/richieste" className={classe}>Richieste di supporto</NavLink>{" · "}
+          <NavLink to="/impresa/abbonamento" className={classe}>Abbonamento</NavLink>
         </nav>}
         {utente.ruolo === "revisore" && <nav>
           <NavLink to="/catalogo" className={classe}>Catalogo</NavLink>{" · "}
@@ -96,6 +97,7 @@ export default function App() {
             <Route path="/impresa/imprese/:id" element={<ModuloImpresa />} />
             <Route path="/impresa/bandi/:id" element={<SchedaImpresa />} />
             <Route path="/impresa/richieste" element={<MieRichieste />} />
+            <Route path="/impresa/abbonamento" element={<Abbonamento />} />
           </Routes>
         ) : utente.ruolo === "revisore" ? (
           <Routes>
@@ -111,6 +113,7 @@ export default function App() {
             <Route path="/impresa/imprese/:id" element={<ModuloImpresa />} />
             <Route path="/impresa/bandi/:id" element={<SchedaImpresa />} />
             <Route path="/impresa/richieste" element={<MieRichieste />} />
+            <Route path="/impresa/abbonamento" element={<Abbonamento />} />
             <Route path="*" element={<Navigate to="/impresa" replace />} />
           </Routes>
         )}

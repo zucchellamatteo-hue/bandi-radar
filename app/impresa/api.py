@@ -60,6 +60,7 @@ def nuova_impresa(dati: DatiImpresa, utente: dict = Depends(utente_impresa)) -> 
         except imp.ErroreImpresa as e:
             raise _errore(e) from e
         conn.commit()
+    _sincronizza(utente["id"])
     return r
 
 
@@ -71,6 +72,7 @@ def modifica_impresa(impresa_id: int, dati: DatiImpresa, utente: dict = Depends(
         except imp.ErroreImpresa as e:
             raise _errore(e) from e
         conn.commit()
+    _sincronizza(utente["id"])
     return r
 
 
@@ -82,21 +84,48 @@ def cancella_impresa(impresa_id: int, utente: dict = Depends(utente_impresa)) ->
         except imp.ErroreImpresa as e:
             raise _errore(e) from e
         conn.commit()
+    _sincronizza(utente["id"])
     return {"cancellata": True}
+
+
+def _sincronizza(utente_id: int) -> None:
+    """Imprese e sedi in piu' nell'abbonamento Stripe; un errore di Stripe non deve fermare il salvataggio."""
+    from app import abbonamenti
+
+    try:
+        with connetti() as conn:
+            abbonamenti.sincronizza_quantita(conn, utente_id)
+            conn.commit()
+    except Exception as exc:  # noqa: BLE001
+        print(f"[abbonamento dell'utente {utente_id} non aggiornato: {exc}]")
+
+
+def _puo_vedere(conn, utente: dict) -> bool:
+    from app import abbonamenti
+
+    r = abbonamenti.puo_vedere_i_bandi(conn, utente)
+    conn.commit()
+    return r
 
 
 @router.get("/impresa/imprese/{impresa_id}/bandi")
 def bandi_impresa(impresa_id: int, utente: dict = Depends(utente_impresa)) -> dict:
+    """Con gli abbonamenti accesi, chi non ha un abbonamento (o la prova) vede quanti bandi ci sono, non quali."""
     with connetti() as conn:
         try:
-            return imp.bandi_dell_impresa(conn, utente["id"], impresa_id)
+            r = imp.bandi_dell_impresa(conn, utente["id"], impresa_id)
         except imp.ErroreImpresa as e:
             raise _errore(e) from e
+        if not _puo_vedere(conn, utente):
+            return {**r, "bandi": [], "bloccato": True}
+        return r
 
 
 @router.get("/impresa/bandi/{bando_id}")
 def scheda(bando_id: int, utente: dict = Depends(utente_impresa)) -> dict:
     with connetti() as conn:
+        if not _puo_vedere(conn, utente):
+            raise HTTPException(status_code=402, detail="La prova gratuita e' finita: abbonati per vedere le schede.")
         try:
             return imp.scheda_ridotta(conn, utente["id"], bando_id)
         except imp.ErroreImpresa as e:

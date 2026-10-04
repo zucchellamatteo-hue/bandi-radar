@@ -53,6 +53,21 @@ export interface ImpresaIscritta {
   attivo: boolean; sedi: number; richieste: number;
 }
 
+// Abbonamenti (app/abbonamenti).
+export interface Abbonamento {
+  stato: "prova" | "attivo" | "in_ritardo" | "disdetto" | "gratuito"; piano: "mensile" | "annuale" | null; accesso: boolean;
+  attivi: boolean; giorni_prova: number | null; prova_fino_al: string | null; fine_impegno: string | null; fine_periodo: string | null;
+  imprese_extra: number; sedi_extra: number; prezzi: { mensile: number; annuale: number; impresa: number; sede: number };
+  iva_inclusa: boolean; stripe: boolean; portale: boolean;
+}
+export interface RigaAbbonamento {
+  utente_id: number; email: string; nome: string | null; stato: string | null; piano: string | null; prova_fino_al: string | null;
+  fine_impegno: string | null; fine_periodo: string | null; imprese_extra: number | null; sedi_extra: number | null; nota: string | null; imprese: number;
+}
+export const NOMI_STATO_ABBONAMENTO: Record<string, string> = {
+  prova: "in prova", attivo: "attivo", in_ritardo: "pagamento in ritardo", disdetto: "disdetto", gratuito: "gratuito",
+};
+
 export const NOMI_RUOLO_UTENTE: Record<RuoloUtente, string> = { admin: "amministratore", revisore: "revisore", impresa: "impresa" };
 
 export type Colore = "verde" | "giallo" | "rosso" | "pausa";
@@ -263,7 +278,7 @@ export const api = {
     chiama<Impresa>(`/api/impresa/imprese/${id}`, { method: "PUT", body: JSON.stringify(corpo) }),
   cancellaImpresa: (id: number) => chiama(`/api/impresa/imprese/${id}`, { method: "DELETE" }),
   bandiImpresa: (id: number) =>
-    chiama<{ impresa: { id: number; nome: string }; conteggi: { compatibile: number; da_verificare: number }; bandi: BandoRiga[] }>(`/api/impresa/imprese/${id}/bandi`),
+    chiama<{ impresa: { id: number; nome: string }; conteggi: { compatibile: number; da_verificare: number }; bandi: BandoRiga[]; bloccato?: boolean }>(`/api/impresa/imprese/${id}/bandi`),
   schedaImpresa: (bandoId: string) => chiama<SchedaRidotta>(`/api/impresa/bandi/${bandoId}`),
   richiediSupporto: (corpo: { impresa_id: number; bando_id: number; messaggio: string; origine: "piattaforma" | "email" }) =>
     chiama<{ id: number; messaggio: string }>("/api/impresa/richieste", { method: "POST", body: JSON.stringify(corpo) }),
@@ -276,6 +291,12 @@ export const api = {
   preparaEmail: () => chiama<Record<string, number>>("/api/email-imprese/prepara", { method: "POST" }),
   inviaEmail: (id: number) => chiama<unknown>(`/api/email-imprese/${id}/invia`, { method: "POST" }),
   scartaEmail: (id: number) => chiama<unknown>(`/api/email-imprese/${id}/scarta`, { method: "POST" }),
+  abbonamento: () => chiama<Abbonamento>("/api/impresa/abbonamento"),
+  paga: (piano: "mensile" | "annuale") => chiama<{ url: string }>("/api/impresa/abbonamento/checkout", { method: "POST", body: JSON.stringify({ piano }) }),
+  portale: () => chiama<{ url: string }>("/api/impresa/abbonamento/portale", { method: "POST" }),
+  abbonamenti: () => chiama<RigaAbbonamento[]>("/api/abbonamenti"),
+  modificaAbbonamento: (utenteId: number, corpo: { stato?: string; giorni_prova_in_piu?: number; nota?: string }) =>
+    chiama<unknown>(`/api/abbonamenti/${utenteId}`, { method: "PATCH", body: JSON.stringify(corpo) }),
   utenti: () => chiama<Utente[]>("/api/utenti"),
   creaUtente: (corpo: { email: string; nome: string; ruolo: RuoloUtente }) =>
     chiama<{ utente: Utente; link: string; email: string }>("/api/utenti", { method: "POST", body: JSON.stringify(corpo) }),
