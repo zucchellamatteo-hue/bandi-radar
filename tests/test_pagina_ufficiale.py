@@ -144,7 +144,7 @@ def test_ordine_e_testo_per_la_scheda():
     assert [a["nome"] for a in ordina_per_scheda(allegati)] == [
         "Bando", "Pagina del bando (copia)", "FAQ", "Decreto 12/03/2026", "Delibera 2025", "Scansione"]
     documenti, avvertenze = documenti_per_scheda(allegati, massimo=110)
-    assert documenti[0]["testo"] == "B" * 100                 # il bando intero
+    assert documenti[0]["testo"].startswith("B" * 80)         # il bando per primo e quasi intero (ogni documento ha l'inizio)
     assert documenti[1]["testo"] == "pagina"
     assert any("tagliato" in x for x in avvertenze) or any("escluso" in x for x in avvertenze)
     assert any("Scansione" in x and "nessun testo" in x for x in avvertenze)
@@ -158,6 +158,21 @@ def test_documenti_brevi_non_spariscono_dietro_un_bando_lunghissimo():
     testi = {d["nome"]: d["testo"] for d in documenti}
     assert len(testi["FAQ"]) == 10_000 and len(testi["Determina n. 960 del 23/10/2025"]) == 29_000
     assert len(testi["Avviso"]) == 300_000 - 39_000 and any("Avviso: tagliato" in x for x in avvertenze)
+
+
+def test_versioni_superate_dopo_e_testi_doppi_una_volta():
+    avviso = "Art. 1 Avviso definitivo. " * 400
+    allegati = [{"nome": "Avviso in pre-informazione", "url": "p.pdf", "tipo": "pdf", "categoria": "bando", "testo_estratto": "P" * 9000},
+                {"nome": "Avviso aiuti STEP", "url": "a.pdf", "tipo": "pdf", "categoria": "bando", "testo_estratto": avviso},
+                {"nome": "Determina 859 - Approvazione Avviso", "url": "d1.pdf", "tipo": "pdf", "categoria": "decreto", "testo_estratto": avviso},
+                *[{"nome": f"Graduatoria {i}", "url": f"g{i}.pdf", "tipo": "pdf", "categoria": "graduatoria",
+                   "testo_estratto": f"{i} " + "G" * 50_000} for i in range(30)]]
+    documenti, avvertenze = documenti_per_scheda(allegati, massimo=100_000)
+    nomi = [d["nome"] for d in documenti]
+    assert nomi[:2] == ["Avviso aiuti STEP", "Avviso in pre-informazione"]
+    assert "Determina 859 - Approvazione Avviso" not in nomi and any("stesso testo" in a for a in avvertenze)
+    assert len(documenti[0]["testo"]) == len(avviso)                  # l'avviso in vigore intero
+    assert all(d["testo"] for d in documenti)                          # nessuno escluso del tutto, con 32 documenti
 
 
 def test_allegato_con_lettera_che_e_un_atto_non_un_modulo():

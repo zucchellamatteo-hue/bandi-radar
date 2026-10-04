@@ -28,5 +28,10 @@ Regole:
   CAL, CAM, EMR, FVG, LAZ, LIG, LOM, MAR, MOL, PIE, PUG, SAR, SIC, TN, TOS, UMB, VDA, VEN; province con la sigla automobilistica).
   Se il limite è un'area più piccola (un comune, un cratere sismico) o non è sulla sede, `"territorio": null`.
 - Niente invenzioni: solo ciò che i documenti dicono, con la frase e la fonte.
+- **Ogni riga della forma va riscontrata nei documenti** (articolo su agevolazione, intensità, massimali): non copiare
+  `forma_ricavata` o i campi della scheda senza averli ritrovati nel testo. Se non riesci a riscontrarla, `"forma_incentivo": null`.
+- Niente valori calcolati da te (per esempio un massimale = percentuale × spesa massima) né valori di edizioni
+  precedenti: se il documento non scrive il numero, `null` e la spiegazione in `note`.
+- Per cercare usa lo strumento Grep (se non c'è, `grep -n -i "parola" <file>` da Bash, un comando per riga, niente `|` o `&&`).
 
 Alla fine rispondi solo "fatto: N file scritti" e i problemi trovati (una riga per bando, solo se ce ne sono).

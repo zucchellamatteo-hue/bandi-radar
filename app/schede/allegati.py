@@ -683,7 +683,15 @@ def ordina_per_scheda(allegati: list[dict]) -> list[dict]:
             continue
         utili.append({**a, "categoria": categoria})
     return sorted(utili, key=lambda a: (ORDINE_CATEGORIE.get(a["categoria"], 5),
+                                        bool(_SUPERATA.search(a.get("nome") or "")),
                                         "" if a["categoria"] != "decreto" else _invertito(_data_nel_nome(f"{a.get('nome')} {a.get('url')}"))))
+
+
+# Versioni superate di un bando (verifica del 04/10: 4180 metteva prima "Bando A - versione in vigore fino al
+# 21.02.2024" e lasciava fuori quello aggiornato nel 2026; 1647 la pre-informazione al posto dell'avviso definitivo):
+# restano tra i documenti, ma dopo quelle in vigore della stessa categoria.
+_SUPERATA = re.compile(r"pre-?\s?informazione|\bbozza\b|in vigore fino al|versione (?:precedente|superata|originaria)",
+                       re.IGNORECASE)
 
 
 def _invertito(data: str) -> str:
@@ -692,25 +700,32 @@ def _invertito(data: str) -> str:
 
 RISERVA_DOCUMENTO = 30_000   # caratteri garantiti a ogni documento prima di allungare i primi
 
-
 def documenti_per_scheda(allegati: list[dict], massimo: int = 150_000) -> tuple[list[dict], list[str]]:
     """I documenti per la scheda, gia' in ordine. Ogni documento ha l'inizio garantito; il resto dello spazio va ai
     documenti in ordine (prima il bando), quindi si accorcia la coda dei documenti piu' lunghi. Ritorna
     (documenti con 'testo', avvertenze da dire a chi scrive la scheda)."""
-    ordinati = ordina_per_scheda(allegati)
+    documenti, avvertenze, ordinati, visti = [], [], [], {}
+    for a in ordina_per_scheda(allegati):
+        # Lo stesso testo in piu' documenti (1542: l'avviso allegato a tre determinazioni) si legge una volta sola.
+        impronta = _SPAZI.sub(" ", (a.get("testo_estratto") or "")[:5000]).strip().lower()
+        if len(impronta) > 2000 and impronta in visti:
+            avvertenze.append(f"{a.get('nome')}: stesso testo di '{visti[impronta]}', letto una volta sola")
+            continue
+        visti.setdefault(impronta, a.get("nome"))
+        ordinati.append(a)
     lunghezze = [len(a.get("testo_estratto") or "") for a in ordinati]
-    # Prima ogni documento ha i suoi primi RISERVA_DOCUMENTO caratteri, poi il resto va in ordine (03/10: in 4163
-    # un avviso di 296.000 caratteri lasciava fuori la determina e le FAQ). Se nemmeno le riserve ci stanno, si
-    # torna al taglio dal fondo.
-    quote = [min(n, RISERVA_DOCUMENTO) for n in lunghezze]
-    if sum(quote) > massimo:
-        quote = [0] * len(ordinati)
-    restano = massimo - sum(quote)
+    # Prima ogni documento ha l'inizio garantito, poi il resto va in ordine (03/10: in 4163 un avviso di 296.000
+    # caratteri lasciava fuori la determina e le FAQ). Con molti documenti la parte garantita si accorcia, fino a
+    # meta' dello spazio in tutto (04/10: con 27 documenti 4180 tornava al taglio dal fondo e perdeva il bando in vigore).
+    riserva = min(RISERVA_DOCUMENTO, massimo // (2 * max(1, len(ordinati))))
+    quote, restano = [], massimo
+    for n in lunghezze:
+        quote.append(min(n, riserva, restano))
+        restano -= quote[-1]
     for i, n in enumerate(lunghezze):
         aggiunta = max(0, min(n - quote[i], restano))
         quote[i] += aggiunta
         restano -= aggiunta
-    documenti, avvertenze = [], []
     for a, n, quota in zip(ordinati, lunghezze, quote):
         testo = a.get("testo_estratto") or ""
         if not testo and a["tipo"] not in ("pagina", "faq"):
