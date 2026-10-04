@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams, useSearchParams } from "react-router-dom";
-import { api, BandoRiga, data, euro, Impresa, nome, NOMI_STATO_RICHIESTA, Profilo, RichiestaSupporto, SchedaRidotta, Valori } from "../api";
+import { Abbonamento as TipoAbbonamento, api, BandoRiga, data, euro, Impresa, nome, NOMI_STATO_ABBONAMENTO, NOMI_STATO_RICHIESTA, Profilo, RichiestaSupporto, SchedaRidotta, Valori } from "../api";
 import { Importo, SegnoEsito } from "./Catalogo";
 import { Fasce, Modulo, Motivi, VUOTO } from "./Profili";
 import Giudizio from "../Giudizio";
@@ -44,6 +44,8 @@ export function MieiBandi() {
           <p>Bandi aperti o in arrivo: <b>{r.conteggi.compatibile}</b> adatti a <b>{r.impresa.nome}</b> e <b>{r.conteggi.da_verificare}</b> da
             verificare (manca un dato o il bando pone condizioni da controllare). <span className="piccolo">Informazione indicativa:
             verifica sempre il bando ufficiale.</span></p>
+          {r.bloccato && <div className="avviso"><b>La prova gratuita è finita.</b> Abbonati per vedere i bandi e ricevere l'email
+            settimanale. <Link to="/impresa/abbonamento"><button className="primario">Abbonati</button></Link></div>}
           <ElencoBandi titolo="✓ Adatti alla tua impresa" bandi={compatibili} impresaId={r.impresa.id} />
           <ElencoBandi titolo="? Da verificare" bandi={daVerificare} impresaId={r.impresa.id} />
         </>
@@ -255,6 +257,48 @@ export function MieRichieste() {
             </tr>))}</tbody>
         </table>
       )}
+    </>
+  );
+}
+
+export function Abbonamento() {
+  const [a, setA] = useState<TipoAbbonamento | null>(null);
+  const [parametri] = useSearchParams();
+  const [errore, setErrore] = useState<string | null>(null);
+  useEffect(() => { api.abbonamento().then(setA).catch((e) => setErrore(String(e.message || e))); }, []);
+  const vai = async (f: () => Promise<{ url: string }>) => {
+    setErrore(null);
+    try { window.location.href = (await f()).url; } catch (e) { setErrore(e instanceof Error ? e.message : String(e)); }
+  };
+  if (!a) return errore ? <div className="allarme">{errore}</div> : <div className="caricamento">Caricamento…</div>;
+  const iva = a.iva_inclusa ? "IVA inclusa" : "+ IVA";
+  const extra = a.imprese_extra * a.prezzi.impresa + a.sedi_extra * a.prezzi.sede;
+  const pagante = a.stato === "attivo" || a.stato === "in_ritardo";
+  return (
+    <>
+      <h1>Abbonamento</h1>
+      {parametri.get("esito") === "ok" && <div className="avviso">Grazie! Il pagamento è registrato: lo stato si aggiorna entro qualche secondo.</div>}
+      <p>Stato: <b>{NOMI_STATO_ABBONAMENTO[a.stato] || a.stato}</b>{a.piano ? ` · piano ${a.piano}` : ""}
+        {a.stato === "prova" && a.giorni_prova != null && <> · {a.giorni_prova > 0 ? `restano ${a.giorni_prova} giorni di prova` : "prova finita"}</>}
+        {a.fine_impegno && a.piano === "annuale" && <> · impegno fino al {data(a.fine_impegno)}</>}
+        {a.stato === "disdetto" && a.fine_periodo && <> · accesso fino al {data(a.fine_periodo)}</>}</p>
+      {!a.attivi && <p className="piccolo">In questa fase l'accesso è gratuito per tutti: puoi provare il pagamento, ma non è richiesto.</p>}
+      {a.stato === "in_ritardo" && <div className="allarme">L'ultimo addebito non è riuscito: aggiorna la carta da "Gestisci abbonamento".</div>}
+      {a.stato === "gratuito" ? <p>Il tuo abbonamento è gratuito: non devi fare niente.</p> : !pagante && (
+        <div className="griglia-piani">
+          <div className="riquadro"><div className="etichetta">Mensile</div><div className="numero">{a.prezzi.mensile} €</div>
+            <div className="piccolo">al mese {iva}, disdici quando vuoi</div>
+            <button className="primario" disabled={!a.stripe} onClick={() => vai(() => api.paga("mensile"))}>Scegli il mensile</button></div>
+          <div className="riquadro"><div className="etichetta">Annuale</div><div className="numero">{a.prezzi.annuale} €</div>
+            <div className="piccolo">al mese {iva}, pagato ogni mese, impegno di 12 mesi</div>
+            <button className="primario" disabled={!a.stripe} onClick={() => vai(() => api.paga("annuale"))}>Scegli l'annuale</button></div>
+        </div>)}
+      {(a.imprese_extra > 0 || a.sedi_extra > 0) && <p>Con le tue imprese: {a.imprese_extra} impresa/e in più ({a.prezzi.impresa} € l'una) e {a.sedi_extra} sede/i
+        in più ({a.prezzi.sede} € l'una): {extra} € al mese in più {iva}.</p>}
+      {a.portale && <p><button onClick={() => vai(api.portale)}>Gestisci abbonamento: carta, fatture, disdetta</button></p>}
+      {!a.stripe && <p className="piccolo">I pagamenti online non sono ancora attivi.</p>}
+      {errore && <div className="allarme">{errore}</div>}
+      <p className="piccolo">Pagamento sicuro con Stripe: i dati della carta non passano da Bandi Radar. <a href="/termini">Termini del servizio</a>.</p>
     </>
   );
 }

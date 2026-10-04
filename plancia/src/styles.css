@@ -125,3 +125,5 @@ button.stella.piena { color: #e0a800; }
 .riquadro.supporto { border-top-color: var(--verde); margin: 1rem 0 1.5rem; display: block; }
 .riquadro.supporto button.primario { margin-left: .5rem; }
 .riquadro.supporto textarea { width: 100%; padding: .4rem .55rem; border: 1px solid var(--bordo); border-radius: 6px; font: inherit; }
+.griglia-piani { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem; margin: 1rem 0; }
+.griglia-piani .riquadro button { margin-top: .8rem; }

@@ -15,6 +15,7 @@ import psycopg
 from fastapi import Depends, FastAPI, HTTPException, Request
 from fastapi.responses import FileResponse, HTMLResponse, JSONResponse
 
+from app.abbonamenti.api import router as api_abbonamenti
 from app.feedback.api import router as api_feedback
 from app.notifiche.api import router as api_notifiche
 from app.impresa.api import router as api_impresa
@@ -56,6 +57,7 @@ app.include_router(api_utenti)
 app.include_router(api_feedback)
 app.include_router(api_notifiche)   # email alle imprese (solo admin) e disiscrizione pubblica
 app.include_router(api_impresa)
+app.include_router(api_abbonamenti)
 app.include_router(api_plancia, dependencies=[Depends(controlla_plancia)])
 
 
