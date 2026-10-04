@@ -109,3 +109,14 @@ button.primario { background: var(--accento); color: #fff; border-color: var(--a
 button.primario:hover { background: var(--blu-scuro); color: #fff; }
 header.barra .chi-sono { margin-left: auto; white-space: nowrap; font-size: .88rem; }
 code.link-invito { word-break: break-all; background: #fff; padding: .1rem .3rem; border-radius: 4px; }
+
+/* Giudizio sulla scheda (05/10): voto a stelle e problemi segnalati. */
+.giudizio { background: var(--carta); border: 1px solid var(--bordo); border-left: 4px solid var(--accento); border-radius: 10px; box-shadow: var(--ombra); padding: .2rem 1.2rem 1rem; margin: 2rem 0; }
+.giudizio .voto { display: flex; align-items: center; gap: .3rem; margin: .5rem 0 1rem; flex-wrap: wrap; }
+.giudizio .voto > span:first-child { font-weight: 600; margin-right: .5rem; }
+button.stella { font-size: 1.5rem; line-height: 1; padding: .1rem .3rem; color: #c3cfdf; border-color: transparent; background: none; }
+button.stella.piena { color: #e0a800; }
+.giudizio .problema { display: flex; gap: .5rem; margin-bottom: .5rem; flex-wrap: wrap; }
+.giudizio .problema input { flex: 1; min-width: 240px; }
+.giudizio select, .giudizio input, .giudizio textarea, td textarea, td select { padding: .4rem .55rem; border: 1px solid var(--bordo); border-radius: 6px; font: inherit; }
+.giudizio textarea, td textarea { width: 100%; margin-top: .3rem; }

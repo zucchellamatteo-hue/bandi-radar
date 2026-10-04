@@ -3,6 +3,7 @@ import { Link, useParams } from "react-router-dom";
 import { api, Bando as TipoBando, FormaIncentivo as TipoForma, data, dimensione, euro, nome, NOMI_CATEGORIA, NOMI_DECISO_DA, NOMI_RUOLO } from "../api";
 import { Importo } from "./Catalogo";
 import { eAdmin, useUtente } from "../utente";
+import Giudizio from "../Giudizio";
 
 // La scheda completa del bando (docs/SCHEDA_BANDO.md), i documenti, gli annunci che ne parlano e le versioni.
 export default function Bando() {
@@ -22,7 +23,8 @@ export default function Bando() {
       <h1>{b.titolo}</h1>
       <p><span className={`stato-bando ${b.stato || "non_noto"}`}>{b.stato ? nome(b.stato) : "stato non noto"}</span>
         <span className="piccolo"> · {b.ente}{b.gestore && b.gestore !== b.ente ? ` (gestisce ${b.gestore})` : ""}
-          {b.codice_ufficiale ? ` · codice ${b.codice_ufficiale}` : ""} · versione {b.versione}</span></p>
+          {b.codice_ufficiale ? ` · codice ${b.codice_ufficiale}` : ""} · versione {b.versione}</span>
+        {b.completezza && <> · <a href="#giudizio">giudica la scheda ↓</a></>}</p>
       <p>{b.data_apertura && <>apre il <b>{data(b.data_apertura)}</b>{b.ora_apertura ? ` ore ${String(b.ora_apertura).slice(0, 5)}` : ""} · </>}
         {b.scadenza ? <>scade il <b className="scadenza">{data(b.scadenza)}</b>{b.ora_scadenza ? ` ore ${String(b.ora_scadenza).slice(0, 5)}` : ""}</>
           : "nessuna scadenza scritta"}
@@ -73,6 +75,8 @@ export default function Bando() {
           {dati.modello && <p className="piccolo">Scheda scritta da: {dati.modello}</p>}
         </>
       ) : null}
+
+      {b.completezza && <Giudizio bandoId={b.id} admin={admin} />}
 
       <h2>Documenti del bando</h2>
       {documenti.length === 0 ? <p className="piccolo">Nessun documento scaricato.</p> : (

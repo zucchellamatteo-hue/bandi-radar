@@ -15,6 +15,7 @@ import psycopg
 from fastapi import Depends, FastAPI, HTTPException
 from fastapi.responses import FileResponse, HTMLResponse, JSONResponse
 
+from app.feedback.api import router as api_feedback
 from app.plancia.api import router as api_plancia
 from app.utenti.api import controlla_plancia
 from app.utenti.api import router as api_utenti
@@ -48,6 +49,7 @@ _PAGINA_IN_COSTRUZIONE = """<!doctype html><html lang="it"><head><meta charset="
 <p>La plancia non e' stata costruita in questa immagine (manca plancia/dist).</p></body></html>"""
 
 app.include_router(api_utenti)
+app.include_router(api_feedback)
 app.include_router(api_plancia, dependencies=[Depends(controlla_plancia)])
 
 
