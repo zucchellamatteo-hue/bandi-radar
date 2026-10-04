@@ -9,6 +9,8 @@ from pydantic import ValidationError
 from app.abbinamento import regole
 from app.abbinamento.profilo import Profilo
 
+from conftest import accesso_di_prova
+
 
 def test_profilo_valido_e_normalizzato():
     p = Profilo.model_validate({
@@ -52,8 +54,6 @@ def test_startup_da_costituire_passa_nei_bandi_per_aspiranti():
 def test_api_profili():
     from fastapi.testclient import TestClient
 
-    os.environ.setdefault("BASIC_AUTH_USER", "prova")
-    os.environ.setdefault("BASIC_AUTH_PASSWORD", "prova")
     from app.db.connessione import connetti
     from app.db.migrazioni import applica_migrazioni
     from app.main import app
@@ -64,7 +64,7 @@ def test_api_profili():
             cur.execute("DELETE FROM profili WHERE codice LIKE 'prova-%'")
         conn.commit()
     c = TestClient(app)
-    auth = (os.environ["BASIC_AUTH_USER"], os.environ["BASIC_AUTH_PASSWORD"])
+    auth = accesso_di_prova()
     corpo = {"forma_giuridica": "srl", "dimensione": "piccola", "sedi": [{"provincia": "BO"}], "ateco": ["62.01"]}
     r = c.put("/api/profili/prova-1", json=corpo, auth=auth)
     assert r.status_code == 200 and r.json()["profilo"]["sedi"][0]["regione"] == "EMR"

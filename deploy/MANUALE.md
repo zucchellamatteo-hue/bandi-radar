@@ -37,7 +37,9 @@ cd /srv/bandi-radar && sudo -u deploy docker compose up -d
 
 ## 4. Cambiare le impostazioni più comuni
 
-- **Password o utente del sito**: cambia `BASIC_AUTH_USER` o `BASIC_AUTH_PASSWORD` nel `.env` e riavvia come sopra. Il browser chiederà le nuove credenziali.
+- **Utenti del sito** (dal 05/10): si entra con email e password. Gli utenti si creano nella pagina **Utenti** della plancia (solo amministratori) oppure dal server:
+  `cd /srv/bandi-radar && sudo -u deploy docker compose exec app python -m app.utenti crea --email nome@esempio.it --ruolo revisore --nome "Nome"`
+  (ruoli: `admin`, `revisore`, `impresa`). Il comando stampa il link per scegliere la password, da mandare a mano se l'email non parte. Altri comandi: `elenco`, `link --email ...` (nuovo link, anche per chi ha dimenticato la password), `disattiva --email ...`, `attiva --email ...`. `BASIC_AUTH_USER` e `BASIC_AUTH_PASSWORD` del `.env` servono solo a far entrare il primo amministratore.
 - **Email per il certificato**: cambia `ACME_EMAIL` e riavvia. Nessun altro effetto.
 - **Nome del sito**: `SITE_ADDRESS` vuoto vale finanzagevolata.qiaro.it. Per un nome diverso serve prima il record DNS che punti al server, poi il nuovo valore e un riavvio: Caddy chiede da solo il certificato nuovo.
 - **Password del database**: non basta cambiarla nel `.env`, perché il database ha memorizzato quella vecchia. Chiedi a Claude, che la cambia con un comando nel database e poi nel file. Finché il database è vuoto (Fase 0) si può anche cancellare tutto e ripartire.

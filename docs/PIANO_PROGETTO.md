@@ -161,7 +161,7 @@ La parte grossa del costo è **fissa** (leggere i bandi). Ogni bando si legge un
 
 ---
 
-## 5. Plancia di controllo (solo per Matteo)
+## 5. Plancia di controllo (Matteo e collaboratori; dal 05/10 anche i revisori, in sola lettura sul catalogo)
 
 Una schermata con **una riga per fonte** e un semaforo:
 
@@ -386,6 +386,12 @@ Alcune fasi si sovrappongono di una settimana, apposta. Nella **Fase 0** e nella
 | Feedback | Voto e segnalazioni sulle schede da revisori e imprese, rianalizzati dagli agenti. |
 
 Piano di lavoro: `docs/sessioni/2026-10-05_prodotto_indipendente.md`.
+
+**Fatto dal 05/10/2026 (prodotto indipendente):**
+
+| Tappa | Cosa c'è |
+|---|---|
+| 1. Utenti e ruoli | Si entra con email e password (tabelle `utenti`, `sessioni`, `link_email`, `tentativi_accesso`; `app/utenti/`). Ruoli: admin (tutto, pagina Utenti), revisore (catalogo, schede, documenti; nessuna modifica), impresa (solo area impresa). Inviti con link per scegliere la password (7 giorni), recupero password (2 ore), pausa di 15 minuti dopo 5 errori. Utente e password del `.env` fanno entrare solo il primo admin. Comando sul server: `python -m app.utenti crea --email ... --ruolo revisore`. Le email partono quando Resend è configurato; intanto il link si copia dalla pagina Utenti. |
 
 **Ancora aperti:**
 

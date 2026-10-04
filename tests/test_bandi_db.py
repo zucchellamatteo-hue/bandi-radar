@@ -7,6 +7,8 @@ import os
 
 import pytest
 
+from conftest import accesso_di_prova
+
 pytestmark = pytest.mark.skipif(not os.environ.get("PGHOST"), reason="serve un database Postgres di prova (PGHOST)")
 
 
@@ -121,15 +123,13 @@ def test_scelte_di_matteo_e_versioni(conn):
 def test_api_plancia_bandi_e_dubbi(conn):
     from fastapi.testclient import TestClient
 
-    os.environ.setdefault("BASIC_AUTH_USER", "prova")
-    os.environ.setdefault("BASIC_AUTH_PASSWORD", "prova")
     from app.main import app
     from app.schede.bandi import carica, pianifica, salva_piano
 
     annunci, esistenti, in_dubbio = carica(conn)
     salva_piano(conn, pianifica(annunci, esistenti, in_dubbio, anno_corrente=2026))
     c = TestClient(app)
-    auth = (os.environ["BASIC_AUTH_USER"], os.environ["BASIC_AUTH_PASSWORD"])
+    auth = accesso_di_prova()
 
     dettaglio = c.get("/api/annunci/900001", auth=auth).json()
     assert dettaglio["bando"]["titolo"] == "Bando occupazione giovanile 2026"

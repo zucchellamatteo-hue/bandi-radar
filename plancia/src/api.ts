@@ -1,4 +1,11 @@
-// Chiamate all'API della plancia. Il browser manda da solo le credenziali dell'autenticazione base.
+// Chiamate all'API della plancia. Il browser manda da solo il cookie della sessione (accesso con email e password).
+
+export type RuoloUtente = "admin" | "revisore" | "impresa";
+export interface Utente {
+  id: number; email: string; nome: string | null; ruolo: RuoloUtente; attivo?: boolean;
+  creato_il?: string; ultimo_accesso?: string | null; password_impostata?: boolean;
+}
+export const NOMI_RUOLO_UTENTE: Record<RuoloUtente, string> = { admin: "amministratore", revisore: "revisore", impresa: "impresa" };
 
 export type Colore = "verde" | "giallo" | "rosso" | "pausa";
 
@@ -167,6 +174,8 @@ export interface SettimanaDettaglio {
 
 async function chiama<T>(percorso: string, opzioni?: RequestInit): Promise<T> {
   const r = await fetch(percorso, { ...opzioni, headers: { "Content-Type": "application/json", ...(opzioni?.headers || {}) } });
+  // Sessione scaduta o chiusa altrove: si torna alla pagina di accesso (non per le chiamate dell'accesso stesso).
+  if (r.status === 401 && !percorso.startsWith("/api/accesso")) { window.location.href = "/"; }
   if (!r.ok) {
     // Gli errori di controllo (422) spiegano cosa correggere: si mostra il messaggio del server.
     const corpo = await r.json().catch(() => null);
@@ -176,6 +185,22 @@ async function chiama<T>(percorso: string, opzioni?: RequestInit): Promise<T> {
 }
 
 export const api = {
+  io: () => chiama<Utente>("/api/accesso/io"),
+  entra: (email: string, password: string) =>
+    chiama<Utente>("/api/accesso/entra", { method: "POST", body: JSON.stringify({ email, password }) }),
+  esci: () => chiama("/api/accesso/esci", { method: "POST" }),
+  recupero: (email: string) =>
+    chiama<{ messaggio: string }>("/api/accesso/recupero", { method: "POST", body: JSON.stringify({ email }) }),
+  controllaLink: (codice: string) =>
+    chiama<{ email: string; nome: string | null; scopo: string }>(`/api/accesso/link?codice=${encodeURIComponent(codice)}`),
+  impostaPassword: (codice: string, password: string) =>
+    chiama<Utente>("/api/accesso/imposta-password", { method: "POST", body: JSON.stringify({ codice, password }) }),
+  utenti: () => chiama<Utente[]>("/api/utenti"),
+  creaUtente: (corpo: { email: string; nome: string; ruolo: RuoloUtente }) =>
+    chiama<{ utente: Utente; link: string; email: string }>("/api/utenti", { method: "POST", body: JSON.stringify(corpo) }),
+  modificaUtente: (id: number, corpo: { ruolo?: RuoloUtente; attivo?: boolean }) =>
+    chiama<Utente>(`/api/utenti/${id}`, { method: "PATCH", body: JSON.stringify(corpo) }),
+  reinvita: (id: number) => chiama<{ link: string; email: string }>(`/api/utenti/${id}/invito`, { method: "POST" }),
   riepilogo: () => chiama<Riepilogo>("/api/riepilogo"),
   fonti: () => chiama<Fonte[]>("/api/fonti"),
   fonte: (id: string) => chiama<{ fonte: Fonte; controlli: Controllo[]; annunci: Annuncio[] }>(`/api/fonti/${id}`),
