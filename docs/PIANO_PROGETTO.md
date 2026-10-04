@@ -374,6 +374,19 @@ Alcune fasi si sovrappongono di una settimana, apposta. Nella **Fase 0** e nella
 | Scheda | Percentuale = base; più misure nella prima riga della sintesi; fondi esauriti in evidenza; settori a parole tradotti in ATECO con avvertenza; regioni negli elenchi anche se solo nel testo. |
 | Spesa | Le schede da rifare restano in sessione anche quando il limite dell'abbonamento ferma gli agenti: niente Batch API oltre il tetto (Matteo, 03/10). |
 
+**Decise il 04/10/2026 (Matteo):**
+
+| Tema | Decisione |
+|---|---|
+| Prodotto | Bandi Radar diventa un **prodotto indipendente** per misurare l'interesse, senza aspettare Contract to Cash; più avanti potrà entrarci. Supera la scelta del 23/09 sui clienti anonimi: Bandi Radar avrà utenti veri (admin, revisori, imprese), con i dati identificativi separati dal profilo di abbinamento e mai inviati all'IA. |
+| Abbonamenti | Stripe, addebito ricorrente su carta: 30 €/mese, oppure 20 €/mese con impegno annuale pagato a rate; impresa o sede in più a pagamento (proposta: 10 € e 5 €). |
+| Supporto | Pulsanti "Richiedi supporto per la domanda" nella piattaforma e nelle email; success fee 10-15% del fondo perduto, 1-2% del finanziamento agevolato, minimo 400-500 € (da fissare). |
+| Acquisizione | Google Ads e annunci nei motori di IA, budget iniziale di qualche migliaio di euro. |
+| IA | Il lavoro pesante (schede, preliminari, analisi) a lotti con la Batch API. |
+| Feedback | Voto e segnalazioni sulle schede da revisori e imprese, rianalizzati dagli agenti. |
+
+Piano di lavoro: `docs/sessioni/2026-10-05_prodotto_indipendente.md`.
+
 **Ancora aperti:**
 
 1. **Struttura delle anagrafiche in Postgres**: schema ricevuto il 25/09 (`docs/ricerche/2026-09-25_schema_anagrafiche_leadgen.md`). Copre bene ATECO e fatturato; mancano data di costituzione, totale di bilancio, ULA, requisiti speciali. È un archivio di prospect: serve sapere dove stanno i clienti. Seconda richiesta pronta in `docs/RICHIESTA_SCHEMA_ANAGRAFICHE.md`.
