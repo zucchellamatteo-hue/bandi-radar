@@ -1,0 +1,96 @@
+import { Fragment, useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import { api, data, EmailImpresa, ImpresaIscritta, NOMI_STATO_RICHIESTA, RichiestaSupporto, StatoRichiesta } from "../api";
+
+// Pagina Imprese (solo amministratori): richieste di supporto, email settimanali da approvare, imprese iscritte.
+export default function Imprese() {
+  const [richieste, setRichieste] = useState<RichiestaSupporto[]>([]);
+  const [email, setEmail] = useState<EmailImpresa[]>([]);
+  const [imprese, setImprese] = useState<ImpresaIscritta[]>([]);
+  const [errore, setErrore] = useState<string | null>(null);
+  const [avviso, setAvviso] = useState<string | null>(null);
+  const [aperta, setAperta] = useState<number | null>(null);
+  const ricarica = () => Promise.all([api.richieste().then(setRichieste), api.emailImprese().then(setEmail), api.impreseIscritte().then(setImprese)])
+    .catch((e) => setErrore(String(e.message || e)));
+  useEffect(() => { ricarica(); }, []);
+  const azione = async (f: () => Promise<unknown>, testo?: string) => {
+    setErrore(null); setAvviso(null);
+    try { const r = await f(); if (testo) setAvviso(`${testo} ${r && typeof r === "object" ? Object.entries(r).map(([k, v]) => `${k.replace(/_/g, " ")} ${v}`).join(", ") : ""}`); ricarica(); }
+    catch (e) { setErrore(e instanceof Error ? e.message : String(e)); }
+  };
+  const daApprovare = email.filter((e) => e.stato === "da_approvare");
+  const decise = email.filter((e) => e.stato !== "da_approvare");
+
+  return (
+    <>
+      <h1>Imprese</h1>
+      {errore && <div className="allarme">{errore}</div>}
+      {avviso && <div className="avviso">{avviso}</div>}
+
+      <h2>Richieste di supporto per la domanda</h2>
+      {!richieste.length ? <p className="piccolo">Nessuna richiesta.</p> : (
+        <table>
+          <thead><tr><th>Bando</th><th>Impresa</th><th>Messaggio</th><th>Stato e note</th></tr></thead>
+          <tbody>{richieste.map((r) => <RigaRichiesta key={r.id} r={r} ricarica={ricarica} />)}</tbody>
+        </table>)}
+
+      <h2>Email settimanali da approvare</h2>
+      <p className="piccolo">Il lunedì il sistema prepara un'email per ogni impresa con i bandi nuovi o in scadenza (mai due volte lo stesso
+        bando). Nella fase di prova partono solo dopo la tua approvazione.{" "}
+        <button onClick={() => azione(() => api.preparaEmail(), "Email della settimana:")}>Prepara adesso</button></p>
+      {!daApprovare.length ? <p className="piccolo">Nessuna email in attesa.</p> : (
+        <table>
+          <thead><tr><th>Impresa</th><th>Oggetto</th><th>Bandi</th><th></th></tr></thead>
+          <tbody>{daApprovare.map((e) => (
+            <Fragment key={e.id}>
+              <tr>
+                <td>{e.impresa_nome}<div className="piccolo">{e.utente_email} · {e.settimana}</div></td>
+                <td><a href="#" onClick={(ev) => { ev.preventDefault(); setAperta(aperta === e.id ? null : e.id); }}>{e.oggetto}</a></td>
+                <td>{e.n_bandi ?? e.bandi?.length ?? "–"}</td>
+                <td><button className="primario" onClick={() => azione(() => api.inviaEmail(e.id))}>Approva e invia</button>{" "}
+                  <button onClick={() => azione(() => api.scartaEmail(e.id))}>Scarta</button></td>
+              </tr>
+              {aperta === e.id && <tr><td colSpan={4}>
+                {e.html ? <iframe title="anteprima" sandbox="" srcDoc={e.html} style={{ width: "100%", height: 500, border: "1px solid var(--bordo)" }} />
+                  : <pre className="testo-lungo">{e.testo}</pre>}</td></tr>}
+            </Fragment>))}</tbody>
+        </table>)}
+      {decise.length > 0 && <details><summary className="piccolo">Ultime email decise ({decise.length})</summary>
+        <table><tbody>{decise.map((e) => (
+          <tr key={e.id}><td>{e.impresa_nome}</td><td>{e.oggetto}</td><td>{e.stato}{e.errore ? `: ${e.errore}` : ""}</td>
+            <td className="piccolo">{e.decisa_da} {data(e.decisa_il, true)}</td></tr>))}</tbody></table></details>}
+
+      <h2>Imprese iscritte ({imprese.length})</h2>
+      <p className="piccolo">Per invitare un'impresa: pagina <Link to="/utenti">Utenti</Link>, ruolo "impresa". L'impresa poi descrive da sola
+        la sua attività.</p>
+      {imprese.length > 0 && (
+        <table>
+          <thead><tr><th>Impresa</th><th>Utente</th><th>Sedi</th><th>Email settimanale</th><th>Richieste</th><th>Iscritta</th></tr></thead>
+          <tbody>{imprese.map((i) => (
+            <tr key={i.id}><td>{i.nome}</td><td>{i.utente_nome || ""} {i.email}{i.attivo ? "" : " (accesso tolto)"}</td><td>{i.sedi}</td>
+              <td>{i.email_settimanale ? "sì" : "no"}</td><td>{i.richieste}</td><td>{data(i.creata_il)}</td></tr>))}</tbody>
+        </table>)}
+    </>
+  );
+}
+
+function RigaRichiesta({ r, ricarica }: { r: RichiestaSupporto; ricarica: () => void }) {
+  const [stato, setStato] = useState<StatoRichiesta>(r.stato);
+  const [nota, setNota] = useState(r.nota || "");
+  const cambiato = stato !== r.stato || nota !== (r.nota || "");
+  return (
+    <tr>
+      <td><Link to={`/bandi/${r.bando_id}`}>{r.bando_titolo}</Link>
+        <div className="piccolo">scadenza {data(r.bando_scadenza)} · richiesta il {data(r.creata_il, true)}{r.origine === "email" ? " dall'email" : ""}</div></td>
+      <td>{r.impresa_nome}<div className="piccolo">{r.utente_nome || ""} {r.email}</div></td>
+      <td>{r.messaggio || "–"}</td>
+      <td style={{ minWidth: 240 }}>
+        <select value={stato} onChange={(e) => setStato(e.target.value as StatoRichiesta)}>
+          {(Object.keys(NOMI_STATO_RICHIESTA) as StatoRichiesta[]).map((s) => <option key={s} value={s}>{NOMI_STATO_RICHIESTA[s]}</option>)}
+        </select>
+        <textarea rows={2} placeholder="note (le vedi solo tu)" value={nota} onChange={(e) => setNota(e.target.value)} />
+        {cambiato && <button onClick={() => api.gestisciRichiesta(r.id, { stato, nota }).then(ricarica)}>Salva</button>}
+      </td>
+    </tr>
+  );
+}

@@ -5,7 +5,7 @@ import { Importo, SegnoEsito } from "./Catalogo";
 
 // Profili d'impresa ANONIMI (docs/PROFILO_IMPRESA.md) e i bandi che passano le regole, con il motivo.
 // Niente nomi, codici fiscali, partite IVA, email: il codice lo sceglie Matteo e la corrispondenza resta da lui.
-const VUOTO: Profilo = {
+export const VUOTO: Profilo = {
   codice: "", soggetto: "impresa", da_costituire: false, forma_giuridica: null, sedi: [{ tipo: "legale_e_operativa", regione: null, provincia: null, comune: null }],
   ateco: [], ateco_versione: "2025", attivita: null, dimensione: null, dipendenti: null, fatturato: null, totale_bilancio: null,
   data_costituzione: null, requisiti: {}, temi: [], categorie_spesa: [], importo_progetto: null, note: null,
@@ -70,8 +70,14 @@ export default function Profili() {
   );
 }
 
-function Modulo({ p, cambia, valori, bloccaCodice }: {
+export interface Fasce { dipendenti?: string; fatturato?: string }
+export const FASCE_DIPENDENTI: Record<string, string> = { "0": "nessuno", "1-9": "da 1 a 9", "10-49": "da 10 a 49", "50-249": "da 50 a 249", "250+": "250 o più" };
+export const FASCE_FATTURATO: Record<string, string> = { fino_2m: "fino a 2 milioni €", "2m-10m": "da 2 a 10 milioni €", "10m-50m": "da 10 a 50 milioni €", oltre_50m: "oltre 50 milioni €" };
+
+// Il modulo del profilo. Con `fasce` (area impresa) niente codice e note, e dipendenti e fatturato a fasce.
+export function Modulo({ p, cambia, valori, bloccaCodice, fasce, cambiaFasce }: {
   p: Profilo; cambia: <K extends keyof Profilo>(k: K, v: Profilo[K]) => void; valori: Valori | null; bloccaCodice: boolean;
+  fasce?: Fasce; cambiaFasce?: (f: Fasce) => void;
 }) {
   const elenco = (campo: string) => ((valori?.[campo] as string[]) || []);
   const numero = (v: string) => (v === "" ? null : Number(v));
@@ -81,12 +87,12 @@ function Modulo({ p, cambia, valori, bloccaCodice }: {
     cambia(campo, si ? [...p[campo], v] : p[campo].filter((x) => x !== v));
   return (
     <div className="modulo-profilo">
-      <fieldset><legend>Codice</legend>
+      {!fasce && <fieldset><legend>Codice</legend>
         <label>Codice interno <input value={p.codice} disabled={bloccaCodice} placeholder="es. C001" maxLength={40}
           onChange={(e) => cambia("codice", e.target.value.trim())} /></label>
         <label>Note (niente dati personali)<br /><textarea rows={2} value={p.note || ""} maxLength={500}
           onChange={(e) => cambia("note", e.target.value || null)} /></label>
-      </fieldset>
+      </fieldset>}
 
       <fieldset><legend>Chi è</legend>
         <label>Tipo <select value={p.soggetto || ""} onChange={(e) => cambia("soggetto", (e.target.value || null) as Profilo["soggetto"])}>
@@ -98,13 +104,21 @@ function Modulo({ p, cambia, valori, bloccaCodice }: {
         {!p.da_costituire && <label>Costituita il <input type="date" value={p.data_costituzione || ""} onChange={(e) => cambia("data_costituzione", e.target.value || null)} /></label>}
       </fieldset>
 
-      <fieldset><legend>Dimensione</legend>
+      {fasce && cambiaFasce ? <fieldset><legend>Dimensione</legend>
+        <label>Dipendenti <select value={fasce.dipendenti || ""} onChange={(e) => cambiaFasce({ ...fasce, dipendenti: e.target.value || undefined })}>
+          <option value="">non indicato</option>{Object.entries(FASCE_DIPENDENTI).map(([k, v]) => <option key={k} value={k}>{v}</option>)}</select></label>
+        <label>Fatturato dell'ultimo anno <select value={fasce.fatturato || ""} onChange={(e) => cambiaFasce({ ...fasce, fatturato: e.target.value || undefined })}>
+          <option value="">non indicato</option>{Object.entries(FASCE_FATTURATO).map(([k, v]) => <option key={k} value={k}>{v}</option>)}</select></label>
+        <label>Classe <select value={p.dimensione || ""} onChange={(e) => cambia("dimensione", (e.target.value || null) as Profilo["dimensione"])}>
+          <option value="">calcolala dalle fasce</option>{["micro", "piccola", "media", "grande"].map((d) => <option key={d} value={d}>{d}</option>)}</select></label>
+        <div className="piccolo">Se conosci la classe (micro, piccola, media) indicala: è quella che chiedono i bandi.</div>
+      </fieldset> : <fieldset><legend>Dimensione</legend>
         <label>Classe <select value={p.dimensione || ""} onChange={(e) => cambia("dimensione", (e.target.value || null) as Profilo["dimensione"])}>
           <option value="">calcolala dai numeri sotto</option>{["micro", "piccola", "media", "grande"].map((d) => <option key={d} value={d}>{d}</option>)}</select></label>
         <label>Dipendenti (ULA) <input type="number" min={0} value={p.dipendenti ?? ""} onChange={(e) => cambia("dipendenti", numero(e.target.value))} /></label>
         <label>Fatturato € <input type="number" min={0} step={1000} value={p.fatturato ?? ""} onChange={(e) => cambia("fatturato", numero(e.target.value))} /></label>
         <label>Totale di bilancio € <input type="number" min={0} step={1000} value={p.totale_bilancio ?? ""} onChange={(e) => cambia("totale_bilancio", numero(e.target.value))} /></label>
-      </fieldset>
+      </fieldset>}
 
       <fieldset><legend>Sedi</legend>
         {p.sedi.map((s, i) => (
@@ -205,7 +219,7 @@ function Gruppo({ titolo, bandi, aperto }: { titolo: string; bandi: BandoRiga[];
   );
 }
 
-function Motivi({ classe, voci, segno }: { classe: string; voci: string[]; segno: string }) {
+export function Motivi({ classe, voci, segno }: { classe: string; voci: string[]; segno: string }) {
   if (!voci.length) return null;
   return <ul className={`motivi ${classe}`}>{voci.map((v) => <li key={v}>{segno} {v}</li>)}</ul>;
 }

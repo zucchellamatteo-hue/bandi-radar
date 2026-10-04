@@ -23,6 +23,36 @@ export interface FeedbackBando {
 export interface RigaFeedback extends GiudizioSalvato {
   email: string; nome: string | null; titolo: string; ente: string | null; versione_attuale: number; qualita: number | null; peso: number;
 }
+// Area impresa (app/impresa).
+export interface Impresa {
+  id: number; nome: string; profilo_codice: string; profilo: Profilo; fasce: { dipendenti?: string; fatturato?: string };
+  email_settimanale: boolean; sedi: number; creata_il: string;
+}
+export interface SchedaRidotta {
+  id: number; titolo: string; ente: string | null; territorio: string | null; url: string | null; stato: string | null;
+  data_apertura: string | null; ora_apertura: string | null; scadenza: string | null; ora_scadenza: string | null; chiuso_il: string | null;
+  sintesi: string | null; a_chi_si_rivolge: string | null; cosa_finanzia: string | null; spese_ammesse: string | null; requisiti: string | null;
+  tipi_agevolazione: string[] | null; tipo_agevolazione: string | null; contributo_massimo: number | null; percentuale: number | null;
+  fondo_perduto_massimo: number | null; finanziamento_massimo: number | null; spesa_minima: number | null; spesa_massima: number | null;
+  dotazione: number | null; modalita_selezione: string | null; forma_incentivo: FormaIncentivo | null; versione: number;
+  imprese: { id: number; nome: string; esito: EsitoRegole }[]; documenti_ufficiali: { nome: string; url: string }[]; avvertenza: string;
+}
+export type StatoRichiesta = "nuova" | "in_corso" | "accettata" | "chiusa";
+export const NOMI_STATO_RICHIESTA: Record<StatoRichiesta, string> = { nuova: "ricevuta", in_corso: "in valutazione", accettata: "accettata", chiusa: "chiusa" };
+export interface RichiestaSupporto {
+  id: number; bando_id: number; impresa_id: number; messaggio: string | null; stato: StatoRichiesta; creata_il: string;
+  bando_titolo: string; impresa_nome: string; email?: string; utente_nome?: string | null; nota?: string | null; bando_scadenza?: string | null; origine?: string;
+}
+export interface EmailImpresa {
+  id: number; impresa_id: number; impresa_nome?: string; utente_email?: string; settimana: string; oggetto: string; testo: string;
+  html: string | null; stato: string; creata_il: string; decisa_il: string | null; decisa_da: string | null; errore: string | null;
+  n_bandi?: number; bandi?: { bando_id: number; motivo: string }[];
+}
+export interface ImpresaIscritta {
+  id: number; nome: string; email_settimanale: boolean; creata_il: string; email: string; utente_nome: string | null;
+  attivo: boolean; sedi: number; richieste: number;
+}
+
 export const NOMI_RUOLO_UTENTE: Record<RuoloUtente, string> = { admin: "amministratore", revisore: "revisore", impresa: "impresa" };
 
 export type Colore = "verde" | "giallo" | "rosso" | "pausa";
@@ -221,6 +251,31 @@ export const api = {
       categorie: Record<string, string>; feedback: RigaFeedback[] }>("/api/feedback?" + new URLSearchParams(parametri).toString()),
   gestisciFeedback: (id: number, corpo: { stato: StatoFeedback; risposta: string }) =>
     chiama<GiudizioSalvato>(`/api/feedback/${id}`, { method: "PATCH", body: JSON.stringify(corpo) }),
+  statoRegistrazione: () => chiama<{ aperta: boolean }>("/api/accesso/registrazione"),
+  registrati: (corpo: { email: string; password: string; nome: string }) =>
+    chiama<{ messaggio: string }>("/api/accesso/registrazione", { method: "POST", body: JSON.stringify(corpo) }),
+  confermaEmail: (codice: string) => chiama<Utente>("/api/accesso/conferma", { method: "POST", body: JSON.stringify({ codice }) }),
+  disiscrivi: (codice: string) => chiama<{ impresa: string }>(`/api/disiscrizione?codice=${encodeURIComponent(codice)}`),
+  mieImprese: () => chiama<Impresa[]>("/api/impresa/imprese"),
+  creaImpresa: (corpo: { nome: string; profilo: Profilo; fasce: Impresa["fasce"] }) =>
+    chiama<Impresa>("/api/impresa/imprese", { method: "POST", body: JSON.stringify(corpo) }),
+  modificaImpresa: (id: number, corpo: { nome: string; profilo: Profilo; fasce: Impresa["fasce"]; email_settimanale?: boolean }) =>
+    chiama<Impresa>(`/api/impresa/imprese/${id}`, { method: "PUT", body: JSON.stringify(corpo) }),
+  cancellaImpresa: (id: number) => chiama(`/api/impresa/imprese/${id}`, { method: "DELETE" }),
+  bandiImpresa: (id: number) =>
+    chiama<{ impresa: { id: number; nome: string }; conteggi: { compatibile: number; da_verificare: number }; bandi: BandoRiga[] }>(`/api/impresa/imprese/${id}/bandi`),
+  schedaImpresa: (bandoId: string) => chiama<SchedaRidotta>(`/api/impresa/bandi/${bandoId}`),
+  richiediSupporto: (corpo: { impresa_id: number; bando_id: number; messaggio: string; origine: "piattaforma" | "email" }) =>
+    chiama<{ id: number; messaggio: string }>("/api/impresa/richieste", { method: "POST", body: JSON.stringify(corpo) }),
+  mieRichieste: () => chiama<RichiestaSupporto[]>("/api/impresa/richieste"),
+  impreseIscritte: () => chiama<ImpresaIscritta[]>("/api/imprese"),
+  richieste: () => chiama<RichiestaSupporto[]>("/api/richieste"),
+  gestisciRichiesta: (id: number, corpo: { stato: StatoRichiesta; nota: string }) =>
+    chiama<RichiestaSupporto>(`/api/richieste/${id}`, { method: "PATCH", body: JSON.stringify(corpo) }),
+  emailImprese: () => chiama<EmailImpresa[]>("/api/email-imprese"),
+  preparaEmail: () => chiama<Record<string, number>>("/api/email-imprese/prepara", { method: "POST" }),
+  inviaEmail: (id: number) => chiama<unknown>(`/api/email-imprese/${id}/invia`, { method: "POST" }),
+  scartaEmail: (id: number) => chiama<unknown>(`/api/email-imprese/${id}/scarta`, { method: "POST" }),
   utenti: () => chiama<Utente[]>("/api/utenti"),
   creaUtente: (corpo: { email: string; nome: string; ruolo: RuoloUtente }) =>
     chiama<{ utente: Utente; link: string; email: string }>("/api/utenti", { method: "POST", body: JSON.stringify(corpo) }),

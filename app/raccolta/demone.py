@@ -1,6 +1,7 @@
 """Servizio di raccolta: ogni ora controlla le fonti in scadenza e porta avanti la catena dei bandi (smistamento,
 deduplica, pagina ufficiale, allegati e, con la chiave API, l'IA con la Batch API: app/schede/ia.py, ciclo_catena);
-una volta al giorno ricalcola lo stato dei bandi; il lunedi' mattina manda il riepilogo della settimana.
+una volta al giorno ricalcola lo stato dei bandi; il lunedi' mattina manda il riepilogo della settimana e prepara le
+email per le imprese (app/notifiche/email_imprese.py).
 CATENA_AUTOMATICA=0 nel .env spegne la catena (resta solo la raccolta).
 Gira come container 'raccolta' in Docker Compose."""
 
@@ -59,6 +60,11 @@ def main() -> int:
                     e.riepilogo = invia_riepilogo()
             except Exception:  # noqa: BLE001
                 traceback.print_exc()
+        if adesso.weekday() == 0 and adesso.hour >= 7:   # poi le email per le imprese, anche loro una volta sola
+            try:
+                email_imprese_della_settimana()
+            except Exception:  # noqa: BLE001 - un errore qui non deve fermare la raccolta
+                traceback.print_exc()
         time.sleep(INTERVALLO_SECONDI)
 
 
@@ -83,6 +89,37 @@ def riepilogo_gia_inviato() -> bool:
         cur.execute("SELECT 1 FROM notifiche_inviate WHERE nome = 'novita_settimana' AND chiave = %s",
                     (f"{chiave.year}-W{chiave.week:02d}",))
         return cur.fetchone() is not None
+
+
+def email_imprese_della_settimana() -> str | None:
+    """Prepara le email settimanali per le imprese (una volta a settimana, registrata in notifiche_inviate) e avvisa
+    Matteo se ce ne sono da approvare. Ritorna il riepilogo, o None se questa settimana e' gia' stato fatto."""
+    from datetime import date
+
+    from app import utenti
+    from app.db.connessione import connetti
+    from app.notifiche.email_imprese import prepara, settimana_iso
+    from app.notifiche.novita_settimana import gia_inviato, registra_invio
+
+    settimana = settimana_iso(date.today())
+    with connetti() as conn:
+        if gia_inviato(conn, "email_imprese", settimana):
+            return None
+        conteggi = prepara(conn)
+        with conn.cursor() as cur:
+            cur.execute("SELECT count(*) AS n FROM email_imprese WHERE stato = 'da_approvare'")
+            da_approvare = cur.fetchone()["n"]
+        avviso = ""
+        destinatario = os.environ.get("EMAIL_MATTEO")
+        if da_approvare and destinatario:
+            avviso = "; avviso a Matteo: " + utenti.manda(
+                destinatario, f"Bandi Radar: {da_approvare} email per le imprese da approvare",
+                f"{da_approvare} email per le imprese da approvare: {utenti.sito_url()}/imprese\n")
+        riepilogo = (f"{conteggi['create']} email preparate per {conteggi['imprese']} imprese, "
+                     f"{da_approvare} da approvare{avviso}")
+        registra_invio(conn, "email_imprese", settimana, riepilogo[:500])
+    print(f"Email imprese {settimana}: {riepilogo}", flush=True)
+    return riepilogo
 
 
 if __name__ == "__main__":
