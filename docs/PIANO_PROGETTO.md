@@ -392,6 +392,7 @@ Piano di lavoro: `docs/sessioni/2026-10-05_prodotto_indipendente.md`.
 | Tappa | Cosa c'è |
 |---|---|
 | 1. Utenti e ruoli | Si entra con email e password (tabelle `utenti`, `sessioni`, `link_email`, `tentativi_accesso`; `app/utenti/`). Ruoli: admin (tutto, pagina Utenti), revisore (catalogo, schede, documenti; nessuna modifica), impresa (solo area impresa). Inviti con link per scegliere la password (7 giorni), recupero password (2 ore), pausa di 15 minuti dopo 5 errori. Utente e password del `.env` fanno entrare solo il primo admin. Comando sul server: `python -m app.utenti crea --email ... --ruolo revisore`. Le email partono quando Resend è configurato; intanto il link si copia dalla pagina Utenti. |
+| 2. Feedback sulle schede | Nella pagina del bando, riquadro "Il tuo giudizio": voto 1-5 ("mi fiderei a proporlo?") e problemi a categorie fisse con il campo e un testo (tabella `feedback`, `app/feedback/`); un giudizio per persona e versione, si può cambiare. Pagina **Feedback** per l'admin (filtri, stato, risposta) e "I miei giudizi" per il revisore. Gli agenti rileggono i documenti e correggono la scheda (`strumenti/sessione/ar/esporta_feedback.py`, `ISTRUZIONI_FEEDBACK.md`, `importa_feedback.py`), proponendo regole per prompt e controlli. "Stato sbagliato" fa ricontrollare la pagina ufficiale entro un'ora. I revisori pesano il doppio delle imprese. Dal 05/10 le date tecniche (pagina, documenti, stato cercati il…) non creano più una versione nuova della scheda: prima erano un terzo delle versioni. |
 
 **Ancora aperti:**
 

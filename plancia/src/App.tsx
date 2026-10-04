@@ -14,6 +14,7 @@ import Profili from "./pagine/Profili";
 import Lavorazione from "./pagine/Lavorazione";
 import Supervisione from "./pagine/Supervisione";
 import Utenti from "./pagine/Utenti";
+import Feedback from "./pagine/Feedback";
 import { Accesso, ImpostaPassword } from "./pagine/Accesso";
 import { ContestoUtente } from "./utente";
 
@@ -44,10 +45,12 @@ export default function App() {
           <NavLink to="/supervisione" className={classe}>Supervisione</NavLink>{" · "}
           <NavLink to="/doppioni" className={classe}>Doppioni</NavLink>{" · "}
           <NavLink to="/novita" className={classe}>Novità</NavLink>{" · "}
+          <NavLink to="/feedback" className={classe}>Feedback</NavLink>{" · "}
           <NavLink to="/utenti" className={classe}>Utenti</NavLink>
         </nav>}
         {utente.ruolo === "revisore" && <nav>
-          <NavLink to="/catalogo" className={classe}>Catalogo</NavLink>
+          <NavLink to="/catalogo" className={classe}>Catalogo</NavLink>{" · "}
+          <NavLink to="/feedback" className={classe}>I miei giudizi</NavLink>
         </nav>}
         <span className="chi-sono">
           {utente.nome || utente.email} <span className="piccolo">({NOMI_RUOLO_UTENTE[utente.ruolo]})</span>{" "}
@@ -72,11 +75,13 @@ export default function App() {
             <Route path="/novita" element={<Novita />} />
             <Route path="/novita/:chiave" element={<Settimana />} />
             <Route path="/utenti" element={<Utenti />} />
+            <Route path="/feedback" element={<Feedback />} />
           </Routes>
         ) : utente.ruolo === "revisore" ? (
           <Routes>
             <Route path="/catalogo" element={<Catalogo />} />
             <Route path="/bandi/:id" element={<Bando />} />
+            <Route path="/feedback" element={<Feedback />} />
             <Route path="*" element={<Navigate to="/catalogo" replace />} />
           </Routes>
         ) : (

@@ -5,6 +5,24 @@ export interface Utente {
   id: number; email: string; nome: string | null; ruolo: RuoloUtente; attivo?: boolean;
   creato_il?: string; ultimo_accesso?: string | null; password_impostata?: boolean;
 }
+// Feedback sulle schede (app/feedback): voto 1-5 e problemi.
+export type StatoFeedback = "nuovo" | "preso_in_carico" | "corretto" | "respinto";
+export const NOMI_STATO_FEEDBACK: Record<StatoFeedback, string> = {
+  nuovo: "nuovo", preso_in_carico: "preso in carico", corretto: "corretto", respinto: "respinto",
+};
+export interface ProblemaFeedback { categoria: string; campo: string | null; testo: string | null }
+export interface GiudizioSalvato {
+  id: number; bando_id: number; versione: number; ruolo: RuoloUtente; voto: number | null; problemi: ProblemaFeedback[];
+  commento: string | null; stato: StatoFeedback; risposta: string | null; aggiornato_il: string;
+  gestito_da: string | null; gestito_il: string | null; analisi: { regola?: string | null } | null;
+}
+export interface FeedbackBando {
+  versione: number; mio: GiudizioSalvato | null; categorie: Record<string, string>;
+  tutti: (GiudizioSalvato & { email: string; nome: string | null })[];
+}
+export interface RigaFeedback extends GiudizioSalvato {
+  email: string; nome: string | null; titolo: string; ente: string | null; versione_attuale: number; qualita: number | null; peso: number;
+}
 export const NOMI_RUOLO_UTENTE: Record<RuoloUtente, string> = { admin: "amministratore", revisore: "revisore", impresa: "impresa" };
 
 export type Colore = "verde" | "giallo" | "rosso" | "pausa";
@@ -195,6 +213,14 @@ export const api = {
     chiama<{ email: string; nome: string | null; scopo: string }>(`/api/accesso/link?codice=${encodeURIComponent(codice)}`),
   impostaPassword: (codice: string, password: string) =>
     chiama<Utente>("/api/accesso/imposta-password", { method: "POST", body: JSON.stringify({ codice, password }) }),
+  feedbackBando: (id: number) => chiama<FeedbackBando>(`/api/bandi/${id}/feedback`),
+  giudica: (id: number, corpo: { voto: number | null; problemi: ProblemaFeedback[]; commento: string | null }) =>
+    chiama<GiudizioSalvato>(`/api/bandi/${id}/feedback`, { method: "PUT", body: JSON.stringify(corpo) }),
+  feedback: (parametri: Record<string, string>) =>
+    chiama<{ totale: number; pagina: number; per_pagina: number; conteggi: Record<StatoFeedback, number>;
+      categorie: Record<string, string>; feedback: RigaFeedback[] }>("/api/feedback?" + new URLSearchParams(parametri).toString()),
+  gestisciFeedback: (id: number, corpo: { stato: StatoFeedback; risposta: string }) =>
+    chiama<GiudizioSalvato>(`/api/feedback/${id}`, { method: "PATCH", body: JSON.stringify(corpo) }),
   utenti: () => chiama<Utente[]>("/api/utenti"),
   creaUtente: (corpo: { email: string; nome: string; ruolo: RuoloUtente }) =>
     chiama<{ utente: Utente; link: string; email: string }>("/api/utenti", { method: "POST", body: JSON.stringify(corpo) }),

@@ -45,6 +45,16 @@ Finché `IA_SCHEDE_API` non è 1 nel `.env` (decisione di Matteo del 02/10), l'A
 | `ar/regole_stato.py`, `ar/pagine_oggi.py`, `ar/ISTRUZIONI_STATO.md`, `ar/importa_stato.py` | ricontrollo a mano dello stato dei proponibili (03/10): regole di chiusura senza IA, pagina ufficiale di oggi (una per sito alla volta), agenti che decidono aperto/chiuso con la citazione, salvataggio con il motivo |
 | `ar/regole_imprese.py`, `ar/esporta_imprese.py`, `ar/ISTRUZIONI_IMPRESE.md`, `ar/importa_imprese.py` | ricontrollo a mano dei beneficiari (03/10): regole sui testi, modulistica compresa; i "non per imprese" escono dal catalogo |
 | `ar/rifai.py` | rifare preliminare e scheda di alcuni bandi (per esempio dopo la rilettura OCR) |
+| `ar/esporta_feedback.py`, `ar/ISTRUZIONI_FEEDBACK.md`, `ar/importa_feedback.py` | feedback sulle schede (05/10): segnalazioni di revisori e imprese rilette dagli agenti sui documenti; correzioni nella scheda con la causa "feedback N", schede da rifare rimesse "da aggiornare", regole proposte da riportare a Matteo |
+
+## Feedback sulle schede
+
+Revisori e imprese votano le schede e segnalano errori (tabella `feedback`, pagina Feedback della plancia). Dopo `installa.sh`:
+
+1. `/tmp/claude-1000/ar.sh esporta_feedback.py` → una cartella `/tmp/claude-1000/ar/feedback/<id>/` per ogni segnalazione nuova con problemi o commento (senza dati di chi scrive); il feedback passa a "preso in carico". Il riepilogo dice quali bandi hanno più segnalazioni: vanno allo stesso agente;
+2. agenti (al massimo 5 insieme) con il prompt "Leggi /tmp/claude-1000/ar/ISTRUZIONI_FEEDBACK.md e lavora le cartelle 12, 15, 18";
+3. **`/tmp/claude-1000/ar.sh importa_feedback.py` subito dopo ogni agente** (prima con `--prova` se l'esito è dubbio): applica le correzioni, rimette "da aggiornare" le schede da rifare, scrive la risposta per chi ha segnalato. Gli esiti con errori restano "preso in carico": si correggono e si reimportano;
+4. riporta a Matteo le **regole proposte** stampate alla fine (sono anche in `/tmp/claude-1000/ar/feedback/regole_proposte.md`): cambiare il prompt o i controlli lo decide lui.
 
 ## Regole
 
