@@ -310,20 +310,26 @@ def giro() -> dict:
         with connetti() as conn:
             try:
                 ia.cmd_raccogli(conn)
-                # Controlli preliminari con chiamate dirette: la scheda parte gia' in questo giro (02/10).
-                preliminari = ia.cmd_preliminari_diretti(conn)
+                # Dal 05/10 (prodotto indipendente) il lavoro pesante va a lotti, a meta' prezzo: anche i controlli
+                # preliminari, che dal 02/10 partivano con chiamate dirette. Con IA_PRELIMINARI_DIRETTI=1 si torna
+                # alle chiamate dirette (la scheda parte nello stesso giro, ma costa il doppio).
+                if os.environ.get("IA_PRELIMINARI_DIRETTI", "0") == "1":
+                    preliminari = ia.cmd_preliminari_diretti(conn)
                 # Un lotto in volo per tipo (prima uno solo per tutto: un lotto di smistamento bloccava le schede
                 # per 13 ore). Il costo resta sotto controllo con il tetto, che conta anche i lotti in volo.
                 in_volo = ia.scopi_in_volo(conn)
                 if "smistamento" not in in_volo:
                     ia.cmd_smista(conn, int(os.environ.get("CATENA_SMISTA_PER_GIRO", "100")), batch=True)
                 # Le schede con l'API solo se IA_SCHEDE_API=1 nel .env (decisione di Matteo del 02/10: finche' il
-                # servizio non e' venduto le schede si scrivono nelle sessioni di Claude Code, a costo zero; l'API fa
-                # smistamento, doppioni e controlli preliminari, che costano poco).
-                if os.environ.get("IA_SCHEDE_API", "0") == "1" and not in_volo & {"preliminare", "scheda"}:
-                    ia.cmd_schede_batch(conn)
+                # servizio non e' venduto le schede si scrivono nelle sessioni di Claude Code, a costo zero). Senza,
+                # il lotto porta solo controlli preliminari e seconde letture.
+                if not in_volo & {"preliminare", "scheda"}:
+                    if os.environ.get("IA_SCHEDE_API", "0") == "1":
+                        ia.cmd_schede_batch(conn)
+                    else:
+                        ia.cmd_schede_batch(conn, limite_schede=0)
             except ia.IASpenta as exc:
-                return f"{preliminari} controlli preliminari diretti; poi fermata: {exc}"
+                return f"{preliminari} controlli preliminari diretti; IA fermata: {exc}"
         n = _conta("SELECT count(*) FILTER (WHERE esito = 'inviata') AS inviate, count(*) FILTER (WHERE esito <> 'inviata') AS altre, "
                    "coalesce(sum(costo_usd), 0) AS costo FROM chiamate_ia WHERE fatta_il >= %s", inizio)
         return (f"{preliminari} controlli preliminari diretti; {n['inviate']} richieste mandate alla Batch API, "

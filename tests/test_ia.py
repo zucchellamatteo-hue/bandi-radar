@@ -316,6 +316,8 @@ def test_batch_preliminare_seconda_lettura_e_scheda(monkeypatch):
             assert "Seconda lettura" in finto.lotti[-1][0]["params"]["messages"][0]["content"]
             finto.risposte[f"pre2-{bando}"] = aperto
             ia.cmd_raccogli(conn)
+            ia.cmd_schede_batch(conn, limite_schede=0)          # IA_SCHEDE_API=0: a lotti solo i preliminari (05/10)
+            assert len(finto.lotti) == 2
             ia.cmd_schede_batch(conn)                           # 3. scheda
             assert [r["custom_id"] for r in finto.lotti[-1]] == [f"sch-{bando}"]
             ia.cmd_schede_batch(conn)                           # niente doppioni: la scheda e' gia' in volo
