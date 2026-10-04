@@ -1,0 +1,20 @@
+{"id": 4247,
+ "campi": {
+  "stato": {"esito": "giusto", "nota": "Domande dal 1/10 al 12/11/2026 ore 15:00."},
+  "data_apertura": {"esito": "giusto", "nota": ""},
+  "scadenza": {"esito": "giusto", "nota": ""},
+  "tipo_agevolazione": {"esito": "giusto", "nota": "Servizio gratuito, valore de minimis."},
+  "contributo_massimo": {"esito": "giusto", "nota": "5.100 euro e' il valore de minimis del servizio per impresa."},
+  "percentuale": {"esito": "giusto", "nota": "Determinazione: 'copertura del 100% dei costi di organizzazione'."},
+  "a_chi_si_rivolge": {"esito": "giusto", "nota": ""},
+  "territorio": {"esito": "giusto", "nota": "Province BG, CO, LC, MI, MB, LO, SO, VA coerenti con le Camere indicate."},
+  "dimensioni_ammesse": {"esito": "giusto", "nota": "Avviso 'PMI lombarde', pagina 'MPMI'."},
+  "codici_ateco": {"esito": "giusto", "nota": "Nessun elenco ATECO; esclusione delle societa' di consulenza riportata (solo dalla pagina web, correttamente segnalato)."},
+  "cosa_finanzia": {"esito": "giusto", "nota": ""},
+  "sintesi": {"esito": "giusto", "nota": ""}
+ },
+ "voto": 5,
+ "davvero_per_imprese_e_aperto": true,
+ "avvertenza_falsa_allegato": false,
+ "nota_generale": "Scheda precisa e fedele all'avviso e alla determinazione: date, 20 posti a sportello con valutazione di prefattibilita', 5.100 euro de minimis, paesi, costi a carico dell'impresa, polizza catastrofale. Servizio reale per PMI, aperto oggi."
+}

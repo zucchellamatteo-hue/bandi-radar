@@ -1,0 +1,20 @@
+{"id": 3971,
+ "campi": {
+  "stato": {"esito": "giusto", "nota": ""},
+  "data_apertura": {"esito": "giusto", "nota": "16/03/2026; la scheda avverte anche che l'invio tecnico e' partito dal 18/03, come dice la pagina."},
+  "scadenza": {"esito": "giusto", "nota": "29/01/2027 ore 16, Regolamento punto 2."},
+  "tipo_agevolazione": {"esito": "giusto", "nota": ""},
+  "contributo_massimo": {"esito": "giusto", "nota": "5.000 euro (punto 5), premialita' fisse descritte a parte."},
+  "percentuale": {"esito": "giusto", "nota": "50% al netto IVA."},
+  "a_chi_si_rivolge": {"esito": "giusto", "nota": ""},
+  "territorio": {"esito": "giusto", "nota": "Provincia di Brescia, regione LOM, provincia BS."},
+  "dimensioni_ammesse": {"esito": "giusto", "nota": "micro, piccola, media."},
+  "codici_ateco": {"esito": "giusto", "nota": "Tutti i settori; esclusi solo i settori esclusi dal de minimis (segnalato in avvertenza)."},
+  "cosa_finanzia": {"esito": "giusto", "nota": "Le quattro azioni del punto 4, periodo 2026."},
+  "sintesi": {"esito": "giusto", "nota": "Completa: importi, spesa minima, premialita', piattaforma, sportello cronologico, dotazione."}
+ },
+ "voto": 5,
+ "davvero_per_imprese_e_aperto": true,
+ "avvertenza_falsa_allegato": false,
+ "nota_generale": "Scheda accurata e completa rispetto al Regolamento AGEF 2605. Misura unica, nessun segnale di fondi esauriti nei documenti (lo sportello resta comunque aperto anche dopo l'esaurimento, come la scheda avverte)."
+}

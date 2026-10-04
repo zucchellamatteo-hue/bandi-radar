@@ -1,0 +1,19 @@
+{"id": 3878,
+ "campi": {
+  "stato": {"esito": "giusto", "nota": "Candidature dal 16/09/2026 alle 14:00 del 16/10/2026: aperto oggi."},
+  "data_apertura": {"esito": "giusto", "nota": "Art. 6: 'a partire da mercoledi' 16 settembre 2026'."},
+  "scadenza": {"esito": "giusto", "nota": "Art. 6: 'entro e non oltre le ore 14:00 del giorno 16 ottobre 2026'."},
+  "tipo_agevolazione": {"esito": "giusto", "nota": "Servizi (postazione di coworking e servizi), nessun contributo in denaro."},
+  "contributo_massimo": {"esito": "giusto", "nota": "Non applicabile: nessun importo in denaro."},
+  "percentuale": {"esito": "giusto", "nota": "Non applicabile."},
+  "a_chi_si_rivolge": {"esito": "giusto", "nota": "Imprese iscritte al RI di Nuoro (sede o unita' locale) e operatori in avvio con iscrizione entro 90 giorni."},
+  "territorio": {"esito": "giusto", "nota": "Provincia di Nuoro (RI CCIAA Nuoro); SAR / NU."},
+  "dimensioni_ammesse": {"esito": "giusto", "nota": "Nessun limite dimensionale nell'avviso."},
+  "codici_ateco": {"esito": "impreciso", "nota": "Scheda: nessun vincolo ATECO. Avviso: preferenza solo a parita' di punteggio per ICC, digitale, transizione energetica, ma art. 11 prevede la decadenza se l'impresa modifica l'attivita' 'rendendola incompatibile con gli ambiti tematici (ICC, digitale, energia e sostenibilita') che hanno giustificato l'ammissione': il legame con quei settori e' piu' forte di una semplice preferenza."},
+  "cosa_finanzia": {"esito": "giusto", "nota": "Coerente con art. 5 e Allegato A (postazione fissa, sale riunioni 2 h/sett., fino a 3 prenotazioni annue per sala eventi, multimediale, formativa)."},
+  "sintesi": {"esito": "giusto", "nota": "Fedele: servizi in cambio di animazione territoriale, PEC, graduatoria 100 punti soglia 60, accordo annuale."}
+ },
+ "voto": 4,
+ "davvero_per_imprese_e_aperto": true,
+ "avvertenza_falsa_allegato": false,
+ "nota_generale": "Scheda corretta e onesta: chiarisce che non e' un contributo in denaro e segnala che l'avviso non dice se la postazione sia gratuita (la determina 414 parla di 'condizioni agevolate'). E' un'opportunita' marginale come 'agevolazione': accesso a spazi di coworking in cambio di impegni di animazione, adatta soprattutto a startup e professionisti del nuorese nei settori ICC, digitale ed energia. Aperta fino al 16/10/2026."}

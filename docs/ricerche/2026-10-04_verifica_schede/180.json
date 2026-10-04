@@ -1,0 +1,20 @@
+{"id": 180,
+ "campi": {
+  "stato": {"esito": "giusto", "nota": "Aperto fino al 10/12/2026 o esaurimento dei 105.000 euro; nei documenti nessuna notizia di esaurimento."},
+  "data_apertura": {"esito": "giusto", "nota": ""},
+  "scadenza": {"esito": "giusto", "nota": ""},
+  "tipo_agevolazione": {"esito": "giusto", "nota": ""},
+  "contributo_massimo": {"esito": "sbagliato", "nota": "Scheda: 20.000 euro (linea consulenza) e isola formativa 'massimale non nei documenti'. Avviso, Linea Isola formativa: 'ammontare massimo di 15.000,00 per ciascun partecipante, fino a un massimo di 5 partecipanti' = 75.000 euro per progetto. Il massimo del bando e' quindi 75.000, non 20.000."},
+  "percentuale": {"esito": "impreciso", "nota": "80% vale solo per la linea ausili ('nella misura dell'80% fino a un importo massimo di 15.000'); consulenza e isola formativa sono importi fissi per persona. La nota lo dice, ma il campo unico 80 puo' fuorviare."},
+  "a_chi_si_rivolge": {"esito": "giusto", "nota": ""},
+  "territorio": {"esito": "giusto", "nota": "Sede operativa in Lombardia, domanda alla Provincia dell'unita' produttiva (Lecco); LOM corretto."},
+  "dimensioni_ammesse": {"esito": "giusto", "nota": "Nessun vincolo dimensionale."},
+  "codici_ateco": {"esito": "giusto", "nota": "Nessun vincolo ATECO."},
+  "cosa_finanzia": {"esito": "impreciso", "nota": "Per l'isola formativa mancano le spese elencate nell'Avviso: consulenza percorsi, adattamento posti, ausili, tutoraggio (max 11.000/partecipante), rimborso indennita' tirocinio (max 7.200/partecipante)."},
+  "sintesi": {"esito": "impreciso", "nota": "Dice che il massimale dell'isola formativa 'non e' nei documenti ricevuti', mentre l'Avviso lo indica (15.000 per partecipante, max 5 partecipanti, durata 24 mesi)."}
+ },
+ "voto": 3,
+ "davvero_per_imprese_e_aperto": true,
+ "avvertenza_falsa_allegato": true,
+ "nota_generale": "Scheda in gran parte corretta su date, territorio, beneficiari, linee consulenza e ausili. Errore importante: l'avvertenza dice che l'Avviso e' tagliato a meta' della linea ausili e mancano le regole dell'isola formativa, ma la sezione 'LINEA ISOLA FORMATIVA' c'e' per intero (massimale 15.000 euro a partecipante fino a 5, spese, durata 24 mesi, partenariato, non cumulabilita' con le altre linee). Di conseguenza contributo massimo e sintesi sottostimano il bando. Bando a piu' misure ridotto a un numero (20.000 / 80%)."
+}

@@ -1,0 +1,20 @@
+{"id": 3055,
+ "campi": {
+  "stato": {"esito": "impreciso", "nota": "Scheda: 'aperto'. Il documento indica solo 'Single stage - 2027/2' con scadenza 2027-09-22, senza data di apertura: un bando con scadenza 2027/2 del programma 2026-27 e' plausibilmente 'in arrivo' (apertura nel 2027), non aperto oggi."},
+  "data_apertura": {"esito": "non verificabile", "nota": ""},
+  "scadenza": {"esito": "giusto", "nota": ""},
+  "tipo_agevolazione": {"esito": "giusto", "nota": ""},
+  "contributo_massimo": {"esito": "non verificabile", "nota": ""},
+  "percentuale": {"esito": "non verificabile", "nota": ""},
+  "a_chi_si_rivolge": {"esito": "giusto", "nota": ""},
+  "territorio": {"esito": "giusto", "nota": ""},
+  "dimensioni_ammesse": {"esito": "giusto", "nota": "Nessun vincolo dimensionale nel testo."},
+  "codici_ateco": {"esito": "giusto", "nota": "Nessun vincolo ATECO."},
+  "cosa_finanzia": {"esito": "giusto", "nota": ""},
+  "sintesi": {"esito": "giusto", "nota": ""}
+ },
+ "voto": 4,
+ "davvero_per_imprese_e_aperto": false,
+ "avvertenza_falsa_allegato": false,
+ "nota_generale": "Scheda fedele alla pagina del tema UE. E' un'azione di coordinamento (CSA) per consorzi multidisciplinari: le imprese possono partecipare ma non e' un'agevolazione tipica per PMI. Lo stato 'aperto' non e' supportato dal testo: con scadenza 22/09/2027 e nessuna data di apertura, oggi e' piu' probabilmente in arrivo. Le avvertenze sugli Allegati generali mancanti sono corrette."
+}

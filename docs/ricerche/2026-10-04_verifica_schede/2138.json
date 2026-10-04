@@ -1,0 +1,19 @@
+{"id": 2138,
+ "campi": {
+  "stato": {"esito": "giusto", "nota": "aperto: termine 5/10/2026 (Determinazione art. 3, Avviso art. 5); al 04/10/2026 resta un giorno."},
+  "data_apertura": {"esito": "giusto", "nota": "Data di pubblicazione 23/09/2026."},
+  "scadenza": {"esito": "giusto", "nota": "'entro il 5 ottobre 2026', pagina ore 23:59."},
+  "tipo_agevolazione": {"esito": "giusto", "nota": "Contributo/finanziamento regionale alle manifestazioni."},
+  "contributo_massimo": {"esito": "non verificabile", "nota": "L'avviso non indica un massimo per manifestazione; solo 650.000 euro per annualita'."},
+  "percentuale": {"esito": "non verificabile", "nota": "Nessuna percentuale nei documenti."},
+  "a_chi_si_rivolge": {"esito": "impreciso", "nota": "Scheda: 'organizzatori di rally' e soggetti_ammessi include 'impresa'. Modulistica: il richiedente e' un 'sodalizio sportivo' che dichiara di fruire del regime L. 398/1991 e che 'NON E' un ente commerciale'. Di fatto associazioni/societa' sportive dilettantistiche, non imprese."},
+  "territorio": {"esito": "giusto", "nota": "'sede legale e operativa in Sardegna' (Avviso art. 3); sede_richiesta='legale' e' riduttivo ma il testo lo dice."},
+  "dimensioni_ammesse": {"esito": "giusto", "nota": "Nessuna dimensione: non pertinente."},
+  "codici_ateco": {"esito": "giusto", "nota": "Nessun vincolo ATECO."},
+  "cosa_finanzia": {"esito": "impreciso", "nota": "Corretto, ma l'avvertenza 'l'Avviso non elenca le spese ammissibili' trascura il piano finanziario della modulistica (vitto e alloggio, viaggi, tasse federali, spese arbitrali, comunicazione, premiazioni, compensi/premi)."},
+  "sintesi": {"esito": "giusto", "nota": "Fedele all'avviso."}
+ },
+ "voto": 4,
+ "davvero_per_imprese_e_aperto": false,
+ "avvertenza_falsa_allegato": false,
+ "nota_generale": "Il sistema oggi lo tratta correttamente come non per imprese (per_imprese=no): il modulo di domanda fa dichiarare al richiedente di essere un sodalizio sportivo in regime L. 398/1991 e di NON essere un ente commerciale. stato=aperto e' corretto fino al 05/10/2026, ma non rilevante per le imprese. La scheda e' fedele al testo; incoerenza interna: soggetti_ammessi contiene 'impresa' (dalla pagina regionale che indica 'impresa, cittadino')."}

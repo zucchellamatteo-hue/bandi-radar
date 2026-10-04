@@ -1,0 +1,20 @@
+{"id": 804,
+ "campi": {
+  "stato": {"esito": "giusto", "nota": "Aperto fino alle 13:00 del 21/10/2026."},
+  "data_apertura": {"esito": "giusto", "nota": ""},
+  "scadenza": {"esito": "giusto", "nota": ""},
+  "tipo_agevolazione": {"esito": "giusto", "nota": ""},
+  "contributo_massimo": {"esito": "giusto", "nota": "Unico contributo di 40.000 euro."},
+  "percentuale": {"esito": "giusto", "nota": "Nessuna percentuale nel testo (contributo fisso, costo minimo progetto 58.000 euro IVA esclusa)."},
+  "a_chi_si_rivolge": {"esito": "giusto", "nota": ""},
+  "territorio": {"esito": "giusto", "nota": "Nessun vincolo di sede; luogo dell'iniziativa a Rimini correttamente indicato."},
+  "dimensioni_ammesse": {"esito": "giusto", "nota": ""},
+  "codici_ateco": {"esito": "giusto", "nota": ""},
+  "cosa_finanzia": {"esito": "giusto", "nota": ""},
+  "sintesi": {"esito": "giusto", "nota": ""}
+ },
+ "voto": 5,
+ "davvero_per_imprese_e_aperto": false,
+ "avvertenza_falsa_allegato": false,
+ "nota_generale": "Scheda accurata e completa (450 mq, 15 gruppi scultorei, 3 anni di esperienza, 20/35 punti, 58.000 euro di costo minimo tutti confermati). Ma non e' un'agevolazione per imprese: e' un contributo a un unico soggetto per un evento natalizio, rivolto ad associazioni ed enti; le imprese con scopo di lucro sono ammesse solo devolvendo gli utili in beneficenza. Giusto che per_imprese sia 'incerto'; per i clienti di un commercialista e' di fatto irrilevante."
+}

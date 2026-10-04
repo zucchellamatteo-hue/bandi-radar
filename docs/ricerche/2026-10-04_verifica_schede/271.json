@@ -1,0 +1,19 @@
+{"id": 271,
+ "campi": {
+  "stato": {"esito": "giusto", "nota": "Finestra 2026 aperta dal 21/05/2026 al 31/12/2026, sportello fino a esaurimento (piattaforma fino al 110% della dotazione annuale)."},
+  "data_apertura": {"esito": "giusto", "nota": "Art. 9: 'per l'esercizio 2026, dal 21 maggio 2026 ore 12:00'."},
+  "scadenza": {"esito": "impreciso", "nota": "Scheda: 2028-12-29 (fine dell'ultima finestra). Documento: tre finestre annuali, la corrente chiude 'al 31/12/2026 ore 12:00'; la data e' vera ma chi guarda solo il campo non vede che entro fine 2026 va presentata la domanda per l'investimento avviato nel 2026 (le finestre sono pero' in avvertenze)."},
+  "tipo_agevolazione": {"esito": "giusto", "nota": "Contributo a fondo perduto, con opzione credito d'imposta."},
+  "contributo_massimo": {"esito": "giusto", "nota": "Nessun massimale in euro nell'avviso; solo i tetti di cumulo della Carta aiuti regionali (avvertenza presente)."},
+  "percentuale": {"esito": "giusto", "nota": "Base 10% dei costi salariali biennali (art. 8), 15% con condizioni premiali."},
+  "a_chi_si_rivolge": {"esito": "giusto", "nota": "Datori di lavoro privati che esercitano attivita' economica, a prescindere dalla forma giuridica, con P.IVA attiva."},
+  "territorio": {"esito": "giusto", "nota": "Investimento iniziale nel territorio della Regione Siciliana; SIC."},
+  "dimensioni_ammesse": {"esito": "giusto", "nota": "Tutte (art. 14 GBER, tetti di cumulo per piccole, medie e grandi)."},
+  "codici_ateco": {"esito": "giusto", "nota": "Nessun elenco ATECO; esclusi solo i soggetti non agevolabili ex Reg. 651/2014, segnalato come 'non_noto' con avvertenza."},
+  "cosa_finanzia": {"esito": "giusto", "nota": "Costi salariali biennali dei nuovi assunti a tempo indeterminato legati a investimento iniziale avviato dal 9/1/2026."},
+  "sintesi": {"esito": "giusto", "nota": "Fedele: 10%/15%, condizioni premiali, dotazione 50 mln/anno, finestre, anticipo 70% con fideiussione."}
+ },
+ "voto": 4,
+ "davvero_per_imprese_e_aperto": true,
+ "avvertenza_falsa_allegato": false,
+ "nota_generale": "Scheda accurata e ben documentata. Unico punto da migliorare: la scadenza indicata e' quella dell'ultima finestra (29/12/2028) invece della finestra in corso (31/12/2026); l'informazione corretta c'e' nelle avvertenze e nella sintesi. Le maggiorazioni sono rese come due +5 punti, ma il bando prevede un 15% unico se ricorre almeno una condizione (la nota lo chiarisce). Aperto oggi, salvo raggiungimento del 110% della dotazione 2026, di cui i documenti non danno notizia."}

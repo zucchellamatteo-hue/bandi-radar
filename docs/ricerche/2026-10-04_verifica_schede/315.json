@@ -1,0 +1,20 @@
+{"id": 315,
+ "campi": {
+  "stato": {"esito": "giusto", "nota": "Pagina 'Aperto'; sportello fino alle 12:00 del 30/09/2027 o esaurimento dotazione, nessuna notizia di esaurimento."},
+  "data_apertura": {"esito": "giusto", "nota": ""},
+  "scadenza": {"esito": "giusto", "nota": ""},
+  "tipo_agevolazione": {"esito": "giusto", "nota": ""},
+  "contributo_massimo": {"esito": "giusto", "nota": "200.000 euro per partenariato e per fiera (non per singola impresa: la scheda lo dice)."},
+  "percentuale": {"esito": "giusto", "nota": "'fino al 90% delle spese ammissibili'."},
+  "a_chi_si_rivolge": {"esito": "giusto", "nota": ""},
+  "territorio": {"esito": "giusto", "nota": ""},
+  "dimensioni_ammesse": {"esito": "giusto", "nota": ""},
+  "codici_ateco": {"esito": "giusto", "nota": "Esclusioni ATECO 2025 sezioni A, L, M e codici tabacco riportate correttamente."},
+  "cosa_finanzia": {"esito": "giusto", "nota": ""},
+  "sintesi": {"esito": "giusto", "nota": ""}
+ },
+ "voto": 5,
+ "davvero_per_imprese_e_aperto": true,
+ "avvertenza_falsa_allegato": false,
+ "nota_generale": "Scheda completa e fedele al bando (Allegato A al Decreto 6379/2026): 90% fino a 200.000 euro per partenariato e fiera, almeno 5 MPMI, soglia 55/100, dotazione 4.646.882,96, settori e esclusioni ATECO corretti. Unico limite pratico: il contributo e' per il partenariato, l'impresa singola non puo' partecipare da sola, e la scheda lo rende chiaro."
+}

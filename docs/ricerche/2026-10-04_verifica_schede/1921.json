@@ -1,0 +1,19 @@
+{"id": 1921,
+ "campi": {
+  "stato": {"esito": "giusto", "nota": "in_arrivo: seconda apertura dal 1/12/2026 (art. 10), prima apertura 12/05-30/06/2026 chiusa."},
+  "data_apertura": {"esito": "giusto", "nota": "'Seconda apertura dalle ore 10.00 del 1 dicembre 2026'."},
+  "scadenza": {"esito": "giusto", "nota": "'Alle ore 17.00 del 2 febbraio 2027'."},
+  "tipo_agevolazione": {"esito": "giusto", "nota": ""},
+  "contributo_massimo": {"esito": "giusto", "nota": "36.000 euro con impegno di certificazione ambientale (art. 8 c. 4), base 35.400; la sintesi spiega entrambi."},
+  "percentuale": {"esito": "impreciso", "nota": "Il campo percentuale dice 60, ma la base e' 59% ('percentuale del 59% della spesa ammessa', art. 8 c. 2); 60% solo con impegno di certificazione ambientale. intensita.percentuale_base=59 e' corretta."},
+  "a_chi_si_rivolge": {"esito": "giusto", "nota": "PMI, ATECO J 59.11 primario o secondario, sede legale/unita' operativa in Italia o UE, esclusi liberi professionisti, fondazioni, associazioni (art. 4)."},
+  "territorio": {"esito": "giusto", "nota": "Imprese italiane o UE, attivita' realizzate in Veneto (art. 3); elenco regioni vuoto coerente con l'ammissione di imprese di tutta Italia/UE."},
+  "dimensioni_ammesse": {"esito": "giusto", "nota": ""},
+  "codici_ateco": {"esito": "giusto", "nota": "'codice ISTAT ATECO, primario o secondario, J 59.11'."},
+  "cosa_finanzia": {"esito": "giusto", "nota": "doc >= 30 minuti, short <= 30 minuti, XR (art. 5)."},
+  "sintesi": {"esito": "giusto", "nota": "Riporta base 59%/35.400 e maggiorazione 60%/36.000, spesa minima 20.000, date e dotazione 190.000."}
+ },
+ "voto": 5,
+ "davvero_per_imprese_e_aperto": true,
+ "avvertenza_falsa_allegato": false,
+ "nota_generale": "Scheda accurata. Unico neo: il campo percentuale (60) non segue la regola della percentuale base (59). Bando a due tipologie (A e B): la scheda riguarda solo la B e lo dichiara nelle avvertenze. Seconda finestra in arrivo dal 1/12/2026."}

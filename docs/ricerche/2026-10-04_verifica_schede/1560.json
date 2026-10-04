@@ -1,0 +1,19 @@
+{"id": 1560,
+ "campi": {
+  "stato": {"esito": "giusto", "nota": "La pagina del bando riporta 'Aperto'; sportello fino a esaurimento dei 2 milioni, concessioni ancora in corso (3o provvedimento 14/01/2026)."},
+  "data_apertura": {"esito": "giusto", "nota": "'Domande dal: 02/07/2025, ore 10:00'."},
+  "scadenza": {"esito": "giusto", "nota": "Nessuna data: 'sino ad esaurimento della dotazione finanziaria' (art. C.1), con lista d'attesa fino a +20%."},
+  "tipo_agevolazione": {"esito": "giusto", "nota": "Misto: finanziamento agevolato 70% + due eventuali contributi a fondo perduto del 10%."},
+  "contributo_massimo": {"esito": "impreciso", "nota": "Scheda: 40.000 (solo fondo perduto, che e' eventuale e legato a risultati). Documento: agevolazione fino a 180.000 euro, di cui finanziamento 'non oltre 140.000' e due contributi 'non oltre 20.000 euro' ciascuno 'al raggiungimento dei risultati'. La sintesi lo spiega bene, il campo isolato no."},
+  "percentuale": {"esito": "impreciso", "nota": "Scheda: 20 (e percentuale_base null). Documento: base 'Finanziamento agevolato pari al 70% delle spese'; il 10%+10% a fondo perduto e' 'eventuale'. Come percentuale base il 20% non e' garantito."},
+  "a_chi_si_rivolge": {"esito": "giusto", "nota": "Cooperative e consorzi iscritti al RI della Lombardia e all'Albo; escluse coop di edilizia e abitazione."},
+  "territorio": {"esito": "giusto", "nota": "Sede legale e/o almeno una operativa in Lombardia; LOM."},
+  "dimensioni_ammesse": {"esito": "giusto", "nota": "Tutte, grandi imprese incluse (purche' rating non inferiore a B)."},
+  "codici_ateco": {"esito": "giusto", "nota": "Esclusi codice primario sezione M (attivita' immobiliari, ATECO 2025) e coop agricole sezione A."},
+  "cosa_finanzia": {"esito": "giusto", "nota": "Beni strumentali, software/digitale, consulenze, ristrutturazione locali; spese 50.000-200.000 come da bando."},
+  "sintesi": {"esito": "giusto", "nota": "Chiara su 70% di finanziamento all'1,5%, contributi condizionati e totale 180.000."}
+ },
+ "voto": 4,
+ "davvero_per_imprese_e_aperto": true,
+ "avvertenza_falsa_allegato": false,
+ "nota_generale": "Scheda fedele e dettagliata. Il limite e' nei campi numerici: percentuale 20 e contributo massimo 40.000 rappresentano solo la parte a fondo perduto condizionata, mentre l'aiuto principale e' il finanziamento al 70% (fino a 140.000): un abbinamento che legge solo questi campi sottovaluta e insieme travisa il bando. Sportello ancora 'Aperto' secondo la pagina; fondi da 2 milioni con piu' decreti di concessione gia' emessi, quindi rischio di esaurimento da verificare (l'avvertenza lo dice)."}

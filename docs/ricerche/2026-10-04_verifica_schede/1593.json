@@ -1,0 +1,20 @@
+{"id": 1593,
+ "campi": {
+  "stato": {"esito": "giusto", "nota": "Sportello aperto dal 05/08/2025; dal 22/09/2026 domande dalla nuova scheda del catalogo bandi. Nessun avviso di chiusura o esaurimento."},
+  "data_apertura": {"esito": "giusto", "nota": "05/08/2025 ore 12."},
+  "scadenza": {"esito": "giusto", "nota": "Nessuna scadenza nell'avviso (art. 3: istanze dalla data della determina, senza termine finale); l'avvertenza segnala il 31/12/2029 del catalogo nazionale."},
+  "tipo_agevolazione": {"esito": "giusto", "nota": "Art. 9 c.10: sovvenzione, contributi in conto impianti."},
+  "contributo_massimo": {"esito": "giusto", "nota": "Nessun tetto al contributo nell'avviso; ci sono tetti di spesa (art. 8) riportati nella scheda."},
+  "percentuale": {"esito": "impreciso", "nota": "Scheda: 70 (ricerca industriale/formazione piccole imprese). L'avviso, art. 9 c.1, per gli investimenti produttivi (la voce principale) da' 65% piccole, 55% medie, 45% grandi; il 70% vale solo per R&S industriale e formazione delle piccole. Il dettaglio per dimensione nella scheda e' corretto."},
+  "a_chi_si_rivolge": {"esito": "giusto", "nota": "Art. 4 riportato fedelmente (due bilanci per grandi/medie, fatturato medio 1 milione per micro/piccole, start up TRL 5)."},
+  "territorio": {"esito": "giusto", "nota": "Unita' locali in Puglia (PUG)."},
+  "dimensioni_ammesse": {"esito": "giusto", "nota": "Tutte, con requisiti diversi."},
+  "codici_ateco": {"esito": "impreciso", "nota": "Scheda esclude in blocco 05, 24.1 e sezione H. Avviso art. 5 c.4: trasporti, siderurgia, lignite e carbone esclusi solo per gli investimenti produttivi (aiuti a finalita' regionale), non per R&S/formazione; l'avvertenza lo dice ma l'elenco esclusi e' piu' rigido del bando."},
+  "cosa_finanzia": {"esito": "giusto", "nota": "Art. 7 riportato correttamente."},
+  "sintesi": {"esito": "giusto", "nota": "Completa e corretta su azioni, dotazioni, soglie e intensita'."}
+ },
+ "voto": 4,
+ "davvero_per_imprese_e_aperto": true,
+ "avvertenza_falsa_allegato": true,
+ "nota_generale": "Scheda molto accurata. Avvertenza falsa: dice che il testo dell'avviso e' tagliato dall'art. 19 e che l'Allegato 5 non e' stato letto, ma nei documenti l'avviso modificato (BURP 64/2026) e' completo fino all'art. 23, e Allegati 2, 4 e 5 sono presenti. Bando a piu' misure (azioni 12.1 e 13.1, tipi di spesa con intensita' diverse) gestito bene con linee e forma_incentivo; solo il campo percentuale riduce tutto a 70. Bando rivolto a imprese medio-grandi con progetti da almeno 1 milione in tecnologie STEP."
+}

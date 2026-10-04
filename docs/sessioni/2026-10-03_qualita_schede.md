@@ -1,5 +1,7 @@
 # Sessione sul server: qualità delle schede proponibili
 
+*Eseguito il 03-04/10/2026: risultati in `docs/ricerche/2026-10-02_verifica_schede.md`, sezione "Seconda misura".*
+
 *Piano preparato il 02/10/2026 dopo la verifica a campione (`docs/ricerche/2026-10-02_verifica_schede.md`). Da incollare in una nuova sessione di Claude Code sul server (cartella `~/bandi-radar` dell'utente `ubuntu`).*
 
 ---

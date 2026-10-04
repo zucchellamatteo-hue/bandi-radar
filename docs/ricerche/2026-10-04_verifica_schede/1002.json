@@ -1,0 +1,20 @@
+{"id": 1002,
+ "campi": {
+  "stato": {"esito": "giusto", "nota": "Sportello 01/10-07/10/2026, salvo chiusura anticipata per esaurimento fondi; nessun avviso di chiusura nei documenti (pagina aggiornata al 24/09)."},
+  "data_apertura": {"esito": "giusto", "nota": "01/10/2026 ore 15."},
+  "scadenza": {"esito": "giusto", "nota": "07/10/2026 ore 15."},
+  "tipo_agevolazione": {"esito": "giusto", "nota": ""},
+  "contributo_massimo": {"esito": "giusto", "nota": "Contributo fisso 2.000 euro, piu' premi di 300/200/200 euro sommabili (spiegato in avvertenza)."},
+  "percentuale": {"esito": "giusto", "nota": "Null coerente: contributo in cifra fissa, non percentuale."},
+  "a_chi_si_rivolge": {"esito": "giusto", "nota": "Art. 3: codici ATECO2025 primari/prevalenti e secondari per 55.20.5 e 56.11.91."},
+  "territorio": {"esito": "impreciso", "nota": "Scheda: imprese con sede nella provincia di Vicenza. Bando art. 3: il requisito di sede/unita' locale in circoscrizione deve sussistere 'almeno al momento della liquidazione'; chi non ce l'ha alla domanda puo' impegnarsi a ottenerlo. Elenco regioni VEN/VI corretto."},
+  "dimensioni_ammesse": {"esito": "giusto", "nota": "Nessun vincolo dimensionale nel bando."},
+  "codici_ateco": {"esito": "giusto", "nota": "55.1, 55.2, 55.3, 56.11, 56.3, 79.1 e sottocodici; 55.20.5 e 56.11.91 anche secondari."},
+  "cosa_finanzia": {"esito": "giusto", "nota": "Art. 8 riportato fedelmente."},
+  "sintesi": {"esito": "giusto", "nota": "Importi, date, dotazione 220.000 e rendicontazione corretti."}
+ },
+ "voto": 5,
+ "davvero_per_imprese_e_aperto": true,
+ "avvertenza_falsa_allegato": false,
+ "nota_generale": "Scheda fedele al bando 26FT. Aperto oggi ma solo fino al 07/10/2026 ore 15, a sportello cronologico con 220.000 euro (circa 110 contributi da 2.000): rischio concreto di esaurimento anticipato gia' nei primi giorni, la sintesi lo menziona ma andrebbe messo piu' in evidenza vista l'urgenza."
+}

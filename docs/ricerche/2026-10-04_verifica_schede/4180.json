@@ -1,0 +1,20 @@
+{"id": 4180,
+ "campi": {
+  "stato": {"esito": "giusto", "nota": "Pagina: 'Stato Aperto', sportello prorogato all'11/02/2027."},
+  "data_apertura": {"esito": "giusto", "nota": "03/02/2026 ore 9 (DD 659/2025)."},
+  "scadenza": {"esito": "giusto", "nota": "11/02/2027 ore 12 (DD 331 del 22/07/2026), salvo sospensione per esaurimento."},
+  "tipo_agevolazione": {"esito": "giusto", "nota": "Misto: finanziamento agevolato 100% (70% tasso zero + 30% bancario) + fondo perduto solo PMI; Bando B fondo perduto."},
+  "contributo_massimo": {"esito": "impreciso", "nota": "Scheda: null a livello generale. Documenti: Bando B max 200.000 euro (25.000 per ULA); Bando A finanziamento fino a 3.000.000. Le cifre sono nelle linee ma il campo principale e' vuoto."},
+  "percentuale": {"esito": "impreciso", "nota": "Scheda: null. Bando A 2.12.1: finanziamento 'fino al 100%'; la tabella delle intensita' del fondo perduto (2.12.4) non e' nel testo estratto. Premialita' +1%/+2% leggibili nel bando in vigore ma riportate senza valore."},
+  "a_chi_si_rivolge": {"esito": "giusto", "nota": ""},
+  "territorio": {"esito": "giusto", "nota": "Piemonte (PIE), area a destinazione produttiva."},
+  "dimensioni_ammesse": {"esito": "impreciso", "nota": "Scheda: include 'grande'. Bando: solo PMI e imprese a media capitalizzazione (queste solo finanziamento, senza fondo perduto); avvertenza lo spiega."},
+  "codici_ateco": {"esito": "impreciso", "nota": "Scheda: nessun codice escluso, 'allegato non leggibile'. Bando A Allegato 4 (leggibile): esclusi tabacco e superalcolici, armi, case da gioco, pesca/acquacoltura/silvicoltura, produzione agricola primaria, attivita' finanziarie e assicurative; in aree 107.3.c anche siderurgia, carbone, trasporti, energia."},
+  "cosa_finanzia": {"esito": "giusto", "nota": ""},
+  "sintesi": {"esito": "giusto", "nota": "Corretta su importi, soglie, date e gestore."}
+ },
+ "voto": 3,
+ "davvero_per_imprese_e_aperto": true,
+ "avvertenza_falsa_allegato": true,
+ "nota_generale": "L'avvertenza dice che i testi in vigore dei Bandi A e B (aggiornati con DD 331/2026) non erano tra i documenti e che mancano tutte le cifre: falso, 'Bando A - aggiornato con DD n. 331 del 22.07.2026' e 'Bando B - Aggiornato con DD n. 331' sono nei documenti e leggibili. Dal Bando A in vigore si ricavano: durata progetto 30 mesi dalla concessione (proroga max 12), durata finanziamento 60/72/84 mesi con preammortamento 6/12, tetti per voce (20% opere accessorie, 10% proprieta' intellettuale, 20% progettazione, 15%, 50% cumulato), beni min 500 euro, premialita' +1%/+2%, elenco attivita' escluse (Allegato 4), preventivi per almeno il 70% dell'investimento. Resta davvero assente nel testo solo la tabella delle intensita' (2.12.4). Scheda utilizzabile per il quadro generale ma da completare. Bando a piu' misure gestito con le linee A e B (corretto); nessun esaurimento fondi dichiarato."
+}

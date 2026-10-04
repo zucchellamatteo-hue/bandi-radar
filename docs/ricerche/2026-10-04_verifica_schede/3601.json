@@ -1,0 +1,20 @@
+{"id": 3601,
+ "campi": {
+  "stato": {"esito": "giusto", "nota": "Aperto fino alle 23:59 del 30/10/2026."},
+  "data_apertura": {"esito": "giusto", "nota": "Pagina: 'Domande dal Gio, 03/09/2026'."},
+  "scadenza": {"esito": "giusto", "nota": ""},
+  "tipo_agevolazione": {"esito": "giusto", "nota": "Contributo in conto capitale."},
+  "contributo_massimo": {"esito": "giusto", "nota": "97.500 = 65% di 150.000 di spesa massima; derivato, correttamente segnalato nelle avvertenze."},
+  "percentuale": {"esito": "giusto", "nota": "'65% della spesa ammissibile per tutte le tipologie di investimento'."},
+  "a_chi_si_rivolge": {"esito": "giusto", "nota": ""},
+  "territorio": {"esito": "giusto", "nota": ""},
+  "dimensioni_ammesse": {"esito": "giusto", "nota": "Nessun vincolo dimensionale."},
+  "codici_ateco": {"esito": "giusto", "nota": "'01' coerente con imprenditori agricoli e comparti di coltivazione ammessi; non e' un elenco ATECO del bando ma una deduzione dichiarata."},
+  "cosa_finanzia": {"esito": "giusto", "nota": ""},
+  "sintesi": {"esito": "giusto", "nota": ""}
+ },
+ "voto": 5,
+ "davvero_per_imprese_e_aperto": true,
+ "avvertenza_falsa_allegato": false,
+ "nota_generale": "Scheda molto accurata: 65%, spesa 5.000-150.000, PS >= 12.000 euro, dotazione 571.686 integrabile fino a 3 milioni, punteggio minimo 20, scadenza 30/10/2026 23:59 tutti confermati dai documenti. Agevolazione reale per imprese agricole (CD/IAP) piemontesi, aperta oggi."
+}
