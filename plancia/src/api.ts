@@ -341,6 +341,7 @@ export const api = {
   modificaPasso: (id: number, corpo: Partial<Passo>) => chiama<Passo>(`/api/passi/${id}`, { method: "PATCH", body: JSON.stringify(corpo) }),
   cancellaPasso: (id: number) => chiama(`/api/passi/${id}`, { method: "DELETE" }),
   guida: () => chiama<{ id: string; titolo: string; testo: string; per: string[] }[]>("/api/guida"),
+  cancellaAccount: (password: string) => chiama("/api/account/cancella", { method: "POST", body: JSON.stringify({ password }) }),
   utenti: () => chiama<Utente[]>("/api/utenti"),
   creaUtente: (corpo: { email: string; nome: string; ruolo: RuoloUtente }) =>
     chiama<{ utente: Utente; link: string; email: string }>("/api/utenti", { method: "POST", body: JSON.stringify(corpo) }),

@@ -21,6 +21,7 @@ import Campagne from "./pagine/Campagne";
 import Misure from "./pagine/Misure";
 import Passi from "./pagine/Passi";
 import Guida from "./pagine/Guida";
+import Account from "./pagine/Account";
 import { Abbonamento, MieImprese, MieiBandi, MieRichieste, ModuloImpresa, SchedaImpresa } from "./pagine/AreaImpresa";
 import { ContestoUtente, puo } from "./utente";
 
@@ -82,7 +83,7 @@ export default function App() {
           <NavLink to="/guida" className={classe}>Guida</NavLink>
         </nav>}
         <span className="chi-sono">
-          {utente.nome || utente.email} <span className="piccolo">({NOMI_RUOLO_UTENTE[utente.ruolo]})</span>{" "}
+          <NavLink to="/account" className={classe} title="Il mio account">{utente.nome || utente.email}</NavLink> <span className="piccolo">({NOMI_RUOLO_UTENTE[utente.ruolo]})</span>{" "}
           <button onClick={esci}>Esci</button>
         </span>
       </header>
@@ -95,6 +96,7 @@ export default function App() {
             <Route path="/fonti/:id" element={<DettaglioFonte />} />
             <Route path="/catalogo" element={<Catalogo />} />
             <Route path="/guida" element={<Guida />} />
+            <Route path="/account" element={<Account />} />
             <Route path="/passi" element={<Passi />} />
             <Route path="/misure" element={<Misure />} />
             <Route path="/misure/:id" element={<Misure />} />
@@ -127,6 +129,7 @@ export default function App() {
           <Routes>
             <Route path="/catalogo" element={<Catalogo />} />
             <Route path="/guida" element={<Guida />} />
+            <Route path="/account" element={<Account />} />
             <Route path="/misure" element={<Misure />} />
             <Route path="/misure/:id" element={<Misure />} />
             <Route path="/bandi/:id" element={<Bando />} />
@@ -147,6 +150,7 @@ export default function App() {
             <Route path="/impresa/misure" element={<Misure base="/impresa/misure" />} />
             <Route path="/impresa/misure/:id" element={<Misure base="/impresa/misure" />} />
             <Route path="/guida" element={<Guida />} />
+            <Route path="/account" element={<Account />} />
             <Route path="*" element={<Navigate to="/impresa" replace />} />
           </Routes>
         )}
