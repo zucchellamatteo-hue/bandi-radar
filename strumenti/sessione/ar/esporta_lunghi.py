@@ -33,7 +33,7 @@ def titoli(testo: str, massimo: int = 60) -> list[tuple[int, str]]:
 def main() -> int:
     os.umask(0)
     ids = [int(x) for x in sys.argv[1:] if x.isdigit()]
-    _, modello = ia.leggi_prompt("prompt_scheda.md")
+    regole, modello = ia.leggi_prompt("prompt_scheda.md")   # regole e formato della scheda + messaggio con i dati
     oggi = date.today()
     with connetti() as conn:
         for bando_id in ids:
@@ -69,7 +69,8 @@ def main() -> int:
                                         "elencati in indice.md con titoli e articoli",
                 "documenti": [{"nome": "(vedi indice.md)", "url": "", "tipo": "pagina", "categoria": "altro",
                                "testo": "I documenti non sono qui: leggi indice.md e apri i file di documenti/."}]})
-            (cartella / "istruzioni.md").write_text(istruzioni)
+            (cartella / "istruzioni.md").write_text(ia.riempi(regole, {"data_oggi": oggi.isoformat()})
+                                                    + "\n\n---\n\n# Il bando\n\n" + istruzioni)
             print(f"{bando_id}: {n} documenti, {sum(len(a.get('testo_estratto') or '') for a in allegati):,} caratteri")
     return 0
 

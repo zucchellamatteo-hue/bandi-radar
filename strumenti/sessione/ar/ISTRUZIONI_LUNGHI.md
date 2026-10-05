@@ -17,11 +17,11 @@ in due passaggi. La cartella è `/tmp/claude-1000/ar/lunghi/<ID>/`.
 ## Passaggio 2: leggere solo il necessario e scrivere
 4. Apri i file `documenti/NN.txt` a pezzi con lo strumento Read (offset e limit sulle righe dell'indice): per ogni campo
    della scheda leggi l'articolo che ne parla (beneficiari, territorio, spese ammissibili, intensità e massimali, durata,
-   presentazione delle domande, criteri, erogazione). Puoi usare Grep sul file per trovare parole chiave.
+   presentazione delle domande, criteri, erogazione). Se lo strumento Grep c'è, usalo per trovare parole chiave.
 5. Se un bando ha più linee o assi, la scheda deve coprirli tutti (campo `linee`), non solo il primo.
 6. Scrivi la scheda in `scheda.json` nella stessa cartella, nel formato chiesto da `istruzioni.md`, con le citazioni
    (`fonti`) copiate dai documenti. Nelle `avvertenze` dì solo ciò che resta davvero incerto: non scrivere più che "il
    testo è tagliato", perché qui il testo è completo.
 
-Regole: usa solo Read, Grep e Write; nessun comando sul database; non modificare altri file. Alla fine rispondi con una
+Regole: usa solo Read, Write (e Grep se disponibile); nessun comando sul database; non modificare altri file. Alla fine rispondi con una
 riga: ID, scritta o no, e i dubbi principali.
