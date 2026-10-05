@@ -234,8 +234,10 @@ misure:
     intensita: >-
       10% della base di calcolo, massimo 5 milioni di euro per periodo d'imposta, per i periodi dal
       2023 al 2031. Base al netto di altre sovvenzioni o contributi ricevuti per le stesse spese.
-      Maggiorazioni per il Mezzogiorno e per le aree sisma: in vigore fino al 2025, proroga per il 2026
-      da verificare.
+      Nel 2026 aliquota unica 10% in tutta Italia: le maggiorazioni per il Mezzogiorno e le aree sisma
+      (art. 244 DL 34/2020: 25% grandi, 35% medie, 45% piccole) valevano fino al 2025 e non risultano
+      prorogate dalla L. 199/2025 (pagina MIMIT senza maggiorazioni per il 2026, fonti secondarie concordi;
+      testo della legge non letto per intero).
     beneficio_stimato:
       percentuale_min: 10
       percentuale_max: 10
@@ -264,9 +266,13 @@ misure:
       Rischio principale: contestazione della natura di R&S da parte dell'Agenzia (recupero con
       interessi e sanzioni); conviene la certificazione tecnica. Comunicazioni al MIMIT obbligatorie
       dal 2024: senza, il credito non si usa. Documentazione di progetto, timesheet del personale,
-      certificazione contabile. Il credito per innovazione tecnologica e design (5% fino al 2025) non
-      e' incluso qui: per il 2026 risulta un nuovo credito design con prenotazione e plafond di 60
-      milioni (piattaforma dal 07/07/2026), da verificare.
+      certificazione contabile. Questa voce copre solo la R&S. Il credito innovazione tecnologica
+      (anche 4.0 e green) era al 5% nel 2024-2025 e non e' stato prorogato per il 2026. Il credito
+      design e ideazione estetica per il 2026 esiste (L. 199/2025 art. 1 commi 925-926: 10%, max 2
+      milioni per impresa, utilizzo in una sola quota annuale, tetto complessivo 60 milioni con
+      prenotazione sulla piattaforma MIMIT dal 07/07/2026), ma i 60 milioni sono finiti in 24 ore
+      (comunicazione MIMIT dell'08/07/2026): le nuove prenotazioni restano in coda solo per un eventuale
+      scorrimento se arrivano altri fondi. Per questo non e' una voce separata "aperta".
     fonte_verificata_il: "2026-10-05"
 
   - id: credito_zes_unica_2026
@@ -418,7 +424,9 @@ misure:
 # Misure valutate e NON inserite (dettaglio nella ricerca):
 # - Credito d'imposta beni strumentali 4.0 (L. 178/2020) e Transizione 5.0 (DL 19/2024): chiusi per
 #   investimenti dal 2026, sostituiti dall'iperammortamento.
-# - Credito innovazione tecnologica/design/transizione 4.0 (L. 160/2019): 5% fino al 2025; per il 2026
-#   risulta un nuovo credito design con plafond 60 milioni e prenotazione: da verificare.
-# - Credito formazione 4.0: non risulta rinnovato, da verificare.
-# - Maggiorazioni R&S Mezzogiorno: da verificare per il 2026.
+# - Credito innovazione tecnologica / transizione 4.0 e green (L. 160/2019): 5% fino al 2025, non prorogato.
+# - Credito design e ideazione estetica 2026 (L. 199/2025 commi 925-926): 10%, ma plafond di 60 milioni
+#   esaurito l'08/07/2026; prenotazioni solo in coda per eventuale scorrimento. Rivedere se arrivano fondi.
+# - Credito formazione 4.0 (L. 205/2017 e proroghe): non piu' attivo (pagina MIMIT "La misura non e'
+#   piu' attiva"); non sostituito dall'iperammortamento, che riguarda solo beni.
+# - Maggiorazioni R&S Mezzogiorno (art. 244 DL 34/2020): fino al 2025, non prorogate per il 2026.
