@@ -1,0 +1,509 @@
+# Guida della piattaforma Bandi Radar (05/10/2026).
+# Ogni sezione si vede se l'utente ha ALMENO UNO dei valori in "per": "tutti", "admin", "impresa" oppure i permessi
+# "catalogo", "giudizi", "lavoro", "modifiche", "imprese". L'amministratore vede tutto.
+# Testo: paragrafi separati da una riga vuota, elenchi con "- " o "1. ", **grassetto** per pulsanti e voci di menu.
+# Quando cambia un nome nella plancia, va cambiato anche qui.
+
+sezioni:
+  - id: primo_accesso
+    titolo: "Primo accesso e password"
+    per: [tutti]
+    testo: |
+      Il tuo nome utente è il tuo indirizzo email. La password la scegli tu, la prima volta, con il link d'invito.
+
+      Primo accesso con il link d'invito:
+      1. Apri il link che hai ricevuto (per email o da chi ti ha invitato). Vale 7 giorni e si usa una sola volta.
+      2. Scrivi una password di almeno 10 caratteri, poi ripetila.
+      3. Premi **Salva ed entra**. Sei dentro.
+
+      Se il link è scaduto o già usato, la pagina lo dice: chiedi un link nuovo a chi ti ha invitato.
+
+      Le volte successive vai su https://finanzagevolata.qiaro.it, scrivi email e password e premi **Entra**. L'accesso resta aperto sullo stesso browser per 30 giorni.
+
+      Password dimenticata:
+      1. Nella pagina di accesso clicca **Password dimenticata?**.
+      2. Scrivi la tua email e premi **Mandami il link**.
+      3. Apri il link dell'email (vale 2 ore) e scegli la nuova password.
+
+      Finché il servizio email non è attivo, l'email potrebbe non arrivare: in quel caso chiedi all'amministratore un **Nuovo link**.
+
+      Dopo 5 password sbagliate l'accesso si blocca per 15 minuti. Poi puoi riprovare.
+
+      Per uscire premi **Esci**, in alto a destra, accanto al tuo nome e al tuo ruolo.
+
+  - id: menu
+    titolo: "Come è fatto il menu"
+    per: [catalogo, giudizi, lavoro, modifiche, imprese]   # il menu delle imprese e' spiegato nelle loro sezioni
+    testo: |
+      Il menu è la riga in alto. Ognuno vede solo le voci che gli servono.
+
+      - Impresa: **I miei bandi**, **Agevolazioni fiscali**, **Le mie imprese**, **Richieste di supporto**, **Abbonamento**.
+      - Revisore con i permessi di base: **Catalogo**, **Misure**, **I miei giudizi** (e **Imprese** se ha quel permesso).
+      - Chi ha il permesso "lavoro": **Fonti**, **Catalogo**, **Misure**, **Profili**, **Annunci**, **Lavorazione**, **Supervisione**, **Doppioni**, **Novità**, **Feedback**; con il permesso "imprese" anche **Imprese** e **Campagne**.
+      - Amministratore: tutto, più **Utenti** e **Prossimi passi**.
+
+      La voce **Guida** apre questa pagina: mostra solo le parti che ti riguardano.
+
+      In alto a destra vedi il tuo nome, il ruolo tra parentesi e il pulsante **Esci**.
+
+  - id: admin_primo_accesso
+    titolo: "Primo accesso dell'amministratore"
+    per: [admin]
+    testo: |
+      La prima volta non esiste ancora nessun utente. Per entrare si usano nome utente e password scritti nel file .env sul server (le voci BASIC_AUTH_USER e BASIC_AUTH_PASSWORD).
+
+      1. Nella pagina di accesso scrivi nel campo **Email** il nome utente del .env e nel campo **Password** la sua password.
+      2. Premi **Entra**. Il sistema crea il primo amministratore, con il nome "Amministratore".
+
+      Funziona solo finché non c'è un amministratore attivo. Dopo, valgono solo gli utenti e le password salvati nel sistema.
+
+      Subito dopo crea il tuo utente vero:
+      1. Vai in **Utenti**.
+      2. Scrivi la tua email vera, il tuo nome, scegli il ruolo **amministratore** e premi **Invita**.
+      3. Copia il link che compare, aprilo e scegli la tua password.
+      4. Da quel momento entra con la tua email. Se vuoi, al primo utente "Amministratore" premi **Togli accesso**: deve restare sempre almeno un amministratore attivo, e il sistema lo controlla.
+
+  - id: admin_utenti
+    titolo: "Creare un utente e mandargli l'invito"
+    per: [admin]
+    testo: |
+      Gli utenti si creano nella pagina **Utenti** (la vede solo l'amministratore).
+
+      1. Nella riga in cima scrivi l'email della persona e, se vuoi, il nome.
+      2. Scegli il ruolo: **amministratore**, **revisore** o **impresa**.
+      3. Premi **Invita**.
+
+      Compare un riquadro con il link per scegliere la password. Il servizio email (Resend) non è ancora configurato, quindi l'email d'invito non parte: premi **Copia** e manda tu il link alla persona (per email, WhatsApp, come preferisci). Quando le email funzioneranno, l'invito partirà da solo e il link resterà comunque visibile.
+
+      Il link vale 7 giorni e si usa una volta sola. Se scade, o se la persona ha dimenticato la password, premi **Nuovo link** sulla sua riga: il link vecchio smette di valere.
+
+      Nella colonna Stato vedi a che punto è ogni utente:
+      - "invitato, password da scegliere": non ha ancora aperto il link.
+      - "attivo": ha scelto la password.
+      - "accesso tolto": non può entrare.
+
+      La colonna Ultimo accesso dice quando è entrato l'ultima volta.
+
+  - id: admin_ruoli_permessi
+    titolo: "Ruoli e permessi"
+    per: [admin]
+    testo: |
+      I ruoli sono tre:
+      - **amministratore**: vede e fa tutto, compresa la gestione degli utenti e i Prossimi passi.
+      - **revisore**: vede e fa solo quello che spunti nella colonna Permessi. Di base: catalogo e giudizi.
+      - **impresa**: vede solo la sua area (i suoi bandi, le sue imprese, le richieste, l'abbonamento). Niente pagine di lavoro.
+
+      Il ruolo si cambia dal menu a tendina sulla riga dell'utente. I permessi valgono solo per i revisori; si accendono e spengono con le caselle nella colonna Permessi.
+
+      I permessi uno per uno:
+      - **catalogo**: vede il catalogo dei bandi, le schede, i documenti e le misure nazionali.
+      - **giudizi**: dà voti e segnala problemi sulle schede; vede i suoi giudizi.
+      - **lavoro**: vede tutte le pagine di lavoro (fonti, annunci, lavorazione, supervisione, doppioni, novità, profili) e i giudizi di tutti. Solo guardare, senza toccare.
+      - **modifiche**: può fare le azioni: rilanciare o mettere in pausa una fonte, correggere lo smistamento, unire o separare annunci, decidere i doppioni, salvare profili, gestire stato e risposta dei giudizi. Ha senso insieme a "lavoro".
+      - **imprese**: vede la pagina Imprese (clienti, richieste di supporto, email settimanali, abbonamenti) e le Campagne.
+
+      Tre ricette pronte:
+      1. Revisore che giudica soltanto: **catalogo** + **giudizi**.
+      2. Vede tutto senza toccare: **catalogo** + **giudizi** + **lavoro**.
+      3. Collaboratore con ampi poteri, ma senza gestire utenti né vedere i clienti: **catalogo** + **giudizi** + **lavoro** + **modifiche**.
+
+      Per fargli vedere anche clienti, richieste ed email aggiungi **imprese**. La pagina Utenti resta comunque solo dell'amministratore.
+
+      Quando cambi ruolo o permessi, l'utente viene fatto uscire e rientra con i poteri nuovi.
+
+  - id: admin_accesso
+    titolo: "Togliere e ridare l'accesso"
+    per: [admin]
+    testo: |
+      Nella pagina **Utenti**, sulla riga della persona:
+      - **Togli accesso**: la persona esce subito da tutti i dispositivi e non può più entrare. Resta nell'elenco, in grigio, con i suoi dati e i suoi giudizi.
+      - **Ridai accesso**: torna a entrare con la password di prima.
+
+      Gli utenti non si cancellano: si toglie l'accesso. Non si può togliere l'accesso all'ultimo amministratore attivo.
+
+  - id: admin_comandi_server
+    titolo: "Gestire gli utenti dal server"
+    per: [admin]
+    testo: |
+      Le stesse cose si possono fare dal server, utile se la plancia non si apre. Collegati con ssh ubuntu@146.59.145.138 e lancia una di queste righe.
+
+      Creare un utente (ruoli: admin, revisore, impresa). Stampa il link per scegliere la password, valido 7 giorni:
+      cd /srv/bandi-radar && sudo -u deploy docker compose exec app python -m app.utenti crea --email nome@esempio.it --ruolo revisore --nome "Nome"
+
+      Aggiungendo --senza-email in fondo non prova nemmeno a mandare l'invito.
+
+      Elenco degli utenti:
+      cd /srv/bandi-radar && sudo -u deploy docker compose exec app python -m app.utenti elenco
+
+      Nuovo link per scegliere la password (anche per chi l'ha dimenticata):
+      cd /srv/bandi-radar && sudo -u deploy docker compose exec app python -m app.utenti link --email nome@esempio.it
+
+      Togliere l'accesso:
+      cd /srv/bandi-radar && sudo -u deploy docker compose exec app python -m app.utenti disattiva --email nome@esempio.it
+
+      Ridare l'accesso:
+      cd /srv/bandi-radar && sudo -u deploy docker compose exec app python -m app.utenti attiva --email nome@esempio.it
+
+  - id: admin_prossimi_passi
+    titolo: "Prossimi passi"
+    per: [admin]
+    testo: |
+      La pagina **Prossimi passi** (solo amministratore) è l'elenco dei promemoria e dei lavori da fare sulla piattaforma. Serve a te per non perdere niente, e alle sessioni di Claude Code per sapere cosa fare.
+
+      Ogni voce ha:
+      - una descrizione di cosa va fatto, scritta come la diresti a voce;
+      - lo stato: da fare, in corso, fatto, rimandato;
+      - la priorità;
+      - chi se ne occupa (tu, Claude, un collaboratore).
+
+      Come si usa:
+      1. Per un'idea o un lavoro nuovo scrivi il titolo nella casella **nuovo passo** in alto, scegli il tipo (promemoria, da sviluppare, decisione), la priorità e chi se ne occupa, poi premi **Aggiungi**. Il tipo **da sviluppare** è quello che le sessioni di Claude prendono come lavoro da mandare in produzione.
+      2. Quando qualcuno ci lavora, lo stato passa a "in corso".
+      3. Quando è in produzione, lo stato diventa "fatto".
+      4. Se decidi di aspettare, mettilo "rimandato": resta in elenco ma nessuno ci lavora.
+
+      Puoi cambiare tipo, priorità, stato e responsabile direttamente dai menu nella riga, quando vuoi. Con **Modifica** cambi titolo e dettaglio (poi **Salva**); con **✗** cancelli la voce. I passi fatti spariscono dall'elenco: per rivederli spunta **mostra anche i fatti**. Chi ha il permesso "lavoro" vede l'elenco ma non può modificarlo.
+
+      Le sessioni di Claude Code leggono questo elenco come la lista dei lavori da portare in produzione: partono dalle voci "da fare" con la priorità più alta, le aggiornano mentre lavorano e le segnano come fatte quando la modifica è unita in main. Più la descrizione è chiara, meno domande ti faranno.
+
+  - id: lavoro_panoramica
+    titolo: "Le pagine di lavoro: cosa guardare"
+    per: [lavoro]
+    testo: |
+      Le pagine di lavoro mostrano come procede la raccolta dei bandi, dalle fonti fino alle schede. Con il solo permesso "lavoro" si guarda; le azioni richiedono anche "modifiche".
+
+      **Fonti** (la prima pagina). Una riga per ogni fonte, con un semaforo:
+      - verde: regolare;
+      - giallo: da guardare (un errore, silenzio sospetto, mai controllata);
+      - rosso: in errore (tre errori di fila o pagina cambiata);
+      - grigio: in pausa.
+
+      In alto i riquadri contano le fonti per colore (cliccali per filtrare), le novità degli ultimi 7 giorni e l'ultimo controllo. Il riquadro rosso **Allarmi** elenca le fonti con problemi. La colonna Silenzio dice da quanti giorni la fonte non pubblica nulla, rispetto alla sua soglia: una fonte silenziosa non è per forza sana. Il nome della fonte apre i suoi ultimi controlli e annunci.
+
+      **Annunci**. Tutto quello che pubblicano le fonti, anche le notizie. Le regole li smistano in rilevanti, da rivedere e non rilevanti. Si cerca per testo e si filtra per tipo di fonte, territorio, date, scadenza e smistamento. Il titolo apre la pagina dell'annuncio, con il motivo dello smistamento, il bando collegato e i documenti; **originale ↗** apre la pagina dell'ente.
+
+      **Lavorazione**. Due colonne, Annunci e Bandi, con quanti sono fermi in ogni fase tra la raccolta e la scheda. Cliccando una fase vedi chi è fermo lì e perché. Sotto: le ultime azioni del regista (il sistema che ogni ora porta avanti il lavoro) e la spesa dell'IA nel mese.
+
+      **Supervisione**. Tutti i sistemi automatici in un posto: cosa fanno, quando girano, com'è andata l'ultima volta. In alto: quanti sono in corso, quanti da guardare, quanti con l'ultimo giro ok. Cliccando un sistema vedi le sue ultime esecuzioni e i suoi dati. Si aggiorna da sola ogni 30 secondi.
+
+      **Doppioni**. Gli annunci che forse parlano di un bando già noto. Finché nessuno decide restano senza bando.
+
+      **Novità**. Una voce per settimana, con le stesse novità dell'email del lunedì.
+
+      **Profili**. Profili d'impresa di prova, anonimi (solo un codice, mai nomi o partite IVA). Compili il modulo e vedi i bandi aperti o in arrivo divisi in compatibili, da verificare ed esclusi, con il motivo. **Prova senza salvare** non registra nulla.
+
+      **Feedback**. I giudizi di revisori e imprese sulle schede, con lo stato.
+
+      Ogni giorno, in due minuti:
+      - **Fonti**: ci sono allarmi o fonti rosse?
+      - **Supervisione**: il riquadro "da guardare" è a zero?
+
+      Ogni settimana:
+      - **Doppioni**: decidere quelli aperti.
+      - **Annunci** con il filtro "Da rivedere": correggere lo smistamento.
+      - **Feedback**: guardare le segnalazioni nuove.
+      - **Lavorazione**: ci sono fasi con molti bandi fermi?
+      - **Novità**: leggere la settimana.
+
+  - id: modifiche
+    titolo: "Le azioni: correggere e decidere"
+    per: [modifiche]
+    testo: |
+      Con il permesso "modifiche" compaiono i pulsanti per agire. Le tue scelte valgono su tutto: i sistemi automatici non le cambiano mai.
+
+      Fonti (pagina **Fonti**, colonna Azioni):
+      - **▶**: controlla la fonte adesso. Ricarica la pagina dopo qualche secondo per vedere l'esito.
+      - **⏸**: mette la fonte in pausa. La pausa resta finché non premi **▶▶** per riprenderla.
+
+      Smistamento (pagina **Annunci** o pagina di un annuncio): i tre pulsanti accanto all'esito correggono la decisione.
+      - **✓** è rilevante (aiuti alle imprese);
+      - **?** da rivedere;
+      - **✗** non è rilevante.
+
+      Le tue correzioni servono anche a migliorare le regole.
+
+      Unire o separare annunci (nella pagina di un annuncio, sezione Bando):
+      - Per dire che l'annuncio parla dello stesso bando di un altro, scrivi il numero dell'altro annuncio e premi **Unisci allo stesso bando**. Il numero è nell'indirizzo della sua pagina (…/annunci/123).
+      - Se l'annuncio è stato collegato per sbaglio, premi **Separa: è un bando a sé**.
+
+      Doppioni (pagina **Doppioni**), per ogni riga:
+      - **Stesso bando**: l'annuncio si unisce al bando candidato;
+      - **Bando diverso**: diventa un bando a sé.
+
+      Giudizi (pagina **Feedback**), per ogni giudizio:
+      1. Scegli lo stato: nuovo, preso in carico, corretto, respinto.
+      2. Scrivi una risposta per chi ha segnalato: la vede nella sua pagina e sulla scheda.
+      3. Premi **Salva** (compare appena cambi qualcosa).
+
+      Profili (pagina **Profili**): **Salva e abbina** registra il profilo, **Cancella il profilo** lo toglie.
+
+  - id: catalogo
+    titolo: "Il catalogo dei bandi"
+    per: [catalogo]
+    testo: |
+      Il **Catalogo** contiene i bandi con la scheda, uno per riga: stato, scadenza, tipo di agevolazione, importo ed ente.
+
+      Cercare e filtrare:
+      - scrivi nel campo di ricerca e premi **Cerca** (cerca nel titolo, nell'ente e nella sintesi);
+      - stato: di base "Aperti e in arrivo"; puoi scegliere solo aperti, solo in arrivo, chiusi, senza date o tutti;
+      - scadenza (entro 7, 30 o 90 giorni) e livello dell'ente;
+      - Chi partecipa: regioni (anche più di una), provincia, tipo di soggetto, forma giuridica, dimensione, codice ATECO, bandi riservati o con punti per un requisito;
+      - Cosa e come: tipo di agevolazione, tema, spese finanziate, modalità di selezione, regime d'aiuto;
+      - **Azzera filtri** toglie tutto.
+
+      I filtri su chi partecipa danno due risultati:
+      - **✓ compatibile**: il bando ammette quel valore o non pone limiti;
+      - **? da verificare**: la scheda non lo dice, o è fatta solo su una sintesi. Il motivo è scritto sotto il titolo.
+
+      I bandi esclusi non compaiono.
+
+      Proponibili e in disparte. Di base vedi solo i bandi **proponibili**: la scheda è fatta sul testo ufficiale del bando. Quelli **in disparte** hanno una scheda fatta solo su una sintesi o una pagina web: non si propongono ai clienti. Per vederli usa l'ultimo menu dei filtri ("Anche quelli in disparte" o "Solo quelli in disparte").
+
+      Leggere una scheda (clicca il titolo):
+      - in cima: stato, ente, date, modalità di selezione e **pagina ufficiale ↗**;
+      - la riga Documenti dice se c'è il testo del bando o solo una sintesi;
+      - se la scheda non è fatta sul bando ufficiale, un riquadro avvisa che i dati vanno controllati;
+      - i riquadri con agevolazione, fondo perduto, prestito, progetto ammesso e dotazione;
+      - la forma dell'incentivo, per chi e in che misura;
+      - a chi si rivolge, cosa finanzia, spese ammesse, requisiti;
+      - **Chi può partecipare: i vincoli**: per ogni vincolo "✔ limitato" (il bando pone un limite), "— nessun limite" (il bando dice che non ce ne sono) o "? non noto" (la scheda non lo sa: da verificare sul bando);
+      - le linee del bando e i **Dettagli per il commercialista** (intensità, prestiti, vincoli sulle spese, esclusioni, obblighi, come si presenta la domanda);
+      - le avvertenze sulla scheda;
+      - i **Documenti del bando**: si aprono dalla plancia con un clic; **originale ↗** porta al sito dell'ente;
+      - gli annunci che parlano del bando e le versioni precedenti della scheda.
+
+      Misure nazionali. La voce **Misure** elenca le agevolazioni previste dalla legge e sempre aperte finché sono in vigore (Conto Termico, Iperammortamento, credito R&S, credito ZES unica, Nuova Sabatini). Non sono bandi con una scadenza. Ogni scheda dice a chi si rivolge, cosa si può comprare, quanto vale, come si ottiene, i tempi e se si somma ai bandi.
+
+      Nelle schede dei bandi, il riquadro **Per gli stessi investimenti si può sommare anche:** indica le misure che si possono aggiungere, con il beneficio stimato sulla spesa che il bando non copre. È una stima: le regole sul cumulo degli aiuti vanno controllate caso per caso.
+
+  - id: giudizi
+    titolo: "Giudicare una scheda e segnalare un problema"
+    per: [giudizi]
+    testo: |
+      In fondo a ogni scheda del Catalogo c'è il riquadro **Il tuo giudizio sulla scheda**. In cima alla scheda il link "giudica la scheda ↓" ti porta lì.
+
+      Dare il voto:
+      1. Alla domanda "Mi fiderei a proporlo a un cliente?" clicca una stella da 1 a 5: 1 no, 2 poco, 3 con controlli, 4 quasi, 5 sì.
+      2. Cliccando di nuovo la stessa stella togli il voto.
+
+      Segnalare un problema:
+      1. Premi **+ Segnala un problema**.
+      2. Scegli la categoria: stato sbagliato (aperto/chiuso), non è per imprese, importo o percentuale, beneficiari, territorio, codici ATECO, scadenza o date, documento mancante, altro.
+      3. Se vuoi, scegli il campo della scheda a cui ti riferisci (scadenza, contributo massimo, spese ammesse…).
+      4. Scrivi cosa non va e, se puoi, dove lo dice il bando.
+      5. Per più problemi premi di nuovo **+ Segnala un problema**; **Togli** ne elimina uno.
+
+      Puoi aggiungere un commento libero. Poi premi **Salva il giudizio**.
+
+      Hai un giudizio per ogni versione della scheda e puoi cambiarlo quando vuoi. Se la scheda viene aggiornata, il riquadro te lo dice: il giudizio va rifatto sulla versione nuova.
+
+      La pagina **I miei giudizi** (o **Feedback**, se hai il permesso "lavoro") raccoglie i tuoi giudizi con lo stato e la risposta. Cliccando i riquadri in alto filtri per stato.
+
+      Cosa succede dopo. Gli agenti di Claude rileggono i documenti del bando. Se la segnalazione è giusta correggono la scheda e la segnano "corretto"; se no la segnano "respinto". In tutti e due i casi scrivono una risposta. Gli stati sono: nuovo, preso in carico, corretto, respinto. Con "stato sbagliato" il sistema ricontrolla anche la pagina ufficiale del bando entro un'ora.
+
+  - id: imprese_pagina
+    titolo: "La pagina Imprese"
+    per: [imprese]
+    testo: |
+      La pagina **Imprese** raccoglie tutto quello che riguarda i clienti.
+
+      Richieste di supporto per la domanda. Ogni volta che un'impresa preme "Richiedi supporto per la domanda" arriva qui una riga: bando (con scadenza), impresa, messaggio e da dove è partita (piattaforma o email).
+      1. Scegli lo stato: ricevuta, in valutazione, accettata, chiusa. L'impresa vede lo stato nella sua pagina.
+      2. Scrivi le note: le vedi solo tu.
+      3. Premi **Salva**.
+
+      Email settimanali da approvare. Il lunedì il sistema prepara un'email per ogni impresa con i bandi nuovi o in scadenza (mai due volte lo stesso bando). In questa fase partono solo dopo la tua approvazione.
+      - **Prepara adesso**: prepara subito le email della settimana, senza aspettare lunedì.
+      - Clicca l'oggetto per vedere l'anteprima dell'email.
+      - **Approva e invia**: l'email parte.
+      - **Scarta**: l'email non parte.
+      - Sotto, **Ultime email decise** elenca quelle già inviate o scartate.
+
+      Abbonamenti. Una riga per ogni utente impresa: stato (in prova, attivo, pagamento in ritardo, disdetto, gratuito), numero di imprese, scadenze.
+      - **Rendi gratuito**: per le imprese amiche, che non pagheranno.
+      - **Togli gratuito**: torna alla prova.
+      - **+14 giorni di prova**: allunga la prova.
+
+      Oggi gli abbonamenti sono spenti: entrano tutti, e queste impostazioni conteranno quando verranno accesi.
+
+      Fatture elettroniche. Una per ogni pagamento riuscito, inviata allo SdI. Funzionano solo quando le fatture sono accese: per ora la tabella resta vuota. **XML** scarica il file, **Rinvia** riprova una fattura in errore, **Aggiorna stato** chiede l'esito allo SdI.
+
+      Imprese iscritte. Nome dell'impresa, utente, numero di sedi, se riceve l'email settimanale, quante richieste ha fatto, quando si è iscritta.
+
+      Invitare un'impresa. Lo fa l'amministratore: pagina **Utenti**, ruolo **impresa**, **Invita**, poi manda il link all'imprenditore. Al primo accesso l'impresa descrive da sola la sua attività.
+
+  - id: campagne
+    titolo: "Campagne"
+    per: [imprese]
+    testo: |
+      La pagina **Campagne** abbina i profili anonimi delle imprese del tuo archivio ai bandi usciti di recente e prepara una bozza di lettera per ognuna. In Bandi Radar non entrano mai nomi, partite IVA o contatti.
+
+      1. Sul tuo computer, nella cartella del progetto delle anagrafiche, lancia lo script strumenti/anagrafiche/esporta_profili.py. Legge il database delle anagrafiche e crea due file: profili_anonimi.json (solo codici e dati di categoria: forma giuridica, provincia, ATECO, dimensione stimata) e corrispondenze.csv (codice e impresa, che resta sul tuo computer e non va mandato a nessuno).
+      2. In **Campagne** scrivi il nome della campagna, scegli di quanti giorni prendere i bandi (di base 60), scegli il file profili_anonimi.json e premi **Carica e analizza**.
+      3. Lo stato resta "in analisi…" per qualche momento. La pagina si aggiorna da sola.
+      4. Apri la campagna cliccando il nome.
+
+      Cosa trovi nella campagna:
+      - quante imprese hai caricato, quante hanno bandi compatibili, quanti bandi sono stati considerati;
+      - **I bandi che interessano più imprese**;
+      - **Dove la proposta è più forte**: imprese per settore (prime due cifre ATECO), regione e dimensione, con i bandi in media e il beneficio mediano;
+      - un esempio di testo.
+
+      Premi **Scarica il CSV con le bozze**. C'è una riga per ogni impresa con almeno un bando compatibile: codice, bandi, beneficio massimo, oggetto e testo della lettera, più l'invito al collegamento LinkedIn (massimo 300 caratteri) e il primo messaggio. A casa unisci il CSV a corrispondenze.csv usando il codice, e sostituisci {RAGIONE_SOCIALE} e {FIRMA}.
+
+      Attenzione alle regole. In Italia le email promozionali non richieste sono vietate anche verso le società. Usa questi testi per lettere cartacee, o per email solo a chi ti ha dato il consenso, dopo il via libera di un avvocato. I messaggi LinkedIn vanno mandati a mano, uno per uno, a persone con un ruolo pertinente: niente strumenti automatici. I dettagli sono in docs/ricerche/2026-10-05_marketing_prospect_regole.md.
+
+  - id: admin_interruttori
+    titolo: "Gli interruttori nel file .env"
+    per: [admin]
+    testo: |
+      Alcune funzioni si accendono e si spengono dal file dei segreti sul server, /srv/bandi-radar/.env. Il valore 1 accende; vuoto o 0 spegne (tranne dove scritto diversamente).
+
+      - **PAGINA_PUBBLICA**: con 1, chi apre il sito senza accesso vede la pagina di presentazione. Spenta, la presentazione si vede solo su /presentazione e non è indicizzata.
+      - **REGISTRAZIONE_APERTA**: con 1, le imprese possono registrarsi da sole (con conferma dell'email). Spenta, le imprese entrano solo su invito dalla pagina Utenti.
+      - **EMAIL_IMPRESE_APPROVAZIONE**: vuoto o 1, le email settimanali alle imprese partono solo dopo la tua approvazione nella pagina Imprese. Con 0 partono da sole.
+      - **ABBONAMENTI_ATTIVI**: con 1, l'area impresa richiede la prova gratuita o un abbonamento. Spento, entrano tutti.
+      - **FATTURE_ATTIVE**: con 1, a ogni pagamento si crea e si invia la fattura elettronica.
+
+      Per ora restano spenti, e le email settimanali restano con l'approvazione. Si accendono dopo le decisioni su prezzi, prova gratuita, testi legali e pagamenti. Le email in generale partono solo quando nel .env c'è la chiave di Resend (RESEND_API_KEY).
+
+      Come si modifica il .env:
+      1. Collegati al server: ssh ubuntu@146.59.145.138
+      2. Apri il file: sudo nano /srv/bandi-radar/.env
+      3. Cambia la riga che ti serve, salva con Ctrl+O e Invio, esci con Ctrl+X.
+      4. Riavvia i servizi una volta a mano: cd /srv/bandi-radar && sudo -u deploy docker compose up -d
+
+      L'aggiornamento automatico scatta solo quando cambia il codice, per questo il riavvio va fatto a mano. Il contenuto del .env non va mai incollato in chat né messo su GitHub.
+
+  - id: impresa_descrivi
+    titolo: "Descrivi la tua impresa"
+    per: [impresa]
+    testo: |
+      Per vedere i bandi adatti, prima descrivi la tua impresa. Bastano pochi minuti.
+
+      1. Al primo accesso premi **Descrivi la tua impresa** (oppure vai in **Le mie imprese** e premi **+ Aggiungi un'impresa**).
+      2. Scrivi il nome o la ragione sociale.
+      3. Compila il modulo:
+      - Chi è: tipo (impresa, libero professionista, ente del terzo settore), se è da costituire, forma giuridica, data di costituzione;
+      - Dimensione: dipendenti e fatturato dell'ultimo anno a fasce; se conosci la classe (micro, piccola, media) indicala, è quella che chiedono i bandi;
+      - Sedi: regione, provincia e comune di ogni sede; **+ sede** ne aggiunge un'altra;
+      - Attività: il codice ATECO, il principale per primo;
+      - Requisiti speciali: sì, no o non so;
+      - Cosa vuoi fare: temi, spese e importo dell'investimento.
+      4. Premi **Salva e vedi i bandi**.
+
+      Se un dato non lo sai, lascialo vuoto. I bandi che lo chiedono non vengono scartati: compaiono tra quelli "da verificare".
+
+      I dati servono solo a scegliere i bandi. Il nome dell'impresa resta separato dal resto e non viene mai mandato a servizi esterni.
+
+      Per cambiare i dati: **Le mie imprese**, **Modifica**, poi **Salva e vedi i bandi**.
+
+  - id: impresa_bandi
+    titolo: "I miei bandi"
+    per: [impresa]
+    testo: |
+      In **I miei bandi** trovi i bandi aperti o in arrivo che fanno per te, in due gruppi:
+      - **✓ Adatti alla tua impresa**: in base ai dati che hai indicato, puoi partecipare.
+      - **? Da verificare**: manca un dato oppure il bando pone una condizione da controllare. Sotto il titolo trovi cosa verificare.
+
+      I bandi a cui sicuramente non puoi partecipare non compaiono. A parità di gruppo vengono prima i bandi a fondo perduto.
+
+      Per ogni bando vedi l'ente, una breve sintesi, lo stato, la scadenza, il tipo di agevolazione e l'importo massimo. **Mostra altri** allunga l'elenco.
+
+      È un'informazione indicativa: verifica sempre il bando ufficiale.
+
+  - id: impresa_scheda
+    titolo: "La scheda del bando"
+    per: [impresa]
+    testo: |
+      Clicca il titolo di un bando per aprire la sua scheda.
+
+      - In cima: stato, ente, data di apertura, scadenza (con l'ora, se c'è) e **bando ufficiale ↗** per andare al sito dell'ente.
+      - Il riquadro d'avvertenza ricorda che la scheda è un riassunto: fa fede il bando ufficiale.
+      - **Per** (il nome della tua impresa): perché il bando è adatto, cosa resta da verificare, i punti a favore e le cose da controllare.
+      - **In breve**: sintesi, agevolazione, fondo perduto, prestito, progetto ammesso, dotazione del bando.
+      - La forma dell'incentivo, a chi si rivolge, cosa finanzia, cosa serve.
+      - Le agevolazioni fiscali che si possono sommare al bando per gli stessi investimenti, se ci sono.
+      - I documenti ufficiali, che si aprono sul sito dell'ente.
+
+  - id: impresa_supporto
+    titolo: "Richiedi supporto per la domanda"
+    per: [impresa]
+    testo: |
+      Se vuoi partecipare a un bando, i nostri consulenti verificano i requisiti e preparano la pratica con te.
+
+      1. Apri la scheda del bando.
+      2. Premi **Richiedi supporto per la domanda**.
+      3. Se hai più imprese, scegli per quale.
+      4. Se vuoi, scrivi cosa vorresti fare con questo bando.
+      5. Premi **Invia la richiesta**.
+
+      Puoi farlo anche dall'email settimanale: sotto ogni bando c'è il link "Richiedi supporto per la domanda", che apre la scheda con il modulo già aperto.
+
+      Un consulente ti ricontatta. Lo stato della richiesta lo vedi in **Richieste di supporto**: ricevuta, in valutazione, accettata, chiusa.
+
+      Il servizio è a successo: paghi solo se il contributo viene concesso, in percentuale sull'agevolazione ottenuta. Le condizioni precise te le presenta il consulente prima di iniziare.
+
+  - id: impresa_misure
+    titolo: "Agevolazioni fiscali"
+    per: [impresa]
+    testo: |
+      In **Agevolazioni fiscali** trovi le misure nazionali sugli investimenti: Conto Termico, Iperammortamento, credito d'imposta per ricerca e sviluppo, credito ZES unica, Nuova Sabatini.
+
+      Non sono bandi con una scadenza: sono agevolazioni previste dalla legge, disponibili finché sono in vigore. Spesso si possono sommare ai contributi dei bandi per gli stessi investimenti.
+
+      Ogni scheda spiega a chi si rivolge, quali investimenti sono ammessi, quanto vale (beneficio stimato in percentuale sulla spesa), come si ottiene, i tempi, se si somma ai bandi e a cosa fare attenzione.
+
+      È un'informazione indicativa: prima di investire verifica la norma e le regole del gestore, magari con il tuo commercialista.
+
+  - id: impresa_email
+    titolo: "L'email settimanale"
+    per: [impresa]
+    testo: |
+      Ogni lunedì ricevi un'email per ciascuna tua impresa con i bandi nuovi o in scadenza adatti a lei. Lo stesso bando non ti arriva mai due volte.
+
+      Dall'email puoi aprire la scheda di un bando o chiedere subito il supporto per la domanda.
+
+      Per non riceverla più:
+      - apri il link in fondo all'email: si disattiva subito;
+      - oppure vai in **Le mie imprese**, premi **Modifica**, togli la spunta da "ricevi l'email settimanale con i bandi nuovi" e premi **Salva e vedi i bandi**.
+
+      Per riattivarla rimetti la spunta allo stesso modo.
+
+  - id: impresa_abbonamento
+    titolo: "Abbonamento e dati di fatturazione"
+    per: [impresa]
+    testo: |
+      In **Abbonamento** vedi lo stato del tuo abbonamento (in prova, attivo, gratuito…) e, se sei in prova, quanti giorni restano.
+
+      In questa fase l'accesso è gratuito per tutti e i pagamenti online non sono ancora attivi: non devi fare niente. Quando partiranno, potrai scegliere il piano mensile o annuale in questa pagina; ogni impresa o sede in più avrà un piccolo costo aggiuntivo, indicato qui. Il pagamento avverrà con Stripe: i dati della carta non passano da Bandi Radar.
+
+      Dati di fatturazione. Servono per la fattura elettronica e puoi inserirli già da ora:
+      1. Compila ragione sociale, partita IVA, codice fiscale (se diverso), codice destinatario SDI oppure PEC.
+      2. Compila la sede: indirizzo, CAP, comune, provincia (sigla).
+      3. Premi **Salva i dati di fatturazione**.
+
+  - id: impresa_giudizio
+    titolo: "Giudicare una scheda o segnalare un errore"
+    per: [impresa]
+    testo: |
+      In fondo a ogni scheda c'è il riquadro **Ti è utile questa scheda? Hai trovato un errore?**
+
+      1. Alla domanda "Quanto è chiara e utile?" clicca una stella da 1 a 5.
+      2. Se hai visto un errore, premi **+ Segnala un problema**, scegli il tipo (per esempio scadenza o date, territorio, importo o percentuale) e scrivi cosa non va.
+      3. Premi **Salva il giudizio**.
+
+      Rileggiamo i documenti del bando e, se hai ragione, correggiamo la scheda. Nel riquadro vedi lo stato della tua segnalazione e la nostra risposta.
+
+  - id: impresa_piu_imprese
+    titolo: "Più imprese e più sedi"
+    per: [impresa]
+    testo: |
+      Con un solo accesso puoi seguire più imprese.
+
+      - Per aggiungerne una: **Le mie imprese**, **+ Aggiungi un'impresa**, compila il modulo e premi **Salva e vedi i bandi**.
+      - In **I miei bandi**, se hai più imprese, in alto trovi un pulsante per ciascuna: cliccalo per vedere i suoi bandi.
+      - In **Le mie imprese**, **Vedi i bandi** apre i bandi di quell'impresa, **Modifica** i suoi dati.
+      - Per toglierne una: **Modifica**, poi **Togli questa impresa**.
+
+      Se un'impresa ha più sedi, aggiungile tutte nel modulo con **+ sede**: alcuni bandi guardano dove si trova la sede legale o quella operativa.
