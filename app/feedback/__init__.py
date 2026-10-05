@@ -87,7 +87,7 @@ def del_bando(conn, bando_id: int, utente: dict) -> dict:
                     (bando_id, utente["id"]))
         mio = cur.fetchone()
         tutti = []
-        if utente["ruolo"] == "admin":
+        if "lavoro" in (utente.get("permessi") or []):   # chi vede le pagine di lavoro vede i giudizi di tutti
             cur.execute("""SELECT f.*, u.email, u.nome FROM feedback f JOIN utenti u ON u.id = f.utente_id
                            WHERE f.bando_id = %s ORDER BY f.versione DESC, f.aggiornato_il DESC""", (bando_id,))
             tutti = [dict(r) for r in cur.fetchall()]

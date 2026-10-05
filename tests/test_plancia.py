@@ -115,7 +115,8 @@ def client_plancia(monkeypatch, tmp_path):
     def utente_finto(request: Request) -> dict:
         if request.cookies.get("br_sessione") != "admin-finto":
             raise HTTPException(status_code=401, detail="Accesso richiesto.")
-        return {"id": 1, "email": "admin@esempio.it", "nome": None, "ruolo": "admin"}
+        return {"id": 1, "email": "admin@esempio.it", "nome": None, "ruolo": "admin",
+                "permessi": ["catalogo", "giudizi", "lavoro", "modifiche", "imprese"]}
 
     app.dependency_overrides[utente_corrente] = utente_finto
     monkeypatch.setenv("ALLEGATI_CARTELLA", str(tmp_path / "allegati"))

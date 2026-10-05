@@ -19,7 +19,7 @@ from app.db.connessione import connetti
 
 COOKIE = "br_sessione"
 
-# Rotte della plancia che il revisore puo' usare (solo lettura): percorsi come scritti nelle rotte FastAPI.
+# Rotte del catalogo (permesso "catalogo"): percorsi come scritti nelle rotte FastAPI.
 REVISORE_PUO = {
     ("GET", "/api/bandi"), ("GET", "/api/bandi/{bando_id}"), ("GET", "/api/valori"),
     ("GET", "/api/allegati/{allegato_id}/file"),
@@ -60,13 +60,30 @@ def solo_admin(utente: dict = Depends(utente_corrente)) -> dict:
     return utente
 
 
-def controlla_plancia(request: Request, utente: dict = Depends(utente_corrente)) -> dict:
-    """Protezione delle rotte della plancia di lavoro: l'admin passa sempre, il revisore solo in lettura sul catalogo."""
-    if utente["ruolo"] == "admin":
+def richiede(permesso: str):
+    """Dipendenza: l'utente deve avere il permesso (l'admin li ha tutti)."""
+    def controllo(utente: dict = Depends(utente_corrente)) -> dict:
+        if not u.ha_permesso(utente, permesso):
+            raise HTTPException(status_code=403, detail="Il tuo profilo non permette questa operazione.")
         return utente
+    return controllo
+
+
+# Calcoli senza effetti che usano il metodo POST: per i permessi valgono come letture.
+LETTURE_IN_POST = {("POST", "/api/abbina")}
+
+
+def controlla_plancia(request: Request, utente: dict = Depends(utente_corrente)) -> dict:
+    """Protezione delle rotte della plancia di lavoro secondo i permessi: catalogo (schede e documenti), lavoro (tutte le
+    letture), modifiche (tutto il resto). L'admin ha tutti i permessi."""
     rotta = request.scope.get("route")
     chiave = (request.method, rotta.path) if rotta is not None else None
-    if chiave in TUTTI_POSSONO or (utente["ruolo"] == "revisore" and chiave in REVISORE_PUO):
+    if chiave in TUTTI_POSSONO:
+        return utente
+    if chiave in REVISORE_PUO and (u.ha_permesso(utente, "catalogo") or u.ha_permesso(utente, "lavoro")):
+        return utente
+    lettura = request.method == "GET" or chiave in LETTURE_IN_POST
+    if u.ha_permesso(utente, "lavoro" if lettura else "modifiche"):
         return utente
     raise HTTPException(status_code=403, detail="Il tuo profilo non permette questa operazione.")
 
@@ -219,6 +236,7 @@ class ModificaUtente(BaseModel):
     ruolo: Literal["admin", "revisore", "impresa"] | None = None
     attivo: bool | None = None
     nome: str | None = None
+    permessi: list[str] | None = None
 
 
 def _invita(conn, utente: dict, admin: dict) -> dict:
@@ -227,6 +245,11 @@ def _invita(conn, utente: dict, admin: dict) -> dict:
     esito = u.manda(utente["email"], *u.email_invito(utente, link, admin.get("nome") or admin["email"]))
     # Il link torna anche all'amministratore: se l'email non parte (Resend non ancora configurato) lo manda lui.
     return {"link": link, "email": esito}
+
+
+@router.get("/utenti/permessi")
+def elenco_permessi(_: dict = Depends(solo_admin)) -> dict:
+    return u.PERMESSI
 
 
 @router.get("/utenti")
@@ -250,7 +273,7 @@ def crea(dati: NuovoUtente, admin: dict = Depends(solo_admin)) -> dict:
 def cambia(utente_id: int, dati: ModificaUtente, admin: dict = Depends(solo_admin)) -> dict:
     with connetti() as conn:
         try:
-            r = u.modifica(conn, utente_id, dati.ruolo, dati.attivo, dati.nome)
+            r = u.modifica(conn, utente_id, dati.ruolo, dati.attivo, dati.nome, dati.permessi)
         except u.ErroreUtenti as e:
             raise HTTPException(status_code=422, detail=str(e)) from e
         conn.commit()

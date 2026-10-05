@@ -205,3 +205,37 @@ def test_comando_crea_stampa_il_link(client, capsys):
     assert main(["disattiva", "--email", email]) == 0
     assert main(["elenco"]) == 0
     assert email in capsys.readouterr().out
+
+
+@db
+def test_permessi_del_revisore(client):
+    from conftest import accesso_di_prova
+
+    rev = accesso_di_prova("revisore")
+    io = client.get("/api/accesso/io", auth=rev).json()
+    assert sorted(io["permessi"]) == ["catalogo", "giudizi"]
+    admin = accesso_di_prova("admin")
+    assert client.get("/api/utenti/permessi", auth=admin).json()["lavoro"]
+    assert client.get("/api/utenti/permessi", auth=rev).status_code == 403
+    assert client.patch(f"/api/utenti/{io['id']}", json={"permessi": ["inventato"]}, auth=admin).status_code == 422
+    # "Vede tutto in sola lettura": lavoro senza modifiche (il cambio fa rientrare: nuova sessione).
+    assert client.patch(f"/api/utenti/{io['id']}", json={"permessi": ["catalogo", "giudizi", "lavoro"]}, auth=admin).status_code == 200
+    assert client.get("/api/fonti", auth=rev).status_code == 401
+    from app import utenti as u
+    from app.db.connessione import connetti
+    from conftest import CookieSessione
+
+    with connetti() as conn:
+        _, codice = u.accedi(conn, io["email"], "password-di-prova")
+        conn.commit()
+    rev = CookieSessione(codice)
+    assert client.get("/api/accesso/io", auth=rev).json()["permessi"] == ["catalogo", "giudizi", "lavoro"]
+    for rotta in ("/api/fonti", "/api/annunci", "/api/lavorazione", "/api/sistemi", "/api/profili", "/api/dubbi"):
+        assert client.get(rotta, auth=rev).status_code == 200, rotta
+    assert client.post("/api/abbina", json={"sedi": [{"provincia": "MI"}]}, auth=rev).status_code == 200   # calcolo, non modifica
+    assert client.post("/api/fonti/x/pausa", json={"in_pausa": True}, auth=rev).status_code == 403
+    assert client.put("/api/profili/prova-perm", json={}, auth=rev).status_code == 403
+    assert client.get("/api/utenti", auth=rev).status_code == 403          # gli utenti restano dell'admin
+    assert client.get("/api/imprese", auth=rev).status_code == 403         # i clienti solo con "imprese"
+    assert "totale" in client.get("/api/feedback", auth=rev).json()
+    assert client.patch("/api/feedback/999999", json={"stato": "respinto"}, auth=rev).status_code == 403

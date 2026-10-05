@@ -4,6 +4,7 @@ import { api, data, NOMI_RUOLO_UTENTE, RuoloUtente, Utente } from "../api";
 // Pagina Utenti (solo amministratori): inviti, ruoli, accesso tolto o ridato.
 export default function Utenti() {
   const [utenti, setUtenti] = useState<Utente[]>([]);
+  const [permessi, setPermessi] = useState<Record<string, string>>({});
   const [email, setEmail] = useState("");
   const [nome, setNome] = useState("");
   const [ruolo, setRuolo] = useState<RuoloUtente>("revisore");
@@ -11,7 +12,9 @@ export default function Utenti() {
   const [errore, setErrore] = useState<string | null>(null);
 
   const ricarica = () => api.utenti().then(setUtenti).catch((e) => setErrore(String(e.message || e)));
-  useEffect(() => { ricarica(); }, []);
+  useEffect(() => { ricarica(); api.permessi().then(setPermessi); }, []);
+  const cambiaPermesso = (u: Utente, p: string, si: boolean) =>
+    azione(() => api.modificaUtente(u.id, { permessi: si ? [...u.permessi, p] : u.permessi.filter((x) => x !== p) }));
 
   const spiega = (chi: string, r: { link: string; email: string }) => setEsito({
     testo: r.email === "inviata" ? `Invito mandato per email a ${chi}. Se non arriva, manda tu questo link:`
@@ -36,8 +39,10 @@ export default function Utenti() {
   return (
     <>
       <h1>Utenti</h1>
-      <p className="piccolo">Amministratore: vede e fa tutto. Revisore: vede catalogo, schede e documenti e dà i giudizi,
-        non può cambiare niente. Impresa: vede solo l'area impresa.</p>
+      <p className="piccolo">Amministratore: vede e fa tutto. Impresa: vede solo l'area impresa. Revisore: vede e fa quello che spunti
+        nella colonna Permessi (di base catalogo e giudizi). Per far vedere tutto in sola lettura spunta "lavoro" e non "modifiche".
+        Un cambio di permessi fa rientrare l'utente.</p>
+      <ul className="piccolo">{Object.entries(permessi).map(([p, spiegazione]) => <li key={p}><b>{p}</b>: {spiegazione}</li>)}</ul>
       <form className="filtri" onSubmit={invita}>
         <input type="email" placeholder="email" required value={email} onChange={(e) => setEmail(e.target.value)} />
         <input type="text" placeholder="nome (facoltativo)" value={nome} onChange={(e) => setNome(e.target.value)} style={{ minWidth: 180 }} />
@@ -50,7 +55,7 @@ export default function Utenti() {
       {esito && <div className="avviso">{esito.testo}{esito.link && <><br /><code className="link-invito">{esito.link}</code>{" "}
         <button type="button" onClick={() => navigator.clipboard?.writeText(esito.link!)}>Copia</button></>}</div>}
       <table>
-        <thead><tr><th>Email</th><th>Nome</th><th>Ruolo</th><th>Stato</th><th>Ultimo accesso</th><th></th></tr></thead>
+        <thead><tr><th>Email</th><th>Nome</th><th>Ruolo</th><th>Permessi</th><th>Stato</th><th>Ultimo accesso</th><th></th></tr></thead>
         <tbody>
           {utenti.map((u) => (
             <tr key={u.id} style={u.attivo ? undefined : { opacity: 0.55 }}>
@@ -62,6 +67,10 @@ export default function Utenti() {
                   {(Object.keys(NOMI_RUOLO_UTENTE) as RuoloUtente[]).map((r) => <option key={r} value={r}>{NOMI_RUOLO_UTENTE[r]}</option>)}
                 </select>
               </td>
+              <td className="permessi">{u.ruolo === "admin" ? <span className="piccolo">tutti</span> : u.ruolo === "impresa" ?
+                <span className="piccolo">area impresa</span> : Object.entries(permessi).map(([p, spiegazione]) => (
+                  <label key={p} title={spiegazione}><input type="checkbox" disabled={!u.attivo} checked={u.permessi.includes(p)}
+                    onChange={(e) => cambiaPermesso(u, p, e.target.checked)} /> {p}</label>))}</td>
               <td>{!u.attivo ? "accesso tolto" : u.password_impostata ? "attivo" : "invitato, password da scegliere"}</td>
               <td>{data(u.ultimo_accesso, true)}</td>
               <td>

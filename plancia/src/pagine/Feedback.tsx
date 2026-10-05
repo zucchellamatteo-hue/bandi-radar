@@ -2,11 +2,13 @@ import { useEffect, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import { api, data, NOMI_STATO_FEEDBACK, RigaFeedback, StatoFeedback } from "../api";
 import { CAMPI_SCHEDA } from "../Giudizio";
-import { eAdmin, useUtente } from "../utente";
+import { puo, useUtente } from "../utente";
 
 // Pagina Feedback (solo amministratori): voti e segnalazioni di revisori e imprese, con lo stato e la risposta.
 export default function Feedback() {
-  const admin = eAdmin(useUtente());
+  const utente = useUtente();
+  const admin = puo(utente, "lavoro");            // vede i giudizi di tutti
+  const gestisce = puo(utente, "modifiche");      // cambia stato e risposta
   const [parametri, setParametri] = useSearchParams();
   const [r, setR] = useState<Awaited<ReturnType<typeof api.feedback>> | null>(null);
   const [errore, setErrore] = useState<string | null>(null);
@@ -50,7 +52,7 @@ export default function Feedback() {
       </div>
       <table>
         <thead><tr><th>Bando</th><th>Chi</th><th>Voto</th><th>Problemi</th><th>Stato e risposta</th></tr></thead>
-        <tbody>{r.feedback.map((f) => <Riga key={f.id} f={f} categorie={r.categorie} ricarica={ricarica} admin={admin} />)}</tbody>
+        <tbody>{r.feedback.map((f) => <Riga key={f.id} f={f} categorie={r.categorie} ricarica={ricarica} admin={gestisce} />)}</tbody>
       </table>
       <div className="pagine">
         <button disabled={r.pagina <= 1} onClick={() => imposta("pagina", String(r.pagina - 1))}>← Precedente</button>

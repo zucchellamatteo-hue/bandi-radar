@@ -15,6 +15,15 @@ import secrets
 from datetime import datetime, timedelta, timezone
 
 RUOLI = ("admin", "revisore", "impresa")
+# Permessi di chi non e' admin (05/10/2026): l'admin li ha tutti, l'impresa nessuno (usa solo la sua area).
+PERMESSI = {
+    "catalogo": "vede catalogo, schede e documenti",
+    "giudizi": "dà voti e segnala problemi sulle schede",
+    "lavoro": "vede tutte le pagine di lavoro e i giudizi di tutti (sola lettura)",
+    "modifiche": "può fare le azioni: rilanciare, mettere in pausa, correggere, decidere i doppioni, gestire i giudizi",
+    "imprese": "vede la pagina Imprese: clienti, richieste di supporto, email, abbonamenti",
+}
+PERMESSI_REVISORE = ("catalogo", "giudizi")
 DURATA_SESSIONE = timedelta(days=30)
 DURATA_LINK = {"invito": timedelta(days=7), "recupero": timedelta(hours=2), "conferma": timedelta(days=3)}
 MAX_ERRORI = 5                         # errori di password per indirizzo prima della pausa
@@ -75,9 +84,21 @@ def normalizza_email(email: str) -> str:
 
 # --- utenti ---
 
+def permessi_effettivi(r: dict) -> list[str]:
+    if r.get("ruolo") == "admin":
+        return list(PERMESSI)
+    if r.get("ruolo") == "impresa":
+        return []
+    return [p for p in (r.get("permessi") or PERMESSI_REVISORE) if p in PERMESSI]
+
+
+def ha_permesso(utente: dict, permesso: str) -> bool:
+    return permesso in (utente.get("permessi") or [])
+
+
 def _pubblico(r: dict) -> dict:
     return {k: r[k] for k in ("id", "email", "nome", "ruolo", "attivo", "creato_il", "ultimo_accesso",
-                              "email_confermata_il") if k in r} | (
+                              "email_confermata_il") if k in r} | {"permessi": permessi_effettivi(r)} | (
         {"password_impostata": r["password_hash"] is not None} if "password_hash" in r else {})
 
 
@@ -113,9 +134,14 @@ def elenco(conn) -> list[dict]:
         return [_pubblico(dict(r)) for r in cur.fetchall()]
 
 
-def modifica(conn, utente_id: int, ruolo: str | None = None, attivo: bool | None = None, nome: str | None = None) -> dict:
+def modifica(conn, utente_id: int, ruolo: str | None = None, attivo: bool | None = None, nome: str | None = None,
+             permessi: list[str] | None = None) -> dict:
     if ruolo is not None and ruolo not in RUOLI:
         raise ErroreUtenti("Ruolo non valido.")
+    if permessi is not None:
+        sconosciuti = set(permessi) - set(PERMESSI)
+        if sconosciuti:
+            raise ErroreUtenti(f"Permessi sconosciuti: {', '.join(sorted(sconosciuti))}.")
     with conn.cursor() as cur:
         cur.execute("SELECT * FROM utenti WHERE id = %s FOR UPDATE", (utente_id,))
         u = cur.fetchone()
@@ -127,10 +153,10 @@ def modifica(conn, utente_id: int, ruolo: str | None = None, attivo: bool | None
             cur.execute("SELECT count(*) AS n FROM utenti WHERE ruolo = 'admin' AND attivo AND id <> %s", (utente_id,))
             if cur.fetchone()["n"] == 0:
                 raise ErroreUtenti("Deve restare almeno un amministratore attivo.")
-        cur.execute("UPDATE utenti SET ruolo = %s, attivo = %s, nome = coalesce(%s, nome) WHERE id = %s RETURNING *",
-                    (nuovo_ruolo, nuovo_attivo, nome, utente_id))
+        cur.execute("UPDATE utenti SET ruolo = %s, attivo = %s, nome = coalesce(%s, nome), permessi = coalesce(%s, permessi) "
+                    "WHERE id = %s RETURNING *", (nuovo_ruolo, nuovo_attivo, nome, permessi, utente_id))
         r = dict(cur.fetchone())
-        if not nuovo_attivo or nuovo_ruolo != u["ruolo"]:
+        if not nuovo_attivo or nuovo_ruolo != u["ruolo"] or (permessi is not None and set(permessi) != set(u["permessi"] or [])):
             cur.execute("DELETE FROM sessioni WHERE utente_id = %s", (utente_id,))   # esce subito ovunque
     return _pubblico(r)
 

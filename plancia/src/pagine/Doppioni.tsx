@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { api, Dubbio } from "../api";
+import { usePuo } from "../utente";
 
 // I doppioni dubbi: la deduplica senza IA non e' sicura che due annunci parlino dello stesso bando.
 // Oggi decide Matteo; piu' avanti li smistera' Haiku e qui resteranno solo i casi difficili.
@@ -20,6 +21,7 @@ export default function Doppioni() {
     }
   };
   const ultima = risposta ? Math.max(1, Math.ceil(risposta.totale / 50)) : 1;
+  const modifiche = usePuo("modifiche");
   return (
     <>
       <h1>Doppioni da decidere</h1>
@@ -39,8 +41,8 @@ export default function Doppioni() {
                 <div className="piccolo">{d.motivo}</div></td>
               <td className="smistamento">{decisi[d.id] ? <span className="piccolo">✔ {decisi[d.id]}</span> : (
                 <div className="correggi">
-                  {d.bando_id && <button onClick={() => decidi(d, "stesso")}>Stesso bando</button>}
-                  <button onClick={() => decidi(d, "diverso")}>Bando diverso</button>
+                  {modifiche && d.bando_id && <button onClick={() => decidi(d, "stesso")}>Stesso bando</button>}
+                  {modifiche && <button onClick={() => decidi(d, "diverso")}>Bando diverso</button>}
                 </div>)}</td>
             </tr>
           ))}</tbody>

@@ -18,7 +18,7 @@ import Feedback from "./pagine/Feedback";
 import { Accesso, ConfermaEmail, Disiscrizione, ImpostaPassword, Registrati } from "./pagine/Accesso";
 import Imprese from "./pagine/Imprese";
 import { Abbonamento, MieImprese, MieiBandi, MieRichieste, ModuloImpresa, SchedaImpresa } from "./pagine/AreaImpresa";
-import { ContestoUtente } from "./utente";
+import { ContestoUtente, puo } from "./utente";
 
 
 export default function App() {
@@ -38,11 +38,13 @@ export default function App() {
   const esci = async () => { await api.esci().catch(() => null); setUtente(null); vai("/", { replace: true }); };
   const classe = ({ isActive }: { isActive: boolean }) => (isActive ? "attivo" : "");
   const admin = utente.ruolo === "admin";
+  const lavoro = puo(utente, "lavoro");      // tutte le pagine di lavoro (in sola lettura senza "modifiche")
+  const imprese = puo(utente, "imprese");
   return (
     <ContestoUtente.Provider value={utente}>
       <header className="barra">
         <span className="logo">Bandi Radar</span>
-        {admin && <nav>
+        {lavoro && <nav>
           <NavLink to="/" end className={classe}>Fonti</NavLink>{" · "}
           <NavLink to="/catalogo" className={classe}>Catalogo</NavLink>{" · "}
           <NavLink to="/profili" className={classe}>Profili</NavLink>{" · "}
@@ -52,8 +54,8 @@ export default function App() {
           <NavLink to="/doppioni" className={classe}>Doppioni</NavLink>{" · "}
           <NavLink to="/novita" className={classe}>Novità</NavLink>{" · "}
           <NavLink to="/feedback" className={classe}>Feedback</NavLink>{" · "}
-          <NavLink to="/imprese" className={classe}>Imprese</NavLink>{" · "}
-          <NavLink to="/utenti" className={classe}>Utenti</NavLink>
+          {imprese && <><NavLink to="/imprese" className={classe}>Imprese</NavLink>{" · "}</>}
+          {admin && <NavLink to="/utenti" className={classe}>Utenti</NavLink>}
         </nav>}
         {utente.ruolo === "impresa" && <nav>
           <NavLink to="/impresa" end className={classe}>I miei bandi</NavLink>{" · "}
@@ -61,9 +63,10 @@ export default function App() {
           <NavLink to="/impresa/richieste" className={classe}>Richieste di supporto</NavLink>{" · "}
           <NavLink to="/impresa/abbonamento" className={classe}>Abbonamento</NavLink>
         </nav>}
-        {utente.ruolo === "revisore" && <nav>
+        {utente.ruolo === "revisore" && !lavoro && <nav>
           <NavLink to="/catalogo" className={classe}>Catalogo</NavLink>{" · "}
           <NavLink to="/feedback" className={classe}>I miei giudizi</NavLink>
+          {imprese && <>{" · "}<NavLink to="/imprese" className={classe}>Imprese</NavLink></>}
         </nav>}
         <span className="chi-sono">
           {utente.nome || utente.email} <span className="piccolo">({NOMI_RUOLO_UTENTE[utente.ruolo]})</span>{" "}
@@ -71,7 +74,7 @@ export default function App() {
         </span>
       </header>
       <main>
-        {admin ? (
+        {lavoro ? (
           <Routes>
             <Route path="/" element={<Fonti />} />
             <Route path="/accedi" element={<Navigate to="/" replace />} />
@@ -89,9 +92,9 @@ export default function App() {
             <Route path="/doppioni" element={<Doppioni />} />
             <Route path="/novita" element={<Novita />} />
             <Route path="/novita/:chiave" element={<Settimana />} />
-            <Route path="/utenti" element={<Utenti />} />
+            {admin && <Route path="/utenti" element={<Utenti />} />}
             <Route path="/feedback" element={<Feedback />} />
-            <Route path="/imprese" element={<Imprese />} />
+            {imprese && <Route path="/imprese" element={<Imprese />} />}
             <Route path="/impresa" element={<MieiBandi />} />
             <Route path="/impresa/imprese" element={<MieImprese />} />
             <Route path="/impresa/imprese/:id" element={<ModuloImpresa />} />
@@ -104,6 +107,7 @@ export default function App() {
             <Route path="/catalogo" element={<Catalogo />} />
             <Route path="/bandi/:id" element={<Bando />} />
             <Route path="/feedback" element={<Feedback />} />
+            {imprese && <Route path="/imprese" element={<Imprese />} />}
             <Route path="*" element={<Navigate to="/catalogo" replace />} />
           </Routes>
         ) : (

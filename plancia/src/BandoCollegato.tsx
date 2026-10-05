@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { AnnuncioDelBando, api, BandoBreve, data, DubbioAnnuncio, nome, NOMI_DECISO_DA, NOMI_RUOLO, Ruolo } from "./api";
+import { usePuo } from "./utente";
 
 // Nella pagina dell'annuncio: il bando a cui e' collegato, gli altri annunci dello stesso bando,
 // i dubbi aperti e i comandi per unire o separare a mano.
@@ -10,6 +11,7 @@ export default function BandoCollegato({ annuncioId, bando, ruolo, collegatoDa, 
 }) {
   const [conAnnuncio, setConAnnuncio] = useState("");
   const [inCorso, setInCorso] = useState(false);
+  const modifiche = usePuo("modifiche");
   const esegui = async (corpo: Parameters<typeof api.cambiaBando>[1]) => {
     setInCorso(true);
     try {
@@ -65,7 +67,7 @@ export default function BandoCollegato({ annuncioId, bando, ruolo, collegatoDa, 
           </table>
         </>
       )}
-      <div className="filtri" style={{ marginTop: ".8rem" }}>
+      {modifiche && <><div className="filtri" style={{ marginTop: ".8rem" }}>
         <form onSubmit={(e) => { e.preventDefault(); if (conAnnuncio) esegui({ azione: "unisci", con_annuncio: Number(conAnnuncio) }); }}>
           <input type="number" min={1} placeholder="n. di un altro annuncio" value={conAnnuncio} onChange={(e) => setConAnnuncio(e.target.value)} />
           {" "}<button type="submit" disabled={inCorso || !conAnnuncio} title="Questo annuncio parla dello stesso bando dell'annuncio indicato">Unisci allo stesso bando</button>
@@ -75,7 +77,7 @@ export default function BandoCollegato({ annuncioId, bando, ruolo, collegatoDa, 
             Separa: è un bando a sé</button>
         )}
       </div>
-      <p className="piccolo">Il numero dell'annuncio è nell'indirizzo della sua pagina (…/annunci/<b>123</b>). Le tue scelte non vengono mai cambiate dalla deduplica automatica.</p>
+      <p className="piccolo">Il numero dell'annuncio è nell'indirizzo della sua pagina (…/annunci/<b>123</b>). Le tue scelte non vengono mai cambiate dalla deduplica automatica.</p></>}
     </>
   );
 }

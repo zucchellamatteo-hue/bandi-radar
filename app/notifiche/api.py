@@ -7,7 +7,7 @@ from fastapi import APIRouter, Depends, HTTPException
 from app import impresa
 from app.db.connessione import connetti
 from app.notifiche import email_imprese
-from app.utenti.api import solo_admin
+from app.utenti.api import richiede
 
 router = APIRouter(prefix="/api")
 
@@ -21,19 +21,19 @@ def _errore(e: ValueError) -> HTTPException:
 
 
 @router.get("/email-imprese")
-def elenco(admin: dict = Depends(solo_admin)) -> list[dict]:
+def elenco(admin: dict = Depends(richiede("imprese"))) -> list[dict]:
     with connetti() as conn:
         return email_imprese.in_attesa(conn)
 
 
 @router.post("/email-imprese/prepara")
-def prepara(admin: dict = Depends(solo_admin)) -> dict:
+def prepara(admin: dict = Depends(richiede("imprese"))) -> dict:
     with connetti() as conn:
         return email_imprese.prepara(conn)
 
 
 @router.post("/email-imprese/{email_id}/invia")
-def invia(email_id: int, admin: dict = Depends(solo_admin)) -> dict:
+def invia(email_id: int, admin: dict = Depends(richiede("imprese"))) -> dict:
     with connetti() as conn:
         try:
             esito = email_imprese.invia(conn, email_id, _chi(admin))
@@ -43,7 +43,7 @@ def invia(email_id: int, admin: dict = Depends(solo_admin)) -> dict:
 
 
 @router.post("/email-imprese/{email_id}/scarta")
-def scarta(email_id: int, admin: dict = Depends(solo_admin)) -> dict:
+def scarta(email_id: int, admin: dict = Depends(richiede("imprese"))) -> dict:
     with connetti() as conn:
         try:
             email_imprese.scarta(conn, email_id, _chi(admin))

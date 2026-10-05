@@ -9,7 +9,8 @@ from pydantic import BaseModel
 
 from app import feedback as fb
 from app.db.connessione import connetti
-from app.utenti.api import solo_admin, utente_corrente
+from app.utenti import ha_permesso
+from app.utenti.api import richiede, utente_corrente
 
 router = APIRouter(prefix="/api")
 
@@ -33,7 +34,7 @@ class Gestione(BaseModel):
 
 def _puo_giudicare(utente: dict, bando_id: int | None = None) -> None:
     """Admin e revisori giudicano tutte le schede; l'impresa solo quelle dei bandi adatti alle sue imprese."""
-    if utente["ruolo"] in ("admin", "revisore"):
+    if utente["ruolo"] in ("admin", "revisore") and ha_permesso(utente, "giudizi"):
         return
     if utente["ruolo"] == "impresa" and bando_id is not None:
         from app.impresa import imprese_per_bando
@@ -46,7 +47,8 @@ def _puo_giudicare(utente: dict, bando_id: int | None = None) -> None:
 
 @router.get("/bandi/{bando_id}/feedback")
 def feedback_del_bando(bando_id: int, utente: dict = Depends(utente_corrente)) -> dict:
-    _puo_giudicare(utente, bando_id)
+    if not ha_permesso(utente, "lavoro"):   # chi vede le pagine di lavoro legge i giudizi anche senza darne
+        _puo_giudicare(utente, bando_id)
     with connetti() as conn:
         try:
             return fb.del_bando(conn, bando_id, utente)
@@ -70,14 +72,14 @@ def giudica(bando_id: int, dati: Giudizio, utente: dict = Depends(utente_corrent
 def elenco_feedback(stato: str | None = None, ruolo: str | None = None, categoria: str | None = None,
                     bando: int | None = None, pagina: int = Query(1, ge=1), utente: dict = Depends(utente_corrente)) -> dict:
     """Tutti i giudizi per l'admin; per revisori e imprese solo i loro, con lo stato e la risposta."""
-    solo_miei = utente["id"] if utente["ruolo"] != "admin" else None
+    solo_miei = None if ha_permesso(utente, "lavoro") else utente["id"]
     with connetti() as conn:
         return fb.elenco(conn, stato or None, ruolo or None, categoria or None, bando, pagina, utente_id=solo_miei) | {
             "categorie": fb.CATEGORIE}
 
 
 @router.patch("/feedback/{feedback_id}")
-def gestisci(feedback_id: int, dati: Gestione, admin: dict = Depends(solo_admin)) -> dict:
+def gestisci(feedback_id: int, dati: Gestione, admin: dict = Depends(richiede("modifiche"))) -> dict:
     with connetti() as conn:
         try:
             r = fb.gestisci(conn, feedback_id, dati.stato, dati.risposta, admin["email"])

@@ -12,7 +12,7 @@ from pydantic import BaseModel
 from app import abbonamenti as ab
 from app.db.connessione import connetti
 from app.impresa.api import utente_impresa
-from app.utenti.api import solo_admin
+from app.utenti.api import richiede
 
 router = APIRouter(prefix="/api")
 
@@ -67,13 +67,13 @@ async def webhook(request: Request) -> dict:
 
 
 @router.get("/abbonamenti")
-def tutti(_: dict = Depends(solo_admin)) -> list[dict]:
+def tutti(_: dict = Depends(richiede("imprese"))) -> list[dict]:
     with connetti() as conn:
         return ab.elenco(conn)
 
 
 @router.patch("/abbonamenti/{utente_id}")
-def modifica(utente_id: int, dati: Modifica, _: dict = Depends(solo_admin)) -> dict:
+def modifica(utente_id: int, dati: Modifica, _: dict = Depends(richiede("imprese"))) -> dict:
     with connetti() as conn:
         try:
             r = ab.imposta(conn, utente_id, dati.stato, dati.giorni_prova_in_piu, dati.nota)

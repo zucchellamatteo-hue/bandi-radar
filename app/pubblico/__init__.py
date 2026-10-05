@@ -18,7 +18,7 @@ TESTI = Path(__file__).resolve().parent / "testi"
 LEGALI = {"termini": ("termini.html", "Termini e condizioni"), "privacy": ("privacy.html", "Informativa privacy"),
           "cookie": ("cookie.html", "Cookie"), "condizioni-supporto": ("supporto.html", "Condizioni del servizio di supporto")}
 
-# Prezzi del modello commerciale del 04/10 (IVA, prova gratuita, impresa e sede in piu': da confermare con Matteo).
+# Prezzi del modello commerciale, IVA esclusa (Matteo, 05/10: impresa in piu' 10 euro e sede in piu' 5 euro confermati).
 PREZZI = {"mensile": 30, "annuale": 20, "impresa_in_piu": 10, "sede_in_piu": 5}
 
 
@@ -147,6 +147,9 @@ def presentazione(conn) -> str:
     n = _numeri(conn)
     carte = "".join(_carta_esempio(b) for b in esempi(conn)) or "<p>Gli esempi arrivano presto.</p>"
     p = PREZZI
+    from app.abbonamenti import giorni_prova
+
+    giorni = giorni_prova()
     corpo = f"""
 <section><h1>I bandi giusti per la tua impresa,<br>ogni settimana.</h1>
 <p class="sottotitolo">Bandi Radar legge ogni giorno i bandi di Unione europea, Stato, Regioni, Camere di commercio e Comuni,
@@ -173,17 +176,17 @@ contributo arriva.</p></div>
 <p class="piccolo">Le schede sono indicative: prima di presentare la domanda va sempre letto il bando ufficiale.</p></section>
 
 <section id="prezzi"><h2>Prezzi</h2><div class="griglia">
-<div class="carta"><div class="etichetta">Mensile</div><div class="prezzo">{p['mensile']} € <small>/ mese</small></div>
+<div class="carta"><div class="etichetta">Mensile</div><div class="prezzo">{p['mensile']} € <small>/ mese + IVA</small></div>
 <ul class="spunte"><li>bandi adatti alla tua impresa</li><li>schede chiare e aggiornate</li><li>email settimanale</li><li>disdici quando vuoi</li></ul>
 <a class="bottone chiaro" href="/registrati">Prova gratis</a></div>
-<div class="carta evidenza"><div class="etichetta">Annuale</div><div class="prezzo">{p['annuale']} € <small>/ mese</small></div>
+<div class="carta evidenza"><div class="etichetta">Annuale</div><div class="prezzo">{p['annuale']} € <small>/ mese + IVA</small></div>
 <ul class="spunte"><li>tutto quello del mensile</li><li>pagato mese per mese</li><li>impegno di 12 mesi</li></ul>
 <a class="bottone" href="/registrati">Prova gratis</a></div>
 <div class="carta"><div class="etichetta">In più</div><ul class="spunte"><li>altra impresa: {p['impresa_in_piu']} € / mese</li>
 <li>altra sede della stessa impresa: {p['sede_in_piu']} € / mese</li></ul>
 <p class="piccolo">Supporto per la domanda a successo: una percentuale del contributo ottenuto, solo se arriva
 (<a href="/condizioni-supporto">condizioni</a>).</p></div>
-</div><p class="piccolo">[PREZZI IVA ESCLUSA O INCLUSA, DURATA DELLA PROVA GRATUITA: DA DECIDERE]</p></section>
+</div><p class="piccolo">Prezzi IVA esclusa. Prova gratuita di {giorni} giorni, senza carta.</p></section>
 
 <section class="grigia"><h2>Domande frequenti</h2>
 <details><summary>Da dove arrivano i bandi?</summary><p>Da {n['fonti']} siti pubblici: Unione europea, ministeri e agenzie nazionali, Regioni,
