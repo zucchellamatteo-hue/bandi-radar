@@ -556,10 +556,12 @@ def dettaglio_bando(bando_id: int) -> dict:
         cur.execute("SELECT versione, causa, salvata_il FROM bandi_versioni WHERE bando_id = %s ORDER BY versione DESC",
                     (bando_id,))
         versioni = _righe(cur)
+    from app import misure
     from app.schede import forma_incentivo
 
     return {**dict(bando), "forma_incentivo": forma_incentivo.per_la_plancia(dict(bando)),
-            "annunci": annunci, "allegati": allegati, "versioni": versioni}
+            "annunci": annunci, "allegati": allegati, "versioni": versioni,
+            "misure_cumulabili": misure.cumulabili(dict(bando))}
 
 
 class Correzione(BaseModel):

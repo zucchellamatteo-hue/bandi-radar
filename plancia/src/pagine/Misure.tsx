@@ -1,0 +1,70 @@
+import { useEffect, useState } from "react";
+import { Link, useParams } from "react-router-dom";
+import { api, Misura, MisuraBreve, nome } from "../api";
+
+const intervallo = (min: number | null | undefined, max: number | null | undefined) =>
+  min == null || max == null ? "" : min === max ? `${min}%` : `${min}–${max}%`;
+
+// Misure nazionali sugli investimenti (conto termico, iperammortamento...): non sono bandi, sono norme sempre aperte che
+// spesso si sommano ai bandi. Schede scritte e verificate a mano in app/misure/misure.yaml.
+export default function Misure({ base = "/misure" }: { base?: string }) {
+  const { id } = useParams();
+  const [elenco, setElenco] = useState<Misura[] | null>(null);
+  useEffect(() => { api.misure().then(setElenco); }, []);
+  if (!elenco) return <div className="caricamento">Caricamento…</div>;
+  const m = id ? elenco.find((x) => x.id === id) : null;
+  if (id && m) return <SchedaMisura m={m} base={base} />;
+  return (
+    <>
+      <h1>Misure nazionali sugli investimenti</h1>
+      <p>Non sono bandi con una scadenza: sono agevolazioni previste dalla legge, sempre disponibili finché sono in vigore, che spesso si
+        possono <b>sommare</b> ai contributi dei bandi per gli stessi investimenti.</p>
+      <div className="griglia-piani">{elenco.map((x) => (
+        <div key={x.id} className="riquadro">
+          <div className="etichetta">{x.ente} · {nome(x.tipo)}</div>
+          <h3><Link to={`${base}/${x.id}`}>{x.nome}</Link></h3>
+          <p className="piccolo">{x.sintesi}</p>
+          {x.beneficio_stimato?.percentuale_max != null && <p><b>Beneficio stimato: {intervallo(x.beneficio_stimato.percentuale_min, x.beneficio_stimato.percentuale_max)}</b> della spesa</p>}
+          <span className={`stato-bando ${x.stato === "aperto" ? "aperto" : "non_noto"}`}>{x.stato === "aperto" ? "in vigore" : "da verificare"}</span>
+        </div>))}</div>
+    </>
+  );
+}
+
+function SchedaMisura({ m, base }: { m: Misura; base: string }) {
+  const voce = (titolo: string, testo: unknown) => testo ? <><h3>{titolo}</h3><p className="testo-lungo">{String(testo)}</p></> : null;
+  return (
+    <>
+      <p><Link to={base}>← Misure nazionali</Link></p>
+      <h1>{m.nome}</h1>
+      <p className="piccolo">{m.ente} · {m.norma}{m.url_ufficiale && <> · <a href={m.url_ufficiale} target="_blank" rel="noreferrer">fonte ufficiale ↗</a></>}
+        {m.fonte_verificata_il && <> · verificata il {m.fonte_verificata_il}</>}</p>
+      {m.sintesi && <p className="testo-lungo">{m.sintesi}</p>}
+      {m.beneficio_stimato && <div className="avviso"><b>Beneficio stimato: {intervallo(m.beneficio_stimato.percentuale_min, m.beneficio_stimato.percentuale_max)} della spesa.</b>{" "}
+        {m.beneficio_stimato.nota}</div>}
+      {voce("A chi si rivolge", m.a_chi_si_rivolge)}
+      {voce("Investimenti ammessi", m.investimenti_ammessi)}
+      {voce("Quanto vale", m.intensita)}
+      {voce("Come si ottiene", Array.isArray(m.come_si_ottiene) ? m.come_si_ottiene.join("\n") : m.come_si_ottiene)}
+      {voce("Tempi", m.tempi)}
+      {m.cumulabilita && voce("Si somma ai bandi?", `${m.cumulabilita.regola || ""}${m.cumulabilita.riferimento ? ` (${m.cumulabilita.riferimento})` : ""}`)}
+      {voce("Attenzione", Array.isArray(m.attenzione) ? m.attenzione.join("\n") : m.attenzione)}
+      <p className="piccolo">Informazione indicativa: verificare la norma e le regole del gestore prima di investire.</p>
+    </>
+  );
+}
+
+// Riquadro per le schede dei bandi: le misure che si possono sommare per gli stessi investimenti.
+export function SiSommaCon({ misure, base = "/misure" }: { misure?: MisuraBreve[]; base?: string }) {
+  if (!misure?.length) return null;
+  return (
+    <div className="avviso">
+      <b>Per gli stessi investimenti si può sommare anche:</b>
+      <ul>{misure.map((m) => (
+        <li key={m.id}><Link to={`${base}/${m.id}`}>{m.nome}</Link>
+          {m.beneficio_max != null && <> — circa {intervallo(m.beneficio_min, m.beneficio_max)} della spesa non coperta dal bando</>}
+          {m.cumulo && <div className="piccolo">{m.cumulo}</div>}</li>))}</ul>
+      <span className="piccolo">Stima indicativa, nei limiti delle regole sul cumulo degli aiuti: da verificare caso per caso.</span>
+    </div>
+  );
+}

@@ -18,6 +18,7 @@ import Feedback from "./pagine/Feedback";
 import { Accesso, ConfermaEmail, Disiscrizione, ImpostaPassword, Registrati } from "./pagine/Accesso";
 import Imprese from "./pagine/Imprese";
 import Campagne from "./pagine/Campagne";
+import Misure from "./pagine/Misure";
 import { Abbonamento, MieImprese, MieiBandi, MieRichieste, ModuloImpresa, SchedaImpresa } from "./pagine/AreaImpresa";
 import { ContestoUtente, puo } from "./utente";
 
@@ -48,6 +49,7 @@ export default function App() {
         {lavoro && <nav>
           <NavLink to="/" end className={classe}>Fonti</NavLink>{" · "}
           <NavLink to="/catalogo" className={classe}>Catalogo</NavLink>{" · "}
+          <NavLink to="/misure" className={classe}>Misure</NavLink>{" · "}
           <NavLink to="/profili" className={classe}>Profili</NavLink>{" · "}
           <NavLink to="/annunci" end className={classe}>Annunci</NavLink>{" · "}
           <NavLink to="/lavorazione" className={classe}>Lavorazione</NavLink>{" · "}
@@ -61,12 +63,14 @@ export default function App() {
         </nav>}
         {utente.ruolo === "impresa" && <nav>
           <NavLink to="/impresa" end className={classe}>I miei bandi</NavLink>{" · "}
+          <NavLink to="/impresa/misure" className={classe}>Agevolazioni fiscali</NavLink>{" · "}
           <NavLink to="/impresa/imprese" className={classe}>Le mie imprese</NavLink>{" · "}
           <NavLink to="/impresa/richieste" className={classe}>Richieste di supporto</NavLink>{" · "}
           <NavLink to="/impresa/abbonamento" className={classe}>Abbonamento</NavLink>
         </nav>}
         {utente.ruolo === "revisore" && !lavoro && <nav>
           <NavLink to="/catalogo" className={classe}>Catalogo</NavLink>{" · "}
+          <NavLink to="/misure" className={classe}>Misure</NavLink>{" · "}
           <NavLink to="/feedback" className={classe}>I miei giudizi</NavLink>
           {imprese && <>{" · "}<NavLink to="/imprese" className={classe}>Imprese</NavLink></>}
         </nav>}
@@ -83,6 +87,8 @@ export default function App() {
             <Route path="/registrati" element={<Navigate to="/" replace />} />
             <Route path="/fonti/:id" element={<DettaglioFonte />} />
             <Route path="/catalogo" element={<Catalogo />} />
+            <Route path="/misure" element={<Misure />} />
+            <Route path="/misure/:id" element={<Misure />} />
             <Route path="/annunci" element={<Annunci />} />
             <Route path="/profili" element={<Profili />} />
             <Route path="/lavorazione" element={<Lavorazione />} />
@@ -105,10 +111,14 @@ export default function App() {
             <Route path="/impresa/bandi/:id" element={<SchedaImpresa />} />
             <Route path="/impresa/richieste" element={<MieRichieste />} />
             <Route path="/impresa/abbonamento" element={<Abbonamento />} />
+            <Route path="/impresa/misure" element={<Misure base="/impresa/misure" />} />
+            <Route path="/impresa/misure/:id" element={<Misure base="/impresa/misure" />} />
           </Routes>
         ) : utente.ruolo === "revisore" ? (
           <Routes>
             <Route path="/catalogo" element={<Catalogo />} />
+            <Route path="/misure" element={<Misure />} />
+            <Route path="/misure/:id" element={<Misure />} />
             <Route path="/bandi/:id" element={<Bando />} />
             <Route path="/feedback" element={<Feedback />} />
             {imprese && <Route path="/imprese" element={<Imprese />} />}
@@ -124,6 +134,8 @@ export default function App() {
             <Route path="/impresa/bandi/:id" element={<SchedaImpresa />} />
             <Route path="/impresa/richieste" element={<MieRichieste />} />
             <Route path="/impresa/abbonamento" element={<Abbonamento />} />
+            <Route path="/impresa/misure" element={<Misure base="/impresa/misure" />} />
+            <Route path="/impresa/misure/:id" element={<Misure base="/impresa/misure" />} />
             <Route path="*" element={<Navigate to="/impresa" replace />} />
           </Routes>
         )}

@@ -192,6 +192,14 @@ def checkout(conn, utente: dict, piano: str) -> str:
             dati[f"line_items[{riga}][quantity]"] = str(quanti)
             riga += 1
     # I giorni di prova che restano valgono anche pagando prima (Stripe vuole almeno 2 giorni nel futuro).
+    # Prezzi IVA esclusa (Matteo, 05/10): Stripe aggiunge l'IVA al 22% con l'aliquota creata da prepara-stripe.
+    if os.environ.get("STRIPE_IVA_22"):
+        dati["subscription_data[default_tax_rates][0]"] = os.environ["STRIPE_IVA_22"]
+    # Con le fatture elettroniche accese servono prima i dati di fatturazione (ragione sociale, P.IVA, SDI o PEC).
+    from app import fatture
+
+    if fatture.attive() and not fatture.leggi_dati(conn, utente["id"]):
+        raise ErroreAbbonamento("Prima inserisci i dati di fatturazione (ragione sociale, partita IVA, codice SDI o PEC).")
     if a["stato"] == "prova" and a["prova_fino_al"] and a["prova_fino_al"] > adesso() + timedelta(days=2):
         dati["subscription_data[trial_end]"] = str(int(a["prova_fino_al"].timestamp()))
     conn.commit()
@@ -311,12 +319,35 @@ def gestisci_evento(conn, evento: dict) -> str:
                             (stato, piano, o.get("id"), o.get("customer"), _data(o.get("current_period_end")
                              or (o.get("items", {}).get("data") or [{}])[0].get("current_period_end")), impegno, utente_id))
                 esito = f"utente {utente_id}: {stato}"
+        elif evento["type"] == "invoice.paid":
+            esito = _fattura_elettronica(conn, o)
         elif evento["type"] == "invoice.payment_failed":
             cur.execute("UPDATE abbonamenti SET stato = 'in_ritardo', aggiornato_il = now() WHERE stripe_cliente = %s "
                         "AND stato = 'attivo'", (o.get("customer"),))
             esito = "addebito non riuscito"
         cur.execute("UPDATE eventi_stripe SET esito = %s WHERE id = %s", (esito, evento["id"]))
     return esito
+
+
+def _fattura_elettronica(conn, fattura_stripe: dict) -> str:
+    """Pagamento riuscito: fattura elettronica (app/fatture), se attiva. Un errore non ferma il webhook: la fattura
+    resta da rifare dalla pagina Imprese."""
+    from app import fatture
+
+    if not fatture.attive():
+        return "pagamento registrato (fatture elettroniche spente)"
+    with conn.cursor() as cur:
+        cur.execute("SELECT utente_id FROM abbonamenti WHERE stripe_cliente = %s", (fattura_stripe.get("customer"),))
+        r = cur.fetchone()
+    if not r:
+        return "pagamento di un cliente sconosciuto: nessuna fattura"
+    try:
+        fid = fatture.crea_da_stripe(conn, r["utente_id"], fattura_stripe)
+    except fatture.ErroreFattura as exc:
+        return f"fattura non creata: {exc}"
+    if fid is None:
+        return "fattura gia' fatta o importo zero"
+    return f"fattura {fid}: {fatture.invia(conn, fid)}"
 
 
 # --- preparazione dei prodotti in Stripe (una volta, con le chiavi di prova) ---
@@ -348,5 +379,8 @@ def prepara_stripe() -> list[str]:
     annuale = chiama("POST", "/billing_portal/configurations", {**comune, "features[subscription_cancel][enabled]": "false",
                                                                "default_return_url": f"{sito_url()}/impresa/abbonamento"})
     fatti.append(f"portale con disdetta: STRIPE_PORTALE={normale['id']}")
+    iva22 = chiama("POST", "/tax_rates", {"display_name": "IVA", "percentage": "22", "inclusive": "false", "country": "IT",
+                                          "jurisdiction": "IT", "description": "IVA ordinaria 22%"})
+    fatti.append(f"aliquota IVA 22%: STRIPE_IVA_22={iva22['id']}")
     fatti.append(f"portale senza disdetta per l'annuale: STRIPE_PORTALE_ANNUALE={annuale['id']}")
     return fatti

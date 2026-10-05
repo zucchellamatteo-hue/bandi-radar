@@ -16,6 +16,7 @@ from collections import Counter, defaultdict
 from datetime import date
 
 from app.abbinamento import catalogo, regole
+from app import misure
 from app.abbinamento.profilo import Profilo
 
 MASSIMO_PROSPETTI = 20_000
@@ -94,9 +95,12 @@ def analizza(conn, campagna_id: int, oggi: date | None = None) -> dict:
             elenco = [{"bando_id": b["id"], "titolo": b["titolo"], "ente": b.get("ente"),
                        "scadenza": b["scadenza"].isoformat() if b.get("scadenza") else None, "importo": importo(b),
                        "percentuale": b.get("percentuale"), "livello": e.livello,
-                       "locale": bool(regioni & set(b.get("territorio_regioni") or []))} for b, e in risultati]
-            # Prima i compatibili, poi quelli della sua regione, poi l'importo (fino al tetto per la dimensione).
-            elenco.sort(key=lambda x: (x["livello"] != regole.COMPATIBILE, not x["locale"],
+                       "locale": bool(regioni & set(b.get("territorio_regioni") or [])),
+                       "fondo_perduto": catalogo.a_fondo_perduto(b),
+                       "cumulo": misure.frase_cumulo(misure.cumulabili(b, prof))} for b, e in risultati]
+            # Prima i compatibili, poi il fondo perduto (Matteo, 05/10), poi quelli della sua regione, poi l'importo
+            # (fino al tetto per la dimensione).
+            elenco.sort(key=lambda x: (x["livello"] != regole.COMPATIBILE, not x["fondo_perduto"], not x["locale"],
                                        -min(float(x["importo"] or 0), tetto)))
             comp = [x for x in elenco if x["livello"] == regole.COMPATIBILE]
             cache[chiave] = (elenco[:10], len(comp), len(elenco) - len(comp),
@@ -165,6 +169,7 @@ def testo(prospetto: dict, sito: str, prezzo: int = 30, giorni_prova: int = 14) 
         "abbiamo trovato opportunità che, per settore, territorio e dimensione, sembrano adatte alla vostra impresa:\n\n"
         + "\n".join(righe) + "\n"
         + (f"\n…e altri {altri} bandi compatibili.\n" if altri > 0 else "")
+        + (f"\n{comp[0]['cumulo']}\n" if comp[0].get("cumulo") else "")
         + "\nSono informazioni indicative, da verificare sul bando ufficiale insieme a voi.\n\n"
         f"Con Bandi Radar ricevete ogni settimana solo i bandi adatti alla vostra impresa, con schede chiare: "
         f"{prezzo} € al mese + IVA, con {giorni_prova} giorni di prova gratuita. "
@@ -173,6 +178,25 @@ def testo(prospetto: dict, sito: str, prezzo: int = 30, giorni_prova: int = 14) 
         f"Per vedere i bandi della vostra impresa: {sito}/registrati\n\n"
         "Cordiali saluti\n{FIRMA}\n")
     return oggetto, corpo
+
+
+def messaggi_linkedin(prospetto: dict, sito: str) -> tuple[str, str]:
+    """Invito al collegamento (al massimo 300 caratteri, il limite di LinkedIn) e primo messaggio dopo l'accettazione.
+    Da mandare a mano, a una persona con un ruolo pertinente: niente strumenti automatici (vietati da LinkedIn)."""
+    comp = [b for b in (prospetto.get("bandi") or []) if b["livello"] == regole.COMPATIBILE]
+    if not comp:
+        return "", ""
+    b = comp[0]
+    importo_b = f" (fino a {_euro(b['importo'])})" if b.get("importo") else ""
+    invito = (f"Buongiorno {{NOME}}, mi occupo di finanza agevolata. Per imprese come {{RAGIONE_SOCIALE}} è aperto "
+              f"«{b['titolo'][:90]}»{importo_b}. Se le interessa le mando i dettagli.")
+    if len(invito) > 300:
+        invito = (f"Buongiorno {{NOME}}, mi occupo di finanza agevolata: ci sono bandi aperti adatti a {{RAGIONE_SOCIALE}}"
+                  f"{importo_b}. Se le interessa le mando i dettagli.")[:300]
+    _, corpo = testo(prospetto, sito)
+    messaggio = corpo.replace("Gentile {RAGIONE_SOCIALE},", "Grazie {NOME} per il collegamento.") + \
+        "\nSe preferisce non ricevere altri messaggi me lo scriva pure: non la ricontatterò.\n"
+    return invito, messaggio
 
 
 def esporta_csv(conn, campagna_id: int, sito: str) -> str:
@@ -185,13 +209,15 @@ def esporta_csv(conn, campagna_id: int, sito: str) -> str:
         righe = [dict(r) for r in cur.fetchall()]
     uscita = io.StringIO()
     w = csv.writer(uscita, delimiter=";")
-    w.writerow(["codice", "bandi_compatibili", "bandi_da_verificare", "beneficio_massimo_euro", "bandi", "oggetto", "testo"])
+    w.writerow(["codice", "bandi_compatibili", "bandi_da_verificare", "beneficio_massimo_euro", "bandi", "oggetto", "testo",
+                "linkedin_invito", "linkedin_messaggio"])
     for r in righe:
         oggetto, corpo = testo(r, sito, giorni_prova=giorni_prova())
+        invito, messaggio = messaggi_linkedin(r, sito)
         w.writerow([r["codice"], r["n_compatibili"], r["n_da_verificare"],
                     round(float(r["beneficio_max"])) if r["beneficio_max"] else "",
                     " | ".join(f"{b['bando_id']} {b['titolo'][:80]}" for b in (r["bandi"] or []) if b["livello"] == regole.COMPATIBILE),
-                    oggetto, corpo])
+                    oggetto, corpo, invito, messaggio])
     return uscita.getvalue()
 
 

@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams, useSearchParams } from "react-router-dom";
-import { Abbonamento as TipoAbbonamento, api, BandoRiga, data, euro, Impresa, nome, NOMI_STATO_ABBONAMENTO, NOMI_STATO_RICHIESTA, Profilo, RichiestaSupporto, SchedaRidotta, Valori } from "../api";
+import { Abbonamento as TipoAbbonamento, DatiFatturazione, api, BandoRiga, data, euro, Impresa, nome, NOMI_STATO_ABBONAMENTO, NOMI_STATO_RICHIESTA, Profilo, RichiestaSupporto, SchedaRidotta, Valori } from "../api";
 import { Importo, SegnoEsito } from "./Catalogo";
 import { Fasce, Modulo, Motivi, VUOTO } from "./Profili";
 import Giudizio from "../Giudizio";
+import { SiSommaCon } from "./Misure";
 
 // Area impresa (05/10/2026): le imprese dell'utente, i bandi adatti (mai gli esclusi), la scheda ridotta e la richiesta
 // di supporto. Niente pagine di lavoro (fonti, annunci, lavorazione).
@@ -128,6 +129,7 @@ export function SchedaImpresa() {
       </div>
       {b.forma_incentivo?.righe?.length ? <><h3>Forma dell'incentivo</h3><ul>{b.forma_incentivo.righe.map((r, i) => (
         <li key={i}><b>{r.per_chi}</b>: {r.forme.map((f) => `${nome(f.forma)}${f.percentuale != null ? ` ${f.percentuale}%` : ""}${f.massimale != null ? ` fino a ${euro(f.massimale)}` : ""}`).join(" + ")}</li>))}</ul></> : null}
+      <SiSommaCon misure={b.misure_cumulabili} base="/impresa/misure" />
       {b.a_chi_si_rivolge && <><h3>A chi si rivolge</h3><p className="testo-lungo">{b.a_chi_si_rivolge}</p></>}
       {b.cosa_finanzia && <><h3>Cosa finanzia</h3><p className="testo-lungo">{b.cosa_finanzia}</p></>}
       {b.requisiti && <><h3>Cosa serve</h3><p className="testo-lungo">{b.requisiti}</p></>}
@@ -299,6 +301,40 @@ export function Abbonamento() {
       {!a.stripe && <p className="piccolo">I pagamenti online non sono ancora attivi.</p>}
       {errore && <div className="allarme">{errore}</div>}
       <p className="piccolo">Pagamento sicuro con Stripe: i dati della carta non passano da Bandi Radar. <a href="/termini">Termini del servizio</a>.</p>
+      <ModuloFatturazione />
+    </>
+  );
+}
+
+const VUOTI: DatiFatturazione = { denominazione: "", partita_iva: "", codice_fiscale: "", codice_destinatario: "", pec: "", indirizzo: "", cap: "", comune: "", provincia: "" };
+
+function ModuloFatturazione() {
+  const [d, setD] = useState<DatiFatturazione>(VUOTI);
+  const [richiesti, setRichiesti] = useState(false);
+  const [esito, setEsito] = useState<string | null>(null);
+  const [errore, setErrore] = useState<string | null>(null);
+  useEffect(() => { api.fatturazione().then((r) => { if (r.dati) setD({ ...VUOTI, ...r.dati }); setRichiesti(r.richiesti); }); }, []);
+  const campo = (k: keyof DatiFatturazione, etichetta: string, extra: Partial<React.InputHTMLAttributes<HTMLInputElement>> = {}) => (
+    <label>{etichetta}<input value={d[k] || ""} onChange={(e) => setD({ ...d, [k]: e.target.value })} {...extra} /></label>);
+  const salva = async () => {
+    setErrore(null); setEsito(null);
+    try { setD({ ...VUOTI, ...(await api.salvaFatturazione(d)) }); setEsito("Dati salvati."); }
+    catch (e) { setErrore(e instanceof Error ? e.message : String(e)); }
+  };
+  return (
+    <>
+      <h2>Dati di fatturazione</h2>
+      <p className="piccolo">Per la fattura elettronica{richiesti ? " (servono prima di abbonarsi)" : ""}. Indica il codice destinatario SDI oppure la PEC.</p>
+      <div className="modulo-profilo"><fieldset><legend>Intestatario</legend>
+        {campo("denominazione", "Ragione sociale")}{campo("partita_iva", "Partita IVA", { maxLength: 13 })}
+        {campo("codice_fiscale", "Codice fiscale (se diverso)", { maxLength: 16 })}
+        {campo("codice_destinatario", "Codice destinatario SDI", { maxLength: 7 })}{campo("pec", "PEC (se non hai il codice)")}
+      </fieldset><fieldset><legend>Sede</legend>
+        {campo("indirizzo", "Indirizzo")}{campo("cap", "CAP", { maxLength: 5 })}{campo("comune", "Comune")}{campo("provincia", "Provincia (sigla)", { maxLength: 2 })}
+      </fieldset></div>
+      {errore && <div className="allarme">{errore}</div>}
+      {esito && <div className="avviso">{esito}</div>}
+      <p><button onClick={salva}>Salva i dati di fatturazione</button></p>
     </>
   );
 }

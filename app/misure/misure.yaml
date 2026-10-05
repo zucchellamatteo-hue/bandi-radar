@@ -1,0 +1,424 @@
+# Misure nazionali "automatiche" o a sportello permanente, separate dai bandi.
+# Si cumulano (nei limiti indicati) con i bandi a fondo perduto.
+# Ricerca e fonti: docs/ricerche/2026-10-05_misure_nazionali.md
+# Regola: dove un dato non e' stato verificato su fonte ufficiale c'e' scritto "da verificare".
+# beneficio_stimato: percentuale del costo dell'investimento (o della spesa agevolata) che torna
+# all'impresa, stima prudente, prima di eventuali cumuli.
+
+misure:
+
+  - id: conto_termico_3
+    nome: "Conto Termico 3.0"
+    tipo: contributo_conto_capitale
+    ente: "GSE (Gestore dei Servizi Energetici), per conto del MASE"
+    norma: >-
+      DM MASE 7 agosto 2025 (GU 26/09/2025, in vigore dal 25/12/2025), in particolare
+      art. 17 (cumulo), Titolo V artt. 24-28 (imprese); Regole Applicative GSE approvate il 19/12/2025.
+    url_ufficiale: "https://www.gse.it/servizi-per-te/efficienza-energetica/conto-termico-3-0"
+    in_vigore_dal: "2025-12-25"
+    in_vigore_fino_al: null
+    stato: aperto
+    sintesi: >-
+      Contributo a fondo perduto del GSE per lavori di efficienza energetica sugli edifici
+      (cappotto, infissi, illuminazione LED, building automation, fotovoltaico o colonnine
+      solo insieme a una pompa di calore) e per impianti termici a fonti rinnovabili
+      (pompe di calore, biomassa, solare termico, scaldacqua a pompa di calore).
+      Per le imprese copre dal 25% al 65% della spesa ammessa, pagato dal GSE dopo la fine
+      dei lavori, in una rata se fino a 15.000 euro, altrimenti in rate annuali.
+    a_chi_si_rivolge: >-
+      Imprese di ogni dimensione (anche agricole e ditte individuali) che hanno la disponibilita'
+      dell'edificio; Pubbliche amministrazioni ed Enti del Terzo Settore; privati per alcuni interventi.
+      Per le imprese: interventi di efficienza (Titolo II) solo su edifici dell'ambito terziario
+      (categorie catastali indicate nelle Regole Applicative, es. gruppi B, C esclusi C/6-C/7, D escluso D/9, A/10);
+      impianti rinnovabili (Titolo III) anche altrove.
+    soggetti_ammessi: [impresa, libero_professionista, ente_terzo_settore, ente_pubblico, persona_fisica]
+    dimensioni_ammesse: []
+    settori_esclusi: >-
+      Nessun settore escluso in quanto tale. Esclusi: imprese in difficolta', imprese con ordine di
+      recupero di aiuti illegali pendente, cause di esclusione artt. 94-95 D.Lgs. 36/2023 e art. 67
+      D.Lgs. 159/2011. Per imprese ed ETS economici non sono ammessi apparecchi alimentati a
+      combustibili fossili, incluso il gas naturale (niente pompe di calore a gas).
+    investimenti_ammessi: >-
+      Titolo II (efficienza energetica, edifici esistenti): II.A isolamento superfici opache;
+      II.B sostituzione infissi; II.C schermature solari; II.D trasformazione in edificio a energia
+      quasi zero (nZEB); II.E illuminazione efficiente interna e pertinenze; II.F building automation
+      e termoregolazione; II.G colonnine di ricarica insieme a pompa di calore elettrica; II.H
+      fotovoltaico e accumulo insieme a pompa di calore elettrica.
+      Titolo III (rinnovabili termiche, fino a 2.000 kW): III.A pompe di calore; III.B sistemi ibridi;
+      III.C generatori a biomassa (anche serre e calore di processo); III.D solare termico (fino a
+      2.500 m2); III.E scaldacqua a pompa di calore; III.F allaccio a teleriscaldamento efficiente;
+      III.G microcogenerazione da rinnovabili. Requisito per le imprese: risparmio di almeno il 10%
+      di energia rispetto alla situazione prima (20% per i multi-intervento), secondo la pagina GSE.
+    categorie_spesa: [energia_efficienza, opere_edili_impianti]
+    intensita: >-
+      Imprese, Titolo II: base 25% dei costi ammissibili per intervento singolo, 30% per multi-intervento
+      (30% massimo per II.D, II.G, II.H); +20 punti piccole imprese, +10 medie; +15 zone assistite
+      art. 107.3.a TFUE, +5 zone 107.3.c; +15 se la prestazione energetica migliora di almeno il 40%.
+      Tetto: 65% piccole e medie, 60% grandi.
+      Imprese, Titolo III: 45% dei costi ammissibili; +20 piccole, +10 medie. Tetto: 65% piccole,
+      55% medie, 45% grandi.
+      In ogni caso entro i costi massimi unitari (euro/m2, euro/kW) delle Regole Applicative; IVA esclusa.
+      Limiti Titolo V: 150 milioni di euro l'anno per tutte le imprese, 30 milioni per impresa e intervento.
+      Budget annuo complessivo 900 milioni (500 privati, di cui 150 imprese; 400 PA).
+    beneficio_stimato:
+      percentuale_min: 25
+      percentuale_max: 65
+      nota: >-
+        Contributo diretto, non fiscale: e' gia' la percentuale della spesa. Grande impresa con un
+        solo intervento di efficienza fuori dalle zone assistite = 25%; piccola impresa con
+        multi-intervento in zona 107.3.a = tetto 65%. Il valore reale puo' essere piu' basso per i
+        costi massimi unitari. Contributo in conto impianti: tassato come ricavo pro quota.
+    come_si_ottiene: >-
+      1) Imprese: PRIMA dell'avvio dei lavori (primo ordine vincolante o inizio cantiere) inviare sul
+      Portaltermico la "richiesta preliminare" (Modello 4), pena l'inammissibilita'.
+      2) Realizzare l'intervento con asseverazione del tecnico, diagnosi/APE dove richiesti, pagamenti tracciabili.
+      3) Entro 90 giorni dalla fine lavori presentare la richiesta di "accesso diretto" sul Portaltermico
+      (le imprese non possono usare la prenotazione, riservata a PA ed ETS).
+      4) Firma della scheda-contratto con il GSE dopo l'istruttoria.
+    tempi: >-
+      Pagamento entro l'ultimo giorno del mese successivo al bimestre in cui il GSE ammette l'istanza.
+      Fino a 15.000 euro rata unica; oltre, rate annuali costanti (2 anni per pompe di calore fino a
+      35 kW, fino a 5 anni per isolamento e infissi). Trattenuta GSE 1% del contributo, max 250 euro + IVA.
+    cumulabilita:
+      con_fondo_perduto: nei_limiti
+      regola: >-
+        Art. 17: niente Conto Termico se per lo stesso intervento ci sono altri "incentivi statali"
+        (contributi erogati direttamente da un'Amministrazione centrale), salvo fondi di garanzia,
+        fondi di rotazione e contributi in conto interessi (quindi si' Fondo di garanzia PMI e
+        Nuova Sabatini). Per le imprese, art. 27: cumulabile con altri aiuti di Stato sugli stessi
+        costi (es. bandi regionali/camerali) nel limite delle intensita' massime sopra (65%/60%,
+        65%/55%/45%). Il GSE (FAQ) considera incentivi statali anche detrazioni fiscali, crediti
+        d'imposta, Transizione 5.0 e iperammortamento: quindi NON cumulabile con iperammortamento
+        e crediti d'imposta sulle stesse spese (posizione prudente da seguire). Va dichiarato
+        ogni altro aiuto (codici COR del Registro Nazionale Aiuti).
+      riferimento: "DM 7/8/2025 artt. 17 e 27; Regole Applicative GSE par. 4.5"
+    attenzione: >-
+      Richiesta preliminare prima dell'avvio dei lavori (anche un ordine firmato o un acconto fanno
+      partire i lavori). Domanda entro 90 giorni dalla fine lavori, a pena di inammissibilita'.
+      Il portale e' stato sospeso il 3/3/2026 per troppe richieste (circa 1,3 miliardi) e riaperto il
+      13/4/2026 solo in accesso diretto: le risorse annuali possono esaurirsi, controllare i contatori GSE.
+      Edificio deve essere esistente e accatastato; per Titolo II solo ambito terziario. Prodotti
+      a catalogo GSE semplificano. Controlli e sopralluoghi GSE con possibile revoca.
+    fonte_verificata_il: "2026-10-05"
+
+  - id: iperammortamento_2026
+    nome: "Iperammortamento 2026 (Nuovo Piano Transizione 5.0)"
+    tipo: maggiorazione_ammortamento
+    ente: "MIMIT e MEF, procedura gestita dal GSE; recupero eventuale tramite Agenzia delle Entrate"
+    norma: >-
+      Legge 30 dicembre 2025 n. 199 (Legge di bilancio 2026), art. 1, commi 427-436, allegati IV e V;
+      DL 27 marzo 2026 n. 38, art. 7 (eliminato il vincolo di beni prodotti in UE/SEE);
+      DM MIMIT-MEF 7 maggio 2026 (modalita' attuative); DD MIMIT 10 giugno 2026 (termini e modelli).
+    url_ufficiale: "https://www.mimit.gov.it/it/incentivi/nuovo-piano-transizione-5-0-iperammortamento"
+    in_vigore_dal: "2026-01-01"
+    in_vigore_fino_al: "2028-09-30"
+    stato: aperto
+    sintesi: >-
+      Chi compra beni strumentali nuovi 4.0 (macchinari interconnessi, software, sistemi digitali)
+      o impianti per produrre energia rinnovabile per autoconsumo puo' dedurre dalle tasse un costo
+      piu' alto di quello pagato: +180% fino a 2,5 milioni di investimenti l'anno, +100% fino a 10
+      milioni, +50% fino a 20 milioni. Per una societa' in utile vale circa il 43% della spesa,
+      recuperato negli anni di ammortamento. Servono comunicazioni al GSE, perizia e certificazione.
+    a_chi_si_rivolge: >-
+      Tutte le imprese residenti e le stabili organizzazioni in Italia, di ogni forma, settore e
+      dimensione, che determinano il reddito d'impresa. Esclusi (fonti secondarie concordi, da
+      verificare sul testo di legge): imprese in liquidazione o procedure concorsuali, imprese con
+      sanzioni interdittive D.Lgs. 231/2001, lavoratori autonomi, forfettari, imprese agricole a
+      reddito catastale. Condizione: rispetto delle norme sulla sicurezza sul lavoro e regolarita' contributiva.
+    soggetti_ammessi: [impresa]
+    dimensioni_ammesse: []
+    settori_esclusi: >-
+      Nessun settore escluso in quanto tale. Esclusi i soggetti indicati sopra. Il beneficio serve
+      solo a chi ha reddito d'impresa tassabile (in perdita il beneficio si sposta negli anni o si perde).
+    investimenti_ammessi: >-
+      a) Beni materiali e immateriali nuovi elencati negli allegati IV e V alla L. 199/2025 (sostituiscono
+      gli ex allegati A e B dell'Industria 4.0), destinati a strutture produttive in Italia e interconnessi
+      al sistema aziendale di gestione della produzione o alla rete di fornitura. Dal DL 38/2026 non serve
+      piu' che siano prodotti in UE/SEE.
+      b) Beni per autoproduzione di energia rinnovabile destinata all'autoconsumo: gruppi di generazione
+      elettrica, trasformatori e misuratori, impianti termici per calore di processo elettrificato,
+      servizi ausiliari, accumuli; producibilita' massima 105% del fabbisogno della struttura produttiva;
+      costi massimi in euro/kW (allegato 1 al DM); per il fotovoltaico solo moduli iscritti al registro
+      ENEA (lettere b e c, cioe' prodotti in UE).
+      Nessun requisito di riduzione dei consumi energetici (a differenza della vecchia Transizione 5.0).
+    categorie_spesa: [macchinari_attrezzature, software_digitale, energia_efficienza]
+    intensita: >-
+      Maggiorazione del costo di acquisto (solo ai fini delle imposte sui redditi, deduzione
+      extracontabile di quote di ammortamento e canoni di leasing), per scaglioni di investimenti
+      completati in ciascun anno: 180% fino a 2,5 milioni; 100% oltre 2,5 e fino a 10 milioni;
+      50% oltre 10 e fino a 20 milioni; oltre 20 milioni nessuna maggiorazione.
+      Base di calcolo al netto di altre sovvenzioni o contributi ricevuti per gli stessi costi.
+      Non e' un credito d'imposta: non si compensa in F24.
+    beneficio_stimato:
+      percentuale_min: 12
+      percentuale_max: 43.2
+      nota: >-
+        Risparmio = maggiorazione x aliquota IRES 24%. Primo scaglione: 180% x 24% = 43,2% della spesa;
+        secondo: 100% x 24% = 24%; terzo: 50% x 24% = 12%. Solo per un'impresa in utile e capiente,
+        distribuito sugli anni di ammortamento (o del leasing), quindi il valore attuale e' un po' piu'
+        basso. Per ditte individuali e societa' di persone conta l'aliquota IRPEF marginale (puo' essere
+        piu' alta, fino al 43% piu' addizionali). Non riduce l'IRAP (da verificare). Se c'e' un contributo
+        a fondo perduto sullo stesso bene, la base si riduce (vedi ricerca).
+    come_si_ottiene: >-
+      Tutto sulla piattaforma GSE (Area Clienti, SPID/CIE), per ogni struttura produttiva:
+      1) comunicazione preventiva (piattaforma aperta dal 12/06/2026) con beni, importi, data prevista
+      di interconnessione o entrata in funzione;
+      2) entro 60 giorni dall'esito positivo del GSE, comunicazione di conferma con pagamento di acconti
+      almeno pari al 20% del costo di ogni bene e dati delle fatture (piattaforma dal 21/07/2026;
+      per il leasing basta contratto e ordine del concedente);
+      3) a investimento completato e interconnesso, e comunque entro il 15/11/2028, comunicazione di
+      completamento con attestazione di possesso di perizia e certificazione contabile;
+      4) ogni anno, fino a fine fruizione: comunicazione entro il 20 gennaio (investimenti e previsione
+      di utilizzo) ed entro il 30 giugno (piano di ammortamento).
+      Il GSE risponde entro 10 giorni; integrazioni entro 10 giorni.
+    tempi: >-
+      La maggiorazione si usa dal periodo d'imposta in cui si invia la comunicazione di completamento,
+      se il bene e' entrato in funzione nello stesso periodo e dopo l'esito positivo del GSE; poi
+      in dichiarazione dei redditi anno per anno, lungo tutta la durata dell'ammortamento (di solito
+      5-10 anni secondo i coefficienti) o del leasing.
+    cumulabilita:
+      con_fondo_perduto: si
+      regola: >-
+        Cumulabile con altre agevolazioni nazionali ed europee sugli stessi costi (anche credito ZES
+        unica, Nuova Sabatini, bandi regionali FESR, de minimis), a condizione che il sostegno non copra
+        le medesime quote di costo e che il totale non superi il costo sostenuto; la base della
+        maggiorazione si calcola al netto dei contributi a qualunque titolo ricevuti per gli stessi costi.
+        Essendo una misura fiscale generale non e' un aiuto di Stato e non consuma i massimali GBER
+        (secondo i commentatori; da verificare in eventuali chiarimenti dell'Agenzia).
+        NON cumulabile con il credito d'imposta beni strumentali 4.0/Transizione 5.0 sugli stessi beni
+        e, secondo il GSE, con il Conto Termico 3.0 sulle stesse spese.
+        Dubbio aperto: se il contributo Sabatini vada sottratto dalla base (prudenza: sottrarlo).
+      riferimento: "L. 199/2025 art. 1 comma 431 (come modificato); DM CT 7/8/2025 art. 17"
+    attenzione: >-
+      Perizia tecnica asseverata (ingegnere o perito industriale iscritto, o ente di certificazione
+      accreditato; agronomo per l'agricolo) per ogni bene, senza soglie minime: deve provare
+      caratteristiche da allegato IV/V e interconnessione. Certificazione contabile di un revisore
+      legale. Interconnessione entro il completamento: senza, niente beneficio. Termini delle
+      comunicazioni perentori (mancato invio = beneficio perso). Decadenza se il bene viene venduto o
+      spostato all'estero durante la fruizione senza sostituirlo con un bene nuovo analogo, per
+      documenti mancanti o dichiarazioni false; controlli GSE nei termini dell'accertamento fiscale,
+      recupero con interessi e sanzioni. Beni nuovi, niente usato. Copertura finanziaria e eventuali
+      tetti di spesa complessivi: da verificare.
+    fonte_verificata_il: "2026-10-05"
+
+  - id: credito_rs_2026
+    nome: "Credito d'imposta ricerca e sviluppo"
+    tipo: credito_imposta
+    ente: "MIMIT (comunicazioni, certificazione) e Agenzia delle Entrate (utilizzo e controlli)"
+    norma: >-
+      Legge 27 dicembre 2019 n. 160, art. 1, commi 198-209, e modifiche; DM 26 maggio 2020;
+      DL 29 marzo 2024 n. 39, art. 6 (comunicazioni preventive e consuntive).
+    url_ufficiale: "https://www.mimit.gov.it/it/incentivi/credito-d-imposta-r-s"
+    in_vigore_dal: "2023-01-01"
+    in_vigore_fino_al: "2031-12-31"
+    stato: aperto
+    sintesi: >-
+      Le imprese che fanno ricerca e sviluppo (ricerca fondamentale, industriale, sviluppo
+      sperimentale) recuperano il 10% delle spese ammissibili (personale, consulenze e contratti di
+      ricerca, quote di ammortamento di strumenti, materiali) come credito da usare in F24 per pagare
+      tasse e contributi. Massimo 5 milioni l'anno. Non vale per l'acquisto di macchinari di produzione.
+    a_chi_si_rivolge: >-
+      Tutte le imprese residenti in Italia, a prescindere da forma, settore e dimensione, che svolgono
+      attivita' di R&S ammissibili secondo il Manuale di Frascati e il DM 26/5/2020. Escluse le imprese
+      in liquidazione o procedure concorsuali e quelle con sanzioni interdittive (da verificare
+      l'elenco completo sul testo di legge).
+    soggetti_ammessi: [impresa]
+    dimensioni_ammesse: []
+    settori_esclusi: "Nessun settore escluso in quanto tale (da verificare)."
+    investimenti_ammessi: >-
+      Spese per attivita' di ricerca fondamentale, ricerca industriale e sviluppo sperimentale:
+      personale, quote di ammortamento di beni materiali e software usati nel progetto, contratti di
+      ricerca extra-muros, servizi di consulenza, materiali e forniture, privative industriali (con
+      limiti percentuali fissati dalla norma, da verificare caso per caso).
+    categorie_spesa: [ricerca_sviluppo]
+    intensita: >-
+      10% della base di calcolo, massimo 5 milioni di euro per periodo d'imposta, per i periodi dal
+      2023 al 2031. Base al netto di altre sovvenzioni o contributi ricevuti per le stesse spese.
+      Maggiorazioni per il Mezzogiorno e per le aree sisma: in vigore fino al 2025, proroga per il 2026
+      da verificare.
+    beneficio_stimato:
+      percentuale_min: 10
+      percentuale_max: 10
+      nota: >-
+        10% delle spese di R&S ammissibili (non dell'intero investimento). Credito d'imposta: vale
+        anche se l'impresa e' in perdita, perche' si compensa con contributi e ritenute in F24.
+    come_si_ottiene: >-
+      1) Comunicazione preventiva al MIMIT (art. 6 DL 39/2024) sulla piattaforma dedicata, prima
+      dell'utilizzo; 2) comunicazione consuntiva a fine periodo; 3) certificazione contabile delle
+      spese da revisore legale; 4) relazione tecnica sul progetto; facoltativa la certificazione
+      tecnica di un certificatore iscritto all'albo MIMIT (protegge da contestazioni sulla
+      qualificazione); 5) indicazione in dichiarazione e utilizzo in F24 dal periodo successivo
+      (tre quote annuali, da verificare la regola vigente).
+    tempi: >-
+      Il credito si usa in compensazione dal periodo d'imposta successivo a quello delle spese, dopo
+      la certificazione contabile e le comunicazioni al MIMIT (ripartizione in quote annuali: da verificare).
+    cumulabilita:
+      con_fondo_perduto: nei_limiti
+      regola: >-
+        Base di calcolo al netto delle sovvenzioni ricevute per le stesse spese; cumulabile con altre
+        agevolazioni sugli stessi costi se il totale (anche considerando la non tassazione del
+        credito) non supera il costo sostenuto. Il riferimento puntuale al comma della L. 160/2019
+        e' da verificare. Sui beni strumentali non si sovrappone all'iperammortamento (costi diversi).
+      riferimento: "L. 160/2019 art. 1 commi 198-209"
+    attenzione: >-
+      Rischio principale: contestazione della natura di R&S da parte dell'Agenzia (recupero con
+      interessi e sanzioni); conviene la certificazione tecnica. Comunicazioni al MIMIT obbligatorie
+      dal 2024: senza, il credito non si usa. Documentazione di progetto, timesheet del personale,
+      certificazione contabile. Il credito per innovazione tecnologica e design (5% fino al 2025) non
+      e' incluso qui: per il 2026 risulta un nuovo credito design con prenotazione e plafond di 60
+      milioni (piattaforma dal 07/07/2026), da verificare.
+    fonte_verificata_il: "2026-10-05"
+
+  - id: credito_zes_unica_2026
+    nome: "Credito d'imposta ZES unica (investimenti nel Mezzogiorno e in Marche, Umbria, Abruzzo)"
+    tipo: credito_imposta
+    ente: "Agenzia delle Entrate (comunicazioni e utilizzo); Struttura di missione ZES"
+    norma: >-
+      Legge 30 dicembre 2025 n. 199, art. 1, commi 438-443 (anni 2026-2028); disciplina di base
+      art. 16 DL 124/2023; Provvedimento Agenzia delle Entrate 30 gennaio 2026 (modelli).
+    url_ufficiale: "https://www.agenziaentrate.gov.it/portale/credito-d-imposta-per-investimenti-nella-zes-unica-zes-2026-/che-cos-"
+    in_vigore_dal: "2026-01-01"
+    in_vigore_fino_al: "2028-12-31"
+    stato: aperto
+    sintesi: >-
+      Le imprese che investono almeno 200.000 euro in macchinari, impianti, attrezzature e immobili
+      strumentali in una struttura produttiva in Basilicata, Calabria, Campania, Molise, Puglia,
+      Sardegna, Sicilia, Abruzzo, Marche o Umbria ricevono un credito d'imposta pari all'intensita'
+      degli aiuti a finalita' regionale della zona (fino al 60% per una piccola impresa nelle regioni
+      meno sviluppate), ridotto in proporzione se le richieste superano le risorse.
+      Si chiede ogni anno in una finestra precisa.
+    a_chi_si_rivolge: >-
+      Imprese di ogni dimensione, gia' operative o che si insediano nella ZES unica, con
+      struttura produttiva nelle regioni indicate.
+    soggetti_ammessi: [impresa]
+    dimensioni_ammesse: []
+    settori_esclusi: >-
+      Esclusi per la disciplina ZES (da verificare l'elenco aggiornato): siderurgia, carbone e lignite,
+      trasporti e relative infrastrutture, produzione/trasporto/distribuzione di energia e relative
+      infrastrutture, banda larga, settori creditizio, finanziario e assicurativo; regole specifiche
+      per agricoltura, pesca e acquacoltura (modelli e percentuali separati). Escluse imprese in difficolta'.
+    investimenti_ammessi: >-
+      Acquisto (anche in leasing) di macchinari, impianti e attrezzature nuovi destinati a strutture
+      produttive nella ZES; acquisto di terreni e acquisizione, realizzazione o ampliamento di immobili
+      strumentali (con limiti percentuali sul progetto, da verificare). Progetto da almeno 200.000 euro,
+      massimo 100 milioni per progetto (2026). Spese dal 1/1/2026 al 31/12/2026 per il credito 2026.
+    # Regioni della ZES unica: la misura compare solo per bandi e imprese di queste regioni.
+    regioni: [ABR, BAS, CAL, CAM, MAR, MOL, PUG, SAR, SIC, UMB]
+    categorie_spesa: [macchinari_attrezzature, opere_edili_impianti, software_digitale]
+    intensita: >-
+      Intensita' massime della Carta degli aiuti a finalita' regionale 2022-2027 per la zona del comune
+      (maggiorate per piccole e medie imprese), nel rispetto del Reg. UE 651/2014 (GBER). Il credito
+      effettivo e' poi ridotto da una percentuale di riparto fissata dall'Agenzia in base alle risorse
+      (2,3 miliardi per il 2026): per il 2025 il credito fruibile e' stato il 60,3811% del richiesto,
+      portato al 75% con il contributo aggiuntivo della Legge di bilancio 2026. Percentuale 2026 da verificare.
+      Valori per regione e per comune da verificare sulla Carta.
+    beneficio_stimato:
+      percentuale_min: 5
+      percentuale_max: 60
+      nota: >-
+        Beneficio = intensita' della zona x percentuale di riparto. Massimo teorico 60% (piccola impresa
+        in zona 107.3.a) prima del riparto; con un riparto del 75% come nel 2025 diventa 45%. Nelle aree
+        107.3.c (parti di Abruzzo, Marche, Umbria) l'intensita' e' molto piu' bassa. Credito d'imposta da
+        usare in F24: vale anche per imprese in perdita.
+    come_si_ottiene: >-
+      1) Comunicazione preventiva all'Agenzia delle Entrate con il software gratuito, nella finestra
+      annuale (per il 2026: dal 31/03/2026 al 30/05/2026, gia' chiusa) con spese gia' sostenute e previste;
+      2) comunicazione integrativa a investimento realizzato (per il 2026: dal 03/01/2027 al 17/01/2027),
+      a pena di decadenza, con certificazione delle spese da revisore legale;
+      3) utilizzo in compensazione in F24 dopo il provvedimento con la percentuale di riparto.
+    tempi: >-
+      Il credito diventa utilizzabile dopo la comunicazione integrativa e il provvedimento dell'Agenzia
+      sulla percentuale (indicativamente nel corso dell'anno successivo all'investimento, da verificare).
+    cumulabilita:
+      con_fondo_perduto: nei_limiti
+      regola: >-
+        E' un aiuto di Stato a finalita' regionale: cumulabile con aiuti de minimis e altri aiuti di Stato
+        sugli stessi costi solo se il totale non supera l'intensita' massima della Carta degli aiuti
+        regionali per quella zona e impresa; cumulabile con misure che non sono aiuti di Stato (es.
+        iperammortamento, che pero' si calcola sulla base netta). Un bando regionale al 40% su un bene
+        in zona con intensita' massima 40-60% lascia poco o nessuno spazio al credito ZES sugli stessi costi.
+      riferimento: "L. 199/2025 commi 438-443; Reg. UE 651/2014 art. 14 e art. 8"
+    attenzione: >-
+      Finestra di comunicazione annuale stretta: chi ha perso quella del 2026 deve aspettare il 2027
+      (date da verificare). Il credito reale dipende dal riparto (incertezza fino al provvedimento).
+      Vincolo di mantenimento dell'attivita' nella zona per almeno 5 anni dopo il completamento (pena
+      revoca, da verificare il dettaglio). Investimento iniziale (nuovo stabilimento, ampliamento,
+      diversificazione), non semplice sostituzione. Certificazione contabile obbligatoria.
+    fonte_verificata_il: "2026-10-05"
+
+  - id: nuova_sabatini
+    nome: "Nuova Sabatini (beni strumentali PMI)"
+    tipo: contributo_conto_interessi
+    ente: "MIMIT, tramite banche e intermediari convenzionati (CDP-ABI)"
+    norma: >-
+      Art. 2 DL 21 giugno 2013 n. 69 e successivi rifinanziamenti (Legge di bilancio 2026: 650 milioni,
+      200 per il 2026 e 450 per il 2027); DI 19 gennaio 2024 n. 43 (variante Capitalizzazione).
+    url_ufficiale: "https://www.mimit.gov.it/it/incentivi/agevolazioni-per-gli-investimenti-delle-pmi-in-beni-strumentali-nuova-sabatini"
+    in_vigore_dal: "2014-03-31"
+    in_vigore_fino_al: null
+    stato: aperto
+    sintesi: >-
+      Le PMI che comprano (o prendono in leasing) macchinari, impianti, attrezzature, hardware e
+      software nuovi con un finanziamento bancario da 20.000 euro a 4 milioni ricevono dal Ministero
+      un contributo pari agli interessi di un finanziamento di 5 anni al 2,75% (3,575% se il bene e'
+      4.0 o green; 5% per micro e piccole che si capitalizzano). In pratica circa il 7,7-14% del
+      finanziamento. Sportello aperto fino a esaurimento risorse.
+    a_chi_si_rivolge: >-
+      Micro, piccole e medie imprese con sede o unita' locale in Italia, regolarmente costituite, non in
+      liquidazione o procedure concorsuali e non in difficolta'. Variante Capitalizzazione: PMI in
+      forma societaria con aumento di capitale.
+    soggetti_ammessi: [impresa]
+    dimensioni_ammesse: [micro, piccola, media]
+    settori_esclusi: "Attivita' finanziarie e assicurative (secondo la classificazione ATECO 2025 indicata dal MIMIT). Ammessi agricoltura e pesca."
+    investimenti_ammessi: >-
+      Acquisto o leasing di macchinari, attrezzature, impianti, beni strumentali ad uso produttivo,
+      hardware, software e tecnologie digitali, nuovi, con autonomia funzionale e correlati
+      all'attivita'. Esclusi terreni, fabbricati, beni usati o rigenerati, immobilizzazioni in corso.
+    categorie_spesa: [macchinari_attrezzature, software_digitale]
+    intensita: >-
+      Finanziamento bancario o leasing 20.000 - 4.000.000 euro, durata massima 5 anni (garanzia del
+      Fondo PMI fino all'80% possibile). Contributo in conto impianti pari agli interessi convenzionali
+      su un piano di 5 anni: 2,75% annuo ordinario; 3,575% per investimenti 4.0 e green; Capitalizzazione
+      5% micro e piccole, 3,575% medie. Aiuto in esenzione (GBER), non de minimis.
+    beneficio_stimato:
+      percentuale_min: 7.7
+      percentuale_max: 14.3
+      nota: >-
+        Calcolo su piano convenzionale a rate semestrali per 5 anni: al 2,75% gli interessi sono circa
+        il 7,7% del finanziamento; al 3,575% circa il 10,1%; al 5% circa il 14,3%. La percentuale e' sul
+        finanziamento, non sul costo totale se il bene e' finanziato solo in parte. Stima nostra con la
+        formula della rata costante: da confrontare con il calcolatore MIMIT.
+    come_si_ottiene: >-
+      1) Domanda sulla piattaforma benistrumentali.dgiai.gov.it (SPID/CNS/CIE del legale rappresentante)
+      e invio alla banca o intermediario aderente, insieme alla richiesta di finanziamento, PRIMA
+      dell'investimento; 2) delibera del finanziamento e concessione del Ministero; 3) investimento
+      completato entro 12 mesi dal contratto di finanziamento (da verificare); 4) richiesta di
+      erogazione del contributo entro 120 giorni dal termine per completare l'investimento.
+    tempi: >-
+      Contributo erogato in un'unica soluzione per finanziamenti fino a 200.000 euro (dal 2022), altrimenti
+      in quote annuali nell'arco di 6 anni dall'ultimazione dell'investimento.
+    cumulabilita:
+      con_fondo_perduto: nei_limiti
+      regola: >-
+        Cumulabile con altri aiuti di Stato sugli stessi costi se il cumulo non supera l'intensita'
+        massima applicabile (FAQ MIMIT: con aiuti in esenzione vale la piu' alta delle intensita' delle
+        misure cumulate; con de minimis vale il limite della Sabatini; nel GBER per le PMI di norma 10-20%,
+        65% agricoltura, 50% pesca). Cumulabile con misure fiscali generali non aiuti di Stato
+        (iperammortamento, a suo tempo crediti 4.0/5.0) entro il costo sostenuto. Cumulabile con il Conto
+        Termico (contributo in conto interessi ammesso dall'art. 17 DM 7/8/2025).
+      riferimento: "FAQ MIMIT Nuova Sabatini 9.1, 9.2, 9.7, 9.9, 9.10; Reg. UE 651/2014"
+    attenzione: >-
+      La domanda va fatta prima dell'investimento (ordini/fatture precedenti escludono il bene, da
+      verificare il dettaglio nelle FAQ). Sportello fino a esaurimento risorse (al 14/09/2026 disponibili
+      circa 1,199 miliardi Sabatini ordinaria e 77 milioni Capitalizzazione). Cumulo con un bando a fondo
+      perduto sugli stessi beni spesso limitato dall'intensita' massima. Revoca se i beni vengono venduti
+      o distolti entro 3 anni (da verificare). Obbligo assicurazione catastrofale (DM 18/6/2025).
+    fonte_verificata_il: "2026-10-05"
+
+# Misure valutate e NON inserite (dettaglio nella ricerca):
+# - Credito d'imposta beni strumentali 4.0 (L. 178/2020) e Transizione 5.0 (DL 19/2024): chiusi per
+#   investimenti dal 2026, sostituiti dall'iperammortamento.
+# - Credito innovazione tecnologica/design/transizione 4.0 (L. 160/2019): 5% fino al 2025; per il 2026
+#   risulta un nuovo credito design con plafond 60 milioni e prenotazione: da verificare.
+# - Credito formazione 4.0: non risulta rinnovato, da verificare.
+# - Maggiorazioni R&S Mezzogiorno: da verificare per il 2026.

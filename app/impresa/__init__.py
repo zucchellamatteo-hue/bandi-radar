@@ -139,8 +139,9 @@ def leggi(conn, utente_id: int, impresa_id: int) -> dict:
 
 def pertinenti(bandi: list[dict], profilo: dict, oggi: date | None = None) -> list[tuple[dict, regole.Esito]]:
     """I bandi da mostrare all'impresa: compatibili o da verificare, proponibili (scheda sul bando ufficiale), aperti o in
-    arrivo. Mai gli esclusi. E' lo stesso abbinamento del catalogo e dei profili."""
-    return catalogo.abbina(bandi, profilo, oggi)
+    arrivo. Mai gli esclusi. E' lo stesso abbinamento del catalogo e dei profili; nell'ordine, a parita' di livello,
+    prima i bandi a fondo perduto."""
+    return catalogo.prima_il_fondo_perduto(catalogo.abbina(bandi, profilo, oggi))
 
 
 def riga_bando(b: dict, esito: regole.Esito) -> dict:
@@ -186,14 +187,19 @@ def scheda_ridotta(conn, utente_id: int, bando_id: int) -> dict:
     if not imprese:
         raise ErroreImpresa("Bando non trovato tra quelli adatti alle tue imprese.")
     with conn.cursor() as cur:
-        cur.execute(f"SELECT {', '.join(CAMPI_SCHEDA_RIDOTTA)} FROM bandi WHERE id = %s", (bando_id,))
+        cur.execute(f"SELECT {', '.join(CAMPI_SCHEDA_RIDOTTA)}, categorie_spesa FROM bandi WHERE id = %s", (bando_id,))
         b = dict(cur.fetchone())
+        cur.execute("SELECT p.profilo FROM imprese i JOIN profili p ON p.codice = i.profilo_codice WHERE i.id = %s",
+                    (imprese[0]["id"],))
+        profilo = cur.fetchone()["profilo"]
         cur.execute("""SELECT id, nome, url, tipo FROM allegati WHERE bando_id = %s AND annuncio_id IS NULL
                        AND categoria IN ('bando', 'modulistica', 'faq', 'decreto') AND errore IS NULL ORDER BY id""",
                     (bando_id,))
         documenti = [dict(r) for r in cur.fetchall()]
+    from app import misure
+
     return {**b, "imprese": imprese, "documenti_ufficiali": [{"nome": d["nome"], "url": d["url"]} for d in documenti],
-            "avvertenza": AVVERTENZA}
+            "avvertenza": AVVERTENZA, "misure_cumulabili": misure.cumulabili(b, profilo)}
 
 
 # --- richieste di supporto ---
