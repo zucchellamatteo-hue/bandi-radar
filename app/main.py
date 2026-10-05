@@ -16,6 +16,7 @@ from fastapi import Depends, FastAPI, HTTPException, Request
 from fastapi.responses import FileResponse, HTMLResponse, JSONResponse
 
 from app.abbonamenti.api import router as api_abbonamenti
+from app.campagne.api import router as api_campagne
 from app.feedback.api import router as api_feedback
 from app.notifiche.api import router as api_notifiche
 from app.impresa.api import router as api_impresa
@@ -58,6 +59,7 @@ app.include_router(api_feedback)
 app.include_router(api_notifiche)   # email alle imprese (solo admin) e disiscrizione pubblica
 app.include_router(api_impresa)
 app.include_router(api_abbonamenti)
+app.include_router(api_campagne)
 app.include_router(api_plancia, dependencies=[Depends(controlla_plancia)])
 
 
@@ -76,6 +78,7 @@ def presentazione():
 @app.get("/privacy", response_class=HTMLResponse)
 @app.get("/cookie", response_class=HTMLResponse)
 @app.get("/condizioni-supporto", response_class=HTMLResponse)
+@app.get("/note-legali", response_class=HTMLResponse)
 def testo_legale(request: Request):
     return HTMLResponse(pubblico.legale(request.url.path.strip("/")))
 

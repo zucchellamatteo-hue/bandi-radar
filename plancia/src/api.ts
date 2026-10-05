@@ -297,6 +297,14 @@ export const api = {
   abbonamenti: () => chiama<RigaAbbonamento[]>("/api/abbonamenti"),
   modificaAbbonamento: (utenteId: number, corpo: { stato?: string; giorni_prova_in_piu?: number; nota?: string }) =>
     chiama<unknown>(`/api/abbonamenti/${utenteId}`, { method: "PATCH", body: JSON.stringify(corpo) }),
+  campagne: () => chiama<{ id: number; nome: string; giorni: number; stato: string; creata_il: string; prospetti: number;
+    riepilogo: { con_compatibili?: number; errore?: string } | null }[]>("/api/campagne"),
+  creaCampagna: (corpo: { nome: string; giorni: number; profili: unknown[] }) =>
+    chiama<{ id: number }>("/api/campagne", { method: "POST", body: JSON.stringify(corpo) }),
+  campagna: (id: number) => chiama<{ id: number; nome: string; giorni: number; stato: string;
+    riepilogo: Record<string, any> | null;
+    segmenti: { ateco: string; regione: string; dimensione: string; imprese: number; con_compatibili: number; media_bandi: number; beneficio_mediano: number | null }[];
+    esempio: { codice: string; oggetto: string; testo: string } | null }>(`/api/campagne/${id}`),
   utenti: () => chiama<Utente[]>("/api/utenti"),
   creaUtente: (corpo: { email: string; nome: string; ruolo: RuoloUtente }) =>
     chiama<{ utente: Utente; link: string; email: string }>("/api/utenti", { method: "POST", body: JSON.stringify(corpo) }),

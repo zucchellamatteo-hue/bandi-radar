@@ -17,6 +17,7 @@ import Utenti from "./pagine/Utenti";
 import Feedback from "./pagine/Feedback";
 import { Accesso, ConfermaEmail, Disiscrizione, ImpostaPassword, Registrati } from "./pagine/Accesso";
 import Imprese from "./pagine/Imprese";
+import Campagne from "./pagine/Campagne";
 import { Abbonamento, MieImprese, MieiBandi, MieRichieste, ModuloImpresa, SchedaImpresa } from "./pagine/AreaImpresa";
 import { ContestoUtente, puo } from "./utente";
 
@@ -54,7 +55,8 @@ export default function App() {
           <NavLink to="/doppioni" className={classe}>Doppioni</NavLink>{" · "}
           <NavLink to="/novita" className={classe}>Novità</NavLink>{" · "}
           <NavLink to="/feedback" className={classe}>Feedback</NavLink>{" · "}
-          {imprese && <><NavLink to="/imprese" className={classe}>Imprese</NavLink>{" · "}</>}
+          {imprese && <><NavLink to="/imprese" className={classe}>Imprese</NavLink>{" · "}
+            <NavLink to="/campagne" className={classe}>Campagne</NavLink>{" · "}</>}
           {admin && <NavLink to="/utenti" className={classe}>Utenti</NavLink>}
         </nav>}
         {utente.ruolo === "impresa" && <nav>
@@ -95,6 +97,8 @@ export default function App() {
             {admin && <Route path="/utenti" element={<Utenti />} />}
             <Route path="/feedback" element={<Feedback />} />
             {imprese && <Route path="/imprese" element={<Imprese />} />}
+            {imprese && <Route path="/campagne" element={<Campagne />} />}
+            {imprese && <Route path="/campagne/:id" element={<Campagne />} />}
             <Route path="/impresa" element={<MieiBandi />} />
             <Route path="/impresa/imprese" element={<MieImprese />} />
             <Route path="/impresa/imprese/:id" element={<ModuloImpresa />} />
@@ -108,6 +112,8 @@ export default function App() {
             <Route path="/bandi/:id" element={<Bando />} />
             <Route path="/feedback" element={<Feedback />} />
             {imprese && <Route path="/imprese" element={<Imprese />} />}
+            {imprese && <Route path="/campagne" element={<Campagne />} />}
+            {imprese && <Route path="/campagne/:id" element={<Campagne />} />}
             <Route path="*" element={<Navigate to="/catalogo" replace />} />
           </Routes>
         ) : (

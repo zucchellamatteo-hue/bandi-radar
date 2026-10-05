@@ -2,23 +2,32 @@
 
 Frammenti HTML (solo contenuto, senza stili né script) che la pagina pubblica di Bandi Radar inserisce nel proprio modello:
 
-- `termini.html` — Termini e condizioni del servizio in abbonamento (rivolto a imprese e professionisti).
+- `termini.html` — Termini e condizioni del servizio in abbonamento (rivolto a imprese e professionisti), con la sezione 16 "Approvazione specifica delle clausole" (artt. 1341-1342 c.c.).
 - `privacy.html` — Informativa privacy (artt. 13-14 GDPR).
 - `cookie.html` — Cookie policy; contiene il link `id="rivedi-cookie"` che la pagina deve collegare al banner dei cookie.
 - `supporto.html` — Condizioni del servizio di supporto per la domanda a success fee.
+- `note_legali.html` — Note legali: dati obbligatori del fornitore (art. 7 d.lgs. 70/2003, art. 2250 c.c.). **Non ancora collegata**: va aggiunta a `LEGALI` in `app/pubblico/__init__.py` con l'indirizzo `/note-legali` e un link nel piede della pagina (i termini la richiamano già).
 
 **Sono bozze del 05/10/2026**: vanno fatte rivedere da un professionista (avvocato o consulente privacy) prima di usarle con clienti reali. Ogni file ha in cima il riquadro `<p class="bozza">`, da togliere solo dopo la revisione.
+
+I documenti interni (registro dei trattamenti, fornitori e DPA, modello di incarico, testi del consenso alle email, elenco di tutto ciò che serve per vendere) sono in `docs/legale/`, non pubblicati.
+
+## Decisioni già riportate nei testi (05/10/2026)
+
+Prezzi **IVA esclusa** (IVA aggiunta in fattura): mensile 30 €/mese; annuale 20 €/mese pagato ogni mese con impegno di 12 mesi (rate residue dovute in caso di interruzione anticipata); impresa in più 10 €/mese; sede in più della stessa impresa 5 €/mese. Servizio per imprese e professionisti (B2B, partita IVA richiesta per abbonarsi). Fattura elettronica tramite un servizio collegato a Stripe. Prova gratuita senza carta e senza addebito automatico alla fine (è come funziona il sistema; da confermare).
 
 ## Segnaposto da riempire (tra parentesi quadre nei testi)
 
 Dati del titolare (tutti i file): `[RAGIONE SOCIALE DEL TITOLARE]`, `[PARTITA IVA]`, `[SEDE]`, `[EMAIL DI CONTATTO]`, `[PEC]`, `[DATA DI ENTRATA IN VIGORE]`.
 
-Termini: `[PREZZO MENSILE]`, `[PREZZO ANNUALE MENSILE]`, `[PREZZI AGGIUNTIVI]`, `[IVA INCLUSA / IVA ESCLUSA]`, `[MODALITÀ DI FATTURAZIONE]`, `[GIORNI DI PREAVVISO]`, `[DURATA PROVA GRATUITA]`, cosa succede alla fine della prova (con `[GIORNI DI AVVISO FINE PROVA]`), regola per l'uscita anticipata dall'impegno annuale, rinnovo dell'annuale (`[SI RINNOVA PER ALTRI 12 MESI / PASSA ALLA FORMULA MENSILE]`), `[FORO COMPETENTE]`.
+Note legali: `[FORMA GIURIDICA ...]`, `[CODICE FISCALE]`, ufficio del Registro delle imprese e `[NUMERO REA]`, `[CAPITALE SOCIALE]` (solo società di capitali), righe "unico socio" e "in liquidazione" da tenere o togliere, `[TELEFONO ...]`, iscrizione all'Ordine (solo se il fornitore è un professionista o una STP), eventuale codice di condotta.
 
-Privacy: eventuale DPO (`[DATI DI CONTATTO DEL DPO]`, altrimenti togliere il paragrafo), `[GIORNI PER LA CANCELLAZIONE]`, `[DURATA DI CONSERVAZIONE RICHIESTE]`, `[DURATA DI CONSERVAZIONE LOG]`, `[DURATA DEL CONSENSO]`, verifica dell'adesione dei fornitori al Data Privacy Framework.
+Termini: `[SERVIZIO DI FATTURAZIONE ELETTRONICA]`, `[GIORNI DI PREAVVISO]` (modifiche di prezzi e termini, disdetta dell'annuale), `[DURATA PROVA GRATUITA]` e conferma del funzionamento della prova, cosa succede alla scadenza dei 12 mesi dell'annuale (`[SI RINNOVA PER ALTRI 12 MESI / PASSA ALLA FORMULA MENSILE / CONTINUA A 20 € AL MESE SENZA IMPEGNO ...]`: oggi il sistema fa la terza), `[FORO COMPETENTE]`. La nota tecnica tra parentesi quadre in fondo alla sezione 16 va tolta dalla versione pubblica: ricorda che nel checkout serve una **seconda casella**, separata e non preselezionata, per l'approvazione specifica delle clausole, con registrazione di data, ora e versione dei termini.
 
-Cookie: `[NOME COOKIE SCELTA COOKIE]`, `[DURATA DEL CONSENSO]`, `[DURATA COOKIE GOOGLE ADS]`.
+Privacy: eventuale DPO (`[DATI DI CONTATTO DEL DPO]`, altrimenti togliere il paragrafo), `[GIORNI PER LA CANCELLAZIONE]`, `[DURATA DI CONSERVAZIONE RICHIESTE]`, `[DURATA DI CONSERVAZIONE LOG]`, `[DURATA DEL CONSENSO]`, verifica dell'adesione dei fornitori al Data Privacy Framework. Quando sarà scelto, aggiungere il servizio di fatturazione elettronica alla tabella dei fornitori.
 
-Supporto (cioè le percentuali e il minimo della success fee): `[CONCESSO / EROGATO]`, `[PERCENTUALE FONDO PERDUTO]` (proposta 10-15%), `[PERCENTUALE FINANZIAMENTO AGEVOLATO]` (proposta 1-2%), `[COMPENSO MINIMO]` (proposta 400-500 €), `[IVA ESCLUSA / IVA INCLUSA]`, `[MOMENTO DEL PAGAMENTO, ...]`, cosa succede se l'impresa rinuncia dopo l'avvio, limiti di responsabilità e assicurazione professionale.
+Cookie: `[NOME COOKIE SCELTA COOKIE]` (oggi la scelta è salvata nel `localStorage` del browser con chiave `br_consenso`, senza scadenza), `[DURATA DEL CONSENSO]`, `[DURATA COOKIE GOOGLE ADS]`.
 
-I link interni usano `/privacy` e `/cookie`: adeguarli se le pagine avranno indirizzi diversi.
+Supporto (cioè le percentuali e il minimo della success fee): `[CONCESSO / EROGATO]`, `[PERCENTUALE FONDO PERDUTO]` (proposta 10-15%), `[PERCENTUALE FINANZIAMENTO AGEVOLATO]` (proposta 1-2%), `[COMPENSO MINIMO]` (proposta 400-500 €), `[IVA ESCLUSA / IVA INCLUSA]`, `[MOMENTO DEL PAGAMENTO, ...]`, cosa succede se l'impresa rinuncia dopo l'avvio, limiti di responsabilità e assicurazione professionale. Gli stessi punti sono nel modello di incarico `docs/legale/incarico_supporto.md`.
+
+I link interni usano `/privacy`, `/cookie`, `/termini`, `/condizioni-supporto` e `/note-legali`: adeguarli se le pagine avranno indirizzi diversi.
