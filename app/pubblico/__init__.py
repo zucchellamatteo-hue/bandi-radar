@@ -16,7 +16,8 @@ from pathlib import Path
 
 TESTI = Path(__file__).resolve().parent / "testi"
 LEGALI = {"termini": ("termini.html", "Termini e condizioni"), "privacy": ("privacy.html", "Informativa privacy"),
-          "cookie": ("cookie.html", "Cookie"), "condizioni-supporto": ("supporto.html", "Condizioni del servizio di supporto")}
+          "cookie": ("cookie.html", "Cookie"), "condizioni-supporto": ("supporto.html", "Condizioni del servizio di supporto"),
+          "note-legali": ("note_legali.html", "Note legali")}
 
 # Prezzi del modello commerciale, IVA esclusa (Matteo, 05/10: impresa in piu' 10 euro e sede in piu' 5 euro confermati).
 PREZZI = {"mensile": 30, "annuale": 20, "impresa_in_piu": 10, "sede_in_piu": 5}
@@ -63,7 +64,7 @@ _SCRIPT_COOKIE = """
 <div id="banner-cookie" role="dialog" aria-label="Cookie">
   <div style="flex:1;min-width:16rem">Usiamo un cookie tecnico per l'accesso. Con il tuo consenso usiamo anche cookie di misurazione
   per capire quali annunci funzionano. <a href="/cookie">Dettagli</a></div>
-  <button class="bottone chiaro" id="cookie-no">Rifiuta</button> <button class="bottone" id="cookie-si">Accetta</button>
+  <button class="bottone" id="cookie-no">Rifiuta</button> <button class="bottone" id="cookie-si">Accetta</button>
 </div>
 <script>
 (function(){
@@ -76,8 +77,10 @@ _SCRIPT_COOKIE = """
     var s = document.createElement("script"); s.async = true; s.src = "https://www.googletagmanager.com/gtag/js?id=" + ID; document.head.appendChild(s);
     gtag("js", new Date()); gtag("config", ID);
   }
-  function scegli(v){ try { localStorage.setItem(chiave, v); } catch(e) {} banner.style.display = "none"; if (v === "si") carica(); }
-  var scelta = null; try { scelta = localStorage.getItem(chiave); } catch(e) {}
+  // La scelta vale 6 mesi (linee guida del Garante sui cookie, 2021): poi il banner torna.
+  function scegli(v){ try { localStorage.setItem(chiave, v + "|" + Date.now()); } catch(e) {} banner.style.display = "none"; if (v === "si") carica(); }
+  var scelta = null;
+  try { var s = (localStorage.getItem(chiave) || "").split("|"); if (s[1] && Date.now() - Number(s[1]) < 182 * 864e5) scelta = s[0]; } catch(e) {}
   if (scelta === "si") carica(); else if (scelta !== "no" && ID) banner.style.display = "flex";
   document.getElementById("cookie-si").onclick = function(){ scegli("si"); };
   document.getElementById("cookie-no").onclick = function(){ scegli("no"); };
@@ -99,7 +102,7 @@ def pagina(titolo: str, corpo: str, descrizione: str = "", indicizza: bool = Fal
 <a class="bottone" href="/registrati">Prova gratis</a></nav></header>
 {corpo}
 <footer><span>© Bandi Radar · finanzagevolata.qiaro.it</span><a href="/termini">Termini</a><a href="/privacy">Privacy</a>
-<a href="/cookie">Cookie</a><a href="/condizioni-supporto">Condizioni del supporto</a></footer>
+<a href="/cookie">Cookie</a><a href="/condizioni-supporto">Condizioni del supporto</a><a href="/note-legali">Note legali</a></footer>
 {_SCRIPT_COOKIE.replace("__GOOGLE_ADS_ID__", ads)}</body></html>"""
 
 

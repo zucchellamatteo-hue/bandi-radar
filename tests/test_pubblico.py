@@ -15,7 +15,7 @@ def test_pagine_legali_senza_database(monkeypatch):
 
     monkeypatch.delenv("PAGINA_PUBBLICA", raising=False)
     c = TestClient(app)
-    for nome in ("termini", "privacy", "cookie", "condizioni-supporto"):
+    for nome in ("termini", "privacy", "cookie", "condizioni-supporto", "note-legali"):
         r = c.get(f"/{nome}")
         assert r.status_code == 200 and "Bandi Radar" in r.text, nome
         assert 'content="noindex, nofollow"' in r.text          # finche' la pagina non e' accesa
