@@ -27,18 +27,26 @@ STATI_FILTRO = {"aperti": ("aperto", "in_arrivo"), "aperto": ("aperto",), "in_ar
                 "chiuso": ("chiuso",), "non_noto": (None,), "tutti": None}
 
 
+# Fonti che raccolgono bandi di tutti i livelli (non sono l'ente che li emette).
+CATALOGHI = ("incentivi_gov_ricerca", "incentivi_gov_open_data")
+
+
 def carica_bandi(conn) -> list[dict]:
     """Tutti i bandi con una scheda, con il livello delle fonti (UE, nazionale, regione...) e le loro regioni."""
     with conn.cursor() as cur:
         cur.execute(f"""
             SELECT {COLONNE},
-                   coalesce((SELECT array_agg(DISTINCT f.tipo) FROM annunci a JOIN fonti f ON f.id = a.fonte_id
-                             WHERE a.bando_id = b.id), '{{}}') AS livelli,
+                   -- I cataloghi (incentivi.gov.it) ripubblicano bandi di ogni livello: se il bando ha anche una fonte
+                   -- vera, il loro livello "nazionale" non conta (05/10: un avviso del Comune di Rimini risultava
+                   -- nazionale e quindi adatto anche a un'impresa di Milano).
+                   coalesce((SELECT coalesce(nullif(array_agg(DISTINCT f.tipo) FILTER (WHERE f.id <> ALL(%(cataloghi)s)), '{{}}'),
+                                             array_agg(DISTINCT f.tipo))
+                             FROM annunci a JOIN fonti f ON f.id = a.fonte_id WHERE a.bando_id = b.id), '{{}}') AS livelli,
                    coalesce((SELECT array_agg(DISTINCT f.territorio) FROM annunci a JOIN fonti f ON f.id = a.fonte_id
                              WHERE a.bando_id = b.id), '{{}}') AS territori_fonti
             FROM bandi b WHERE b.completezza IS NOT NULL
               -- non per imprese (preliminare o ricontrollo del 03/10): fuori dal catalogo, la scheda resta nello storico
-              AND coalesce(b.preliminare->>'per_imprese', '') <> 'no'""")
+              AND coalesce(b.preliminare->>'per_imprese', '') <> 'no'""", {"cataloghi": list(CATALOGHI)})
         bandi = [dict(r) for r in cur.fetchall()]
     for b in bandi:
         b["regioni_fonti"] = [t for t in b["territori_fonti"] if t in REGIONI]

@@ -9,7 +9,7 @@
 **Limiti:**
 - **Il testo della Legge 199/2025 (commi 427-436 e 438-443) non l'ho letto direttamente**: Normattiva e Gazzetta Ufficiale mostrano solo l'inizio dell'articolo 1 (che ha centinaia di commi). Numero di legge, commi, scaglioni e periodo sono confermati dal MIMIT e dal DM attuativo; le esclusioni soggettive, il testo del comma 431 sul cumulo e la modifica del DL 38/2026 (via il vincolo "prodotto in UE") vengono da fonti secondarie concordi (Confindustria Toscana, ANCE, iperammortamenti.it e altre).
 - Le FAQ GSE (assistenza.clienti.gse.it) si caricano con JavaScript e non si leggono senza browser: la posizione del GSE sul cumulo Conto Termico + iperammortamento è riportata da fonti secondarie che la citano, ed è coerente con l'art. 17 del DM che ho letto.
-- Percentuale di riparto del credito ZES per il 2026, maggiorazioni R&S Mezzogiorno 2026, elenco preciso dei settori esclusi ZES e vincoli di mantenimento: non verificati, scritti come "da verificare".
+- Percentuale di riparto del credito ZES per il 2026, elenco preciso dei settori esclusi ZES e vincoli di mantenimento: non verificati, scritti come "da verificare".
 - Le stime di beneficio sono mie, prudenti, e valgono per un'impresa in utile tassata IRES al 24%.
 
 ## URL visti davvero
@@ -31,6 +31,12 @@
 | Confindustria Toscana Centro e Costa (secondaria) | https://confindustriatoscanacentroecosta.it/iperammortamento-nuova-agevolazione-per-le-imprese-della-legge-di-bilancio-2026/ | DL 38/2026 art. 7, esclusioni soggettive | sì (secondaria) |
 | iperammortamenti.it (secondaria) | https://www.iperammortamenti.it/risorse/iperammortamento-cumulabilita | testo del comma 431, dubbio Sabatini | sì (secondaria) |
 | naturalnzeb, FAQ CT (secondaria) | https://faqcontotermico.naturalnzeb.it/faq/cumulabilita-conto-termico-iper-ammortamento | posizione GSE: CT 3.0 non cumulabile con iperammortamento | sì (secondaria) |
+| MIMIT, credito formazione 4.0 | https://www.mimit.gov.it/it/incentivi/credito-d-imposta-formazione-4-0 | "La misura non è più attiva" | sì |
+| FiscoOggi (Agenzia Entrate), credito design 2026 | https://www.fiscooggi.it/portale/-/credito-design-e-ideazione-estetica-al-via-le-domande-al-mimit | L. 199/2025 commi 925-926, 10%, 2 mln per impresa, 60 mln totali, prenotazione dal 7/7/2026, completamento entro 30 giorni dalla chiusura del periodo | sì |
+| Consulenti del Lavoro (30/7/2026) | https://www.consulentidellavoro.it/home/storico-articoli/19787-credito-d-imposta-design-esauriti-i-60-milioni-disponibili | 60 mln esauriti l'8/7/2026 (comunicazione MIMIT), coda per scorrimento | sì (secondaria) |
+| EC News (17/2/2026) | https://www.ecnews.it/fiscale/fisco-e-patrimonio/agevolazioni/il-credito-design-prorogato-e-potenziato-nel-2026/ | design dal 5% al 10%, quota annuale unica; innovazione tecnologica non prorogata | sì (secondaria) |
+| Normattiva, art. 244 DL 34/2020 | https://www.normattiva.it/uri-res/N2Ls?urn:nir:stato:decreto.legge:2020-05-19;34~art244 | aliquote maggiorate Sud (25/35/45%); scadenza non leggibile dalla pagina | non chiaro |
+| incentivimpresa.it (secondaria) | https://www.incentivimpresa.it/credito-imposta-ricerca-sviluppo-sud-italia-bandi-regionali | maggiorazioni Sud fino al 2025, non prorogate nel 2026 | sì (secondaria) |
 
 ## Esito per misura
 
@@ -42,10 +48,10 @@
 | Credito ZES unica 2026-2028 | sì | sì, `aperto` | finestra 2026 chiusa il 30/5/2026; prossima nel 2027 |
 | Nuova Sabatini | sì | sì, `aperto` | sportello fino a esaurimento |
 | Credito beni strumentali 4.0 / Transizione 5.0 | no per investimenti 2026 | no | sostituiti dall'iperammortamento |
-| Credito innovazione tecnologica e transizione 4.0 | no (5% fino al 2025) | no | |
-| Credito design 2026 | non chiaro | no | MIMIT indica prenotazione dal 7/7/2026 con plafond 60 mln: da verificare |
-| Credito formazione 4.0 | non chiaro (non risulta rinnovato) | no | da verificare |
-| Maggiorazioni R&S Mezzogiorno | non chiaro per il 2026 | no | da verificare |
+| Credito innovazione tecnologica e transizione 4.0 | no (5% fino al 2025, non prorogato) | no | |
+| Credito design 2026 | sì per legge, ma fondi esauriti | no | 10%, plafond 60 mln finito l'8/7/2026; prenotazioni solo in coda per scorrimento. Citato nell'avvertenza di `credito_rs_2026` |
+| Credito formazione 4.0 | no | no | MIMIT: "La misura non è più attiva"; l'iperammortamento non copre la formazione |
+| Maggiorazioni R&S Mezzogiorno | no per il 2026 | no (corretta la voce R&S) | valevano fino al 2025; nel 2026 10% ovunque |
 
 ## Punti principali e dubbi
 
@@ -67,6 +73,10 @@
 ### Altre misure
 - **Credito R&S:** 10% delle spese di ricerca e sviluppo, massimo 5 mln l'anno, fino al 2031; comunicazioni preventive e consuntive al MIMIT obbligatorie dal 2024. Riguarda spese di ricerca, non l'acquisto di macchinari di produzione: si affianca ai bandi di ricerca (base al netto dei contributi).
 - **Credito ZES unica:** Legge 199/2025 commi 438-443, anni 2026-2028, regioni del Sud più Abruzzo, Marche e Umbria; progetti da almeno 200.000 €. È un aiuto di Stato regionale: col bando a fondo perduto si somma solo entro l'intensità massima della Carta degli aiuti per quella zona. Il credito effettivo dipende dal riparto (nel 2025: 75% del richiesto).
+- **Credito design e ideazione estetica 2026** (verifica del 5/10/2026): la L. 199/2025, art. 1, commi 925-926, lo porta dal 5% al **10%** per le spese 2026, massimo 2 milioni per impresa, utilizzabile in F24 in **una sola quota annuale**, con un tetto complessivo di **60 milioni** e prenotazione sulla piattaforma MIMIT (DD 3/7/2026, apertura 7/7/2026; poi comunicazione di completamento entro 30 giorni dalla chiusura del periodo d'imposta, con spese almeno pari al 70% di quelle prenotate). Il MIMIT ha comunicato l'**esaurimento dei fondi l'8/7/2026**, dopo 24 ore; le nuove domande restano in coda per un eventuale scorrimento. Quindi non è una misura su cui contare per un cliente oggi: non l'ho inserita come voce separata, l'ho citata nella voce R&S. Se arrivano nuovi fondi, va aggiunta (non esiste una categoria di spesa "design": `ricerca_sviluppo` lo abbinerebbe ai bandi di ricerca, che non c'entrano; da decidere se usare `altro` o aggiungere una categoria).
+- **Credito innovazione tecnologica (anche 4.0 e green):** 5% nel 2024-2025, **non prorogato** per il 2026 (pagina MIMIT riporta aliquote solo fino al 2025; EC News concorde).
+- **Credito formazione 4.0:** la pagina MIMIT dice "La misura non è più attiva" (ultimo aggiornamento della pagina: dicembre 2022). La formazione era poi entrata come spesa accessoria nella Transizione 5.0, che per i nuovi investimenti dal 2026 è chiusa; l'iperammortamento riguarda solo beni (allegati IV e V e impianti FER), per quanto risulta dalle fonti lette non la formazione. Nessuna misura nazionale automatica per la formazione da inserire.
+- **Maggiorazioni R&S Mezzogiorno** (art. 244 DL 34/2020, 25% grandi / 35% medie / 45% piccole): valevano fino al periodo d'imposta 2025 e **non risultano prorogate** per il 2026; la pagina MIMIT non le riporta per il 2026 e le fonti secondarie concordano. Non ho potuto leggere su Normattiva la nota con la scadenza: certezza buona ma non piena. Corretta di conseguenza la voce `credito_rs_2026` (10% ovunque).
 - **Nuova Sabatini:** contributo pari agli interessi di un finanziamento a 5 anni (2,75% / 3,575% / 5%), circa il 7,7% / 10,1% / 14,3% del finanziamento. Aiuto in esenzione GBER: col bando sugli stessi beni si somma solo se l'intensità totale resta entro il massimo applicabile.
 
 ## Come stimare il beneficio cumulato con un bando a fondo perduto
@@ -110,7 +120,8 @@ Nota onesta: il contributo a fondo perduto è un contributo in conto impianti e 
 - Conto Termico 3.0: dal 25% al 65% a fondo perduto per le imprese, con richiesta preliminare prima dei lavori. Non si cumula con l'iperammortamento né con altri contributi statali; si cumula con bandi regionali entro il 65%.
 - Il cumulo bando + iperammortamento è ammesso, ma l'iperammortamento si calcola sulla parte non coperta dal bando: bando al 40% + iper = circa 66% lordo su un macchinario da 100.000 €, non 83%.
 - Le misure che sono aiuti di Stato (ZES, Sabatini, Conto Termico) si sommano al bando solo entro le intensità massime europee: spesso lo spazio è poco.
-- Restano da verificare: testo letterale dei commi 427-436 su Normattiva, percentuale di riparto ZES 2026, credito design 2026, credito formazione, maggiorazioni R&S al Sud.
+- Verificati il 5/10/2026: credito formazione 4.0 non più attivo; innovazione tecnologica non prorogata; maggiorazioni R&S al Sud finite nel 2025; credito design 2026 al 10% esistente ma con i 60 milioni già esauriti (in coda per scorrimento).
+- Restano da verificare: testo letterale dei commi 427-436 e 925-926 su Normattiva, percentuale di riparto ZES 2026, eventuali nuovi fondi per il credito design (scorrimento), scadenza dell'art. 244 DL 34/2020 letta sul testo ufficiale.
 
 ## Conseguenze per Bandi Radar
 
