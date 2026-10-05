@@ -531,11 +531,15 @@ def leggi_annuncio(cur, annuncio_id: int) -> Annuncio | None:
                     territorio_annuncio(r["territorio"], dati), dati, r["bando_id"], r["collegato_da"]).prepara()
 
 
-def _togli_bandi_vuoti(cur, bandi: set[int]) -> None:
-    """Un bando rimasto senza annunci e mai schedato dall'IA non serve piu'."""
+def _togli_bandi_vuoti(cur, bandi: set[int], verso: int | None = None) -> None:
+    """Un bando rimasto senza annunci e mai schedato dall'IA non serve piu'. Se era gia' schedato la scheda resta come
+    storico e il bando si segna "unito a" quello che ha ricevuto gli annunci (06/10/2026)."""
     for b in bandi:
         cur.execute("DELETE FROM bandi b WHERE id = %s AND dati IS NULL AND NOT EXISTS "
                     "(SELECT 1 FROM annunci a WHERE a.bando_id = b.id)", (b,))
+        if verso is not None and verso != b:
+            cur.execute("UPDATE bandi b SET unito_a = %s WHERE id = %s AND NOT EXISTS "
+                        "(SELECT 1 FROM annunci a WHERE a.bando_id = b.id)", (verso, b))
 
 
 def decisione_matteo(conn, annuncio_id: int, bando_id: int | None) -> int:
@@ -568,6 +572,7 @@ def decidi_collegamento(conn, annuncio_id: int, bando_id: int | None, da: str, m
                 raise LookupError("bando non trovato")
             nuovo = bando_id
             collega(cur, annuncio_id, nuovo, a.ruolo or "doppione", motivo or "unito a mano dalla plancia", da)
+        cur.execute("UPDATE bandi SET unito_a = NULL WHERE id = %s AND unito_a IS NOT NULL", (nuovo,))   # torna a vivere
         cur.execute(
             """UPDATE bandi_dubbi SET decisione = CASE WHEN bando_id = %s THEN 'stesso' ELSE 'diverso' END,
                       deciso_da = %s, deciso_il = now()
@@ -575,7 +580,7 @@ def decidi_collegamento(conn, annuncio_id: int, bando_id: int | None, da: str, m
             (nuovo, da, annuncio_id),
         )
         if vecchio is not None and vecchio != nuovo:
-            _togli_bandi_vuoti(cur, {vecchio})
+            _togli_bandi_vuoti(cur, {vecchio}, nuovo)
     conn.commit()
     return nuovo
 

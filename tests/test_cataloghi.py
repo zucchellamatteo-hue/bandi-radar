@@ -50,3 +50,42 @@ def test_bando_comunale_ripreso_dal_catalogo_resta_locale():
     esito = regole.valuta(rimini, milano)
     assert esito.fuori_zona and esito.livello == regole.DA_VERIFICARE
     assert not regole.valuta(ministero, milano).fuori_zona
+
+
+def test_bando_unito_esce_dal_catalogo():
+    from app.abbinamento import catalogo
+    from app.db.connessione import connetti
+    from app.db.migrazioni import applica_migrazioni
+    from app.schede.bandi import decidi_collegamento
+
+    with connetti() as conn:
+        applica_migrazioni(conn)
+        with conn.cursor() as cur:
+            cur.execute("INSERT INTO fonti (id, nome, ente, tipo, territorio, modalita, frequenza, stato) "
+                        "VALUES ('prova_unione', 'x', 'Ente', 'camera', 'LOM', 'api', 'settimanale', 'attiva') ON CONFLICT (id) DO NOTHING")
+            ids, annunci = [], []
+            for n in (1, 2):
+                cur.execute("""INSERT INTO bandi (titolo, stato, completezza, dati) VALUES (%s, 'aperto', 'bando_ufficiale',
+                               '{"risposta": {}}') RETURNING id""", (f"Bando unione {n}",))
+                ids.append(cur.fetchone()["id"])
+                cur.execute("INSERT INTO annunci (fonte_id, url, titolo, impronta, bando_id) VALUES ('prova_unione', %s, 'x', %s, %s) "
+                            "RETURNING id", (f"https://esempio.it/u{ids[-1]}", f"unione-{ids[-1]}", ids[-1]))
+                annunci.append(cur.fetchone()["id"])
+        conn.commit()
+        try:
+            decidi_collegamento(conn, annunci[1], ids[0], "matteo", "prova")
+            with conn.cursor() as cur:
+                cur.execute("SELECT id, unito_a FROM bandi WHERE id = ANY(%s) ORDER BY id", (ids,))
+                assert [r["unito_a"] for r in cur.fetchall()] == [None, ids[0]]      # la scheda resta, segnata come unita
+            elenco = {b["id"] for b in catalogo.carica_bandi(conn)}
+            assert ids[0] in elenco and ids[1] not in elenco
+            decidi_collegamento(conn, annunci[1], ids[1], "matteo", "ripensamento")   # torna nel suo bando
+            with conn.cursor() as cur:
+                cur.execute("SELECT unito_a FROM bandi WHERE id = %s", (ids[1],))
+                assert cur.fetchone()["unito_a"] is None
+        finally:
+            with conn.cursor() as cur:
+                cur.execute("DELETE FROM annunci WHERE id = ANY(%s)", (annunci,))
+                cur.execute("UPDATE bandi SET unito_a = NULL WHERE id = ANY(%s)", (ids,))
+                cur.execute("DELETE FROM bandi WHERE id = ANY(%s)", (ids,))
+            conn.commit()

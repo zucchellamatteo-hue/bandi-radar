@@ -24,6 +24,8 @@ export default function Bando() {
     <>
       <p><Link to="/catalogo">← Catalogo</Link></p>
       <h1>{b.titolo}</h1>
+      {b.unito_a ? <div className="avviso">Questo bando è un doppione: è stato unito al <Link to={`/bandi/${b.unito_a}`}>bando {String(b.unito_a)}</Link>,
+        che ha i suoi annunci. Questa scheda resta solo come storico e non compare nel catalogo.</div> : null}
       <p><span className={`stato-bando ${b.stato || "non_noto"}`}>{b.stato ? nome(b.stato) : "stato non noto"}</span>
         <span className="piccolo"> · {b.ente}{b.gestore && b.gestore !== b.ente ? ` (gestisce ${b.gestore})` : ""}
           {b.codice_ufficiale ? ` · codice ${b.codice_ufficiale}` : ""} · versione {b.versione}</span>

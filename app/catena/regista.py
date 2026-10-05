@@ -178,7 +178,7 @@ def ricontrolla_documenti(conn, limite: int = RICONTROLLI_PER_GIRO) -> int:
     from app.schede import allegati
 
     with conn.cursor() as cur:
-        cur.execute("""SELECT id FROM bandi WHERE dati IS NOT NULL AND stato IN ('aperto', 'in_arrivo')
+        cur.execute("""SELECT id FROM bandi WHERE dati IS NOT NULL AND stato IN ('aperto', 'in_arrivo') AND unito_a IS NULL
                        AND pagina_stato = 'trovata' AND da_aggiornare IS NULL
                        AND allegati_cercati_il < now() - make_interval(days => %s)
                        ORDER BY allegati_cercati_il LIMIT %s""", (RICONTROLLO_GIORNI, limite))
