@@ -11,7 +11,7 @@ from pydantic import BaseModel
 from app import impresa as imp
 from app.db.connessione import connetti
 from app.utenti import manda
-from app.utenti.api import solo_admin, utente_corrente
+from app.utenti.api import richiede, utente_corrente
 
 router = APIRouter(prefix="/api")
 
@@ -156,19 +156,19 @@ def le_mie_richieste(utente: dict = Depends(utente_impresa)) -> list[dict]:
 # --- admin: imprese iscritte e richieste di supporto ---
 
 @router.get("/imprese")
-def imprese_iscritte(_: dict = Depends(solo_admin)) -> list[dict]:
+def imprese_iscritte(_: dict = Depends(richiede("imprese"))) -> list[dict]:
     with connetti() as conn:
         return imp.imprese_tutte(conn)
 
 
 @router.get("/richieste")
-def tutte_le_richieste(stato: str | None = None, _: dict = Depends(solo_admin)) -> list[dict]:
+def tutte_le_richieste(stato: str | None = None, _: dict = Depends(richiede("imprese"))) -> list[dict]:
     with connetti() as conn:
         return imp.richieste_tutte(conn, stato or None)
 
 
 @router.patch("/richieste/{richiesta_id}")
-def gestisci_richiesta(richiesta_id: int, dati: GestioneRichiesta, _: dict = Depends(solo_admin)) -> dict:
+def gestisci_richiesta(richiesta_id: int, dati: GestioneRichiesta, _: dict = Depends(richiede("imprese"))) -> dict:
     with connetti() as conn:
         try:
             r = imp.gestisci_richiesta(conn, richiesta_id, dati.stato, dati.nota)

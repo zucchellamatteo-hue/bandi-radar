@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { api, Esito, NOMI_DECISO_DA, NOMI_ESITO } from "./api";
+import { usePuo } from "./utente";
 
 // Esito dello smistamento con i tre pulsanti per correggerlo a mano.
 // La correzione si salva come decisa da Matteo; la proposta delle regole resta nel database per tararle.
@@ -18,6 +19,7 @@ export default function Smistamento({ annuncioId, esito, decisoDa, motivo }:
       setInCorso(false);
     }
   };
+  const modifiche = usePuo("modifiche");
   const pulsanti: [Esito, string, string][] = [["rilevante", "✓", "È rilevante"], ["da_rivedere", "?", "Da rivedere"], ["non_rilevante", "✗", "Non è rilevante"]];
   return (
     <div className="smistamento">
@@ -25,12 +27,12 @@ export default function Smistamento({ annuncioId, esito, decisoDa, motivo }:
         {attuale.esito ? NOMI_ESITO[attuale.esito] : "Non smistato"}
       </span>
       {attuale.da && <span className="piccolo"> ({NOMI_DECISO_DA[attuale.da] || attuale.da})</span>}
-      <div className="correggi">
+      {modifiche && <div className="correggi">
         {pulsanti.map(([valore, simbolo, titolo]) => (
           <button key={valore} title={titolo} disabled={inCorso || attuale.esito === valore}
             className={attuale.esito === valore ? "scelto" : ""} onClick={() => correggi(valore)}>{simbolo}</button>
         ))}
-      </div>
+      </div>}
     </div>
   );
 }

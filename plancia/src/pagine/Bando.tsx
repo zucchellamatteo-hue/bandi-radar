@@ -2,7 +2,7 @@ import { ReactNode, useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { api, Bando as TipoBando, FormaIncentivo as TipoForma, data, dimensione, euro, nome, NOMI_CATEGORIA, NOMI_DECISO_DA, NOMI_RUOLO } from "../api";
 import { Importo } from "./Catalogo";
-import { eAdmin, useUtente } from "../utente";
+import { puo, useUtente } from "../utente";
 import Giudizio from "../Giudizio";
 
 // La scheda completa del bando (docs/SCHEDA_BANDO.md), i documenti, gli annunci che ne parlano e le versioni.
@@ -10,7 +10,9 @@ export default function Bando() {
   const { id } = useParams();
   const [b, setB] = useState<TipoBando | null>(null);
   const [errore, setErrore] = useState<string | null>(null);
-  const admin = eAdmin(useUtente());
+  const utente = useUtente();
+  const admin = puo(utente, "lavoro");
+  const giudica = puo(utente, "giudizi");
   useEffect(() => { if (id) api.bando(id).then(setB).catch((e) => setErrore(String(e))); }, [id]);
   if (errore) return <div className="allarme">{errore}</div>;
   if (!b) return <div className="caricamento">Caricamento…</div>;
@@ -76,7 +78,7 @@ export default function Bando() {
         </>
       ) : null}
 
-      {b.completezza && <Giudizio bandoId={b.id} admin={admin} />}
+      {b.completezza && (giudica || admin) && <Giudizio bandoId={b.id} admin={admin} />}
 
       <h2>Documenti del bando</h2>
       {documenti.length === 0 ? <p className="piccolo">Nessun documento scaricato.</p> : (

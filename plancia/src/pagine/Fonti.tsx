@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { api, Colore, data, Fonte, NOMI_TIPO, Riepilogo } from "../api";
+import { usePuo } from "../utente";
 
 const ORDINE_COLORE: Record<Colore, number> = { rosso: 0, giallo: 1, verde: 2, pausa: 3 };
 
@@ -27,6 +28,7 @@ export default function Fonti() {
       .sort((a, b) => ORDINE_COLORE[a.colore] - ORDINE_COLORE[b.colore] || a.nome.localeCompare(b.nome));
   }, [fonti, testo, tipo, colore]);
 
+  const modifiche = usePuo("modifiche");
   const rilancia = async (f: Fonte) => {
     const r = await api.rilancia(f.id);
     setMessaggio(`${f.nome}: controllo ${r.stato}. Ricarica tra qualche secondo per vedere l'esito.`);
@@ -86,8 +88,8 @@ export default function Fonti() {
               <td className="nascondi-mobile">{f.silenzio_giorni ?? "–"}<span className="piccolo"> / {f.soglia_silenzio_giorni}</span></td>
               <td>{f.novita_30} / {f.novita_90}</td>
               <td>
-                <button onClick={() => rilancia(f)} title="Controlla adesso">▶</button>{" "}
-                <button onClick={() => pausa(f)} title={f.in_pausa ? "Riprendi" : "Metti in pausa"}>{f.in_pausa ? "▶▶" : "⏸"}</button>{" "}
+                {modifiche && <><button onClick={() => rilancia(f)} title="Controlla adesso">▶</button>{" "}
+                <button onClick={() => pausa(f)} title={f.in_pausa ? "Riprendi" : "Metti in pausa"}>{f.in_pausa ? "▶▶" : "⏸"}</button>{" "}</>}
                 {f.url && <a href={f.url} target="_blank" rel="noreferrer" title="Apri la pagina della fonte">↗</a>}
               </td>
             </tr>

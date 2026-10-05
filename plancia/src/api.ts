@@ -3,7 +3,7 @@
 export type RuoloUtente = "admin" | "revisore" | "impresa";
 export interface Utente {
   id: number; email: string; nome: string | null; ruolo: RuoloUtente; attivo?: boolean;
-  creato_il?: string; ultimo_accesso?: string | null; password_impostata?: boolean;
+  creato_il?: string; ultimo_accesso?: string | null; password_impostata?: boolean; permessi: string[];
 }
 // Feedback sulle schede (app/feedback): voto 1-5 e problemi.
 export type StatoFeedback = "nuovo" | "preso_in_carico" | "corretto" | "respinto";
@@ -300,7 +300,8 @@ export const api = {
   utenti: () => chiama<Utente[]>("/api/utenti"),
   creaUtente: (corpo: { email: string; nome: string; ruolo: RuoloUtente }) =>
     chiama<{ utente: Utente; link: string; email: string }>("/api/utenti", { method: "POST", body: JSON.stringify(corpo) }),
-  modificaUtente: (id: number, corpo: { ruolo?: RuoloUtente; attivo?: boolean }) =>
+  permessi: () => chiama<Record<string, string>>("/api/utenti/permessi"),
+  modificaUtente: (id: number, corpo: { ruolo?: RuoloUtente; attivo?: boolean; permessi?: string[] }) =>
     chiama<Utente>(`/api/utenti/${id}`, { method: "PATCH", body: JSON.stringify(corpo) }),
   reinvita: (id: number) => chiama<{ link: string; email: string }>(`/api/utenti/${id}/invito`, { method: "POST" }),
   riepilogo: () => chiama<Riepilogo>("/api/riepilogo"),

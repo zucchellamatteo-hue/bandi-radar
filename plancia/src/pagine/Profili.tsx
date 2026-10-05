@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { api, BandoRiga, data, nome, Profilo, ProfiloSalvato, RispostaAbbinamento, Sede, Valori } from "../api";
 import { Importo, SegnoEsito } from "./Catalogo";
+import { usePuo } from "../utente";
 
 // Profili d'impresa ANONIMI (docs/PROFILO_IMPRESA.md) e i bandi che passano le regole, con il motivo.
 // Niente nomi, codici fiscali, partite IVA, email: il codice lo sceglie Matteo e la corrispondenza resta da lui.
@@ -21,6 +22,7 @@ export default function Profili() {
   const [errore, setErrore] = useState<string | null>(null);
   const [inCorso, setInCorso] = useState(false);
 
+  const modifiche = usePuo("modifiche");
   const ricarica = () => api.profili().then(setElenco);
   useEffect(() => { ricarica(); api.valori().then(setValori); }, []);
   useEffect(() => {
@@ -59,9 +61,9 @@ export default function Profili() {
 
       <Modulo p={p} cambia={cambia} valori={valori} bloccaCodice={!!codice} />
       <div className="filtri" style={{ marginTop: ".8rem" }}>
-        <button onClick={salva} disabled={inCorso}>Salva e abbina</button>
+        {modifiche && <button onClick={salva} disabled={inCorso}>Salva e abbina</button>}
         <button onClick={prova} disabled={inCorso}>Prova senza salvare</button>
-        {codice && <button onClick={cancella} disabled={inCorso}>Cancella il profilo</button>}
+        {modifiche && codice && <button onClick={cancella} disabled={inCorso}>Cancella il profilo</button>}
         {inCorso && <span className="piccolo">Calcolo…</span>}
       </div>
       {errore && <div className="allarme">{errore}</div>}
