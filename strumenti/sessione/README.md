@@ -44,6 +44,7 @@ Finché `IA_SCHEDE_API` non è 1 nel `.env` (decisione di Matteo del 02/10), l'A
 | `ar/coda.py`, `ar/libera.py` | coda dei fascicoli tra gli agenti (`coda.py conta`), liberazione delle prenotazioni di un agente fermo |
 | `ar/regole_stato.py`, `ar/pagine_oggi.py`, `ar/ISTRUZIONI_STATO.md`, `ar/importa_stato.py` | ricontrollo a mano dello stato dei proponibili (03/10): regole di chiusura senza IA, pagina ufficiale di oggi (una per sito alla volta), agenti che decidono aperto/chiuso con la citazione, salvataggio con il motivo |
 | `ar/regole_imprese.py`, `ar/esporta_imprese.py`, `ar/ISTRUZIONI_IMPRESE.md`, `ar/importa_imprese.py` | ricontrollo a mano dei beneficiari (03/10): regole sui testi, modulistica compresa; i "non per imprese" escono dal catalogo |
+| `ar/esporta_lunghi.py`, `ar/ISTRUZIONI_LUNGHI.md`, `ar/importa_lunghi.py` | bandi lunghissimi (06/10): scheda in due passaggi, con indice dei documenti (titoli e articoli con il numero di riga) e testi completi in file separati; l'agente apre solo le parti che servono. `ar_copia.sh esporta_lunghi.py ID ...`, agenti, poi `importa_lunghi.py` |
 | `ar/rifai.py` | rifare preliminare e scheda di alcuni bandi (per esempio dopo la rilettura OCR) |
 | `ar/esporta_feedback.py`, `ar/ISTRUZIONI_FEEDBACK.md`, `ar/importa_feedback.py` | feedback sulle schede (05/10): segnalazioni di revisori e imprese rilette dagli agenti sui documenti; correzioni nella scheda con la causa "feedback N", schede da rifare rimesse "da aggiornare", regole proposte da riportare a Matteo |
 
