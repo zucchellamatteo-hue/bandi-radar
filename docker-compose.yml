@@ -55,6 +55,7 @@ services:
       SITO_URL: ${SITO_URL:-https://finanzagevolata.qiaro.it}   # per i link nelle email (invito, nuova password)
       RESEND_API_KEY: ${RESEND_API_KEY:-}
       EMAIL_MITTENTE: ${EMAIL_MITTENTE:-}
+      EMAIL_CONTATTO: ${EMAIL_CONTATTO:-}
       EMAIL_MATTEO: ${EMAIL_MATTEO:-}
       REGISTRAZIONE_APERTA: ${REGISTRAZIONE_APERTA:-0}             # 1 = le imprese possono registrarsi da sole
       EMAIL_IMPRESE_APPROVAZIONE: ${EMAIL_IMPRESE_APPROVAZIONE:-1} # 1 = le email alle imprese partono dopo l'ok di Matteo
@@ -128,6 +129,7 @@ services:
       CATENA_AUTOMATICA: ${CATENA_AUTOMATICA:-1}     # 0 = solo raccolta, senza smistamento/pagine/allegati/IA nel giro orario
       EMAIL_MATTEO: ${EMAIL_MATTEO:-}
       EMAIL_MITTENTE: ${EMAIL_MITTENTE:-}
+      EMAIL_CONTATTO: ${EMAIL_CONTATTO:-}
       SITO_URL: ${SITO_URL:-https://finanzagevolata.qiaro.it}      # link nelle email settimanali alle imprese
       EMAIL_IMPRESE_APPROVAZIONE: ${EMAIL_IMPRESE_APPROVAZIONE:-1}
       ALLEGATI_CARTELLA: /srv/allegati

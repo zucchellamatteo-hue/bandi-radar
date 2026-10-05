@@ -24,3 +24,21 @@ def test_componi_riepilogo():
     assert "[Regione Lombardia] 17/09 Bando <test>" in testo
     assert "Fonte rotta: errore (HTTP 500)" in testo
     assert "Bando &lt;test&gt;" in corpo_html and "250" in testo
+
+
+def test_email_automatiche_dicono_di_non_rispondere(monkeypatch):
+    from app.notifiche import email
+
+    monkeypatch.delenv("EMAIL_MITTENTE", raising=False)
+    monkeypatch.setenv("SITO_URL", "https://esempio.it")
+    monkeypatch.setenv("EMAIL_CONTATTO", "info@esempio.it")
+    assert email.mittente() == "Bandi Radar <non-rispondere@esempio.it>"
+    testo, html = email.con_avviso("Ciao", "<html><body><p>Ciao</p></body></html>")
+    assert "non rispondere" in testo and "info@esempio.it" in testo
+    assert "non rispondere" in html and html.endswith("</p></body></html>")
+    inviate = []
+    monkeypatch.setenv("RESEND_API_KEY", "re_prova")
+    monkeypatch.setattr(email.httpx, "post", lambda url, json, headers, timeout: inviate.append(json) or
+                        type("R", (), {"raise_for_status": lambda self: None})())
+    assert email.invia("a@b.it", "Oggetto", "Testo") == "inviata"
+    assert inviate[0]["from"] == "Bandi Radar <non-rispondere@esempio.it>" and "non rispondere" in inviate[0]["text"]
