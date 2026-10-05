@@ -19,6 +19,8 @@ from app.abbonamenti.api import router as api_abbonamenti
 from app.campagne.api import router as api_campagne
 from app.misure.api import router as api_misure
 from app.fatture.api import router as api_fatture
+from app.guida.api import router as api_guida
+from app.passi.api import router as api_passi
 from app.feedback.api import router as api_feedback
 from app.notifiche.api import router as api_notifiche
 from app.impresa.api import router as api_impresa
@@ -64,6 +66,8 @@ app.include_router(api_abbonamenti)
 app.include_router(api_campagne)
 app.include_router(api_misure)
 app.include_router(api_fatture)
+app.include_router(api_passi)
+app.include_router(api_guida)
 app.include_router(api_plancia, dependencies=[Depends(controlla_plancia)])
 
 

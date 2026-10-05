@@ -86,6 +86,11 @@ export interface Fattura {
   stato: string; esito: string | null; aggiornata_il: string; email: string | null;
 }
 
+export interface Passo {
+  id: number; titolo: string; dettaglio: string | null; tipo: string; stato: string; priorita: number; chi: string | null;
+  creato_il: string; aggiornato_il: string; aggiornato_da: string | null;
+}
+
 export const NOMI_RUOLO_UTENTE: Record<RuoloUtente, string> = { admin: "amministratore", revisore: "revisore", impresa: "impresa" };
 
 export type Colore = "verde" | "giallo" | "rosso" | "pausa";
@@ -331,6 +336,11 @@ export const api = {
   fatture: () => chiama<Fattura[]>("/api/fatture"),
   reinviaFattura: (id: number) => chiama<{ esito: string }>(`/api/fatture/${id}/invia`, { method: "POST" }),
   aggiornaFattura: (id: number) => chiama<{ esito: string }>(`/api/fatture/${id}/aggiorna`, { method: "POST" }),
+  passi: () => chiama<{ passi: Passo[]; tipi: Record<string, string>; stati: Record<string, string> }>("/api/passi"),
+  creaPasso: (corpo: Partial<Passo>) => chiama<Passo>("/api/passi", { method: "POST", body: JSON.stringify(corpo) }),
+  modificaPasso: (id: number, corpo: Partial<Passo>) => chiama<Passo>(`/api/passi/${id}`, { method: "PATCH", body: JSON.stringify(corpo) }),
+  cancellaPasso: (id: number) => chiama(`/api/passi/${id}`, { method: "DELETE" }),
+  guida: () => chiama<{ id: string; titolo: string; testo: string; per: string[] }[]>("/api/guida"),
   utenti: () => chiama<Utente[]>("/api/utenti"),
   creaUtente: (corpo: { email: string; nome: string; ruolo: RuoloUtente }) =>
     chiama<{ utente: Utente; link: string; email: string }>("/api/utenti", { method: "POST", body: JSON.stringify(corpo) }),

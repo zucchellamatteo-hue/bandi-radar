@@ -19,6 +19,8 @@ import { Accesso, ConfermaEmail, Disiscrizione, ImpostaPassword, Registrati } fr
 import Imprese from "./pagine/Imprese";
 import Campagne from "./pagine/Campagne";
 import Misure from "./pagine/Misure";
+import Passi from "./pagine/Passi";
+import Guida from "./pagine/Guida";
 import { Abbonamento, MieImprese, MieiBandi, MieRichieste, ModuloImpresa, SchedaImpresa } from "./pagine/AreaImpresa";
 import { ContestoUtente, puo } from "./utente";
 
@@ -59,20 +61,25 @@ export default function App() {
           <NavLink to="/feedback" className={classe}>Feedback</NavLink>{" · "}
           {imprese && <><NavLink to="/imprese" className={classe}>Imprese</NavLink>{" · "}
             <NavLink to="/campagne" className={classe}>Campagne</NavLink>{" · "}</>}
-          {admin && <NavLink to="/utenti" className={classe}>Utenti</NavLink>}
+          <NavLink to="/passi" className={classe}>Prossimi passi</NavLink>{" · "}
+          {admin && <><NavLink to="/utenti" className={classe}>Utenti</NavLink>{" · "}</>}
+          <NavLink to="/guida" className={classe}>Guida</NavLink>
         </nav>}
         {utente.ruolo === "impresa" && <nav>
           <NavLink to="/impresa" end className={classe}>I miei bandi</NavLink>{" · "}
           <NavLink to="/impresa/misure" className={classe}>Agevolazioni fiscali</NavLink>{" · "}
           <NavLink to="/impresa/imprese" className={classe}>Le mie imprese</NavLink>{" · "}
           <NavLink to="/impresa/richieste" className={classe}>Richieste di supporto</NavLink>{" · "}
-          <NavLink to="/impresa/abbonamento" className={classe}>Abbonamento</NavLink>
+          <NavLink to="/impresa/abbonamento" className={classe}>Abbonamento</NavLink>{" · "}
+          <NavLink to="/guida" className={classe}>Guida</NavLink>
         </nav>}
         {utente.ruolo === "revisore" && !lavoro && <nav>
           <NavLink to="/catalogo" className={classe}>Catalogo</NavLink>{" · "}
           <NavLink to="/misure" className={classe}>Misure</NavLink>{" · "}
           <NavLink to="/feedback" className={classe}>I miei giudizi</NavLink>
-          {imprese && <>{" · "}<NavLink to="/imprese" className={classe}>Imprese</NavLink></>}
+          {imprese && <>{" · "}<NavLink to="/imprese" className={classe}>Imprese</NavLink>{" · "}
+            <NavLink to="/campagne" className={classe}>Campagne</NavLink></>}{" · "}
+          <NavLink to="/guida" className={classe}>Guida</NavLink>
         </nav>}
         <span className="chi-sono">
           {utente.nome || utente.email} <span className="piccolo">({NOMI_RUOLO_UTENTE[utente.ruolo]})</span>{" "}
@@ -87,6 +94,8 @@ export default function App() {
             <Route path="/registrati" element={<Navigate to="/" replace />} />
             <Route path="/fonti/:id" element={<DettaglioFonte />} />
             <Route path="/catalogo" element={<Catalogo />} />
+            <Route path="/guida" element={<Guida />} />
+            <Route path="/passi" element={<Passi />} />
             <Route path="/misure" element={<Misure />} />
             <Route path="/misure/:id" element={<Misure />} />
             <Route path="/annunci" element={<Annunci />} />
@@ -117,6 +126,7 @@ export default function App() {
         ) : utente.ruolo === "revisore" ? (
           <Routes>
             <Route path="/catalogo" element={<Catalogo />} />
+            <Route path="/guida" element={<Guida />} />
             <Route path="/misure" element={<Misure />} />
             <Route path="/misure/:id" element={<Misure />} />
             <Route path="/bandi/:id" element={<Bando />} />
@@ -136,6 +146,7 @@ export default function App() {
             <Route path="/impresa/abbonamento" element={<Abbonamento />} />
             <Route path="/impresa/misure" element={<Misure base="/impresa/misure" />} />
             <Route path="/impresa/misure/:id" element={<Misure base="/impresa/misure" />} />
+            <Route path="/guida" element={<Guida />} />
             <Route path="*" element={<Navigate to="/impresa" replace />} />
           </Routes>
         )}

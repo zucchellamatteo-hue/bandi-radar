@@ -15,6 +15,8 @@ Sistema che raccoglie i bandi di finanza agevolata per imprese (UE, nazionali, r
 - Prima di dichiarare finito un lavoro: test eseguiti, esito riportato con onestà. Se qualcosa è stato saltato, dirlo.
 - Le mappature manuali delle fonti vanno in `docs/ricerche/` seguendo `docs/ricerche/README.md`.
 - Gli strumenti delle sessioni sul server (agenti che fanno smistamento, doppioni e schede al posto dell'API) stanno in `strumenti/sessione/` (README per installarli in `/tmp/claude-1000/`).
+- **Prossimi passi** (pagina della plancia, tabella `prossimi_passi`): sono i promemoria e le richieste di Matteo. All'inizio di una sessione sul server leggerli (`sudo -u deploy docker compose exec app python -m app.passi` in `/srv/bandi-radar`, o `sql.sh`), lavorare sui "da sviluppare" in ordine di priorità se Matteo non chiede altro, e a lavoro finito segnarli "fatto" (o aggiungerne di nuovi) con un UPDATE/INSERT che dica chi l'ha fatto.
+- La **Guida** (`app/guida/guida.yaml`) va aggiornata quando cambia una pagina o un comando: ogni sezione dice chi la vede.
 - La catena della fase 2 la guida il regista (`app/catena/regista.py`, `docs/ORCHESTRAZIONE.md`); i sistemi automatici e le loro esecuzioni sono in `app/sistemi.py` e nella pagina Supervisione.
 
 ## Scelte tecniche (decise, non riaprirle senza motivo)
