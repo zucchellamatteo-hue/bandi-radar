@@ -44,7 +44,7 @@ def main() -> int:
             # sessione finche' IA_SCHEDE_API non e' 1.
             cur.execute("""SELECT * FROM bandi WHERE pagina_stato = 'trovata' AND allegati_cercati_il IS NOT NULL
                            AND documentazione = 'bando'
-                           AND ((dati IS NULL) OR (dati IS NOT NULL AND da_aggiornare IS NOT NULL)) ORDER BY id""")
+                           AND unito_a IS NULL AND ((dati IS NULL) OR (dati IS NOT NULL AND da_aggiornare IS NOT NULL)) ORDER BY id""")
             bandi = [dict(r) for r in cur.fetchall()]
         for b in bandi:
             cartella = OUT / "fascicoli" / str(b["id"])

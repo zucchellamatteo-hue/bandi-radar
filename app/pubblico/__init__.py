@@ -126,7 +126,7 @@ def esempi(conn, quanti: int = 3) -> list[dict]:
             cur.execute(f"SELECT {colonne} FROM bandi WHERE id = ANY(%s) AND completezza = 'bando_ufficiale'", (scelti,))
         else:
             cur.execute(f"""SELECT DISTINCT ON (ente) {colonne} FROM bandi
-                            WHERE completezza = 'bando_ufficiale' AND stato = 'aperto' AND sintesi IS NOT NULL
+                            WHERE completezza = 'bando_ufficiale' AND stato = 'aperto' AND sintesi IS NOT NULL AND unito_a IS NULL
                               AND contributo_massimo IS NOT NULL AND scadenza > current_date + 21
                               AND coalesce(preliminare->>'per_imprese', '') <> 'no'
                             ORDER BY ente, coalesce(qualita, 3) DESC, contributo_massimo DESC""")

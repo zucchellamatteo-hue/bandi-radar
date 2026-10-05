@@ -59,7 +59,7 @@ def da_ricontrollare(conn, limite: int = PER_GIRO, bando_id: int | None = None) 
             cur.execute("SELECT id, url FROM bandi WHERE id = %s", (bando_id,))
         else:
             cur.execute("""SELECT id, url FROM bandi
-                           WHERE completezza = 'bando_ufficiale' AND coalesce(stato, '') <> 'chiuso'
+                           WHERE completezza = 'bando_ufficiale' AND coalesce(stato, '') <> 'chiuso' AND unito_a IS NULL
                              AND da_aggiornare IS NULL AND coalesce(preliminare->>'per_imprese', '') <> 'no'
                              AND (stato_ricontrollato_il IS NULL OR stato_ricontrollato_il < now() - make_interval(days => %s))
                            ORDER BY stato_ricontrollato_il NULLS FIRST, id LIMIT %s""", (GIORNI, limite))

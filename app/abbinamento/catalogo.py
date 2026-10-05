@@ -44,7 +44,7 @@ def carica_bandi(conn) -> list[dict]:
                              FROM annunci a JOIN fonti f ON f.id = a.fonte_id WHERE a.bando_id = b.id), '{{}}') AS livelli,
                    coalesce((SELECT array_agg(DISTINCT f.territorio) FROM annunci a JOIN fonti f ON f.id = a.fonte_id
                              WHERE a.bando_id = b.id), '{{}}') AS territori_fonti
-            FROM bandi b WHERE b.completezza IS NOT NULL
+            FROM bandi b WHERE b.completezza IS NOT NULL AND b.unito_a IS NULL   -- i doppioni uniti restano solo come storico
               -- non per imprese (preliminare o ricontrollo del 03/10): fuori dal catalogo, la scheda resta nello storico
               AND coalesce(b.preliminare->>'per_imprese', '') <> 'no'""", {"cataloghi": list(CATALOGHI)})
         bandi = [dict(r) for r in cur.fetchall()]

@@ -1122,7 +1122,7 @@ def cmd_schede_batch(conn, limite_pre: int = LIMITE_PRELIMINARI_BATCH, limite_sc
                        HAVING bool_or(esito = 'inviata') OR count(*) FILTER (WHERE esito IN ('inviata', 'raccolta')) >= 2""")
         gia = {r["riferimento"] for r in cur.fetchall()}
         cur.execute("""SELECT * FROM bandi WHERE pagina_stato = 'trovata' AND allegati_cercati_il IS NOT NULL
-                       AND documentazione = 'bando'
+                       AND documentazione = 'bando' AND unito_a IS NULL
                        AND ((dati IS NULL AND (preliminare IS NULL OR preliminare->>'seconda_lettura' = 'da_fare'
                              OR preliminare->>'deciso_da' IS DISTINCT FROM 'segnali'))
                             OR (dati IS NOT NULL AND da_aggiornare IS NOT NULL))
