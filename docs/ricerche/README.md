@@ -34,3 +34,4 @@ In una sessione di Claude Code su questo repository, descrivere la domanda e chi
 | 2026-10-05 | `2026-10-05_success_fee_concorrenti.md` | Come fanno pagare i consulenti di finanza agevolata la presentazione delle domande (percentuali, concesso o erogato, quando) e quanto costano gli abbonamenti ai bandi? Ricerca web, ~20 operatori |
 | 2026-10-05 | `2026-10-05_fatturazione_elettronica.md` | Fattura elettronica per gli abbonamenti Stripe: costruirla o comprarla, quale servizio, quanto costa? Siti ufficiali dei fornitori |
 | 2026-10-05 | `2026-10-05_marketing_prospect_regole.md` | Si possono mandare email promozionali alle imprese della mappatura di Matteo? Regole, sanzioni del Garante, canali leciti |
+| 2026-10-05 | `2026-10-05_misure_nazionali.md` | Misure nazionali automatiche cumulabili con i bandi (Conto Termico 3.0, iperammortamento 2026, R&S, ZES, Sabatini): regole, beneficio, cumulo. Schede in `app/misure/misure.yaml` |

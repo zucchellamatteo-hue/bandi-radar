@@ -124,6 +124,23 @@ def filtra(bandi: list[dict], f: Filtri, oggi: date | None = None) -> list[tuple
     return risultato
 
 
+# Tipi che danno soldi che non si restituiscono: vengono prima nelle proposte alle imprese (Matteo, 05/10/2026).
+_A_FONDO_PERDUTO = {"fondo_perduto", "voucher", "premio"}
+
+
+def a_fondo_perduto(b: dict) -> bool:
+    return bool(b.get("fondo_perduto_massimo")) or bool(_A_FONDO_PERDUTO & set(b.get("tipi_agevolazione") or [])) \
+        or b.get("tipo_agevolazione") in _A_FONDO_PERDUTO
+
+
+def prima_il_fondo_perduto(risultati: list[tuple[dict, regole.Esito]]) -> list[tuple[dict, regole.Esito]]:
+    """Riordina un elenco gia' ordinato dall'abbinamento: dentro ogni livello (compatibili, da verificare) prima i bandi
+    a fondo perduto, poi gli altri (prestiti, garanzie, crediti d'imposta), lasciando invariato il resto dell'ordine.
+    E' solo l'ordine di presentazione: chi passa e chi no lo decidono le regole, uguali per tutti."""
+    livelli = {regole.COMPATIBILE: 0, regole.DA_VERIFICARE: 1}
+    return sorted(risultati, key=lambda x: (livelli.get(x[1].livello, 2), not a_fondo_perduto(x[0])))
+
+
 def proponibile(b: dict) -> bool:
     """Si propone ai clienti solo un bando con la scheda fatta sul bando ufficiale (Matteo, 01/10/2026): una sintesi,
     una notizia o la scheda del catalogo non bastano. Gli altri restano "in disparte"."""

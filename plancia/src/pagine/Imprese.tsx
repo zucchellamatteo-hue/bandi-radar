@@ -1,6 +1,6 @@
 import { Fragment, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { api, data, EmailImpresa, ImpresaIscritta, NOMI_STATO_ABBONAMENTO, NOMI_STATO_RICHIESTA, RichiestaSupporto, RigaAbbonamento, StatoRichiesta } from "../api";
+import { api, data, EmailImpresa, euro, Fattura, ImpresaIscritta, NOMI_STATO_ABBONAMENTO, NOMI_STATO_RICHIESTA, RichiestaSupporto, RigaAbbonamento, StatoRichiesta } from "../api";
 
 // Pagina Imprese (solo amministratori): richieste di supporto, email settimanali da approvare, imprese iscritte.
 export default function Imprese() {
@@ -8,10 +8,11 @@ export default function Imprese() {
   const [email, setEmail] = useState<EmailImpresa[]>([]);
   const [imprese, setImprese] = useState<ImpresaIscritta[]>([]);
   const [abbonamenti, setAbbonamenti] = useState<RigaAbbonamento[]>([]);
+  const [fatture, setFatture] = useState<Fattura[]>([]);
   const [errore, setErrore] = useState<string | null>(null);
   const [avviso, setAvviso] = useState<string | null>(null);
   const [aperta, setAperta] = useState<number | null>(null);
-  const ricarica = () => Promise.all([api.richieste().then(setRichieste), api.emailImprese().then(setEmail), api.impreseIscritte().then(setImprese), api.abbonamenti().then(setAbbonamenti)])
+  const ricarica = () => Promise.all([api.richieste().then(setRichieste), api.emailImprese().then(setEmail), api.impreseIscritte().then(setImprese), api.abbonamenti().then(setAbbonamenti), api.fatture().then(setFatture)])
     .catch((e) => setErrore(String(e.message || e)));
   useEffect(() => { ricarica(); }, []);
   const azione = async (f: () => Promise<unknown>, testo?: string) => {
@@ -77,6 +78,21 @@ export default function Imprese() {
                 {(a.stato === "prova" || !a.stato) && <button onClick={() => azione(() => api.modificaAbbonamento(a.utente_id, { giorni_prova_in_piu: 14 }))}>+14 giorni di prova</button>}
                 {a.stato === "gratuito" && <button onClick={() => azione(() => api.modificaAbbonamento(a.utente_id, { stato: "prova" }))}>Togli gratuito</button>}</td>
             </tr>))}</tbody>
+        </table>)}
+
+      <h2>Fatture elettroniche</h2>
+      <p className="piccolo">Una per ogni pagamento riuscito su Stripe (sezionale BR), inviata allo SdI con Invoicetronic. Funziona solo
+        con FATTURE_ATTIVE=1.</p>
+      {fatture.length > 0 && (
+        <table>
+          <thead><tr><th>Numero</th><th>Cliente</th><th>Totale</th><th>Stato</th><th></th></tr></thead>
+          <tbody>{fatture.map((f) => (
+            <tr key={f.id}><td>{f.numero}/BR del {data(f.data)}</td><td>{f.cliente}<div className="piccolo">{f.email}</div></td>
+              <td>{euro(f.totale)}<div className="piccolo">di cui IVA {euro(f.iva)}</div></td>
+              <td>{f.stato}{f.esito && <div className="piccolo">{f.esito}</div>}</td>
+              <td><a href={`/api/fatture/${f.id}/xml`}>XML</a>{" "}
+                {f.stato === "errore" && <button onClick={() => azione(() => api.reinviaFattura(f.id))}>Rinvia</button>}{" "}
+                {f.stato === "inviata" && <button onClick={() => azione(() => api.aggiornaFattura(f.id))}>Aggiorna stato</button>}</td></tr>))}</tbody>
         </table>)}
 
       <h2>Imprese iscritte ({imprese.length})</h2>

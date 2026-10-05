@@ -49,7 +49,7 @@ e) assistenza fino all'esito dell'istruttoria: risposte a richieste di chiarimen
 
 Salvo accordo scritto e compenso separato, sono esclusi:
 
-a) rendicontazione delle spese, richieste di anticipo, stati di avanzamento e saldo dopo la concessione [OPPURE: INCLUSE A CONDIZIONI DA INDICARE];
+a) rendicontazione delle spese, richieste di anticipo, stati di avanzamento, saldo, varianti e proroghe dopo la concessione: esclusi dalla percentuale del punto 4 e regolati con un **forfait da 400 a 600 € per ciascuna rendicontazione** [IMPORTO DA CONFERMARE], IVA esclusa;
 b) perizie, asseverazioni, certificazioni, relazioni tecniche, attestazioni di altri professionisti (ingegneri, revisori, ecc.);
 c) imposte di bollo, diritti, marche, costi di firma digitale o di accesso alle piattaforme;
 d) ricorsi, opposizioni, contenziosi e procedimenti di revoca;
@@ -58,25 +58,38 @@ f) reperimento dei finanziamenti bancari eventualmente richiesti dal bando.
 
 ### 4. Compenso a successo
 
-4.1 Il compenso è dovuto **solo in caso di esito positivo**, cioè [DEFINIRE L'EVENTO: PROVVEDIMENTO DI CONCESSIONE / AMMISSIONE IN GRADUATORIA CON FINANZIAMENTO / PRIMA EROGAZIONE].
+4.1 **Quota di avvio.** Alla firma del presente incarico il Cliente versa una quota di avvio di **250 €**. In caso di esito positivo la quota è detratta dal compenso a successo del punto 4.2; in caso di domanda non accolta resta l'unico compenso dovuto al Professionista.
 
-4.2 Il compenso è pari a:
+4.2 **Compenso a successo.** Il compenso a successo è dovuto **solo in caso di esito positivo**, cioè con il provvedimento di concessione o l'ammissione nella graduatoria definitiva con finanziamento. Si calcola sull'importo **concesso** indicato in tale provvedimento ed è poi conguagliato sull'importo **effettivamente erogato** (punto 4.5). È pari a:
 
-| Tipo di agevolazione | Compenso | Base di calcolo |
+| Tipo di agevolazione | Compenso (a scaglioni progressivi: ogni percentuale si applica solo alla parte di importo compresa nello scaglione) | Base di calcolo |
 |---|---|---|
-| Contributo a fondo perduto (anche in conto impianti, conto esercizio, credito d'imposta) | [PERCENTUALE FONDO PERDUTO] % | Importo [CONCESSO / EROGATO] |
-| Finanziamento agevolato | [PERCENTUALE FINANZIAMENTO AGEVOLATO] % | Importo del finanziamento [CONCESSO / EROGATO] |
+| Contributo a fondo perduto (in conto impianti o in conto esercizio) | 12% fino a 50.000 €; 10% sulla parte da 50.000 € a 150.000 €; 8% sulla parte oltre 150.000 € | Contributo concesso, conguagliato sull'erogato |
+| Finanziamento agevolato | 2% fino a 200.000 €; 1,5% sulla parte da 200.000 € a 1.000.000 €; 1% sulla parte oltre 1.000.000 € [SOGLIE DA CONFERMARE] | Importo del finanziamento concesso, conguagliato sull'erogato |
+| Credito d'imposta | 6% del credito | Credito utilizzato in compensazione (F24) |
 | Garanzia pubblica, abbuono interessi, altre forme | [PERCENTUALE O IMPORTO FISSO] | [BASE] |
 
-con un **compenso minimo** di [COMPENSO MINIMO] € in caso di esito positivo [E UN COMPENSO MASSIMO DI [IMPORTO] €, SE SI VUOLE UN TETTO].
+Esempio: per un contributo a fondo perduto concesso di 200.000 € il compenso è 6.000 € (12% di 50.000) + 10.000 € (10% di 100.000) + 4.000 € (8% di 50.000) = **20.000 €**, al netto della quota di avvio già versata.
 
-4.3 Gli importi sono **IVA esclusa**; si aggiungono IVA e contributo previdenziale integrativo [4% CASSA, SE APPLICABILE] nella misura di legge.
+Il compenso a successo non può essere inferiore a un **minimo di 500 €** per ciascuna pratica accolta [E UN COMPENSO MASSIMO DI [IMPORTO] €, SE SI VUOLE UN TETTO].
 
-4.4 **Momento del pagamento**: [ENTRO [N] GIORNI DALLA COMUNICAZIONE DI CONCESSIONE / ALL'EROGAZIONE, IN PROPORZIONE A CIASCUNA EROGAZIONE / [X]% ALLA CONCESSIONE E IL RESTO ALL'EROGAZIONE], dietro emissione di fattura. Il Cliente si impegna a comunicare al Professionista l'esito e ogni erogazione entro [N] giorni da quando li riceve.
+4.3 Tutti gli importi sono **IVA esclusa**; si aggiungono IVA e contributo previdenziale integrativo [4% CASSA, SE DOVUTO] nella misura di legge.
 
-4.5 Se l'agevolazione viene in seguito ridotta, revocata o restituita per cause **imputabili al Professionista**, il compenso si riduce in proporzione e quanto già pagato in eccesso viene restituito. Se la riduzione o revoca dipende dal Cliente (per esempio mancata realizzazione del progetto, mancato rispetto degli obblighi del bando, dichiarazioni non veritiere), il compenso resta dovuto per intero.
+4.4 **Momento del pagamento**, dietro emissione di fattura:
 
-4.6 **Se la domanda non viene accolta non è dovuto alcun compenso**, salvo quanto previsto ai punti 5 e 7.
+a) il **50%** del compenso a successo calcolato sull'importo concesso, e comunque non meno del compenso minimo, entro **30 giorni** dalla comunicazione del provvedimento di concessione o della graduatoria definitiva;
+b) il **resto entro 15 giorni da ciascuna erogazione**, ricalcolato in proporzione alle somme effettivamente erogate;
+c) per il credito d'imposta, il compenso è dovuto man mano che il credito viene utilizzato in compensazione (F24), [CON CADENZA TRIMESTRALE / A OGNI UTILIZZO].
+
+Il Cliente si impegna a comunicare al Professionista l'esito e ogni erogazione entro [N] giorni da quando li riceve.
+
+4.5 **Conguaglio.** Se l'ente eroga un importo inferiore a quello concesso, la parte del compenso di cui al punto 4.4 b) è ricalcolata sull'importo erogato; la parte già versata ai sensi del punto 4.4 a) resta acquisita, salvo quanto previsto al punto 4.6 per l'errore del Professionista.
+
+4.6 **Revoca.** Se l'agevolazione viene revocata, ridotta o restituita per cause **imputabili al Cliente** (per esempio mancata realizzazione del progetto, perdita dei requisiti, mancato rispetto degli obblighi del bando, dichiarazioni non veritiere), resta dovuto quanto già maturato. Se la revoca o la riduzione dipende da **errore del Professionista**, il Professionista restituisce quanto incassato per quella pratica.
+
+4.7 **Se la domanda non viene accolta non è dovuto alcun compenso a successo**: resta acquisita al Professionista la sola quota di avvio, oltre alle spese vive del punto 5.
+
+4.8 Il Cliente prende atto che il compenso del Professionista **non è di norma spesa ammissibile** all'agevolazione e resta a suo carico.
 
 ### 5. Spese vive
 
@@ -96,13 +109,15 @@ g) fornire quanto richiesto per l'adeguata verifica antiriciclaggio (punto 10).
 
 ### 7. Rinuncia del Cliente e mancata presentazione
 
-7.1 Se, dopo l'avvio dei lavori, il Cliente rinuncia a presentare la domanda, non fornisce in tempo i documenti necessari, o presenta la domanda in proprio o tramite altri, è dovuto al Professionista [DA DEFINIRE: UN COMPENSO PER L'ATTIVITÀ SVOLTA DI [IMPORTO] € / PARI AL COMPENSO MINIMO / CALCOLATO A TEMPO A [TARIFFA ORARIA] € L'ORA, CON UN MASSIMO DI [IMPORTO] €].
+7.1 Se, **prima dell'invio della domanda**, il Cliente rinuncia a presentarla, non fornisce in tempo i documenti necessari, o la presenta in proprio o tramite altri, resta acquisita al Professionista la quota di avvio del punto 4.1 e non è dovuto altro.
 
-7.2 Se, dopo una rinuncia, il Cliente ottiene comunque l'agevolazione con la domanda preparata dal Professionista, è dovuto il compenso a successo del punto 4.
+7.2 Se il Cliente rinuncia all'agevolazione **dopo la concessione**, è dovuto il **50% del compenso a successo** calcolato sull'importo concesso (punto 4.2).
+
+7.3 Se, dopo una rinuncia, il Cliente ottiene comunque l'agevolazione con la domanda preparata dal Professionista, è dovuto il compenso a successo del punto 4.
 
 ### 8. Rinuncia e revoca dell'incarico
 
-8.1 Il Cliente può revocare l'incarico in qualsiasi momento con comunicazione scritta, pagando quanto previsto al punto 7.1 per l'attività già svolta.
+8.1 Il Cliente può revocare l'incarico in qualsiasi momento con comunicazione scritta, pagando quanto previsto al punto 7.
 
 8.2 Il Professionista può rinunciare all'incarico per giusta causa (per esempio mancata collaborazione del Cliente, documenti non veritieri, impossibilità di completare l'adeguata verifica, conflitto di interessi), con preavviso scritto e in modo da non recare pregiudizio al Cliente; in tal caso non è dovuto alcun compenso, salvo le spese vive approvate.
 
@@ -150,7 +165,7 @@ Il Professionista ____________________
 
 Il Cliente (timbro e firma del legale rappresentante) ____________________
 
-**Approvazione specifica.** Ai sensi degli artt. 1341 e 1342 c.c. il Cliente approva specificamente i punti: 4.5 (compenso in caso di riduzione o revoca), 5 (spese vive), 7 (compenso in caso di rinuncia o mancata presentazione), 8 (revoca e rinuncia), 9 (responsabilità), 15 (foro competente).
+**Approvazione specifica.** Ai sensi degli artt. 1341 e 1342 c.c. il Cliente approva specificamente i punti: 4.1 (quota di avvio non restituibile), 4.5 e 4.6 (conguaglio, compenso in caso di riduzione o revoca), 5 (spese vive), 7 (compenso in caso di rinuncia o mancata presentazione), 8 (revoca e rinuncia), 9 (responsabilità), 15 (foro competente).
 
 Il Cliente ____________________
 

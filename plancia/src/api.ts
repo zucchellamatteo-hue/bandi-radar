@@ -36,6 +36,7 @@ export interface SchedaRidotta {
   fondo_perduto_massimo: number | null; finanziamento_massimo: number | null; spesa_minima: number | null; spesa_massima: number | null;
   dotazione: number | null; modalita_selezione: string | null; forma_incentivo: FormaIncentivo | null; versione: number;
   imprese: { id: number; nome: string; esito: EsitoRegole }[]; documenti_ufficiali: { nome: string; url: string }[]; avvertenza: string;
+  misure_cumulabili?: MisuraBreve[];
 }
 export type StatoRichiesta = "nuova" | "in_corso" | "accettata" | "chiusa";
 export const NOMI_STATO_RICHIESTA: Record<StatoRichiesta, string> = { nuova: "ricevuta", in_corso: "in valutazione", accettata: "accettata", chiusa: "chiusa" };
@@ -67,6 +68,23 @@ export interface RigaAbbonamento {
 export const NOMI_STATO_ABBONAMENTO: Record<string, string> = {
   prova: "in prova", attivo: "attivo", in_ritardo: "pagamento in ritardo", disdetto: "disdetto", gratuito: "gratuito",
 };
+
+// Misure nazionali sugli investimenti (app/misure/misure.yaml): conto termico, iperammortamento...
+export interface MisuraBreve {
+  id: string; nome: string; tipo: string | null; ente: string | null; beneficio_min: number | null; beneficio_max: number | null;
+  nota_beneficio: string | null; cumulo: string | null; url_ufficiale: string | null; spese_in_comune?: string[];
+}
+export type Misura = Record<string, any> & { id: string; nome: string };
+
+// Fattura elettronica (app/fatture).
+export interface DatiFatturazione {
+  denominazione: string; partita_iva: string; codice_fiscale: string | null; codice_destinatario: string | null; pec: string | null;
+  indirizzo: string; cap: string; comune: string; provincia: string;
+}
+export interface Fattura {
+  id: number; anno: number; numero: number; data: string; cliente: string; imponibile: string; iva: string; totale: string;
+  stato: string; esito: string | null; aggiornata_il: string; email: string | null;
+}
 
 export const NOMI_RUOLO_UTENTE: Record<RuoloUtente, string> = { admin: "amministratore", revisore: "revisore", impresa: "impresa" };
 
@@ -133,6 +151,7 @@ export interface Bando extends BandoBreve {
   [campo: string]: unknown;
   chiave_titolo: string | null; creato_il: string; aggiornato_il: string;
   annunci: AnnuncioDelBando[]; allegati: Allegato[]; versioni: { versione: number; causa: string | null; salvata_il: string }[];
+  misure_cumulabili?: MisuraBreve[];
 }
 
 // Esito delle regole di abbinamento (app/abbinamento/regole.py): stesso formato nel catalogo e nei profili.
@@ -305,6 +324,13 @@ export const api = {
     riepilogo: Record<string, any> | null;
     segmenti: { ateco: string; regione: string; dimensione: string; imprese: number; con_compatibili: number; media_bandi: number; beneficio_mediano: number | null }[];
     esempio: { codice: string; oggetto: string; testo: string } | null }>(`/api/campagne/${id}`),
+  misure: () => chiama<Misura[]>("/api/misure"),
+  misura: (id: string) => chiama<Misura>(`/api/misure/${id}`),
+  fatturazione: () => chiama<{ dati: DatiFatturazione | null; richiesti: boolean }>("/api/impresa/fatturazione"),
+  salvaFatturazione: (d: DatiFatturazione) => chiama<DatiFatturazione>("/api/impresa/fatturazione", { method: "PUT", body: JSON.stringify(d) }),
+  fatture: () => chiama<Fattura[]>("/api/fatture"),
+  reinviaFattura: (id: number) => chiama<{ esito: string }>(`/api/fatture/${id}/invia`, { method: "POST" }),
+  aggiornaFattura: (id: number) => chiama<{ esito: string }>(`/api/fatture/${id}/aggiorna`, { method: "POST" }),
   utenti: () => chiama<Utente[]>("/api/utenti"),
   creaUtente: (corpo: { email: string; nome: string; ruolo: RuoloUtente }) =>
     chiama<{ utente: Utente; link: string; email: string }>("/api/utenti", { method: "POST", body: JSON.stringify(corpo) }),

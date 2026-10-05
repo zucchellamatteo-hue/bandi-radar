@@ -4,6 +4,7 @@ import { api, Bando as TipoBando, FormaIncentivo as TipoForma, data, dimensione,
 import { Importo } from "./Catalogo";
 import { puo, useUtente } from "../utente";
 import Giudizio from "../Giudizio";
+import { SiSommaCon } from "./Misure";
 
 // La scheda completa del bando (docs/SCHEDA_BANDO.md), i documenti, gli annunci che ne parlano e le versioni.
 export default function Bando() {
@@ -62,6 +63,7 @@ export default function Bando() {
       )}
       {b.sintesi && <p className="testo-lungo">{b.sintesi}</p>}
       <FormaIncentivo f={b.forma_incentivo} />
+      <SiSommaCon misure={b.misure_cumulabili} />
 
       <Testo titolo="A chi si rivolge" testo={b.a_chi_si_rivolge} />
       <Testo titolo="Cosa finanzia" testo={b.cosa_finanzia} />

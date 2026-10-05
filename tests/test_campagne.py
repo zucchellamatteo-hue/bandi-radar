@@ -37,6 +37,19 @@ def test_testo_con_segnaposto():
     assert "{RAGIONE_SOCIALE}" in oggetto and "{FIRMA}" in testo and "agevolazione fino a 50.000 €" in testo
     assert "31/12/2026" in testo and "Altro" not in testo and "altri 3 bandi" in testo and "https://esempio.it/registrati" in testo
     assert cp.testo({"n_compatibili": 0, "bandi": []}, "x") == ("", "")
+    invito, messaggio = cp.messaggi_linkedin(p, "https://esempio.it")
+    assert len(invito) <= 300 and "{NOME}" in invito and "Digitale PMI" in invito
+    assert messaggio.startswith("Grazie {NOME}") and "non la ricontatterò" in messaggio
+
+
+def test_fondo_perduto_prima():
+    from app.abbinamento import catalogo, regole
+
+    e = regole.Esito(livello=regole.COMPATIBILE)
+    prestito = ({"id": 1, "tipi_agevolazione": ["finanziamento_agevolato"]}, e)
+    contributo = ({"id": 2, "tipi_agevolazione": ["fondo_perduto"]}, e)
+    dubbio = ({"id": 3, "tipi_agevolazione": ["fondo_perduto"]}, regole.Esito(livello=regole.DA_VERIFICARE))
+    assert [b["id"] for b, _ in catalogo.prima_il_fondo_perduto([prestito, dubbio, contributo])] == [2, 1, 3]
 
 
 @db

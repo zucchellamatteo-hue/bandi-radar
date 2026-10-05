@@ -155,7 +155,9 @@ def scegli_bandi(bandi: list[dict], profilo: dict, segnalati: set[int], oggi: da
             continue
         motivo = "in_scadenza" if b.get("scadenza") and b["scadenza"] <= oggi + timedelta(days=GIORNI_IN_SCADENZA) else "nuovo"
         voci.append({**b, "motivo": motivo, "livello": esito.livello, "da_verificare": esito.da_verificare})
-    voci.sort(key=lambda v: (v["livello"] != regole.COMPATIBILE, v.get("scadenza") is None, v.get("scadenza") or date.max))
+    # Compatibili prima, poi a fondo perduto prima degli altri (Matteo, 05/10), poi per scadenza.
+    voci.sort(key=lambda v: (v["livello"] != regole.COMPATIBILE, not catalogo.a_fondo_perduto(v),
+                             v.get("scadenza") is None, v.get("scadenza") or date.max))
     return voci[:MASSIMO_BANDI]
 
 

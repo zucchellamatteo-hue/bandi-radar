@@ -4,7 +4,7 @@
 body { margin: 0; font-family: system-ui, -apple-system, "Segoe UI", sans-serif; background: var(--sfondo); color: var(--testo); font-size: 15px; }
 a { color: var(--accento); }
 header.barra { background: #fff; border-bottom: 1px solid var(--bordo); box-shadow: var(--ombra); padding: 0 1.5rem; display: flex; align-items: center; gap: 1.5rem; height: 56px; position: sticky; top: 0; z-index: 2; }
-header.barra .logo { font-weight: 800; font-size: 1.3rem; color: var(--blu-scuro); letter-spacing: -.01em; }
+header.barra .logo { white-space: nowrap; font-weight: 800; font-size: 1.3rem; color: var(--blu-scuro); letter-spacing: -.01em; }
 header.barra nav a { text-decoration: none; color: var(--grigio); font-weight: 500; padding: .4rem .2rem; border-bottom: 2px solid transparent; }
 header.barra nav a.attivo { color: var(--blu-scuro); font-weight: 650; border-bottom-width: 3px; border-color: var(--accento); }
 main { max-width: 1400px; margin: 0 auto; padding: 1.5rem; }
