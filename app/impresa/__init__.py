@@ -30,7 +30,7 @@ CAMPI_SCHEDA_RIDOTTA = ("id", "titolo", "ente", "territorio", "url", "stato", "d
                         "ora_scadenza", "chiuso_il", "sintesi", "a_chi_si_rivolge", "cosa_finanzia", "spese_ammesse",
                         "requisiti", "tipi_agevolazione", "tipo_agevolazione", "contributo_massimo", "percentuale",
                         "fondo_perduto_massimo", "finanziamento_massimo", "spesa_minima", "spesa_massima", "dotazione",
-                        "modalita_selezione", "forma_incentivo", "versione")
+                        "modalita_selezione", "forma_incentivo", "vincoli_spese", "versione")
 
 
 class ErroreImpresa(ValueError):

@@ -71,6 +71,7 @@ export default function Bando() {
       <Testo titolo="A chi si rivolge" testo={b.a_chi_si_rivolge} />
       <Testo titolo="Cosa finanzia" testo={b.cosa_finanzia} />
       <Testo titolo="Spese ammesse" testo={b.spese_ammesse} />
+      <Fornitori v={b.vincoli_spese as Record<string, { stato?: string; dettaglio?: string } | null> | null} />
       <Testo titolo="Requisiti" testo={b.requisiti} />
       <Vincoli b={b} />
       <Linee b={b} />
@@ -187,12 +188,17 @@ const STATI: Record<string, string> = { vincolo: "✔ limitato", nessun_vincolo:
 function Vincoli({ b }: { b: TipoBando }) {
   if (!b.completezza) return null;
   const vincoli = b.vincoli || {};
+  // Le spiegazioni dei vincoli (06/10): un "limitato" senza numeri dice come, invece di restare vuoto.
+  const note: Record<string, string> = Object.fromEntries((((b.dati as { risposta?: { note_vincoli?: { vincolo: string; nota: string }[] } } | null)
+    ?.risposta?.note_vincoli) || []).map((n) => [n.vincolo, n.nota]));
   return (
     <>
       <h2>Chi può partecipare: i vincoli</h2>
       <table className="vincoli"><tbody>{VINCOLI.map(([chiave, etichetta, valore]) => {
         const stato = vincoli[chiave] || "non_noto";
-        return <tr key={chiave}><th>{etichetta}</th><td className={`stato ${stato}`}>{STATI[stato] || stato}</td><td>{valore(b) || ""}</td></tr>;
+        const testo = [valore(b), note[chiave]].filter(Boolean).join(" — ");
+        return <tr key={chiave}><th>{etichetta}</th><td className={`stato ${stato}`}>{STATI[stato] || stato}</td>
+          <td>{testo || (stato === "vincolo" ? <span className="piccolo">il limite è descritto nei Requisiti</span> : "")}</td></tr>;
       })}</tbody></table>
       <p className="piccolo">"Limitato": il bando pone un limite. "Nessun limite": il bando dice che non ce ne sono. "Non noto": la scheda non lo sa (per esempio perché fatta su una sintesi): da verificare sul bando.</p>
     </>
@@ -300,4 +306,11 @@ function Dettagli({ b }: { b: TipoBando }) {
       ))}
     </>
   );
+}
+
+// Requisiti dei fornitori in evidenza (06/10, richiesta di Matteo): prima stavano solo nei dettagli in fondo alla pagina.
+export function Fornitori({ v }: { v: Record<string, { stato?: string; dettaglio?: string } | null> | null | undefined }) {
+  const f = v?.fornitore;
+  if (!f || f.stato !== "vincolo" || !f.dettaglio) return null;
+  return <><h2>Requisiti dei fornitori</h2><div className="avviso testo-lungo">{f.dettaglio}</div></>;
 }

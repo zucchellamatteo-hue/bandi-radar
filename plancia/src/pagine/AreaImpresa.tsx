@@ -5,6 +5,7 @@ import { Importo, SegnoEsito } from "./Catalogo";
 import { Fasce, Modulo, Motivi, VUOTO } from "./Profili";
 import Giudizio from "../Giudizio";
 import { SiSommaCon } from "./Misure";
+import { Fornitori } from "./Bando";
 
 // Area impresa (05/10/2026): le imprese dell'utente, i bandi adatti (mai gli esclusi), la scheda ridotta e la richiesta
 // di supporto. Niente pagine di lavoro (fonti, annunci, lavorazione).
@@ -133,6 +134,7 @@ export function SchedaImpresa() {
       {b.a_chi_si_rivolge && <><h3>A chi si rivolge</h3><p className="testo-lungo">{b.a_chi_si_rivolge}</p></>}
       {b.cosa_finanzia && <><h3>Cosa finanzia</h3><p className="testo-lungo">{b.cosa_finanzia}</p></>}
       {b.requisiti && <><h3>Cosa serve</h3><p className="testo-lungo">{b.requisiti}</p></>}
+      <Fornitori v={b.vincoli_spese} />
       {b.documenti_ufficiali.length > 0 && <><h3>Documenti ufficiali</h3><ul>{b.documenti_ufficiali.map((d) =>
         <li key={d.url}><a href={d.url} target="_blank" rel="noreferrer">{d.nome} ↗</a></li>)}</ul></>}
       <Giudizio bandoId={b.id} admin={false} perImpresa />
