@@ -7,6 +7,10 @@ delle fonti: aggiungere una misura e' aggiungere una voce), e compaiono:
 - nella scheda di un bando, come "si puo' sommare con", quando le spese del bando sono tra gli investimenti della
   misura e la misura e' cumulabile con un contributo a fondo perduto;
 - nella bozza delle campagne, con il beneficio stimato in percentuale della spesa (indicativo).
+
+Ogni misura aperta ha anche degli "esempi" (06/10/2026, richiesta di Matteo): un caso pratico per ciascun profilo tipo
+di impresa (profili_esempio in testa al file: ufficio, negozio, hotel, artigiano, manifattura, logistica...) con
+l'interesse per quel profilo. Arrivano all'API ordinati per interesse e con il nome del profilo.
 """
 
 from __future__ import annotations
@@ -18,19 +22,41 @@ import yaml
 
 FILE = Path(__file__).resolve().parent / "misure.yaml"
 CUMULABILI = ("si", "nei_limiti")
+INTERESSI = ("alto", "medio", "basso", "nullo")      # in quest'ordine nella pagina
 
 
 @lru_cache(maxsize=1)
-def _da_file(percorso: str, modificato: float) -> tuple[dict, ...]:
+def _da_file(percorso: str, modificato: float) -> tuple[tuple[dict, ...], tuple[dict, ...]]:
     dati = yaml.safe_load(Path(percorso).read_text(encoding="utf-8")) or {}
-    return tuple(m for m in dati.get("misure") or [] if isinstance(m, dict) and m.get("id") and m.get("nome"))
+    voci = tuple(m for m in dati.get("misure") or [] if isinstance(m, dict) and m.get("id") and m.get("nome"))
+    profili = tuple(p for p in dati.get("profili_esempio") or [] if isinstance(p, dict) and p.get("id"))
+    return voci, profili
+
+
+def _carica(percorso: Path | None) -> tuple[tuple[dict, ...], tuple[dict, ...]]:
+    p = percorso or FILE
+    if not p.is_file():
+        return (), ()
+    return _da_file(str(p), p.stat().st_mtime)
+
+
+def profili_esempio(percorso: Path | None = None) -> list[dict]:
+    """I profili tipo di impresa usati negli esempi delle misure (id, nome, descrizione)."""
+    return [dict(p) for p in _carica(percorso)[1]]
+
+
+def _esempi(m: dict, nomi: dict[str, str]) -> list[dict]:
+    """Esempi della misura con il nome del profilo, dal piu' al meno interessante (copie: la cache resta intatta)."""
+    ordine = {v: i for i, v in enumerate(INTERESSI)}
+    esempi = [dict(e) | {"profilo_nome": nomi.get(e.get("profilo"), e.get("profilo"))}
+              for e in m.get("esempi") or [] if isinstance(e, dict)]
+    return sorted(esempi, key=lambda e: ordine.get(e.get("interesse"), len(INTERESSI)))
 
 
 def tutte(percorso: Path | None = None) -> list[dict]:
-    p = percorso or FILE
-    if not p.is_file():
-        return []
-    return [dict(m) for m in _da_file(str(p), p.stat().st_mtime)]
+    voci, profili = _carica(percorso)
+    nomi = {p["id"]: p.get("nome") or p["id"] for p in profili}
+    return [dict(m) | ({"esempi": _esempi(m, nomi)} if m.get("esempi") else {}) for m in voci]
 
 
 def una(misura_id: str, percorso: Path | None = None) -> dict | None:

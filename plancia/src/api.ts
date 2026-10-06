@@ -75,7 +75,11 @@ export interface MisuraBreve {
   id: string; nome: string; tipo: string | null; ente: string | null; beneficio_min: number | null; beneficio_max: number | null;
   nota_beneficio: string | null; cumulo: string | null; url_ufficiale: string | null; spese_in_comune?: string[];
 }
-export type Misura = Record<string, any> & { id: string; nome: string };
+// Esempi pratici per tipo di impresa (profili_esempio in testa a misure.yaml), gia' ordinati per interesse.
+export type Interesse = "alto" | "medio" | "basso" | "nullo";
+export interface ProfiloEsempio { id: string; nome: string; descrizione?: string }
+export interface EsempioMisura { profilo: string; profilo_nome: string; interesse: Interesse; esempio: string }
+export type Misura = Record<string, any> & { id: string; nome: string; esempi?: EsempioMisura[] };
 
 // Fattura elettronica (app/fatture).
 export interface DatiFatturazione {
@@ -337,6 +341,7 @@ export const api = {
     esempio: { codice: string; oggetto: string; testo: string } | null }>(`/api/campagne/${id}`),
   misure: () => chiama<Misura[]>("/api/misure"),
   misura: (id: string) => chiama<Misura>(`/api/misure/${id}`),
+  profiliEsempio: () => chiama<ProfiloEsempio[]>("/api/misure/profili"),
   fatturazione: () => chiama<{ dati: DatiFatturazione | null; richiesti: boolean }>("/api/impresa/fatturazione"),
   salvaFatturazione: (d: DatiFatturazione) => chiama<DatiFatturazione>("/api/impresa/fatturazione", { method: "PUT", body: JSON.stringify(d) }),
   fatture: () => chiama<Fattura[]>("/api/fatture"),

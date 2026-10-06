@@ -1,4 +1,4 @@
-# Guida della piattaforma Bandi Radar (05/10/2026).
+# Guida della piattaforma Bandi Radar (05/10/2026, aggiornata il 06/10: Da rivedere, ricerca per numero, misure).
 # Ogni sezione si vede se l'utente ha ALMENO UNO dei valori in "per": "tutti", "admin", "impresa" oppure i permessi
 # "catalogo", "giudizi", "lavoro", "modifiche", "imprese". L'amministratore vede tutto.
 # Testo: paragrafi separati da una riga vuota, elenchi con "- " o "1. ", **grassetto** per pulsanti e voci di menu.
@@ -184,6 +184,12 @@ sezioni:
 
       **Lavorazione**. Due colonne, Annunci e Bandi, con quanti sono fermi in ogni fase tra la raccolta e la scheda. Cliccando una fase vedi chi è fermo lì e perché. Sotto: le ultime azioni del regista (il sistema che ogni ora porta avanti il lavoro) e la spesa dell'IA nel mese.
 
+      **Da rivedere** (in fondo alla pagina Lavorazione). Ogni ora il sistema ricontrolla, senza IA, le schede nuove o cambiate e qui elenca quelle con problemi, una riga per bando con l'elenco dei problemi:
+      - **Grave**: la scheda potrebbe ingannare un cliente (manca il testo del bando tra i documenti, stessa pagina e stesso titolo di un altro bando, apertura dopo la scadenza, contributo più alto della dotazione). Finché resta, il bando non viene proposto alle imprese: non compare nel catalogo come proponibile, né in I miei bandi, né nelle email.
+      - Le altre righe sono cose da migliorare: un vincolo senza spiegazione, requisiti dei fornitori non noti, un bando a fasi senza le linee, una pagina condivisa con altri bandi.
+
+      In cima vedi quanti sono i gravi e quanti da migliorare; la casella **solo i gravi** nasconde gli altri. Il titolo apre la scheda. Le correzioni le fanno le sessioni di Claude: quando la scheda cambia, il controllo si rifà da solo al giro successivo.
+
       **Supervisione**. Tutti i sistemi automatici in un posto: cosa fanno, quando girano, com'è andata l'ultima volta. In alto: quanti sono in corso, quanti da guardare, quanti con l'ultimo giro ok. Cliccando un sistema vedi le sue ultime esecuzioni e i suoi dati. Si aggiorna da sola ogni 30 secondi.
 
       **Doppioni**. Gli annunci che forse parlano di un bando già noto. Finché nessuno decide restano senza bando.
@@ -202,7 +208,7 @@ sezioni:
       - **Doppioni**: decidere quelli aperti.
       - **Annunci** con il filtro "Da rivedere": correggere lo smistamento.
       - **Feedback**: guardare le segnalazioni nuove.
-      - **Lavorazione**: ci sono fasi con molti bandi fermi?
+      - **Lavorazione**: ci sono fasi con molti bandi fermi? In **Da rivedere** ci sono schede gravi?
       - **Novità**: leggere la settimana.
 
   - id: modifiche
@@ -244,7 +250,7 @@ sezioni:
       Il **Catalogo** contiene i bandi con la scheda, uno per riga: stato, scadenza, tipo di agevolazione, importo ed ente.
 
       Cercare e filtrare:
-      - scrivi nel campo di ricerca e premi **Cerca** (cerca nel titolo, nell'ente e nella sintesi);
+      - scrivi nel campo di ricerca e premi **Cerca** (cerca nel titolo, nell'ente e nella sintesi); se scrivi il numero di un bando (per esempio 4092 o n. 4092) compare quel bando, qualunque siano gli altri filtri;
       - stato: di base "Aperti e in arrivo"; puoi scegliere solo aperti, solo in arrivo, chiusi, senza date o tutti;
       - scadenza (entro 7, 30 o 90 giorni) e livello dell'ente;
       - Chi partecipa: regioni (anche più di una), provincia, tipo di soggetto, forma giuridica, dimensione, codice ATECO, bandi riservati o con punti per un requisito;
@@ -257,7 +263,7 @@ sezioni:
 
       I bandi esclusi non compaiono.
 
-      Proponibili e in disparte. Di base vedi solo i bandi **proponibili**: la scheda è fatta sul testo ufficiale del bando. Quelli **in disparte** hanno una scheda fatta solo su una sintesi o una pagina web: non si propongono ai clienti. Per vederli usa l'ultimo menu dei filtri ("Anche quelli in disparte" o "Solo quelli in disparte").
+      Proponibili e in disparte. Di base vedi solo i bandi **proponibili**: la scheda è fatta sul testo ufficiale del bando e il controllo automatico non ha trovato problemi gravi. Quelli **in disparte** hanno una scheda fatta solo su una sintesi o una pagina web, oppure un problema grave ancora da sistemare: non si propongono ai clienti. Per vederli usa l'ultimo menu dei filtri ("Anche quelli in disparte" o "Solo quelli in disparte").
 
       Leggere una scheda (clicca il titolo):
       - in cima: stato, ente, date, modalità di selezione e **pagina ufficiale ↗**;
@@ -272,7 +278,7 @@ sezioni:
       - i **Documenti del bando**: si aprono dalla plancia con un clic; **originale ↗** porta al sito dell'ente;
       - gli annunci che parlano del bando e le versioni precedenti della scheda.
 
-      Misure nazionali. La voce **Misure** elenca le agevolazioni previste dalla legge e sempre aperte finché sono in vigore (Conto Termico, Iperammortamento, credito R&S, credito ZES unica, Nuova Sabatini). Non sono bandi con una scadenza. Ogni scheda dice a chi si rivolge, cosa si può comprare, quanto vale, come si ottiene, i tempi e se si somma ai bandi.
+      Misure nazionali. La voce **Misure** elenca le agevolazioni previste dalla legge e sempre aperte finché sono in vigore (Conto Termico, Iperammortamento, credito R&S, credito ZES unica, Nuova Sabatini, Ecobonus, Sismabonus, Art bonus). Non sono bandi con una scadenza. Le misure chiuse restano in fondo alla pagina, in grigio, con il motivo: non si propongono mai con i bandi. Ogni scheda dice a chi si rivolge, cosa si può comprare, quanto vale, come si ottiene, i tempi e se si somma ai bandi. In fondo, la tabella **Esempi per tipo di impresa** mostra un caso con numeri indicativi per otto profili tipo (ufficio di servizi, negozio, bar-ristorante-hotel, artigiano, manifattura con capannone, logistica con più sedi, azienda agricola, startup), ordinati dall'interesse alto al nullo. Profili ed esempi si modificano in `app/misure/misure.yaml`.
 
       Nelle schede dei bandi, il riquadro **Per gli stessi investimenti si può sommare anche:** indica le misure che si possono aggiungere, con il beneficio stimato sulla spesa che il bando non copre. È una stima: le regole sul cumulo degli aiuti vanno controllate caso per caso.
 
@@ -448,11 +454,11 @@ sezioni:
     titolo: "Agevolazioni fiscali"
     per: [impresa]
     testo: |
-      In **Agevolazioni fiscali** trovi le misure nazionali sugli investimenti: Conto Termico, Iperammortamento, credito d'imposta per ricerca e sviluppo, credito ZES unica, Nuova Sabatini.
+      In **Agevolazioni fiscali** trovi le misure nazionali sugli investimenti: Conto Termico, Iperammortamento, credito d'imposta per ricerca e sviluppo, credito ZES unica, Nuova Sabatini, Ecobonus e Sismabonus per gli edifici dell'impresa, Art bonus per le donazioni alla cultura. In fondo, in grigio, quelle chiuse.
 
       Non sono bandi con una scadenza: sono agevolazioni previste dalla legge, disponibili finché sono in vigore. Spesso si possono sommare ai contributi dei bandi per gli stessi investimenti.
 
-      Ogni scheda spiega a chi si rivolge, quali investimenti sono ammessi, quanto vale (beneficio stimato in percentuale sulla spesa), come si ottiene, i tempi, se si somma ai bandi e a cosa fare attenzione.
+      Ogni scheda spiega a chi si rivolge, quali investimenti sono ammessi, quanto vale (beneficio stimato in percentuale sulla spesa), come si ottiene, i tempi, se si somma ai bandi e a cosa fare attenzione. In fondo trovi degli **esempi per tipo di impresa** (ufficio, negozio, hotel, laboratorio artigiano, capannone, logistica con più sedi, azienda agricola, startup): un caso con numeri indicativi e quanto la misura interessa a quel tipo di impresa.
 
       È un'informazione indicativa: prima di investire verifica la norma e le regole del gestore, magari con il tuo commercialista.
 

@@ -1,6 +1,6 @@
 # Bandi Radar — Piano di progetto v1
 
-*Bozza del 23/09/2026, rivista lo stesso giorno con le prime decisioni di Matteo (vedi §10).*
+*Bozza del 23/09/2026, rivista lo stesso giorno con le prime decisioni di Matteo (vedi §10). Ultimo aggiornamento: 06/10/2026. Come funziona oggi ogni pezzo: `docs/COME_FUNZIONA.md`; cosa è cambiato giorno per giorno: `docs/CRONOLOGIA.md`.*
 
 ---
 
@@ -405,14 +405,31 @@ Piano di lavoro: `docs/sessioni/2026-10-05_prodotto_indipendente.md`.
 | Fattura elettronica (05/10) | `app/fatture/`: dati di fatturazione del cliente (pagina Abbonamento), fattura numerata (sezionale BR) a ogni pagamento Stripe, XML FatturaPA 1.2.2 generato da noi e validato sullo schema ufficiale nei test, invio con **Invoicetronic** (`docs/ricerche/2026-10-05_fatturazione_api_prezzi.md`), notifiche dello SdI via webhook, conservazione gratuita dell'Agenzia. Stripe aggiunge l'IVA 22% (`STRIPE_IVA_22`). Spenta (`FATTURE_ATTIVE=0`), chiave vera solo con `FATTURE_VERE=1`. |
 | LinkedIn (05/10) | Le campagne preparano anche l'invito al collegamento (massimo 300 caratteri) e il primo messaggio, da mandare a mano, con la frase per non essere ricontattati. Rischio sanzione noto a Matteo. |
 | Prossimi passi e Guida (05/10) | Pagina **Prossimi passi** (admin modifica, chi ha "lavoro" legge): promemoria, decisioni e lavori da sviluppare, letti dalle sessioni (`python -m app.passi`). Pagina **Guida** per tutti, filtrata dal server secondo ruolo e permessi (`app/guida/guida.yaml`): l'admin vede tutto, le imprese solo le istruzioni per loro. Stripe e fattura elettronica rimandati da Matteo finché il servizio non è pronto per la vendita. |
+| Email automatiche (05/10) | Mittente `non-rispondere@` del dominio di `SITO_URL` e avviso di non rispondere in fondo a ogni email (nessuno legge quella casella); indirizzo per le domande se c'è `EMAIL_CONTATTO`. PR #68. |
+| Bandi di altri territori (05/10) | Il catalogo incentivi.gov.it ripubblica bandi di ogni livello: se un bando ha anche una fonte vera (Regione, Camera, Comune), il suo livello "nazionale" non conta più, così la regola "bando di un'altra regione" vale anche per i 172 bandi ripresi dal catalogo. Le regole non cambiano. PR #69. |
+| Dati dell'utente (05/10) | Pagina **Il mio account**: ogni utente scarica i propri dati e cancella l'account con la password; restano solo le fatture emesse (10 anni), staccate dall'utente. PR #70. |
+
+**Decise il 06/10/2026 (Matteo; controllo delle schede):**
+
+| Tema | Decisione |
+|---|---|
+| Doppioni già schedati | Un bando schedato che resta senza annunci non si cancella (la scheda è storico): si segna **"unito a"** il bando principale (`bandi.unito_a`, migrazione 025) ed esce da catalogo, profili, area impresa, campagne, ricontrolli e aggiornamenti. Il 06/10 uniti così 59 doppioni con la stessa pagina ufficiale e il doppione di Green Tour (2117). PR #71. |
+| Pagine elenco | Quando la pagina ufficiale contiene più bandi (Camera di Cuneo, bando 423), documenti e copia della pagina si prendono solo dalla **sezione del bando** (dalla sua "firma" a quella del bando successivo); se il bando non è sulla pagina, nessun documento. PR #76, #77. |
+| Regole della scheda 21d, 21e, 21f | 21d: dotazione ripartita o bando a fasi → spiegato nella sintesi e dettagliato nelle linee. 21e: ogni vincolo "limitato" che i numeri non spiegano ha una frase in `note_vincoli`, mostrata accanto al vincolo. 21f: requisiti dei fornitori mappati con cura e mostrati nel riquadro "Requisiti dei fornitori" vicino alle spese ammesse, anche nella scheda per le imprese. PR #76, #78, #79. |
+| Controllo delle schede senza IA | Ogni ora il regista ricontrolla le schede nuove o cambiate (`app/schede/controlli.py`, colonna `bandi.controllo`, migrazione 026). **Le schede con problemi gravi non si propongono** alle imprese finché non sono sistemate (testo del bando mancante, doppione sulla stessa pagina, date o importi impossibili); i problemi minori vanno in **Da rivedere** nella pagina Lavorazione. Un testo del bando presente ma con un nome poco chiaro è un problema minore, non grave. PR #80, #81. |
+| Verifica con l'IA | Pilota in sessione (`strumenti/sessione/ar/ISTRUZIONI_VERIFICA_IA.md`): l'agente confronta scheda e documenti e cita il bando per ogni problema. Su 19 schede 14 corrette, 3 minori, 2 gravi che il controllo senza IA non vede (2072 non per imprese, 271 con scadenza 31/12/2026), corrette a mano. Resta un lavoro di sessione, non automatico. PR #82. |
+| Bandi lunghissimi | Quando i documenti superano il testo di un fascicolo, la scheda si scrive in sessione in due passaggi: indice dei documenti con titoli e articoli, poi solo le parti che servono (`esporta_lunghi.py`, `ISTRUZIONI_LUNGHI.md`, `importa_lunghi.py`). PR #72, #73. |
+| Misure nazionali | Aggiunte **Art bonus**, **Ecobonus** e **Sismabonus** per le imprese; il bonus barriere 75% no (scaduto il 31/12/2025). Le misure chiuse (credito design 2026, formazione 4.0, innovazione tecnologica, maggiorazioni R&S per il Sud) restano in fondo alla pagina Misure, in grigio, e non si propongono mai con i bandi. PR #74, #81. |
+| Ricerca per numero | Nel catalogo un numero ("4092", "n. 4092", "#4092") mostra quel bando qualunque siano gli altri filtri. PR #75. |
+| Documentazione | Due documenti per Matteo, da aggiornare a fine di ogni lavoro: `docs/COME_FUNZIONA.md` (mappa del sistema, pezzo per pezzo) e `docs/CRONOLOGIA.md` (cosa è cambiato giorno per giorno). |
 
 **Ancora aperti:**
 
-0. **Abbinamento e Comuni (visto il 05/10 nell'area impresa)**: un bando di un Comune di un'altra regione senza vincolo di sede scritto (es. eventi a Rimini) risulta "compatibile" per un'impresa di Milano, perché la regola "bando pubblicato solo da enti di un'altra regione" guarda le fonti con territorio regionale e i capoluoghi hanno la provincia. Da correggere nelle regole (stesso abbinamento per catalogo, profili e area impresa) con il via di Matteo.
-
+0. **Abbinamento e Comuni (visto il 05/10 nell'area impresa)**: un bando di un Comune di un'altra regione senza vincolo di sede scritto (es. eventi a Rimini) risultava "compatibile" per un'impresa di Milano. Corretto il 05/10 per i bandi ripresi dal catalogo incentivi.gov.it (PR #69, sopra); da tenere d'occhio sugli altri casi.
 1. **Struttura delle anagrafiche in Postgres**: schema ricevuto il 25/09 (`docs/ricerche/2026-09-25_schema_anagrafiche_leadgen.md`). Copre bene ATECO e fatturato; mancano data di costituzione, totale di bilancio, ULA, requisiti speciali. È un archivio di prospect: serve sapere dove stanno i clienti. Seconda richiesta pronta in `docs/RICHIESTA_SCHEMA_ANAGRAFICHE.md`.
 2. **Server**: OVH VPS-2 attivo dal 24/09 (Gravelines, Ubuntu 24.04, IP pubblico 146.59.145.138), preparato con `deploy/bootstrap.sh`: Docker, firewall, fail2ban, aggiornamento automatico da GitHub ogni 5 minuti, backup notturno. Claude Code installato sul server con l'abbonamento, per le sessioni "dal server". Da fare in Fase 0: accesso SSH con chiave e disattivazione della password (fail2ban ha già bloccato tentativi di intrusione nelle prime ore). Le sessioni cloud non possono usare SSH, quindi nessuna credenziale del server va nel cloud.
 4. **Dominio**: deciso, `finanzagevolata.qiaro.it`, record attivo.
 5. **Rete della sessione cloud**: risolto. Il 24/09 la sessione cloud raggiunge i siti delle Regioni, delle Camere e dei Comuni (non incentivi.gov.it, che però risponde dal server).
 3. **Modello commerciale**: resta da decidere, non blocca lo sviluppo.
 6. **Pratiche** (proposta del 03/10, `docs/PIANO_PRATICHE.md`): checklist dei documenti per bando generata su richiesta, area riservata dell'impresa per il caricamento, controlli dei documenti, compilazione dei moduli, notifiche e chat per pratica. Prima di costruirla servono decisioni di Matteo: IA sui documenti con dati personali (cambia la regola dei profili anonimi), dove vive l'area riservata (Bandi Radar o Contract to Cash), cosa sta nell'abbonamento base.
+7. **Controllo delle schede (06/10)**: in corso la scheda del Fondo screening DAE e l'aggiunta del Ministero del Lavoro tra le fonti. Da decidere se e quando rendere periodica la verifica con l'IA delle schede proponibili.

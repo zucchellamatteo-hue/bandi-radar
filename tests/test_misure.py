@@ -74,3 +74,41 @@ def test_file_delle_misure_valido():
         b = m.get("beneficio_stimato") or {}
         if b.get("percentuale_max") is not None:
             assert 0 <= float(b["percentuale_min"]) <= float(b["percentuale_max"]) <= 100, m["id"]
+
+
+def test_esempi_per_tutti_i_profili():
+    """Ogni misura aperta ha un esempio per ciascun profilo tipo, con un profilo che esiste e un interesse valido."""
+    profili = [p["id"] for p in misure.profili_esempio()]
+    assert len(profili) >= 6 and len(set(profili)) == len(profili)
+    assert all(p.get("nome") and p.get("descrizione") for p in misure.profili_esempio())
+    for m in misure.tutte():
+        if m["stato"] != "aperto":
+            continue
+        esempi = m.get("esempi") or []
+        usati = [e["profilo"] for e in esempi]
+        assert set(usati) <= set(profili), (m["id"], set(usati) - set(profili))
+        assert sorted(usati) == sorted(profili), (m["id"], "profili mancanti o doppi")
+        for e in esempi:
+            assert e.get("interesse") in misure.INTERESSI and len(e.get("esempio") or "") > 40, (m["id"], e["profilo"])
+            assert e["profilo_nome"] != e["profilo"]                        # il nome arriva dall'elenco dei profili
+        assert [misure.INTERESSI.index(e["interesse"]) for e in esempi] == sorted(
+            misure.INTERESSI.index(e["interesse"]) for e in esempi), m["id"]   # ordinati per interesse
+
+
+def test_esempi_letti_dal_file(tmp_path):
+    f = tmp_path / "misure.yaml"
+    f.write_text("""
+profili_esempio:
+  - {id: ufficio, nome: Ufficio}
+misure:
+  - id: x
+    nome: X
+    esempi:
+      - {profilo: ufficio, interesse: basso, esempio: poco}
+      - {profilo: altro, interesse: alto, esempio: molto}
+""")
+    esempi = misure.tutte(f)[0]["esempi"]
+    assert [e["interesse"] for e in esempi] == ["alto", "basso"]
+    assert [e["profilo_nome"] for e in esempi] == ["altro", "Ufficio"]
+    assert misure.profili_esempio(f) == [{"id": "ufficio", "nome": "Ufficio"}]
+    assert "profilo_nome" not in misure._carica(f)[0][0]["esempi"][0]      # la copia in memoria resta com'era

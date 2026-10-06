@@ -59,11 +59,11 @@ SISTEMI: list[Sistema] = [
             "confronta con quella salvata e cerca nelle righe nuove gli avvisi di chiusura ('piattaforma chiusa', "
             "'dotazione esaurita', 'bando chiuso'). Se ne trova uno, la scheda va aggiornata con il motivo.",
             "ogni ora, nel giro del regista (10 pagine)", 60, dati="stato_pagine"),
-    Sistema("controlli", "Controllo delle schede",
+    Sistema("controllo_schede", "Controllo delle schede",
             "Senza IA: ricontrolla ogni scheda nuova o aggiornata (documenti, date, importi, pagina condivisa con altri bandi, "
             "vincoli senza spiegazione, fornitori non noti, fasi senza linee). Le schede con problemi gravi non si "
             "propongono alle imprese finche' non sono sistemate; tutte compaiono in 'Da rivedere' (pagina Lavorazione).",
-            "ogni ora, nel giro del regista", 60, dati="controlli"),
+            "ogni ora, nel giro del regista", 60, dati="controllo_schede"),
     Sistema("filtro", "C'e' il bando?",
             "Senza IA: guarda i documenti scaricati e decide se c'e' il testo ufficiale del bando. Solo quelli vanno "
             "all'IA per la scheda; gli altri (solo sintesi o pagine web) restano in disparte e non si propongono.",
@@ -159,7 +159,7 @@ DATI: dict[str, tuple[str, str]] = {
                   """SELECT al.scaricato_il AS quando, left(b.titolo, 80) AS bando, left(al.nome, 80) AS documento,
                             al.categoria, coalesce(al.errore, 'ok') AS esito
                      FROM allegati al LEFT JOIN bandi b ON b.id = al.bando_id ORDER BY al.scaricato_il DESC LIMIT 100"""),
-    "controlli": ("Schede con problemi (gravi prima)",
+    "controllo_schede": ("Schede con problemi (gravi prima)",
                   """SELECT id, left(titolo, 90) AS bando, coalesce(stato, '-') AS stato,
                             jsonb_array_length(controllo->'gravi') AS gravi, jsonb_array_length(controllo->'da_migliorare') AS da_migliorare,
                             left(coalesce(controllo->'gravi'->>0, controllo->'da_migliorare'->>0), 160) AS primo_problema
@@ -205,7 +205,7 @@ NUMERI: dict[str, str] = {
     "documenti": """SELECT format('%s bandi con documenti da scaricare; %s file in tutto',
                            (SELECT count(*) FROM bandi WHERE pagina_stato = 'trovata' AND allegati_cercati_il IS NULL),
                            count(*)) AS t FROM allegati WHERE errore IS NULL""",
-    "controlli": """SELECT format('%s schede con problemi gravi (non proposte), %s da migliorare, %s da controllare',
+    "controllo_schede": """SELECT format('%s schede con problemi gravi (non proposte), %s da migliorare, %s da controllare',
                            count(*) FILTER (WHERE jsonb_array_length(controllo->'gravi') > 0),
                            count(*) FILTER (WHERE jsonb_array_length(controllo->'gravi') = 0 AND jsonb_array_length(controllo->'da_migliorare') > 0),
                            count(*) FILTER (WHERE controllo IS NULL)) AS t FROM bandi WHERE dati IS NOT NULL AND unito_a IS NULL""",
