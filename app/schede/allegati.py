@@ -73,6 +73,8 @@ _ESTENSIONE = re.compile(r"\.(" + "|".join(ESTENSIONI) + r")(?=/|$)")
 # .../at_download/file): il tipo vero si legge dal Content-Type quando si scarica.
 # .../download.aspx?...&Id=<GUID>: allegati di myCIVIS (Provincia di Bolzano, 30/09).
 _SCARICA = re.compile(r"/(?:@@download|at_download|download)(?:/[^/]+|\.aspx)?/?$", re.IGNORECASE)
+# Liferay (Azienda Zero del Veneto e molti siti della PA, 06/10): /documents/<numero>/<codice> senza estensione.
+_LIFERAY = re.compile(r"/documents/\d+/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/?$", re.IGNORECASE)
 _FAQ = re.compile(r"(?<!\w)(faq|domande frequenti|domande e risposte)(?!\w)", re.IGNORECASE)
 _SPAZI = re.compile(r"\s+")
 # Testi dei link che non dicono nulla: meglio il nome del file.
@@ -258,7 +260,7 @@ def trova_allegati(html: str, base_url: str, firma: re.Pattern | None = None,
         tipo = tipo_da_url(url)
         if tipo is None and (_FAQ.search(testo) or _FAQ.search(unquote(urlsplit(url).path))):
             tipo = "faq"
-        if tipo is None and _SCARICA.search(urlsplit(url).path):
+        if tipo is None and (_SCARICA.search(urlsplit(url).path) or _LIFERAY.search(urlsplit(url).path)):
             tipo = "file"
         if tipo is None:
             continue

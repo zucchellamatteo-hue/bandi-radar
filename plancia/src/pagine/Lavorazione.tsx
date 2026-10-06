@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
-import { api, data, FaseLavorazione, Lavorazione as TipoLavorazione, RigaLavorazione } from "../api";
+import { api, data, FaseLavorazione, Lavorazione as TipoLavorazione, RigaLavorazione, SchedaDaRivedere } from "../api";
 
 // A che punto e' la fase 2: dagli annunci raccolti alla scheda. I numeri li calcola il regista
 // (app/catena/regista.py) dai dati; cliccando una fase si vedono i bandi o gli annunci fermi li', con il motivo.
@@ -10,7 +10,9 @@ export default function Lavorazione() {
   const [righe, setRighe] = useState<RigaLavorazione[] | null>(null);
   const tipo = parametri.get("tipo") as "bandi" | "annunci" | null;
   const fase = parametri.get("fase");
-  useEffect(() => { api.lavorazione().then(setDati); }, []);
+  const [rivedere, setRivedere] = useState<SchedaDaRivedere[] | null>(null);
+  const [soloGravi, setSoloGravi] = useState(true);
+  useEffect(() => { api.lavorazione().then(setDati); api.controlli().then(setRivedere).catch(() => setRivedere([])); }, []);
   useEffect(() => {
     setRighe(null);
     if (tipo && fase) api.lavorazioneFase(tipo, fase).then(setRighe);
@@ -49,6 +51,7 @@ export default function Lavorazione() {
           )}
         </>
       )}
+      {rivedere && <DaRivedere righe={rivedere} soloGravi={soloGravi} cambia={setSoloGravi} />}
       <h2>Ultime azioni del regista</h2>
       <table>
         <thead><tr><th>Quando</th><th>Cosa</th><th>Esito</th><th className="nascondi-mobile">Motivo</th></tr></thead>
@@ -81,5 +84,34 @@ function Imbuto({ titolo, fasi, tipo, scegli, attiva }: {
         </tr>
       ))}</tbody></table>
     </div>
+  );
+}
+
+// Il controllo delle schede senza IA: le gravi non si propongono alle imprese finche' non sono sistemate.
+function DaRivedere({ righe, soloGravi, cambia }: { righe: SchedaDaRivedere[]; soloGravi: boolean; cambia: (v: boolean) => void }) {
+  const gravi = righe.filter((r) => r.controllo.gravi.length > 0).length;
+  const mostra = (soloGravi ? righe.filter((r) => r.controllo.gravi.length > 0) : righe).slice(0, 200);
+  return (
+    <>
+      <h2>Da rivedere <span className="piccolo">({gravi} con problemi gravi, {righe.length - gravi} da migliorare)</span></h2>
+      <p className="piccolo">Ogni ora il regista ricontrolla senza IA le schede nuove o cambiate. Le schede con problemi
+        <b> gravi</b> non vengono proposte alle imprese finché non sono sistemate.{" "}
+        <label><input type="checkbox" checked={soloGravi} onChange={(e) => cambia(e.target.checked)} /> solo i gravi</label></p>
+      {mostra.length === 0 ? <p className="piccolo">Nessuna.</p> : (
+        <table>
+          <thead><tr><th>Bando</th><th>Problemi</th></tr></thead>
+          <tbody>{mostra.map((r) => (
+            <tr key={r.id}>
+              <td><Link to={`/bandi/${r.id}`} className="titolo-annuncio">{r.titolo}</Link>
+                <div className="piccolo">{r.ente}{r.stato ? ` · ${r.stato}` : ""}{r.scadenza ? ` · scade il ${data(r.scadenza)}` : ""}</div></td>
+              <td className="piccolo">
+                {r.controllo.gravi.map((g, i) => <div key={"g" + i}><b>Grave:</b> {g}</div>)}
+                {r.controllo.da_migliorare.map((g, i) => <div key={"m" + i}>{g}</div>)}
+              </td>
+            </tr>
+          ))}</tbody>
+        </table>
+      )}
+    </>
   );
 }

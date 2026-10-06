@@ -414,6 +414,15 @@ def dettaglio_sistema(sistema_id: str) -> dict:
 
 # --- Lavorazione: a che punto e' la fase 2 (regista, docs/ORCHESTRAZIONE.md) ------------------------------------
 
+@router.get("/controlli")
+def schede_da_rivedere() -> list[dict]:
+    """Le schede con problemi trovati dal controllo senza IA (gravi prima)."""
+    from app.schede import controlli
+
+    with connetti() as conn:
+        return controlli.da_rivedere(conn)
+
+
 @router.get("/lavorazione")
 def lavorazione() -> dict:
     """Imbuto di annunci e bandi per fase, ultime azioni del regista, spesa IA del mese."""
