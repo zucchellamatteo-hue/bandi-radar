@@ -355,3 +355,9 @@ def test_scheda_senza_schema_vincolato_e_pulizia():
     assert scheda["temi"] == ["digitale"] and scheda["scadenza"] is None and scheda["contributo_massimo"] is None
     assert scheda["completezza"] == "nessun_documento" and set(scheda["vincoli"]) == set(campi.VINCOLI)
     assert any("inventato" in t for t in tolti)
+
+
+def test_note_vincoli_nella_scheda_non_nelle_colonne():
+    s, tolti = ia.prepara_scheda({"note_vincoli": [{"vincolo": "eta_impresa", "nota": "escluse le imprese costituite dopo il 15/07/2026"}]})
+    assert s["note_vincoli"][0]["vincolo"] == "eta_impresa" and "note_vincoli" not in ia._COLONNE_SCHEDA
+    assert ia.prepara_scheda({})[0]["note_vincoli"] == []

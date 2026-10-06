@@ -218,6 +218,10 @@ _CAMPI_SCHEDA: dict[str, dict] = {
     "vincoli": {"type": "object", "properties": {v: {"type": "string", "enum": list(campi.STATI_VINCOLO)} for v in campi.VINCOLI},
                 "required": list(campi.VINCOLI), "additionalProperties": False},
     "completezza": {"type": "string", "enum": list(campi.COMPLETEZZA)},
+    # Una frase per ogni vincolo "vincolo" che i numeri non spiegano (06/10/2026, segnalato da Matteo sul 423: "eta'
+    # dell'impresa: limitato" senza dire come). Elenco di coppie, come le fonti. Resta nella scheda, non e' una colonna.
+    "note_vincoli": {"type": "array", "items": {"type": "object", "properties": {"vincolo": _TESTO, "nota": _TESTO},
+                                                "required": ["vincolo", "nota"], "additionalProperties": False}},
     # Le fonti come elenco di coppie: le chiavi libere non si possono vincolare con uno schema chiuso.
     "fonti": {"type": "array", "items": {"type": "object", "properties": {"campo": _TESTO, "fonte": _TESTO},
                                          "required": ["campo", "fonte"], "additionalProperties": False}},
@@ -282,7 +286,7 @@ _ELENCHI_DEL_VINCOLO = {
     "dipendenti": ("dipendenti_min", "dipendenti_max"), "fatturato": ("fatturato_min", "fatturato_max"),
     "spesa": ("spesa_minima", "spesa_massima"), "regime_aiuto": ("regime_aiuto",),
 }
-_SENZA_FONTE = {"titolo", "url", "vincoli", "completezza", "fonti", "avvertenze", "linee"}
+_SENZA_FONTE = {"titolo", "url", "vincoli", "completezza", "fonti", "avvertenze", "linee", "note_vincoli"}
 
 
 def _data(testo) -> date | None:
@@ -800,7 +804,7 @@ def bandi_da_schedare(conn, bando_id: int | None, limite: int) -> list[dict]:
         return [dict(r) for r in cur.fetchall()]
 
 
-_COLONNE_SCHEDA = [c for c in _CAMPI_SCHEDA if c not in ("fonti", "avvertenze", "url")]
+_COLONNE_SCHEDA = [c for c in _CAMPI_SCHEDA if c not in ("fonti", "avvertenze", "url", "note_vincoli")]
 
 
 def salva_scheda(conn, bando_id: int, scheda: dict, problemi: list[str], costo_usd: float) -> None:

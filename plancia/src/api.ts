@@ -37,6 +37,7 @@ export interface SchedaRidotta {
   dotazione: number | null; modalita_selezione: string | null; forma_incentivo: FormaIncentivo | null; versione: number;
   imprese: { id: number; nome: string; esito: EsitoRegole }[]; documenti_ufficiali: { nome: string; url: string }[]; avvertenza: string;
   misure_cumulabili?: MisuraBreve[];
+  vincoli_spese?: Record<string, { stato?: string; dettaglio?: string } | null> | null;
 }
 export type StatoRichiesta = "nuova" | "in_corso" | "accettata" | "chiusa";
 export const NOMI_STATO_RICHIESTA: Record<StatoRichiesta, string> = { nuova: "ricevuta", in_corso: "in valutazione", accettata: "accettata", chiusa: "chiusa" };
