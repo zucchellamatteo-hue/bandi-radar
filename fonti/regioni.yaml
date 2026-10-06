@@ -922,7 +922,17 @@
     applicati via JavaScript: la pagina filtrata risponde 200 ma senza risultati nell''HTML. Il feed generale /feed/
     e'' di notizie ed eventi, non di bandi.
 
+    Dal 06/10 la scorta legge la pagina /bandi-aperti/: un paragrafo per avviso aperto (titolo in grassetto, scadenza,
+    link "Per saperne di piu''" alla scheda su lazioeuropa.it), circa 34 avvisi di tutti i programmi (FSE+, FESR,
+    regionali, PNRR). Il feed ha solo le ultime 10 voci: "Rafforzamento delle capacita'' manageriali" e "Acchiappa
+    Talenti" (scadenza 22/12/2026) non erano mai entrati.
+
     '
+  scorta:
+    url: https://www.lazioinnova.it/bandi-aperti/
+    modalita: html
+    selettore: .entry-content
+    frequenza: settimanale
 
 - id: abruzzo_contributi_finanziamenti
   nome: Regione Abruzzo - Avvisi contributi e finanziamenti

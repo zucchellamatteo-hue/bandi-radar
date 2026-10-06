@@ -119,3 +119,8 @@
 - Misure nazionali: esempi pratici per otto tipi di impresa (ufficio, negozio, ristorazione/hotel, artigiano, manifattura, logistica, agricola, startup) nella pagina Misure.
 - Supervisione: il sistema "Controllo delle schede" ha ora un nome suo (`controllo_schede`), separato dai controlli delle fonti.
 
+- Ricerca sul web dei bandi più discussi (66 misure tra agosto e ottobre): 30 a posto, 25 con difetti, 11 assenti. Corretti: 27 doppioni uniti (Nuova Sabatini, Smart&Start, SIMEST, Fondo di garanzia, Cultura Cresce, Voucher Cloud...), date e stati di 1960, 4130, 1428, 1280, 2613.
+- Documenti: si leggono anche le sottopagine della pagina ufficiale (/normativa, /faq...): i bandi Invitalia aperti hanno ora avvisi e decreti (PR #85).
+- Misure nazionali nuove: incentivi all'assunzione 2026 (Giovani, Donne, ZES), Fondo di Garanzia PMI, maxi-deduzione dei nuovi assunti; bonus Coesione tra le chiuse (PR #86).
+- Fonti nuove: INAIL (bando ISI), INPS (circolari sugli incentivi), Unioncamere (Marchi+, Disegni+); ISMEA segnata "difficile" (blocca il server). Lettura completa degli elenchi di Lazio Innova e MASE.
+- Arretrato emerso: 839 bandi hanno il testo ufficiale ma non sono mai passati dalla scheda (in attesa della decisione sul tetto di spesa per l'IA).

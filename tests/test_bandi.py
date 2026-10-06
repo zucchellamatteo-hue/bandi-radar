@@ -23,6 +23,9 @@ def test_url_chiave_toglie_solo_il_superfluo():
     # i parametri che identificano la pagina restano
     assert url_chiave("https://www.regione.marche.it/Bandi/p/1?idb=28598") == "regione.marche.it/Bandi/p/1?idb=28598"
     assert url_chiave(None) is None and url_chiave("mailto:x@y.it") is None
+    # la pagina di provenienza di Liferay (MASE) non cambia il bando
+    assert url_chiave("https://www.mase.gov.it/portale/-/avviso?p_l_back_url=%2Fportale%2Fbandi-e-avvisi") == \
+        "mase.gov.it/portale/-/avviso"
 
 
 def test_ente_normalizzato():

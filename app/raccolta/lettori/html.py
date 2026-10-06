@@ -31,6 +31,9 @@ _TESTI_GENERICI = re.compile(
 _ESTENSIONI_FILE = (".pdf", ".doc", ".docx", ".xls", ".xlsx", ".zip", ".p7m", ".odt", ".jpg", ".png")
 _SPAZI = re.compile(r"\s+")
 _SESSIONE = re.compile(r";jsessionid=[^?#]*", re.IGNORECASE)
+# Liferay (MASE) aggiunge a ogni link la pagina da cui si arriva (?p_l_back_url=/portale/bandi-e-avvisi?start=3):
+# cambia da una pagina dell'elenco all'altra, e lo stesso bando sembrerebbe un link nuovo a ogni pagina della scorta.
+_TORNA_INDIETRO = re.compile(r"([?&])p_l_back_url=[^&#]*&?", re.IGNORECASE)
 # Il titolo nell'attributo title del link, a volte con un prefisso ("Vai al contenuto ...", Design Comuni).
 _PREFISSI_TITLE = re.compile(r"^(vai al contenuto|vai a|leggi|apri|visualizza)\s+", re.IGNORECASE)
 
@@ -85,7 +88,7 @@ def estrai_link(html: str, url_pagina: str, selettore: str | None = None) -> lis
         annunci: list[Annuncio] = []
         visti: set[str] = set()
         for radice in radici:
-            for a in _link_in(radice, url_pagina, LUNGHEZZA_MINIMA_CON_SELETTORE):
+            for a in _link_in(radice, url_pagina, LUNGHEZZA_MINIMA_CON_SELETTORE, con_selettore=True):
                 if a.url not in visti:
                     visti.add(a.url)
                     annunci.append(a)
@@ -95,6 +98,21 @@ def estrai_link(html: str, url_pagina: str, selettore: str | None = None) -> lis
         if annunci:
             return annunci
     return []
+
+
+def _paragrafo_con_titolo(a):
+    """"<p><strong>Titolo</strong>: domande entro il ... <a>Per saperne di piu'</a></p>" (Lazio Innova, Bandi aperti):
+    il paragrafo comincia con il titolo in grassetto. Ritorna (paragrafo, titolo) oppure None."""
+    paragrafo = a.find_parent("p")
+    if paragrafo is None:
+        return None
+    primo = paragrafo.find(True)
+    if primo is None or primo.name not in ("strong", "b") or primo.find("a") is not None:
+        return None
+    titolo = _SPAZI.sub(" ", primo.get_text(" ")).strip().rstrip(":").strip()
+    if not titolo or not _SPAZI.sub(" ", paragrafo.get_text(" ")).strip().startswith(titolo):
+        return None
+    return paragrafo, titolo
 
 
 def _titolo_della_scheda(a) -> str | None:
@@ -119,7 +137,7 @@ def _senza_schema(url: str) -> str:
     return url.split("://", 1)[-1].rstrip("/")
 
 
-def _link_in(radice, url_pagina: str, minimo: int = LUNGHEZZA_MINIMA_TITOLO) -> list[Annuncio]:
+def _link_in(radice, url_pagina: str, minimo: int = LUNGHEZZA_MINIMA_TITOLO, con_selettore: bool = False) -> list[Annuncio]:
     host = urlsplit(url_pagina).netloc
     visti: set[str] = set()
     annunci: list[Annuncio] = []
@@ -129,10 +147,17 @@ def _link_in(radice, url_pagina: str, minimo: int = LUNGHEZZA_MINIMA_TITOLO) -> 
             continue
         # Il codice di sessione (;jsessionid=...) cambia a ogni visita: senza toglierlo ogni link sembrerebbe nuovo.
         url = _SESSIONE.sub("", urljoin(url_pagina, href).split("#")[0])
+        url = _TORNA_INDIETRO.sub(r"\1", url).rstrip("?&")
         # Il link alla pagina stessa (anche in http invece che https: filtro "Stato incentivo" di Invitalia) non e' un annuncio.
         if url in visti or _senza_schema(url) == _senza_schema(url_pagina):
             continue
         testo = _SPAZI.sub(" ", a.get_text(" ")).strip()
+        immagine = a.find("img")
+        if not testo and con_selettore and immagine is not None:
+            # Link fatto solo di un logo (Unioncamere: un logo per edizione di Marchi+ e Disegni+): il titolo e' il testo
+            # alternativo dell'immagine. Solo con il selettore, perche' altrove i loghi linkati sono banner e cornice.
+            testo = _SPAZI.sub(" ", immagine.get("alt") or "").strip()
+        paragrafo = None   # il paragrafo "Titolo: domande entro il ..." da cui viene il titolo, se c'e'
         if len(testo) < minimo or _TESTI_GENERICI.match(testo):
             # "Scopri di piu'", "Vai": il titolo e' nell'attributo title del link o nel titolo della scheda che lo contiene.
             # Solo per i link con un testo generico ("Ulteriori dettagli"): non per le icone ("Seguici su facebook")
@@ -141,6 +166,8 @@ def _link_in(radice, url_pagina: str, minimo: int = LUNGHEZZA_MINIMA_TITOLO) -> 
                 if _TESTI_GENERICI.match(testo) else ""
             if len(attributo) >= max(minimo, LUNGHEZZA_MINIMA_TITOLO) and not _TESTI_GENERICI.match(attributo):
                 testo = attributo
+            elif (con_titolo := _paragrafo_con_titolo(a)) is not None and len(con_titolo[1]) >= minimo:
+                paragrafo, testo = con_titolo
             else:
                 testo = _titolo_della_scheda(a) or ""
             if len(testo) < minimo:
@@ -149,7 +176,8 @@ def _link_in(radice, url_pagina: str, minimo: int = LUNGHEZZA_MINIMA_TITOLO) -> 
             continue
         visti.add(url)
         # Data: un <time> o una data scritta nel blocco che contiene il link.
-        blocco = a.find_parent(["article", "li", "tr", "div"]) or a
+        # Nei paragrafi "Titolo: domande entro il ..." la data e' quella del paragrafo, non del primo della pagina.
+        blocco = paragrafo or a.find_parent(["article", "li", "tr", "div"]) or a
         tempo = blocco.find("time")
         data = leggi_data(tempo.get("datetime") or tempo.get_text()) if tempo else leggi_data(blocco.get_text(" ")[:400])
         dati: dict = {}

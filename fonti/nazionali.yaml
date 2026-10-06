@@ -308,11 +308,22 @@
   verificato_il: '2026-09-24'
   note: 'Akamai blocca gli User-Agent non da browser: si usa un UA da browser con in coda il nostro nome e contatto.
     L''elenco (15 link /portale/-/<slug>) e'' gia'' nell''HTML. Verificato il 24/09 dal cloud, da confermare dal
-    server.'
+    server.
+
+    Dal 06/10 la scorta legge l''elenco a 30 per pagina (?delta=30&start=1,2,...; circa 37 pagine in tutto, dal
+    2022): 4 pagine arrivano a maggio 2025. Elenco misto (bandi, decreti, gare, interpelli): niente scadenze nei
+    dati, lo smistamento scarta il resto. Liferay aggiunge a ogni link ?p_l_back_url=<pagina di provenienza>, che il
+    lettore toglie. Il decreto "hard-to-abate" (DD 173/2026) non e'' in questo elenco.'
   richiesta:
     intestazioni:
       User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0 Safari/537.36
         BandiRadar/0.1 (+https://finanzagevolata.qiaro.it)
+  scorta:
+    url: https://www.mase.gov.it/portale/bandi-e-avvisi?delta=30
+    parametro: start
+    inizio: 1
+    passo: 1
+    pagine: 4
 
 - id: lavoro_notizie
   nome: Ministero del Lavoro - Notizie
@@ -337,6 +348,91 @@
     inizio: 0
     passo: 1
     pagine: 13
+
+- id: inail_incentivi_imprese
+  nome: INAIL - Incentivi alle imprese (Bando ISI)
+  ente: Istituto Nazionale per l'Assicurazione contro gli Infortuni sul Lavoro
+  tipo: nazionale
+  territorio: ITA
+  url: https://www.inail.it/portale/prevenzione-e-sicurezza/it/prevenzione-e-sicurezza/finanziamenti-per-la-sicurezza/incentivi-alle-imprese.html
+  modalita: html
+  feed_url: null
+  piattaforma: aem
+  frequenza: settimanale
+  stato: attiva
+  verificato_il: '2026-10-06'
+  note: >
+    Aggiunta il 06/10 (rapporto sui bandi discussi: il Bando ISI, il piu' seguito dai commercialisti, mancava a
+    livello nazionale). La pagina elenca le edizioni del Bando ISI (bando-isi-2017 ... bando-isi-2025, ISI
+    agricoltura, bando per la formazione, storico): l'ISI 2026 e' atteso a dicembre 2026 e comparira' qui come
+    nuova pagina bando-isi-2026. robots.txt vieta solo l'amministrazione trasparente. Gli avvisi INAIL
+    (/portale/it/inail-comunica/avvisi.html) sono quasi solo chiusure di sedi e orari: non aggiunti.
+  richiesta:
+    selettore: div.pt-4 > ul.list-inline
+
+- id: inps_circolari_incentivi
+  nome: INPS - Circolari e messaggi sugli incentivi
+  ente: Istituto Nazionale della Previdenza Sociale
+  tipo: nazionale
+  territorio: ITA
+  url: https://www.inps.it/it/it/inps-comunica/atti/circolari-messaggi-e-normativa.html
+  modalita: api
+  feed_url: https://www.inps.it/content/scorporati/search/jcr:content.search.2f636f6e74656e742f64616d2f696e70732d736974652f69742f73636f72706f726174692f636972636f6c6172692d652d6d65737361676769.30.3135.67696f726e6f.44455343.636972636f6c6172692d652d6d65737361676769.6f5f696e63656e746976.json
+  piattaforma: aem
+  frequenza: settimanale
+  stato: attiva
+  verificato_il: '2026-10-06'
+  note: >
+    Aggiunta il 06/10 (Bonus giovani, donne e ZES delle circolari 55, 56 e 57 del 14/05/2026 mancavano). La pagina
+    riempie l'elenco via JavaScript dall'API interna /content/scorporati/search/jcr:content.search.<parametri>.json,
+    con i parametri scritti in esadecimale: cartella, pagina (0), quanti (15), ordine (giorno DESC), modello e il
+    filtro sull'oggetto "o_incentiv". Senza filtro escono circa 5 circolari e messaggi a settimana, quasi tutti su
+    pensioni, contributi e prestazioni (rumore); con "incentiv" una decina all'anno, quasi tutti pertinenti
+    (incentivi all'assunzione, autoimpiego, de minimis). Il filtro "o_esonero" (esoneri contributivi) e' un'alternativa
+    da valutare con Matteo. Serve piu' per aggiornare le misure nazionali che come fonte di bandi.
+  richiesta:
+    url_modello: https://www.inps.it/it/it/inps-comunica/atti/circolari-messaggi-e-normativa/dettaglio.{selectors}.html
+
+- id: unioncamere_marchi_disegni
+  nome: Unioncamere - Agevolazioni per la proprieta' industriale (Marchi+, Disegni+)
+  ente: Unioncamere (per conto del MIMIT)
+  tipo: nazionale
+  territorio: ITA
+  url: https://www.unioncamere.gov.it/innovazione-e-proprieta-industriale/agevolazioni-proprieta-industriale
+  modalita: html
+  feed_url: null
+  piattaforma: drupal
+  frequenza: settimanale
+  stato: attiva
+  verificato_il: '2026-10-06'
+  note: >
+    Aggiunta il 06/10 (Marchi+ e Disegni+ 2026 mancavano: decreto di riapertura in GU n. 200 del 29/08/2026). Unioncamere
+    gestisce Marchi+, Disegni+ e Marchi storici/collettivi: ogni edizione ha un suo sito (2025marchipiu.it,
+    2025disegnipiu.it, marchicollettivi2025.it ...) e il link compare in questa pagina. Brevetti+ e' gestito da
+    Invitalia (fonti invitalia_*), non da Unioncamere. I link delle edizioni sono loghi in una tabella: con il
+    selettore il titolo e' il testo alternativo dell'immagine ("Marchi+ 2025").
+  richiesta:
+    selettore: table td
+
+- id: ismea_strumenti
+  nome: ISMEA - Strumenti per le imprese agricole
+  ente: Istituto di Servizi per il Mercato Agricolo Alimentare
+  tipo: nazionale
+  territorio: ITA
+  url: https://www.ismea.it/flex/cm/pages/ServeBLOB.php/L/IT/IDPagina/13558
+  modalita: html
+  feed_url: null
+  piattaforma: flex_cms
+  frequenza: settimanale
+  stato: difficile
+  verificato_il: '2026-10-06'
+  note: >
+    Valutata il 06/10 (Generazione Terra, 120 mln, chiusa il 19/06/2026, mancava). Dal VPS il sito risponde ma con
+    due ostacoli: il certificato HTTPS e' incompleto (manca il certificato intermedio, curl lo rifiuta) e un
+    firewall Barracuda risponde "You have been blocked" (FINGERPRINT_RISK_LEVEL_SUSPECTED_CLIENT) anche con
+    User-Agent da browser; niente IPv6 (il nome non ha indirizzo AAAA). L'indirizzo e' quello della notizia
+    "Riparte Generazione Terra" trovata con la ricerca web, non verificato nel contenuto. Le misure ISMEA
+    (Generazione Terra, Piu' Impresa, bando trattori) arrivano oggi da incentivi.gov.it.
 
 - id: cdp_imprese
   nome: Cassa Depositi e Prestiti - Imprese
