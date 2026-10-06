@@ -4,6 +4,8 @@ regola dei tre stati (vincolo / nessun vincolo / non noto) e' scritta in un post
 
 from __future__ import annotations
 
+import re
+
 from dataclasses import dataclass
 from datetime import date, timedelta
 
@@ -121,6 +123,12 @@ def filtra(bandi: list[dict], f: Filtri, oggi: date | None = None) -> list[tuple
     Ordine: livello, poi scadenza."""
     oggi = oggi or date.today()
     profilo = f.profilo()
+    # Ricerca per numero (06/10: "4092", "n. 4092", "#4092"): si mostra quel bando, qualunque siano gli altri filtri.
+    numero = re.fullmatch(r"\s*(?:n\.?|nr\.?|numero:?|#)?\s*(\d{1,7})\s*", f.q or "", re.IGNORECASE)
+    if numero:
+        trovati = [b for b in bandi if b["id"] == int(numero.group(1))]
+        if trovati:
+            return [(trovati[0], regole.valuta(trovati[0], profilo, oggi, parziale=True))]
     risultato = []
     for b in bandi:
         if not _passa_campi(b, f, oggi):

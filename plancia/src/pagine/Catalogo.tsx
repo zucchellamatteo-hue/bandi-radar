@@ -80,7 +80,7 @@ export default function Catalogo() {
           Bandi ancora senza scheda: {risposta.senza_scheda}.</>}</div>
 
       <form className="filtri" onSubmit={(e) => { e.preventDefault(); imposta("q", testo); }}>
-        <input type="text" placeholder="Cerca nel titolo, nell'ente o nella sintesi…" value={testo} onChange={(e) => setTesto(e.target.value)} />
+        <input type="text" placeholder="Cerca nel titolo, nell'ente, nella sintesi o il numero…" value={testo} onChange={(e) => setTesto(e.target.value)} />
         <button type="submit">Cerca</button>
         <select value={parametri.get("stato") || "aperti"} onChange={(e) => imposta("stato", e.target.value === "aperti" ? "" : e.target.value)}>
           <option value="aperti">Aperti e in arrivo</option><option value="aperto">Solo aperti</option>
