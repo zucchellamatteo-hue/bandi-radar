@@ -13,21 +13,36 @@ export default function Misure({ base = "/misure" }: { base?: string }) {
   useEffect(() => { api.misure().then(setElenco); }, []);
   if (!elenco) return <div className="caricamento">Caricamento…</div>;
   const m = id ? elenco.find((x) => x.id === id) : null;
+  const aperte = elenco.filter((x) => x.stato !== "chiuso"), chiuse = elenco.filter((x) => x.stato === "chiuso");
   if (id && m) return <SchedaMisura m={m} base={base} />;
   return (
     <>
       <h1>Misure nazionali sugli investimenti</h1>
       <p>Non sono bandi con una scadenza: sono agevolazioni previste dalla legge, sempre disponibili finché sono in vigore, che spesso si
         possono <b>sommare</b> ai contributi dei bandi per gli stessi investimenti.</p>
-      <div className="griglia-piani">{elenco.map((x) => (
-        <div key={x.id} className="riquadro">
-          <div className="etichetta">{x.ente} · {nome(x.tipo)}</div>
-          <h3><Link to={`${base}/${x.id}`}>{x.nome}</Link></h3>
-          <p className="piccolo">{x.sintesi}</p>
-          {x.beneficio_stimato?.percentuale_max != null && <p><b>Beneficio stimato: {intervallo(x.beneficio_stimato.percentuale_min, x.beneficio_stimato.percentuale_max)}</b> della spesa</p>}
-          <span className={`stato-bando ${x.stato === "aperto" ? "aperto" : "non_noto"}`}>{x.stato === "aperto" ? "in vigore" : "da verificare"}</span>
-        </div>))}</div>
+      <div className="griglia-piani">{aperte.map((x) => <Carta key={x.id} x={x} base={base} />)}</div>
+      {chiuse.length > 0 && <>
+        <h2 className="chiuse">Misure chiuse</h2>
+        <p className="piccolo">Non più attive o con i fondi esauriti: restano qui per le eventuali code, gli scorrimenti o una riapertura.
+          Non vengono proposte insieme ai bandi.</p>
+        <div className="griglia-piani misure-chiuse">{chiuse.map((x) => <Carta key={x.id} x={x} base={base} />)}</div>
+      </>}
     </>
+  );
+}
+
+function Carta({ x, base }: { x: Misura; base: string }) {
+  const chiusa = x.stato === "chiuso";
+  return (
+    <div className="riquadro">
+      <div className="etichetta">{x.ente} · {nome(x.tipo)}</div>
+      <h3><Link to={`${base}/${x.id}`}>{x.nome}</Link></h3>
+      <p className="piccolo">{x.sintesi}</p>
+      {x.beneficio_stimato?.percentuale_max != null && <p><b>Beneficio stimato: {intervallo(x.beneficio_stimato.percentuale_min, x.beneficio_stimato.percentuale_max)}</b> della spesa</p>}
+      {chiusa ? <><span className="stato-bando chiuso">{x.coda ? "fondi esauriti, domande in coda" : "chiusa"}</span>
+          {x.nota_chiusura && <p className="piccolo">{x.nota_chiusura}</p>}</>
+        : <span className={`stato-bando ${x.stato === "aperto" ? "aperto" : "non_noto"}`}>{x.stato === "aperto" ? "in vigore" : "da verificare"}</span>}
+    </div>
   );
 }
 
@@ -39,6 +54,7 @@ function SchedaMisura({ m, base }: { m: Misura; base: string }) {
       <h1>{m.nome}</h1>
       <p className="piccolo">{m.ente} · {m.norma}{m.url_ufficiale && <> · <a href={m.url_ufficiale} target="_blank" rel="noreferrer">fonte ufficiale ↗</a></>}
         {m.fonte_verificata_il && <> · verificata il {m.fonte_verificata_il}</>}</p>
+      {m.stato === "chiuso" && <div className="avviso"><b>Misura chiusa{m.coda ? ": fondi esauriti, domande in coda" : ""}.</b> {m.nota_chiusura}</div>}
       {m.sintesi && <p className="testo-lungo">{m.sintesi}</p>}
       {m.beneficio_stimato && <div className="avviso"><b>Beneficio stimato: {intervallo(m.beneficio_stimato.percentuale_min, m.beneficio_stimato.percentuale_max)} della spesa.</b>{" "}
         {m.beneficio_stimato.nota}</div>}

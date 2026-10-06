@@ -430,3 +430,68 @@ misure:
 # - Credito formazione 4.0 (L. 205/2017 e proroghe): non piu' attivo (pagina MIMIT "La misura non e'
 #   piu' attiva"); non sostituito dall'iperammortamento, che riguarda solo beni.
 # - Maggiorazioni R&S Mezzogiorno (art. 244 DL 34/2020): fino al 2025, non prorogate per il 2026.
+
+  # --- Misure chiuse (06/10/2026, richiesta di Matteo): restano in fondo alla pagina, in grigio, per eventuali code,
+  # scorrimenti o riaperture. Non si abbinano ai bandi (cumulabili() usa solo quelle "aperto").
+  - id: credito_design_2026
+    nome: "Credito d'imposta design e ideazione estetica 2026"
+    tipo: credito_imposta
+    ente: "MIMIT (prenotazione) e Agenzia delle Entrate (utilizzo)"
+    norma: "L. 199/2025, art. 1, commi 925-926"
+    url_ufficiale: "https://www.mimit.gov.it/it/incentivi/credito-d-imposta-r-s"
+    stato: chiuso
+    chiuso_il: "2026-07-08"
+    coda: true
+    nota_chiusura: "Fondi esauriti l'8/7/2026 (60 milioni): le domande presentate restano in coda per un eventuale scorrimento se si liberano risorse."
+    sintesi: >-
+      Credito del 10% delle spese per design e ideazione estetica sostenute nel 2026, fino a 2 milioni per impresa,
+      con prenotazione al MIMIT dal 7/7/2026 e un tetto complessivo di 60 milioni. Le risorse sono finite il giorno dopo.
+    beneficio_stimato: {percentuale_min: 10, percentuale_max: 10, nota: "10% delle spese ammissibili, se la domanda in coda viene finanziata"}
+    categorie_spesa: []
+    cumulabilita: {con_fondo_perduto: nei_limiti, regola: "Come gli altri crediti R&S: cumulabile entro il costo sostenuto."}
+    fonte_verificata_il: "2026-10-05"
+  - id: credito_formazione_40
+    nome: "Credito d'imposta formazione 4.0"
+    tipo: credito_imposta
+    ente: "MIMIT"
+    norma: "L. 205/2017, art. 1, commi 46-56 (e proroghe)"
+    url_ufficiale: "https://www.mimit.gov.it/it/incentivi/credito-d-imposta-formazione-4-0"
+    stato: chiuso
+    coda: false
+    nota_chiusura: "Il MIMIT indica che la misura non è più attiva; non è stata sostituita dall'iperammortamento, che riguarda solo i beni."
+    sintesi: >-
+      Credito sulle spese di formazione del personale nelle tecnologie 4.0. Non più attivo: resta qui come riferimento
+      nel caso venga riproposto.
+    categorie_spesa: []
+    cumulabilita: {con_fondo_perduto: nei_limiti, regola: "Non applicabile: misura non attiva."}
+    fonte_verificata_il: "2026-10-05"
+  - id: credito_innovazione_2025
+    nome: "Credito d'imposta innovazione tecnologica (anche 4.0 e green)"
+    tipo: credito_imposta
+    ente: "MIMIT e Agenzia delle Entrate"
+    norma: "L. 160/2019, art. 1, commi 198-209 (e proroghe)"
+    url_ufficiale: "https://www.mimit.gov.it/it/incentivi/credito-d-imposta-r-s"
+    stato: chiuso
+    chiuso_il: "2025-12-31"
+    coda: false
+    nota_chiusura: "5% fino al periodo d'imposta 2025, non prorogato per il 2026 (per ricerca e sviluppo resta il credito al 10%)."
+    sintesi: >-
+      Credito sulle spese di innovazione tecnologica, anche digitale 4.0 e green. Valeva fino al 2025.
+    categorie_spesa: []
+    cumulabilita: {con_fondo_perduto: nei_limiti, regola: "Non applicabile: misura non piu' in vigore."}
+    fonte_verificata_il: "2026-10-05"
+  - id: maggiorazioni_rs_sud
+    nome: "Maggiorazioni del credito ricerca e sviluppo per il Mezzogiorno"
+    tipo: credito_imposta
+    ente: "MIMIT e Agenzia delle Entrate"
+    norma: "DL 34/2020, art. 244"
+    url_ufficiale: "https://www.normattiva.it/uri-res/N2Ls?urn:nir:stato:decreto.legge:2020-05-19;34~art244"
+    stato: chiuso
+    chiuso_il: "2025-12-31"
+    coda: false
+    nota_chiusura: "Aliquote maggiorate (25/35/45%) per le regioni del Sud valide fino al 2025, non prorogate: dal 2026 il credito R&S è al 10% in tutta Italia (data di scadenza da confermare sul testo ufficiale)."
+    sintesi: >-
+      Aliquote più alte del credito R&S per le imprese del Mezzogiorno, secondo la dimensione. Finite nel 2025.
+    categorie_spesa: []
+    cumulabilita: {con_fondo_perduto: nei_limiti, regola: "Non applicabile: misura non piu' in vigore."}
+    fonte_verificata_il: "2026-10-05"

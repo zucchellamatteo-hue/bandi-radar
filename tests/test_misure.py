@@ -57,10 +57,18 @@ misure:
     assert len(misure.cumulabili(bando, {"sedi": [{"regione": "SIC"}]}, f)) == 1      # conta la sede dell'impresa
 
 
+def test_misure_chiuse_mai_sommate():
+    """Le misure chiuse stanno nella pagina (in fondo) ma non si propongono mai insieme ai bandi."""
+    chiuse = {m["id"] for m in misure.tutte() if m["stato"] == "chiuso"}
+    bando = {"categorie_spesa": ["macchinari_attrezzature", "software_digitale", "energia_efficienza", "ricerca_sviluppo",
+                                 "formazione", "opere_edili_impianti"], "territorio_regioni": ["PUG"]}
+    assert chiuse and not chiuse & {m["id"] for m in misure.cumulabili(bando)}
+
+
 def test_file_delle_misure_valido():
     """Il file vero (scritto e verificato a mano): ogni voce ha i campi che servono alla plancia."""
     for m in misure.tutte():
-        assert m.get("stato") in ("aperto", "da_verificare"), m["id"]
+        assert m.get("stato") in ("aperto", "da_verificare", "chiuso"), m["id"]
         assert m.get("sintesi") and m.get("ente"), m["id"]
         assert (m.get("cumulabilita") or {}).get("con_fondo_perduto") in ("si", "no", "nei_limiti", "da_verificare"), m["id"]
         b = m.get("beneficio_stimato") or {}
