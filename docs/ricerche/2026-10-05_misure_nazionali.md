@@ -167,3 +167,44 @@ Nota onesta: il contributo a fondo perduto è un contributo in conto impianti e 
 - Le misure stanno in `app/misure/misure.yaml`, separate dal registro delle fonti: non sono bandi, cambiano raramente e vanno ricontrollate a mano almeno ogni trimestre e a ogni Legge di bilancio (campo `fonte_verificata_il`).
 - Il calcolo del cumulo nella scheda di un bando deve usare la base netta (formula sopra) e mostrare sempre l'avvertenza sui casi di non cumulabilità; mai sommare semplicemente le percentuali.
 - Da osservare con il sistema di raccolta (senza IA): le pagine news del GSE sul Conto Termico (sospensioni, contatori) e la pagina MIMIT dell'iperammortamento, per accorgersi di cambi di regole o chiusure.
+
+## Aggiunta del 6/10/2026: incentivi all'assunzione, Fondo di Garanzia PMI, maxi-deduzione dei nuovi assunti
+
+**Domanda:** il rapporto sui bandi più discussi di ottobre (`bandi_discussi_2026-10.md`, nazionali n. 21 e 25) segnala come mancanti tra le misure nazionali i bonus assunzioni Giovani, Donne e ZES e il Fondo di Garanzia PMI; in più va verificata la maxi-deduzione del costo dei nuovi assunti (120%/130%). Sono vigenti al 6/10/2026? Le domande INPS sono ancora aperte?
+
+**Metodo:** ricerca web limitata a inps.it, agenziaentrate.gov.it, fiscooggi.it, fondidigaranzia.it, mimit.gov.it. Le pagine notizie dell'INPS si caricano con JavaScript: le ho scaricate con `curl` (User-Agent di Bandi Radar) e ho tolto i tag con Python. Le circolari INPS 55, 56, 57 del 14/05/2026 e la circolare 1/E 2025 dell'Agenzia delle Entrate le ho lette per intero, estratte a testo con `pypdf` dentro il container `raccolta`.
+
+### URL visti davvero
+
+| Fonte | URL | Cosa conferma | Giudizio |
+|---|---|---|---|
+| INPS, notizia "Bonus INPS 2026: al via le domande" (30/06/2026) | https://www.inps.it/it/it/inps-comunica/notizie/dettaglio-news-page.news.2026.06.bonus-inps-2026-al-via-le-domande-per-giovani-donne-e-zes.html | assunzioni a tempo indeterminato dal 1/1 al 31/12/2026; esonero 100%; messaggi 1966, 1968, 1970 dell'11/06/2026; Portale delle Agevolazioni; Bonus ZES: over 35 disoccupati da 24 mesi, max 10 dipendenti, 10 regioni | sì |
+| INPS, notizia "domande entro il 30 settembre" (23/07/2026) | https://www.inps.it/it/it/inps-comunica/notizie/dettaglio-news-page.news.2026.07.bonus-giovani-donne-e-zes-domande-entro-il-30-settembre.html | messaggio 2451/2026: il termine del 30/09/2026 riguarda **solo** i bonus del decreto Coesione (DL 60/2024 artt. 22-24, assunzioni 1/9/2024 - 31/12/2025); dal 1/10 niente nuove domande | sì |
+| INPS, comunicato stampa 14/05/2026 (PDF) | https://www.inps.it/content/dam/inps-site/it/scorporati/comunicati-stampa/2026/05/Allegati/4095_Cs_decreto_lavoro.pdf | DL 62/2026; circolari 55 (Giovani), 56 (ZES), 57 (Donne); tetti 500/650/800 euro; esclusi PA, domestico, apprendistato | sì |
+| INPS, circolare 55 del 14/05/2026 (PDF letto per intero) | https://www.inps.it/content/dam/inps-site/it/scorporati/circolari-e-messaggi/2026/05/Circolare_15258/Allegati/16770_Circolare-numero-55-del-14-05-2026.pdf | Bonus Giovani: art. 2 DL 62/2026; under 35 svantaggiati (12 mesi) o molto svantaggiati (24 mesi); 500 euro, 650 nella ZES; incremento occupazionale netto; spesa 109,7 mln 2026; niente trasformazioni; non cumulabile con altri esoneri, cumulabile con la maxi-deduzione (L. 207/2024 c. 399-400); domanda anche prima dell'assunzione con 10 giorni per assumere | sì |
+| INPS, circolare 56 del 14/05/2026 (PDF letto per intero) | https://www.inps.it/content/dam/inps-site/it/scorporati/circolari-e-messaggi/2026/05/Circolare_15259/Allegati/16771_Circolare-numero-56-del-14-05-2026.pdf | Bonus ZES: art. 3 DL 62/2026; 650 euro per 24 mesi; spesa 26 mln 2026, 60 nel 2027, 34 nel 2028; GBER; niente Decontribuzione Sud insieme; compatibile con la maxi-deduzione | sì |
+| INPS, circolare 57 del 14/05/2026 (PDF letto per intero) | https://www.inps.it/content/dam/inps-site/it/scorporati/circolari-e-messaggi/2026/05/Circolare_15260/Allegati/16772_Circolare-numero-57-del-14-05-2026.pdf | Bonus Donne: art. 1 DL 62/2026; 650 euro, 800 per residenti ZES; 24 mesi (12 per alcune categorie); spesa 26,5 mln 2026 | sì |
+| INPS, comunicato stampa 31/07/2026 (PDF) | https://www.inps.it/content/dam/inps-site/it/scorporati/comunicati-stampa/2026/07/Allegati/4156_CS_bonus-assunzioni-e-stabilizzazioni.pdf | misure collegate: madri di almeno 3 figli (L. 199/2025 c. 210-213, circ. 82/2026, 8.000 euro l'anno); trasformazioni di giovani dal 1/8 al 31/12/2026 (art. 4 DL 62/2026, circ. 72/2026, msg 2518/2026); decreto convertito il 25/06/2026 | sì |
+| Agenzia Entrate, circolare 1/E del 20/01/2025 (PDF letto per intero) | https://www.agenziaentrate.gov.it/portale/documents/20143/8410815/Circolare_n_1_del_20_01_2025.pdf/7d236acf-dd08-2d3f-dd3a-58717c71b1aa | maxi-deduzione: art. 4 D.Lgs. 216/2023; proroga L. 207/2024 commi 399-400 per i periodi d'imposta **2025, 2026 e 2027**; 20% o 30% (allegato 1); minore tra costo dei nuovi assunti e aumento del costo del personale (voci B9); esclusi liquidazione e forfettari; 365 giorni di attività; acconti senza maggiorazione | sì |
+| Agenzia Entrate, comunicato stampa 20/01/2025 | https://www.agenziaentrate.gov.it/portale/-/comunicato-stampa-del-20-gennaio-2025-nuove-assunzioni | proroga fino al 2027, categorie al 30% | sì |
+| FiscoOggi (Agenzia Entrate), "Maxi-deduzione nuove assunzioni" | https://www.fiscooggi.it/portale/-/maxi-deduzione-nuove-assunzioni-l-agenzia-fornisce-indicazioni | stesso contenuto della circolare | sì |
+| Fondo di garanzia, "Prorogate per il 2026 le modalità di funzionamento" (2/1/2026) | https://www.fondidigaranzia.it/prorogate-per-il-2026-le-modalita-di-funzionamento-del-fondo-di-garanzia/ | art. 14 c. 1 DL 200/2025: regole 2025 valide per tutto il 2026; 80% investimenti, startup, PMI innovative, Sabatini, importo ridotto, microcredito; 50% liquidità | sì |
+| Fondo di garanzia, "Dal 1° gennaio al via la riforma" (2024) | https://www.fondidigaranzia.it/dal-1-gennaio-al-via-la-riforma-del-fondo-di-garanzia-per-le-pmi/ | 5 mln garantiti per impresa; commissioni: micro esenti, piccole 0,5%, medie 1%, small mid-cap 1,25%; fascia di rating 5 esclusa; percentuali mid-cap 40%/30% | sì, ma del 2024: commissioni e mid-cap da verificare per il 2026 |
+| Fondo di garanzia, home e "Conosci il Fondo" | https://www.fondidigaranzia.it/conosci-il-fondo/ | beneficiari (PMI, professionisti), accesso solo tramite banca o confidi, Consiglio di gestione due volte a settimana; dati gen-giu 2026 | sì |
+| MIMIT, pagina Fondo di garanzia per le PMI (aggiornata il 21/09/2026) | https://www.mimit.gov.it/it/incentivi/fondo-di-garanzia-per-le-pmi | L. 662/1996 art. 2 c. 100 lett. a); esclusi finanziari e assicurativi; niente garanzie aggiuntive sulla parte coperta | sì |
+| Fonti secondarie viste solo nei risultati di ricerca (Investireoggi, Leggioggi, BibLus, IRDE, Studio Giaquinta) | — | coerenti con le fonti ufficiali; non usate per i dati | sì (secondarie) |
+
+### Esito
+
+- **Incentivi all'assunzione 2026 (Bonus Giovani, Donne, ZES)**: **aperti**. Valgono per le assunzioni a tempo indeterminato dal 1/1 al 31/12/2026 (DL 62/2026); domande sul Portale delle Agevolazioni INPS dall'11/06/2026, fino a esaurimento dei fondi annuali. Inseriti come una sola misura `incentivi_assunzione_2026`, tipo `decontribuzione`, spese `personale`.
+- **Bonus Giovani, Donne e ZES del decreto Coesione** (assunzioni 1/9/2024 - 31/12/2025): **chiusi**. Il 30/09/2026 indicato nel rapporto è il termine delle domande per queste assunzioni passate, non per i bonus 2026. Inseriti tra le chiuse (`incentivi_assunzione_coesione`) con la nota.
+- **Fondo di Garanzia PMI**: **aperto**, permanente; percentuali 2025 prorogate per tutto il 2026. Tipo `garanzia`. Beneficio non espresso in percentuale della spesa (è una garanzia, non un contributo).
+- **Maxi-deduzione dei nuovi assunti 120%/130%**: **vigente nel 2026** (proroga per 2025-2027 della L. 207/2024). Inserita tra le aperte (`maxi_deduzione_assunzioni`), tipo `deduzione_maggiorata`. Le circolari INPS 2026 confermano che si somma ai bonus contributivi.
+
+### Da verificare
+
+- Estremi della legge di conversione del DL 62/2026 (convertito il 25/06/2026) ed eventuali modifiche agli artt. 1-3: le circolari 55-57 sono di maggio, prima della conversione.
+- Termine finale delle domande INPS per le assunzioni 2026 (per i bonus 2024-2025 è stato fissato un anno dopo); stato dei fondi annuali (Bonus ZES e Donne circa 26 milioni ciascuno nel 2026).
+- Ammissione dei datori non imprenditori (studi professionali) ai bonus 2026, scritta nelle circolari? Non l'ho trovata in modo esplicito.
+- Fondo di garanzia: commissioni e percentuali small mid-cap nel 2026 (fonte del 2024); accesso delle imprese agricole.
+- Maxi-deduzione: conteggio degli apprendisti; testo dei commi 399-400 su Normattiva (letto solo tramite la circolare 1/E).

@@ -426,7 +426,11 @@ export const NOMI_VALORI: Record<string, string> = {
   impresa_sociale: "impresa sociale", rating_legalita: "rating di legalità",
   certificazione_parita_genere: "certificazione parità di genere", esportatrice: "esportatrice", nuova_impresa: "nuova impresa",
   fondo_perduto: "fondo perduto", credito_imposta: "credito d'imposta", finanziamento_agevolato: "finanziamento agevolato",
-  garanzia: "garanzia", voucher: "voucher", servizi: "servizi", premio: "premio", misto: "misto",
+  garanzia: "garanzia", voucher: "voucher",
+  // tipi delle misure nazionali (app/misure/misure.yaml)
+  decontribuzione: "esonero contributivo", deduzione_maggiorata: "maxi-deduzione", detrazione_fiscale: "detrazione fiscale",
+  contributo_conto_capitale: "contributo a fondo perduto", contributo_conto_interessi: "contributo sugli interessi",
+  maggiorazione_ammortamento: "maggiorazione dell'ammortamento", servizi: "servizi", premio: "premio", misto: "misto",
   sportello: "a sportello", sportello_valutativo: "sportello valutativo", graduatoria: "graduatoria", click_day: "click day",
   automatica: "automatica", negoziale: "negoziale",
   de_minimis: "de minimis", de_minimis_agricolo: "de minimis agricolo", gber: "GBER (esenzione)", aber: "ABER (agricoltura)",
