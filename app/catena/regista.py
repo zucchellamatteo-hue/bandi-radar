@@ -336,9 +336,16 @@ def giro() -> dict:
                 f"{n['altre']} risposte registrate, {float(n['costo']):.2f} $")
 
     with esecuzione("regista") as giro_intero:
+        def controlli_schede(inizio):
+            from app.schede import controlli
+
+            with connetti() as conn:
+                c = riepilogo["controlli"] = controlli.controlla(conn)
+            return f"{c['controllati']} schede controllate: {c['con_gravi']} con problemi gravi, {c['da_migliorare']} da migliorare"
+
         for nome, lavoro in (("smistamento", smistamento), ("doppioni", doppioni), ("pagine", pagine),
                              ("documenti", documenti), ("stato_pagine", stato_pagine), ("filtro", filtro),
-                             ("ia", intelligenza)):
+                             ("ia", intelligenza), ("controlli", controlli_schede)):
             _passo(nome, lavoro)
         giro_intero.riepilogo = (f"{riepilogo.get('ripiego', 0)} incerti mandati avanti; doppioni: "
                                  f"{riepilogo.get('doppioni', {})}; {riepilogo.get('schede_da_aggiornare', 0)} schede da aggiornare")

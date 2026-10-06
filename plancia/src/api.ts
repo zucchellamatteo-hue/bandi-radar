@@ -216,6 +216,11 @@ export interface SistemaDettaglio {
   dati: { titolo: string; colonne: string[]; righe: Record<string, unknown>[] } | null;
 }
 
+// Schede con problemi trovati dal controllo senza IA (app/schede/controlli.py).
+export interface SchedaDaRivedere {
+  id: number; titolo: string; ente: string | null; stato: string | null; scadenza: string | null; completezza: string | null;
+  controllo: { fatto_il: string; gravi: string[]; da_migliorare: string[] };
+}
 // Pagina Lavorazione (app/catena/stato.py).
 export interface FaseLavorazione { fase: string; nome: string; prossimo: string; n: number }
 export interface Lavorazione {
@@ -377,6 +382,7 @@ export const api = {
   sistemi: () => chiama<Sistema[]>("/api/sistemi"),
   sistema: (id: string) => chiama<SistemaDettaglio>(`/api/sistemi/${id}`),
   lavorazione: () => chiama<Lavorazione>("/api/lavorazione"),
+  controlli: () => chiama<SchedaDaRivedere[]>("/api/controlli"),
   lavorazioneFase: (tipo: "bandi" | "annunci", fase: string) => chiama<RigaLavorazione[]>(`/api/lavorazione/${tipo}/${fase}`),
   profili: () => chiama<ProfiloSalvato[]>("/api/profili"),
   profilo: (codice: string) => chiama<ProfiloSalvato>(`/api/profili/${encodeURIComponent(codice)}`),

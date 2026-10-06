@@ -17,7 +17,7 @@ from app.schede.campi import REGIONI
 COLONNE = """b.id, b.titolo, b.ente, b.gestore, b.territorio, b.url, b.stato, b.data_apertura, b.scadenza, b.ora_scadenza,
     b.sintesi, b.tipo_agevolazione, b.tipi_agevolazione, b.temi, b.categorie_spesa, b.contributo_massimo, b.percentuale,
     b.fondo_perduto_massimo, b.percentuale_fondo_perduto, b.finanziamento_massimo, b.contributo_minimo, b.dotazione,
-    b.spesa_minima, b.spesa_massima, b.modalita_selezione, b.completezza, b.vincoli, b.linee, b.esclusioni,
+    b.spesa_minima, b.spesa_massima, b.modalita_selezione, b.completezza, b.vincoli, b.linee, b.esclusioni, b.controllo,
     b.territorio_regioni, b.territorio_province, b.territorio_comuni, b.sede_richiesta, b.soggetti_ammessi,
     b.forme_giuridiche_ammesse, b.forme_giuridiche_escluse, b.dimensioni_ammesse, b.eta_impresa_min_mesi,
     b.eta_impresa_max_mesi, b.requisiti_speciali_obbligatori, b.requisiti_speciali_premiali, b.dipendenti_min,
@@ -160,7 +160,8 @@ def prima_il_fondo_perduto(risultati: list[tuple[dict, regole.Esito]]) -> list[t
 def proponibile(b: dict) -> bool:
     """Si propone ai clienti solo un bando con la scheda fatta sul bando ufficiale (Matteo, 01/10/2026): una sintesi,
     una notizia o la scheda del catalogo non bastano. Gli altri restano "in disparte"."""
-    return b.get("completezza") == "bando_ufficiale"
+    # Dal 06/10 anche senza problemi gravi trovati dal controllo delle schede (app/schede/controlli.py).
+    return b.get("completezza") == "bando_ufficiale" and not ((b.get("controllo") or {}).get("gravi"))
 
 
 def abbina(bandi: list[dict], profilo: dict, oggi: date | None = None, anche_esclusi: bool = False,
