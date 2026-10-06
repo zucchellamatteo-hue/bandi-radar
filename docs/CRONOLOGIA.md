@@ -125,3 +125,4 @@
 - Fonti nuove: INAIL (bando ISI), INPS (circolari sugli incentivi), Unioncamere (Marchi+, Disegni+); ISMEA segnata "difficile" (blocca il server). Lettura completa degli elenchi di Lazio Innova e MASE.
 - Arretrato emerso: 839 bandi hanno il testo ufficiale ma non sono mai passati dalla scheda (in attesa della decisione sul tetto di spesa per l'IA).
 - Matteo approva il tetto di spesa dell'IA a 100 $ al mese: schede via API accese (IA_SCHEDE_API=1). Visione, obiettivi (affidabilità 9/10 prima di vendere) e prezzi (20 € al mese per i primi clienti, poi 30) in docs/VISIONE.md.
+- **Pulsante "Segnala"** in basso a destra in ogni pagina, chiesto da Matteo: bando mancante, errore in una scheda, stato o scadenza, doppione, documenti, problema della plancia, idea, altro; con la pagina di provenienza e, nella pagina di un bando, il suo numero. Nuova pagina **Segnalazioni** (tabella `segnalazioni`) e comando `python -m app.segnalazioni` per le sessioni.

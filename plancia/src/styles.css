@@ -142,3 +142,17 @@ header.barra { height: auto; min-height: 56px; padding-top: .3rem; padding-botto
 /* Misure chiuse (06/10): in fondo, in grigio. */
 .misure-chiuse .riquadro { opacity: .6; filter: grayscale(1); border-top-color: var(--pausa); }
 h2.chiuse { color: var(--grigio); border-bottom-color: var(--bordo); }
+/* Pulsante "Segnala" (06/10): sempre visibile in basso a destra, apre il pannello delle segnalazioni. */
+button.segnala-pulsante { position: fixed; right: 1.2rem; bottom: 1.2rem; z-index: 20; background: var(--accento); color: #fff; border-color: var(--accento); border-radius: 999px; padding: .6rem 1.2rem; font-size: .95rem; font-weight: 650; box-shadow: 0 4px 14px rgba(22, 62, 122, .3); }
+button.segnala-pulsante:hover { background: var(--blu-scuro); color: #fff; }
+.segnala-pannello { position: fixed; right: 1.2rem; bottom: 1.2rem; z-index: 20; width: min(400px, calc(100vw - 2rem)); max-height: calc(100vh - 6rem); overflow-y: auto; background: var(--carta); border: 1px solid var(--bordo); border-top: 4px solid var(--accento); border-radius: 12px; box-shadow: 0 8px 30px rgba(22, 62, 122, .25); padding: .8rem 1rem; }
+.segnala-testa { display: flex; justify-content: space-between; align-items: center; margin-bottom: .5rem; color: var(--blu-scuro); font-size: 1.05rem; }
+.segnala-testa button { border: none; font-size: 1rem; }
+ul.segnala-tipi { list-style: none; padding: 0; margin: 0; }
+ul.segnala-tipi li button { display: block; width: 100%; text-align: left; margin-bottom: .35rem; padding: .45rem .6rem; }
+ul.segnala-tipi li button span { display: block; margin-top: .1rem; }
+.segnala-pannello form label { display: flex; flex-direction: column; gap: .2rem; font-size: .85rem; font-weight: 600; color: var(--grigio); margin-bottom: .5rem; }
+.segnala-pannello input, .segnala-pannello textarea { padding: .4rem .55rem; border: 1px solid var(--bordo); border-radius: 6px; font: inherit; font-weight: 400; color: var(--testo); }
+ul.segnala-mie { padding-left: 1rem; font-size: .85rem; }
+button.collegamento { border: none; background: none; padding: 0; color: var(--accento); text-decoration: underline; font-size: inherit; }
+.riquadro.scelto { border-color: var(--accento); background: #e8f0fb; }

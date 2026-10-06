@@ -1,4 +1,4 @@
-# Guida della piattaforma Bandi Radar (05/10/2026, aggiornata il 06/10: Da rivedere, ricerca per numero, misure).
+# Guida della piattaforma Bandi Radar (05/10/2026, aggiornata il 06/10: Da rivedere, ricerca per numero, misure, pulsante Segnala).
 # Ogni sezione si vede se l'utente ha ALMENO UNO dei valori in "per": "tutti", "admin", "impresa" oppure i permessi
 # "catalogo", "giudizi", "lavoro", "modifiche", "imprese". L'amministratore vede tutto.
 # Testo: paragrafi separati da una riga vuota, elenchi con "- " o "1. ", **grassetto** per pulsanti e voci di menu.
@@ -39,10 +39,12 @@ sezioni:
 
       - Impresa: **I miei bandi**, **Agevolazioni fiscali**, **Le mie imprese**, **Richieste di supporto**, **Abbonamento**.
       - Revisore con i permessi di base: **Catalogo**, **Misure**, **I miei giudizi** (e **Imprese** se ha quel permesso).
-      - Chi ha il permesso "lavoro": **Fonti**, **Catalogo**, **Misure**, **Profili**, **Annunci**, **Lavorazione**, **Supervisione**, **Doppioni**, **Novità**, **Feedback**; con il permesso "imprese" anche **Imprese** e **Campagne**.
+      - Chi ha il permesso "lavoro": **Fonti**, **Catalogo**, **Misure**, **Profili**, **Annunci**, **Lavorazione**, **Supervisione**, **Doppioni**, **Novità**, **Feedback**, **Segnalazioni**; con il permesso "imprese" anche **Imprese** e **Campagne**.
       - Amministratore: tutto, più **Utenti** e **Prossimi passi**.
 
       La voce **Guida** apre questa pagina: mostra solo le parti che ti riguardano.
+
+      In basso a destra, in ogni pagina, c'è il pulsante **Segnala** per mandarci un problema o un'idea.
 
       In alto a destra vedi il tuo nome, il ruolo tra parentesi e il pulsante **Esci**.
 
@@ -166,6 +168,36 @@ sezioni:
 
       Le sessioni di Claude Code leggono questo elenco come la lista dei lavori da portare in produzione: partono dalle voci "da fare" con la priorità più alta, le aggiornano mentre lavorano e le segnano come fatte quando la modifica è unita in main. Più la descrizione è chiara, meno domande ti faranno.
 
+  - id: segnala
+    titolo: "Il pulsante Segnala"
+    per: [tutti]
+    testo: |
+      In basso a destra di ogni pagina c'è il pulsante **Segnala**. Serve per dirci in pochi secondi che qualcosa non va o che ti serve qualcosa.
+
+      1. Premi **Segnala**.
+      2. Scegli il tipo: **Manca un bando**, **Errore in una scheda**, **Stato o scadenza sbagliati**, **Doppione**, **Documenti sbagliati o mancanti**, **Problema della plancia**, **Idea o richiesta**, **Altro**. Sotto ogni tipo c'è una riga che lo spiega.
+      3. Compila i campi del tipo. Per **Manca un bando** basta il nome o il link del bando. Se sei nella pagina di un bando, il suo numero è già scritto nel campo **Bando**.
+      4. Scrivi, se vuoi, cosa vuoi dirci, poi premi **Invia**.
+
+      Non serve dire in che pagina eri: la segnalazione lo registra da sola. **← Indietro** torna alla scelta del tipo, **✕** (o il tasto Esc) chiude senza mandare niente.
+
+      Leggiamo ogni segnalazione e rispondiamo. Per vedere le tue e le risposte apri **Segnala** e premi **Le mie segnalazioni e le risposte** (chi ha il permesso "lavoro" trova invece il collegamento **Tutte le segnalazioni**).
+
+  - id: lavoro_segnalazioni
+    titolo: "La pagina Segnalazioni"
+    per: [lavoro]
+    testo: |
+      La pagina **Segnalazioni** raccoglie quello che arriva dal pulsante **Segnala**, da tutti gli utenti.
+
+      - All'apertura mostra le segnalazioni aperte (nuove e prese in carico), dalla più recente.
+      - I riquadri in alto contano le aperte per tipo: clicca **Manca un bando** (o un altro tipo) per vedere solo quelle.
+      - Con i due menu scegli lo stato (aperte, nuova, presa in carico, risolta, respinta, tutti) e il tipo.
+      - Per ogni segnalazione vedi il tipo, il bando collegato (cliccalo per aprirlo), i campi compilati, il testo, chi l'ha mandata, quando e da quale pagina.
+
+      Con il permesso "modifiche" (e per l'amministratore) nella colonna di destra scegli lo stato, scrivi la risposta per chi ha scritto e premi **Salva**. Chi ha scritto vede stato e risposta dal suo pulsante **Segnala**.
+
+      Le sessioni di Claude Code leggono le segnalazioni aperte all'inizio del lavoro, insieme ai prossimi passi: aggiungono i bandi mancanti, correggono le schede e chiudono la segnalazione con una risposta (firmata "agente").
+
   - id: lavoro_panoramica
     titolo: "Le pagine di lavoro: cosa guardare"
     per: [lavoro]
@@ -200,6 +232,8 @@ sezioni:
 
       **Feedback**. I giudizi di revisori e imprese sulle schede, con lo stato.
 
+      **Segnalazioni**. Quello che arriva dal pulsante **Segnala**: bandi mancanti, errori, doppioni, problemi della plancia, idee.
+
       Ogni giorno, in due minuti:
       - **Fonti**: ci sono allarmi o fonti rosse?
       - **Supervisione**: il riquadro "da guardare" è a zero?
@@ -207,7 +241,7 @@ sezioni:
       Ogni settimana:
       - **Doppioni**: decidere quelli aperti.
       - **Annunci** con il filtro "Da rivedere": correggere lo smistamento.
-      - **Feedback**: guardare le segnalazioni nuove.
+      - **Feedback** e **Segnalazioni**: guardare quelle nuove.
       - **Lavorazione**: ci sono fasi con molti bandi fermi? In **Da rivedere** ci sono schede gravi?
       - **Novità**: leggere la settimana.
 

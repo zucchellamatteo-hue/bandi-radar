@@ -23,6 +23,7 @@ from app.fatture.api import router as api_fatture
 from app.guida.api import router as api_guida
 from app.passi.api import router as api_passi
 from app.feedback.api import router as api_feedback
+from app.segnalazioni.api import router as api_segnalazioni
 from app.notifiche.api import router as api_notifiche
 from app.impresa.api import router as api_impresa
 from app.plancia.api import router as api_plancia
@@ -61,6 +62,7 @@ _PAGINA_IN_COSTRUZIONE = """<!doctype html><html lang="it"><head><meta charset="
 
 app.include_router(api_utenti)
 app.include_router(api_feedback)
+app.include_router(api_segnalazioni)   # pulsante "Segnala": scrive chiunque abbia fatto l'accesso
 app.include_router(api_notifiche)   # email alle imprese (solo admin) e disiscrizione pubblica
 app.include_router(api_impresa)
 app.include_router(api_abbonamenti)
