@@ -26,7 +26,7 @@
 
 Tutto quello che succede dopo la raccolta lo guida il **regista**, una volta all'ora. Le pagine della plancia dove guardare sono: **Fonti** (la raccolta), **Lavorazione** (a che punto sono annunci e bandi, e le schede "Da rivedere"), **Supervisione** (tutti i sistemi automatici e com'è andato l'ultimo giro).
 
-**Chi lavora senza IA e chi con l'IA.** Raccolta, smistamento a regole, doppioni chiari, pagina ufficiale, documenti, filtro, ricontrolli dello stato, controllo delle schede, abbinamento ed email: **senza IA**, quindi senza costo. L'IA (Claude Opus 5.5 con la chiave API e il tetto di spesa) fa solo: smistamento degli annunci incerti, doppioni dubbi, controllo preliminare. Le **schede** finché il servizio non è venduto le scrivono gli agenti nelle sessioni di Claude Code (`IA_SCHEDE_API=0`).
+**Chi lavora senza IA e chi con l'IA.** Raccolta, smistamento a regole, doppioni chiari, pagina ufficiale, documenti, filtro, ricontrolli dello stato, controllo delle schede, abbinamento ed email: **senza IA**, quindi senza costo. L'IA (Claude Opus 5.5 con la chiave API e il tetto di spesa) fa solo: smistamento degli annunci incerti, doppioni dubbi, controllo preliminare. Dal 06/10 anche le **schede** si scrivono con l'API (`IA_SCHEDE_API=1`, decisione di Matteo con il tetto a 100 $ al mese); gli agenti nelle sessioni di Claude Code restano per i casi difficili, le verifiche e i rifacimenti.
 
 **Dove gira.** Tutto in Docker sul server OVH (`/srv/bandi-radar`): `db` (Postgres), `app` (sito e plancia), `raccolta` (il servizio che ogni ora raccoglie e fa girare il regista), `caddy` (HTTPS). Il server scarica `main` da GitHub ogni 5 minuti: unire una pull request vuol dire metterla in produzione.
 
@@ -195,7 +195,7 @@ Per ogni pezzo: **cosa fa**, **quando gira**, **dove si vede**, **file principal
 | Interruttore | Cosa accende | Oggi |
 |---|---|---|
 | `CATENA_AUTOMATICA` | il regista nel giro orario | acceso |
-| `ANTHROPIC_API_KEY`, `IA_TETTO_MESE_USD` | l'IA con la chiave API e il tetto mensile | attiva, 30 $ |
+| `ANTHROPIC_API_KEY`, `IA_TETTO_MESE_USD` | l'IA con la chiave API e il tetto mensile | attiva, 100 $ al mese (dal 06/10) |
 | `IA_SCHEDE_API` | schede scritte dall'API invece che in sessione | spento |
 | `IA_PRELIMINARI_DIRETTI` | controlli preliminari con chiamate dirette (prezzo pieno) | spento |
 | `RESEND_API_KEY` | invio delle email | da configurare |
