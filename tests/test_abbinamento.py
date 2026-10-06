@@ -173,3 +173,14 @@ def test_catalogo_piu_regioni():
                  categorie_spesa=[], regime_aiuto=[], modalita_selezione=None)
     trovati = catalogo.filtra([piemonte, veneto], catalogo.Filtri(regione="LOM,PIE"), OGGI)
     assert [b["id"] for b, _ in trovati] == [1]
+
+
+def test_ricerca_per_numero_del_bando():
+    from app.abbinamento import catalogo
+
+    bandi = [{"id": 4092, "titolo": "Contributi", "ente": "Comune", "stato": "chiuso", "completezza": "solo_sintesi",
+              "livelli": [], "vincoli": {}},
+             {"id": 7, "titolo": "Altro", "ente": "X", "stato": "aperto", "completezza": "bando_ufficiale", "livelli": [], "vincoli": {}}]
+    for testo in ("4092", " n. 4092", "#4092", "numero:4092"):
+        assert [b["id"] for b, _ in catalogo.filtra(bandi, catalogo.Filtri(q=testo))] == [4092], testo
+    assert catalogo.filtra(bandi, catalogo.Filtri(q="999")) == []

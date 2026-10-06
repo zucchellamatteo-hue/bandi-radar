@@ -14,7 +14,8 @@ export default function Bando() {
   const utente = useUtente();
   const admin = puo(utente, "lavoro");
   const giudica = puo(utente, "giudizi");
-  useEffect(() => { if (id) api.bando(id).then(setB).catch((e) => setErrore(String(e))); }, [id]);
+  // Basta che nell'indirizzo ci sia il numero: /bandi/4092 ma anche /bandi/numero:4092.
+  useEffect(() => { const n = (id || "").replace(/\D/g, ""); if (n) api.bando(n).then(setB).catch((e) => setErrore(String(e))); }, [id]);
   if (errore) return <div className="allarme">{errore}</div>;
   if (!b) return <div className="caricamento">Caricamento…</div>;
   const dati = (b.dati || {}) as { avvertenze?: string[]; problemi?: string[]; modello?: string };
