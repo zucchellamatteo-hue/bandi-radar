@@ -31,7 +31,10 @@ def problemi(b: dict, altri_sulla_pagina: list[dict], categorie_documenti: list[
     gravi, migliorare = [], []
     risposta = (b.get("dati") or {}).get("risposta") or {}
     if b.get("completezza") == "bando_ufficiale" and "bando" not in categorie_documenti and "decreto" not in categorie_documenti:
-        gravi.append("scheda segnata 'bando ufficiale' ma tra i documenti non c'e' il testo del bando")
+        if b.get("documentazione") == "bando":   # il filtro ha trovato il testo nella pagina o in un documento senza nome chiaro
+            migliorare.append("il testo del bando c'e' ma non e' riconoscibile dal nome tra i documenti")
+        else:
+            gravi.append("scheda segnata 'bando ufficiale' ma tra i documenti non c'e' il testo del bando")
     for a in altri_sulla_pagina:
         if (a.get("titolo") or "").strip().lower() == (b.get("titolo") or "").strip().lower():
             gravi.append(f"possibile doppione: stessa pagina e stesso titolo del bando {a['id']}")
