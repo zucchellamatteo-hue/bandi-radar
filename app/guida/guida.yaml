@@ -1,4 +1,4 @@
-# Guida della piattaforma Bandi Radar (05/10/2026, aggiornata il 06/10: Da rivedere, ricerca per numero, misure, pulsante Segnala).
+# Guida della piattaforma Bandi Radar (05/10/2026, aggiornata il 06/10: Da rivedere, ricerca per numero, misure, pulsante Segnala, uso dal telefono).
 # Ogni sezione si vede se l'utente ha ALMENO UNO dei valori in "per": "tutti", "admin", "impresa" oppure i permessi
 # "catalogo", "giudizi", "lavoro", "modifiche", "imprese". L'amministratore vede tutto.
 # Testo: paragrafi separati da una riga vuota, elenchi con "- " o "1. ", **grassetto** per pulsanti e voci di menu.
@@ -47,6 +47,8 @@ sezioni:
       In basso a destra, in ogni pagina, c'è il pulsante **Segnala** per mandarci un problema o un'idea.
 
       In alto a destra vedi il tuo nome, il ruolo tra parentesi e il pulsante **Esci**.
+
+      La plancia si usa anche dal telefono: in alto c'è il pulsante **☰** con il nome della pagina in cui sei; premilo per aprire il menu (nome, ruolo ed **Esci** sono in fondo al menu). Il pulsante **Segnala** sul telefono sta in alto, accanto al menu. Le tabelle diventano schede una sotto l'altra e nel Catalogo i filtri meno usati si aprono con **Altri filtri**.
 
   - id: admin_primo_accesso
     titolo: "Primo accesso dell'amministratore"
@@ -172,7 +174,7 @@ sezioni:
     titolo: "Il pulsante Segnala"
     per: [tutti]
     testo: |
-      In basso a destra di ogni pagina c'è il pulsante **Segnala**. Serve per dirci in pochi secondi che qualcosa non va o che ti serve qualcosa.
+      In basso a destra di ogni pagina (sul telefono in alto, accanto al menu) c'è il pulsante **Segnala**. Serve per dirci in pochi secondi che qualcosa non va o che ti serve qualcosa.
 
       1. Premi **Segnala**.
       2. Scegli il tipo: **Manca un bando**, **Errore in una scheda**, **Stato o scadenza sbagliati**, **Doppione**, **Documenti sbagliati o mancanti**, **Problema della plancia**, **Idea o richiesta**, **Altro**. Sotto ogni tipo c'è una riga che lo spiega.

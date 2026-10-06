@@ -28,8 +28,10 @@ Scrivi `<id>/verifica_ia.json` (UTF-8, JSON valido):
 {"id": 123,
  "esito": "corretta | da_correggere | grave",
  "problemi": [{"gravita": "grave|minore", "campo": "scadenza", "nella_scheda": "...", "nel_bando": "...",
-               "citazione": "frase esatta del documento (max 300 caratteri)"}],
+               "citazione": "frase esatta del documento (max 300 caratteri)",
+               "correzione": {"campo": "nome del campo della scheda (es. scadenza, contributo_massimo, per_imprese)",
+                              "valore": "valore giusto, nello stesso formato del campo"}}],
  "note": "una o due frasi in italiano semplice per Matteo"}
 ```
-Niente inventato: ogni problema deve avere la citazione. Alla fine rispondi con una riga per bando: id, esito,
+Per ogni problema grave metti sempre `correzione` (servira' a correggere la scheda). Controlla anche **a chi si rivolge**: se il bando non e' per imprese (solo enti pubblici, associazioni, Terzo Settore, persone fisiche) e' grave, correzione {"campo": "per_imprese", "valore": "no"}. Niente inventato: ogni problema deve avere la citazione. Alla fine rispondi con una riga per bando: id, esito,
 numero di problemi gravi/minori.

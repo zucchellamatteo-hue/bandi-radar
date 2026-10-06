@@ -11,6 +11,7 @@ export default function Catalogo() {
   const [valori, setValori] = useState<Valori | null>(null);
   const [testo, setTesto] = useState(parametri.get("q") || "");
   const [ateco, setAteco] = useState(parametri.get("ateco") || "");
+  const [altriFiltri, setAltriFiltri] = useState(false);   // sul telefono i filtri "chi partecipa" e "cosa e come" sono chiusi
   const pagina = Number(parametri.get("pagina") || "1");
 
   const imposta = (chiave: string, valore: string) => {
@@ -69,6 +70,7 @@ export default function Catalogo() {
   const perPagina = 50;
   const ultimaPagina = risposta ? Math.max(1, Math.ceil(risposta.totale / perPagina)) : 1;
   const filtriAttivi = [...parametri.keys()].filter((k) => k !== "pagina").length > 0;
+  const nAltri = [...parametri.keys()].filter((k) => !["pagina", "q", "stato", "scadenza_entro", "livello"].includes(k)).length;
   return (
     <>
       <h1>Catalogo dei bandi</h1>
@@ -91,7 +93,10 @@ export default function Catalogo() {
         {menu("livello", "Tutti gli enti", Object.entries(NOMI_TIPO).filter(([k]) => k !== "contesto"))}
       </form>
 
-      <div className="filtri">
+      <button type="button" className={`solo-mobile altri-filtri${altriFiltri ? " filtro-attivo" : ""}`} aria-expanded={altriFiltri}
+        onClick={() => setAltriFiltri(!altriFiltri)}>{altriFiltri ? "▴ Chiudi i filtri" : "▾ Altri filtri"}
+        {nAltri > 0 && ` (${nAltri} attivi)`}</button>
+      <div className={`filtri filtri-extra${altriFiltri ? " aperti" : ""}`}>
         <span className="piccolo etichetta-filtri">Chi partecipa</span>
         {multiplo("regione", "Tutte le regioni", Object.entries(valori?.regioni || {}).sort((a, b) => a[1].localeCompare(b[1])))}
         {menu("provincia", "Provincia", province)}
@@ -105,7 +110,7 @@ export default function Catalogo() {
         {menu("requisito", "Riservati o con punti per…", elenco("requisiti_speciali_obbligatori").filter(([k]) => k !== "altro"))}
       </div>
 
-      <div className="filtri">
+      <div className={`filtri filtri-extra${altriFiltri ? " aperti" : ""}`}>
         <span className="piccolo etichetta-filtri">Cosa e come</span>
         {menu("tipo_agevolazione", "Tipo di agevolazione", elenco("tipi_agevolazione"))}
         {menu("tema", "Tema", elenco("temi"))}
@@ -157,7 +162,7 @@ export function Importo({ b }: { b: Pick<BandoRiga, "contributo_massimo" | "fond
 function Riga({ b }: { b: BandoRiga }) {
   return (
     <tr>
-      <td><SegnoEsito livello={b.esito.livello} /></td>
+      <td className="segno"><SegnoEsito livello={b.esito.livello} /></td>
       <td><Link to={`/bandi/${b.id}`} className="titolo-annuncio">{b.titolo}</Link>
         {b.url && <> <a href={b.url} target="_blank" rel="noreferrer" className="piccolo" title="Pagina ufficiale">ufficiale ↗</a></>}
         {b.sintesi && <div className="riassunto">{b.sintesi}{b.sintesi.length >= 260 ? "…" : ""}</div>}
