@@ -20,6 +20,8 @@ import Imprese from "./pagine/Imprese";
 import Campagne from "./pagine/Campagne";
 import Misure from "./pagine/Misure";
 import Passi from "./pagine/Passi";
+import Segnalazioni from "./pagine/Segnalazioni";
+import Segnala from "./Segnala";
 import Guida from "./pagine/Guida";
 import Account from "./pagine/Account";
 import { Abbonamento, MieImprese, MieiBandi, MieRichieste, ModuloImpresa, SchedaImpresa } from "./pagine/AreaImpresa";
@@ -60,6 +62,7 @@ export default function App() {
           <NavLink to="/doppioni" className={classe}>Doppioni</NavLink>{" · "}
           <NavLink to="/novita" className={classe}>Novità</NavLink>{" · "}
           <NavLink to="/feedback" className={classe}>Feedback</NavLink>{" · "}
+          <NavLink to="/segnalazioni" className={classe}>Segnalazioni</NavLink>{" · "}
           {imprese && <><NavLink to="/imprese" className={classe}>Imprese</NavLink>{" · "}
             <NavLink to="/campagne" className={classe}>Campagne</NavLink>{" · "}</>}
           <NavLink to="/passi" className={classe}>Prossimi passi</NavLink>{" · "}
@@ -113,6 +116,7 @@ export default function App() {
             <Route path="/novita/:chiave" element={<Settimana />} />
             {admin && <Route path="/utenti" element={<Utenti />} />}
             <Route path="/feedback" element={<Feedback />} />
+            <Route path="/segnalazioni" element={<Segnalazioni />} />
             {imprese && <Route path="/imprese" element={<Imprese />} />}
             {imprese && <Route path="/campagne" element={<Campagne />} />}
             {imprese && <Route path="/campagne/:id" element={<Campagne />} />}
@@ -155,6 +159,7 @@ export default function App() {
           </Routes>
         )}
       </main>
+      <Segnala />
     </ContestoUtente.Provider>
   );
 }

@@ -23,6 +23,14 @@ export interface FeedbackBando {
 export interface RigaFeedback extends GiudizioSalvato {
   email: string; nome: string | null; titolo: string; ente: string | null; versione_attuale: number; qualita: number | null; peso: number;
 }
+// Segnalazioni rapide (app/segnalazioni): il pulsante "Segnala" in ogni pagina.
+export type StatoSegnalazione = "nuova" | "presa_in_carico" | "risolta" | "respinta";
+export interface TipoSegnalazione { nome: string; descrizione: string; campi: Record<string, string> }
+export interface Segnalazione {
+  id: number; tipo: string; testo: string | null; dettagli: Record<string, string>; bando_id: number | null; pagina: string | null;
+  utente_id: number | null; ruolo: RuoloUtente | null; stato: StatoSegnalazione; risposta: string | null; creata_il: string;
+  gestita_il: string | null; gestita_da: string | null; email?: string | null; nome?: string | null; bando_titolo?: string | null;
+}
 // Area impresa (app/impresa).
 export interface Impresa {
   id: number; nome: string; profilo_codice: string; profilo: Profilo; fasce: { dipendenti?: string; fatturato?: string };
@@ -292,6 +300,15 @@ export const api = {
     chiama<{ email: string; nome: string | null; scopo: string }>(`/api/accesso/link?codice=${encodeURIComponent(codice)}`),
   impostaPassword: (codice: string, password: string) =>
     chiama<Utente>("/api/accesso/imposta-password", { method: "POST", body: JSON.stringify({ codice, password }) }),
+  tipiSegnalazione: () => chiama<{ tipi: Record<string, TipoSegnalazione>; stati: Record<StatoSegnalazione, string> }>("/api/segnalazioni/tipi"),
+  segnala: (corpo: { tipo: string; testo: string; dettagli: Record<string, string>; bando_id: number | null; pagina: string }) =>
+    chiama<Segnalazione>("/api/segnalazioni", { method: "POST", body: JSON.stringify(corpo) }),
+  segnalazioni: (parametri: Record<string, string>) =>
+    chiama<{ totale: number; pagina: number; per_pagina: number; conteggi: Record<StatoSegnalazione, number>;
+      aperte_per_tipo: Record<string, number>; tipi: Record<string, TipoSegnalazione>; stati: Record<StatoSegnalazione, string>;
+      segnalazioni: Segnalazione[] }>("/api/segnalazioni?" + new URLSearchParams(parametri).toString()),
+  gestisciSegnalazione: (id: number, corpo: { stato: StatoSegnalazione; risposta: string }) =>
+    chiama<Segnalazione>(`/api/segnalazioni/${id}`, { method: "PATCH", body: JSON.stringify(corpo) }),
   feedbackBando: (id: number) => chiama<FeedbackBando>(`/api/bandi/${id}/feedback`),
   giudica: (id: number, corpo: { voto: number | null; problemi: ProblemaFeedback[]; commento: string | null }) =>
     chiama<GiudizioSalvato>(`/api/bandi/${id}/feedback`, { method: "PUT", body: JSON.stringify(corpo) }),

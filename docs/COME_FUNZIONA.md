@@ -172,7 +172,15 @@ Per ogni pezzo: **cosa fa**, **quando gira**, **dove si vede**, **file principal
 - **File principale.** `app/passi/api.py`.
 - **Limiti noti.** Funziona solo se le sessioni lo aggiornano davvero a fine lavoro.
 
-### 17. Guida
+### 17. Segnalazioni (pulsante "Segnala")
+
+- **Cosa fa.** In basso a destra di ogni pagina della plancia c'è il pulsante **Segnala**, per tutti quelli che hanno fatto l'accesso (anche le imprese). Si sceglie il tipo (manca un bando, errore in una scheda, stato o scadenza sbagliati, doppione, documenti sbagliati o mancanti, problema della plancia, idea o richiesta, altro), si compilano i due o tre campi del tipo (per "Manca un bando": nome o link) e si scrive un testo libero. La pagina da cui si scrive parte da sola; nella pagina di un bando il suo numero è già scritto. Diverse dai giudizi sulle schede (sezione 13): non serve una scheda, e coprono anche bandi che non ci sono e problemi della plancia.
+- **Quando gira.** Non gira: si scrive e si legge. Le sessioni di Claude Code le leggono all'inizio (`python -m app.segnalazioni`) e le chiudono con una risposta (`python -m app.segnalazioni rispondi ID risolta "testo"`).
+- **Dove si vede.** Pagina **Segnalazioni** (chi ha "lavoro" la legge, chi ha "modifiche" cambia stato e risposta); i riquadri in alto contano le aperte per tipo, così "Manca un bando" si filtra con un clic. Chi non ha "lavoro" vede le sue segnalazioni e le risposte dal pulsante stesso (**Le mie segnalazioni e le risposte**).
+- **File principale.** `app/segnalazioni/api.py` (tipi e campi in `app/segnalazioni/__init__.py`; pulsante `plancia/src/Segnala.tsx`).
+- **Limiti noti.** Nessun avviso via email quando arriva una segnalazione o una risposta: si guarda la pagina.
+
+### 18. Guida
 
 - **Cosa fa.** Le istruzioni d'uso della piattaforma, in una sola guida filtrata dal server: ogni sezione dice chi la vede (`tutti`, `admin`, `impresa` o un permesso). L'amministratore vede tutto, l'impresa solo le sezioni scritte per lei.
 - **Quando gira.** Quando si apre la pagina.
