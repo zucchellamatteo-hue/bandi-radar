@@ -1,0 +1,52 @@
+2026-10-06;F01 fonti attive;267
+2026-10-06;F02 fonti difficili o da verificare;16
+2026-10-06;F03 fonti attive con ultimo controllo in errore;4
+2026-10-06;F04 fonti attive senza controllo da 35 giorni;0
+2026-10-06;F05 fonti attive senza annunci nuovi in 14 giorni;10
+2026-10-06;F06 fonti nazionali/UE attive senza annunci nuovi in 14 giorni;6
+2026-10-06;F07 controlli in errore ultimi 14 giorni (%);5.6
+2026-10-06;A01 annunci novita ultimi 14 giorni;7164
+2026-10-06;A02 annunci da rivedere;353
+2026-10-06;A03 annunci rilevanti senza bando;23
+2026-10-06;A04 smistamenti decisi dall IA (%);48.8
+2026-10-06;B01 bandi (non uniti);4336
+2026-10-06;B02 bandi uniti a un altro;51
+2026-10-06;B03 pagina ufficiale non trovata;240
+2026-10-06;B04 documenti da valutare (filtro non fatto);242
+2026-10-06;B05 con testo ufficiale;1951
+2026-10-06;B06 testo ufficiale senza preliminare;5
+2026-10-06;B07 testo ufficiale fermati come chiusi (senza scheda);996
+2026-10-06;B08 di cui chiusi dai segnali senza IA;341
+2026-10-06;B09 fermati come chiusi o non per imprese ma con scadenza futura;50
+2026-10-06;B10 scheda in attesa (preliminare passato, senza scheda);3
+2026-10-06;B11 schede da aggiornare;0
+2026-10-06;S01 schede proponibili (bando ufficiale);671
+2026-10-06;S02 proponibili aperte o in arrivo;383
+2026-10-06;S03 proponibili con problemi gravi;33
+2026-10-06;S04 aperte o in arrivo con problemi gravi (nascoste ai clienti);32
+2026-10-06;S05 proponibili da migliorare (%);63.0
+2026-10-06;S06 proponibili senza stato;40
+2026-10-06;S07 proponibili aperte scadute (stato incoerente);0
+2026-10-06;S08 proponibili non ricontrollate (stato) da 8 giorni;21
+2026-10-06;D01 gruppi di bandi non uniti con la stessa url_chiave;37
+2026-10-06;D02 bandi con annunci a oltre 300 giorni di distanza (edizioni mescolate?);92
+2026-10-06;D03 doppioni dubbi senza decisione;0
+2026-10-06;D04 documenti non scaricati per il limite di 30 file;2961
+2026-10-06;D05 documenti in errore (%);14.1
+2026-10-06;Q01 feedback totali;1
+2026-10-06;Q02 feedback da gestire;0
+2026-10-06;Q03 voto medio feedback;3.00
+2026-10-06;I01 spesa IA del mese (USD);11.86
+2026-10-06;I02 spesa IA schede del mese (USD);1.01
+2026-10-06;I03 spesa IA ultimi 7 giorni (USD);11.86
+2026-10-06;I04 chiamate IA in errore ultimi 14 giorni;122
+2026-10-06;I05 costo medio scheda batch ultimi 30 giorni (USD);0.142
+2026-10-06;R01 giri del regista ultime 24 ore;36
+2026-10-06;R02 durata massima del regista ultimi 7 giorni (s);1791
+2026-10-06;R03 esecuzioni rimaste in corso (interrotte) ultimi 14 giorni;4
+2026-10-06;R04 esecuzioni in errore ultimi 14 giorni;0
+2026-10-06;M01 imprese iscritte;0
+2026-10-06;M02 profili;3
+2026-10-06;M03 email alle imprese preparate ultimi 14 giorni;0
+2026-10-06;P01 prossimi passi da fare o in corso;22
+2026-10-06;X01 dimensione database (MB);453
