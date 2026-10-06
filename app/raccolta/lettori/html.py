@@ -23,7 +23,7 @@ LUNGHEZZA_MINIMA_TITOLO = 18
 # Con un selettore del registro i link sono gia' quelli giusti: bastano titoli corti ("Legge 181", "Bando SI4.0 2026").
 LUNGHEZZA_MINIMA_CON_SELETTORE = 5
 _TESTI_GENERICI = re.compile(
-    r"^(leggi( di piu'| tutto)?|vai( alla pagina)?|scopri( di piu')?|(ulteriori |maggiori )?dettagli|per saperne di pi(u'|ù)|"
+    r"^(leggi( di piu'| tutto)?|vai( alla pagina)?|scopri( di piu')?|approfondisci|visita la pagina( dedicata)?|(ulteriori |maggiori )?dettagli|per saperne di pi(u'|ù)|"
     r"apri|continua|home|privacy|cookie|"
     r"accedi|login|contatti|mappa del sito|torna su|scarica|download|prev|next|precedente|successivo)\b",
     re.IGNORECASE,
@@ -126,7 +126,10 @@ def _titolo_della_scheda(a) -> str | None:
     for _ in range(3):
         if scheda is None:
             return None
-        titolo = scheda.find(["h1", "h2", "h3", "h4", "h5"])
+        # Non il testo generico scritto come titolo dentro il link stesso ("<a><h4>Approfondisci</h4></a>", Fondirigenti).
+        titolo = next((h for h in scheda.find_all(["h1", "h2", "h3", "h4", "h5"])
+                       if not (_TESTI_GENERICI.match(_SPAZI.sub(" ", h.get_text(" ")).strip())
+                               and any(p is a for p in h.parents))), None)
         if titolo is not None:
             return _SPAZI.sub(" ", titolo.get_text(" ")).strip()
         scheda = scheda.find_parent(["article", "li", "div", "tr", "section"])

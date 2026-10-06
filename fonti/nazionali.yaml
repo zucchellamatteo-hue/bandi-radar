@@ -434,6 +434,352 @@
     "Riparte Generazione Terra" trovata con la ricerca web, non verificato nel contenuto. Le misure ISMEA
     (Generazione Terra, Piu' Impresa, bando trattori) arrivano oggi da incentivi.gov.it.
 
+# --- Copertura dei ministeri e degli enti nazionali (ricerca docs/ricerche/2026-10-06_copertura_ministeri.md) ---
+
+- id: cultura_avvisi
+  nome: Ministero della Cultura - Avvisi
+  ente: Ministero della Cultura
+  tipo: nazionale
+  territorio: ITA
+  url: https://cultura.gov.it/comunicati/avvisi
+  modalita: html
+  frequenza: tre_a_settimana
+  stato: attiva
+  verificato_il: '2026-10-06'
+  note: >
+    Aggiunta il 06/10 (copertura dei ministeri: il MiC non era tra le fonti). Schede "Avvisi" del sito del Ministero,
+    12 per pagina con la data, circa 3 a settimana: contributi e incentivi delle direzioni generali (Incentivo per la
+    filiera del libro, Ad Alta Voce, Citta' che legge, festival del fumetto) insieme a manifestazioni di interesse,
+    incarichi e appalti: lo smistamento scarta il resto. Il selettore esclude il riquadro con le notizie del 2021.
+  richiesta:
+    selettore: "#cardsList h3.card-title"
+
+- id: cultura_bandi
+  nome: Ministero della Cultura - Bandi
+  ente: Ministero della Cultura
+  tipo: nazionale
+  territorio: ITA
+  url: https://cultura.gov.it/comunicati/bandi-e-concorsi
+  modalita: html
+  frequenza: settimanale
+  stato: attiva
+  verificato_il: '2026-10-06'
+  note: >
+    Aggiunta il 06/10. Sezione "Bandi" del MiC: soprattutto gare e concorsi, ma anche bandi di contributo (festival
+    del fumetto, Capitale italiana della cultura e del libro, ricerca nelle aree vulnerabili). Non filtrare per "gara":
+    smistamento con l'IA. Stessa struttura della voce cultura_avvisi.
+  richiesta:
+    selettore: "#cardsList h3.card-title"
+
+- id: cultura_cinema_bandi
+  nome: Ministero della Cultura - DG Cinema e audiovisivo, bandi e incentivi
+  ente: Ministero della Cultura - Direzione generale Cinema e audiovisivo
+  tipo: nazionale
+  territorio: ITA
+  url: https://cinema.cultura.gov.it/comunicazione/notizie/bandi-incentivi/
+  modalita: html
+  piattaforma: wordpress
+  frequenza: settimanale
+  stato: attiva
+  verificato_il: '2026-10-06'
+  note: >
+    Aggiunta il 06/10. Notizie della categoria "Bandi e incentivi" della DG Cinema: contributi selettivi, Piano
+    nazionale Cinema e immagini per la scuola, Film Distribution Fund, riparti del Fondo cinema (15 notizie, poche
+    all'anno). I contributi automatici e il tax credit sono misure a sportello: le loro novita' sono in
+    /comunicazione/avvisi/. Il titolo comincia con "bandi incentivi - <data>".
+  richiesta:
+    selettore: "section.page-news div.single-news"
+
+- id: cultura_spettacolo_news
+  nome: Ministero della Cultura - DG Spettacolo, novita' e bandi
+  ente: Ministero della Cultura - Direzione generale Spettacolo
+  tipo: nazionale
+  territorio: ITA
+  url: https://spettacolo.cultura.gov.it/news/
+  modalita: rss
+  feed_url: https://spettacolo.cultura.gov.it/feed/
+  piattaforma: wordpress
+  frequenza: settimanale
+  stato: attiva
+  verificato_il: '2026-10-06'
+  note: >
+    Aggiunta il 06/10. Feed WordPress della DG Spettacolo (10 voci, circa 2 a settimana): bandi e contributi per
+    teatro, musica, danza, circo e spettacolo viaggiante (Fondo nazionale per lo spettacolo dal vivo, bandi jazz,
+    festival cori e bande, carnevali storici, accessibilita'), con assegnazioni e modulistica. Molti beneficiari sono
+    imprese dello spettacolo. Il vecchio indirizzo spettacolodalvivo.beniculturali.it non risponde.
+
+- id: coesione_avvisi_bandi
+  nome: Dipartimento per le politiche di coesione e il Sud - Finanziamenti, avvisi e bandi
+  ente: Presidenza del Consiglio dei Ministri - Dipartimento per le politiche di coesione e per il Sud
+  tipo: nazionale
+  territorio: ITA
+  url: https://www.politichecoesione.governo.it/it/finanziamenti-avvisi-e-bandi/
+  modalita: html
+  frequenza: settimanale
+  stato: attiva
+  verificato_il: '2026-10-06'
+  note: >
+    Aggiunta il 06/10. Ministro per gli affari europei, il PNRR e le politiche di coesione: avvisi del Dipartimento,
+    tra cui il Fondo di contrasto alla deindustrializzazione (seconda edizione 2026, per imprese; gestito con
+    Invitalia), insieme ad avvisi per enti pubblici (rischio sismico, PRigA, Scuola della coesione, assunzioni). Una
+    scheda per misura con le sottopagine (edizioni, FAQ): la nuova edizione di una misura compare come sottopagina.
+    Il portale STEP (/piattaforma-per-le-tecnologie-strategiche-per-leuropa-step/) rimanda ai bandi delle Regioni.
+  richiesta:
+    selettore: "#main-page .card"
+
+- id: sport_bandi_avvisi
+  nome: Dipartimento per lo Sport - Bandi e avvisi
+  ente: Presidenza del Consiglio dei Ministri - Dipartimento per lo Sport
+  tipo: nazionale
+  territorio: ITA
+  url: https://www.sport.governo.it/it/bandi-e-avvisi/
+  modalita: html
+  frequenza: settimanale
+  stato: attiva
+  verificato_il: '2026-10-06'
+  note: >
+    Aggiunta il 06/10. Ministro per lo sport e i giovani: avvisi del Dipartimento, quasi tutti per enti sportivi,
+    comuni e oratori, ma anche per imprese (contributo a fondo perduto per i gestori di impianti natatori). Una scheda
+    per misura: si leggono solo i titoli delle schede, perche' dentro ogni scheda ci sono decine di sottopagine
+    (graduatorie, allegati, modelli di rendicontazione). Ogni nuovo avviso ha la sua scheda. Il feed /it/rss/ e' vuoto.
+  richiesta:
+    selettore: "#main-page h2.card-header-custom"
+
+- id: sportesalute_bandi
+  nome: Sport e Salute - Bandi e avvisi
+  ente: Sport e Salute S.p.A.
+  tipo: nazionale
+  territorio: ITA
+  url: https://www.sportesalute.eu/bandi-e-avvisi.html
+  modalita: html
+  frequenza: settimanale
+  stato: attiva
+  verificato_il: '2026-10-06'
+  note: >
+    Aggiunta il 06/10. Schede degli avvisi di Sport e Salute con stato, apertura e chiusura: voucher sportivi e
+    contributi per ASD/SSD/ETS (le SSD sono imprese), comuni (Sport in Comune, Spazio Sport) e famiglie. Ogni scheda
+    ha il PDF dell'avviso e altri allegati: il titolo e' quello della scheda (piu' link con lo stesso titolo). Feed
+    RSS /primo-piano.feed solo di notizie sportive: non usato.
+  richiesta:
+    selettore: ".sppb-addon-image-layout-content"
+
+- id: famiglia_avvisi_bandi
+  nome: Dipartimento per le politiche della famiglia - Avvisi e bandi
+  ente: Presidenza del Consiglio dei Ministri - Dipartimento per le politiche della famiglia
+  tipo: nazionale
+  territorio: ITA
+  url: https://www.famiglia.governo.it/it/politiche-e-attivita/finanziamenti-avvisi-e-bandi/avvisi-e-bandi/
+  modalita: html
+  frequenza: settimanale
+  stato: attiva
+  verificato_il: '2026-10-06'
+  note: >
+    Aggiunta il 06/10. Ministro per la famiglia, la natalita' e le pari opportunita': pochi avvisi all'anno, quasi
+    tutti per comuni ed enti del terzo settore, ma a volte per imprese (welfare aziendale per il rientro dal
+    congedo di maternita', "#Riparto" 2022; conciliazione vita-lavoro con Unioncamere). Il feed RSS "Avvisi e
+    bandi" e' vuoto: si legge la pagina (9 avvisi con la data).
+
+- id: editoria_bandi_avvisi
+  nome: Dipartimento per l'informazione e l'editoria - Bandi e avvisi
+  ente: Presidenza del Consiglio dei Ministri - Dipartimento per l'informazione e l'editoria
+  tipo: nazionale
+  territorio: ITA
+  url: https://www.informazioneeditoria.gov.it/it/attivita/bandi-e-avvisi/
+  modalita: html
+  frequenza: settimanale
+  stato: attiva
+  verificato_il: '2026-10-06'
+  note: >
+    Aggiunta il 06/10. Avvisi del Fondo per il pluralismo e l'innovazione dell'informazione rivolti alle imprese
+    editrici (occupabilita' e autoimprenditorialita', innovazione e conversione al digitale, contrasto alle fake
+    news). I contributi diretti e i crediti d'imposta per l'editoria sono nella sezione "Misure di sostegno
+    all'editoria", che cambia raramente. Una scheda per avviso con le sottopagine (graduatorie, FAQ, rendicontazione).
+  richiesta:
+    selettore: "#main-page .card"
+
+- id: acn_avvisi
+  nome: Agenzia per la Cybersicurezza Nazionale - Avvisi
+  ente: Agenzia per la Cybersicurezza Nazionale
+  tipo: nazionale
+  territorio: ITA
+  url: https://www.acn.gov.it/portale/avvisi
+  modalita: html
+  piattaforma: liferay
+  frequenza: settimanale
+  stato: attiva
+  verificato_il: '2026-10-06'
+  note: >
+    Aggiunta il 06/10. Avvisi dell'ACN: contributi a fondo perduto per le startup dei programmi di accelerazione
+    (05/01/2026), call dei programmi di incubazione e accelerazione cyber per startup, insieme a borse di studio,
+    dottorati e tirocini (scartati dallo smistamento). Il feed RSS del sito e' quello del CSIRT (vulnerabilita'):
+    non usato. La pagina NCC "Opportunita' di finanziamento" rimanda ai bandi europei, gia' letti dal Portale UE.
+  richiesta:
+    selettore: ".portlet-body .card-title"
+
+- id: fondirigenti_avvisi
+  nome: Fondirigenti - Avvisi
+  ente: Fondirigenti (fondo interprofessionale per la formazione dei dirigenti)
+  tipo: nazionale
+  territorio: ITA
+  url: https://www.fondirigenti.it/
+  modalita: html
+  piattaforma: liferay
+  frequenza: settimanale
+  stato: attiva
+  verificato_il: '2026-10-06'
+  note: >
+    Aggiunta il 06/10 (fondi interprofessionali: contributi alla formazione per le imprese aderenti). La pagina
+    /avvisi elenca gli avvisi (1/2026, 2/2025...) ma ogni link e' un PDF con titoli tutti uguali; nella home ogni
+    avviso in corso ha una scheda (titolo "Avviso 1/2026") con il link alla pagina dell'avviso: si legge quella.
+  richiesta:
+    selettore: ".title-hero"
+
+- id: fondoforte_avvisi
+  nome: Fondo For.Te. - Avvisi attivi
+  ente: Fondo For.Te. (fondo interprofessionale per la formazione nel terziario)
+  tipo: nazionale
+  territorio: ITA
+  url: https://www.fondoforte.it/elenco-avvisi/
+  modalita: html
+  piattaforma: wordpress
+  frequenza: settimanale
+  stato: attiva
+  verificato_il: '2026-10-06'
+  note: >
+    Aggiunta il 06/10 (fondi interprofessionali). Avvisi attivi di For.Te. per le imprese aderenti del commercio,
+    turismo e servizi (Avviso di sistema 2/26, Catalogo voucher, Avviso 2/25), un titolo per avviso.
+  richiesta:
+    selettore: "article h2"
+
+- id: ice_home
+  nome: Agenzia ICE - Iniziative e misure per le imprese (home)
+  ente: ICE - Agenzia per la promozione all'estero e l'internazionalizzazione delle imprese italiane
+  tipo: nazionale
+  territorio: ITA
+  url: https://www.ice.it/it/
+  modalita: html
+  piattaforma: drupal
+  frequenza: settimanale
+  stato: esclusa
+  verificato_il: '2026-10-06'
+  note: >
+    Valutata il 06/10. L'ICE non pubblica bandi di contributo ma servizi (partecipazioni collettive a fiere, formazione,
+    Piano export Sud); le "misure straordinarie" (Medio Oriente, territori alluvionati) sono banner senza testo nella
+    home. La lettura della home da' 16 link: fiere, notizie dal mondo in inglese, pagine istituzionali. Le pagine
+    /it/feed-rss/* sono pagine HTML, non feed. Gli strumenti finanziari per l'export (Fondo 394) arrivano da SIMEST.
+    Esclusa: rumore senza bandi; da riconsiderare se Matteo vuole anche le fiere ICE.
+
+- id: mit_incentivi
+  nome: Ministero delle Infrastrutture e dei Trasporti
+  ente: Ministero delle Infrastrutture e dei Trasporti
+  tipo: nazionale
+  territorio: ITA
+  url: ''
+  modalita: html
+  frequenza: settimanale
+  stato: difficile
+  verificato_il: '2026-10-06'
+  note: >
+    Valutata il 06/10. Il MIT pubblica incentivi per le imprese di autotrasporto (investimenti, formazione, rinnovo
+    del parco), Marebonus e Ferrobonus. Dal VPS www.mit.gov.it non si legge: il certificato HTTPS e' incompleto
+    (manca il certificato intermedio; curl e la raccolta lo rifiutano, come ISMEA), in IPv6 nessuna risposta.
+    Nessuna pagina elenco aperta davvero, quindi nessun indirizzo. Le misure del MIT arrivano oggi da incentivi.gov.it
+    (6 schede con gestore MIT). Si sblocca insegnando alla raccolta a completare la catena dei certificati.
+
+- id: mur_bandi
+  nome: Ministero dell'Universita' e della Ricerca
+  ente: Ministero dell'Universita' e della Ricerca
+  tipo: nazionale
+  territorio: ITA
+  url: ''
+  modalita: html
+  frequenza: settimanale
+  stato: difficile
+  verificato_il: '2026-10-06'
+  note: >
+    Valutata il 06/10. Il MUR pubblica bandi di ricerca aperti anche alle imprese (ricerca industriale, partenariati
+    PNRR, FIS). Dal VPS tutto il sito, anche robots.txt, risponde 403 con la verifica Cloudflare "Just a moment...
+    Enable JavaScript and cookies", anche con User-Agent da browser. Nessuna pagina aperta, nessun indirizzo.
+    Da riprovare con il browser senza interfaccia.
+
+- id: maeci_opportunita
+  nome: Ministero degli Affari Esteri e della Cooperazione Internazionale
+  ente: Ministero degli Affari Esteri e della Cooperazione Internazionale
+  tipo: nazionale
+  territorio: ITA
+  url: ''
+  modalita: html
+  frequenza: mensile
+  stato: difficile
+  verificato_il: '2026-10-06'
+  note: >
+    Valutata il 06/10. www.esteri.it e' protetto dal bot manager Radware (rimando a validate.perfdrive.com, come il
+    Ministero del Turismo). Gli strumenti per l'export finanziati dal MAECI (Fondo 394/81, promozione integrata)
+    sono gestiti da SIMEST e ICE e arrivano gia' dalle voci simest_*; incentivi.gov.it ha 4 schede con gestore
+    MAECI. Nessuna pagina aperta, nessun indirizzo.
+
+- id: enea_bandi
+  nome: ENEA - Bandi
+  ente: Agenzia nazionale per le nuove tecnologie, l'energia e lo sviluppo economico sostenibile
+  tipo: nazionale
+  territorio: ITA
+  url: ''
+  modalita: html
+  frequenza: mensile
+  stato: difficile
+  verificato_il: '2026-10-06'
+  note: >
+    Valutata il 06/10. Certificato HTTPS incompleto come MIT e ISMEA: www.enea.it non si legge dal VPS. ENEA gestisce
+    soprattutto i portali delle detrazioni (Ecobonus, Bonus casa) e bandi di ricerca; i contributi energetici per
+    le imprese passano da GSE e MASE, gia' letti. Nessuna pagina aperta, nessun indirizzo.
+
+- id: fondimpresa_avvisi
+  nome: Fondimpresa - Avvisi
+  ente: Fondimpresa (fondo interprofessionale per la formazione continua)
+  tipo: nazionale
+  territorio: ITA
+  url: ''
+  modalita: html
+  frequenza: settimanale
+  stato: difficile
+  verificato_il: '2026-10-06'
+  note: >
+    Valutata il 06/10. E' il fondo interprofessionale piu' grande (avvisi del Conto di sistema per le imprese
+    aderenti), ma dal VPS www.fondimpresa.it non risponde (connessione scaduta in IPv4, nessuna risposta in IPv6).
+    Nessuna pagina aperta, nessun indirizzo. Da riprovare.
+
+- id: cultura_creativita_bandi
+  nome: Ministero della Cultura - DG Creativita' contemporanea, portale bandi
+  ente: Ministero della Cultura - Direzione generale Creativita' contemporanea
+  tipo: nazionale
+  territorio: ITA
+  url: https://portalebandidgcc.cultura.gov.it/
+  modalita: browser
+  frequenza: settimanale
+  stato: difficile
+  verificato_il: '2026-10-06'
+  note: >
+    Valutata il 06/10. I bandi della DG Creativita' contemporanea (imprese culturali e creative, moda e design,
+    Italian Council) sono su un portale fatto in JavaScript che legge un'API interna (/backend/api/v2/announcement),
+    ma robots.txt del portale vieta tutto (Disallow: /): non si legge senza un'autorizzazione esplicita di Matteo
+    (ignora_robots). I bandi principali sono annunciati anche negli avvisi del MiC (voce cultura_avvisi).
+
+- id: asi_bandi
+  nome: Agenzia Spaziale Italiana - Bandi per contratti di finanziamento di ricerca, sviluppo e innovazione
+  ente: Agenzia Spaziale Italiana
+  tipo: nazionale
+  territorio: ITA
+  url: https://www.asi.it/bandi/bandi-asi/bandi-per-contratti-di-finanziamento-di-ricerca-sviluppo-e-innovazione/
+  modalita: browser
+  piattaforma: wordpress
+  frequenza: mensile
+  stato: difficile
+  verificato_il: '2026-10-06'
+  note: >
+    Valutata il 06/10. La pagina risponde (200) ma nel HTML ci sono solo le notizie della colonna laterale (bando
+    NASA, call ESA del 2024): l'elenco dei bandi non si vede senza browser. I bandi ASI per imprese sono per lo piu'
+    contratti di ricerca e appalti della space economy, di nicchia per i clienti di Matteo.
+
 - id: cdp_imprese
   nome: Cassa Depositi e Prestiti - Imprese
   ente: Cassa Depositi e Prestiti
