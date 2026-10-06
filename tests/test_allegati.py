@@ -274,12 +274,18 @@ def test_pagina_elenco_solo_documenti_della_sezione():
     def documenti(chi):
         altri = [t for k, t in titoli.items() if k != chi]
         firma = firma_del_bando(titoli[chi], None, altri)
-        altre = [firma_del_bando(t, None, [titoli[chi]]) for t in altri]
+        altre = [firma_del_bando(t, None, [x for x in titoli.values() if x != t]) for t in altri]
         return [c.url.rsplit("/", 1)[-1] for c in trova_allegati(html, "https://esempio.it/bandi", firma, altre)]
 
     assert documenti("ai") == ["ai_bando.pdf", "ai_faq.pdf", "ai_modulo.pdf"]   # la sezione vera, non l'avviso in cima
     assert documenti("reti") == ["reti.pdf", "reti_modulo.pdf"]
     assert documenti("digital") == ["digital.pdf"]
+    from app.schede.allegati import testo_sezione
+
+    sezione_ai = testo_sezione(html, firma_del_bando(titoli["ai"], None, [titoli["reti"], titoli["digital"]]),
+                               [firma_del_bando(titoli["reti"], None, [titoli["ai"], titoli["digital"]]),
+                                firma_del_bando(titoli["digital"], None, [titoli["ai"], titoli["reti"]])])
+    assert "Modulo di candidatura" in sezione_ai and "Reti" not in sezione_ai and "Digital" not in sezione_ai
     # Senza firma (pagina di un solo bando) si prendono tutti; titoli uguali (doppioni) non hanno firma.
     assert len(trova_allegati(html, "https://esempio.it/bandi")) == 7
     assert firma_del_bando("Bando ESG 2026", None, ["Bando ESG 2026"]) is None
