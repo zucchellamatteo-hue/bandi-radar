@@ -411,13 +411,14 @@ def verifica_scheda(s: dict, documenti: list[dict] | None = None) -> list[str]:
     if s.get("tipo_agevolazione") == "misto" and s.get("percentuale") == 100 and s.get("finanziamento_massimo"):
         problemi.append("agevolazione mista al 100%: la percentuale deve riguardare solo il fondo perduto")
     vincoli = s.get("vincoli") or {}
+    spiegati = {n.get("vincolo") for n in s.get("note_vincoli") or [] if isinstance(n, dict) and n.get("nota")}
     for v, elenchi in _ELENCHI_DEL_VINCOLO.items():
         stato = vincoli.get(v)
         if stato not in campi.STATI_VINCOLO:
             problemi.append(f"vincoli.{v}: stato mancante o non ammesso")
         elif stato == "vincolo" and not any(s.get(e) not in (None, []) for e in elenchi):
-            if not (v == "territorio" and s.get("territorio")):
-                problemi.append(f"vincoli.{v} = vincolo, ma i campi {', '.join(elenchi)} sono vuoti")
+            if not (v == "territorio" and s.get("territorio")) and v not in spiegati:   # una nota in note_vincoli basta
+                problemi.append(f"vincoli.{v} = vincolo, ma i campi {', '.join(elenchi)} sono vuoti (e manca la nota)")
     # Una regione scritta solo a parole non serve all'abbinamento (verifica del 02/10, 3677).
     if vincoli.get("territorio") == "vincolo" and not s.get("territorio_regioni") and not s.get("territorio_province"):
         from app.abbinamento.territorio import NOMI_REGIONI

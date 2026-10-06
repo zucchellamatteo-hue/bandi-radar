@@ -361,3 +361,10 @@ def test_note_vincoli_nella_scheda_non_nelle_colonne():
     s, tolti = ia.prepara_scheda({"note_vincoli": [{"vincolo": "eta_impresa", "nota": "escluse le imprese costituite dopo il 15/07/2026"}]})
     assert s["note_vincoli"][0]["vincolo"] == "eta_impresa" and "note_vincoli" not in ia._COLONNE_SCHEDA
     assert ia.prepara_scheda({})[0]["note_vincoli"] == []
+
+
+def test_vincolo_senza_numeri_ma_spiegato():
+    base = {"vincoli": {v: "nessun_vincolo" for v in ia.campi.VINCOLI} | {"eta_impresa": "vincolo"}}
+    assert any("eta_impresa" in x for x in ia.verifica_scheda(ia.prepara_scheda(base)[0]))
+    con_nota = {**base, "note_vincoli": [{"vincolo": "eta_impresa", "nota": "costituite prima del 15/07/2026"}]}
+    assert not any("eta_impresa" in x for x in ia.verifica_scheda(ia.prepara_scheda(con_nota)[0]))
