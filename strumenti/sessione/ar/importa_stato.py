@@ -65,6 +65,7 @@ def main():
                 pre = dict(b["preliminare"])
                 pre["per_imprese"] = "no"
                 pre["motivo"] = ("Ricontrollo 03/10: non per imprese. " + (e.get("motivo") or ""))[:500]
+                pre.update(deciso_da="sessione", deciso_il=oggi.isoformat())   # per la situazione del bando (bandi_situazione)
                 modifiche["preliminare"] = json.dumps(pre)
                 conti["non_per_imprese"] = conti.get("non_per_imprese", 0) + 1
             if prova:

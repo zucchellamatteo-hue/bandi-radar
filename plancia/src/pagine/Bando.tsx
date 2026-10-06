@@ -38,6 +38,11 @@ export default function Bando() {
         {b.modalita_selezione ? ` · ${nome(String(b.modalita_selezione))}` : ""}
         {b.url && <> · <a href={b.url} target="_blank" rel="noreferrer">pagina ufficiale ↗</a></>}</p>
 
+      {admin && b.situazione && (
+        <p className="piccolo">Situazione: <Link to={`/lavorazione?situazione=${b.situazione.situazione}`}><b>{b.situazione.nome_situazione}</b></Link>
+          {" "}· {b.situazione.nome_fase}{b.situazione.motivo ? ` — ${b.situazione.motivo}` : ""}
+          {b.situazione.chi ? ` · deciso da ${b.situazione.chi}` : ""}{b.situazione.deciso_il ? ` il ${data(b.situazione.deciso_il)}` : ""}</p>
+      )}
       {b.pagina_stato === "non_trovata" && (
         <div className="allarme"><b>Bando ufficiale non trovato</b>: niente scheda finché non si trova la pagina del bando.
           <div className="piccolo">{b.pagina_motivo}</div></div>

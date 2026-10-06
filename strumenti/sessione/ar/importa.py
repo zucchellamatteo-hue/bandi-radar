@@ -47,6 +47,7 @@ def main() -> int:
                     if "enum" in s and pre[k] not in s["enum"]:
                         pre[k] = "non_noto" if "non_noto" in s["enum"] else "incerto"
                 pre["compilato_da"] = MODELLO
+                pre = ia.firma(pre, "sessione")   # chi e quando, per la situazione del bando (bandi_situazione)
                 if not prova:
                     with conn.cursor() as cur:
                         cur.execute("SELECT set_config('bandi_radar.causa', %s, true)", ("controllo preliminare: " + CAUSA,))

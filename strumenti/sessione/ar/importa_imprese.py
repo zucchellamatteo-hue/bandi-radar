@@ -36,6 +36,7 @@ def main():
                         pre = dict(b["preliminare"] or {})
                         pre["per_imprese"] = "no"
                         pre["motivo"] = ("Ricontrollo 03/10: non per imprese. " + (e.get("motivo") or ""))[:500]
+                        pre.update(deciso_da="sessione", deciso_il=date.today().isoformat())   # per bandi_situazione
                         dati = b["dati"] or {}
                         nota = (f"Ricontrollo dei beneficiari del {date.today():%d/%m/%Y}: non per imprese. "
                                 f"{e.get('motivo') or ''} «{(e.get('citazione') or '')[:300]}»")

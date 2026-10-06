@@ -1,5 +1,7 @@
 """A che punto e' ogni bando e ogni annuncio della fase 2, calcolato dai dati (niente stato a parte da tenere in
-ordine). Serve alla pagina Lavorazione della plancia: imbuto, motivi di fermo, prossimo passo."""
+ordine). Serve alla pagina Lavorazione della plancia: imbuto, motivi di fermo, prossimo passo.
+Per CONTARE o descrivere i bandi si usa invece la situazione (app/catena/situazione.py, vista bandi_situazione): una
+sola voce per bando, con motivo, chi ha deciso e quando. Queste fasi restano per seguire la catena passo per passo."""
 
 from __future__ import annotations
 
