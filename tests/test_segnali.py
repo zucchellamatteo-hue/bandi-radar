@@ -5,7 +5,7 @@ from datetime import date
 
 import pytest
 
-from app.schede.segnali import Segnali, date_barrate, scadenza_nei_dati, segnali_dal_testo
+from app.schede.segnali import Segnali, date_barrate, scadenza_nei_dati, segnali_da_dati, segnali_dal_testo
 
 OGGI = date(2026, 9, 28)
 
@@ -27,6 +27,108 @@ def test_fino_a_esaurimento_delle_risorse_non_vuol_dire_chiuso():
     on = "ON - Oltre Nuove imprese a tasso zero. Le domande si presentano fino a esaurimento delle risorse disponibili."
     assert segnali_dal_testo(on, OGGI).stato is None
     assert segnali_dal_testo("Le risorse sono esaurite: lo sportello e' chiuso dal 3 settembre.", OGGI).stato == "chiuso"
+
+
+# Revisione del 06/10 sui 502 bandi fermati dai segnali: frasi vere delle pagine che non vogliono dire "chiuso".
+OGGI_REVISIONE = date(2026, 10, 6)
+
+
+def test_chiusura_anticipata_solo_prevista_non_chiude():
+    foggia = ("Presentazione delle domande dalle ore 09:00 del 29/09/2023 alle ore 21:00 del 30/10/2023. Si terrà conto "
+              "dell’ordine cronologico di ricezione delle domande. Al raggiungimento di richieste di contributi superiori "
+              "alla dotazione finanziaria sarà possibile la chiusura anticipata del bando.")
+    assert segnali_dal_testo(foggia, OGGI_REVISIONE).chiuso == []
+    foggia2 = ("Al raggiungimento di richieste di contributi superiori alla dotazione finanziaria sarà possibile procedere "
+               "alla chiusura anticipata del bando.")
+    assert segnali_dal_testo(foggia2, OGGI_REVISIONE).chiuso == []
+    maremma = ("Bando a sostegno delle iniziative locali e di valorizzazione dei prodotti tipici - Anno 2026 | Camera di "
+               "Commercio Maremma e Tirreno Salta al contenuto principale Aperto Scade 10/11/2026 salvo chiusura "
+               "anticipata per esaurimento risorse ID 3722")
+    s = segnali_dal_testo(maremma, OGGI_REVISIONE)
+    assert s.stato == "aperto" and s.aperto == ["scadenza 10/11/2026 scritta nella pagina"]
+    puglia = ("dovranno inviare la propria istanza entro e non oltre le ore 23.59 del giorno 20 dicembre 2026 (salvo "
+              "chiusura anticipata per raggiungimento budget, opportunamente comunicato)")
+    assert segnali_dal_testo(puglia, OGGI_REVISIONE).stato == "aperto"
+
+
+def test_chiusure_anticipate_avvenute_restano():
+    alto_adige = ("Con determinazione del Segretario Generale n. 134 del 24/09/2025 è stata disposta la chiusura anticipata "
+                  "del bando alle ore 17:00 del 24/09/2025 per esaurimento delle risorse disponibili.")
+    assert segnali_dal_testo(alto_adige, OGGI_REVISIONE).stato == "chiuso"
+    sondrio = "Bando Nuova Impresa 2023 Avviso del 11 gennaio 2024 : chiusura anticipata dello sportello per esaurimento delle risorse disponibili."
+    assert segnali_dal_testo(sondrio, OGGI_REVISIONE).stato == "chiuso"
+    bergamo = "Bando Fiere 2026: chiusura anticipata dei termini 08/05/2026 - Il bando è stato chiuso anticipatamente per esaurimento del fondo disponibile ."
+    assert segnali_dal_testo(bergamo, OGGI_REVISIONE).stato == "chiuso"
+
+
+def test_voci_di_menu_e_frasi_su_altro_non_chiudono():
+    simest = ("Operatività fino al 2021 - SIMEST Operatività fino al 2021 Non hai trovato quello che cercavi? Consulta qui "
+              "ulteriori strumenti non più operativi Strumenti attualmente non disponibili Operatività finanziamenti "
+              "agevolati per l’internalizzazione fino al 2021 Scopri di più")
+    assert segnali_dal_testo(simest, OGGI_REVISIONE).chiuso == []
+    finlombarda = ("dispongono di patrimonio netto positivo nell'ultimo bilancio approvato; nel caso in cui l’ultimo bilancio "
+                   "non sia ancora stato chiuso si richiede la presentazione dell’ultimo bilancio approvato")
+    assert segnali_dal_testo(finlombarda, OGGI_REVISIONE).chiuso == []
+    sondrio = "AVVISO DEL 30 MAGGIO 2023: il bando è stato chiuso con Determinazione del D.O. n. 76/2003 per esaurimento delle risorse."
+    assert segnali_dal_testo(sondrio, OGGI_REVISIONE).stato == "chiuso"
+
+
+def test_stato_del_portale_calabria():
+    # "Conclusione Data aggiornamento stato" e' l'etichetta dello stato della procedura, non testo di servizio.
+    conclusione = "Grandi Eventi Avviso pubblico di selezione Fondo: PAC 2007/2013 Conclusione Data aggiornamento stato 11 Nov 2022 Obiettivo"
+    assert segnali_dal_testo(conclusione, OGGI_REVISIONE).stato == "chiuso"
+    aperto = "Azione: 1_2_4 / Fondo: FESR Aperto Data aggiornamento stato 16 Lug 2026 Obiettivo"
+    assert segnali_dal_testo(aperto, OGGI_REVISIONE).stato == "aperto"
+    sospeso = "Azione: Azione 6.8.3 / Fondo: PAC 2014/2020 Sospeso Data aggiornamento stato 9 Set 2026 Obiettivo"
+    assert segnali_dal_testo(sospeso, OGGI_REVISIONE).chiuso == []
+    # Bando 1225: la pagina e' dell'edizione 2023, ma tra gli annunci c'e' l'"Annualita' 2025" pubblicata il 13/05/2025.
+    manifestazioni = ("Avviso Pubblico per la concessione di contributi per Manifestazioni Sportive Azione: Azione 6.8.3 / "
+                      "Fondo: PAC Calabria 2014-2020 Conclusione Data aggiornamento stato 16 Ott 2023 Obiettivo")
+    s = segnali_dal_testo(manifestazioni, OGGI_REVISIONE, ultima_pubblicazione=date(2025, 5, 13))
+    assert s.chiuso == [] and s.stato == "aperto" and "13/05/2025" in s.aperto[0]
+    assert segnali_dal_testo(manifestazioni, OGGI_REVISIONE, ultima_pubblicazione=date(2023, 1, 11)).stato == "chiuso"
+
+
+def test_edizione_nuova_tra_gli_annunci():
+    pagina = {"testo_estratto": "Fondo: PAC Calabria 2014-2020 Conclusione Data aggiornamento stato 16 Ott 2023 Obiettivo",
+              "percorso_locale": None}
+    annunci = [{"url": "https://calabriaeuropa.regione.calabria.it/bando/manifestazioni-sportive/", "dati": None,
+                "pubblicato_il": "2023-01-11T00:00:00+00:00", "ruolo": "origine"},
+               {"url": "https://www.regione.calabria.it/bandi/atto_numero_16451-graduatoria-definitiva/", "dati": None,
+                "pubblicato_il": "2026-09-30T00:00:00+00:00", "ruolo": "graduatoria"}]
+    # La graduatoria esce dopo la chiusura: non e' un'edizione nuova.
+    assert segnali_da_dati("https://x.it/b", annunci, [pagina], OGGI_REVISIONE).stato == "chiuso"
+    annunci.append({"url": "https://calabriaeuropa.regione.calabria.it/bando/manifestazioni-sportive-annualita-2025/",
+                    "dati": None, "pubblicato_il": "2025-05-13T00:00:00+00:00", "ruolo": "doppione"})
+    assert segnali_da_dati("https://x.it/b", annunci, [pagina], OGGI_REVISIONE).stato == "aperto"
+
+
+def test_termini_futuri_scritti_in_altro_modo():
+    lombardia = ("Aperto Ti porto io Codice: RLU12026053838 Pubblicato il: 24/06/2026 , ore 15:20 Domande dal: 30/06/2026 , "
+                 "ore 10:00 Scade il: 15/10/2026 , ore 16:00 La misura è finalizzata")
+    assert "scadenza 15/10/2026 scritta nella pagina" in segnali_dal_testo(lombardia, OGGI_REVISIONE).aperto
+    gal = "Termine presentazione domande PROROGATO alle ore 13.00 del 12 ottobre 2026 Importo a Bando 710.624,00 €"
+    assert segnali_dal_testo(gal, OGGI_REVISIONE).stato == "aperto"
+    annualita = ("Presentazione delle domande di contributo: per l’annualità 2026, dal 3 agosto 2026 e fino al 15 settembre "
+                 "2026; per l’annualità 2027, dal 2 agosto 2027 e fino al 15 settembre 2027.")
+    assert segnali_dal_testo(annualita, OGGI_REVISIONE).stato == "aperto"
+    bari = "Bando certificazione competenze anno 2026 a favore delle MPMI Domande dal 01/10/2026 al 16/12/2026 Finalità e obiettivi"
+    assert segnali_dal_testo(bari, OGGI_REVISIONE).stato == "aperto"
+    # I termini per altro (rendicontazione, eventi) non contano.
+    emilia = ("Bando Certificazioni ESG 2025 - BC25 Pubblicata la graduatoria - Termine ultimo per la presentazione della "
+              "rendicontazione ore 18:00 del 31/10/2026 Bando Chiuso Condividi")
+    assert segnali_dal_testo(emilia, OGGI_REVISIONE).stato == "chiuso"
+    fiera = "Bando Scaduto. La manifestazione si svolgerà presso il porto turistico Marina di Brindisi dal 22 al 26 ottobre 2026."
+    assert segnali_dal_testo(fiera, OGGI_REVISIONE).stato == "chiuso"
+
+
+def test_data_barrata_conta_solo_quella_subito_dopo():
+    bari = ('<p><strong>a partire <s>dalle ore 10:00 del 01/10/2026</s> e fino alle ore 12:00 del 16/12/2026. '
+            '<span>AVVISO 01.01.2026 -- Si comunica che per problemi tecnici</span></strong></p>')
+    assert date_barrate(bari, OGGI_REVISIONE) == []
+    foggia = ("<p>Le imprese interessate a candidarsi all'iniziativa dovranno compilare, a partire dalle ore 9:00 del "
+              "7/08/2026 e fino alle ore 12:00 del <s>4/09/2026</s> 18/09/2026, la manifestazione di interesse</p>")
+    assert date_barrate(foggia, OGGI_REVISIONE) == ["data barrata 4/09/2026, nuova data 18/09/2026 gia' passata"]
 
 
 def test_scadenza_futura_nella_pagina_blocca_la_chiusura():
