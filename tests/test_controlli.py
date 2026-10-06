@@ -60,3 +60,16 @@ def test_controlla_scrive_e_non_cambia_la_versione():
             with conn.cursor() as cur:
                 cur.execute("DELETE FROM bandi WHERE id = %s", (riga["id"],))
             conn.commit()
+
+
+def test_sottopagine_con_i_documenti():
+    from app.schede.allegati import sottopagine
+
+    html = ('<a href="/incentivi-e-strumenti/fondo-greentour/normativa">Normativa</a>'
+            '<a href="/incentivi-e-strumenti/fondo-greentour/faq">FAQ</a>'
+            '<a href="/incentivi-e-strumenti/fondo-greentour/cosa-finanzia">Cosa finanzia</a>'
+            '<a href="/incentivi-e-strumenti/altro/faq">FAQ di un altro</a>'
+            '<a href="https://altro.it/incentivi-e-strumenti/fondo-greentour/faq">altro sito</a>')
+    assert sottopagine(html, "https://www.invitalia.it/incentivi-e-strumenti/fondo-greentour") == [
+        "https://www.invitalia.it/incentivi-e-strumenti/fondo-greentour/normativa",
+        "https://www.invitalia.it/incentivi-e-strumenti/fondo-greentour/faq"]
