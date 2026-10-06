@@ -35,3 +35,4 @@ In una sessione di Claude Code su questo repository, descrivere la domanda e chi
 | 2026-10-05 | `2026-10-05_fatturazione_elettronica.md` | Fattura elettronica per gli abbonamenti Stripe: costruirla o comprarla, quale servizio, quanto costa? Siti ufficiali dei fornitori |
 | 2026-10-05 | `2026-10-05_marketing_prospect_regole.md` | Si possono mandare email promozionali alle imprese della mappatura di Matteo? Regole, sanzioni del Garante, canali leciti |
 | 2026-10-05 | `2026-10-05_misure_nazionali.md` | Misure nazionali automatiche cumulabili con i bandi (Conto Termico 3.0, iperammortamento 2026, R&S, ZES, Sabatini): regole, beneficio, cumulo. Schede in `app/misure/misure.yaml` |
+| 2026-10-06 | `2026-10-06_fonti_nazionali_mancanti.md` | INAIL, INPS, Unioncamere (Marchi+, Disegni+) e ISMEA si leggono dal server? Lettura completa di Lazio Innova (bandi aperti) e MASE. Prove con la raccolta, 3 fonti nuove, ISMEA difficile |

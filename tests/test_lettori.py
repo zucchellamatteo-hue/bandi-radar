@@ -172,6 +172,39 @@ def test_osservatore_tabella_con_link_dettaglio_e_sessione_nel_link():
     assert a.url == "https://x.it/widget/bandi1?codBando=7"
 
 
+def test_osservatore_paragrafi_con_titolo_in_grassetto():
+    # Lazio Innova, Bandi aperti: "<p><strong>Titolo</strong>: scadenza ... <a>Per saperne di piu'</a></p>" sotto un h2 comune.
+    html = """<html><body><main><div class="entry-content"><h2>Programma Regionale FSE+ 2021-2027</h2>
+      <p><strong>Acchiappa Talenti</strong>: domande entro le ore 17.00 del 22 dicembre 2099.
+         <a href="https://y.it/bandi/acchiappa-talenti/">Per saperne di più</a>.</p>
+      <p><strong>Bonus occupazionale SALGO</strong>: domande entro il 4 dicembre 2099.
+         <a href="https://y.it/bandi/salgo/">Per saperne di più</a>.</p>
+    </div></main></body></html>"""
+    a, b = estrai_link(html, "https://x.it/bandi-aperti/", ".entry-content")
+    assert (a.titolo, a.dati) == ("Acchiappa Talenti", {"scadenza": "2099-12-22"})
+    assert (b.titolo, b.dati) == ("Bonus occupazionale SALGO", {"scadenza": "2099-12-04"})
+
+
+def test_osservatore_logo_con_testo_alternativo_solo_con_selettore():
+    html = """<html><body><main><table><tr>
+      <td><a href="https://2025marchipiu.it"><img alt="Marchi+ 2025" src="/logo.png"></a></td>
+    </tr></table></main></body></html>"""
+    assert estrai_link(html, "https://x.it/agevolazioni") == []
+    (a,) = estrai_link(html, "https://x.it/agevolazioni", "table td")
+    assert (a.titolo, a.url) == ("Marchi+ 2025", "https://2025marchipiu.it")
+
+
+def test_osservatore_toglie_la_pagina_di_provenienza_di_liferay():
+    # MASE: lo stesso bando ha un p_l_back_url diverso a ogni pagina dell'elenco.
+    html = """<html><body><main>
+      <a href="https://m.it/portale/-/avviso-pubblico-progetti-idrogeno?p_l_back_url=%2Fportale%2Fbandi%3Fdelta%3D30%26start%3D2">
+        Avviso pubblico progetti idrogeno</a>
+      <a href="https://m.it/portale/-/avviso-imprese-energivore?id=4&p_l_back_url=%2Fportale%2Fbandi">Avviso imprese energivore 2026</a>
+    </main></body></html>"""
+    assert [a.url for a in estrai_link(html, "https://m.it/portale/bandi")] == [
+        "https://m.it/portale/-/avviso-pubblico-progetti-idrogeno", "https://m.it/portale/-/avviso-imprese-energivore?id=4"]
+
+
 def test_client_ipv6_esce_solo_in_ipv6():
     from app.raccolta.scarica import nuovo_client
 

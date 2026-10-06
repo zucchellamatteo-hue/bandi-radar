@@ -58,7 +58,7 @@ def codice_ufficiale(url: str, titolo: str, dati: dict | None) -> str | None:
 
 # Parametri che non cambiano la pagina (tracciamento, cache): si tolgono. Gli altri restano, perche' in
 # molti siti identificano il bando (?idb=28598, ?id=123).
-_PARAMETRI_INUTILI = re.compile(r"^(utm_\w+|fbclid|gclid|t|_|ts|lang|locale|sessionid|jsessionid|phpsessid)$", re.I)
+_PARAMETRI_INUTILI = re.compile(r"^(utm_\w+|fbclid|gclid|t|_|ts|lang|locale|sessionid|jsessionid|phpsessid|p_l_back_url)$", re.I)
 
 
 def url_chiave(url: str | None) -> str | None:
