@@ -591,6 +591,28 @@ def con_testo_dai_dati(conn, bando_id: int, campi: list[str], risultati: list[Ri
 
 # --- una pagina: annuncio o bando ------------------------------------------------------------------
 
+# Sottopagine della stessa misura dove i gestori mettono avviso, decreti e FAQ (Invitalia: .../fondo-greentour/normativa
+# e .../faq, 06/10): si legge un livello in piu', solo sotto l'indirizzo della pagina ufficiale e solo con questi nomi.
+_SOTTOPAGINE = re.compile(r"^(normativa|faq|documenti|documentazione|allegati|modulistica|presenta-la-domanda|"
+                          r"come-presentare-la-domanda|domande-frequenti)/?$", re.IGNORECASE)
+MASSIMO_SOTTOPAGINE = 4
+
+
+def sottopagine(html: str, base_url: str) -> list[str]:
+    """Le sottopagine della pagina ufficiale con i documenti (es. /normativa, /faq), al massimo MASSIMO_SOTTOPAGINE."""
+    radice = urlsplit(base_url)
+    prefisso = radice.path.rstrip("/") + "/"
+    trovate: list[str] = []
+    for a in BeautifulSoup(html, "html.parser").find_all("a", href=True):
+        url = urldefrag(urljoin(base_url, a["href"].strip())).url
+        parti = urlsplit(url)
+        if parti.netloc != radice.netloc or not parti.path.startswith(prefisso) or parti.query:
+            continue
+        if _SOTTOPAGINE.match(parti.path[len(prefisso):]) and url not in trovate:
+            trovate.append(url)
+    return trovate[:MASSIMO_SOTTOPAGINE]
+
+
 def elabora_annuncio(client: httpx.Client, annuncio_id: int, url_annuncio: str, cartella: Path, pausa: Pausa,
                      ignora_robots: bool = False, gia_scaricati: int = 0, gia_presenti: set[str] | None = None,
                      ) -> list[Risultato]:
@@ -625,6 +647,18 @@ def elabora_pagina(client: httpx.Client, sottocartella: str, url_pagina: str, ca
         risposta = scarica(client, pagina, accept="text/html,application/xhtml+xml", ignora_robots=ignora(pagina))
         risposta.raise_for_status()
         candidati = trova_allegati(risposta.text, str(risposta.url), firma, altre_firme)
+        if firma is None:   # le pagine elenco condivise da piu' bandi no: le sottopagine sarebbero di tutti
+            for sotto in sottopagine(risposta.text, str(risposta.url)):
+                try:
+                    pausa.attendi(sotto, ignora_robots=ignora(sotto))
+                    r_sotto = scarica(client, sotto, accept="text/html,application/xhtml+xml", ignora_robots=ignora(sotto))
+                    r_sotto.raise_for_status()
+                except (NonPermesso, httpx.HTTPError):
+                    continue
+                visti = {c.url for c in candidati}
+                if "faq" in sotto.lower() or "domande" in sotto.lower():
+                    candidati.append(Candidato(sotto, "FAQ (pagina)", "faq"))
+                candidati += [c for c in trova_allegati(r_sotto.text, str(r_sotto.url)) if c.url not in visti and c.url != pagina]
         copia = _copia_pagina(risposta, pagina, cartella, cartella_annuncio)
         copia.nome = nome_copia
         if firma is not None:   # pagina elenco: della copia si tiene solo il testo della sezione del bando
