@@ -180,29 +180,57 @@ def firma_del_bando(titolo: str, codice: str | None, altri_titoli: list[str]) ->
     return re.compile(r"\W+(?:\w+\W+){0,3}".join(re.escape(w) for w in proprie[:2]), re.IGNORECASE)
 
 
-def _sezione(zuppa: BeautifulSoup, firma: re.Pattern, altre: list[re.Pattern]) -> set[int] | None:
-    """Gli id dei tag <a> che stanno nella sezione del bando. Con piu' punti in cui compare la firma (un avviso in
-    cima e la sezione vera) vince quello con piu' link prima della firma di un altro bando. None se la firma non c'e'."""
-    testo, link = [], []
-    lunghezza = 0
+def _scorri(zuppa: BeautifulSoup) -> tuple[str, list[tuple[int, int]]]:
+    """Il testo della pagina e, per ogni link, la posizione nel testo in cui compare."""
+    testo, link, lunghezza = [], [], 0
     for nodo in zuppa.descendants:
         if getattr(nodo, "name", None) == "a" and nodo.get("href"):
             link.append((lunghezza, id(nodo)))
         elif isinstance(nodo, str) and not getattr(nodo, "name", None):
             testo.append(str(nodo))
             lunghezza += len(testo[-1])
-    tutto = "".join(testo)
+    return "".join(testo), link
+
+
+def _limiti_sezione(tutto: str, link: list[tuple[int, int]], firma: re.Pattern,
+                    altre: list[re.Pattern]) -> tuple[int, int] | None:
+    """Inizio e fine della sezione del bando nel testo. Con piu' punti in cui compare la firma (un avviso in cima e la
+    sezione vera) vince quello con piu' link prima della firma di un altro bando. None se la firma non c'e'."""
     mie = [m.start() for m in firma.finditer(tutto)]
     if not mie:
         return None
     confini = sorted(m.start() for f in altre for m in f.finditer(tutto))
-    migliore: set[int] = set()
-    for inizio in mie:
-        fine = next((c for c in confini if c > inizio), len(tutto) + 1)
-        dentro = {i for pos, i in link if inizio <= pos < fine}
-        if len(dentro) > len(migliore):
-            migliore = dentro
+    migliore, contati = None, -1
+    for trovata in mie:
+        # Dall'inizio della riga del titolo fino all'inizio della riga del bando successivo.
+        inizio = tutto.rfind("\n", 0, trovata) + 1
+        fine = next((c for c in confini if c > trovata), len(tutto) + 1)
+        a_capo = tutto.rfind("\n", trovata, fine) if fine <= len(tutto) else -1
+        fine = a_capo if a_capo > trovata else fine
+        n = sum(1 for pos, _ in link if inizio <= pos < fine)
+        if n > contati:
+            migliore, contati = (inizio, fine), n
     return migliore
+
+
+def _sezione(zuppa: BeautifulSoup, firma: re.Pattern, altre: list[re.Pattern]) -> set[int] | None:
+    """Gli id dei tag <a> che stanno nella sezione del bando (None se la firma non c'e')."""
+    tutto, link = _scorri(zuppa)
+    limiti = _limiti_sezione(tutto, link, firma, altre)
+    if limiti is None:
+        return None
+    return {i for pos, i in link if limiti[0] <= pos < limiti[1]}
+
+
+def testo_sezione(html: str, firma: re.Pattern, altre: list[re.Pattern]) -> str | None:
+    """Il testo della sola sezione del bando su una pagina elenco (per la copia della pagina)."""
+    zuppa = BeautifulSoup(html, "html.parser")
+    _togli_cornice(zuppa)
+    tutto, link = _scorri(zuppa)
+    limiti = _limiti_sezione(tutto, link, firma, altre)
+    if limiti is None:
+        return None
+    return _SPAZI.sub(" ", tutto[limiti[0]:limiti[1]]).strip() or None
 
 
 def trova_allegati(html: str, base_url: str, firma: re.Pattern | None = None,
@@ -597,6 +625,11 @@ def elabora_pagina(client: httpx.Client, sottocartella: str, url_pagina: str, ca
         candidati = trova_allegati(risposta.text, str(risposta.url), firma, altre_firme)
         copia = _copia_pagina(risposta, pagina, cartella, cartella_annuncio)
         copia.nome = nome_copia
+        if firma is not None:   # pagina elenco: della copia si tiene solo il testo della sezione del bando
+            sezione = testo_sezione(risposta.text, firma, altre_firme or [])
+            if sezione:
+                copia.testo_estratto = sezione
+                copia.nome = f"{nome_copia}, solo la sezione del bando"
         risultati.append(copia)
         if plone_api:
             candidati = candidati_plone(client, pausa, str(risposta.url)) + candidati
