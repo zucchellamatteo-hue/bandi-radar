@@ -110,7 +110,7 @@ Per ogni pezzo: **cosa fa**, **quando gira**, **dove si vede**, **file principal
 - **Quando gira.** Ogni ora, nel servizio `raccolta` (`CATENA_AUTOMATICA=0` lo spegne).
 - **Dove si vede.** **Lavorazione**: due imbuti (annunci e bandi) con quanti sono fermi in ogni fase e perché, ultime azioni del regista, spesa IA del mese, schede da rivedere. **Supervisione**: tutti i sistemi automatici, cosa fanno, quando girano, ultimo esito, dati; si aggiorna ogni 30 secondi.
 - **File principale.** `app/catena/regista.py` (fasi: `app/catena/stato.py`; elenco dei sistemi: `app/sistemi.py`; dettagli: `docs/ORCHESTRAZIONE.md`).
-- **Limiti noti.** Nella plancia non c'è ancora un pulsante per riprovare subito un passo o escludere un bando a mano. In `app/sistemi.py` la chiave dei dati `controlli` è usata due volte: dal 06/10 cliccando "Raccolta dalle fonti" nella Supervisione si vedono le schede con problemi invece degli ultimi controlli delle fonti (da correggere).
+- **Limiti noti.** Nella plancia non c'è ancora un pulsante per riprovare subito un passo o escludere un bando a mano.
 
 ### 10. Misure nazionali e cumulabili
 

@@ -278,7 +278,7 @@ sezioni:
       - i **Documenti del bando**: si aprono dalla plancia con un clic; **originale ↗** porta al sito dell'ente;
       - gli annunci che parlano del bando e le versioni precedenti della scheda.
 
-      Misure nazionali. La voce **Misure** elenca le agevolazioni previste dalla legge e sempre aperte finché sono in vigore (Conto Termico, Iperammortamento, credito R&S, credito ZES unica, Nuova Sabatini, Ecobonus, Sismabonus, Art bonus). Non sono bandi con una scadenza. Le misure chiuse restano in fondo alla pagina, in grigio, con il motivo: non si propongono mai con i bandi. Ogni scheda dice a chi si rivolge, cosa si può comprare, quanto vale, come si ottiene, i tempi e se si somma ai bandi.
+      Misure nazionali. La voce **Misure** elenca le agevolazioni previste dalla legge e sempre aperte finché sono in vigore (Conto Termico, Iperammortamento, credito R&S, credito ZES unica, Nuova Sabatini, Ecobonus, Sismabonus, Art bonus). Non sono bandi con una scadenza. Le misure chiuse restano in fondo alla pagina, in grigio, con il motivo: non si propongono mai con i bandi. Ogni scheda dice a chi si rivolge, cosa si può comprare, quanto vale, come si ottiene, i tempi e se si somma ai bandi. In fondo, la tabella **Esempi per tipo di impresa** mostra un caso con numeri indicativi per otto profili tipo (ufficio di servizi, negozio, bar-ristorante-hotel, artigiano, manifattura con capannone, logistica con più sedi, azienda agricola, startup), ordinati dall'interesse alto al nullo. Profili ed esempi si modificano in `app/misure/misure.yaml`.
 
       Nelle schede dei bandi, il riquadro **Per gli stessi investimenti si può sommare anche:** indica le misure che si possono aggiungere, con il beneficio stimato sulla spesa che il bando non copre. È una stima: le regole sul cumulo degli aiuti vanno controllate caso per caso.
 
@@ -458,7 +458,7 @@ sezioni:
 
       Non sono bandi con una scadenza: sono agevolazioni previste dalla legge, disponibili finché sono in vigore. Spesso si possono sommare ai contributi dei bandi per gli stessi investimenti.
 
-      Ogni scheda spiega a chi si rivolge, quali investimenti sono ammessi, quanto vale (beneficio stimato in percentuale sulla spesa), come si ottiene, i tempi, se si somma ai bandi e a cosa fare attenzione.
+      Ogni scheda spiega a chi si rivolge, quali investimenti sono ammessi, quanto vale (beneficio stimato in percentuale sulla spesa), come si ottiene, i tempi, se si somma ai bandi e a cosa fare attenzione. In fondo trovi degli **esempi per tipo di impresa** (ufficio, negozio, hotel, laboratorio artigiano, capannone, logistica con più sedi, azienda agricola, startup): un caso con numeri indicativi e quanto la misura interessa a quel tipo di impresa.
 
       È un'informazione indicativa: prima di investire verifica la norma e le regole del gestore, magari con il tuo commercialista.
 

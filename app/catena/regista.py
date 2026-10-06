@@ -345,7 +345,7 @@ def giro() -> dict:
 
         for nome, lavoro in (("smistamento", smistamento), ("doppioni", doppioni), ("pagine", pagine),
                              ("documenti", documenti), ("stato_pagine", stato_pagine), ("filtro", filtro),
-                             ("ia", intelligenza), ("controlli", controlli_schede)):
+                             ("ia", intelligenza), ("controllo_schede", controlli_schede)):
             _passo(nome, lavoro)
         giro_intero.riepilogo = (f"{riepilogo.get('ripiego', 0)} incerti mandati avanti; doppioni: "
                                  f"{riepilogo.get('doppioni', {})}; {riepilogo.get('schede_da_aggiornare', 0)} schede da aggiornare")

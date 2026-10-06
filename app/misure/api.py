@@ -15,6 +15,12 @@ def elenco(_: dict = Depends(utente_corrente)) -> list[dict]:
     return misure.tutte()
 
 
+@router.get("/misure/profili")
+def profili(_: dict = Depends(utente_corrente)) -> list[dict]:
+    """I profili tipo di impresa degli esempi (prima di /misure/{id}, che altrimenti prenderebbe "profili")."""
+    return misure.profili_esempio()
+
+
 @router.get("/misure/{misura_id}")
 def scheda(misura_id: str, _: dict = Depends(utente_corrente)) -> dict:
     m = misure.una(misura_id)

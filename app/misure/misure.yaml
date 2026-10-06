@@ -4,6 +4,51 @@
 # Regola: dove un dato non e' stato verificato su fonte ufficiale c'e' scritto "da verificare".
 # beneficio_stimato: percentuale del costo dell'investimento (o della spesa agevolata) che torna
 # all'impresa, stima prudente, prima di eventuali cumuli.
+# esempi (06/10/2026, richiesta di Matteo): per ogni misura aperta, un caso pratico per ciascun profilo tipo
+# di profili_esempio, con l'interesse (alto, medio, basso, nullo). Numeri indicativi calcolati con le regole
+# della misura scritte qui sotto; dove un dettaglio non e' certo c'e' scritto "da verificare".
+
+profili_esempio:
+  - id: ufficio_servizi
+    nome: "Studio o ufficio di servizi"
+    descrizione: >-
+      5-15 addetti, una sede (ufficio di 200-300 m2), consumi di energia modesti: riscaldamento,
+      condizionamento, computer. Es. agenzia, studio tecnico, societa' di consulenza.
+  - id: negozio
+    nome: "Negozio, commercio al dettaglio"
+    descrizione: >-
+      2-8 addetti, uno o due punti vendita di 100-300 m2 con vetrine, illuminazione e climatizzazione;
+      spesso in affitto.
+  - id: ristorazione_ricettivo
+    nome: "Bar, ristorante, hotel"
+    descrizione: >-
+      10-40 addetti, una struttura con cucina, molta acqua calda e climatizzazione tutto l'anno:
+      consumi termici alti.
+  - id: artigiano
+    nome: "Artigiano, laboratorio"
+    descrizione: >-
+      3-10 addetti, un laboratorio di 300-600 m2 con macchine e un ambiente da scaldare;
+      spesso ditta individuale o snc.
+  - id: manifattura
+    nome: "Manifattura PMI con capannone"
+    descrizione: >-
+      50-150 addetti (media impresa), un capannone di 3.000-8.000 m2 da riscaldare e raffrescare,
+      linee produttive; societa' di capitali in utile.
+  - id: logistica
+    nome: "Logistica e trasporti con piu' sedi"
+    descrizione: >-
+      30-200 addetti, 4-10 magazzini o depositi in province diverse, coperture grandi, luci accese a lungo,
+      mezzi di movimentazione e spesso una flotta.
+  - id: agricola
+    nome: "Azienda agricola o agroalimentare"
+    descrizione: >-
+      5-20 addetti, terreni, serre o celle frigo, a volte trasformazione (cantina, caseificio, frantoio);
+      spesso reddito agrario da catasto, non da bilancio.
+  - id: startup
+    nome: "Startup innovativa, impresa digitale"
+    descrizione: >-
+      3-15 addetti, uffici in affitto o coworking, pochi beni materiali, spese soprattutto in persone e
+      software; nei primi anni spesso in perdita.
 
 misure:
 
@@ -99,6 +144,65 @@ misure:
       13/4/2026 solo in accesso diretto: le risorse annuali possono esaurirsi, controllare i contatori GSE.
       Edificio deve essere esistente e accatastato; per Titolo II solo ambito terziario. Prodotti
       a catalogo GSE semplificano. Controlli e sopralluoghi GSE con possibile revoca.
+    esempi:
+      - profilo: ristorazione_ricettivo
+        interesse: alto
+        esempio: >-
+          Hotel di 40 camere (piccola impresa) che sostituisce la caldaia a gas con pompe di calore da 120 kW
+          e aggiunge il solare termico per l'acqua calda: spesa 180.000 euro. Sul Titolo III una piccola impresa
+          arriva al 65%, cioe' fino a circa 117.000 euro, ma il valore reale dipende dai costi massimi unitari
+          (euro/kW, euro/m2) e puo' essere piu' basso. Richiesta preliminare al GSE prima di firmare l'ordine;
+          sopra i 15.000 euro il pagamento e' in rate annuali (quante, per questa taglia: da verificare).
+      - profilo: manifattura
+        interesse: alto
+        esempio: >-
+          Capannone di 5.000 m2 al Nord, media impresa: copertura isolata e LED per 450.000 euro (Titolo II,
+          multi-intervento: 30% + 10 punti media impresa = 40%, cioe' 180.000 euro; 55% se la prestazione
+          energetica migliora di almeno il 40%) e pompe di calore per 150.000 euro (Titolo III, media impresa 55%:
+          82.500 euro). In tutto circa 262.500 euro su 600.000, entro i costi massimi unitari. Sulle stesse spese
+          niente iperammortamento ne' Ecobonus: bisogna scegliere.
+      - profilo: logistica
+        interesse: alto
+        esempio: >-
+          Sei magazzini da 3.000 m2, media impresa: LED in tutti per circa 40.000 euro a sede, 240.000 in tutto.
+          Intervento singolo di efficienza (Titolo II): 25% + 10 punti media impresa = 35%, circa 84.000 euro,
+          con una pratica per ogni edificio. I magazzini devono essere in una categoria catastale ammessa
+          (gruppo D escluso D/9: da verificare sede per sede) e risparmiare almeno il 10%; dove non sono
+          riscaldati non ci sono interventi termici da fare.
+      - profilo: artigiano
+        interesse: alto
+        esempio: >-
+          Laboratorio di 400 m2 (categoria C/3, micro impresa) che sostituisce la caldaia a gas con una pompa
+          di calore da 40 kW (30.000 euro) e isola la copertura (40.000 euro). Pompa di calore al 65% (Titolo III,
+          piccola) = 19.500 euro; copertura in multi-intervento al 50% (30% + 20 punti piccola) = 20.000 euro:
+          circa 39.500 euro su 70.000, entro i costi massimi unitari. Richiesta preliminare prima dell'ordine.
+      - profilo: agricola
+        interesse: alto
+        esempio: >-
+          Azienda con serre (piccola impresa) che installa un generatore a biomassa da 200 kW per scaldarle:
+          spesa 120.000 euro. Il Titolo III ammette la biomassa anche per serre e calore di processo: 65% per una
+          piccola impresa, fino a circa 78.000 euro entro i costi massimi unitari. Eventuali regole diverse per
+          gli aiuti al settore agricolo: da verificare con il GSE.
+      - profilo: negozio
+        interesse: medio
+        esempio: >-
+          Negozio di 150 m2 (categoria C/1, micro impresa) che passa a una pompa di calore da 12 kW (12.000 euro)
+          e ai LED (6.000 euro). Pompa di calore al 65% = 7.800 euro; LED al 50% (multi-intervento) = 3.000 euro:
+          circa 10.800 euro, in una sola rata perche' sotto i 15.000. Per il multi-intervento serve un risparmio
+          del 20%; se il locale e' in affitto serve la disponibilita' dell'edificio (assenso del proprietario: da verificare).
+      - profilo: ufficio_servizi
+        interesse: medio
+        esempio: >-
+          Ufficio di 250 m2 (categoria A/10, piccola impresa) che sostituisce la caldaia con una pompa di calore
+          da 20 kW (18.000 euro) e cambia l'illuminazione (7.000 euro). Pompa al 65% = 11.700 euro, LED al 50% =
+          3.500 euro: circa 15.200 euro su 25.000. Cifre modeste perche' i consumi sono bassi: conviene soprattutto
+          se l'impianto e' da cambiare comunque.
+      - profilo: startup
+        interesse: basso
+        esempio: >-
+          In coworking non c'e' un edificio a disposizione: niente Conto Termico. Con un ufficio in affitto si puo'
+          al massimo cambiare la climatizzazione (pompa di calore da 8 kW, 6.000 euro: 65% = 3.900 euro), con
+          l'assenso del proprietario. Beneficio piccolo rispetto alle pratiche.
     fonte_verificata_il: "2026-10-05"
 
   - id: iperammortamento_2026
@@ -199,6 +303,63 @@ misure:
       documenti mancanti o dichiarazioni false; controlli GSE nei termini dell'accertamento fiscale,
       recupero con interessi e sanzioni. Beni nuovi, niente usato. Copertura finanziaria e eventuali
       tetti di spesa complessivi: da verificare.
+    esempi:
+      - profilo: manifattura
+        interesse: alto
+        esempio: >-
+          Linea di produzione interconnessa da 1.200.000 euro piu' fotovoltaico in autoconsumo da 400 kW per
+          500.000 euro: 1.700.000 euro, tutto nel primo scaglione (fino a 2,5 milioni, +180%). Maggiorazione
+          3.060.000 euro, cioe' circa 734.400 euro di IRES in meno (43,2%), distribuiti sugli anni di ammortamento.
+          Comunicazioni al GSE, acconto del 20% entro 60 giorni dall'esito, perizia e certificazione contabile;
+          sulle stesse spese niente Conto Termico.
+      - profilo: logistica
+        interesse: alto
+        esempio: >-
+          Magazzino automatico con scaffalature robotizzate e software di gestione interconnesso per 800.000 euro
+          (presenza negli allegati IV/V da verificare con il perito): circa 345.600 euro di IRES in meno in piu'
+          anni. Il fotovoltaico sui tetti dei magazzini e' ammesso per l'autoconsumo entro il 105% del fabbisogno
+          di ciascuna struttura, con comunicazioni separate per ogni struttura produttiva. Camion e furgoni non
+          sono beni 4.0 (eventuali casi particolari da verificare).
+      - profilo: artigiano
+        interesse: alto
+        esempio: >-
+          Centro di lavoro a controllo numerico interconnesso da 150.000 euro. Se il laboratorio e' una srl in
+          utile: maggiorazione 270.000 euro, circa 64.800 euro di IRES in meno negli anni. Se e' una ditta
+          individuale o una snc conta l'aliquota IRPEF del titolare (con redditi alti il risparmio puo' superare
+          il 43%). Perizia e certificazione hanno un costo quasi fisso, che pesa di piu' sugli investimenti piccoli.
+      - profilo: ristorazione_ricettivo
+        interesse: medio
+        esempio: >-
+          Hotel (srl in utile) che installa 50 kW di fotovoltaico in autoconsumo per 60.000 euro: circa 25.900 euro
+          di IRES in meno in piu' anni, se l'impianto non supera il 105% del fabbisogno. Le attrezzature da cucina
+          contano solo se sono negli allegati IV/V e interconnesse: da verificare con il perito. Se il fotovoltaico
+          va nel Conto Termico insieme a una pompa di calore, sulle stesse spese bisogna scegliere.
+      - profilo: agricola
+        interesse: medio
+        esempio: >-
+          Trattore con guida satellitare e raccolta dati interconnessa da 150.000 euro: per una societa' agricola
+          che tassa a bilancio, circa 64.800 euro di imposte in meno (43,2%) negli anni. Le imprese agricole a
+          reddito catastale sono escluse (da verificare sul testo di legge): per molte aziende agricole il
+          beneficio e' zero. La perizia la puo' firmare un agronomo.
+      - profilo: negozio
+        interesse: basso
+        esempio: >-
+          Un negozio compra raramente beni 4.0. L'uso tipico e' il fotovoltaico in autoconsumo, se c'e' un tetto
+          disponibile: 20 kW per 25.000 euro, circa 10.800 euro di IRES in meno per una srl in utile. Perizia,
+          certificazione e quattro comunicazioni al GSE riducono parecchio il vantaggio netto.
+      - profilo: ufficio_servizi
+        interesse: basso
+        esempio: >-
+          Computer e programmi da ufficio comuni non rientrano: servono beni degli allegati IV/V interconnessi.
+          Un software gestionale specialistico da 20.000 euro (se e' nell'allegato V: da verificare) darebbe circa
+          8.640 euro di IRES in meno negli anni, a fronte dei costi di perizia e certificazione. Gli studi
+          professionali senza reddito d'impresa sono esclusi.
+      - profilo: startup
+        interesse: basso
+        esempio: >-
+          Server e software 4.0 per 50.000 euro varrebbero circa 21.600 euro di imposte in meno, ma solo quando
+          l'impresa avra' utili tassabili: in perdita il beneficio si sposta negli anni (riporto delle perdite: da
+          verificare) o si perde. Per una startup in perdita conta di piu' il credito ricerca e sviluppo, che si usa in F24.
     fonte_verificata_il: "2026-10-05"
 
   - id: credito_rs_2026
@@ -273,6 +434,54 @@ misure:
       prenotazione sulla piattaforma MIMIT dal 07/07/2026), ma i 60 milioni sono finiti in 24 ore
       (comunicazione MIMIT dell'08/07/2026): le nuove prenotazioni restano in coda solo per un eventuale
       scorrimento se arrivano altri fondi. Per questo non e' una voce separata "aperta".
+    esempi:
+      - profilo: startup
+        interesse: alto
+        esempio: >-
+          Cinque sviluppatori che lavorano a un software con una vera incertezza tecnologica (non la semplice
+          personalizzazione): 250.000 euro di costo del personale in un anno. Credito del 10% = 25.000 euro,
+          da usare in F24 per pagare contributi e ritenute anche se l'impresa e' in perdita. Servono comunicazioni
+          al MIMIT, certificazione contabile, relazione tecnica e timesheet; la certificazione tecnica facoltativa
+          protegge dalle contestazioni.
+      - profilo: manifattura
+        interesse: medio
+        esempio: >-
+          Ufficio tecnico con tre ingegneri dedicati per meta' del tempo a un prodotto nuovo (120.000 euro) piu'
+          materiali per i prototipi (30.000 euro): 150.000 euro di spese, credito di 15.000 euro in F24. Non valgono
+          i macchinari della produzione ne' le normali migliorie di processo. La base va calcolata al netto di
+          eventuali contributi dei bandi sulle stesse spese.
+      - profilo: artigiano
+        interesse: basso
+        esempio: >-
+          Solo se sviluppa davvero un prodotto nuovo con incertezza tecnica, per esempio un prototipo con un
+          laboratorio universitario per 40.000 euro: credito di 4.000 euro. Relazione tecnica e certificazione
+          contabile costano, e sui progetti piccoli il rischio di contestazione pesa: da valutare caso per caso.
+      - profilo: logistica
+        interesse: basso
+        esempio: >-
+          Sviluppare con un'universita' un algoritmo nuovo di ottimizzazione dei percorsi (contratto di ricerca da
+          80.000 euro) vale 8.000 euro di credito. Comprare o configurare un software di mercato non e' ricerca e sviluppo.
+      - profilo: agricola
+        interesse: basso
+        esempio: >-
+          Sperimentazione con un'universita' su nuove varieta' o tecniche di trasformazione (50.000 euro): credito
+          di 5.000 euro. L'acquisto di macchine e impianti non conta. Accesso per le imprese agricole a reddito
+          catastale: da verificare.
+      - profilo: ufficio_servizi
+        interesse: basso
+        esempio: >-
+          Uno studio o un'agenzia di servizi fa raramente ricerca e sviluppo nel senso della norma (nuove
+          conoscenze, incertezza tecnica). Se sviluppa una piattaforma propria davvero nuova con due persone dedicate
+          (60.000 euro), il credito e' di 6.000 euro, da confrontare con il costo di certificazione e relazione.
+      - profilo: negozio
+        interesse: nullo
+        esempio: >-
+          Un negozio non fa ricerca e sviluppo nel senso della norma: allestimenti, gestionali e siti web non contano.
+      - profilo: ristorazione_ricettivo
+        interesse: nullo
+        esempio: >-
+          Un bar, un ristorante o un hotel di norma non fa ricerca e sviluppo ammissibile: nuovi menu,
+          ristrutturazioni e software di prenotazione non contano.
     fonte_verificata_il: "2026-10-05"
 
   - id: credito_zes_unica_2026
@@ -350,6 +559,58 @@ misure:
       Vincolo di mantenimento dell'attivita' nella zona per almeno 5 anni dopo il completamento (pena
       revoca, da verificare il dettaglio). Investimento iniziale (nuovo stabilimento, ampliamento,
       diversificazione), non semplice sostituzione. Certificazione contabile obbligatoria.
+    esempi:
+      - profilo: manifattura
+        interesse: alto
+        esempio: >-
+          Solo se lo stabilimento e' in una regione ZES. Esempio in Puglia: nuovo reparto con macchinari per
+          2.000.000 di euro, media impresa. Intensita' per una media impresa circa 50% (40% di base + 10 punti;
+          valore della Carta da verificare per il comune), ridotta dal riparto (75% nel 2025): circa 750.000 euro
+          di credito in F24. Serve un investimento iniziale (ampliamento o nuova produzione), mantenimento per
+          5 anni e la comunicazione nella finestra annuale (quella del 2026 e' chiusa).
+      - profilo: ristorazione_ricettivo
+        interesse: medio
+        esempio: >-
+          Hotel in Sicilia (piccola impresa) che amplia la struttura con nuove camere e attrezzature per 600.000 euro:
+          intensita' fino al 60%, circa 45% dopo un riparto come quello del 2025, cioe' circa 270.000 euro (limiti
+          sulla parte immobiliare: da verificare). Solo nelle regioni ZES, con un progetto da almeno 200.000 euro e
+          nella finestra di comunicazione annuale (2027: date da verificare).
+      - profilo: artigiano
+        interesse: medio
+        esempio: >-
+          Laboratorio in Campania (micro impresa) che acquista un capannone e nuove macchine per 250.000 euro:
+          intensita' fino al 60%, circa 112.500 euro con un riparto del 75% (percentuale del 2026 da verificare).
+          Sotto i 200.000 euro di progetto non si accede: per molti artigiani la soglia e' il vero ostacolo.
+      - profilo: agricola
+        interesse: medio
+        esempio: >-
+          Cantina o frantoio in Puglia che installa una nuova linea di imbottigliamento da 400.000 euro: con
+          l'intensita' massima di una piccola impresa (60%) e un riparto del 75% il credito sarebbe circa
+          180.000 euro. Per agricoltura e trasformazione dei prodotti agricoli ci sono modelli e percentuali
+          separati: da verificare prima di contarci.
+      - profilo: negozio
+        interesse: basso
+        esempio: >-
+          Un negozio arriva raramente a 200.000 euro di investimento in beni strumentali, e rifare gli arredi non e'
+          un investimento iniziale. Possibile per l'apertura di un nuovo punto vendita importante in una regione ZES
+          (ammissibilita' del commercio: da verificare).
+      - profilo: ufficio_servizi
+        interesse: basso
+        esempio: >-
+          Un ufficio di servizi difficilmente arriva a 200.000 euro di macchinari e impianti. Caso possibile: acquisto
+          e allestimento di una nuova sede in una regione ZES, ma la parte immobiliare ha limiti percentuali (da verificare).
+      - profilo: logistica
+        interesse: basso
+        esempio: >-
+          Trasporti e relative infrastrutture sono esclusi: un'impresa di autotrasporto non accede. Per il solo
+          magazzinaggio e la logistica conto terzi l'esclusione e' da verificare sul codice ATECO. Un'impresa di un
+          altro settore che costruisce un proprio magazzino al Sud invece puo' accedere.
+      - profilo: startup
+        interesse: basso
+        esempio: >-
+          Pochi beni materiali e quasi mai 200.000 euro di macchinari e impianti: di solito la ZES non serve. Il credito
+          pero' si usa in F24 anche in perdita, quindi una startup del Sud che attrezza un laboratorio o una produzione
+          sopra la soglia dovrebbe considerarlo.
     fonte_verificata_il: "2026-10-05"
 
   - id: nuova_sabatini
@@ -419,6 +680,54 @@ misure:
       circa 1,199 miliardi Sabatini ordinaria e 77 milioni Capitalizzazione). Cumulo con un bando a fondo
       perduto sugli stessi beni spesso limitato dall'intensita' massima. Revoca se i beni vengono venduti
       o distolti entro 3 anni (da verificare). Obbligo assicurazione catastrofale (DM 18/6/2025).
+    esempi:
+      - profilo: manifattura
+        interesse: alto
+        esempio: >-
+          Linea di produzione 4.0 da 1.200.000 euro in leasing a 5 anni: contributo sugli interessi al 3,575%, circa
+          il 10,1% del finanziamento, cioe' circa 121.200 euro, pagato in quote annuali (sopra i 200.000 euro).
+          Domanda alla banca o alla societa' di leasing prima dell'ordine. Si somma all'iperammortamento sullo
+          stesso bene entro il costo sostenuto (per prudenza, base dell'iperammortamento al netto del contributo).
+      - profilo: artigiano
+        interesse: alto
+        esempio: >-
+          Centro di lavoro 4.0 da 150.000 euro in leasing: contributo circa il 10,1% del finanziamento, cioe' circa
+          15.150 euro, in un'unica soluzione perche' sotto i 200.000 euro. Se il laboratorio e' una srl micro o piccola
+          e fa un aumento di capitale, la variante Capitalizzazione porta il tasso al 5% (circa 14,3%: 21.450 euro).
+          Domanda prima dell'acquisto.
+      - profilo: agricola
+        interesse: alto
+        esempio: >-
+          Trattore e attrezzature nuove per 120.000 euro finanziati in 5 anni: contributo circa 7,7%, cioe' 9.240 euro
+          (circa 12.120 se i beni sono 4.0, al 10,1%), in un'unica soluzione. L'agricoltura e' ammessa e il limite di
+          cumulo con altri aiuti e' piu' largo (65% in agricoltura). Domanda prima dell'acquisto.
+      - profilo: logistica
+        interesse: alto
+        esempio: >-
+          Carrelli elevatori elettrici, scaffalature e sistema di magazzino per 800.000 euro in leasing: se sono beni 4.0
+          contributo circa 10,1%, cioe' 80.800 euro in quote annuali; si puo' fare una domanda per ogni investimento
+          delle diverse sedi. Camion e furgoni per il trasporto conto terzi: ammissibilita' da verificare nelle FAQ MIMIT.
+      - profilo: ristorazione_ricettivo
+        interesse: medio
+        esempio: >-
+          Cucina professionale nuova per 120.000 euro in leasing a 5 anni: contributo circa 7,7%, cioe' 9.240 euro,
+          in un'unica soluzione. Esclusi lavori murari e opere sull'immobile; arredi delle camere: da verificare.
+      - profilo: negozio
+        interesse: medio
+        esempio: >-
+          Banchi frigo, casse e attrezzature per 50.000 euro con un finanziamento di 5 anni: contributo circa 7,7%,
+          cioe' circa 3.850 euro. Finanziamento minimo 20.000 euro; utile se l'attrezzatura si rinnova comunque a rate.
+      - profilo: ufficio_servizi
+        interesse: medio
+        esempio: >-
+          Computer, server e software per 40.000 euro in leasing: contributo circa 7,7%, cioe' circa 3.080 euro (circa
+          4.040 se i beni sono 4.0). Pratica semplice tramite la banca; non vale per comprare o ristrutturare l'ufficio.
+      - profilo: startup
+        interesse: basso
+        esempio: >-
+          Hardware per 30.000 euro finanziati: contributo circa 2.310 euro; con un aumento di capitale (variante
+          Capitalizzazione, 5%) circa 4.290 euro. Serve che una banca conceda il finanziamento, non scontato per una
+          startup in perdita (aiuta la garanzia del Fondo PMI).
     fonte_verificata_il: "2026-10-05"
 
   - id: ecobonus_imprese_2026
@@ -503,6 +812,54 @@ misure:
       dal 17/2/2023 salvo casi transitori ormai residuali: la detrazione si usa solo contro le proprie
       imposte. Edificio esistente, non nuova costruzione ne' ampliamento. Controlli ENEA e Agenzia con
       recupero della detrazione. Con le caldaie solo a combustibili fossili niente detrazione.
+    esempi:
+      - profilo: ristorazione_ricettivo
+        interesse: medio
+        esempio: >-
+          Hotel di proprieta' (srl in utile) che cambia gli infissi per 80.000 euro: detrazione 36% = 28.800 euro in
+          10 anni (2.880 euro l'anno), entro il limite di 60.000 euro di detrazione per unita' immobiliare. Con il
+          Conto Termico lo stesso lavoro varrebbe il 45% per una piccola impresa: l'Ecobonus serve quando il Conto
+          Termico non e' possibile (lavori gia' partiti senza richiesta preliminare, fondi GSE esauriti). Non si sommano.
+      - profilo: manifattura
+        interesse: basso
+        esempio: >-
+          Capannone riscaldato di proprieta': isolamento della copertura per 450.000 euro. Il limite di 60.000 euro di
+          detrazione per unita' immobiliare porta il beneficio a circa il 13% della spesa, in 10 anni. Il Conto Termico
+          (40% o piu' per una media impresa) e' quasi sempre meglio; l'edificio deve avere un impianto di riscaldamento.
+      - profilo: artigiano
+        interesse: basso
+        esempio: >-
+          Laboratorio di proprieta': pompa di calore da 30.000 euro, detrazione 36% = 10.800 euro in 10 anni, solo con
+          imposte capienti. Con il Conto Termico la stessa pompa di calore vale fino al 65%: l'Ecobonus e' un ripiego.
+      - profilo: ufficio_servizi
+        interesse: basso
+        esempio: >-
+          Ufficio di proprieta' con infissi da cambiare per 30.000 euro: detrazione 10.800 euro, 1.080 euro l'anno per
+          10 anni. Rende di piu' il Conto Termico (45% per una piccola impresa); l'Ecobonus resta utile se i lavori sono
+          gia' partiti senza la richiesta al GSE.
+      - profilo: negozio
+        interesse: basso
+        esempio: >-
+          Negozio con climatizzazione nuova in pompa di calore da 12.000 euro: detrazione 4.320 euro in 10 anni, con
+          imposte capienti. Se il locale e' in affitto la detrazione spetta anche al conduttore che paga i lavori
+          (consenso del proprietario: da verificare). Il Conto Termico al 65% rende di piu'.
+      - profilo: logistica
+        interesse: basso
+        esempio: >-
+          Molti magazzini non hanno un impianto di riscaldamento, che e' una condizione richiesta: li' niente Ecobonus.
+          Si applica agli uffici delle sedi (es. infissi per 20.000 euro: 7.200 euro in 10 anni). Per l'illuminazione
+          dei magazzini non c'e' Ecobonus; c'e' il Conto Termico.
+      - profilo: agricola
+        interesse: basso
+        esempio: >-
+          Con il reddito agrario catastale le imposte sono basse e la detrazione rischia di non trovare capienza. Caso
+          tipico: infissi o cappotto degli uffici aziendali (30.000 euro: 10.800 euro in 10 anni). Le serre di solito
+          non rientrano (edificio esistente con impianto di riscaldamento: da verificare).
+      - profilo: startup
+        interesse: nullo
+        esempio: >-
+          In perdita e quasi sempre in affitto: una detrazione in 10 anni non serve. La parte che non trova imposte da
+          pagare si perde (per l'IRES riporto da verificare).
     fonte_verificata_il: "2026-10-06"
 
   - id: sismabonus_imprese_2026
@@ -564,6 +921,49 @@ misure:
       in fattura. Massimale per unita' immobiliare: su capannoni grandi il beneficio in percentuale e'
       molto piu' basso del 36%. Verificare con il tecnico se il lavoro rientra anche in un bando regionale
       per la sicurezza sismica delle imprese.
+    esempi:
+      - profilo: manifattura
+        interesse: medio
+        esempio: >-
+          Capannone prefabbricato in zona sismica 2 (es. Emilia): adeguamento dei collegamenti tra travi e pilastri e
+          della copertura per 400.000 euro. Detrazione 36% solo su 96.000 euro per unita' immobiliare: massimo 34.560 euro
+          in 10 anni, circa il 9% della spesa. Spesso rende di piu' un bando regionale per la sicurezza sismica, se c'e'.
+      - profilo: logistica
+        interesse: medio
+        esempio: >-
+          Tre magazzini su sei in zona sismica 2 o 3, ciascuno una unita' immobiliare: messa in sicurezza per 150.000 euro
+          l'uno. Detrazione massima 34.560 euro per magazzino, 103.680 euro in tutto, in 10 anni. Le sedi in zona 4 restano
+          fuori: verificare la classificazione di ogni comune.
+      - profilo: ristorazione_ricettivo
+        interesse: medio
+        esempio: >-
+          Hotel in un edificio storico in zona sismica 2: miglioramento sismico per 300.000 euro. Detrazione massima
+          34.560 euro per unita' immobiliare (circa 11,5%), in 10 anni; se i lavori proseguono su piu' anni il massimale
+          conta anche le spese gia' detratte. Serve l'asseverazione del rischio sismico prima dei lavori.
+      - profilo: artigiano
+        interesse: basso
+        esempio: >-
+          Laboratorio di proprieta' in zona sismica 3: rinforzo strutturale per 60.000 euro, detrazione 21.600 euro in
+          10 anni con imposte capienti. Utile solo se i lavori sono comunque necessari.
+      - profilo: ufficio_servizi
+        interesse: basso
+        esempio: >-
+          Ufficio in condominio: la quota dei lavori antisismici condominiali (es. 20.000 euro) da' 7.200 euro di
+          detrazione in 10 anni. Solo per chi possiede o detiene l'immobile e ha imposte da pagare.
+      - profilo: negozio
+        interesse: basso
+        esempio: >-
+          Negozio al piano terra di un edificio in zona sismica 1-3: quota dei lavori condominiali di 15.000 euro,
+          detrazione di 5.400 euro in 10 anni. Niente in zona 4.
+      - profilo: agricola
+        interesse: basso
+        esempio: >-
+          Fienili, stalle o cantine in zona sismica 1-3 possono rientrare (edifici per attivita' agricole): 80.000 euro
+          di rinforzo = 28.800 euro in 10 anni. Con il reddito agrario catastale il limite e' spesso la capienza d'imposta.
+      - profilo: startup
+        interesse: nullo
+        esempio: >-
+          Sede in affitto o in coworking e spesso in perdita: non ci sono lavori strutturali da fare ne' imposte da ridurre.
     fonte_verificata_il: "2026-10-06"
 
   - id: art_bonus
@@ -633,6 +1033,51 @@ misure:
       dalla legge e pubblicati sul portale. Limite del 5 per mille dei ricavi: oltre, la parte di donazione
       non da' credito. I beneficiari devono comunicare ogni mese al Ministero le donazioni ricevute e
       pubblicarne l'uso. Utile per clienti che fanno gia' mecenatismo; non e' un incentivo agli investimenti.
+    esempi:
+      - profilo: manifattura
+        interesse: medio
+        esempio: >-
+          Ricavi di 20 milioni: credito massimo 100.000 euro l'anno (5 per mille), cioe' donazioni utili fino a circa
+          153.800 euro. Donando 30.000 euro al restauro di un monumento del territorio il credito e' 19.500 euro in tre
+          anni: costo reale 10.500 euro. Ha senso se l'impresa fa gia' mecenatismo; non deve esserci un ritorno pubblicitario.
+      - profilo: logistica
+        interesse: medio
+        esempio: >-
+          Ricavi di 30 milioni: tetto di 150.000 euro di credito l'anno. Una donazione di 20.000 euro al teatro della
+          citta' della sede principale vale 13.000 euro di credito in tre quote, da usare in F24. Non si abbina ai bandi:
+          e' una scelta di legame con il territorio.
+      - profilo: ristorazione_ricettivo
+        interesse: basso
+        esempio: >-
+          Hotel con ricavi di 2 milioni: credito massimo 10.000 euro l'anno, donazioni utili fino a circa 15.400 euro.
+          Es. 5.000 euro al museo cittadino: credito di 3.250 euro in tre anni. Senza ritorno pubblicitario diretto
+          (altrimenti e' una sponsorizzazione).
+      - profilo: ufficio_servizi
+        interesse: basso
+        esempio: >-
+          Ricavi di 1 milione: credito massimo 5.000 euro l'anno, donazioni utili fino a circa 7.700 euro. Es. 3.000 euro
+          a una biblioteca pubblica: credito di 1.950 euro in tre anni.
+      - profilo: negozio
+        interesse: basso
+        esempio: >-
+          Ricavi di 600.000 euro: credito massimo 3.000 euro l'anno, donazioni utili fino a circa 4.600 euro (es. 2.000 euro
+          donati, 1.300 euro di credito in tre anni). Scelta personale, non un incentivo.
+      - profilo: artigiano
+        interesse: basso
+        esempio: >-
+          Ricavi di 500.000 euro: credito massimo 2.500 euro l'anno, donazioni utili fino a circa 3.850 euro. Utile solo
+          se il titolare vuole sostenere un bene culturale del posto.
+      - profilo: agricola
+        interesse: basso
+        esempio: >-
+          Una societa' agricola con ricavi di 1,5 milioni puo' recuperare fino a 7.500 euro di credito l'anno. Per le
+          imprese agricole a reddito catastale l'accesso come titolari di reddito d'impresa e' da verificare (come persona
+          fisica vale il limite del 15% del reddito imponibile).
+      - profilo: startup
+        interesse: basso
+        esempio: >-
+          Con ricavi di 200.000 euro il tetto e' 1.000 euro di credito l'anno: di fatto irrilevante. Il credito si usa in
+          F24 anche in perdita, ma gli importi restano piccoli.
     fonte_verificata_il: "2026-10-06"
 
 # Misure valutate e NON inserite (dettaglio nella ricerca):

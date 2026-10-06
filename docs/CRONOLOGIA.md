@@ -114,3 +114,8 @@
 - **Pilota del controllo con l'IA in sessione** (#82): gli agenti confrontano la scheda con i documenti e citano il bando. Su 19 schede: 14 corrette, 3 con imprecisioni minori, **2 gravi** corrette a mano, che il controllo senza IA non poteva vedere: il bando **2072 non è per imprese**; il bando **271 scade il 31/12/2026**.
 - **In lavorazione**: scheda del **Fondo screening DAE** e aggiunta del **Ministero del Lavoro**, che mancava tra le fonti.
 - Documentazione: nascono `docs/COME_FUNZIONA.md` (mappa del sistema) e questa cronologia.
+- Green Tour: i doppioni (Camera di Genova, FIRA, Ministero, Invitalia) uniti nel bando 2819 con la pagina Invitalia; il sito del Ministero del Turismo blocca i programmi automatici (protezione anti-robot), quindi i documenti ufficiali sono stati scaricati a mano (nuovo strumento `carica_manuali.py`) e la scheda rifatta: proponibile, scade l'08/10 ore 17. "GreenTour" e "Green Tour" ora sono riconosciuti come lo stesso nome (PR #83).
+- Fondo screening - DAE: nuova fonte `lavoro_notizie` (Ministero del Lavoro, PR #83); creato il bando 4407 con avviso e decreti.
+- Misure nazionali: esempi pratici per otto tipi di impresa (ufficio, negozio, ristorazione/hotel, artigiano, manifattura, logistica, agricola, startup) nella pagina Misure.
+- Supervisione: il sistema "Controllo delle schede" ha ora un nome suo (`controllo_schede`), separato dai controlli delle fonti.
+

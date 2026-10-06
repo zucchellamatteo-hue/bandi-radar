@@ -65,6 +65,11 @@ ul.motivi.a_favore li { color: #1e6b3e; }
 ul.motivi.da_controllare li { color: var(--grigio); }
 .stato-bando { display: inline-block; border-radius: 4px; padding: .1rem .4rem; font-size: .78rem; font-weight: 600; background: #f0f2f5; color: var(--grigio); }
 .stato-bando.aperto { background: #e3f4ea; color: #1e6b3e; }
+/* Esempi delle misure per tipo di impresa: interesse alto/medio/basso/nullo. */
+.esempi-misura td:first-child { width: 14rem; } .esempi-misura td:nth-child(2) { width: 6rem; }
+.interesse { display: inline-block; border-radius: 4px; padding: .1rem .45rem; font-size: .78rem; font-weight: 700; text-transform: uppercase; letter-spacing: .03em; }
+.interesse.alto { background: #e3f4ea; color: #1e6b3e; } .interesse.medio { background: #fff4d6; color: #8a6100; }
+.interesse.basso { background: #f0f2f5; color: var(--grigio); } .interesse.nullo { background: #fff; color: var(--pausa); border: 1px dashed var(--bordo); }
 .stato-bando.in_arrivo { background: #e6effb; color: #1f5fbf; }
 .stato-bando.chiuso { background: #f0f2f5; color: var(--grigio); }
 .scheda-griglia { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: .8rem; margin: 1rem 0; }

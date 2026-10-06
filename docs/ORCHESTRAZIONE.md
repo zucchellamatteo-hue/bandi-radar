@@ -35,5 +35,4 @@ La pagina **Lavorazione** mostra i due imbuti con i numeri; cliccando una fase s
 - Verifica delle 40 fonti che non hanno mai dato annunci.
 - Riprova immediata delle pagine non trovate quando cambia la regola della fonte nel registro (oggi si aspettano 14 giorni).
 - Un pulsante nella plancia per riprovare subito un passo o escludere un bando a mano.
-- In `app/sistemi.py` la chiave dei dati `controlli` è definita due volte (controlli delle fonti e controllo delle schede): dal 06/10, cliccando "Raccolta dalle fonti" nella Supervisione, si vedono le schede con problemi invece degli ultimi controlli delle fonti. Da separare.
 - Verifica con l'IA delle schede: oggi solo in sessione e senza strumento di importazione.
