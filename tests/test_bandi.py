@@ -159,3 +159,9 @@ def test_proroga_che_descrive_il_bando_intero_diventa_un_bando():
     assert e.azione == "nuovo" and e.ruolo == "origine" and "pagina e' quella del bando" in e.motivo
     (_, e), = pianifica([ann(2, "Proroga dei termini di presentazione delle domande")], anno_corrente=2026)
     assert e.azione == "dubbio"
+
+
+def test_nome_attaccato_e_nome_staccato_sono_uguali():
+    a = analizza_titolo("GreenTour - Incentivo per la digitalizzazione e lo sviluppo sostenibile del turismo")
+    b = analizza_titolo("Green Tour - Incentivo per lo sviluppo sostenibile e la digitalizzazione del turismo")
+    assert {"green", "tour"} <= a.parole and somiglianza(a, b) > 0.8

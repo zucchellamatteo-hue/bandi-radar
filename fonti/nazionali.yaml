@@ -314,6 +314,30 @@
       User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0 Safari/537.36
         BandiRadar/0.1 (+https://finanzagevolata.qiaro.it)
 
+- id: lavoro_notizie
+  nome: Ministero del Lavoro - Notizie
+  ente: Ministero del Lavoro e delle Politiche Sociali
+  tipo: nazionale
+  territorio: ITA
+  url: https://www.lavoro.gov.it/notizie/Pagine/Notizie
+  modalita: html
+  feed_url: null
+  piattaforma: drupal
+  frequenza: tre_a_settimana
+  stato: attiva
+  verificato_il: '2026-10-06'
+  note: 'Aggiunta il 06/10 su segnalazione di Matteo (Fondo screening - DAE mancava: il Ministero non era tra le
+    fonti). Archivio notizie, 20 per pagina con la data; gli avvisi per imprese escono qui con il link al PDF. Il feed
+    RSS ha date in un formato che leggi_data non capisce, per questo si legge l''HTML. Notizie miste: lo smistamento
+    scarta il resto.'
+  richiesta:
+    selettore: .views-row
+  scorta:
+    parametro: page
+    inizio: 0
+    passo: 1
+    pagine: 13
+
 - id: cdp_imprese
   nome: Cassa Depositi e Prestiti - Imprese
   ente: Cassa Depositi e Prestiti

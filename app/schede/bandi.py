@@ -207,7 +207,8 @@ def ruolo_da_titolo(titolo: str) -> str | None:
 
 
 def analizza_titolo(titolo: str, ente_norm: str = "") -> Titolo:
-    testo = normalizza(titolo).replace("’", "'")
+    # "GreenTour" e "Green Tour" sono lo stesso nome (06/10: il bando del Ministero del Turismo non era stato unito).
+    testo = normalizza(re.sub(r"([a-z])([A-Z])", r"\1 \2", titolo)).replace("’", "'")
     anni = frozenset(_ANNO.findall(testo))
     edizione = set()
     for m in _EDIZIONE.finditer(testo):
