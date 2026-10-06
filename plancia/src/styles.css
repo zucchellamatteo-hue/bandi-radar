@@ -134,3 +134,6 @@ td.permessi label { display: inline-block; margin-right: .6rem; white-space: now
 .guida ul.indice { columns: 2; font-size: .92rem; }
 header.barra nav { flex-wrap: wrap; line-height: 1.8; }
 header.barra { height: auto; min-height: 56px; padding-top: .3rem; padding-bottom: .3rem; }
+/* Misure chiuse (06/10): in fondo, in grigio. */
+.misure-chiuse .riquadro { opacity: .6; filter: grayscale(1); border-top-color: var(--pausa); }
+h2.chiuse { color: var(--grigio); border-bottom-color: var(--bordo); }
