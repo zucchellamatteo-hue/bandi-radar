@@ -62,10 +62,10 @@ function ElencoBandi({ titolo, bandi, impresaId }: { titolo: string; bandi: Band
   return (
     <>
       <h2>{titolo} ({bandi.length})</h2>
-      <table>
+      <table className="impila">
         <tbody>{bandi.slice(0, quanti).map((b) => (
           <tr key={b.id}>
-            <td><SegnoEsito livello={b.esito.livello} /></td>
+            <td className="segno"><SegnoEsito livello={b.esito.livello} /></td>
             <td><Link to={`/impresa/bandi/${b.id}?impresa=${impresaId}`} className="titolo-annuncio">{b.titolo}</Link>
               <div className="piccolo">{b.ente}</div>
               <div className="riassunto">{b.sintesi}</div>

@@ -26,13 +26,17 @@ import Guida from "./pagine/Guida";
 import Account from "./pagine/Account";
 import { Abbonamento, MieImprese, MieiBandi, MieRichieste, ModuloImpresa, SchedaImpresa } from "./pagine/AreaImpresa";
 import { ContestoUtente, puo } from "./utente";
+import { useTabelleMobili } from "./tabelle";
 
 
 export default function App() {
   const [utente, setUtente] = useState<Utente | null | undefined>(undefined);   // undefined = sto controllando
   const posizione = useLocation();
   const vai = useNavigate();
+  const [menuAperto, setMenuAperto] = useState(false);
   useEffect(() => { api.io().then(setUtente).catch(() => setUtente(null)); }, []);
+  useEffect(() => { setMenuAperto(false); }, [posizione.pathname, posizione.search]);
+  useTabelleMobili();
 
   // Pagine raggiungibili dai link delle email, anche senza accesso.
   if (posizione.pathname === "/imposta-password") return <ImpostaPassword entrato={setUtente} />;
@@ -47,48 +51,41 @@ export default function App() {
   const admin = utente.ruolo === "admin";
   const lavoro = puo(utente, "lavoro");      // tutte le pagine di lavoro (in sola lettura senza "modifiche")
   const imprese = puo(utente, "imprese");
+  // Le voci del menu: [indirizzo, nome, solo indirizzo esatto]. Sul computer stanno in fila nella barra, sul telefono
+  // in un menu a tendina aperto dal pulsante "☰" (06/10).
+  const voci: [string, string, boolean?][] = lavoro ? [
+    ["/", "Fonti", true], ["/catalogo", "Catalogo"], ["/misure", "Misure"], ["/profili", "Profili"], ["/annunci", "Annunci", true],
+    ["/lavorazione", "Lavorazione"], ["/supervisione", "Supervisione"], ["/doppioni", "Doppioni"], ["/novita", "Novità"],
+    ["/feedback", "Feedback"], ["/segnalazioni", "Segnalazioni"],
+    ...(imprese ? [["/imprese", "Imprese"], ["/campagne", "Campagne"]] as [string, string][] : []),
+    ["/passi", "Prossimi passi"], ...(admin ? [["/utenti", "Utenti"]] as [string, string][] : []), ["/guida", "Guida"],
+  ] : utente.ruolo === "impresa" ? [
+    ["/impresa", "I miei bandi", true], ["/impresa/misure", "Agevolazioni fiscali"], ["/impresa/imprese", "Le mie imprese"],
+    ["/impresa/richieste", "Richieste di supporto"], ["/impresa/abbonamento", "Abbonamento"], ["/guida", "Guida"],
+  ] : utente.ruolo === "revisore" ? [
+    ["/catalogo", "Catalogo"], ["/misure", "Misure"], ["/feedback", "I miei giudizi"],
+    ...(imprese ? [["/imprese", "Imprese"], ["/campagne", "Campagne"]] as [string, string][] : []), ["/guida", "Guida"],
+  ] : [];
+  const attiva = [...voci].sort((a, b) => b[0].length - a[0].length).find(([to, , fine]) =>
+    fine ? posizione.pathname === to : posizione.pathname === to || posizione.pathname.startsWith(to + "/"));
+  // Sul telefono il pulsante del menu dice in che pagina si e'; le pagine di dettaglio prendono il nome della loro sezione.
+  const nomePagina = attiva?.[1] || [["/bandi/", "Catalogo"], ["/fonti/", "Fonti"], ["/impresa/bandi/", "I miei bandi"], ["/account", "Il mio account"]]
+    .find(([inizio]) => posizione.pathname.startsWith(inizio))?.[1] || "Menu";
   return (
     <ContestoUtente.Provider value={utente}>
       <header className="barra">
         <span className="logo">Bandi Radar</span>
-        {lavoro && <nav>
-          <NavLink to="/" end className={classe}>Fonti</NavLink>{" · "}
-          <NavLink to="/catalogo" className={classe}>Catalogo</NavLink>{" · "}
-          <NavLink to="/misure" className={classe}>Misure</NavLink>{" · "}
-          <NavLink to="/profili" className={classe}>Profili</NavLink>{" · "}
-          <NavLink to="/annunci" end className={classe}>Annunci</NavLink>{" · "}
-          <NavLink to="/lavorazione" className={classe}>Lavorazione</NavLink>{" · "}
-          <NavLink to="/supervisione" className={classe}>Supervisione</NavLink>{" · "}
-          <NavLink to="/doppioni" className={classe}>Doppioni</NavLink>{" · "}
-          <NavLink to="/novita" className={classe}>Novità</NavLink>{" · "}
-          <NavLink to="/feedback" className={classe}>Feedback</NavLink>{" · "}
-          <NavLink to="/segnalazioni" className={classe}>Segnalazioni</NavLink>{" · "}
-          {imprese && <><NavLink to="/imprese" className={classe}>Imprese</NavLink>{" · "}
-            <NavLink to="/campagne" className={classe}>Campagne</NavLink>{" · "}</>}
-          <NavLink to="/passi" className={classe}>Prossimi passi</NavLink>{" · "}
-          {admin && <><NavLink to="/utenti" className={classe}>Utenti</NavLink>{" · "}</>}
-          <NavLink to="/guida" className={classe}>Guida</NavLink>
-        </nav>}
-        {utente.ruolo === "impresa" && <nav>
-          <NavLink to="/impresa" end className={classe}>I miei bandi</NavLink>{" · "}
-          <NavLink to="/impresa/misure" className={classe}>Agevolazioni fiscali</NavLink>{" · "}
-          <NavLink to="/impresa/imprese" className={classe}>Le mie imprese</NavLink>{" · "}
-          <NavLink to="/impresa/richieste" className={classe}>Richieste di supporto</NavLink>{" · "}
-          <NavLink to="/impresa/abbonamento" className={classe}>Abbonamento</NavLink>{" · "}
-          <NavLink to="/guida" className={classe}>Guida</NavLink>
-        </nav>}
-        {utente.ruolo === "revisore" && !lavoro && <nav>
-          <NavLink to="/catalogo" className={classe}>Catalogo</NavLink>{" · "}
-          <NavLink to="/misure" className={classe}>Misure</NavLink>{" · "}
-          <NavLink to="/feedback" className={classe}>I miei giudizi</NavLink>
-          {imprese && <>{" · "}<NavLink to="/imprese" className={classe}>Imprese</NavLink>{" · "}
-            <NavLink to="/campagne" className={classe}>Campagne</NavLink></>}{" · "}
-          <NavLink to="/guida" className={classe}>Guida</NavLink>
-        </nav>}
-        <span className="chi-sono">
-          <NavLink to="/account" className={classe} title="Il mio account">{utente.nome || utente.email}</NavLink> <span className="piccolo">({NOMI_RUOLO_UTENTE[utente.ruolo]})</span>{" "}
-          <button onClick={esci}>Esci</button>
-        </span>
+        <Segnala />
+        <button className="menu-pulsante" aria-expanded={menuAperto} aria-controls="menu-corpo"
+          onClick={() => setMenuAperto(!menuAperto)}>{menuAperto ? "✕" : "☰"} {nomePagina}</button>
+        <div id="menu-corpo" className={`menu-corpo${menuAperto ? " aperto" : ""}`}>
+          {voci.length > 0 && <nav>{voci.map(([to, testo, fine], i) => <span key={to}>
+            {i > 0 && <span className="sep">{" · "}</span>}<NavLink to={to} end={fine} className={classe}>{testo}</NavLink></span>)}</nav>}
+          <span className="chi-sono">
+            <NavLink to="/account" className={classe} title="Il mio account">{utente.nome || utente.email}</NavLink> <span className="piccolo">({NOMI_RUOLO_UTENTE[utente.ruolo]})</span>{" "}
+            <button onClick={esci}>Esci</button>
+          </span>
+        </div>
       </header>
       <main>
         {lavoro ? (
@@ -159,7 +156,6 @@ export default function App() {
           </Routes>
         )}
       </main>
-      <Segnala />
     </ContestoUtente.Provider>
   );
 }

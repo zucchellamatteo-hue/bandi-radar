@@ -203,7 +203,7 @@ function Gruppo({ titolo, bandi, aperto }: { titolo: string; bandi: BandoRiga[];
       <table>
         <tbody>{bandi.slice(0, quanti).map((b) => (
           <tr key={b.id}>
-            <td><SegnoEsito livello={b.esito.livello} /></td>
+            <td className="segno"><SegnoEsito livello={b.esito.livello} /></td>
             <td><Link to={`/bandi/${b.id}`} className="titolo-annuncio">{b.titolo}</Link>
               <div className="piccolo">{b.ente}</div>
               <Motivi classe="esclusioni" voci={b.esito.esclusioni} segno="✗" />

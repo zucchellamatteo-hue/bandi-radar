@@ -156,3 +156,103 @@ ul.segnala-tipi li button span { display: block; margin-top: .1rem; }
 ul.segnala-mie { padding-left: 1rem; font-size: .85rem; }
 button.collegamento { border: none; background: none; padding: 0; color: var(--accento); text-decoration: underline; font-size: inherit; }
 .riquadro.scelto { border-color: var(--accento); background: #e8f0fb; }
+
+/* Menu e telefono (06/10): sul computer il menu sta in fila nella barra; il pulsante "☰" e le cose "solo-mobile" no. */
+.menu-pulsante, .solo-mobile { display: none; }
+.menu-corpo { display: contents; }
+main { padding-bottom: 5rem; }   /* spazio per il pulsante "Segnala": non copre l'ultima riga ne' i pulsanti in fondo */
+
+/* Telefono (fino a 700 px): una colonna, testo dei campi a 16 px (niente zoom automatico di iOS), cose da toccare
+   alte almeno 44 px, menu a tendina, tabelle come schede impilate (vedi tabelle.ts). */
+@media (max-width: 700px) {
+  body { font-size: 16px; -webkit-text-size-adjust: 100%; }
+  main { padding: .9rem .8rem 2rem; overflow-wrap: anywhere; }
+  h1 { font-size: 1.35rem; margin-bottom: .9rem; }
+  h2 { font-size: 1.15rem; margin-top: 1.6rem; }
+
+  /* Barra in alto: logo a sinistra, pulsante del menu a destra; il menu si apre sotto, a tutta larghezza. */
+  header.barra { padding: .35rem .8rem; gap: .5rem; min-height: 56px; flex-wrap: nowrap; }
+  header.barra .logo { font-size: 1.1rem; }
+  button.menu-pulsante { display: inline-flex; align-items: center; gap: .4rem; margin-left: auto; max-width: 60%; overflow: hidden;
+    white-space: nowrap; text-overflow: ellipsis; font-size: 1rem; font-weight: 600; color: var(--blu-scuro); }
+  .menu-corpo { display: none; position: absolute; top: 100%; left: 0; right: 0; background: #fff; border-bottom: 1px solid var(--bordo);
+    box-shadow: 0 10px 24px rgba(22, 62, 122, .18); max-height: calc(100vh - 56px); max-height: calc(100dvh - 56px); overflow-y: auto; padding-bottom: .8rem; }
+  .menu-corpo.aperto { display: block; }
+  header.barra .menu-corpo nav { display: flex; flex-direction: column; line-height: 1.3; }
+  header.barra .menu-corpo nav a { display: flex; align-items: center; min-height: 48px; padding: .5rem 1.2rem; font-size: 1.02rem; color: var(--testo);
+    border-bottom: 1px solid #eef2f8; border-left: 4px solid transparent; }
+  header.barra .menu-corpo nav a.attivo { border-left-color: var(--accento); border-bottom: 1px solid #eef2f8; background: #e8f0fb; }
+  .menu-corpo .sep { display: none; }
+  header.barra .chi-sono { display: flex; align-items: center; gap: .5rem; flex-wrap: wrap; white-space: normal; margin: 0; padding: .8rem 1.2rem 0; }
+  header.barra .chi-sono button { margin-left: auto; }
+
+  /* Campi e pulsanti */
+  input, select, textarea { font-size: 16px !important; }
+  button, select, summary, input[type=text], input[type=email], input[type=password], input[type=number], input[type=date], input:not([type]) { min-height: 44px; }
+  button { padding: .5rem .9rem; font-size: .95rem; }
+  input[type=checkbox], input[type=radio] { width: 20px; height: 20px; vertical-align: middle; }
+  .solo-mobile { display: block; }
+
+  /* Filtri: uno sotto l'altro, a tutta larghezza */
+  .filtri { flex-direction: column; align-items: stretch; gap: .5rem; }
+  .filtri > *, .filtri form, .filtri input[type=text], .filtri input.ateco, .filtri select { width: 100%; min-width: 0; }
+  .filtri .etichetta-filtri { min-width: 0; margin-top: .3rem; }
+  .filtri details.multiplo summary { min-width: 0; display: flex; align-items: center; }
+  .multiplo-voci { left: 0; right: 0; min-width: 0; max-height: 60vh; }
+  .multiplo-voci label { padding: .45rem 0; white-space: normal; }
+  .filtri-extra { display: none; }
+  .filtri-extra.aperti { display: flex; }
+  button.altri-filtri { width: 100%; margin-bottom: 1rem; text-align: left; font-weight: 600; }
+  .pagine { justify-content: space-between; }
+
+  /* Riquadri dei numeri: due per riga */
+  .riquadri { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .6rem; }
+  .riquadro { padding: .7rem .8rem; }
+  .riquadro .numero { font-size: 1.5rem; }
+  .scheda-griglia, .griglia-piani, .modulo-profilo { grid-template-columns: minmax(0, 1fr); }
+  .modulo-profilo { padding: .8rem; }
+  .modulo-profilo input, .modulo-profilo select, .modulo-profilo textarea { width: 100%; }
+  .modulo-profilo .scelte label, .modulo-profilo label:has(> input[type=checkbox]) { display: flex; align-items: center; gap: .4rem; min-height: 40px; }
+  .modulo-profilo .scelte label input, .modulo-profilo label > input[type=checkbox] { width: 20px; }
+  .modulo-profilo .azioni { flex-wrap: wrap; }
+  .accesso { margin: 1.2rem .8rem; padding: 1.4rem 1.1rem; }
+  .lista-settimane li { flex-wrap: wrap; gap: .4rem; }
+  .guida ul.indice { columns: 1; }
+  .giudizio { padding: .2rem .9rem 1rem; }
+  .giudizio .problema input { min-width: 0; }
+  button.stella { min-height: 44px; min-width: 44px; }
+  .riquadro.supporto button.primario { margin: .6rem 0 0; width: 100%; }
+  td, th { min-width: 0 !important; }
+
+  /* Tabelle con intestazione: ogni riga una scheda, il nome della colonna sopra il valore. */
+  table.impila { display: block; background: none; border: none; box-shadow: none; border-radius: 0; overflow: visible; }
+  table.impila thead { display: none; }
+  table.impila tbody { display: block; }
+  table.impila tr { display: block; background: var(--carta); border: 1px solid var(--bordo); border-radius: 10px; box-shadow: var(--ombra);
+    margin-bottom: .7rem; padding: .35rem 0; }
+  table.impila td { display: block; border: none; padding: .3rem .85rem; font-size: .95rem; width: auto !important; text-align: left !important; }
+  table.impila td:empty { display: none; }
+  table.impila td[data-etichetta]::before { content: attr(data-etichetta); display: block; font-size: .7rem; font-weight: 700; color: #2a4a75;
+    text-transform: uppercase; letter-spacing: .04em; margin-bottom: .1rem; }
+  table.impila tr:hover td { background: none; }
+  table.impila td.segno { float: right; padding-left: .4rem; }
+  table.impila td.segno + td::before { display: none; }
+  table.impila .titolo-annuncio { font-size: 1.05rem; }
+  /* Tabelle "nome: valore": una scheda sola, il nome sopra il valore. */
+  table.impila-chiave, table.impila-chiave tbody, table.impila-chiave tr, table.impila-chiave th, table.impila-chiave td { display: block; }
+  table.impila-chiave tr { border-bottom: 1px solid var(--bordo); padding: .3rem 0; }
+  table.impila-chiave tr:last-child { border-bottom: none; }
+  table.impila-chiave th, table.impila-chiave td { border: none; padding: .2rem .85rem; }
+  table.impila-chiave th { background: none; font-size: .72rem; padding-top: .4rem; }
+  table.impila-chiave td.stato { white-space: normal; }
+  /* Tabelle lasciate tabelle: si scorrono di lato */
+  table.non-impilare { display: block; overflow-x: auto; }
+
+  /* Pulsante "Segnala": il pannello occupa la parte bassa dello schermo. */
+  /* Sul telefono il pulsante sta nella barra in alto, accanto al menu: non copre mai la pagina. */
+  button.segnala-pulsante { position: static; margin-left: auto; flex-shrink: 0; box-shadow: none; padding: .5rem .8rem; font-size: .92rem; }
+  header.barra button.menu-pulsante { margin-left: 0; max-width: 46vw; }
+  .segnala-pannello { left: .5rem; right: .5rem; bottom: calc(.5rem + env(safe-area-inset-bottom, 0px)); width: auto; max-height: 85vh; max-height: 85dvh; }
+  .segnala-testa button { min-width: 44px; }
+  .segnala-pannello input, .segnala-pannello textarea { width: 100%; }
+}
