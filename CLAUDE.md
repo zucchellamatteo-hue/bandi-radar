@@ -1,6 +1,6 @@
 # Bandi Radar — regole di lavoro
 
-Leggi questo file prima di qualunque lavoro. Il piano completo e le decisioni prese sono in `docs/PIANO_PROGETTO.md`: è la memoria condivisa del progetto, va tenuto aggiornato quando una decisione cambia.
+Leggi questo file prima di qualunque lavoro. Obiettivi, priorità e modello di ricavi decisi da Matteo sono in `docs/VISIONE.md` (affidabilità 9/10 prima di vendere, non perdere le misure famose, IA entro 100 $ al mese). Il piano completo e le decisioni prese sono in `docs/PIANO_PROGETTO.md`: è la memoria condivisa del progetto, va tenuto aggiornato quando una decisione cambia.
 
 ## Cos'è
 
