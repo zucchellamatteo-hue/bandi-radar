@@ -154,14 +154,72 @@ def _togli_cornice(zuppa: BeautifulSoup) -> None:
             tag.decompose()
 
 
-def trova_allegati(html: str, base_url: str) -> list[Candidato]:
-    """I link a documenti e pagine FAQ di una pagina, senza doppioni, nell'ordine in cui compaiono."""
+# --- pagine elenco condivise da piu' bandi (06/10/2026) ---------------------------------------------------------
+# La Camera di Cuneo mette tutti i bandi su un'unica pagina, ognuno nella sua sezione: senza un filtro ogni bando
+# riceveva i documenti di tutti gli altri (segnalato da Matteo sul 423). Quando la pagina ufficiale e' anche quella di
+# altri bandi, si tengono solo i link della sezione del bando: dal punto in cui compare la sua "firma" (codice o parole
+# del titolo che gli altri non hanno) fino alla firma di un altro bando.
+_CODICE = re.compile(r"\bcod(?:ice|\.)?\s*(?:bando\s*)?[:n.\s]*(\d{3,7})\b", re.IGNORECASE)
+_PAROLE_VUOTE = {"bando", "bandi", "avviso", "anno", "per", "del", "della", "delle", "dei", "degli", "alla", "alle", "con",
+                 "sulle", "sui", "nel", "nella", "una", "the", "and", "contributi", "contributo", "cciaa", "camera",
+                 "commercio", "progetto", "pubblico", "imprese", "impresa", "codice", "cod", "2024", "2025", "2026", "2027"}
+
+
+def firma_del_bando(titolo: str, codice: str | None, altri_titoli: list[str]) -> re.Pattern | None:
+    """Come riconoscere il bando su una pagina che ne elenca altri: il codice, altrimenti le prime parole del titolo
+    che gli altri titoli non hanno. None se il bando non si distingue (allora non si filtra)."""
+    m = _CODICE.search(titolo or "")
+    numero = (codice or "").strip() if (codice or "").strip().isdigit() else (m.group(1) if m else None)
+    if numero:
+        return re.compile(rf"(?<!\d){re.escape(numero)}(?!\d)")
+    parole_altri = {w for t in altri_titoli for w in re.findall(r"\w+", t.lower())}
+    proprie = [w for w in re.findall(r"\w+", (titolo or "").lower())
+               if len(w) >= 3 and w not in _PAROLE_VUOTE and w not in parole_altri]
+    if not proprie:
+        return None
+    return re.compile(r"\W+(?:\w+\W+){0,3}".join(re.escape(w) for w in proprie[:2]), re.IGNORECASE)
+
+
+def _sezione(zuppa: BeautifulSoup, firma: re.Pattern, altre: list[re.Pattern]) -> set[int] | None:
+    """Gli id dei tag <a> che stanno nella sezione del bando. Con piu' punti in cui compare la firma (un avviso in
+    cima e la sezione vera) vince quello con piu' link prima della firma di un altro bando. None se la firma non c'e'."""
+    testo, link = [], []
+    lunghezza = 0
+    for nodo in zuppa.descendants:
+        if getattr(nodo, "name", None) == "a" and nodo.get("href"):
+            link.append((lunghezza, id(nodo)))
+        elif isinstance(nodo, str) and not getattr(nodo, "name", None):
+            testo.append(str(nodo))
+            lunghezza += len(testo[-1])
+    tutto = "".join(testo)
+    mie = [m.start() for m in firma.finditer(tutto)]
+    if not mie:
+        return None
+    confini = sorted(m.start() for f in altre for m in f.finditer(tutto))
+    migliore: set[int] = set()
+    for inizio in mie:
+        fine = next((c for c in confini if c > inizio), len(tutto) + 1)
+        dentro = {i for pos, i in link if inizio <= pos < fine}
+        if len(dentro) > len(migliore):
+            migliore = dentro
+    return migliore
+
+
+def trova_allegati(html: str, base_url: str, firma: re.Pattern | None = None,
+                   altre_firme: list[re.Pattern] | None = None) -> list[Candidato]:
+    """I link a documenti e pagine FAQ di una pagina, senza doppioni, nell'ordine in cui compaiono. Con `firma`
+    (pagina condivisa da piu' bandi) solo quelli della sezione del bando."""
     zuppa = BeautifulSoup(html, "html.parser")
     _togli_cornice(zuppa)
+    nella_sezione = _sezione(zuppa, firma, altre_firme or []) if firma is not None else None
+    if firma is not None and nella_sezione is None:
+        return []   # pagina condivisa ma il bando non c'e': meglio nessun documento che quelli degli altri
     pagina = urldefrag(base_url).url
     visti: set[str] = set()
     candidati: list[Candidato] = []
     for a in zuppa.find_all("a", href=True):
+        if nella_sezione is not None and id(a) not in nella_sezione:
+            continue
         href = a["href"].strip()
         if not href or href.startswith(("#", "mailto:", "javascript:", "tel:")):
             continue
@@ -512,7 +570,8 @@ def elabora_annuncio(client: httpx.Client, annuncio_id: int, url_annuncio: str, 
 
 def elabora_pagina(client: httpx.Client, sottocartella: str, url_pagina: str, cartella: Path, pausa: Pausa,
                    ignora_robots: bool = False, gia_scaricati: int = 0, gia_presenti: set[str] | None = None,
-                   plone_api: bool = False, nome_copia: str = "Pagina dell'annuncio (copia)") -> list[Risultato]:
+                   plone_api: bool = False, nome_copia: str = "Pagina dell'annuncio (copia)",
+                   firma: re.Pattern | None = None, altre_firme: list[re.Pattern] | None = None) -> list[Risultato]:
     """Apre una pagina (dell'annuncio o ufficiale del bando), scarica documenti e FAQ. Non tocca il database.
 
     `ignora_robots` (decisione di Matteo sulla fonte) vale solo per il sito della pagina,
@@ -535,7 +594,7 @@ def elabora_pagina(client: httpx.Client, sottocartella: str, url_pagina: str, ca
         pausa.attendi(pagina, ignora_robots=ignora(pagina))
         risposta = scarica(client, pagina, accept="text/html,application/xhtml+xml", ignora_robots=ignora(pagina))
         risposta.raise_for_status()
-        candidati = trova_allegati(risposta.text, str(risposta.url))
+        candidati = trova_allegati(risposta.text, str(risposta.url), firma, altre_firme)
         copia = _copia_pagina(risposta, pagina, cartella, cartella_annuncio)
         copia.nome = nome_copia
         risultati.append(copia)
@@ -748,6 +807,26 @@ def annunci_da_elaborare(conn, annuncio_id: int | None, limite: int) -> list[dic
         return list(cur.fetchall())
 
 
+def firme_pagina_condivisa(conn, bando: dict) -> tuple[re.Pattern | None, list[re.Pattern]]:
+    """Se la pagina ufficiale del bando e' anche quella di altri bandi (pagina elenco), la firma del bando e quelle
+    degli altri; altrimenti (None, [])."""
+    with conn.cursor() as cur:
+        cur.execute("""SELECT id, titolo, codice_ufficiale FROM bandi WHERE url = %s AND id <> %s AND unito_a IS NULL""",
+                    (bando["url"], bando["id"]))
+        altri = [dict(r) for r in cur.fetchall()]
+        cur.execute("SELECT codice_ufficiale FROM bandi WHERE id = %s", (bando["id"],))
+        r = cur.fetchone()
+    if not altri:
+        return None, []
+    titoli = [a["titolo"] for a in altri]
+    firma = firma_del_bando(bando["titolo"], r["codice_ufficiale"] if r else None, titoli)
+    if firma is None:
+        return None, []   # titoli quasi uguali: e' un doppione, non una pagina elenco (lo decide la deduplica)
+    altre = [f for a in altri if (f := firma_del_bando(a["titolo"], a["codice_ufficiale"],
+                                                       [bando["titolo"], *[t for t in titoli if t != a["titolo"]]]))]
+    return firma, altre
+
+
 def bandi_da_elaborare(conn, bando_id: int | None, limite: int) -> list[dict]:
     """Bandi con la pagina ufficiale trovata e allegati mai cercati (o pagina cambiata dopo l'ultima ricerca)."""
     with conn.cursor() as cur:
@@ -878,10 +957,11 @@ def esegui(annuncio_id: int | None = None, limite: int = LIMITE_PREDEFINITO, car
                 plone = any(f.documenti_plone for f in fonti)
                 presenti = gia_scaricati(conn, bando_id=x["id"])
                 campi_testo = [f.pagina_ufficiale["testo_dai_dati"] for f in fonti if f.pagina_ufficiale.get("testo_dai_dati")]
+                firma, altre = firme_pagina_condivisa(conn, x)
                 chiamata = lambda: con_testo_dai_dati(
                     conn, x["id"], campi_testo,
                     elabora_pagina(client, f"b{x['id']}", x["url"], cartella, pausa, ignora, len(presenti),
-                                   presenti | documenti_del_sito(conn), plone, "Pagina del bando (copia)"))
+                                   presenti | documenti_del_sito(conn), plone, "Pagina del bando (copia)", firma, altre))
                 segna = lambda: segna_cercato(conn, bando_id=x["id"])
                 etichetta = f"bando {x['id']}"
             else:
