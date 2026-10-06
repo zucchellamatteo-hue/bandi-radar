@@ -278,9 +278,9 @@ sezioni:
       - i **Documenti del bando**: si aprono dalla plancia con un clic; **originale ↗** porta al sito dell'ente;
       - gli annunci che parlano del bando e le versioni precedenti della scheda.
 
-      Misure nazionali. La voce **Misure** elenca le agevolazioni previste dalla legge e sempre aperte finché sono in vigore (Conto Termico, Iperammortamento, credito R&S, credito ZES unica, Nuova Sabatini, Ecobonus, Sismabonus, Art bonus). Non sono bandi con una scadenza. Le misure chiuse restano in fondo alla pagina, in grigio, con il motivo: non si propongono mai con i bandi. Ogni scheda dice a chi si rivolge, cosa si può comprare, quanto vale, come si ottiene, i tempi e se si somma ai bandi. In fondo, la tabella **Esempi per tipo di impresa** mostra un caso con numeri indicativi per otto profili tipo (ufficio di servizi, negozio, bar-ristorante-hotel, artigiano, manifattura con capannone, logistica con più sedi, azienda agricola, startup), ordinati dall'interesse alto al nullo. Profili ed esempi si modificano in `app/misure/misure.yaml`.
+      Misure nazionali. La voce **Misure** elenca le agevolazioni previste dalla legge e sempre aperte finché sono in vigore (Conto Termico, Iperammortamento, credito R&S, credito ZES unica, Nuova Sabatini, Ecobonus, Sismabonus, Art bonus, Fondo di Garanzia PMI e, per il personale, i bonus assunzioni 2026 Giovani, Donne e ZES e la maxi-deduzione dei nuovi assunti). Non sono bandi con una scadenza. Le misure chiuse restano in fondo alla pagina, in grigio, con il motivo: non si propongono mai con i bandi. Ogni scheda dice a chi si rivolge, cosa si può comprare, quanto vale, come si ottiene, i tempi e se si somma ai bandi. In fondo, la tabella **Esempi per tipo di impresa** mostra un caso con numeri indicativi per otto profili tipo (ufficio di servizi, negozio, bar-ristorante-hotel, artigiano, manifattura con capannone, logistica con più sedi, azienda agricola, startup), ordinati dall'interesse alto al nullo. Profili ed esempi si modificano in `app/misure/misure.yaml`.
 
-      Nelle schede dei bandi, il riquadro **Per gli stessi investimenti si può sommare anche:** indica le misure che si possono aggiungere, con il beneficio stimato sulla spesa che il bando non copre. È una stima: le regole sul cumulo degli aiuti vanno controllate caso per caso.
+      Nelle schede dei bandi, il riquadro **Per le stesse spese si può sommare anche:** indica le misure che si possono aggiungere, con il beneficio stimato sulla spesa che il bando non copre. È una stima: le regole sul cumulo degli aiuti vanno controllate caso per caso.
 
   - id: giudizi
     titolo: "Giudicare una scheda e segnalare un problema"
@@ -454,9 +454,9 @@ sezioni:
     titolo: "Agevolazioni fiscali"
     per: [impresa]
     testo: |
-      In **Agevolazioni fiscali** trovi le misure nazionali sugli investimenti: Conto Termico, Iperammortamento, credito d'imposta per ricerca e sviluppo, credito ZES unica, Nuova Sabatini, Ecobonus e Sismabonus per gli edifici dell'impresa, Art bonus per le donazioni alla cultura. In fondo, in grigio, quelle chiuse.
+      In **Agevolazioni fiscali** trovi le misure nazionali per le imprese: Conto Termico, Iperammortamento, credito d'imposta per ricerca e sviluppo, credito ZES unica, Nuova Sabatini, Ecobonus e Sismabonus per gli edifici dell'impresa, Art bonus per le donazioni alla cultura, Fondo di Garanzia per le PMI sui prestiti, bonus assunzioni 2026 (Giovani, Donne, ZES) e maxi-deduzione del costo dei nuovi assunti. In fondo, in grigio, quelle chiuse.
 
-      Non sono bandi con una scadenza: sono agevolazioni previste dalla legge, disponibili finché sono in vigore. Spesso si possono sommare ai contributi dei bandi per gli stessi investimenti.
+      Non sono bandi con una scadenza: sono agevolazioni previste dalla legge, disponibili finché sono in vigore. Spesso si possono sommare ai contributi dei bandi per le stesse spese.
 
       Ogni scheda spiega a chi si rivolge, quali investimenti sono ammessi, quanto vale (beneficio stimato in percentuale sulla spesa), come si ottiene, i tempi, se si somma ai bandi e a cosa fare attenzione. In fondo trovi degli **esempi per tipo di impresa** (ufficio, negozio, hotel, laboratorio artigiano, capannone, logistica con più sedi, azienda agricola, startup): un caso con numeri indicativi e quanto la misura interessa a quel tipo di impresa.
 

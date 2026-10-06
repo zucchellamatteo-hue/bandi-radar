@@ -1080,6 +1080,396 @@ misure:
           F24 anche in perdita, ma gli importi restano piccoli.
     fonte_verificata_il: "2026-10-06"
 
+  - id: incentivi_assunzione_2026
+    nome: "Incentivi all'assunzione 2026 (Bonus Giovani, Bonus Donne, Bonus ZES)"
+    tipo: decontribuzione
+    ente: "INPS (domanda e controllo delle risorse), per conto del Ministero del Lavoro"
+    norma: >-
+      DL 30 aprile 2026 n. 62 ("decreto Lavoro 2026"), art. 1 (Bonus Donne), art. 2 (Bonus Giovani),
+      art. 3 (Bonus ZES), art. 7 (trattamento economico minimo); convertito in legge a giugno 2026
+      (estremi della legge di conversione ed eventuali modifiche: da verificare). Istruzioni INPS: circolari
+      n. 55 (Giovani), n. 56 (ZES) e n. 57 (Donne) del 14/05/2026; domande aperte con i messaggi n. 1966,
+      1968 e 1970 dell'11/06/2026. Aiuti in esenzione: Reg. UE 651/2014 (GBER), artt. 32 e seguenti.
+    url_ufficiale: "https://www.inps.it/it/it/inps-comunica/notizie/dettaglio-news-page.news.2026.06.bonus-inps-2026-al-via-le-domande-per-giovani-donne-e-zes.html"
+    in_vigore_dal: "2026-01-01"
+    in_vigore_fino_al: "2026-12-31"
+    stato: aperto
+    sintesi: >-
+      Chi assume a tempo indeterminato nel 2026 (dal 1/1 al 31/12) un giovane under 35, una donna o, al Sud,
+      un disoccupato di lungo periodo, non paga i contributi INPS a suo carico (esonero del 100%, premi INAIL
+      esclusi) fino a un tetto mensile per lavoratore: Giovani 500 euro (650 nelle regioni ZES), Donne 650 euro
+      (800 se la lavoratrice risiede nella ZES), ZES 650 euro. Dura 12 o 24 mesi secondo lo svantaggio del
+      lavoratore. Si chiede all'INPS online, anche prima di assumere; vale fino a esaurimento dei fondi annuali.
+    a_chi_si_rivolge: >-
+      Datori di lavoro privati (studi professionali e altri datori non imprenditori: da verificare nelle circolari)
+      che assumono a tempo indeterminato, anche part-time (tetto ridotto in proporzione) e soci lavoratori di
+      cooperative. Esclusi: lavoro domestico, apprendistato, lavoro intermittente.
+      Bonus Giovani: lavoratori che non hanno compiuto 35 anni e sono "svantaggiati" (es. senza un impiego
+      regolarmente retribuito da almeno 6 mesi, oppure tra 15 e 24 anni, oppure senza diploma) o "molto
+      svantaggiati" (senza impiego da 24 mesi, o da 12 mesi piu' un'altra condizione di svantaggio).
+      Bonus Donne: donne di qualsiasi eta' senza impiego regolarmente retribuito da 24 mesi, o da 12 mesi (6 in
+      alcuni casi) con un'altra condizione di svantaggio (eta' 15-24, niente diploma, oltre 50 anni, settori o
+      professioni con forte disparita' di genere...).
+      Bonus ZES: solo datori con al massimo 10 dipendenti nel mese dell'assunzione, sede o unita' produttiva
+      in Abruzzo, Basilicata, Calabria, Campania, Marche, Molise, Puglia, Sicilia, Sardegna o Umbria; lavoratori
+      di almeno 35 anni disoccupati da almeno 24 mesi; personale non dirigente.
+    soggetti_ammessi: [impresa, libero_professionista, ente_terzo_settore]
+    dimensioni_ammesse: []
+    settori_esclusi: >-
+      Nessun settore escluso in quanto tale; esclusi pubblica amministrazione, lavoro domestico, apprendistato.
+      Non spetta per lavoratori occupati in Paesi extra UE non convenzionati. In agricoltura ed edilizia l'esonero
+      sostituisce (non si somma a) le riduzioni contributive di settore: va fatto il conto di cosa conviene.
+    investimenti_ammessi: >-
+      Nessun investimento: si agevola il costo dei contributi previdenziali a carico del datore di lavoro per le
+      nuove assunzioni a tempo indeterminato fatte nel 2026. Non valgono le trasformazioni di contratti a termine
+      (per i giovani c'e' una misura a parte, art. 4 DL 62/2026, per le trasformazioni dal 1/8 al 31/12/2026).
+      Condizioni comuni: incremento occupazionale netto
+      rispetto alla media dei 12 mesi precedenti (salvo posti liberati da dimissioni, pensionamento, licenziamento
+      per giusta causa...), DURC regolare, rispetto dei contratti collettivi, nessun licenziamento collettivo o
+      per giustificato motivo oggettivo nella stessa unita' produttiva nei 6 mesi prima (Bonus ZES: anche nei 6
+      mesi dopo), trattamento economico non inferiore a quello dei contratti collettivi indicati dall'art. 7.
+    categorie_spesa: [personale]
+    intensita: >-
+      Esonero del 100% dei contributi previdenziali a carico del datore di lavoro (esclusi premi INAIL), con tetto
+      mensile per lavoratore: Bonus Giovani 500 euro (650 in sede o unita' produttiva della ZES unica), 24 mesi
+      per i molto svantaggiati e 12 mesi per gli altri svantaggiati; Bonus Donne 650 euro (800 per le residenti
+      nella ZES unica), fino a 24 mesi (12 per alcune categorie); Bonus ZES 650 euro per 24 mesi. Limiti di spesa:
+      Giovani 109,7 milioni nel 2026 (252,4 nel 2027, 135,4 nel 2028); Donne 26,5 milioni nel 2026; ZES 26 milioni
+      nel 2026. Quando i fondi finiscono l'INPS non accoglie piu' domande.
+    beneficio_stimato:
+      percentuale_min: 13
+      percentuale_max: 23
+      nota: >-
+        Percentuale del costo aziendale del lavoratore assunto (stipendio lordo + contributi + TFR) nei mesi
+        agevolati. Esempio: stipendio lordo di 22.000 euro l'anno, contributi a carico dell'impresa circa 30%
+        (6.600 euro, cioe' 550 al mese): con il Bonus Giovani (tetto 500) l'impresa risparmia 6.000 euro l'anno,
+        circa il 20% del costo; con stipendi piu' alti il tetto pesa di piu' (28.000 euro lordi: circa 16%).
+        Al Sud o con il Bonus Donne (650-800) si arriva a coprire quasi tutti i contributi (circa 22-23%).
+        Aliquote contributive reali secondo il contratto e il settore: da verificare caso per caso.
+    come_si_ottiene: >-
+      1) Verificare che il lavoratore rientri nelle categorie (stato di disoccupazione, eta', residenza) e che
+      l'impresa abbia l'incremento occupazionale netto. 2) Domanda all'INPS sul "Portale delle Agevolazioni (ex
+      DiResCo)", modulo Bonus giovani 2026, Bonus donne 2026 o Bonus ZES 2026 (aperti dall'11/06/2026), con dati
+      del lavoratore, retribuzione e aliquota contributiva. 3) Se la domanda e' fatta prima di assumere, l'INPS
+      accantona le risorse e l'impresa deve assumere e inviare la comunicazione obbligatoria (Unilav) entro 10
+      giorni, pena la perdita della prenotazione. 4) Dopo l'accoglimento l'esonero si applica nelle denunce
+      contributive mensili (Uniemens), recuperando anche i mesi gia' passati.
+    tempi: >-
+      Risposta dell'INPS nel modulo online (assunzione gia' fatta) o via PEC (assunzione da fare). Il risparmio
+      arriva subito, mese per mese, sui contributi da versare, per 12 o 24 mesi. Termine finale per le domande
+      relative alle assunzioni 2026: da verificare (per i bonus 2024-2025 del decreto Coesione l'INPS ha chiuso
+      le domande il 30/09/2026).
+    cumulabilita:
+      con_fondo_perduto: nei_limiti
+      regola: >-
+        Non si somma con altri esoneri o riduzioni dei contributi a carico del datore di lavoro (es. Decontribuzione
+        Sud, incentivo per l'assunzione di disabili, incentivo NASpI, riduzioni per agricoltura in zone montane ed
+        edilizia). Si somma senza riduzioni con la maxi-deduzione del costo dei nuovi assunti (L. 207/2024 commi
+        399-400) e con l'esonero dell'1% per la certificazione della parita' di genere. Essendo un aiuto in esenzione
+        (GBER), con un bando regionale che paga gli stessi costi del personale il totale non puo' superare l'intensita'
+        massima del regolamento (di solito 50% del costo salariale per 12 o 24 mesi): da verificare con il bando.
+      riferimento: "DL 62/2026 art. 2 c. 10 e art. 3 c. 9; circolari INPS 55, 56 e 57 del 14/05/2026, par. 9"
+    attenzione: >-
+      Solo tempo indeterminato e solo assunzioni dal 1/1 al 31/12/2026. Fondi annuali limitati (Bonus ZES e Donne
+      circa 26 milioni ciascuno nel 2026): fare domanda presto, anche prima dell'assunzione. Senza incremento
+      occupazionale netto (contato in ULA sui 12 mesi precedenti) l'esonero non spetta. Diritti di precedenza di
+      altri lavoratori, licenziamenti nei 6 mesi precedenti o violazioni contributive fanno perdere il bonus.
+      Iscrizione delle offerte sulla piattaforma SIISL per i datori che ricevono incentivi pubblici (DL 159/2025
+      art. 14): verificare l'obbligo. Collegate ma distinte: esonero per le madri di almeno tre figli (L. 199/2025
+      commi 210-213, circolare INPS 82 del 29/07/2026, fino a 8.000 euro l'anno) e incentivo per le
+      trasformazioni a tempo indeterminato di giovani (art. 4 DL 62/2026, circolare 72/2026, messaggio 2518/2026).
+    esempi:
+      - profilo: ristorazione_ricettivo
+        interesse: alto
+        esempio: >-
+          Hotel che assume a tempo indeterminato un cuoco di 28 anni senza lavoro da 8 mesi (svantaggiato) con 24.000
+          euro lordi l'anno: contributi a carico circa 7.200 euro l'anno, esonero fino a 500 euro al mese per 12 mesi,
+          circa 6.000 euro (7.200 se l'hotel e' in Puglia, tetto 650). Non vale per i contratti stagionali a termine.
+      - profilo: manifattura
+        interesse: alto
+        esempio: >-
+          Media impresa che aumenta l'organico di 4 operai: due donne senza impiego da oltre 24 mesi (Bonus Donne, fino
+          a 650 euro al mese per 24 mesi: circa 15.600 euro ciascuna) e due under 35 svantaggiati (circa 6.000 euro
+          ciascuno per 12 mesi): totale circa 43.000 euro. Serve l'incremento netto dell'organico; si somma alla
+          maxi-deduzione del costo dei nuovi assunti.
+      - profilo: logistica
+        interesse: alto
+        esempio: >-
+          Operatore logistico che assume 10 magazzinieri a tempo indeterminato: per ogni under 35 svantaggiato circa
+          6.000 euro (12 mesi), per i molto svantaggiati fino a 12.000 euro (24 mesi), di piu' nei magazzini del Sud.
+          L'incremento netto si calcola sull'intera impresa: se nello stesso periodo chiude un deposito e licenzia,
+          il bonus puo' saltare.
+      - profilo: negozio
+        interesse: medio
+        esempio: >-
+          Negozio di Bari con 4 dipendenti che assume una commessa di 40 anni disoccupata da 2 anni: Bonus ZES (ha
+          meno di 10 dipendenti) o Bonus Donne, fino a 650 euro al mese per 24 mesi; con 20.000 euro lordi l'anno i
+          contributi sono circa 500 euro al mese, quindi risparmio di circa 12.000 euro in due anni.
+      - profilo: ufficio_servizi
+        interesse: medio
+        esempio: >-
+          Studio tecnico che assume un geometra di 23 anni al primo impiego (svantaggiato perche' sotto i 25 anni):
+          esonero fino a 500 euro al mese per 12 mesi, circa 6.000 euro. Per gli studi professionali (datori di
+          lavoro non imprenditori) l'accesso e' da verificare. L'apprendistato e' escluso.
+      - profilo: startup
+        interesse: medio
+        esempio: >-
+          Startup che assume a tempo indeterminato uno sviluppatore di 26 anni senza un impiego regolare da 6 mesi:
+          circa 6.000 euro in 12 mesi (stipendio da 32.000 euro: contributi circa 800 euro al mese, tetto 500). Utile
+          anche in perdita, perche' riduce i contributi da versare e non le tasse.
+      - profilo: artigiano
+        interesse: medio
+        esempio: >-
+          Laboratorio artigiano che assume un operaio di 30 anni disoccupato da 2 anni (molto svantaggiato): fino a
+          500 euro al mese per 24 mesi, circa 12.000 euro. Molti artigiani assumono giovani in apprendistato, che
+          pero' e' escluso: va confrontato con le aliquote ridotte dell'apprendistato.
+      - profilo: agricola
+        interesse: basso
+        esempio: >-
+          Azienda agricola che assume a tempo indeterminato un trattorista di 33 anni disoccupato da 8 mesi: circa
+          6.000 euro in 12 mesi, ma l'esonero non si somma alle riduzioni contributive per le zone montane o
+          svantaggiate: conviene solo se supera la riduzione gia' goduta. La maggior parte degli operai agricoli e'
+          a tempo determinato (OTD), esclusi.
+    fonte_verificata_il: "2026-10-06"
+
+  - id: fondo_garanzia_pmi
+    nome: "Fondo di Garanzia per le PMI"
+    tipo: garanzia
+    ente: "MIMIT; gestore Mediocredito Centrale - Banca del Mezzogiorno (fondidigaranzia.it)"
+    norma: >-
+      L. 23 dicembre 1996 n. 662, art. 2 comma 100 lett. a); riforma dell'art. 15-bis DL 145/2023 ("DL Anticipi")
+      in vigore dal 1/1/2024, modificata dalla L. 207/2024; regole 2025 prorogate per tutto il 2026 dall'art. 14
+      comma 1 DL 31 dicembre 2025 n. 200 (Milleproroghe); Disposizioni operative del Fondo e circolari MCC n. 21/2023
+      e n. 20/2024.
+    url_ufficiale: "https://www.fondidigaranzia.it/prorogate-per-il-2026-le-modalita-di-funzionamento-del-fondo-di-garanzia/"
+    in_vigore_dal: "2000-01-01"
+    in_vigore_fino_al: null
+    stato: aperto
+    sintesi: >-
+      Garanzia dello Stato sui finanziamenti bancari e sul leasing di PMI e professionisti: se l'impresa non paga,
+      il Fondo rimborsa alla banca una parte del debito. Nel 2026 copre l'80% dei finanziamenti per investimenti
+      (e quelli di startup, PMI innovative, microcredito, Nuova Sabatini, importo ridotto) e il 50% di quelli per
+      liquidita'. Non e' un contributo: aiuta ad avere il prestito, a un tasso piu' basso e senza dare altre
+      garanzie sulla parte coperta. Si chiede tramite la banca o un confidi.
+    a_chi_si_rivolge: >-
+      Micro, piccole e medie imprese iscritte al Registro delle imprese e professionisti iscritti agli ordini o alle
+      associazioni riconosciute; dalla riforma anche enti del terzo settore e, con percentuali piu' basse, le
+      small mid-cap (fino a 499 addetti). L'impresa deve essere valutata dal modello di rating del Fondo: la fascia
+      peggiore (5) non e' ammessa.
+    soggetti_ammessi: [impresa, libero_professionista, ente_terzo_settore]
+    dimensioni_ammesse: [micro, piccola, media]
+    settori_esclusi: >-
+      Attivita' finanziarie e assicurative (con poche eccezioni). Agricoltura: ammissione e regole da verificare
+      (per le imprese agricole si usa spesso la garanzia ISMEA). Imprese in difficolta' o con sofferenze: escluse
+      o con limiti secondo il rating.
+    investimenti_ammessi: >-
+      Qualsiasi finanziamento legato all'attivita' d'impresa, a breve o medio-lungo termine: investimenti
+      (macchinari, impianti, immobili strumentali, veicoli, software, opere), liquidita' e scorte, consolidamento
+      di debiti (con nuova finanza, regole da verificare), leasing, operazioni sul capitale di rischio. Importo
+      massimo garantito per impresa: 5 milioni di euro (2,5 milioni per il capitale di rischio).
+    categorie_spesa: [macchinari_attrezzature, software_digitale, opere_edili_impianti, immobili, veicoli, scorte_circolante]
+    intensita: >-
+      Garanzia diretta (o riassicurazione dei confidi) nel 2026: 80% per investimenti, importo ridotto, microcredito,
+      Nuova Sabatini, startup, startup e PMI innovative, incubatori certificati, enti del terzo settore; 50% per la
+      liquidita'. Percentuali piu' basse per le small mid-cap (es. 40% investimenti, 30% liquidita', secondo la
+      riforma 2024; da verificare per il 2026). Massimo 5 milioni garantiti per impresa. Commissione una tantum sulla
+      parte garantita secondo la riforma 2024: micro esenti, piccole 0,5%, medie 1%, small mid-cap 1,25% (da
+      verificare per il 2026). Sulla parte garantita la banca non puo' chiedere altre garanzie reali, assicurative
+      o bancarie. L'aiuto (equivalente sovvenzione lordo) va nel de minimis o nel GBER e nel Registro Nazionale Aiuti.
+    beneficio_stimato:
+      percentuale_min: null
+      percentuale_max: null
+      nota: >-
+        Non e' un contributo sulla spesa: il beneficio e' poter ottenere il finanziamento, con un tasso di solito piu'
+        basso e meno garanzie personali. Il valore come aiuto di Stato (equivalente sovvenzione lordo) lo calcola il
+        Fondo per ogni operazione ed e' di solito pochi punti percentuali del finanziamento (da verificare caso per
+        caso sulla delibera). Per questo non lo esprimiamo in percentuale della spesa.
+    come_si_ottiene: >-
+      1) L'impresa chiede il finanziamento a una banca, societa' di leasing o intermediario e, insieme, la garanzia
+      del Fondo (garanzia diretta); oppure si rivolge a un confidi, che garantisce e chiede la riassicurazione al
+      Fondo. Non si presenta domanda direttamente al Fondo. 2) La banca carica la richiesta con i dati di bilancio
+      per il modello di rating. 3) Il Fondo delibera (Consiglio di gestione due volte a settimana) e la banca eroga.
+    tempi: >-
+      Istruttoria rapida dopo l'invio della banca (di solito poche settimane, da verificare). Strumento permanente;
+      le percentuali di copertura attuali valgono fino al 31/12/2026, poi dipendono dalla prossima proroga.
+    cumulabilita:
+      con_fondo_perduto: nei_limiti
+      regola: >-
+        Si usa spesso insieme ai bandi a fondo perduto (per finanziare la quota non coperta), alla Nuova Sabatini e
+        all'iperammortamento. L'aiuto implicito della garanzia conta come aiuto di Stato: sugli stessi costi il totale
+        degli aiuti non deve superare l'intensita' massima del regolamento usato (GBER) o il massimale de minimis
+        dell'impresa. Il Conto Termico 3.0 ammette espressamente i fondi di garanzia (DM 7/8/2025 art. 17).
+      riferimento: "Disposizioni operative del Fondo; DM MASE 7/8/2025 art. 17; Reg. UE 651/2014 e 2831/2023"
+    attenzione: >-
+      Le percentuali del 2026 sono una proroga di un anno (DL 200/2025): dal 2027 possono cambiare. Rating del Fondo:
+      con bilanci deboli la garanzia puo' essere negata. Per la liquidita' la copertura e' solo il 50%. L'aiuto
+      consuma il massimale de minimis se la garanzia e' concessa in quel regime: tenerne conto prima di chiedere
+      altri aiuti de minimis. La banca resta libera di non concedere il prestito anche con la garanzia.
+    esempi:
+      - profilo: startup
+        interesse: alto
+        esempio: >-
+          Startup innovativa che chiede 150.000 euro alla banca per sviluppo prodotto e capitale circolante: copertura
+          80% (120.000 euro garantiti) anche per la liquidita', senza commissione se e' una microimpresa. Spesso e'
+          l'unico modo per avere credito nei primi anni, quando i bilanci sono in perdita.
+      - profilo: artigiano
+        interesse: alto
+        esempio: >-
+          Laboratorio che finanzia un macchinario da 60.000 euro: garanzia 80% (48.000 euro), microimpresa senza
+          commissione; con la Nuova Sabatini sullo stesso finanziamento il tasso effettivo si abbassa ancora. Per
+          importi fino a 40.000 euro c'e' la procedura semplificata "importo ridotto".
+      - profilo: negozio
+        interesse: alto
+        esempio: >-
+          Negozio che rinnova arredi e vetrine con un finanziamento di 50.000 euro: garanzia 80% (40.000 euro); per un
+          fido o un prestito di liquidita' per le scorte da 30.000 euro la copertura e' il 50%. Micro: nessuna
+          commissione.
+      - profilo: ristorazione_ricettivo
+        interesse: alto
+        esempio: >-
+          Hotel che ristruttura le camere con un mutuo di 800.000 euro: garanzia 80% (640.000 euro), commissione una
+          tantum circa 0,5% del garantito se piccola impresa (circa 3.200 euro); la banca non puo' chiedere altre
+          garanzie sulla parte coperta. Utile per finanziare la quota non coperta da un bando regionale sul turismo.
+      - profilo: manifattura
+        interesse: medio
+        esempio: >-
+          Media impresa che finanzia un nuovo capannone e una linea per 3 milioni: garanzia 80% (2,4 milioni, entro il
+          tetto di 5 milioni per impresa), commissione circa 1% del garantito (circa 24.000 euro). Se il rating e'
+          buono la banca puo' dare il prestito anche senza: conviene confrontare il tasso con e senza garanzia.
+      - profilo: logistica
+        interesse: medio
+        esempio: >-
+          Operatore logistico che finanzia carrelli, scaffalature e furgoni per 1,2 milioni: garanzia 80%. Se supera
+          i 250 addetti diventa small mid-cap con copertura piu' bassa (40% per gli investimenti, da verificare).
+      - profilo: ufficio_servizi
+        interesse: medio
+        esempio: >-
+          Societa' di consulenza che chiede 100.000 euro di liquidita' per sostenere la crescita: garanzia 50%. Vale
+          anche per i professionisti iscritti agli ordini. Utile soprattutto se la banca chiede garanzie personali ai soci.
+      - profilo: agricola
+        interesse: basso
+        esempio: >-
+          Azienda agricola che finanzia una cella frigo da 100.000 euro: accesso al Fondo PMI da verificare; per le
+          imprese agricole lo strumento abituale e' la garanzia ISMEA, che funziona in modo simile. La parte di
+          trasformazione (cantina, caseificio) organizzata come impresa a se' puo' usare il Fondo PMI.
+    fonte_verificata_il: "2026-10-06"
+
+  - id: maxi_deduzione_assunzioni
+    nome: "Maxi-deduzione del costo dei nuovi assunti (120% - 130%)"
+    tipo: deduzione_maggiorata
+    ente: "Agenzia delle Entrate (in dichiarazione dei redditi)"
+    norma: >-
+      Art. 4 D.Lgs. 30 dicembre 2023 n. 216; decreto attuativo MEF 25 giugno 2024; prorogata per i periodi
+      d'imposta 2025, 2026 e 2027 dalla L. 30 dicembre 2024 n. 207, art. 1, commi 399 e 400. Chiarimenti:
+      Agenzia delle Entrate, circolare n. 1/E del 20/01/2025.
+    url_ufficiale: "https://www.agenziaentrate.gov.it/portale/-/comunicato-stampa-del-20-gennaio-2025-nuove-assunzioni"
+    in_vigore_dal: "2024-01-01"
+    in_vigore_fino_al: "2027-12-31"
+    stato: aperto
+    sintesi: >-
+      Chi aumenta i dipendenti a tempo indeterminato puo' dedurre dalle tasse (IRES o IRPEF) il costo dei nuovi
+      assunti maggiorato del 20%, cioe' il 120%; il 130% per alcune categorie (lavoratori molto svantaggiati,
+      disabili, donne con almeno due figli minori, giovani ammessi agli incentivi per l'occupazione giovanile...).
+      Vale anche per il 2026 (proroga fino al 2027). Nessuna domanda: si applica in dichiarazione. Per una societa'
+      in utile vale circa il 4,8% del costo dei nuovi assunti (7,2% per le categorie al 130%).
+    a_chi_si_rivolge: >-
+      Imprese (societa' di capitali, di persone, ditte individuali, enti commerciali e stabili organizzazioni) e
+      professionisti, con reddito determinato in modo analitico, che hanno esercitato l'attivita' per almeno 365
+      giorni prima del periodo agevolato. Esclusi: imprese in liquidazione ordinaria, liquidazione giudiziale o altre
+      procedure liquidatorie, forfettari. Enti non commerciali solo per i dipendenti dell'attivita' commerciale.
+    soggetti_ammessi: [impresa, libero_professionista]
+    dimensioni_ammesse: []
+    settori_esclusi: >-
+      Nessun settore escluso. Non serve a chi non ha reddito d'impresa o di lavoro autonomo determinato
+      analiticamente (es. forfettari, imprese agricole con solo reddito agrario catastale), e rende poco a chi e' in perdita.
+    investimenti_ammessi: >-
+      Nessun investimento: il costo del personale a tempo indeterminato assunto in piu' (voci B9 del conto
+      economico: salari, oneri sociali, TFR, quiescenza, altri costi; esclusi buoni pasto, formazione, trasferte).
+      Condizioni a fine periodo d'imposta: aumento del numero medio dei dipendenti a tempo indeterminato rispetto
+      al periodo precedente e aumento anche del numero complessivo dei dipendenti (compresi i tempi determinati).
+    categorie_spesa: [personale]
+    intensita: >-
+      Maggiorazione del 20% (30% per le categorie dell'allegato 1 al D.Lgs. 216/2023) del minore tra il costo dei
+      nuovi assunti a tempo indeterminato e l'aumento del costo complessivo del personale rispetto al periodo
+      precedente. Solo imposte sui redditi, non IRAP. Negli acconti non si tiene conto della maggiorazione.
+    beneficio_stimato:
+      percentuale_min: 4.8
+      percentuale_max: 12.9
+      nota: >-
+        Risparmio = maggiorazione x aliquota. Societa' di capitali (IRES 24%): 20% x 24% = 4,8% del costo dei nuovi
+        assunti, 30% x 24% = 7,2%. Ditte individuali e societa' di persone (IRPEF marginale 35-43%): dal 7% al 12,9%.
+        Solo con un reddito imponibile capiente; in perdita aumenta la perdita riportabile.
+    come_si_ottiene: >-
+      Nessuna domanda. A fine anno il commercialista verifica l'incremento dei dipendenti a tempo indeterminato e
+      complessivo (medie in ULA, rispetto al periodo precedente), calcola il costo dei nuovi assunti e l'aumento del
+      costo del personale, applica il 20% o 30% e deduce la maggiorazione come variazione in diminuzione nella
+      dichiarazione dei redditi. Conservare la documentazione sulle categorie di lavoratori al 130%.
+    tempi: "Beneficio nella dichiarazione dei redditi del periodo d'imposta dell'assunzione (2026: dichiarazione del 2027)."
+    cumulabilita:
+      con_fondo_perduto: si
+      regola: >-
+        Misura fiscale generale (non aiuto di Stato secondo l'impostazione corrente; da verificare per casi
+        particolari). Si somma espressamente, senza riduzioni, con i Bonus Giovani, Donne e ZES 2026 (DL 62/2026,
+        richiamato nelle circolari INPS). Con un contributo a fondo perduto sui costi del personale: il contributo e'
+        un ricavo tassato, la maggiorazione resta sul costo; eventuali divieti di cumulo del bando vanno controllati.
+      riferimento: "D.Lgs. 216/2023 art. 4; L. 207/2024 art. 1 c. 399-400; circolare AE 1/E 2025; circolari INPS 55-57/2026"
+    attenzione: >-
+      Serve un aumento netto sia dei tempi indeterminati sia del totale dei dipendenti: se si assume a tempo
+      indeterminato ma scadono contratti a termine non rinnovati, il beneficio puo' sparire. Nei gruppi si guarda
+      all'incremento di gruppo. Le trasformazioni da tempo determinato contano solo se aumentano il numero dei
+      tempi indeterminati (dettaglio nella circolare 1/E). Attivita' da almeno 365 giorni. Categorie al 130% da
+      documentare. Apprendisti: conteggio da verificare.
+    esempi:
+      - profilo: manifattura
+        interesse: alto
+        esempio: >-
+          Srl in utile che passa da 80 a 85 dipendenti a tempo indeterminato, con 200.000 euro di costo per i 5 nuovi
+          assunti (e un aumento del costo del personale almeno pari): maggiorazione 40.000 euro, risparmio IRES circa
+          9.600 euro; se 2 dei 5 sono molto svantaggiati la maggiorazione sale al 30% per quei due. Si somma ai bonus
+          contributivi INPS per gli stessi lavoratori.
+      - profilo: logistica
+        interesse: alto
+        esempio: >-
+          Operatore logistico che apre un nuovo magazzino e assume 15 persone a tempo indeterminato per 540.000 euro
+          di costo: maggiorazione 108.000 euro, risparmio IRES circa 25.900 euro. Attenzione ai contratti a termine
+          e ai somministrati non rinnovati negli altri depositi: conta il totale dei dipendenti.
+      - profilo: ristorazione_ricettivo
+        interesse: medio
+        esempio: >-
+          Srl che gestisce un ristorante e assume 2 camerieri a tempo indeterminato (64.000 euro di costo):
+          maggiorazione 12.800 euro, risparmio IRES circa 3.070 euro. Se nello stesso anno riduce gli stagionali
+          a termine, il totale dei dipendenti non cresce e il beneficio si perde.
+      - profilo: artigiano
+        interesse: medio
+        esempio: >-
+          Ditta individuale artigiana che assume il primo operaio a tempo indeterminato (30.000 euro di costo):
+          maggiorazione 6.000 euro, risparmio IRPEF circa 2.100-2.580 euro con aliquota del 35-43%. Serve l'attivita'
+          da almeno un anno e un reddito capiente; il conteggio degli apprendisti e' da verificare.
+      - profilo: ufficio_servizi
+        interesse: medio
+        esempio: >-
+          Societa' di consulenza in utile che assume un consulente junior per 40.000 euro di costo annuo: maggiorazione
+          8.000 euro, risparmio IRES circa 1.920 euro; se il giovane era ammesso agli incentivi per l'occupazione
+          giovanile, 30% e circa 2.880 euro. Vale anche per gli studi professionali in contabilita' analitica.
+      - profilo: negozio
+        interesse: basso
+        esempio: >-
+          Snc con un negozio che assume una commessa a tempo indeterminato (28.000 euro di costo): maggiorazione 5.600
+          euro, risparmio IRPEF dei soci circa 1.960-2.400 euro. Non spetta se l'impresa e' nel forfettario.
+      - profilo: startup
+        interesse: basso
+        esempio: >-
+          Startup in perdita che assume 3 sviluppatori (120.000 euro di costo): la maggiorazione di 24.000 euro aumenta
+          la perdita riportabile, quindi il risparmio arriva solo quando ci saranno utili. Serve anche l'attivita' da
+          almeno 365 giorni. Meglio puntare sui bonus contributivi, che valgono subito.
+      - profilo: agricola
+        interesse: nullo
+        esempio: >-
+          Azienda agricola che dichiara solo il reddito agrario catastale: la maggiorazione non serve, perche' il
+          reddito non si calcola sui costi. Puo' interessare solo se c'e' una societa' di trasformazione (cantina,
+          caseificio) con reddito d'impresa e bilancio.
+    fonte_verificata_il: "2026-10-06"
+
 # Misure valutate e NON inserite (dettaglio nella ricerca):
 # - Bonus barriere architettoniche 75% (art. 119-ter DL 34/2020): solo per le spese fino al 31/12/2025,
 #   non prorogato dalla L. 199/2025 (fonti secondarie concordi; ANCE). Dal 2026 restano le detrazioni ordinarie.
@@ -1156,3 +1546,21 @@ misure:
     categorie_spesa: []
     cumulabilita: {con_fondo_perduto: nei_limiti, regola: "Non applicabile: misura non piu' in vigore."}
     fonte_verificata_il: "2026-10-05"
+  - id: incentivi_assunzione_coesione
+    nome: "Bonus Giovani, Donne e ZES del decreto Coesione (assunzioni 1/9/2024 - 31/12/2025)"
+    tipo: decontribuzione
+    ente: "INPS, per conto del Ministero del Lavoro"
+    norma: "DL 7 maggio 2024 n. 60 (decreto Coesione), artt. 22, 23 e 24; circolari INPS 90 e 91 del 12/05/2025 e 10 del 03/02/2026; messaggio INPS 2451 del 23/07/2026"
+    url_ufficiale: "https://www.inps.it/it/it/inps-comunica/notizie/dettaglio-news-page.news.2026.07.bonus-giovani-donne-e-zes-domande-entro-il-30-settembre.html"
+    stato: chiuso
+    chiuso_il: "2026-09-30"
+    coda: false
+    nota_chiusura: "Domande all'INPS possibili solo fino al 30/09/2026 (messaggio 2451 del 23/07/2026) per le assunzioni fatte dal 1/9/2024 al 31/12/2025. Per le assunzioni del 2026 ci sono i nuovi bonus del DL 62/2026."
+    sintesi: >-
+      Esonero del 100% dei contributi a carico del datore di lavoro per le assunzioni a tempo indeterminato di giovani
+      under 35 (fino a 500 euro al mese, 650 nella ZES), donne svantaggiate (fino a 650 euro per 24 mesi) e, nella ZES
+      unica, lavoratori over 35 disoccupati da 24 mesi (fino a 650 euro). Riguardava le assunzioni dal 1/9/2024 al
+      31/12/2025: dal 1/10/2026 non si possono piu' inviare domande.
+    categorie_spesa: []
+    cumulabilita: {con_fondo_perduto: nei_limiti, regola: "Non applicabile: termine per le domande scaduto."}
+    fonte_verificata_il: "2026-10-06"
