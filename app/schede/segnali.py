@@ -72,8 +72,10 @@ _RIAPERTURA = re.compile(r"riapertura|riaperto|nuova finestra|proroga", re.IGNOR
 # settembre 2027", "Domande dal 01/10/2026 al 16/12/2026" (Camera di Bari). Conta solo come dubbio (decide l'IA).
 _TERMINE = re.compile(r"(?:\bentro\b|\bfino al|\bprorogat[oa]\b|\btermine\b|\bscade\b|\bdomande dal\b[^.;]{0,40}?\bal\b)"
                       r"(?:[^.;]|(?<=\d)\.(?=\d)){0,50}?" + _DATA, re.IGNORECASE)      # "ore 13.00" non chiude la frase
-# ...ma non i termini per altro: rendicontazione, lavori, progetti, eventi.
-_TERMINE_ALTRO = re.compile(r"rendicont|liquidaz|realizza|conclu|lavori|spes[ae]|progett|svolg|si terr|evento", re.IGNORECASE)
+# ...ma non i termini per altro: rendicontazione, spese ("Le spese dovranno essere interamente sostenute (fatturate e
+# pagate) a partire dal 01/05/2026 ed entro il 31/05/2027", Camera dell'Emilia), lavori, progetti, eventi.
+_TERMINE_ALTRO = re.compile(r"rendicont|liquidaz|realizza|conclu|lavori|spes[ae]|sostenut|fattur|progett|svolg|si terr|evento",
+                            re.IGNORECASE)
 # "sospeso" non e' chiuso: lo sportello puo' riprendere (Calabria Straordinaria in campo, sospeso il 09/09/2026).
 _STATI_CHIUSI = {"chiuso", "scaduto", "concluso", "esaurito", "valutazione", "conclusione"}
 _STATI_APERTI = {"aperto", "attivo", "in corso", "pubblicazione"}
@@ -168,7 +170,7 @@ def segnali_dal_testo(testo: str, oggi: date, ultima_pubblicazione: date | None 
     if not s.aperto:
         for m in _TERMINE.finditer(testa):
             fine = _data(m.group(1))
-            if fine and fine >= oggi and not _TERMINE_ALTRO.search(testa[max(0, m.start() - 40):m.end()]):
+            if fine and fine >= oggi and not _TERMINE_ALTRO.search(testa[max(0, m.start() - 80):m.end()]):
                 s.aperto.append(f"termine {fine:%d/%m/%Y} scritto nella pagina ('{m.group(0)[:60]}')")
                 break
     for m in _STATO.finditer(testa):

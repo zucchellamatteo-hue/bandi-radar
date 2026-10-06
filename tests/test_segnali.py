@@ -118,6 +118,9 @@ def test_termini_futuri_scritti_in_altro_modo():
     emilia = ("Bando Certificazioni ESG 2025 - BC25 Pubblicata la graduatoria - Termine ultimo per la presentazione della "
               "rendicontazione ore 18:00 del 31/10/2026 Bando Chiuso Condividi")
     assert segnali_dal_testo(emilia, OGGI_REVISIONE).stato == "chiuso"
+    spese = ("Bando Chiuso Le spese dovranno essere interamente sostenute (fatturate e pagate) a partire dal 01/05/2026 "
+             "ed entro il 31/05/2027 Presentazione delle domande e rendicontazione")
+    assert segnali_dal_testo(spese, OGGI_REVISIONE).stato == "chiuso"
     fiera = "Bando Scaduto. La manifestazione si svolgerà presso il porto turistico Marina di Brindisi dal 22 al 26 ottobre 2026."
     assert segnali_dal_testo(fiera, OGGI_REVISIONE).stato == "chiuso"
 
