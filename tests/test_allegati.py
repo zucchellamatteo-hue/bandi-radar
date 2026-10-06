@@ -252,3 +252,36 @@ def test_link_con_indirizzo_malformato_non_ferma_il_bando(tmp_path):
 
 def test_testo_senza_caratteri_che_postgres_rifiuta():
     assert allegati._senza_nul("a\x00b\udd00c") == "abc"
+
+
+def test_pagina_elenco_solo_documenti_della_sezione():
+    """Pagina con piu' bandi (Camera di Cuneo, 06/10/2026): ogni bando prende solo i documenti della sua sezione."""
+    from app.schede.allegati import firma_del_bando, trova_allegati
+
+    html = """<html><body><main>
+      <p>Novita': prorogato il progetto AI MATCH (cod. 2605). <a href="/doc/ai_proroga.pdf">Maggiori informazioni</a></p>
+      <h3>Bando Reti d'impresa (codice 2604)</h3>
+      <a href="/doc/reti.pdf">Testo del bando</a> <a href="/doc/reti_modulo.pdf">Modulo di domanda</a>
+      <h3>AI Match Cuneo 2026 (cod. 2605)</h3>
+      <a href="/doc/ai_bando.pdf">Testo del progetto</a> <a href="/doc/ai_faq.pdf">Consulta le FAQ</a>
+      <a href="/doc/ai_modulo.pdf">Modulo di candidatura</a>
+      <h3>Bando Digital marketing AI</h3>
+      <a href="/doc/digital.pdf">Testo del bando</a>
+    </main></body></html>"""
+    titoli = {"ai": "AI Match Cuneo 2026 - Voucher (cod. 2605)", "reti": "Bando Reti d'impresa - Anno 2026 (codice 2604)",
+              "digital": 'CCIAA Cuneo - Bando "Digital marketing AI anno 2026"'}
+
+    def documenti(chi):
+        altri = [t for k, t in titoli.items() if k != chi]
+        firma = firma_del_bando(titoli[chi], None, altri)
+        altre = [firma_del_bando(t, None, [titoli[chi]]) for t in altri]
+        return [c.url.rsplit("/", 1)[-1] for c in trova_allegati(html, "https://esempio.it/bandi", firma, altre)]
+
+    assert documenti("ai") == ["ai_bando.pdf", "ai_faq.pdf", "ai_modulo.pdf"]   # la sezione vera, non l'avviso in cima
+    assert documenti("reti") == ["reti.pdf", "reti_modulo.pdf"]
+    assert documenti("digital") == ["digital.pdf"]
+    # Senza firma (pagina di un solo bando) si prendono tutti; titoli uguali (doppioni) non hanno firma.
+    assert len(trova_allegati(html, "https://esempio.it/bandi")) == 7
+    assert firma_del_bando("Bando ESG 2026", None, ["Bando ESG 2026"]) is None
+    # Il bando non c'e' sulla pagina condivisa: nessun documento, meglio che quelli degli altri.
+    assert trova_allegati(html, "https://esempio.it/bandi", firma_del_bando("Fiere (cod. 9999)", None, []), []) == []
