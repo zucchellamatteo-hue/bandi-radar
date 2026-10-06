@@ -39,7 +39,7 @@ import os
 import re
 import sys
 from dataclasses import dataclass, field
-from datetime import date
+from datetime import date, datetime, timezone
 from pathlib import Path
 
 from app.schede import campi
@@ -955,8 +955,14 @@ def salva_preliminare_batch(conn, bando_id: int, dati: dict, seconda: bool, segn
     elif dati.get("stato") == "chiuso" and segnali_del_bando(conn, bando_id, oggi).aperto:
         dati["seconda_lettura"] = "da_fare"
     with conn.cursor() as cur:
-        cur.execute("UPDATE bandi SET preliminare = %s WHERE id = %s AND dati IS NULL", (json.dumps(dati), bando_id))
+        cur.execute("UPDATE bandi SET preliminare = %s WHERE id = %s AND dati IS NULL", (json.dumps(firma(dati, "ia")), bando_id))
     conn.commit()
+
+
+def firma(preliminare: dict, da: str) -> dict:
+    """Chi ha deciso il controllo preliminare e quando: la situazione del bando (vista bandi_situazione) li mostra."""
+    return {**preliminare, "deciso_da": preliminare.get("deciso_da") or da,
+            "deciso_il": datetime.now(timezone.utc).isoformat(timespec="seconds")}
 
 
 def preliminare_dai_segnali(s) -> dict | None:
@@ -965,7 +971,8 @@ def preliminare_dai_segnali(s) -> dict | None:
     if s.stato != "chiuso":
         return None
     return {"per_imprese": "incerto", "edizione_in_corso": "incerto", "stato": "chiuso", "testo_bando": "si",
-            "motivo": ("segnali gratuiti, senza IA: " + "; ".join(s.chiuso))[:500], "deciso_da": "segnali"}
+            "motivo": ("segnali gratuiti, senza IA: " + "; ".join(s.chiuso))[:500], "deciso_da": "segnali",
+            "deciso_il": datetime.now(timezone.utc).isoformat(timespec="seconds")}
 
 
 def seconda_lettura(segnali) -> str:
@@ -1070,7 +1077,7 @@ def preliminare_diretto(conn, client, pr, b: dict, segnali, registra) -> dict | 
             seconda.dati["prima_lettura"] = {"stato": r.dati.get("stato"), "motivo": r.dati.get("motivo")}
             r = seconda
     with conn.cursor() as cur:
-        cur.execute("UPDATE bandi SET preliminare = %s WHERE id = %s", (json.dumps(r.dati), b["id"]))
+        cur.execute("UPDATE bandi SET preliminare = %s WHERE id = %s", (json.dumps(firma(r.dati, "ia")), b["id"]))
     conn.commit()
     return r.dati
 

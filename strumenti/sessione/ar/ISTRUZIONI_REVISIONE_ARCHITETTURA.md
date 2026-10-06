@@ -87,6 +87,13 @@ Codici stabili: se si aggiunge un indicatore, dargli un codice nuovo; non cambia
 | A01-A04 | annunci nuovi, da rivedere, rilevanti senza bando, quota decisa dall'IA | A02 < 50, A03 = 0 |
 | B01-B11 | imbuto dei bandi: pagina, filtro, preliminare, fermati come chiusi, scheda in attesa, da aggiornare | B06 = 0, B09 = 0, B10 < 30 |
 | S01-S08 | schede proponibili, aperte, gravi, nascoste, da migliorare %, senza stato, incoerenti, non ricontrollate | S04 = 0, S05 < 20%, S06 = 0, S07 = 0 |
+
+**Dal 06/10 i bandi si contano SOLO con la vista `bandi_situazione`** (regola in CLAUDE.md). Nelle revisioni
+successive B01-B11 e S01-S04 si sostituiscono con `SELECT situazione, fase, count(*) FROM bandi_situazione GROUP BY 1,2`
+(una riga di indicatori per coppia situazione/fase, codice `SIT <situazione>/<fase>`): B07-B08 = `situazione =
+'scartato_chiuso'` (B08 con `deciso_da = 'segnali'`), B09 = scartati (chiusi o non per imprese) con `scadenza >=
+current_date`, B10 = `fase = 'scheda_in_coda'`, S01-S04 = `situazione IN ('proponibile', 'nascosto_per_errori')`.
+I valori del 06/10 qui sotto sono stati calcolati prima della vista: il confronto va fatto sulle definizioni nuove.
 | D01-D05 | doppioni probabili (stessa url_chiave, edizioni mescolate), dubbi aperti, file persi per il limite, % file in errore | D01 e D02 in calo |
 | Q01-Q03 | feedback ricevuti, da gestire, voto medio | Q01 in crescita, Q03 ≥ 4 |
 | I01-I05 | spesa IA del mese, delle schede, ultimi 7 giorni, chiamate in errore, costo medio scheda | I01 < 100 $ |

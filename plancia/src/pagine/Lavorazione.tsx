@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
-import { api, data, FaseLavorazione, Lavorazione as TipoLavorazione, RigaLavorazione, SchedaDaRivedere } from "../api";
+import { api, data, FaseLavorazione, Lavorazione as TipoLavorazione, RigaLavorazione, RigaSituazione, SchedaDaRivedere,
+  Situazione } from "../api";
 
 // A che punto e' la fase 2: dagli annunci raccolti alla scheda. I numeri li calcola il regista
 // (app/catena/regista.py) dai dati; cliccando una fase si vedono i bandi o gli annunci fermi li', con il motivo.
@@ -23,6 +24,7 @@ export default function Lavorazione() {
   return (
     <>
       <h1>Lavorazione</h1>
+      <SituazioneBandi />
       <div className="avviso">Dove si trova ogni annuncio e ogni bando tra la raccolta e la scheda. Ogni ora il <b>regista</b> li porta
         avanti di un passo, riprova quelli fermi (pagine non trovate dopo 14 giorni, documenti dei bandi aperti ogni 14 giorni),
         decide i doppioni (regole, e l'IA per i dubbi) e chiede di aggiornare le schede quando arrivano proroghe o documenti nuovi.
@@ -113,5 +115,66 @@ function DaRivedere({ righe, soloGravi, cambia }: { righe: SchedaDaRivedere[]; s
         </table>
       )}
     </>
+  );
+}
+
+// Situazione dei bandi: ogni bando ha UNA situazione, calcolata solo nella vista bandi_situazione (app/catena/situazione.py),
+// con il perche' accanto. Per contare i bandi si usano questi numeri, non altri.
+function SituazioneBandi() {
+  const [parametri, setParametri] = useSearchParams();
+  const [dati, setDati] = useState<Situazione | null>(null);
+  const [righe, setRighe] = useState<RigaSituazione[] | null>(null);
+  const scelta = parametri.get("situazione");
+  const fase = parametri.get("sfase");
+  useEffect(() => { api.situazione().then(setDati).catch(() => setDati(null)); }, []);
+  useEffect(() => {
+    setRighe(null);
+    if (scelta) api.situazioneElenco(scelta, fase).then(setRighe).catch(() => setRighe([]));
+  }, [scelta, fase]);
+  if (!dati) return null;
+  const scegli = (s: string, f?: string) => setParametri(new URLSearchParams(f ? { situazione: s, sfase: f } : { situazione: s }));
+  const voce = dati.situazioni.find((v) => v.situazione === scelta);
+  const scartati = dati.situazioni.filter((v) => v.situazione.startsWith("scartato_"));
+  return (
+    <div className="riquadro">
+      <div className="etichetta">Situazione dei bandi: {dati.totale.toLocaleString("it-IT")}{" "}
+        <span className="piccolo">(una sola voce per bando; scartati in tutto: {scartati.reduce((t, v) => t + v.n, 0).toLocaleString("it-IT")} —{" "}
+          <a href="#" onClick={(e) => { e.preventDefault(); scegli("scartato_chiuso"); }}>vedi gli scartati e il perché</a>)</span></div>
+      <table className="vincoli"><tbody>{dati.situazioni.map((v) => (
+        <tr key={v.situazione} onClick={() => scegli(v.situazione)} style={{ cursor: "pointer" }}
+          className={scelta === v.situazione ? "filtro-attivo" : ""}>
+          <td><b>{v.nome}</b><div className="piccolo">{v.spiegazione}</div>
+            {v.fasi.length > 1 && <div className="piccolo">{v.fasi.map((f, i) => (
+              <span key={f.fase}>{i ? " · " : ""}<a href="#" onClick={(e) => { e.preventDefault(); e.stopPropagation(); scegli(v.situazione, f.fase); }}
+                className={fase === f.fase && scelta === v.situazione ? "filtro-attivo" : ""}>{f.nome}: {f.n.toLocaleString("it-IT")}</a></span>
+            ))}</div>}</td>
+          <td style={{ textAlign: "right" }}><b>{v.n.toLocaleString("it-IT")}</b></td>
+        </tr>
+      ))}</tbody></table>
+      {scelta && voce && (
+        <>
+          <h2>{voce.nome}{fase ? ` / ${voce.fasi.find((f) => f.fase === fase)?.nome || fase}` : ""}{" "}
+            <span className="piccolo">(al massimo 200, i più recenti)</span>
+            {voce.situazione.startsWith("scartato_") && <span className="piccolo">
+              {scartati.filter((v) => v.situazione !== scelta).map((v) => (
+                <span key={v.situazione}> · <a href="#" onClick={(e) => { e.preventDefault(); scegli(v.situazione); }}>{v.nome}</a></span>))}</span>}
+            {" "}<a href="#" className="piccolo" onClick={(e) => { e.preventDefault(); setParametri(new URLSearchParams()); }}>chiudi</a></h2>
+          {!righe ? <div className="caricamento">Caricamento…</div> : righe.length === 0 ? <p className="piccolo">Nessuno.</p> : (
+            <table>
+              <thead><tr><th>Bando</th><th>Perché</th><th className="nascondi-mobile">Chi ha deciso, quando</th></tr></thead>
+              <tbody>{righe.map((r) => (
+                <tr key={r.id}>
+                  <td><Link to={`/bandi/${r.id}`} className="titolo-annuncio">{r.titolo}</Link>
+                    <div className="piccolo">n. {r.id} · {r.ente || "–"}{r.scadenza ? ` · scade il ${data(r.scadenza)}` : ""}</div></td>
+                  <td className="piccolo"><b>{r.nome_fase}</b>{r.motivo ? `: ${r.motivo}` : ""}
+                    {r.unito_a ? <> (<Link to={`/bandi/${r.unito_a}`}>bando {r.unito_a}</Link>)</> : null}</td>
+                  <td className="nascondi-mobile piccolo">{r.chi || "–"}<div>{data(r.deciso_il, true)}</div></td>
+                </tr>
+              ))}</tbody>
+            </table>
+          )}
+        </>
+      )}
+    </div>
   );
 }

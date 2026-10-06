@@ -214,7 +214,18 @@ sezioni:
 
       **Annunci**. Tutto quello che pubblicano le fonti, anche le notizie. Le regole li smistano in rilevanti, da rivedere e non rilevanti. Si cerca per testo e si filtra per tipo di fonte, territorio, date, scadenza e smistamento. Il titolo apre la pagina dell'annuncio, con il motivo dello smistamento, il bando collegato e i documenti; **originale ↗** apre la pagina dell'ente.
 
-      **Lavorazione**. Due colonne, Annunci e Bandi, con quanti sono fermi in ogni fase tra la raccolta e la scheda. Cliccando una fase vedi chi è fermo lì e perché. Sotto: le ultime azioni del regista (il sistema che ogni ora porta avanti il lavoro) e la spesa dell'IA nel mese.
+      **Lavorazione**. In cima, **Situazione dei bandi**: ogni bando ha una sola situazione, quindi i numeri si sommano al totale senza doppi conteggi:
+      - **Proponibili**: scheda fatta sul bando ufficiale, senza problemi gravi, non chiusi: sono quelli che si propongono alle imprese.
+      - **Nascosti per errori**: la scheda ha problemi gravi (vedi Da rivedere); tornano proponibili quando sono sistemati.
+      - **In disparte**: manca il testo ufficiale del bando (scheda fatta su una sintesi, o solo sintesi tra i documenti).
+      - **In lavorazione**: ancora in catena; sotto il nome vedi le fasi (pagina da cercare, documenti, controllo preliminare in coda, scheda in coda).
+      - **Chiusi, con scheda**: la scheda c'è ma il bando è chiuso; resta nello storico.
+      - **Scartati** (chiusi, non per imprese, altri motivi): fermati dal controllo preliminare o da un ricontrollo. Il collegamento "vedi gli scartati e il perché" apre l'elenco.
+      - **Uniti ad altri**: doppioni, rimandano al bando principale.
+
+      Cliccando una riga (o una fase) vedi i bandi con il **perché**, **chi ha deciso** (regole, segnali gratuiti, IA, sessione di Claude Code, Matteo) e **quando**. La stessa situazione compare in cima alla pagina di ogni bando. Dal server gli stessi numeri: cd /srv/bandi-radar && sudo -u deploy docker compose exec app python -m app.catena.situazione (con --situazione scartato_chiuso l'elenco con i motivi, con --bando 4092 un bando solo).
+
+      Sotto, due colonne, Annunci e Bandi, con quanti sono fermi in ogni fase tra la raccolta e la scheda. Cliccando una fase vedi chi è fermo lì e perché. Sotto: le ultime azioni del regista (il sistema che ogni ora porta avanti il lavoro) e la spesa dell'IA nel mese.
 
       **Da rivedere** (in fondo alla pagina Lavorazione). Ogni ora il sistema ricontrolla, senza IA, le schede nuove o cambiate e qui elenca quelle con problemi, una riga per bando con l'elenco dei problemi:
       - **Grave**: la scheda potrebbe ingannare un cliente (manca il testo del bando tra i documenti, stessa pagina e stesso titolo di un altro bando, apertura dopo la scadenza, contributo più alto della dotazione). Finché resta, il bando non viene proposto alle imprese: non compare nel catalogo come proponibile, né in I miei bandi, né nelle email.

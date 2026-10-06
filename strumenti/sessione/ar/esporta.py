@@ -78,8 +78,7 @@ def main() -> int:
                 continue
             s = segnali_del_bando(conn, b["id"], oggi)
             if s.stato == "chiuso":
-                pre = {"per_imprese": "incerto", "edizione_in_corso": "incerto", "stato": "chiuso", "testo_bando": "si",
-                       "motivo": ("segnali gratuiti, senza IA: " + "; ".join(s.chiuso))[:500], "deciso_da": "segnali"}
+                pre = ia.preliminare_dai_segnali(s)   # con chi e quando (deciso_da, deciso_il), come nel sistema
                 with conn.cursor() as cur:
                     cur.execute("SELECT set_config('bandi_radar.causa', 'controllo preliminare: segnali gratuiti', true)")
                     cur.execute("UPDATE bandi SET preliminare = %s WHERE id = %s AND preliminare IS NULL",

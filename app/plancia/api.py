@@ -443,6 +443,26 @@ def lavorazione_fase(tipo: Literal["bandi", "annunci"], fase: str) -> list[dict]
         return stato.elenco(conn, tipo, fase)
 
 
+@router.get("/situazione")
+def situazione_bandi() -> dict:
+    """Una situazione per bando (vista bandi_situazione): i conteggi per situazione e fase."""
+    from app.catena import situazione
+
+    with connetti() as conn:
+        return situazione.conteggi(conn)
+
+
+@router.get("/situazione/{chiave}")
+def situazione_elenco(chiave: str, fase: str | None = None, limite: int = Query(200, ge=1, le=1000)) -> list[dict]:
+    """I bandi in una situazione, con motivo, chi ha deciso e quando."""
+    from app.catena import situazione
+
+    if chiave not in situazione.NOMI:
+        raise HTTPException(404, "situazione sconosciuta")
+    with connetti() as conn:
+        return situazione.elenco(conn, chiave, fase, limite)
+
+
 # --- Profili d'impresa anonimi e abbinamento (docs/PROFILO_IMPRESA.md) -------------------------------------------
 
 def _abbinamento(conn, profilo, anche_esclusi: bool = True) -> dict:
@@ -565,10 +585,13 @@ def dettaglio_bando(bando_id: int) -> dict:
         cur.execute("SELECT versione, causa, salvata_il FROM bandi_versioni WHERE bando_id = %s ORDER BY versione DESC",
                     (bando_id,))
         versioni = _righe(cur)
+        from app.catena import situazione
+
+        dove = situazione.di_un_bando(conn, bando_id)   # la situazione, con il perche' (vista bandi_situazione)
     from app import misure
     from app.schede import forma_incentivo
 
-    return {**dict(bando), "forma_incentivo": forma_incentivo.per_la_plancia(dict(bando)),
+    return {**dict(bando), "forma_incentivo": forma_incentivo.per_la_plancia(dict(bando)), "situazione": dove,
             "annunci": annunci, "allegati": allegati, "versioni": versioni,
             "misure_cumulabili": misure.cumulabili(dict(bando))}
 

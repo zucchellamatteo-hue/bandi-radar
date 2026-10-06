@@ -170,6 +170,7 @@ export interface Bando extends BandoBreve {
   chiave_titolo: string | null; creato_il: string; aggiornato_il: string;
   annunci: AnnuncioDelBando[]; allegati: Allegato[]; versioni: { versione: number; causa: string | null; salvata_il: string }[];
   misure_cumulabili?: MisuraBreve[];
+  situazione: RigaSituazione | null;
 }
 
 // Esito delle regole di abbinamento (app/abbinamento/regole.py): stesso formato nel catalogo e nei profili.
@@ -232,6 +233,15 @@ export interface SistemaDettaglio {
 export interface SchedaDaRivedere {
   id: number; titolo: string; ente: string | null; stato: string | null; scadenza: string | null; completezza: string | null;
   controllo: { fatto_il: string; gravi: string[]; da_migliorare: string[] };
+}
+// Situazione dei bandi: una voce per bando, con il perche' (vista bandi_situazione, app/catena/situazione.py).
+export interface FaseSituazione { fase: string; nome: string; prossimo: string; n: number }
+export interface VoceSituazione { situazione: string; nome: string; spiegazione: string; n: number; fasi: FaseSituazione[] }
+export interface Situazione { totale: number; situazioni: VoceSituazione[] }
+export interface RigaSituazione {
+  id: number; titolo: string; ente: string | null; stato: string | null; scadenza: string | null; unito_a: number | null;
+  situazione: string; nome_situazione: string; fase: string; nome_fase: string; prossimo: string;
+  motivo: string | null; deciso_da: string | null; chi: string | null; deciso_il: string | null;
 }
 // Pagina Lavorazione (app/catena/stato.py).
 export interface FaseLavorazione { fase: string; nome: string; prossimo: string; n: number }
@@ -404,6 +414,9 @@ export const api = {
   sistemi: () => chiama<Sistema[]>("/api/sistemi"),
   sistema: (id: string) => chiama<SistemaDettaglio>(`/api/sistemi/${id}`),
   lavorazione: () => chiama<Lavorazione>("/api/lavorazione"),
+  situazione: () => chiama<Situazione>("/api/situazione"),
+  situazioneElenco: (chiave: string, fase?: string | null) =>
+    chiama<RigaSituazione[]>(`/api/situazione/${chiave}` + (fase ? `?fase=${encodeURIComponent(fase)}` : "")),
   controlli: () => chiama<SchedaDaRivedere[]>("/api/controlli"),
   lavorazioneFase: (tipo: "bandi" | "annunci", fase: string) => chiama<RigaLavorazione[]>(`/api/lavorazione/${tipo}/${fase}`),
   profili: () => chiama<ProfiloSalvato[]>("/api/profili"),
