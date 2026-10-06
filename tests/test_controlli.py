@@ -32,6 +32,7 @@ def test_scheda_pulita_e_proponibile_solo_senza_gravi():
     b = {"id": 1, "titolo": "Bando", "completezza": "bando_ufficiale",
          "vincoli_spese": {"fornitore": {"stato": "nessun_vincolo"}}, "dati": {"risposta": {"sintesi": "Contributi."}}}
     assert controlli.problemi(b, [], ["bando"]) == ([], [])
+    assert controlli.problemi({**b, "documentazione": "bando"}, [], ["pagina"])[0] == []
     assert proponibile({**b, "controllo": {"gravi": [], "da_migliorare": ["x"]}})
     assert not proponibile({**b, "controllo": {"gravi": ["x"], "da_migliorare": []}})
 

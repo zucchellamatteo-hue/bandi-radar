@@ -421,7 +421,223 @@ misure:
       o distolti entro 3 anni (da verificare). Obbligo assicurazione catastrofale (DM 18/6/2025).
     fonte_verificata_il: "2026-10-05"
 
+  - id: ecobonus_imprese_2026
+    nome: "Ecobonus (detrazione per la riqualificazione energetica degli edifici)"
+    tipo: detrazione_fiscale
+    ente: "Agenzia delle Entrate (detrazione in dichiarazione); ENEA (comunicazione dei dati tecnici)"
+    norma: >-
+      Art. 14 DL 4 giugno 2013 n. 63 (e art. 1 commi 344-347 L. 296/2006); aliquote 2025-2027 riscritte
+      dalla L. 30 dicembre 2024 n. 207, art. 1 comma 55; per il 2026 confermate al 36% (50% abitazione
+      principale) dalla L. 30 dicembre 2025 n. 199, art. 1 comma 22 (numero del comma da fonti secondarie);
+      requisiti tecnici DM MISE 6 agosto 2020; per lavori iniziati dal 4/2/2026 anche D.Lgs. 9 gennaio 2026 n. 5
+      e DM 26/10/2025 (requisiti minimi).
+    url_ufficiale: "https://www.agenziaentrate.gov.it/portale/schede/agevolazioni/detrazione-riqualificazione-energetica-55-2016/cosa-riqualificazione-55-2016"
+    in_vigore_dal: "2025-01-01"
+    in_vigore_fino_al: "2027-12-31"
+    stato: aperto
+    sintesi: >-
+      Chi fa lavori di risparmio energetico su un edificio esistente (cappotto, infissi, schermature,
+      pompe di calore, caldaie a condensazione, solare termico, building automation) puo' togliere dalle
+      tasse (IRES o IRPEF) il 36% della spesa sostenuta nel 2026, in 10 rate annuali uguali.
+      Per le imprese vale su tutti gli immobili posseduti o detenuti: strumentali, beni merce o patrimonio.
+      Il 50% spetta solo per l'abitazione principale delle persone fisiche. Nel 2027 scende al 30%.
+      Niente piu' cessione del credito ne' sconto in fattura: serve avere imposte da pagare.
+    a_chi_si_rivolge: >-
+      Tutti i contribuenti IRPEF e IRES che sostengono la spesa e possiedono o detengono l'immobile:
+      societa' di capitali e di persone, ditte individuali, enti commerciali, professionisti, privati.
+      Per i titolari di reddito d'impresa la detrazione spetta a prescindere dalla destinazione
+      dell'immobile ("strumentali", "beni merce" o "patrimoniali"), secondo l'Agenzia delle Entrate.
+    soggetti_ammessi: [impresa, libero_professionista]
+    dimensioni_ammesse: []
+    settori_esclusi: >-
+      Nessun settore escluso. Esclusi dal 2025 gli interventi di sostituzione dell'impianto di
+      riscaldamento con caldaie uniche alimentate a combustibili fossili (anche a gas).
+      Serve capienza d'imposta: chi e' in perdita o forfettario ne trae poco o nulla.
+    investimenti_ammessi: >-
+      Su edifici esistenti (accatastati o con accatastamento in corso) e dotati di impianto di
+      riscaldamento. Limiti di DETRAZIONE per unita' immobiliare (DM 6/8/2020, all. B): riqualificazione
+      energetica globale 100.000 euro; coibentazione di pareti, coperture e pavimenti 60.000; infissi
+      60.000 (involucro + infissi insieme 60.000); schermature solari 60.000; collettori solari termici
+      60.000; impianti di climatizzazione invernale (caldaie a condensazione, pompe di calore, sistemi
+      ibridi, generatori a biomassa, scaldacqua a pompa di calore) 30.000 complessivi; microcogeneratori
+      100.000; building automation 15.000. In piu' costi massimi unitari (euro/m2, euro/kW, all. I DM).
+      Ammesse anche spese professionali (APE, asseverazione, direzione lavori).
+    categorie_spesa: [energia_efficienza, opere_edili_impianti]
+    intensita: >-
+      Spese 2025 e 2026: 36% (50% solo se il titolare di proprieta' o diritto reale la sostiene
+      sull'abitazione principale). Spese 2027: 30% (36% abitazione principale). Aliquota unica per tutti
+      gli interventi (sono spariti il 65% e le maggiorazioni condominiali). Detrazione ripartita in 10 quote
+      annuali di pari importo, entro i limiti di detrazione per intervento indicati sopra.
+    beneficio_stimato:
+      percentuale_min: 36
+      percentuale_max: 36
+      nota: >-
+        Per un'impresa e' sempre 36% della spesa ammessa (sostenuta nel 2026), recuperato in 10 anni in
+        dichiarazione: valore attuale piu' basso. Solo se l'impresa ha imposte da pagare ogni anno: la quota
+        che non trova capienza si perde per l'IRPEF (per l'IRES da verificare se riportabile). Nel 2027 30%.
+    come_si_ottiene: >-
+      1) Tecnico abilitato: verifica dei requisiti (trasmittanze, efficienze; per lavori iniziati dal
+      4/2/2026 i nuovi requisiti del D.Lgs. 5/2026), APE dove richiesto, asseverazione con computo metrico
+      e congruita' delle spese. 2) Pagamenti: per le imprese non e' obbligatorio il bonifico "parlante"
+      (da verificare caso per caso; per persone fisiche e professionisti si'). 3) Entro 90 giorni dalla
+      fine lavori, invio della scheda descrittiva all'ENEA sul portale bonusfiscali.enea.it (sezione
+      dell'anno di fine lavori). 4) Detrazione in dichiarazione dei redditi dal periodo della spesa, per 10 anni.
+    tempi: >-
+      Nessuna domanda preventiva e nessuna graduatoria: la detrazione spetta per legge se ci sono i
+      requisiti. Il beneficio arriva in 10 quote annuali a partire dalla dichiarazione dell'anno della spesa.
+    cumulabilita:
+      con_fondo_perduto: nei_limiti
+      regola: >-
+        Con un contributo a fondo perduto regionale, camerale o locale sugli stessi lavori: la detrazione
+        si calcola solo sulla parte di spesa rimasta a carico (spesa meno contributo), e il totale non puo'
+        superare il 100% della spesa; serve che il bando non vieti il cumulo. NON si somma con il Conto
+        Termico 3.0 sugli stessi interventi (il DM 7/8/2025 art. 17 esclude chi ha altri incentivi statali,
+        e il GSE ci comprende le detrazioni): bisogna scegliere uno dei due (per un'impresa il Conto Termico,
+        25-65% subito, rende quasi sempre di piu'). Non si somma con altre detrazioni fiscali per gli
+        stessi lavori (es. bonus ristrutturazioni o sismabonus sulla stessa spesa).
+      riferimento: "Prassi Agenzia Entrate e ENEA (calcolo al netto dei contributi, fonti secondarie concordi; riferimento puntuale da verificare); DM MASE 7/8/2025 art. 17"
+    attenzione: >-
+      Scheda ENEA entro 90 giorni dalla fine lavori. Requisiti tecnici cambiati per i lavori iniziati
+      dal 4/2/2026 (D.Lgs. 5/2026: SCOP minimi per le pompe di calore, regole piu' strette per ibridi e
+      biomasse; vademecum ENEA aggiornati al 23/09/2026). Cessione del credito e sconto in fattura vietati
+      dal 17/2/2023 salvo casi transitori ormai residuali: la detrazione si usa solo contro le proprie
+      imposte. Edificio esistente, non nuova costruzione ne' ampliamento. Controlli ENEA e Agenzia con
+      recupero della detrazione. Con le caldaie solo a combustibili fossili niente detrazione.
+    fonte_verificata_il: "2026-10-06"
+
+  - id: sismabonus_imprese_2026
+    nome: "Sismabonus (detrazione per interventi antisismici, anche su immobili produttivi)"
+    tipo: detrazione_fiscale
+    ente: "Agenzia delle Entrate"
+    norma: >-
+      Art. 16 commi 1-bis - 1-septies.1 DL 4 giugno 2013 n. 63; aliquote 2025-2027 dalla L. 207/2024
+      art. 1 comma 55 lett. b) n. 2 (nuovo comma 1-septies.1); per il 2026 portate al 36% (50% abitazione
+      principale) dalla L. 199/2025; 10 quote annuali dall'art. 4-bis comma 4 DL 39/2024.
+    url_ufficiale: "https://www.agenziaentrate.gov.it/portale/aree-tematiche/casa/agevolazioni/sisma-bonus"
+    in_vigore_dal: "2025-01-01"
+    in_vigore_fino_al: "2027-12-31"
+    stato: aperto
+    sintesi: >-
+      Chi fa lavori di adeguamento o miglioramento antisismico su edifici abitativi o adibiti ad
+      attivita' produttive nelle zone sismiche 1, 2 e 3 puo' togliere dalle tasse (IRES o IRPEF) il 36%
+      della spesa sostenuta nel 2026, fino a 96.000 euro di spesa per unita' immobiliare e per anno,
+      in 10 rate annuali. Vale anche per le societa'. Nel 2027 scende al 30%.
+    a_chi_si_rivolge: >-
+      Contribuenti IRPEF e IRES, comprese le imprese, che possiedono o detengono edifici residenziali o
+      adibiti ad attivita' produttive (agricole, professionali, produttive di beni e servizi, commerciali)
+      in zona sismica 1, 2 o 3.
+    soggetti_ammessi: [impresa, libero_professionista]
+    dimensioni_ammesse: []
+    settori_esclusi: "Nessun settore escluso. Escluse le zone sismiche 4. Serve capienza d'imposta."
+    investimenti_ammessi: >-
+      Interventi antisismici e di messa in sicurezza statica (art. 16-bis comma 1 lett. i TUIR) sulle parti
+      strutturali, comprese le spese per classificazione e verifica sismica. Limite di spesa 96.000 euro per
+      unita' immobiliare per anno (se prosecuzione di lavori iniziati prima, si contano anche le spese gia'
+      detratte negli anni precedenti). Dal 2025 la percentuale e' fissa: il miglioramento di una o due
+      classi di rischio non da' piu' aliquote maggiori.
+    categorie_spesa: [opere_edili_impianti]
+    intensita: >-
+      Spese 2026: 36% (50% solo per l'abitazione principale delle persone fisiche). Spese 2027: 30% (36%).
+      Massimale 96.000 euro di spesa per unita' immobiliare per anno. 10 quote annuali.
+    beneficio_stimato:
+      percentuale_min: 36
+      percentuale_max: 36
+      nota: >-
+        Per un'impresa 36% della spesa fino a 96.000 euro per unita' immobiliare (massimo 34.560 euro di
+        detrazione), in 10 anni e solo con imposte capienti. Oltre il massimale la spesa non da' beneficio.
+    come_si_ottiene: >-
+      1) Progettista: asseverazione della classe di rischio prima e dopo e dell'efficacia degli interventi
+      (DM MIT 58/2017 e successive modifiche), da presentare con la richiesta del titolo edilizio
+      (dettaglio da verificare sulla guida dell'Agenzia). 2) Direttore lavori e collaudatore: attestazione
+      di conformita' a fine lavori. 3) Detrazione in dichiarazione per 10 anni. Nessuna domanda ad enti.
+    tempi: "Nessuna domanda: beneficio in 10 quote annuali dalla dichiarazione dell'anno della spesa."
+    cumulabilita:
+      con_fondo_perduto: nei_limiti
+      regola: >-
+        Come l'ecobonus: con un contributo a fondo perduto (regionale o locale) la detrazione spetta solo
+        sulla spesa rimasta a carico, se il bando lo consente (da verificare caso per caso). Non si somma
+        con altre detrazioni per la stessa spesa (ecobonus, bonus ristrutturazioni).
+      riferimento: "Art. 16 DL 63/2013; prassi Agenzia Entrate (da verificare il riferimento puntuale)"
+    attenzione: >-
+      Solo zone sismiche 1, 2, 3 (verificare la classificazione del comune). Asseverazione del rischio
+      sismico nei tempi giusti, altrimenti la detrazione si perde. Niente cessione del credito ne' sconto
+      in fattura. Massimale per unita' immobiliare: su capannoni grandi il beneficio in percentuale e'
+      molto piu' basso del 36%. Verificare con il tecnico se il lavoro rientra anche in un bando regionale
+      per la sicurezza sismica delle imprese.
+    fonte_verificata_il: "2026-10-06"
+
+  - id: art_bonus
+    nome: "Art Bonus (credito d'imposta per le donazioni alla cultura)"
+    tipo: credito_imposta
+    ente: "Ministero della Cultura (portale artbonus.gov.it); Agenzia delle Entrate (utilizzo in F24)"
+    norma: >-
+      Art. 1 DL 31 maggio 2014 n. 83 (convertito dalla L. 106/2014), reso permanente dalla L. 28 dicembre
+      2015 n. 208 (Legge di stabilita' 2016), con successive modifiche.
+    url_ufficiale: "https://artbonus.gov.it/beneficio-fiscale.html"
+    in_vigore_dal: "2014-06-01"
+    in_vigore_fino_al: null
+    stato: aperto
+    sintesi: >-
+      Chi dona denaro a musei, biblioteche, archivi, monumenti e altri beni culturali pubblici, fondazioni
+      lirico-sinfoniche, teatri e altri enti dello spettacolo ammessi recupera il 65% della donazione come
+      credito d'imposta, in tre quote annuali uguali. Per le imprese il credito massimo e' il 5 per mille
+      dei ricavi annui; si usa in F24 (codice tributo 6842). Non e' un investimento dell'impresa: e' una
+      donazione, quindi non si abbina ai bandi.
+    a_chi_si_rivolge: >-
+      Persone fisiche, enti non commerciali e titolari di reddito d'impresa (qualunque forma e dimensione)
+      che fanno erogazioni liberali in denaro ai beneficiari ammessi.
+    soggetti_ammessi: [impresa, libero_professionista, persona_fisica, ente_terzo_settore]
+    dimensioni_ammesse: []
+    settori_esclusi: "Nessuno."
+    investimenti_ammessi: >-
+      Nessun investimento: erogazioni liberali in denaro (bonifico, carta, assegno; niente contanti) per
+      a) manutenzione, protezione e restauro di beni culturali pubblici; b) sostegno di istituti e luoghi
+      della cultura di appartenenza pubblica, fondazioni lirico-sinfoniche, teatri di tradizione, teatri
+      nazionali e di rilevante interesse culturale, festival, imprese ed enti di produzione teatrale e di
+      danza, circuiti di distribuzione, complessi strumentali, societa' concertistiche e corali, circhi e
+      spettacoli viaggianti (secondo le condizioni di legge); c) realizzazione di nuove strutture, restauro
+      e potenziamento di quelle esistenti di enti o istituzioni pubbliche dello spettacolo. Il beneficiario
+      deve essere registrato sul portale artbonus.gov.it. Enti ecclesiastici e privati: solo in casi
+      particolari (FAQ del portale, da verificare caso per caso). Una proposta di legge (2026) per estenderlo a
+      musei privati del Sistema museale nazionale, ETS e enti ecclesiastici non e' ancora legge.
+    # Nessuna categoria di spesa: e' una donazione, non una spesa di investimento. Cosi' non compare mai
+    # tra le misure "da sommare" ai bandi (cumulabili() richiede categorie in comune).
+    categorie_spesa: []
+    intensita: >-
+      Credito d'imposta del 65% delle erogazioni. Limite: per le imprese 5 per mille dei ricavi annui; per
+      persone fisiche ed enti non commerciali 15% del reddito imponibile. Ripartito in tre quote annuali di
+      pari importo; la quota non usata si riporta negli anni successivi senza limiti di tempo. Il credito
+      non concorre alla base IRAP.
+    beneficio_stimato:
+      percentuale_min: 65
+      percentuale_max: 65
+      nota: >-
+        65% della donazione (non di un investimento), nel limite del 5 per mille dei ricavi: es. ricavi di
+        2 milioni, credito massimo 10.000 euro l'anno, cioe' donazioni utili fino a circa 15.385 euro.
+    come_si_ottiene: >-
+      1) Scegliere un beneficiario e un progetto registrati su artbonus.gov.it. 2) Donare con mezzi
+      tracciabili indicando la causale Art Bonus. 3) Conservare la ricevuta. 4) Indicare il credito in
+      dichiarazione e usarlo in F24 (codice tributo 6842), un terzo all'anno, dal periodo successivo
+      alla donazione (decorrenza da verificare sulle istruzioni F24).
+    tempi: "Nessuna domanda: credito in tre quote annuali, a partire dall'anno dopo la donazione (da verificare)."
+    cumulabilita:
+      con_fondo_perduto: si
+      regola: >-
+        Non riguarda le spese dei bandi: e' una donazione, non tocca i costi di un progetto agevolato.
+        Sulla stessa donazione non si sommano altre agevolazioni fiscali (es. deduzione come erogazione
+        liberale): da verificare nelle FAQ del portale. La donazione non deve avere un ritorno per l'impresa
+        (altrimenti e' una sponsorizzazione, con un trattamento fiscale diverso).
+      riferimento: "Art. 1 DL 83/2014; artbonus.gov.it, pagina Benefici fiscali e FAQ"
+    attenzione: >-
+      Solo donazioni in denaro e tracciabili; beneficiario e intervento devono essere tra quelli ammessi
+      dalla legge e pubblicati sul portale. Limite del 5 per mille dei ricavi: oltre, la parte di donazione
+      non da' credito. I beneficiari devono comunicare ogni mese al Ministero le donazioni ricevute e
+      pubblicarne l'uso. Utile per clienti che fanno gia' mecenatismo; non e' un incentivo agli investimenti.
+    fonte_verificata_il: "2026-10-06"
+
 # Misure valutate e NON inserite (dettaglio nella ricerca):
+# - Bonus barriere architettoniche 75% (art. 119-ter DL 34/2020): solo per le spese fino al 31/12/2025,
+#   non prorogato dalla L. 199/2025 (fonti secondarie concordi; ANCE). Dal 2026 restano le detrazioni ordinarie.
 # - Credito d'imposta beni strumentali 4.0 (L. 178/2020) e Transizione 5.0 (DL 19/2024): chiusi per
 #   investimenti dal 2026, sostituiti dall'iperammortamento.
 # - Credito innovazione tecnologica / transizione 4.0 e green (L. 160/2019): 5% fino al 2025, non prorogato.
