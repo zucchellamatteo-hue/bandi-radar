@@ -194,6 +194,20 @@ def test_osservatore_logo_con_testo_alternativo_solo_con_selettore():
     assert (a.titolo, a.url) == ("Marchi+ 2025", "https://2025marchipiu.it")
 
 
+def test_osservatore_approfondisci_prende_il_titolo_della_scheda_anche_con_selettore():
+    # Fondirigenti: nella home ogni avviso ha il titolo "Avviso 1/2026" e un link "Approfondisci".
+    html = """<html><body><main><div class="title-hero"><h2 class="titoloSlider">Avviso 1/2026</h2>
+      <div class="contenuto-scaricabile"><a href="/avviso-1-2026"><img src="/plus.svg"><h4>Approfondisci</h4></a></div>
+    </div></main></body></html>"""
+    (a,) = estrai_link(html, "https://f.it/", ".title-hero")
+    assert (a.titolo, a.url) == ("Avviso 1/2026", "https://f.it/avviso-1-2026")
+    # Sport e Salute: "Visita la pagina dedicata" sotto il titolo della scheda dell'avviso.
+    html = """<html><body><main><div class="scheda"><h6>Aperto</h6><div class="testo"><div><h5>CIRCOLO 65</h5></div>
+      <p><a href="/circolo65.html">Visita la pagina dedicata</a></p></div></div></main></body></html>"""
+    (a,) = estrai_link(html, "https://s.it/bandi.html", ".scheda")
+    assert (a.titolo, a.url) == ("CIRCOLO 65", "https://s.it/circolo65.html")
+
+
 def test_osservatore_toglie_la_pagina_di_provenienza_di_liferay():
     # MASE: lo stesso bando ha un p_l_back_url diverso a ogni pagina dell'elenco.
     html = """<html><body><main>

@@ -4,7 +4,7 @@ Qui vive l'elenco delle fonti che Bandi Radar controlla. **Aggiungere una fonte 
 
 | File | Contenuto |
 |---|---|
-| `nazionali.yaml` | incentivi.gov.it, Portale UE, MIMIT, Invitalia, GSE, SIMEST, cataloghi open data |
+| `nazionali.yaml` | incentivi.gov.it, Portale UE, ministeri (MIMIT, MASAF, MASE, Lavoro, Turismo, Cultura), dipartimenti della Presidenza, Invitalia, GSE, SIMEST, INAIL, INPS, ACN, fondi interprofessionali, cataloghi open data |
 | `regioni.yaml` | 19 Regioni e 2 Province autonome, con eventuali dati aperti e calendari degli avvisi |
 | `camere.yaml` | Camere di Commercio |
 | `capoluoghi.yaml` | Comuni capoluogo di provincia e Province eccezione |
