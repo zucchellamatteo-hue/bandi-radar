@@ -9,3 +9,11 @@
 	encode gzip
 	reverse_proxy app:8000
 }
+
+# Indirizzi secondari (dal 07/10/2026: www e il vecchio finanzagevolata.qiaro.it) -> rinvio permanente (301) al dominio
+# principale, conservando il percorso: Google trasferisce la reputazione e i vecchi link continuano a funzionare.
+# Se SITE_ALTRI non e' impostato, docker-compose.yml mette il nome fittizio http://alias.invalid (nessun certificato).
+{$SITE_ALTRI} {
+	redir https://{$SITE_ADDRESS}{uri} permanent
+}
+
