@@ -158,11 +158,11 @@ Per ogni pezzo: **cosa fa**, **quando gira**, **dove si vede**, **file principal
 - **Cosa fa.**
   - **Abbonamenti** con Stripe: prova gratuita, mensile 30 €, annuale 20 €/mese con impegno di 12 mesi, impresa in più 10 €, sede in più 5 € (IVA esclusa). L'admin può rendere gratuito un abbonamento o allungare la prova.
   - **Fattura elettronica**: XML FatturaPA generato da Bandi Radar e inviato allo SdI con Invoicetronic a ogni pagamento.
-  - **Pagina pubblica** di presentazione con prezzi, esempi di schede e bozze dei testi legali.
+  - **Pagina pubblica** (landing, 07/10) per chi arriva da Google, dagli annunci e dalle IA: promessa, numeri veri dal database (in memoria 15 minuti), bandi aperti per regione, prezzo di lancio, domande frequenti, bozze dei testi legali. SEO tecnica e GEO: URL canonico dal dominio di `SITO_URL`, `robots.txt` (solo pagine pubbliche), `sitemap.xml`, dati strutturati JSON-LD, `/llms.txt`. Strumenti di Google solo con `GOOGLE_ADS_ID`/`GOOGLE_ANALYTICS_ID` e dopo il consenso (Consent Mode v2 base).
   - **Campagne di lancio**: Matteo esporta dal suo database i profili **anonimi** delle imprese (`strumenti/anagrafiche/esporta_profili.py`, la corrispondenza codice → impresa resta sul suo computer), li carica, Bandi Radar li abbina ai bandi aperti e prepara un CSV con la bozza di lettera e i messaggi LinkedIn da mandare a mano.
 - **Quando gira.** Abbonamenti e fatture: quando sono accesi, a ogni pagamento (avvisi di Stripe). Campagne: quando Matteo carica un file (analisi in sottofondo, circa 75 secondi per 5.000 imprese).
 - **Dove si vede.** Per l'impresa **Abbonamento**; per Matteo pagina **Imprese** (abbonamenti, fatture) e pagina **Campagne**; la presentazione su `/presentazione`.
-- **File principale.** `app/abbonamenti/api.py` (fatture: `app/fatture/api.py`; presentazione: `app/pubblico/__init__.py`; campagne: `app/campagne/api.py`).
+- **File principale.** `app/abbonamenti/api.py` (fatture: `app/fatture/api.py`; presentazione: `app/pubblico/landing.py`, SEO: `app/pubblico/seo.py`; campagne: `app/campagne/api.py`).
 - **Limiti noti.** Abbonamenti, fatture e pagina pubblica sono **spenti** (`ABBONAMENTI_ATTIVI`, `FATTURE_ATTIVE`, `PAGINA_PUBBLICA` a 0) e Stripe accetta solo chiavi di prova: si accendono dopo le decisioni di Matteo su prezzi, prova gratuita, testi legali (da far rivedere a un professionista) e pagamenti. Le email promozionali non richieste sono vietate anche verso le società: le campagne servono per lettere o per chi ha dato il consenso.
 
 ### 16. Prossimi passi

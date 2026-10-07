@@ -62,6 +62,9 @@ services:
       PAGINA_PUBBLICA: ${PAGINA_PUBBLICA:-0}       # 1 = "/" mostra la presentazione a chi non ha fatto l'accesso
       GOOGLE_ADS_ID: ${GOOGLE_ADS_ID:-}            # es. AW-123456789: misurazione delle campagne, solo con il consenso
       ESEMPI_BANDI: ${ESEMPI_BANDI:-}              # schede di esempio nella presentazione (id separati da virgola)
+      GOOGLE_ANALYTICS_ID: ${GOOGLE_ANALYTICS_ID:-}  # es. G-XXXXXXX: Google Analytics 4, solo con il consenso
+      TITOLARE_SITO: ${TITOLARE_SITO:-}            # nel piede della landing: ragione sociale e P.IVA (Google Ads lo chiede)
+      PROFILI_SOCIAL: ${PROFILI_SOCIAL:-}          # LinkedIn, Google Business Profile... (https, separati da virgola) per i dati strutturati
       # Abbonamenti (app/abbonamenti): spenti finche' ABBONAMENTI_ATTIVI non e' 1; solo chiavi di prova di Stripe
       # finche' STRIPE_PAGAMENTI_VERI non e' 1 (via di Matteo: termini, privacy, fatturazione elettronica).
       ABBONAMENTI_ATTIVI: ${ABBONAMENTI_ATTIVI:-0}

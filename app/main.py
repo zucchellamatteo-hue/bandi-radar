@@ -13,7 +13,7 @@ from pathlib import Path
 
 import psycopg
 from fastapi import Depends, FastAPI, HTTPException, Request
-from fastapi.responses import FileResponse, HTMLResponse, JSONResponse
+from fastapi.responses import FileResponse, HTMLResponse, JSONResponse, PlainTextResponse, Response
 
 from app.abbonamenti.api import router as api_abbonamenti
 from app.account.api import router as api_account
@@ -28,6 +28,7 @@ from app.notifiche.api import router as api_notifiche
 from app.impresa.api import router as api_impresa
 from app.plancia.api import router as api_plancia
 from app import pubblico
+from app.pubblico import landing, seo
 from app.db.connessione import connetti
 from app.utenti.api import COOKIE, controlla_plancia
 from app.utenti.api import router as api_utenti
@@ -84,6 +85,40 @@ def _presentazione() -> HTMLResponse:
 def presentazione():
     """La pagina pubblica (app/pubblico): sempre visibile qui, anche quando non e' ancora accesa su "/"."""
     return _presentazione()
+
+
+@app.get("/robots.txt", response_class=PlainTextResponse)
+def robots_txt():
+    """Finche' la pagina pubblica e' spenta chiude tutto; da accesa apre solo le pagine pubbliche (app/pubblico/seo.py)."""
+    return PlainTextResponse(seo.robots_txt(pubblico.pubblica()))
+
+
+@app.get("/sitemap.xml")
+def sitemap_xml():
+    return Response(seo.sitemap_xml(), media_type="application/xml")
+
+
+@app.get("/llms.txt", response_class=PlainTextResponse)
+def llms_txt():
+    """Descrizione del servizio per i motori di risposta IA (proposta llmstxt.org), con i numeri del giorno."""
+    with connetti() as conn:
+        return PlainTextResponse(landing.llms_txt(conn), media_type="text/markdown; charset=utf-8")
+
+
+@app.get("/favicon.svg")
+def favicon():
+    return Response(pubblico.LOGO.replace('width="28" height="28" ', 'xmlns="http://www.w3.org/2000/svg" ')
+                    .replace(' aria-hidden="true"', ""), media_type="image/svg+xml",
+                    headers={"Cache-Control": "public, max-age=604800"})
+
+
+@app.get("/immagini/{nome}")
+def immagine(nome: str):
+    """Immagini della parte pubblica (anteprima per i social, logo): solo i file di app/pubblico/immagini."""
+    file = (pubblico.IMMAGINI / nome).resolve()
+    if file.parent != pubblico.IMMAGINI or not file.is_file():
+        raise HTTPException(status_code=404, detail="non trovato")
+    return FileResponse(file, headers={"Cache-Control": "public, max-age=604800"})
 
 
 @app.get("/termini", response_class=HTMLResponse)

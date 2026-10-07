@@ -6,6 +6,7 @@ Frammenti HTML (solo contenuto, senza stili né script) che la pagina pubblica d
 - `privacy.html` — Informativa privacy (artt. 13-14 GDPR).
 - `cookie.html` — Cookie policy; contiene il link `id="rivedi-cookie"` che la pagina deve collegare al banner dei cookie.
 - `supporto.html` — Condizioni del servizio di supporto per la domanda a success fee.
+- `chi_siamo.html` — Sezione "Chi c'è dietro" della landing (07/10/2026): bozza con segnaposto (nome, Albo, città, anni), da confermare con Matteo prima di accendere la pagina.
 - `note_legali.html` — Note legali: dati obbligatori del fornitore (art. 7 d.lgs. 70/2003, art. 2250 c.c.). **Non ancora collegata**: va aggiunta a `LEGALI` in `app/pubblico/__init__.py` con l'indirizzo `/note-legali` e un link nel piede della pagina (i termini la richiamano già).
 
 **Sono bozze del 05/10/2026**: vanno fatte rivedere da un professionista (avvocato o consulente privacy) prima di usarle con clienti reali. Ogni file ha in cima il riquadro `<p class="bozza">`, da togliere solo dopo la revisione.
