@@ -20,6 +20,7 @@ import Imprese from "./pagine/Imprese";
 import Campagne from "./pagine/Campagne";
 import Misure from "./pagine/Misure";
 import Passi from "./pagine/Passi";
+import News from "./pagine/News";
 import Segnalazioni from "./pagine/Segnalazioni";
 import Segnala from "./Segnala";
 import Guida from "./pagine/Guida";
@@ -56,7 +57,7 @@ export default function App() {
   const voci: [string, string, boolean?][] = lavoro ? [
     ["/", "Fonti", true], ["/catalogo", "Catalogo"], ["/misure", "Misure"], ["/profili", "Profili"], ["/annunci", "Annunci", true],
     ["/lavorazione", "Lavorazione"], ["/supervisione", "Supervisione"], ["/doppioni", "Doppioni"], ["/novita", "Novità"],
-    ["/feedback", "Feedback"], ["/segnalazioni", "Segnalazioni"],
+    ["/feedback", "Feedback"], ["/segnalazioni", "Segnalazioni"], ["/news", "News"],
     ...(imprese ? [["/imprese", "Imprese"], ["/campagne", "Campagne"]] as [string, string][] : []),
     ["/passi", "Prossimi passi"], ...(admin ? [["/utenti", "Utenti"]] as [string, string][] : []), ["/guida", "Guida"],
   ] : utente.ruolo === "impresa" ? [
@@ -98,6 +99,7 @@ export default function App() {
             <Route path="/guida" element={<Guida />} />
             <Route path="/account" element={<Account />} />
             <Route path="/passi" element={<Passi />} />
+            <Route path="/news" element={<News />} />
             <Route path="/misure" element={<Misure />} />
             <Route path="/misure/:id" element={<Misure />} />
             <Route path="/annunci" element={<Annunci />} />

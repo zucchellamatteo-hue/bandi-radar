@@ -15,6 +15,7 @@ l'interesse per quel profilo. Arrivano all'API ordinati per interesse e con il n
 
 from __future__ import annotations
 
+from datetime import date, timedelta
 from functools import lru_cache
 from pathlib import Path
 
@@ -103,6 +104,28 @@ def cumulabili(bando: dict, profilo: dict | None = None, percorso: Path | None =
             continue
         uscita.append(breve(m) | {"spese_in_comune": sorted(comuni)})
     return uscita
+
+
+def nuove_per_profilo(profilo: dict | None, oggi: date, giorni: int = 30, escluse: set[str] | frozenset = frozenset(),
+                      percorso: Path | None = None) -> list[dict]:
+    """Le misure aperte aggiunte negli ultimi `giorni` (campo aggiunta_il) adatte al profilo, senza quelle `escluse`
+    (gia' segnalate): servono all'email del lunedi' delle imprese (07/10/2026). Versione breve, le piu' recenti prima."""
+    uscita = []
+    for m in tutte(percorso):
+        aggiunta = m.get("aggiunta_il")
+        if isinstance(aggiunta, str):
+            try:
+                aggiunta = date.fromisoformat(aggiunta)
+            except ValueError:
+                aggiunta = None
+        if m.get("stato") != "aperto" or not isinstance(aggiunta, date) or m["id"] in escluse:
+            continue
+        if not (oggi - timedelta(days=giorni) < aggiunta <= oggi):
+            continue
+        if not _adatta_al_profilo(m, profilo) or not _nel_territorio(m, {}, profilo):
+            continue
+        uscita.append(breve(m) | {"sintesi": m.get("sintesi"), "aggiunta_il": aggiunta})
+    return sorted(uscita, key=lambda m: m["aggiunta_il"], reverse=True)
 
 
 def breve(m: dict) -> dict:

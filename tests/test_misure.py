@@ -112,3 +112,33 @@ misure:
     assert [e["profilo_nome"] for e in esempi] == ["altro", "Ufficio"]
     assert misure.profili_esempio(f) == [{"id": "ufficio", "nome": "Ufficio"}]
     assert "profilo_nome" not in misure._carica(f)[0][0]["esempi"][0]      # la copia in memoria resta com'era
+
+
+def test_misure_nuove_per_l_email(tmp_path):
+    from datetime import date
+
+    f = tmp_path / "misure.yaml"
+    f.write_text("""
+misure:
+  - {id: nuova, nome: Nuova, stato: aperto, aggiunta_il: 2026-10-06, sintesi: "Una misura nuova."}
+  - {id: vecchia, nome: Vecchia, stato: aperto, aggiunta_il: 2026-08-01}
+  - {id: chiusa, nome: Chiusa, stato: chiuso, aggiunta_il: 2026-10-06}
+  - {id: senza_data, nome: Senza data, stato: aperto}
+  - {id: grandi, nome: Solo grandi, stato: aperto, aggiunta_il: 2026-10-05, dimensioni_ammesse: [grande]}
+  - {id: sud, nome: Solo Sud, stato: aperto, aggiunta_il: "2026-10-05", regioni: [CAM]}
+""")
+    oggi = date(2026, 10, 12)
+    milano = {"soggetto": "impresa", "dimensione": "piccola", "sedi": [{"provincia": "MI", "regione": "LOM"}]}
+    assert [m["id"] for m in misure.nuove_per_profilo(milano, oggi, 30, percorso=f)] == ["nuova"]
+    assert misure.nuove_per_profilo(milano, oggi, 30, {"nuova"}, percorso=f) == []           # gia' mandata
+    napoli = {**milano, "sedi": [{"provincia": "NA", "regione": "CAM"}]}
+    assert [m["id"] for m in misure.nuove_per_profilo(napoli, oggi, 30, percorso=f)] == ["nuova", "sud"]
+    assert misure.nuove_per_profilo(milano, date(2026, 10, 5), 30, percorso=f) == []         # non ancora aggiunta
+    assert misure.nuove_per_profilo(milano, oggi, 30, percorso=f)[0]["sintesi"] == "Una misura nuova."
+
+
+def test_misure_vere_hanno_la_data_di_aggiunta():
+    from datetime import date
+
+    aperte = [m for m in misure.tutte() if m.get("stato") == "aperto"]
+    assert aperte and all(isinstance(m.get("aggiunta_il"), date) for m in aperte)

@@ -1,5 +1,5 @@
 import { Fragment, ReactNode, useEffect, useState } from "react";
-import { api } from "../api";
+import { api, News } from "../api";
 
 // Guida (05/10/2026): sezioni di app/guida/guida.yaml, filtrate dal server secondo il ruolo e i permessi di chi legge.
 
@@ -37,11 +37,17 @@ export function Testo({ testo }: { testo: string }) {
 
 export default function Guida() {
   const [sezioni, setSezioni] = useState<{ id: string; titolo: string; testo: string; per: string[] }[] | null>(null);
-  useEffect(() => { api.guida().then(setSezioni); }, []);
+  const [news, setNews] = useState<News[]>([]);
+  useEffect(() => { api.guida().then(setSezioni); api.newsAttive().then(setNews).catch(() => null); }, []);
   if (!sezioni) return <div className="caricamento">Caricamento…</div>;
   return (
     <div className="guida">
       <h1>Guida</h1>
+      {news.length > 0 && <section className="riquadro avviso">
+        <h2>News</h2>
+        {news.map((n) => <p key={n.id}><b>{n.titolo}</b><br />{n.testo}
+          {n.link && <> <a href={n.link} target={n.link.startsWith("/") ? undefined : "_blank"} rel="noreferrer">Scopri di più</a></>}</p>)}
+      </section>}
       <p className="piccolo">Qui trovi come fare le cose che il tuo profilo ti permette.</p>
       <ul className="indice">{sezioni.map((s) => <li key={s.id}><a href={`#${s.id}`}>{s.titolo}</a></li>)}</ul>
       {sezioni.map((s) => (

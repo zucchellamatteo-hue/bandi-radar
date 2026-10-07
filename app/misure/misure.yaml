@@ -7,6 +7,8 @@
 # esempi (06/10/2026, richiesta di Matteo): per ogni misura aperta, un caso pratico per ciascun profilo tipo
 # di profili_esempio, con l'interesse (alto, medio, basso, nullo). Numeri indicativi calcolati con le regole
 # della misura scritte qui sotto; dove un dettaglio non e' certo c'e' scritto "da verificare".
+# aggiunta_il (07/10/2026): quando la misura e' entrata in Bandi Radar. Le misure aperte aggiunte da poco compaiono una
+# volta nell'email del lunedi' delle imprese a cui sono adatte (app/notifiche/email_imprese.py).
 
 profili_esempio:
   - id: ufficio_servizi
@@ -54,6 +56,7 @@ misure:
 
   - id: conto_termico_3
     nome: "Conto Termico 3.0"
+    aggiunta_il: 2026-10-05
     tipo: contributo_conto_capitale
     ente: "GSE (Gestore dei Servizi Energetici), per conto del MASE"
     norma: >-
@@ -207,6 +210,7 @@ misure:
 
   - id: iperammortamento_2026
     nome: "Iperammortamento 2026 (Nuovo Piano Transizione 5.0)"
+    aggiunta_il: 2026-10-05
     tipo: maggiorazione_ammortamento
     ente: "MIMIT e MEF, procedura gestita dal GSE; recupero eventuale tramite Agenzia delle Entrate"
     norma: >-
@@ -364,6 +368,7 @@ misure:
 
   - id: credito_rs_2026
     nome: "Credito d'imposta ricerca e sviluppo"
+    aggiunta_il: 2026-10-05
     tipo: credito_imposta
     ente: "MIMIT (comunicazioni, certificazione) e Agenzia delle Entrate (utilizzo e controlli)"
     norma: >-
@@ -486,6 +491,7 @@ misure:
 
   - id: credito_zes_unica_2026
     nome: "Credito d'imposta ZES unica (investimenti nel Mezzogiorno e in Marche, Umbria, Abruzzo)"
+    aggiunta_il: 2026-10-05
     tipo: credito_imposta
     ente: "Agenzia delle Entrate (comunicazioni e utilizzo); Struttura di missione ZES"
     norma: >-
@@ -615,6 +621,7 @@ misure:
 
   - id: nuova_sabatini
     nome: "Nuova Sabatini (beni strumentali PMI)"
+    aggiunta_il: 2026-10-05
     tipo: contributo_conto_interessi
     ente: "MIMIT, tramite banche e intermediari convenzionati (CDP-ABI)"
     norma: >-
@@ -732,6 +739,7 @@ misure:
 
   - id: ecobonus_imprese_2026
     nome: "Ecobonus (detrazione per la riqualificazione energetica degli edifici)"
+    aggiunta_il: 2026-10-06
     tipo: detrazione_fiscale
     ente: "Agenzia delle Entrate (detrazione in dichiarazione); ENEA (comunicazione dei dati tecnici)"
     norma: >-
@@ -864,6 +872,7 @@ misure:
 
   - id: sismabonus_imprese_2026
     nome: "Sismabonus (detrazione per interventi antisismici, anche su immobili produttivi)"
+    aggiunta_il: 2026-10-06
     tipo: detrazione_fiscale
     ente: "Agenzia delle Entrate"
     norma: >-
@@ -968,6 +977,7 @@ misure:
 
   - id: art_bonus
     nome: "Art Bonus (credito d'imposta per le donazioni alla cultura)"
+    aggiunta_il: 2026-10-06
     tipo: credito_imposta
     ente: "Ministero della Cultura (portale artbonus.gov.it); Agenzia delle Entrate (utilizzo in F24)"
     norma: >-
@@ -1082,6 +1092,7 @@ misure:
 
   - id: incentivi_assunzione_2026
     nome: "Incentivi all'assunzione 2026 (Bonus Giovani, Bonus Donne, Bonus ZES)"
+    aggiunta_il: 2026-10-06
     tipo: decontribuzione
     ente: "INPS (domanda e controllo delle risorse), per conto del Ministero del Lavoro"
     norma: >-
@@ -1234,6 +1245,7 @@ misure:
 
   - id: fondo_garanzia_pmi
     nome: "Fondo di Garanzia per le PMI"
+    aggiunta_il: 2026-10-06
     tipo: garanzia
     ente: "MIMIT; gestore Mediocredito Centrale - Banca del Mezzogiorno (fondidigaranzia.it)"
     norma: >-
@@ -1356,6 +1368,7 @@ misure:
 
   - id: maxi_deduzione_assunzioni
     nome: "Maxi-deduzione del costo dei nuovi assunti (120% - 130%)"
+    aggiunta_il: 2026-10-06
     tipo: deduzione_maggiorata
     ente: "Agenzia delle Entrate (in dichiarazione dei redditi)"
     norma: >-
