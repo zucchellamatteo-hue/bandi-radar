@@ -27,6 +27,13 @@ export default function Articoli() {
   const [anteprima, setAnteprima] = useState<string | null>(null);
   const ricarica = () => api.articoli().then(setR).catch((e) => setErrore(String(e.message || e)));
   useEffect(() => { ricarica(); }, []);
+  useEffect(() => {
+    if (anteprima === null) return;
+    const esc = (e: KeyboardEvent) => { if (e.key === "Escape") setAnteprima(null); };
+    document.addEventListener("keydown", esc);
+    document.body.style.overflow = "hidden";
+    return () => { document.removeEventListener("keydown", esc); document.body.style.overflow = ""; };
+  }, [anteprima]);
   const azione = async (f: () => Promise<unknown>) => {
     setErrore(null);
     try { await f(); ricarica(); return true; } catch (e) { setErrore(e instanceof Error ? e.message : String(e)); return false; }
@@ -57,10 +64,14 @@ export default function Articoli() {
         <button type="button" onClick={() => mostra(modulo.id, modulo.m)}>Anteprima</button>{" "}
         <button type="button" onClick={() => setModulo(null)}>Annulla</button>
       </form>}
-      {anteprima !== null && <div className="riquadro">
-        <div className="filtri"><b>Anteprima</b> <span className="piccolo">come la vedrà chi legge (link non attivi)</span>
-          <button onClick={() => setAnteprima(null)}>Chiudi anteprima</button></div>
-        <iframe title="Anteprima dell'articolo" srcDoc={anteprima} sandbox="" style={{ width: "100%", height: "75vh", border: "1px solid #d5e1f0", borderRadius: 8, background: "#fff" }} />
+      {/* L'anteprima si apre sopra la pagina (07/10): in cima all'elenco non si vedeva se si premeva su un articolo in basso. */}
+      {anteprima !== null && <div className="anteprima-sfondo" role="dialog" aria-modal="true" aria-label="Anteprima dell'articolo"
+        onClick={(e) => { if (e.target === e.currentTarget) setAnteprima(null); }}>
+        <div className="anteprima-finestra">
+          <div className="anteprima-testa"><b>Anteprima</b> <span className="piccolo">come la vedrà chi legge (link non attivi)</span>
+            <button className="primario" onClick={() => setAnteprima(null)}>Chiudi</button></div>
+          <iframe title="Anteprima dell'articolo" srcDoc={anteprima} sandbox="" />
+        </div>
       </div>}
       {!r.articoli.length && <p>Nessun articolo.</p>}
       {r.articoli.map((a) => (
