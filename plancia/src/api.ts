@@ -315,6 +315,17 @@ export interface SettimanaDettaglio {
   chiave: string; inizio: string; fine: string; totale: number; gruppi: { tipo: string; annunci: Annuncio[] }[];
 }
 
+// Visite delle pagine pubbliche (08/10): solo contatori anonimi per giorno, senza cookie (app/visite).
+export interface ConteggiVisite { persone: number; motori: number; ia: number; altri: number }
+export interface Visite {
+  giorni: number; totali: ConteggiVisite & { persone_da_ia: number }; tipi: Record<string, string>;
+  per_giorno: (ConteggiVisite & { giorno: string })[];
+  pagine: (ConteggiVisite & { percorso: string; totale: number })[];
+  provenienze: { provenienza: string; gruppo: string; visite: number }[];
+  programmi: { percorso: string; visitatore: string; programma: string; visite: number; ultima: string }[];
+  campagne: { utm_source: string; utm_medium: string; utm_campaign: string; visite: number }[];
+}
+
 async function chiama<T>(percorso: string, opzioni?: RequestInit): Promise<T> {
   const r = await fetch(percorso, { ...opzioni, headers: { "Content-Type": "application/json", ...(opzioni?.headers || {}) } });
   // Sessione scaduta o chiusa altrove: si torna alla pagina di accesso (non per le chiamate dell'accesso stesso).
@@ -407,6 +418,7 @@ export const api = {
   creaPasso: (corpo: Partial<Passo>) => chiama<Passo>("/api/passi", { method: "POST", body: JSON.stringify(corpo) }),
   modificaPasso: (id: number, corpo: Partial<Passo>) => chiama<Passo>(`/api/passi/${id}`, { method: "PATCH", body: JSON.stringify(corpo) }),
   cancellaPasso: (id: number) => chiama(`/api/passi/${id}`, { method: "DELETE" }),
+  visite: (giorni = 30) => chiama<Visite>(`/api/visite?giorni=${giorni}`),
   news: () => chiama<{ news: News[]; pubblici: Record<string, string>; stati: Record<string, string> }>("/api/news"),
   newsAttive: () => chiama<News[]>("/api/news/attive"),
   creaNews: (corpo: Partial<News>) => chiama<News>("/api/news", { method: "POST", body: JSON.stringify(corpo) }),

@@ -7,13 +7,17 @@ di risposta IA.
   all'accesso come prima);
 - /termini, /privacy, /cookie, /condizioni-supporto, /note-legali: bozze in app/pubblico/testi/, da far rivedere a un
   professionista;
-- /blog e /blog/<slug>: il blog (app/pubblico/blog.py, articoli in app/articoli), solo gli articoli pubblicati;
+- /blog e /blog/<slug>: il blog (app/pubblico/blog.py, articoli in app/articoli), solo gli articoli pubblicati. Si
+  apre ai motori da solo con BLOG_PUBBLICO=1 (08/10), anche con la landing ancora spenta;
 - /robots.txt, /sitemap.xml, /llms.txt, /favicon.svg, /immagini/...: SEO tecnica e GEO (app/pubblico/seo.py).
 La pagina di atterraggio e' in app/pubblico/landing.py; il dominio dei link canonici viene da SITO_URL.
 
 Strumenti di misura (Google Ads, Google Analytics 4): si attivano SOLO mettendo GOOGLE_ADS_ID e/o
 GOOGLE_ANALYTICS_ID nel .env; senza ID non si carica nulla di Google e il banner dei cookie non compare. Con un ID il
 banner chiede il consenso e i tag partono solo dopo "Accetta" (Consent Mode v2 in modalita' "base").
+Le statistiche nostre (app/pubblico/visite.py) sono solo contatori anonimi per giorno, senza cookie.
+Verifica della proprieta' (Search Console, Bing): GOOGLE_SITE_VERIFICATION e BING_SITE_VERIFICATION aggiungono i meta
+tag nelle pagine pubbliche e nella pagina "/" (vedi seo.meta_verifica).
 """
 
 from __future__ import annotations
@@ -38,6 +42,16 @@ PREZZI = {"mensile": 30, "annuale": 20, "impresa_in_piu": 10, "sede_in_piu": 5}
 
 def pubblica() -> bool:
     return os.environ.get("PAGINA_PUBBLICA", "0") == "1"
+
+
+def blog_pubblico() -> bool:
+    """Il blog e' aperto ai motori: da solo (BLOG_PUBBLICO=1, 08/10) o insieme a tutta la parte pubblica."""
+    return pubblica() or os.environ.get("BLOG_PUBBLICO", "0") == "1"
+
+
+def solo_blog() -> bool:
+    """Blog aperto ma landing ancora chiusa: le pagine del blog non devono portare all'anteprima della landing."""
+    return blog_pubblico() and not pubblica()
 
 
 def home() -> str:
@@ -176,15 +190,20 @@ def pagina(titolo: str, corpo: str, descrizione: str = "", indicizza: bool = Fal
                 '<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">'
                 '<meta name="twitter:card" content="summary_large_image">')
     h = home()
+    if solo_blog():          # blog aperto, landing chiusa: niente link all'anteprima (prezzi da confermare)
+        logo, voci = "/blog", '<a class="nascondi" href="/blog">Blog</a>'
+    else:
+        logo = h
+        voci = (f'<a class="nascondi" href="{h}#come">Come funziona</a><a class="nascondi" href="{h}#prezzo">Prezzo</a>'
+                f'<a class="nascondi" href="{h}#domande">Domande</a>')
     titolare = os.environ.get("TITOLARE_SITO", "").strip()     # es. "Studio ... · P.IVA ..." (Google Ads lo chiede)
     dominio = urlparse(seo.sito_url()).hostname or ""
     return f"""<!doctype html><html lang="it"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1"><meta name="robots" content="{robots}">
 <title>{_e(titolo)}</title><meta name="description" content="{_e(descrizione)}">{meta}
 <link rel="icon" href="/favicon.svg" type="image/svg+xml"><meta name="theme-color" content="#163e7a">
-<style>{STILE}</style>{testa}</head><body>
-<header><a class="logo" href="{h}">{LOGO}<span>Bandi Radar</span></a><nav><a class="nascondi" href="{h}#come">Come funziona</a>
-<a class="nascondi" href="{h}#prezzo">Prezzo</a><a class="nascondi" href="{h}#domande">Domande</a><a href="/accedi">Accedi</a>
+{seo.meta_verifica()}<style>{STILE}</style>{testa}</head><body>
+<header><a class="logo" href="{logo}">{LOGO}<span>Bandi Radar</span></a><nav>{voci}<a href="/accedi">Accedi</a>
 <a class="bottone" href="/registrati">Prova gratis</a></nav></header>
 <main>{corpo}</main>
 <footer><span>© Bandi Radar · {_e(dominio)}{(' · ' + _e(titolare)) if titolare else ''}</span><a href="/termini">Termini</a>

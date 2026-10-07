@@ -13,6 +13,7 @@ from pathlib import Path
 
 import psycopg
 from fastapi import Depends, FastAPI, HTTPException, Request
+from starlette.background import BackgroundTask
 from fastapi.responses import FileResponse, HTMLResponse, JSONResponse, PlainTextResponse, Response
 
 from app.abbonamenti.api import router as api_abbonamenti
@@ -34,6 +35,8 @@ from app.pubblico import blog, landing, seo
 from app.db.connessione import connetti
 from app.utenti.api import COOKIE, controlla_plancia
 from app.utenti.api import router as api_utenti
+from app import visite
+from app.visite.api import router as api_visite
 
 app = FastAPI(title="Bandi Radar", docs_url=None, redoc_url=None, openapi_url=None)
 CARTELLA_PLANCIA = Path(__file__).resolve().parents[1] / "plancia" / "dist"
@@ -76,8 +79,22 @@ app.include_router(api_passi)
 app.include_router(api_news)
 app.include_router(api_articoli)
 app.include_router(api_guida)
+app.include_router(api_visite)      # pagina Visite: statistiche anonime delle pagine pubbliche (permesso "lavoro")
 app.include_router(api_account)
 app.include_router(api_plancia, dependencies=[Depends(controlla_plancia)])
+
+
+@app.middleware("http")
+async def conta_visite(request: Request, call_next):
+    """Statistiche senza cookie (app/visite): conta le visite riuscite alle sole pagine pubbliche, non quelle di chi ha
+    fatto l'accesso. Il conteggio si scrive dopo aver mandato la pagina, cosi' non la rallenta."""
+    risposta = await call_next(request)
+    if request.method == "GET" and risposta.status_code == 200 and not request.cookies.get(COOKIE):
+        percorso = visite.percorso_contato(request.url.path)
+        if percorso and risposta.background is None:
+            risposta.background = BackgroundTask(visite.registra, percorso, request.headers.get("referer"),
+                                                 request.headers.get("user-agent"), request.url.query)
+    return risposta
 
 
 def _presentazione() -> HTMLResponse:
@@ -93,8 +110,9 @@ def presentazione():
 
 @app.get("/robots.txt", response_class=PlainTextResponse)
 def robots_txt():
-    """Finche' la pagina pubblica e' spenta chiude tutto; da accesa apre solo le pagine pubbliche (app/pubblico/seo.py)."""
-    return PlainTextResponse(seo.robots_txt(pubblico.pubblica()))
+    """Finche' la pagina pubblica e' spenta chiude tutto; da accesa apre solo le pagine pubbliche; con BLOG_PUBBLICO=1
+    apre solo il blog (app/pubblico/seo.py)."""
+    return PlainTextResponse(seo.robots_txt(pubblico.pubblica(), pubblico.blog_pubblico()))
 
 
 @app.get("/sitemap.xml")
@@ -105,7 +123,7 @@ def sitemap_xml():
             voci = blog.voci_sitemap(conn)
     except Exception:  # noqa: BLE001 - la sitemap non deve cadere per il blog
         voci = []
-    return Response(seo.sitemap_xml(articoli=voci), media_type="application/xml")
+    return Response(seo.sitemap_xml(articoli=voci, solo_blog=pubblico.solo_blog()), media_type="application/xml")
 
 
 @app.get("/blog", response_class=HTMLResponse)
@@ -135,9 +153,11 @@ def blog_articolo(slug: str):
 
 @app.get("/llms.txt", response_class=PlainTextResponse)
 def llms_txt():
-    """Descrizione del servizio per i motori di risposta IA (proposta llmstxt.org), con i numeri del giorno."""
+    """Descrizione del servizio per i motori di risposta IA (proposta llmstxt.org), con i numeri del giorno. Con il
+    solo blog aperto descrive il blog e i suoi articoli (niente prezzi della landing, ancora da decidere)."""
     with connetti() as conn:
-        return PlainTextResponse(landing.llms_txt(conn), media_type="text/markdown; charset=utf-8")
+        testo = blog.llms_txt_blog(conn) if pubblico.solo_blog() else landing.llms_txt(conn)
+        return PlainTextResponse(testo, media_type="text/markdown; charset=utf-8")
 
 
 @app.get("/favicon.svg")
@@ -177,5 +197,9 @@ def plancia(percorso: str, request: Request):
         candidato = (CARTELLA_PLANCIA / percorso).resolve() if percorso else None
         if candidato and candidato.is_file() and CARTELLA_PLANCIA in candidato.parents:
             return FileResponse(candidato)
+        verifica = seo.meta_verifica() if percorso == "" else ""
+        if verifica:            # Search Console e Bing cercano il meta tag di verifica nella pagina "/"
+            testo = (CARTELLA_PLANCIA / "index.html").read_text(encoding="utf-8")
+            return HTMLResponse(testo.replace("</head>", verifica + "</head>", 1))
         return FileResponse(CARTELLA_PLANCIA / "index.html")
     return HTMLResponse(_PAGINA_IN_COSTRUZIONE)

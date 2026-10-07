@@ -39,7 +39,7 @@ sezioni:
 
       - Impresa: **I miei bandi**, **Agevolazioni fiscali**, **Le mie imprese**, **Richieste di supporto**, **Abbonamento**.
       - Revisore con i permessi di base: **Catalogo**, **Misure**, **I miei giudizi** (e **Imprese** se ha quel permesso).
-      - Chi ha il permesso "lavoro": **Fonti**, **Catalogo**, **Misure**, **Profili**, **Annunci**, **Lavorazione**, **Supervisione**, **Doppioni**, **Novità**, **Feedback**, **Segnalazioni**, **News**, **Blog**; con il permesso "imprese" anche **Imprese** e **Campagne**.
+      - Chi ha il permesso "lavoro": **Fonti**, **Catalogo**, **Misure**, **Profili**, **Annunci**, **Lavorazione**, **Supervisione**, **Doppioni**, **Novità**, **Feedback**, **Segnalazioni**, **News**, **Blog**, **Visite**; con il permesso "imprese" anche **Imprese** e **Campagne**.
       - Amministratore: tutto, più **Utenti** e **Prossimi passi**.
 
       La voce **Guida** apre questa pagina: mostra solo le parti che ti riguardano.
@@ -201,11 +201,31 @@ sezioni:
       5. le **fonti ufficiali**, una per riga: `nome | https://...`;
       6. l'**autore** (vuoto = il commercialista, nome preso da `AUTORE_ARTICOLI` nel .env).
 
-      Con **Anteprima** vedi la pagina come la vedrà chi legge, anche prima di salvare. Un articolo nasce in **bozza** e non è visibile a nessuno. Quando l'amministratore preme **Pubblica** compare su /blog, nella mappa del sito (sitemap.xml) e in /llms.txt; finché la pagina pubblica è spenta (`PAGINA_PUBBLICA=0`) resta comunque fuori dagli indici dei motori di ricerca. **Rimetti in bozza** lo toglie dal sito; **Archivia** lo ritira per sempre (l'indirizzo risponde "articolo non più disponibile").
+      Con **Anteprima** vedi la pagina come la vedrà chi legge, anche prima di salvare. Un articolo nasce in **bozza** e non è visibile a nessuno. Quando l'amministratore preme **Pubblica** compare su /blog, nella mappa del sito (sitemap.xml) e in /llms.txt; resta fuori dagli indici dei motori di ricerca finché il blog non è aperto: si apre con `BLOG_PUBBLICO=1` (solo il blog, la presentazione resta chiusa) o con `PAGINA_PUBBLICA=1` (tutto). Con il blog aperto la pagina non mostra più l'avviso "Anteprima" e Google, Bing e i motori IA possono leggerla. **Rimetti in bozza** lo toglie dal sito; **Archivia** lo ritira per sempre (l'indirizzo risponde "articolo non più disponibile").
 
       Ogni articolo mostra in testa "Aggiornato il" (l'ultima modifica del testo). Se il bando collegato chiude o scade, o la misura non è più aperta, la pagina mostra da sola il riquadro rosso **"Bando chiuso"** e qui compare un avviso: aggiornalo o archivialo.
 
       Le sessioni di Claude preparano articoli in bozza (`python -m app.articoli carica FILE.json`): li trovi qui da rileggere e pubblicare. Prima di pubblicare controlla l'autore: finché `AUTORE_ARTICOLI` è vuoto compare il segnaposto "[NOME E COGNOME], commercialista".
+
+  - id: visite
+    titolo: "Visite"
+    per: [lavoro]
+    testo: |
+      La pagina **Visite** dice chi legge le pagine pubbliche: la presentazione (/), il blog e i suoi articoli, /llms.txt (la descrizione per le IA), la mappa del sito (sitemap.xml) e robots.txt. Serve a capire se il blog si fa trovare su Google e dai motori di risposta come ChatGPT.
+
+      Sono **solo conteggi anonimi per giorno**, senza cookie: non sappiamo chi è passato, solo quante volte, da quale sito arrivava e se era una persona o un programma. Per questo non serve il banner dei cookie. Le visite di chi ha fatto l'accesso (noi) non si contano.
+
+      In alto scegli il periodo (7, 30, 90 giorni o un anno). Poi trovi:
+      - i riquadri: visite di persone, persone arrivate da un motore IA (ChatGPT, Perplexity, Gemini, Copilot, Claude), letture dei programmi IA e dei motori di ricerca;
+      - **Visite per giorno**, divise tra persone, motori di ricerca, programmi IA e altri programmi;
+      - **Pagine più viste**;
+      - **Da dove arrivano le persone**: solo il nome del sito (google.it, chatgpt.com, linkedin.com...); i motori IA sono evidenziati. "Diretto" vuol dire link scritto a mano, segnalibro, email o app che non dice da dove arrivi;
+      - **Programmi delle IA** e **Motori di ricerca**, pagina per pagina: per esempio GPTBot o ClaudeBot che leggono un articolo, con la data dell'ultima lettura. Se un programma IA legge un articolo, quell'articolo può essere citato nelle risposte;
+      - **Campagne**: le visite arrivate da link con i parametri utm (annunci, newsletter, post). Per esempio un link su LinkedIn come `https://bandinqiaro.it/blog/nuova-sabatini?utm_source=linkedin&utm_medium=post&utm_campaign=sabatini`.
+
+      Ogni due settimane guarda soprattutto: persone arrivate da Google e dai motori IA, quali articoli leggono i programmi IA, quali pagine portano registrazioni.
+
+      Gli stessi numeri arrivano all'amministratore ogni mattina per email (**rapporto SEO/GEO**, dalle 7): ieri contro il giorno prima e il totale degli ultimi 7 giorni, provenienze con i motori IA evidenziati, letture dei programmi IA e dei motori pagina per pagina, nuove imprese registrate e la riga di Google Search Console (per ora "non ancora collegato"). La frequenza si cambia con `RAPPORTO_SEO` nel .env.
 
   - id: segnala
     titolo: "Il pulsante Segnala"
@@ -454,6 +474,9 @@ sezioni:
       Alcune funzioni si accendono e si spengono dal file dei segreti sul server, /srv/bandi-radar/.env. Il valore 1 accende; vuoto o 0 spegne (tranne dove scritto diversamente).
 
       - **PAGINA_PUBBLICA**: con 1, chi apre il sito senza accesso vede la pagina di presentazione. Spenta, la presentazione si vede solo su /presentazione e non è indicizzata.
+      - **BLOG_PUBBLICO**: con 1, solo il blog si apre a Google, Bing e ai motori IA (articoli pubblicati, /llms.txt, mappa del sito); la presentazione e tutto il resto restano chiusi. Con PAGINA_PUBBLICA=1 il blog è comunque aperto.
+      - **GOOGLE_SITE_VERIFICATION** e **BING_SITE_VERIFICATION**: il codice che Google Search Console o Bing Webmaster Tools danno per il metodo "tag HTML" (solo il codice tra virgolette dopo content=, non tutto il tag). Per Google è più semplice la proprietà "Dominio" con un record TXT nel DNS: in quel caso questa riga non serve.
+      - **RAPPORTO_SEO**: l'email con l'andamento del blog e delle pagine pubbliche. Vuoto o `giornaliero` = ogni mattina dalle 7; `settimanale` = il lunedì; `spento` = mai. Arriva all'indirizzo di EMAIL_MATTEO.
       - **REGISTRAZIONE_APERTA**: con 1, le imprese possono registrarsi da sole (con conferma dell'email). Spenta, le imprese entrano solo su invito dalla pagina Utenti.
       - **EMAIL_IMPRESE_APPROVAZIONE**: vuoto o 1, le email settimanali alle imprese partono solo dopo la tua approvazione nella pagina Imprese. Con 0 partono da sole.
       - **ABBONAMENTI_ATTIVI**: con 1, l'area impresa richiede la prova gratuita o un abbonamento. Spento, entrano tutti.

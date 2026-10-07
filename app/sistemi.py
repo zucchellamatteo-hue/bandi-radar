@@ -82,6 +82,11 @@ SISTEMI: list[Sistema] = [
     Sistema("email_settimana", "Email del lunedi'",
             "Il lunedi' mattina manda a Matteo il riepilogo delle novita' della settimana e lo stato delle fonti.",
             "lunedi' dalle 7", 7 * 24 * 60, "Ogni giorno e ogni settimana", dati="email"),
+    Sistema("rapporto_seo", "Rapporto SEO/GEO",
+            "Ogni mattina dalle 7 (o il lunedi', secondo RAPPORTO_SEO) manda a Matteo l'andamento delle pagine pubbliche: "
+            "visite di persone, provenienze (Google, Bing, motori IA), letture dei programmi IA e dei motori, nuove "
+            "registrazioni. Dai contatori anonimi della pagina Visite.",
+            "ogni giorno dalle 7", 24 * 60, "Ogni giorno e ogni settimana", dati="rapporto_seo"),
     Sistema("aggiornamento", "Aggiornamento automatico del sito",
             "Sul server, ogni 5 minuti: scarica da GitHub la versione 'main' e, se e' cambiata, ricostruisce e riavvia i "
             "servizi. Unire una pull request vuol dire metterla in produzione entro pochi minuti.",
@@ -188,6 +193,11 @@ DATI: dict[str, tuple[str, str]] = {
                  WHERE v.causa ILIKE '%stato%' ORDER BY v.salvata_il DESC LIMIT 100"""),
     "email": ("Email inviate",
               "SELECT inviata_il AS quando, nome, chiave AS settimana, esito FROM notifiche_inviate ORDER BY inviata_il DESC LIMIT 50"),
+    "rapporto_seo": ("Visite delle pagine pubbliche per giorno (ultimi 14 giorni)",
+                     """SELECT giorno, sum(conteggio) FILTER (WHERE visitatore = 'persona') AS persone,
+                               sum(conteggio) FILTER (WHERE visitatore = 'motore') AS motori,
+                               sum(conteggio) FILTER (WHERE visitatore = 'ia') AS programmi_ia
+                        FROM visite WHERE giorno > current_date - 14 GROUP BY giorno ORDER BY giorno DESC"""),
     "sessioni": ("Schede per chi le ha scritte",
                  """SELECT coalesce(dati->>'modello', '?') AS scritte_da, count(*) AS schede,
                            count(*) FILTER (WHERE completezza = 'bando_ufficiale') AS sul_bando_ufficiale,
@@ -226,7 +236,10 @@ NUMERI: dict[str, str] = {
     "stato_bandi": """SELECT format('%s aperti, %s in arrivo, %s chiusi (bandi con scheda)', count(*) FILTER (WHERE stato = 'aperto'),
                              count(*) FILTER (WHERE stato = 'in_arrivo'), count(*) FILTER (WHERE stato = 'chiuso')) AS t
                       FROM bandi WHERE dati IS NOT NULL""",
-    "email_settimana": "SELECT format('ultima: %s', coalesce(max(inviata_il)::date::text, 'mai')) AS t FROM notifiche_inviate",
+    "email_settimana": "SELECT format('ultima: %s', coalesce(max(inviata_il)::date::text, 'mai')) AS t FROM notifiche_inviate WHERE nome = 'novita_settimana'",
+    "rapporto_seo": """SELECT format('ultimo: %s; visite di persone ieri: %s', coalesce((SELECT max(inviata_il)::date::text
+                              FROM notifiche_inviate WHERE nome = 'rapporto_seo'), 'mai'), coalesce(sum(conteggio), 0)) AS t
+                       FROM visite WHERE giorno = current_date - 1 AND visitatore = 'persona'""",
     "sessioni": """SELECT format('%s schede scritte in sessione', count(*)) AS t FROM bandi
                    WHERE dati->>'modello' ILIKE 'claude-code%'""",
 }

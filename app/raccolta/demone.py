@@ -1,7 +1,8 @@
 """Servizio di raccolta: ogni ora controlla le fonti in scadenza e porta avanti la catena dei bandi (smistamento,
 deduplica, pagina ufficiale, allegati e, con la chiave API, l'IA con la Batch API: app/schede/ia.py, ciclo_catena);
-una volta al giorno ricalcola lo stato dei bandi; il lunedi' mattina manda il riepilogo della settimana e prepara le
-email per le imprese (app/notifiche/email_imprese.py).
+una volta al giorno ricalcola lo stato dei bandi; ogni mattina dalle 7 manda a Matteo il rapporto SEO/GEO
+(app/notifiche/rapporto_seo.py, RAPPORTO_SEO: giornaliero, settimanale o spento); il lunedi' mattina manda il riepilogo
+della settimana e prepara le email per le imprese (app/notifiche/email_imprese.py).
 CATENA_AUTOMATICA=0 nel .env spegne la catena (resta solo la raccolta).
 Gira come container 'raccolta' in Docker Compose."""
 
@@ -60,6 +61,14 @@ def main() -> int:
                     e.riepilogo = invia_riepilogo()
             except Exception:  # noqa: BLE001
                 traceback.print_exc()
+        try:                                            # rapporto SEO/GEO: ogni giorno (o il lunedi') dalle 7, una volta sola
+            from app.notifiche import rapporto_seo
+
+            if rapporto_seo.da_inviare(adesso) and not rapporto_seo.gia_inviato_adesso(adesso.date()):
+                with esecuzione("rapporto_seo") as e:
+                    e.riepilogo = rapporto_seo.invia_rapporto(oggi=adesso.date())
+        except Exception:  # noqa: BLE001
+            traceback.print_exc()
         if adesso.weekday() == 0 and adesso.hour >= 7:   # poi le email per le imprese, anche loro una volta sola
             try:
                 email_imprese_della_settimana()

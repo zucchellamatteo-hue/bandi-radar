@@ -100,6 +100,7 @@ I valori del 06/10 qui sotto sono stati calcolati prima della vista: il confront
 | R01-R04 | giri del regista in 24 ore, durata massima, esecuzioni interrotte, esecuzioni in errore | R01 ≥ 20, R03 = 0, R04 = 0 |
 | M01-M03 | imprese, profili, email preparate | in crescita dal pilota |
 | P01, X01 | prossimi passi aperti, dimensione del database | — |
+| W01-W06 | SEO/GEO (dal 07/10, tabella `visite`): visite di persone in 14 giorni, persone da motori di ricerca, persone da motori IA, letture dei programmi IA, letture dei motori, articoli pubblicati mai letti da un motore | W01, W02, W03 in crescita; W06 = 0 |
 
 Valori del 06/10/2026 (punto di partenza): F01 267, F02 16, F03 4, F05 10, F06 6, F07 5,6%; A02 353, A03 23;
 B03 240, B04 242, B07 996, B08 341, B09 50, B10 3; S01 671, S02 383, S03 33, S04 32, S05 63%, S06 40, S08 21;
@@ -172,6 +173,12 @@ SELECT * FROM (VALUES
  ('M02 profili', (SELECT count(*) FROM profili)),
  ('M03 email alle imprese preparate ultimi 14 giorni', (SELECT count(*) FROM email_imprese WHERE creata_il > now() - interval '14 days')),
  ('P01 prossimi passi da fare o in corso', (SELECT count(*) FROM prossimi_passi WHERE stato IN ('da_fare','in_corso'))),
+ ('W01 visite di persone alle pagine pubbliche ultimi 14 giorni', (SELECT coalesce(sum(conteggio),0) FROM visite WHERE visitatore = 'persona' AND giorno > current_date - 14)),
+ ('W02 persone arrivate da motori di ricerca ultimi 14 giorni', (SELECT coalesce(sum(conteggio),0) FROM visite WHERE visitatore = 'persona' AND giorno > current_date - 14 AND provenienza ~ '^(google\.[a-z.]+|bing\.com|duckduckgo\.com|search\.yahoo\.com|ecosia\.org|qwant\.com|search\.brave\.com)$')),
+ ('W03 persone arrivate da motori IA ultimi 14 giorni', (SELECT coalesce(sum(conteggio),0) FROM visite WHERE visitatore = 'persona' AND giorno > current_date - 14 AND (provenienza IN ('chatgpt.com','chat.openai.com','perplexity.ai','copilot.microsoft.com','gemini.google.com','claude.ai','chat.mistral.ai','chat.deepseek.com','meta.ai','grok.com') OR utm_source IN ('chatgpt.com','perplexity.ai','copilot.com')))),
+ ('W04 letture dei programmi IA ultimi 14 giorni', (SELECT coalesce(sum(conteggio),0) FROM visite WHERE visitatore = 'ia' AND giorno > current_date - 14)),
+ ('W05 letture dei motori di ricerca ultimi 14 giorni', (SELECT coalesce(sum(conteggio),0) FROM visite WHERE visitatore = 'motore' AND giorno > current_date - 14)),
+ ('W06 articoli pubblicati mai letti da un motore o da un programma IA', (SELECT count(*) FROM articoli a WHERE a.stato = 'pubblicato' AND NOT EXISTS (SELECT 1 FROM visite v WHERE v.percorso = '/blog/' || a.slug AND v.visitatore IN ('motore','ia')))),
  ('X01 dimensione database (MB)', (SELECT round(pg_database_size(current_database()) / 1e6)))
 ) AS t(indicatore, valore);
 ```
@@ -260,6 +267,43 @@ SELECT sistema, left(riepilogo,160) FROM (SELECT DISTINCT ON (sistema) sistema, 
 
 -- Eventi del regista per passo (quali fasi lasciano traccia)
 SELECT passo, esito, count(*) FROM eventi_catena WHERE quando > now() - interval '14 days' GROUP BY 1,2 ORDER BY 1,3 DESC;
+```
+
+## SEO e GEO (dal 07/10/2026)
+
+Cosa si guarda ogni due settimane (riga "Misura" di `docs/PIANO_SEO_GEO.md`): indicatori W01-W06 qui sopra, pagina
+**Visite** della plancia e, se Matteo ha dato accesso, Google Search Console e Bing Webmaster Tools. La tabella `visite`
+(migrazione 033, `app/visite`) ha solo contatori per giorno: percorso, provenienza (dominio del Referer), utm, tipo di
+visitatore (`persona`, `motore`, `ia`, `altro`) con il nome del programma. Non contiene IP né User-Agent.
+Voto della parte (1-10): 4 se nessun motore legge gli articoli; 6 se Google e almeno un programma IA li leggono tutti
+(W06 = 0); 8 se arrivano persone da Google e dai motori IA in crescita; 9-10 con registrazioni che arrivano dal blog.
+Prima di tutto controllare che `BLOG_PUBBLICO=1` (o `PAGINA_PUBBLICA=1`) sia acceso: senza, robots.txt chiude tutto.
+
+```sql
+-- Visite per settimana e tipo di visitatore
+SELECT date_trunc('week', giorno)::date AS settimana, visitatore, sum(conteggio) FROM visite
+WHERE giorno > current_date - 90 GROUP BY 1, 2 ORDER BY 1 DESC, 2;
+
+-- Provenienze delle persone negli ultimi 14 giorni (i motori IA: chatgpt.com, perplexity.ai, gemini.google.com,
+-- copilot.microsoft.com, claude.ai; ChatGPT aggiunge anche utm_source=chatgpt.com)
+SELECT provenienza, utm_source, sum(conteggio) AS visite FROM visite
+WHERE visitatore = 'persona' AND giorno > current_date - 14 GROUP BY 1, 2 ORDER BY 3 DESC LIMIT 30;
+
+-- Programmi IA e motori, articolo per articolo, con l'ultima lettura
+SELECT percorso, visitatore, programma, sum(conteggio) AS letture, max(giorno) AS ultima FROM visite
+WHERE visitatore IN ('ia', 'motore') AND giorno > current_date - 30 GROUP BY 1, 2, 3 ORDER BY 1, 2, 4 DESC;
+
+-- Articoli pubblicati mai letti da Googlebot (da segnalare in Search Console con "Controllo URL")
+SELECT a.slug, a.pubblicato_il::date FROM articoli a WHERE a.stato = 'pubblicato' AND NOT EXISTS
+  (SELECT 1 FROM visite v WHERE v.percorso = '/blog/' || a.slug AND v.programma = 'Googlebot') ORDER BY 2;
+
+-- Pagine piu' viste dalle persone negli ultimi 14 giorni
+SELECT percorso, sum(conteggio) AS visite FROM visite WHERE visitatore = 'persona' AND giorno > current_date - 14
+GROUP BY 1 ORDER BY 2 DESC LIMIT 20;
+
+-- Campagne utm degli ultimi 30 giorni
+SELECT utm_source, utm_medium, utm_campaign, sum(conteggio) FROM visite
+WHERE giorno > current_date - 30 AND (utm_source <> '' OR utm_campaign <> '') GROUP BY 1, 2, 3 ORDER BY 4 DESC;
 ```
 
 ## Le 10 falle della prima revisione (06/10/2026): da ricontrollare ogni volta
