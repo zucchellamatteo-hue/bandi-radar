@@ -22,7 +22,8 @@ COLONNE = """b.id, b.titolo, b.ente, b.gestore, b.territorio, b.url, b.stato, b.
     b.forme_giuridiche_ammesse, b.forme_giuridiche_escluse, b.dimensioni_ammesse, b.eta_impresa_min_mesi,
     b.eta_impresa_max_mesi, b.requisiti_speciali_obbligatori, b.requisiti_speciali_premiali, b.dipendenti_min,
     b.dipendenti_max, b.fatturato_min, b.fatturato_max, b.codici_ateco, b.codici_ateco_esclusi, b.ateco_versione,
-    b.regime_aiuto, b.qualita"""
+    b.regime_aiuto, b.qualita, b.a_chi_si_rivolge, b.scheda_il,
+    b.preliminare->>'per_imprese' AS per_imprese"""
 
 # Stato "aperti": aperti e in arrivo (quello che serve a un cliente). Senza date lo stato non e' noto.
 STATI_FILTRO = {"aperti": ("aperto", "in_arrivo"), "aperto": ("aperto",), "in_arrivo": ("in_arrivo",),

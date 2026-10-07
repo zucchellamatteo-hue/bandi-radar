@@ -128,6 +128,68 @@ def nuove_per_profilo(profilo: dict | None, oggi: date, giorni: int = 30, esclus
     return sorted(uscita, key=lambda m: m["aggiunta_il"], reverse=True)
 
 
+def _divisioni(profilo: dict) -> set[int]:
+    uscita = set()
+    for c in profilo.get("ateco") or []:
+        testa = str(c).strip()[:2]
+        if testa.isdigit():
+            uscita.add(int(testa))
+    return uscita
+
+
+def tipo_di_impresa(profilo: dict | None) -> str | None:
+    """A quale dei profili_esempio somiglia l'impresa (07/10/2026), dai requisiti, dal codice ATECO e dalla dimensione.
+    None se non si capisce: meglio nessun esempio che un esempio sbagliato."""
+    if not profilo:
+        return None
+    req = profilo.get("requisiti") or {}
+    div = _divisioni(profilo)
+    grande = profilo.get("dimensione") in ("media", "grande") or (profilo.get("dipendenti") or 0) >= 50
+    if req.get("startup_innovativa") or req.get("pmi_innovativa"):
+        return "startup"
+    if req.get("agricola") or div & {1, 2, 3}:
+        return "agricola"
+    if req.get("turistica") or div & {55, 56}:
+        return "ristorazione_ricettivo"
+    if div & {47}:
+        return "negozio"
+    if div & {49, 50, 51, 52, 53}:
+        return "logistica"
+    if div & set(range(10, 34)):
+        if div & {10, 11} and not grande:
+            return "agricola"   # trasformazione agroalimentare (cantina, caseificio, frantoio)
+        return "manifattura" if grande else "artigiano"
+    if req.get("artigiana") or div & {43, 95, 96}:
+        return "artigiano"
+    if div & ({58, 59, 60, 61, 62, 63, 64, 65, 66, 68, 69, 70, 71, 72, 73, 74, 77, 78, 79, 80, 81, 82} | {46}):
+        return "ufficio_servizi"
+    return None
+
+
+def per_profilo(profilo: dict | None, percorso: Path | None = None) -> dict:
+    """Le misure nazionali aperte adatte al profilo (soggetto, dimensione, regioni), per la pagina "I miei bandi":
+    versione breve con la sintesi e, se il profilo somiglia a uno dei profili_esempio, l'esempio pratico per quel tipo
+    di impresa. Prima quelle piu' interessanti per quel tipo."""
+    tipo = tipo_di_impresa(profilo)
+    nomi = {p["id"]: p.get("nome") or p["id"] for p in profili_esempio(percorso)}
+    ordine = {v: i for i, v in enumerate(INTERESSI)}
+    uscita = []
+    for m in tutte(percorso):
+        if m.get("stato") != "aperto" or not _adatta_al_profilo(m, profilo):
+            continue
+        regioni = set(m.get("regioni") or [])
+        if regioni and profilo and not regioni & {s.get("regione") for s in profilo.get("sedi") or []}:
+            continue
+        esempio = next((e for e in m.get("esempi") or [] if e.get("profilo") == tipo), None) if tipo else None
+        if esempio and esempio.get("interesse") == "nullo":
+            continue   # per questo tipo di impresa la misura non serve
+        uscita.append(breve(m) | {"sintesi": (m.get("sintesi") or "").strip(),
+                                  "esempio": esempio and {"testo": " ".join(str(esempio.get("esempio") or "").split()),
+                                                          "interesse": esempio.get("interesse")}})
+    uscita.sort(key=lambda x: ordine.get((x["esempio"] or {}).get("interesse"), len(INTERESSI)))
+    return {"tipo": tipo and {"id": tipo, "nome": nomi.get(tipo, tipo)}, "misure": uscita}
+
+
 def breve(m: dict) -> dict:
     b = m.get("beneficio_stimato") or {}
     return {"id": m["id"], "nome": m["nome"], "tipo": m.get("tipo"), "ente": m.get("ente"),

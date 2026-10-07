@@ -162,6 +162,65 @@ button.collegamento { border: none; background: none; padding: 0; color: var(--a
 .menu-corpo { display: contents; }
 main { padding-bottom: 5rem; }   /* spazio per il pulsante "Segnala": non copre l'ultima riga ne' i pulsanti in fondo */
 
+/* I miei bandi (07/10): riepilogo, card dei bandi, misure nazionali; scheda vista dall'impresa. */
+.riepilogo-impresa { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: .8rem; margin-bottom: .6rem; }
+.riepilogo-impresa .voce { display: block; background: var(--carta); border: 1px solid var(--bordo); border-radius: 10px; box-shadow: var(--ombra);
+  padding: .8rem 1rem; text-decoration: none; color: var(--testo); font: inherit; font-size: .92rem; text-align: left; border-top: 4px solid var(--accento); }
+.riepilogo-impresa .voce .numero { display: block; font-size: 1.9rem; font-weight: 750; line-height: 1.1; color: var(--blu-scuro); }
+.riepilogo-impresa .voce.adatti { border-top-color: var(--verde); } .riepilogo-impresa .voce.adatti .numero { color: #1e6b3e; }
+.riepilogo-impresa .voce.da-valutare { border-top-color: var(--giallo); }
+.riepilogo-impresa .voce.in-scadenza { border-top-color: var(--rosso); cursor: pointer; } .riepilogo-impresa .voce.in-scadenza .numero { color: #b42318; }
+.riepilogo-impresa .voce.in-scadenza.attiva { background: #fff4f3; }
+.riepilogo-impresa .voce.nuovi { border-top-color: #7c5cc4; }
+.filtri-impresa { margin: 1rem 0 .2rem; }
+.scegli-impresa { margin-bottom: 1rem; }
+h2.titolo-gruppo { display: flex; align-items: center; gap: .5rem; margin-bottom: .2rem; }
+h2.titolo-gruppo .conta { font-size: .85rem; font-weight: 700; border-radius: 999px; padding: .1rem .6rem; background: #d9e6f6; color: var(--blu-scuro); }
+h2.titolo-gruppo.adatti .conta { background: #e3f4ea; color: #1e6b3e; }
+h2.titolo-gruppo.da-valutare .conta { background: #fff4d6; color: #8a6100; }
+section#adatti, section#da-valutare, section#misure { scroll-margin-top: 70px; }
+.card-griglia { display: grid; grid-template-columns: repeat(auto-fill, minmax(330px, 1fr)); gap: .9rem; margin: .6rem 0 .8rem; }
+.card-bando { display: flex; flex-direction: column; gap: .45rem; background: var(--carta); border: 1px solid var(--bordo); border-left: 5px solid var(--accento);
+  border-radius: 10px; box-shadow: var(--ombra); padding: .9rem 1rem; min-width: 0; }
+.card-bando.adatti { border-left-color: var(--verde); }
+.card-bando.da_valutare, .card-bando.altre_regioni { border-left-color: var(--giallo); }
+.card-bando.misura { border-left-color: #7c5cc4; }
+.card-bando h3 { margin: 0; font-size: 1.05rem; line-height: 1.3; }
+.card-bando h3 a { color: var(--blu-scuro); text-decoration: none; }
+.card-bando h3 a:hover { text-decoration: underline; }
+.card-segni { display: flex; flex-wrap: wrap; gap: .35rem; }
+.segno-card { border-radius: 4px; padding: .1rem .45rem; font-size: .72rem; font-weight: 700; text-transform: uppercase; letter-spacing: .04em; }
+.segno-card.nuovo { background: #ede7fb; color: #5b3fa8; }
+.segno-card.in-scadenza { background: #fde8e7; color: #b42318; }
+.segno-card.in-arrivo { background: #e8f0fb; color: var(--blu-scuro); }
+.card-ente { color: var(--grigio); font-size: .85rem; }
+.card-agevolazione { font-weight: 650; font-size: .95rem; color: var(--testo); background: #f2f6fc; border-radius: 6px; padding: .35rem .55rem; }
+.card-agevolazione.fp { background: #e9f6ee; color: #1e6b3e; }
+.scadenza-card { font-size: .88rem; color: var(--testo); }
+.scadenza-card.vicina { color: #b42318; font-weight: 700; }
+.scadenza-card.senza { color: var(--grigio); }
+.card-motivo { display: flex; gap: .45rem; font-size: .88rem; line-height: 1.35; border-radius: 6px; padding: .4rem .55rem; }
+.card-motivo .segno { font-weight: 800; }
+.card-motivo.compatibile { background: #f1f9f4; color: #1e5a36; }
+.card-motivo.da_verificare { background: #fffaeb; color: #6b4d00; }
+.card-esempio { margin: 0; font-size: .87rem; color: var(--testo); line-height: 1.4; }
+.card-azioni { display: flex; gap: .5rem; flex-wrap: wrap; margin-top: auto; padding-top: .2rem; }
+.card-azioni button { min-height: 38px; }
+.vuoto { background: var(--carta); border: 1px dashed var(--bordo); border-radius: 10px; padding: 1rem 1.1rem; color: var(--grigio); margin: .6rem 0; }
+details.altre-regioni { margin: .8rem 0; }
+details.altre-regioni summary { cursor: pointer; font-weight: 650; color: var(--blu-scuro); padding: .5rem 0; }
+button.mostra-altri { width: 100%; padding: .6rem; font-weight: 600; }
+.completa-profilo { margin-top: .4rem; }
+.scheda-chiave { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .8rem; margin: .8rem 0; }
+.scheda-chiave > div { background: var(--carta); border: 1px solid var(--bordo); border-radius: 10px; box-shadow: var(--ombra); padding: .7rem .9rem; }
+.scheda-chiave .etichetta { color: var(--grigio); font-size: .74rem; font-weight: 700; text-transform: uppercase; letter-spacing: .04em; }
+.scheda-chiave .valore { font-weight: 650; font-size: 1rem; margin: .15rem 0; }
+.scheda-chiave .valore.vicina { color: #b42318; }
+.esito-impresa { border-radius: 10px; padding: .8rem 1rem; margin-bottom: 1rem; border: 1px solid var(--bordo); }
+.esito-impresa.compatibile { background: #f1f9f4; border-color: #b8e0c6; }
+.esito-impresa.da_verificare { background: #fffaeb; border-color: #f0dca0; }
+.esito-impresa ul { margin: .3rem 0 0; padding-left: 1.2rem; }
+
 /* Telefono (fino a 700 px): una colonna, testo dei campi a 16 px (niente zoom automatico di iOS), cose da toccare
    alte almeno 44 px, menu a tendina, tabelle come schede impilate (vedi tabelle.ts). */
 @media (max-width: 700px) {
@@ -223,6 +282,17 @@ main { padding-bottom: 5rem; }   /* spazio per il pulsante "Segnala": non copre 
   button.stella { min-height: 44px; min-width: 44px; }
   .riquadro.supporto button.primario { margin: .6rem 0 0; width: 100%; }
   td, th { min-width: 0 !important; }
+
+  /* I miei bandi: riepilogo due per riga, card a tutta larghezza, i due pulsanti affiancati. */
+  .riepilogo-impresa { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .6rem; }
+  .riepilogo-impresa .voce { padding: .6rem .75rem; font-size: .88rem; min-height: 0; }
+  .riepilogo-impresa .voce .numero { font-size: 1.55rem; }
+  .card-griglia { grid-template-columns: minmax(0, 1fr); gap: .7rem; }
+  .card-bando { padding: .8rem .85rem; }
+  .card-azioni { flex-wrap: nowrap; }
+  .card-azioni a { flex: 1 1 0; min-width: 0; }
+  .card-azioni button { width: 100%; min-height: 44px; padding: .5rem .4rem; }
+  .scheda-chiave { grid-template-columns: minmax(0, 1fr); gap: .5rem; }
 
   /* Tabelle con intestazione: ogni riga una scheda, il nome della colonna sopra il valore. */
   table.impila { display: block; background: none; border: none; box-shadow: none; border-radius: 0; overflow: visible; }

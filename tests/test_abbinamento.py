@@ -184,3 +184,38 @@ def test_ricerca_per_numero_del_bando():
     for testo in ("4092", " n. 4092", "#4092", "numero:4092"):
         assert [b["id"] for b, _ in catalogo.filtra(bandi, catalogo.Filtri(q=testo))] == [4092], testo
     assert catalogo.filtra(bandi, catalogo.Filtri(q="999")) == []
+
+
+def test_bandi_non_per_imprese():
+    """07/10 (email di prova di Matteo): bandi per enti, associazioni, operatori culturali non si propongono alle imprese."""
+    soggetti = {"soggetti": "vincolo"}
+    # 3883: solo "altro" e un testo senza imprese
+    culturali = bando(vincoli=soggetti, soggetti_ammessi=["altro"],
+                      a_chi_si_rivolge="Soggetti culturali iscritti all'Albo degli operatori culturali e di spettacolo.")
+    e = valuta(culturali, SRL_MILANO, OGGI)
+    assert e.livello == ESCLUSO and "non è per imprese" in e.esclusioni[0]
+    # "altro" ma il testo parla di imprese: resta da verificare
+    consorzi = bando(vincoli=soggetti, soggetti_ammessi=["altro"], a_chi_si_rivolge="Consorzi e reti di imprese.")
+    assert valuta(consorzi, SRL_MILANO, OGGI).livello == DA_VERIFICARE
+    # 809: enti del terzo settore prima, le imprese solo per iniziative senza scopo di lucro
+    rimini = bando(vincoli=soggetti, soggetti_ammessi=["ente_terzo_settore", "impresa", "altro"],
+                   a_chi_si_rivolge="Enti del Terzo Settore; altri soggetti privati, anche con scopo di lucro, solo per "
+                                    "iniziative senza scopo di lucro di particolare rilevanza.")
+    assert valuta(rimini, SRL_MILANO, OGGI).livello == ESCLUSO
+    # stessa frase ma bando fatto per le imprese (impresa prima): non si esclude
+    assert valuta({**rimini, "soggetti_ammessi": ["impresa", "ente_terzo_settore", "altro"]}, SRL_MILANO, OGGI).livello != ESCLUSO
+    # preliminare "incerto" e beneficiari non noti, nessuna parola sulle imprese
+    incerto = bando(vincoli={"soggetti": "non_noto"}, per_imprese="incerto", a_chi_si_rivolge="")
+    assert valuta(incerto, SRL_MILANO, OGGI).livello == ESCLUSO
+    assert valuta({**incerto, "per_imprese": "si"}, SRL_MILANO, OGGI).livello == DA_VERIFICARE
+    # titolo "senza scopo di lucro" e beneficiari non noti
+    onlus = bando(titolo="Contributi per organizzazioni senza scopo di lucro", vincoli={"soggetti": "non_noto"})
+    assert valuta(onlus, SRL_MILANO, OGGI).livello == ESCLUSO
+    # un ente del terzo settore li vede ancora
+    assert valuta(culturali, {**SRL_MILANO, "soggetto": "ente_terzo_settore"}, OGGI).livello != ESCLUSO
+    # solo imprese sociali tra le imprese
+    sociali = bando(vincoli=soggetti, soggetti_ammessi=["ente_terzo_settore", "impresa", "altro"],
+                    a_chi_si_rivolge="Enti privati del sociale: imprese sociali e cooperative sociali; enti religiosi.")
+    assert valuta(sociali, {**SRL_MILANO, "requisiti": {"impresa_sociale": False}}, OGGI).livello == ESCLUSO
+    assert valuta(sociali, {**SRL_MILANO, "requisiti": {"impresa_sociale": True}}, OGGI).livello == COMPATIBILE
+    assert valuta(sociali, {**SRL_MILANO, "requisiti": {}}, OGGI).livello == DA_VERIFICARE

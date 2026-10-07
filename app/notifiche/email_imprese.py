@@ -31,6 +31,7 @@ from datetime import date, datetime, timedelta
 
 from app import impresa, utenti
 from app.abbinamento import catalogo, regole
+from app.impresa import vista
 
 GIORNI_IN_SCADENZA = 14
 MASSIMO_BANDI = 20          # il resto alla settimana dopo
@@ -428,9 +429,11 @@ def scegli_bandi(bandi: list[dict], profilo: dict, segnalati, oggi: date,
         if b["id"] in segnalati or (b.get("scadenza") and b["scadenza"] < oggi):
             continue
         motivo = "in_scadenza" if b.get("scadenza") and b["scadenza"] <= oggi + timedelta(days=GIORNI_IN_SCADENZA) else "nuovo"
-        voci.append({**b, "motivo": motivo, "livello": esito.livello, "da_verificare": esito.da_verificare})
-    # Compatibili prima, poi a fondo perduto prima degli altri (Matteo, 05/10), poi per scadenza.
-    voci.sort(key=lambda v: (v["livello"] != regole.COMPATIBILE, not catalogo.a_fondo_perduto(v),
+        voci.append({**b, "motivo": motivo, "livello": esito.livello, "da_verificare": vista.motivi_semplici(esito),
+                     "fuori_zona": esito.fuori_zona})
+    # Compatibili prima, poi a fondo perduto prima degli altri (Matteo, 05/10), poi per scadenza. I bandi di enti di
+    # altre regioni in fondo (07/10): con il tetto di 20 lasciano il posto a quelli della zona dell'impresa.
+    voci.sort(key=lambda v: (v["livello"] != regole.COMPATIBILE, v["fuori_zona"], not catalogo.a_fondo_perduto(v),
                              v.get("scadenza") is None, v.get("scadenza") or date.max))
     return voci[:MASSIMO_BANDI]
 

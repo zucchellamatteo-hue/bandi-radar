@@ -43,9 +43,23 @@ export interface SchedaRidotta {
   tipi_agevolazione: string[] | null; tipo_agevolazione: string | null; contributo_massimo: number | null; percentuale: number | null;
   fondo_perduto_massimo: number | null; finanziamento_massimo: number | null; spesa_minima: number | null; spesa_massima: number | null;
   dotazione: number | null; modalita_selezione: string | null; forma_incentivo: FormaIncentivo | null; versione: number;
-  imprese: { id: number; nome: string; esito: EsitoRegole }[]; documenti_ufficiali: { nome: string; url: string }[]; avvertenza: string;
+  percentuale_fondo_perduto?: number | null; agevolazione?: string;
+  imprese: { id: number; nome: string; esito: EsitoRegole; motivo?: string; da_verificare_semplici?: string[] }[]; documenti_ufficiali: { nome: string; url: string }[]; avvertenza: string;
   misure_cumulabili?: MisuraBreve[];
   vincoli_spese?: Record<string, { stato?: string; dettaglio?: string } | null> | null;
+}
+// Pagina "I miei bandi" (07/10): bandi in tre gruppi, riepilogo, misure nazionali utili al profilo (app/impresa/vista.py).
+export type GruppoImpresa = "adatti" | "da_valutare" | "altre_regioni";
+export interface BandoImpresa extends BandoRiga {
+  gruppo: GruppoImpresa; agevolazione: string; fondo_perduto: boolean; motivo: string; da_verificare_semplici: string[];
+  giorni_alla_scadenza: number | null; in_scadenza: boolean; nuovo: boolean;
+}
+export interface MisuraPerProfilo extends MisuraBreve { sintesi: string; esempio: { testo: string; interesse: Interesse } | null }
+export interface VistaImpresa {
+  impresa: { id: number | null; nome: string; codice?: string };
+  conteggi: { adatti: number; da_valutare: number; altre_regioni: number; in_scadenza: number; nuovi: number; compatibile: number; da_verificare: number };
+  bandi: BandoImpresa[]; misure: { tipo: { id: string; nome: string } | null; misure: MisuraPerProfilo[] };
+  giorni_in_scadenza: number; giorni_nuovo: number; avvertenza: string; bloccato?: boolean;
 }
 export type StatoRichiesta = "nuova" | "in_corso" | "accettata" | "chiusa";
 export const NOMI_STATO_RICHIESTA: Record<StatoRichiesta, string> = { nuova: "ricevuta", in_corso: "in valutazione", accettata: "accettata", chiusa: "chiusa" };
@@ -60,7 +74,7 @@ export interface EmailImpresa {
 }
 export interface ImpresaIscritta {
   id: number; nome: string; email_settimanale: boolean; creata_il: string; email: string; utente_nome: string | null;
-  attivo: boolean; sedi: number; richieste: number;
+  attivo: boolean; sedi: number; richieste: number; profilo_codice?: string;
 }
 
 // Abbonamenti (app/abbonamenti).
@@ -344,7 +358,8 @@ export const api = {
     chiama<Impresa>(`/api/impresa/imprese/${id}`, { method: "PUT", body: JSON.stringify(corpo) }),
   cancellaImpresa: (id: number) => chiama(`/api/impresa/imprese/${id}`, { method: "DELETE" }),
   bandiImpresa: (id: number) =>
-    chiama<{ impresa: { id: number; nome: string }; conteggi: { compatibile: number; da_verificare: number }; bandi: BandoRiga[]; bloccato?: boolean }>(`/api/impresa/imprese/${id}/bandi`),
+    chiama<VistaImpresa>(`/api/impresa/imprese/${id}/bandi`),
+  vistaImpresaProfilo: (codice: string) => chiama<VistaImpresa>(`/api/profili/${encodeURIComponent(codice)}/vista-impresa`),
   schedaImpresa: (bandoId: string) => chiama<SchedaRidotta>(`/api/impresa/bandi/${bandoId}`),
   richiediSupporto: (corpo: { impresa_id: number; bando_id: number; messaggio: string; origine: "piattaforma" | "email" }) =>
     chiama<{ id: number; messaggio: string }>("/api/impresa/richieste", { method: "POST", body: JSON.stringify(corpo) }),

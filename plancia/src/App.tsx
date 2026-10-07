@@ -25,7 +25,7 @@ import Segnalazioni from "./pagine/Segnalazioni";
 import Segnala from "./Segnala";
 import Guida from "./pagine/Guida";
 import Account from "./pagine/Account";
-import { Abbonamento, MieImprese, MieiBandi, MieRichieste, ModuloImpresa, SchedaImpresa } from "./pagine/AreaImpresa";
+import { Abbonamento, MieImprese, MieiBandi, MieRichieste, ModuloImpresa, SchedaImpresa, VistaImpresaProfilo } from "./pagine/AreaImpresa";
 import { ContestoUtente, puo } from "./utente";
 import { useTabelleMobili } from "./tabelle";
 
@@ -108,6 +108,7 @@ export default function App() {
             <Route path="/supervisione" element={<Supervisione />} />
             <Route path="/supervisione/:id" element={<Supervisione />} />
             <Route path="/profili/:codice" element={<Profili />} />
+            <Route path="/profili/:codice/impresa" element={<VistaImpresaProfilo />} />
             <Route path="/annunci/:id" element={<DettaglioAnnuncio />} />
             <Route path="/bandi/:id" element={<Bando />} />
             <Route path="/doppioni" element={<Doppioni />} />
