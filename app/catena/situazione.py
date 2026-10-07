@@ -1,5 +1,5 @@
 """La situazione di ogni bando: UNA voce per bando, calcolata in un solo posto (la vista SQL `bandi_situazione`,
-migrazione 028), con il perche' accanto: motivo, chi ha deciso, quando.
+migrazioni 028 e 031), con il perche' accanto: motivo, chi ha deciso, quando.
 
 Per contare o descrivere i bandi (plancia, revisioni, sessioni, agenti) si usa SOLO questa: niente query improvvisate
 su stato, completezza, documentazione o preliminare, che hanno fatto chiamare "senza scheda" bandi fermati come chiusi
@@ -15,7 +15,8 @@ from __future__ import annotations
 import argparse
 import sys
 
-# (chiave, nome per Matteo, spiegazione). L'ordine e' quello della vista: vince la prima condizione vera.
+# (chiave, nome per Matteo, spiegazione), nell'ordine in cui le mostra la plancia. Nella vista vince la prima
+# condizione vera: unito, per_non_profit, fuori_target, poi le altre.
 SITUAZIONI = [
     ("proponibile", "Proponibili",
      "scheda fatta sul bando ufficiale, senza problemi gravi, non chiuso: si propone alle imprese"),
@@ -24,11 +25,15 @@ SITUAZIONI = [
     ("in_disparte", "In disparte",
      "manca il testo ufficiale del bando: scheda fatta su una sintesi, o solo sintesi tra i documenti. Non si propone"),
     ("in_lavorazione", "In lavorazione", "ancora in catena: la fase dice dove (pagina, documenti, preliminare, scheda)"),
+    ("per_non_profit", "Per il non profit",
+     "non per imprese ma per associazioni, enti del Terzo settore, fondazioni, ASD/SSD, cooperative sociali: si "
+     "mappano con priorita' piu' bassa (scheda dopo quelle per le imprese; con l'API solo se SCHEDE_NON_PROFIT=1)"),
     ("chiuso_con_scheda", "Chiusi, con scheda", "scheda fatta, ma il bando ora e' chiuso: resta nello storico"),
     ("scartato_chiuso", "Scartati: chiusi",
      "fermati prima della scheda perche' chiusi o edizione passata (segnali gratuiti, IA o sessione)"),
-    ("scartato_non_per_imprese", "Scartati: non per imprese",
-     "il controllo preliminare o il ricontrollo dei beneficiari dice che non e' per imprese (anche se ha una scheda)"),
+    ("fuori_target", "Fuori target",
+     "non per imprese ne' per il non profit: solo enti pubblici o persone fisiche, oppure non e' un'agevolazione "
+     "(gara, concorso, elenco fornitori). Anche se ha una scheda"),
     ("scartato_altro", "Scartati: altri motivi", "fermati prima della scheda: nessun testo del bando da leggere"),
     ("unito", "Uniti ad altri", "doppioni: i loro annunci sono passati a un altro bando, restano solo come storico"),
 ]
@@ -55,6 +60,16 @@ FASI = {
     "chiuso": ("Chiuso", "nessuno"),
     "edizione_passata": ("Edizione passata", "nessuno"),
     "senza_testo_del_bando": ("Nessun testo del bando", "si riguarda se arrivano documenti"),
+    "scheda_non_profit_in_coda": ("Scheda in coda (non profit)", "dopo le schede per le imprese: in sessione, o con "
+                                  "l'API se SCHEDE_NON_PROFIT=1"),
+    "non_profit_con_scheda": ("Scheda fatta (non profit)", "nel catalogo con il filtro Destinatari: non profit e ai "
+                              "profili di enti del Terzo settore"),
+    "non_profit_scheda_su_sintesi": ("Scheda fatta su una sintesi (non profit)", "si riguarda se arriva il testo ufficiale"),
+    "non_profit_senza_testo": ("Senza testo del bando (non profit)", "si riguarda se arrivano documenti"),
+    "non_profit_chiuso": ("Chiuso (non profit)", "nessuno"),
+    "destinatari_da_determinare": ("Destinatari da determinare", "deciso prima del 07/10 solo come \"non per imprese\": "
+                                   "lo script di derivazione o un nuovo controllo preliminare dira' se e' per il non profit"),
+    "non_agevolazione": ("Non e' un'agevolazione", "nessuno (gara, concorso, elenco fornitori, avviso)"),
     "prima_della_scheda": ("Fermato prima della scheda", "nessuno"),
     "dopo_la_scheda": ("Scheda fatta, poi esclusa", "nessuno: la scheda resta nello storico"),
     "unito": ("Unito a un altro bando", "nessuno"),

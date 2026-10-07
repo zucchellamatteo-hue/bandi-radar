@@ -31,11 +31,34 @@ CASI = [
     ("edizione", {"documentazione": "sintesi", "preliminare": {**PASSA, "edizione_in_corso": "no",
                                                               "compilato_da": "claude-code (sessione del 28/09/2026)"}},
      "scartato_chiuso", "edizione_passata", "sessione"),
+    # Prima del 07/10 solo per_imprese "no", senza destinatari: fuori target finche' non si determinano.
     ("non imprese", {"documentazione": "bando", "preliminare": {**PASSA, "per_imprese": "no", "motivo": "per i Comuni"}},
-     "scartato_non_per_imprese", "prima_della_scheda", "ia"),
+     "fuori_target", "destinatari_da_determinare", "ia"),
+    ("solo comuni", {"documentazione": "bando", "preliminare": {**PASSA, "per_imprese": "no", "destinatari": ["enti_pubblici"],
+                                                               "agevolazione": "si", "motivo": "per i Comuni"}},
+     "fuori_target", "prima_della_scheda", "ia"),
     ("non imprese con scheda", {"completezza": "bando_ufficiale", "stato": "aperto", "dati": {"modello": "claude-opus-5-5"},
-                                "preliminare": {**PASSA, "per_imprese": "no", "motivo": "Ricontrollo 03/10: non per imprese."}},
-     "scartato_non_per_imprese", "dopo_la_scheda", "sessione"),
+                                "preliminare": {**PASSA, "per_imprese": "no", "destinatari": ["persone_fisiche"],
+                                                "motivo": "Ricontrollo 03/10: non per imprese."}},
+     "fuori_target", "dopo_la_scheda", "sessione"),
+    ("gara", {"documentazione": "bando", "preliminare": {**PASSA, "per_imprese": "no", "destinatari": ["non_profit"],
+                                                        "agevolazione": "no", "motivo": "gara d'appalto"}},
+     "fuori_target", "non_agevolazione", "ia"),
+    # Bandi solo per il non profit (07/10): si mappano, con priorita' bassa.
+    ("non profit in coda", {"pagina_stato": "trovata", "allegati_cercati_il": "now", "documentazione": "bando",
+                            "preliminare": {**PASSA, "per_imprese": "no", "destinatari": ["non_profit", "enti_pubblici"],
+                                            "agevolazione": "si", "motivo": "ASD e Comuni"}},
+     "per_non_profit", "scheda_non_profit_in_coda", "ia"),
+    ("non profit con scheda", {"completezza": "bando_ufficiale", "stato": "aperto", "dati": {"modello": "claude-code (sessione)"},
+                               "preliminare": {**PASSA, "per_imprese": "no", "destinatari": ["non_profit"],
+                                               "compilato_da": "claude-code (sessione)"}},
+     "per_non_profit", "non_profit_con_scheda", "sessione"),
+    ("non profit chiuso", {"documentazione": "bando", "preliminare": {**PASSA, "per_imprese": "no", "stato": "chiuso",
+                                                                     "destinatari": ["non_profit"]}},
+     "per_non_profit", "non_profit_chiuso", "ia"),
+    ("non profit da derivare", {"documentazione": "bando", "preliminare": {**PASSA, "per_imprese": "no",
+                                                                          "destinatari": ["da_determinare"]}},
+     "fuori_target", "destinatari_da_determinare", "ia"),
     ("senza testo", {"documentazione": "bando", "preliminare": {**PASSA, "testo_bando": "no"}}, "scartato_altro",
      "senza_testo_del_bando", "ia"),
     ("sintesi", {"pagina_stato": "trovata", "allegati_cercati_il": "now", "documentazione": "sintesi",
@@ -67,7 +90,8 @@ def _inserisci(cur, titolo: str, colonne: dict) -> int:
 
 def test_ogni_situazione_ha_nome_e_ogni_fase_un_nome():
     assert len({k for k, _, _ in situazione.SITUAZIONI}) == len(situazione.SITUAZIONI)
-    sql = (Path(__file__).resolve().parent.parent / "app/db/migrazioni/028_bandi_situazione.sql").read_text(encoding="utf-8")
+    # La vista in vigore e' quella dell'ultima migrazione che la ridefinisce (031, 07/10: non profit e fuori target).
+    sql = (Path(__file__).resolve().parent.parent / "app/db/migrazioni/031_situazione_non_profit.sql").read_text(encoding="utf-8")
     for chiave in situazione.NOMI:
         assert f"'{chiave}'" in sql
     for fase in situazione.FASI:
@@ -103,16 +127,23 @@ def test_una_situazione_per_bando_con_il_perche():
             assert u["situazione"] == "unito" and str(principale) in u["motivo"] and u["deciso_il"] is not None
             assert "scadenza passata" in righe[ids["segnali"]]["motivo"]
             assert righe[ids["segnali"]]["deciso_il"].isoformat().startswith("2026-10-01")
-            assert righe[ids["non imprese"]]["motivo"] == "per i Comuni"
+            assert righe[ids["non imprese"]]["motivo"] == "destinatari da determinare. per i Comuni"
+            assert righe[ids["solo comuni"]]["motivo"] == "destinatari: enti pubblici. per i Comuni"
+            assert righe[ids["non profit in coda"]]["motivo"] == "destinatari: non profit, enti pubblici. ASD e Comuni"
+            assert righe[ids["gara"]]["motivo"].startswith("non e' un'agevolazione")
             assert "prima dell'apertura" in righe[ids["errori"]]["motivo"]
             assert righe[ids["chiuso con scheda"]]["motivo"].startswith("scaduto il 31/01/2026")
             assert righe[ids["non trovata"]]["motivo"] == "nessun link"
             assert righe[ids["da aggiornare"]]["motivo"] == "proroga"
 
             # La stessa definizione del catalogo: proponibile = nel catalogo, proponibile e non chiuso.
-            per_catalogo = {b["id"] for b in catalogo.carica_bandi(conn)
-                            if catalogo.proponibile(b) and b["stato"] != "chiuso" and b["id"] in righe}
+            # I bandi solo non profit sono nel catalogo (filtro Destinatari) ma non tra i proponibili alle imprese.
+            caricati = {b["id"]: b for b in catalogo.carica_bandi(conn) if b["id"] in righe}
+            per_catalogo = {i for i, b in caricati.items()
+                            if catalogo.proponibile(b) and b["stato"] != "chiuso" and not catalogo.solo_non_profit(b)}
             assert per_catalogo == {i for i, r in righe.items() if r["situazione"] == "proponibile"}
+            assert catalogo.solo_non_profit(caricati[ids["non profit con scheda"]])
+            assert ids["non imprese con scheda"] not in caricati       # fuori target: fuori dal catalogo
 
             # Conteggi ed elenchi del modulo (quelli della plancia e del comando per gli agenti).
             c = situazione.conteggi(conn)

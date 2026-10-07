@@ -42,10 +42,7 @@ def main() -> int:
                     print(f"[{bando_id}] preliminare.json non valido")
                     conteggi["json_rotti"] += 1
                     continue
-                pre = {k: pre.get(k) for k in ia.SCHEMA_PRELIMINARE["properties"]}
-                for k, s in ia.SCHEMA_PRELIMINARE["properties"].items():   # valori fuori elenco -> il "non so"
-                    if "enum" in s and pre[k] not in s["enum"]:
-                        pre[k] = "non_noto" if "non_noto" in s["enum"] else "incerto"
+                pre = ia.pulisci_preliminare(pre)   # valori fuori elenco -> il "non so"; per_imprese dai destinatari
                 pre["compilato_da"] = MODELLO
                 pre = ia.firma(pre, "sessione")   # chi e quando, per la situazione del bando (bandi_situazione)
                 if not prova:

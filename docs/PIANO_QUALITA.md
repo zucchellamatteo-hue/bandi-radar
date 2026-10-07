@@ -13,5 +13,6 @@ Misura di riferimento: errori gravi nelle schede proponibili sotto il 3% (oggi c
 | 5 | Ricerca settimanale dei bandi più discussi, con controllo che la scheda sia sul testo ufficiale | Non perdere le misure famose | da fare | Primo giro 06/10: 66 misure, 11 assenti |
 | 6 | Fonti bloccate: certificati incompleti (MIT, ENEA, ISMEA), anti-robot (MUR, MAECI, Camera di Milano) | Copertura nazionale | da fare | |
 | 7 | Misura dell'affidabilità ogni due settimane: 30 schede a caso controllate dall'IA e da Luca, voto nella revisione (`docs/revisioni/`) | Sapere se siamo a 9 | da fare | Prossima revisione 20/10 |
+| 8 | Mappare i bandi non profit con priorità bassa (decisione di Matteo del 07/10) | Bandi per associazioni ed enti (ETS, ASD, fondazioni, cooperative sociali) scartati come "non per imprese": Matteo potrebbe vendere servizi anche a loro | **in corso** | Fatto: destinatari nel controllo preliminare, situazioni "per il non profit" e "fuori target" (migrazione 031), filtro Destinatari nel catalogo, schede non profit solo in sessione finché `SCHEDE_NON_PROFIT=0`. Da fare dopo il rilascio: `deriva_destinatari.py` sui bandi già decisi (stima 145 per il non profit, 371 fuori target), poi le 23 schede non profit in coda, dopo quelle per imprese |
 
 Quando il voto misurato al punto 7 è ≥ 9 per due revisioni di fila, il prodotto è pronto per la vendita.

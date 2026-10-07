@@ -258,8 +258,9 @@ sezioni:
       - **Nascosti per errori**: la scheda ha problemi gravi (vedi Da rivedere); tornano proponibili quando sono sistemati.
       - **In disparte**: manca il testo ufficiale del bando (scheda fatta su una sintesi, o solo sintesi tra i documenti).
       - **In lavorazione**: ancora in catena; sotto il nome vedi le fasi (pagina da cercare, documenti, controllo preliminare in coda, scheda in coda).
+      - **Per il non profit**: non sono per imprese ma per associazioni, enti del Terzo settore, fondazioni, ASD/SSD, cooperative sociali. Si mappano lo stesso, con priorità più bassa: la scheda si fa dopo quelle per le imprese (nelle sessioni di Claude Code; con l'API solo se SCHEDE_NON_PROFIT=1). Sotto il nome le fasi: scheda in coda, scheda fatta, senza testo, chiusi.
       - **Chiusi, con scheda**: la scheda c'è ma il bando è chiuso; resta nello storico.
-      - **Scartati** (chiusi, non per imprese, altri motivi): fermati dal controllo preliminare o da un ricontrollo. Il collegamento "vedi gli scartati e il perché" apre l'elenco.
+      - **Scartati** (chiusi, fuori target, altri motivi): fermati dal controllo preliminare o da un ricontrollo. **Fuori target** vuol dire solo enti pubblici o persone fisiche, oppure non è un'agevolazione (gara, concorso, elenco fornitori); la fase "destinatari da determinare" raccoglie i bandi decisi prima del 07/10 di cui non si sa ancora se sono per il non profit. Il collegamento "vedi gli scartati e il perché" apre l'elenco.
       - **Uniti ad altri**: doppioni, rimandano al bando principale.
 
       Cliccando una riga (o una fase) vedi i bandi con il **perché**, **chi ha deciso** (regole, segnali gratuiti, IA, sessione di Claude Code, Matteo) e **quando**. La stessa situazione compare in cima alla pagina di ogni bando. Dal server gli stessi numeri: cd /srv/bandi-radar && sudo -u deploy docker compose exec app python -m app.catena.situazione (con --situazione scartato_chiuso l'elenco con i motivi, con --bando 4092 un bando solo).
@@ -337,6 +338,7 @@ sezioni:
       - scrivi nel campo di ricerca e premi **Cerca** (cerca nel titolo, nell'ente e nella sintesi); se scrivi il numero di un bando (per esempio 4092 o n. 4092) compare quel bando, qualunque siano gli altri filtri;
       - stato: di base "Aperti e in arrivo"; puoi scegliere solo aperti, solo in arrivo, chiusi, senza date o tutti;
       - scadenza (entro 7, 30 o 90 giorni) e livello dell'ente;
+      - **Destinatari**: di base "imprese"; scegli "non profit" per vedere i bandi aperti ad associazioni ed enti del Terzo settore (anche quelli che ammettono pure le imprese), "tutti" per entrambi. I bandi solo per il non profit hanno l'etichetta **non profit** accanto al titolo e non vengono mai proposti alle imprese;
       - Chi partecipa: regioni (anche più di una), provincia, tipo di soggetto, forma giuridica, dimensione, codice ATECO, bandi riservati o con punti per un requisito;
       - Cosa e come: tipo di agevolazione, tema, spese finanziate, modalità di selezione, regime d'aiuto;
       - **Azzera filtri** toglie tutto.

@@ -70,7 +70,7 @@ export default function Catalogo() {
   const perPagina = 50;
   const ultimaPagina = risposta ? Math.max(1, Math.ceil(risposta.totale / perPagina)) : 1;
   const filtriAttivi = [...parametri.keys()].filter((k) => k !== "pagina").length > 0;
-  const nAltri = [...parametri.keys()].filter((k) => !["pagina", "q", "stato", "scadenza_entro", "livello"].includes(k)).length;
+  const nAltri = [...parametri.keys()].filter((k) => !["pagina", "q", "stato", "scadenza_entro", "livello", "destinatari"].includes(k)).length;
   return (
     <>
       <h1>Catalogo dei bandi</h1>
@@ -79,7 +79,9 @@ export default function Catalogo() {
         Se la scheda non lo dice, o è fatta solo su una sintesi, il bando esce lo stesso con <b>? da verificare</b> e il motivo.
         {risposta && <> Schede: {risposta.con_scheda}, di cui <b>{risposta.proponibili} proponibili</b> (fatte sul bando ufficiale);
           le altre, fatte solo su una sintesi, stanno <b>in disparte</b> e si vedono scegliendolo nei filtri.
-          Bandi ancora senza scheda: {risposta.senza_scheda}.</>}</div>
+          Bandi ancora senza scheda: {risposta.senza_scheda}.
+          {!!risposta.solo_non_profit && <> I bandi solo per associazioni ed enti del Terzo settore ({risposta.solo_non_profit} con scheda)
+            si vedono scegliendo <b>Destinatari: non profit</b>.</>}</>}</div>
 
       <form className="filtri" onSubmit={(e) => { e.preventDefault(); imposta("q", testo); }}>
         <input type="text" placeholder="Cerca nel titolo, nell'ente, nella sintesi o il numero…" value={testo} onChange={(e) => setTesto(e.target.value)} />
@@ -91,6 +93,13 @@ export default function Catalogo() {
         </select>
         {menu("scadenza_entro", "Qualunque scadenza", [["7", "Scade entro 7 giorni"], ["30", "Scade entro 30 giorni"], ["90", "Scade entro 90 giorni"]])}
         {menu("livello", "Tutti gli enti", Object.entries(NOMI_TIPO).filter(([k]) => k !== "contesto"))}
+        {/* Destinatari (07/10): di base i bandi per le imprese; il non profit si sceglie qui. */}
+        <select value={parametri.get("destinatari") || "imprese"} onChange={(e) => imposta("destinatari", e.target.value === "imprese" ? "" : e.target.value)}
+          className={parametri.get("destinatari") ? "filtro-attivo" : ""} title="Destinatari">
+          <option value="imprese">Destinatari: imprese</option>
+          <option value="non_profit">Destinatari: non profit (associazioni, ETS)</option>
+          <option value="tutti">Destinatari: tutti</option>
+        </select>
       </form>
 
       <button type="button" className={`solo-mobile altri-filtri${altriFiltri ? " filtro-attivo" : ""}`} aria-expanded={altriFiltri}
@@ -164,6 +173,7 @@ function Riga({ b }: { b: BandoRiga }) {
     <tr>
       <td className="segno"><SegnoEsito livello={b.esito.livello} /></td>
       <td><Link to={`/bandi/${b.id}`} className="titolo-annuncio">{b.titolo}</Link>
+        {b.solo_non_profit && <> <span className="etichetta-tipo" title="Non per imprese: per associazioni ed enti del Terzo settore">non profit</span></>}
         {b.url && <> <a href={b.url} target="_blank" rel="noreferrer" className="piccolo" title="Pagina ufficiale">ufficiale ↗</a></>}
         {b.sintesi && <div className="riassunto">{b.sintesi}{b.sintesi.length >= 260 ? "…" : ""}</div>}
         {b.esito.da_verificare.length > 0 && (

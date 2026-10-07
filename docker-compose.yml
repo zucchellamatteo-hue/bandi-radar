@@ -129,6 +129,7 @@ services:
       ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}      # vuota = IA spenta (app/schede/ia.py)
       IA_TETTO_MESE_USD: ${IA_TETTO_MESE_USD:-30}
       IA_SCHEDE_API: ${IA_SCHEDE_API:-0}            # 1 = anche le schede con l'API; 0 = schede nelle sessioni (02/10)
+      SCHEDE_NON_PROFIT: ${SCHEDE_NON_PROFIT:-0}    # 1 = con l'API anche le schede dei bandi solo non profit; 0 = solo in sessione (07/10)
       IA_PRELIMINARI_DIRETTI: ${IA_PRELIMINARI_DIRETTI:-0}   # 1 = controlli preliminari con chiamate dirette (doppio prezzo); 0 = a lotti (05/10)
       CATENA_AUTOMATICA: ${CATENA_AUTOMATICA:-1}     # 0 = solo raccolta, senza smistamento/pagine/allegati/IA nel giro orario
       EMAIL_MATTEO: ${EMAIL_MATTEO:-}

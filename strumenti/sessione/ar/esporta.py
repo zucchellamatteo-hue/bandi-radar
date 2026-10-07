@@ -54,7 +54,8 @@ def main() -> int:
             if b["dati"] is not None and in_lavorazione:
                 continue                      # aggiornamento gia' esportato, l'agente ci sta lavorando
             if b["preliminare"] is not None:
-                if not ia.passa_preliminare(b["preliminare"])[0]:
+                # anche i bandi solo non profit (07/10): in sessione si schedano, dopo quelli per imprese (coda.py)
+                if not ia.passa_preliminare(b["preliminare"], non_profit=True)[0]:
                     continue
                 if cartella.exists():
                     import shutil, time
