@@ -33,6 +33,10 @@ SISTEMI: list[Sistema] = [
             "incentivi.gov.it), ognuna nel modo che la sua piattaforma richiede (feed RSS, API, pagine web, browser) e "
             "alla sua frequenza; salva gli annunci nuovi. Una volta a settimana legge per intero la 'scorta' dei bandi "
             "ancora aperti.", "ogni ora", 60, "Raccolta", dati="controlli"),
+    Sistema("backup_esterno", "Backup esterno",
+            "Ogni notte copia il database (30 giorni di storico) e i documenti scaricati su OVH Object Storage a "
+            "Strasburgo, lontano dal server di Gravelines (deploy/backup_esterno.sh). Se l'ultimo esito non e' di "
+            "stanotte, il backup e' fermo.", "ogni notte alle 4:15", 1440, "Server"),
     Sistema("regista", "Regista della lavorazione",
             "Dopo la raccolta porta avanti di un passo ogni annuncio e ogni bando, nell'ordine dei sistemi qui sotto; "
             "riprova quelli fermi e sblocca i blocchi. Il riepilogo dice quanti annunci ha mandato avanti, quanti doppioni "

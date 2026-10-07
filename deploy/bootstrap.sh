@@ -124,6 +124,11 @@ cat > /etc/cron.d/bandi-radar-backup <<'CRON'
 30 3 * * * deploy cd /srv/bandi-radar && docker compose ps --services 2>/dev/null | grep -qx db && docker compose exec -T db pg_dumpall -U postgres | gzip > /var/backups/bandi-radar/db-$(date +\%F).sql.gz; find /var/backups/bandi-radar -name 'db-*.sql.gz' -mtime +14 -delete
 CRON
 chown deploy /var/backups/bandi-radar
+log "Backup esterno notturno su OVH Object Storage (attivo quando nel .env ci sono le chiavi BACKUP_S3_*)"
+cat > /etc/cron.d/bandi-radar-backup-esterno <<'CRON'
+# Dopo il dump delle 3:30: copia database e documenti fuori dal server (deploy/backup_esterno.sh)
+15 4 * * * root grep -q '^BACKUP_S3_CHIAVE=..' /srv/bandi-radar/.env && /srv/bandi-radar/deploy/backup_esterno.sh >> /var/log/bandi-radar-backup-esterno.log 2>&1
+CRON
 
 log "Fatto."
 echo "Repository in $APP_DIR (branch $BRANCH). Ogni 5 minuti il server scarica le novita' da GitHub."
