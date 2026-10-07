@@ -61,6 +61,7 @@ Il sito risponde su http://localhost:8080 in HTTP semplice. Per fermare e cancel
 - **Verifica**: sul server, `journalctl -u bandi-radar-deploy.service -n 20` mostra gli ultimi aggiornamenti; `cd /srv/bandi-radar && sudo -u deploy docker compose ps` lo stato dei servizi.
 - **Segreti** (chiave API Anthropic, Resend, password del database): stanno solo sul server, nel file `/srv/bandi-radar/.env`, che non è nel repository. Il file lo compila Matteo seguendo `deploy/env.example` (vedi "Primo avvio dei servizi").
 - **Backup**: OVH fa il backup del disco ogni giorno; in più, ogni notte alle 3:30 il server salva un dump del database in `/var/backups/bandi-radar`, conservato 14 giorni.
+- **Backup esterno** (dal 07/10/2026): alle 4:15 `deploy/backup_esterno.sh` copia il dump su OVH Object Storage a Strasburgo (spazio `yummy-millikan`, 30 giorni di storico) e i documenti scaricati (solo i file nuovi). Le chiavi sono nel `.env` (`BACKUP_S3_*`). L'esito si vede in Supervisione (sistema "Backup esterno"). `deploy/prova_ripristino.sh` scarica l'ultima copia e la ricarica in un Postgres temporaneo: va ripetuta almeno una volta al mese (prima prova riuscita il 07/10: 4.549 bandi, 11.199 annunci, 323 fonti).
 
 ## Sessioni di Claude Code direttamente sul server (opzionale, consigliato)
 
