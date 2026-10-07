@@ -15,7 +15,9 @@ FASI_BANDO = [
     ("in_disparte_nessuno", "In disparte: nessun documento leggibile", "nessuno: non si propone"),
     ("preliminare_in_attesa", "Controllo preliminare in attesa (IA)", "prossimo lotto della Batch API"),
     ("fermato_chiuso", "Fermato: chiuso", "nessuno"),
-    ("fermato_non_imprese", "Fermato: non per imprese", "nessuno"),
+    ("fermato_non_imprese", "Fermato: fuori target (non per imprese ne' per il non profit)", "nessuno"),
+    ("non_profit", "Per il non profit (priorita' bassa)", "scheda dopo quelle per le imprese: in sessione, o con l'API "
+                   "se SCHEDE_NON_PROFIT=1"),
     ("fermato_edizione", "Fermato: edizione vecchia", "nessuno"),
     ("fermato_senza_testo", "Fermato: senza testo del bando", "si riguarda se arrivano documenti"),
     ("scheda_in_attesa", "Scheda in attesa", "prossima sessione di Claude Code (o l'API, se IA_SCHEDE_API=1)"),
@@ -25,6 +27,9 @@ FASI_BANDO = [
 ]
 
 FASE_BANDO_SQL = """CASE
+    WHEN b.preliminare->>'per_imprese' = 'no' AND coalesce(b.preliminare->>'agevolazione', '') <> 'no'
+         AND jsonb_typeof(b.preliminare->'destinatari') = 'array' AND b.preliminare->'destinatari' ? 'non_profit'
+         THEN 'non_profit'
     WHEN b.completezza IS NOT NULL AND b.preliminare->>'per_imprese' = 'no' THEN 'fermato_non_imprese'
     WHEN b.completezza = 'bando_ufficiale' AND b.da_aggiornare IS NOT NULL THEN 'scheda_da_aggiornare'
     WHEN b.completezza = 'bando_ufficiale' THEN 'proponibile'

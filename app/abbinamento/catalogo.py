@@ -23,7 +23,8 @@ COLONNE = """b.id, b.titolo, b.ente, b.gestore, b.territorio, b.url, b.stato, b.
     b.eta_impresa_max_mesi, b.requisiti_speciali_obbligatori, b.requisiti_speciali_premiali, b.dipendenti_min,
     b.dipendenti_max, b.fatturato_min, b.fatturato_max, b.codici_ateco, b.codici_ateco_esclusi, b.ateco_versione,
     b.regime_aiuto, b.qualita, b.a_chi_si_rivolge, b.scheda_il,
-    b.preliminare->>'per_imprese' AS per_imprese"""
+    b.preliminare->>'per_imprese' AS per_imprese, b.preliminare->'destinatari' AS destinatari,
+    b.preliminare->>'agevolazione' AS agevolazione"""
 
 # Stato "aperti": aperti e in arrivo (quello che serve a un cliente). Senza date lo stato non e' noto.
 STATI_FILTRO = {"aperti": ("aperto", "in_arrivo"), "aperto": ("aperto",), "in_arrivo": ("in_arrivo",),
@@ -48,12 +49,33 @@ def carica_bandi(conn) -> list[dict]:
                    coalesce((SELECT array_agg(DISTINCT f.territorio) FROM annunci a JOIN fonti f ON f.id = a.fonte_id
                              WHERE a.bando_id = b.id), '{{}}') AS territori_fonti
             FROM bandi b WHERE b.completezza IS NOT NULL AND b.unito_a IS NULL   -- i doppioni uniti restano solo come storico
-              -- non per imprese (preliminare o ricontrollo del 03/10): fuori dal catalogo, la scheda resta nello storico
-              AND coalesce(b.preliminare->>'per_imprese', '') <> 'no'""", {"cataloghi": list(CATALOGHI)})
+              -- non per imprese (preliminare o ricontrollo del 03/10): fuori dal catalogo, la scheda resta nello storico.
+              -- Dal 07/10 restano quelli solo per il non profit (come ia.solo_non_profit): li vedono il filtro
+              -- "Destinatari" e i profili degli enti del Terzo settore, mai le imprese.
+              AND (coalesce(b.preliminare->>'per_imprese', '') <> 'no'
+                   OR (coalesce(b.preliminare->>'agevolazione', '') <> 'no'
+                       AND jsonb_typeof(b.preliminare->'destinatari') = 'array'
+                       AND b.preliminare->'destinatari' ? 'non_profit'))""", {"cataloghi": list(CATALOGHI)})
         bandi = [dict(r) for r in cur.fetchall()]
     for b in bandi:
         b["regioni_fonti"] = [t for t in b["territori_fonti"] if t in REGIONI]
     return bandi
+
+
+def solo_non_profit(b: dict) -> bool:
+    """Bando non per imprese ma per associazioni, ETS, fondazioni, ASD/SSD... (07/10/2026, app/schede/ia.py)."""
+    return b.get("per_imprese") == "no" and b.get("agevolazione") != "no" and "non_profit" in (b.get("destinatari") or [])
+
+
+def aperto_al_non_profit(b: dict) -> bool:
+    """Il non profit puo' partecipare: lo dice il controllo preliminare o la scheda (enti del Terzo settore ammessi)."""
+    return "non_profit" in (b.get("destinatari") or []) or "ente_terzo_settore" in (b.get("soggetti_ammessi") or [])
+
+
+# Filtro "Destinatari" del catalogo (07/10/2026): imprese (di base) = i bandi aperti alle imprese; non_profit = quelli
+# aperti ad associazioni ed enti del Terzo settore (anche se ammettono le imprese); tutti = entrambi.
+DESTINATARI_FILTRO = ("imprese", "non_profit", "tutti")
+SOGGETTO_NON_PROFIT = "ente_terzo_settore"
 
 
 @dataclass
@@ -78,6 +100,7 @@ class Filtri:
     # Bandi "in disparte" (01/10, Matteo): scheda non fatta sul bando ufficiale, quindi non proponibile ai clienti.
     # "no" = solo i proponibili (di base), "anche" = tutti, "solo" = solo quelli in disparte.
     in_disparte: str = "no"
+    destinatari: str = "imprese"
 
     def profilo(self) -> dict:
         """I filtri su chi puo' partecipare diventano un profilo parziale."""
@@ -115,6 +138,11 @@ def _passa_campi(b: dict, f: Filtri, oggi: date) -> bool:
     if f.modalita and b["modalita_selezione"] != f.modalita:
         return False
     if f.in_disparte != "anche" and proponibile(b) != (f.in_disparte == "no"):
+        return False
+    if f.destinatari == "non_profit" and not aperto_al_non_profit(b):
+        return False
+    # Di base le imprese: i bandi solo non profit escono solo scegliendoli, o cercando per un ente del Terzo settore.
+    if f.destinatari not in ("non_profit", "tutti") and solo_non_profit(b) and f.soggetto != SOGGETTO_NON_PROFIT:
         return False
     return True
 
@@ -171,9 +199,12 @@ def abbina(bandi: list[dict], profilo: dict, oggi: date | None = None, anche_esc
     bandi non proponibili (scheda senza bando ufficiale) invece di quelli proponibili."""
     oggi = oggi or date.today()
     risultato = []
+    per_non_profit = profilo.get("soggetto") == SOGGETTO_NON_PROFIT
     for b in bandi:
         if b["stato"] == "chiuso" or proponibile(b) == in_disparte:
             continue
+        if solo_non_profit(b) and not per_non_profit:
+            continue     # i bandi solo non profit (07/10) li vedono solo i profili degli enti del Terzo settore
         esito = regole.valuta(b, profilo, oggi)
         if anche_esclusi or esito.livello != regole.ESCLUSO:
             risultato.append((b, esito))
@@ -188,4 +219,5 @@ CAMPI_RIGA = ("id", "titolo", "ente", "territorio", "url", "stato", "data_apertu
 
 
 def riga(b: dict, esito: regole.Esito) -> dict:
-    return {**{k: b.get(k) for k in CAMPI_RIGA}, "sintesi": (b.get("sintesi") or "")[:260], "esito": esito.come_dict()}
+    return {**{k: b.get(k) for k in CAMPI_RIGA}, "sintesi": (b.get("sintesi") or "")[:260], "esito": esito.come_dict(),
+            "solo_non_profit": solo_non_profit(b)}

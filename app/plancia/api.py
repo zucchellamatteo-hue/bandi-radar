@@ -362,11 +362,13 @@ def catalogo_bandi(
     ateco: str | None = None, requisito: str | None = None, tipo_agevolazione: str | None = None,
     tema: str | None = None, categoria_spesa: str | None = None, modalita: str | None = None,
     regime: str | None = None, in_disparte: Literal["no", "anche", "solo"] = "no",
+    destinatari: Literal["imprese", "non_profit", "tutti"] = "imprese",
     pagina: int = Query(1, ge=1), per_pagina: int = Query(50, ge=1, le=200),
 ) -> dict:
     """Catalogo dei bandi con scheda. I filtri su chi puo' partecipare seguono i tre stati dei vincoli: passano i bandi
     che ammettono il valore e quelli senza vincolo; quelli con il vincolo "non noto" (o scheda fatta su una sintesi)
-    escono con esito "da_verificare" e il motivo, dopo i compatibili. Gli esclusi non escono."""
+    escono con esito "da_verificare" e il motivo, dopo i compatibili. Gli esclusi non escono. "destinatari" (07/10):
+    di base i bandi per le imprese; "non_profit" quelli aperti ad associazioni ed enti del Terzo settore; "tutti"."""
     from app.abbinamento import catalogo
 
     filtri = catalogo.Filtri(
@@ -374,7 +376,7 @@ def catalogo_bandi(
         provincia=provincia.upper() if provincia else None, comune=comune, soggetto=soggetto,
         forma_giuridica=forma_giuridica, dimensione=dimensione, ateco=ateco, requisito=requisito,
         tipo_agevolazione=tipo_agevolazione, tema=tema, categoria_spesa=categoria_spesa, modalita=modalita,
-        regime=regime, in_disparte=in_disparte)
+        regime=regime, in_disparte=in_disparte, destinatari=destinatari)
     with connetti() as conn:
         bandi = catalogo.carica_bandi(conn)
         with conn.cursor() as cur:
@@ -387,7 +389,8 @@ def catalogo_bandi(
     inizio = (pagina - 1) * per_pagina
     return {"totale": len(trovati), "conteggi": conteggi, "pagina": pagina, "per_pagina": per_pagina,
             "con_scheda": len(bandi), "senza_scheda": senza_scheda,
-            "proponibili": sum(1 for b in bandi if catalogo.proponibile(b)),
+            "proponibili": sum(1 for b in bandi if catalogo.proponibile(b) and not catalogo.solo_non_profit(b)),
+            "solo_non_profit": sum(1 for b in bandi if catalogo.solo_non_profit(b)),
             "bandi": [catalogo.riga(b, e) for b, e in trovati[inizio:inizio + per_pagina]]}
 
 

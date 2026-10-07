@@ -219,3 +219,31 @@ def test_bandi_non_per_imprese():
     assert valuta(sociali, {**SRL_MILANO, "requisiti": {"impresa_sociale": False}}, OGGI).livello == ESCLUSO
     assert valuta(sociali, {**SRL_MILANO, "requisiti": {"impresa_sociale": True}}, OGGI).livello == COMPATIBILE
     assert valuta(sociali, {**SRL_MILANO, "requisiti": {}}, OGGI).livello == DA_VERIFICARE
+
+
+def test_bandi_non_profit_nel_catalogo_e_negli_abbinamenti():
+    """07/10: i bandi solo non profit si mappano. Nel catalogo escono con il filtro Destinatari (di base: imprese) e
+    nell'abbinamento li vedono solo i profili degli enti del Terzo settore, mai le imprese."""
+    np_ = {"per_imprese": "no", "destinatari": ["non_profit"], "agevolazione": "si"}
+    bandi = [
+        {**bando(id=1, soggetti_ammessi=["impresa"]), "per_imprese": "si", "destinatari": ["imprese"]},
+        {**bando(id=2, soggetti_ammessi=["ente_terzo_settore"]), **np_},
+        {**bando(id=3, soggetti_ammessi=["impresa", "ente_terzo_settore"]), "per_imprese": "si"},   # anche ETS
+    ]
+    for b in bandi:
+        b.update(livelli=["regione"], requisiti_speciali_obbligatori=[], requisiti_speciali_premiali=[],
+                 tipi_agevolazione=[], temi=[], categorie_spesa=[], regime_aiuto=[], modalita_selezione=None)
+
+    def ids(f):
+        return [b["id"] for b, _ in catalogo.filtra(bandi, f, OGGI)]
+
+    assert ids(catalogo.Filtri()) == [1, 3]                                  # di base le imprese
+    assert ids(catalogo.Filtri(destinatari="non_profit")) == [2, 3]
+    assert ids(catalogo.Filtri(destinatari="tutti")) == [1, 2, 3]
+    assert 2 in ids(catalogo.Filtri(soggetto="ente_terzo_settore"))           # chi cerca per un ETS li vede
+    assert catalogo.riga(bandi[1], regole.valuta(bandi[1], {}, OGGI, parziale=True))["solo_non_profit"] is True
+    ets = {**SRL_MILANO, "soggetto": "ente_terzo_settore", "forma_giuridica": None}
+    assert 2 not in [b["id"] for b, _ in catalogo.abbina(bandi, SRL_MILANO, OGGI, anche_esclusi=True)]
+    assert 2 in [b["id"] for b, e in catalogo.abbina(bandi, ets, OGGI) if e.livello != ESCLUSO]
+    # una gara (agevolazione "no") non e' "solo non profit"
+    assert not catalogo.solo_non_profit({**np_, "agevolazione": "no"})

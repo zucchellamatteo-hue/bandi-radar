@@ -214,11 +214,12 @@ export interface BandoRiga {
   percentuale: number | null; fondo_perduto_massimo: number | null; finanziamento_massimo: number | null;
   dotazione: number | null; modalita_selezione: string | null; completezza: string | null; livelli: string[];
   temi: string[] | null; qualita: number | null; sintesi: string; esito: EsitoRegole;
+  solo_non_profit?: boolean;   // per associazioni ed enti del Terzo settore, non per imprese (07/10)
 }
 
 export interface RispostaCatalogo {
   totale: number; conteggi: { compatibile: number; da_verificare: number }; pagina: number; per_pagina: number;
-  con_scheda: number; senza_scheda: number; proponibili: number; bandi: BandoRiga[];
+  con_scheda: number; senza_scheda: number; proponibili: number; solo_non_profit?: number; bandi: BandoRiga[];
 }
 
 // Valori ammessi della scheda (app/schede/campi.py) e territori.

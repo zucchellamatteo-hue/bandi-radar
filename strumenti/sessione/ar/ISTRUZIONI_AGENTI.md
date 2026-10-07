@@ -14,7 +14,11 @@ Niente WebFetch, niente ricerche in rete: le informazioni devono venire solo dai
    prenota per te). Se non stampa nulla, la coda e' vuota: fermati.
 3. Per ogni id: leggi `fascicoli/<id>/preliminare.md` e scrivi `fascicoli/<id>/preliminare.json` con **solo** questo
    oggetto JSON (nessun testo prima o dopo):
-   `{"per_imprese": "si|no|incerto", "edizione_in_corso": "si|no|incerto", "stato": "aperto|in_arrivo|chiuso|non_noto", "testo_bando": "si|solo_sintesi|no", "motivo": "una frase, massimo 25 parole"}`
+   `{"destinatari": ["imprese", "non_profit", "enti_pubblici", "persone_fisiche", "altri"], "agevolazione": "si|no", "edizione_in_corso": "si|no|incerto", "stato": "aperto|in_arrivo|chiuso|non_noto", "testo_bando": "si|solo_sintesi|no", "motivo": "una frase, massimo 25 parole"}`
+   In `destinatari` metti solo le categorie che possono presentare domanda (spiegate nelle istruzioni del
+   preliminare), lista vuota `[]` se il testo non basta. Dal 07/10 non si scrive piu' `per_imprese`: lo ricava il
+   programma. I bandi solo per il non profit (associazioni, ETS, ASD...) vanno avanti alla scheda, dopo quelli per
+   imprese.
 4. **Seconda lettura.** Se hai scritto `"stato": "chiuso"` e nella cartella esiste il file `aperto`, leggilo: sono
    dati raccolti dalla fonte che dicono il contrario (per esempio una scadenza futura). Rileggi con attenzione date
    di apertura e chiusura, proroghe e avvisi di chiusura anticipata; rispondi "chiuso" solo se il testo dice

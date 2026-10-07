@@ -134,7 +134,10 @@ function SituazioneBandi() {
   if (!dati) return null;
   const scegli = (s: string, f?: string) => setParametri(new URLSearchParams(f ? { situazione: s, sfase: f } : { situazione: s }));
   const voce = dati.situazioni.find((v) => v.situazione === scelta);
-  const scartati = dati.situazioni.filter((v) => v.situazione.startsWith("scartato_"));
+  // Scartati: chiusi, senza testo e fuori target (solo enti pubblici o persone fisiche). I bandi per il non profit no:
+  // si mappano anche loro, con priorita' piu' bassa (07/10).
+  const scartato = (s: string) => s.startsWith("scartato_") || s === "fuori_target";
+  const scartati = dati.situazioni.filter((v) => scartato(v.situazione));
   return (
     <div className="riquadro">
       <div className="etichetta">Situazione dei bandi: {dati.totale.toLocaleString("it-IT")}{" "}
@@ -155,7 +158,7 @@ function SituazioneBandi() {
         <>
           <h2>{voce.nome}{fase ? ` / ${voce.fasi.find((f) => f.fase === fase)?.nome || fase}` : ""}{" "}
             <span className="piccolo">(al massimo 200, i più recenti)</span>
-            {voce.situazione.startsWith("scartato_") && <span className="piccolo">
+            {scartato(voce.situazione) && <span className="piccolo">
               {scartati.filter((v) => v.situazione !== scelta).map((v) => (
                 <span key={v.situazione}> · <a href="#" onClick={(e) => { e.preventDefault(); scegli(v.situazione); }}>{v.nome}</a></span>))}</span>}
             {" "}<a href="#" className="piccolo" onClick={(e) => { e.preventDefault(); setParametri(new URLSearchParams()); }}>chiudi</a></h2>

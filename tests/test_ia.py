@@ -128,6 +128,53 @@ def test_preliminare():
     assert ia.passa_preliminare({**ok, "testo_bando": "solo_sintesi"})[0]   # si fa, ma la scheda sara' "solo_sintesi"
 
 
+def test_destinatari_e_per_imprese_ricavato():
+    """07/10: il preliminare dice i destinatari; per_imprese si ricava da loro (resta per catalogo, email, strumenti)."""
+    d = ia.per_imprese_da_destinatari
+    assert d(["imprese", "non_profit"]) == "si"                    # cooperative sociali: imprese e non profit
+    assert d(["non_profit"]) == "no" and d(["enti_pubblici", "persone_fisiche"]) == "no"
+    assert d([]) == "incerto" and d(["altri"]) == "incerto" and d(["non_profit", "altri"]) == "incerto"
+    assert d(["imprese"], "no") == "no"                              # gara o concorso: come prima, non per imprese
+    assert d(["da_determinare"]) is None and d(None) is None
+    p = ia.completa_destinatari({"destinatari": ["non_profit", "non_profit", "inventato"], "per_imprese": "si"})
+    assert p["destinatari"] == ["non_profit"] and p["per_imprese"] == "no"
+    vecchio = {"per_imprese": "no", "motivo": "solo Comuni"}
+    assert ia.completa_destinatari(vecchio) == vecchio                # preliminari di prima: invariati
+    assert ia.completa_destinatari({"destinatari": ["da_determinare"], "per_imprese": "no"})["per_imprese"] == "no"
+    firmato = ia.firma({"destinatari": ["imprese"], "agevolazione": "si", "motivo": ""}, "ia")
+    assert firmato["per_imprese"] == "si" and firmato["deciso_da"] == "ia"
+    assert set(ia.SCHEMA_PRELIMINARE["properties"]) >= {"destinatari", "agevolazione"}
+    assert "per_imprese" not in ia.SCHEMA_PRELIMINARE["properties"]
+
+
+def test_preliminare_non_profit(monkeypatch):
+    """I bandi solo non profit si schedano (priorita' bassa), con l'API solo se SCHEDE_NON_PROFIT=1."""
+    ok = {"edizione_in_corso": "si", "stato": "aperto", "testo_bando": "si", "motivo": "ASD"}
+    np_ = ia.completa_destinatari({**ok, "destinatari": ["non_profit"], "agevolazione": "si"})
+    assert ia.solo_non_profit(np_)
+    assert not ia.passa_preliminare(np_)[0]                          # di base niente scheda con l'API
+    assert ia.passa_preliminare(np_, non_profit=True) == (True, "ok")
+    assert not ia.passa_preliminare({**np_, "stato": "chiuso"}, non_profit=True)[0]
+    pubblici = ia.completa_destinatari({**ok, "destinatari": ["enti_pubblici"], "agevolazione": "si"})
+    assert not ia.solo_non_profit(pubblici) and not ia.passa_preliminare(pubblici, non_profit=True)[0]
+    gara = ia.completa_destinatari({**ok, "destinatari": ["non_profit"], "agevolazione": "no"})
+    assert not ia.solo_non_profit(gara) and not ia.passa_preliminare(gara, non_profit=True)[0]
+    monkeypatch.delenv("SCHEDE_NON_PROFIT", raising=False)
+    assert not ia.schede_non_profit_con_api()
+    monkeypatch.setenv("SCHEDE_NON_PROFIT", "1")
+    assert ia.schede_non_profit_con_api()
+
+
+def test_preliminare_scritto_in_sessione():
+    nuovo = ia.pulisci_preliminare({"destinatari": ["non_profit", "boh"], "agevolazione": "forse", "edizione_in_corso": "si",
+                                    "stato": "aperto", "testo_bando": "si", "motivo": "ASD", "extra": 1})
+    assert nuovo["destinatari"] == ["non_profit"] and nuovo["per_imprese"] == "no"
+    assert "agevolazione" not in nuovo and "extra" not in nuovo
+    vecchio = ia.pulisci_preliminare({"per_imprese": "no", "edizione_in_corso": "x", "stato": "aperto", "testo_bando": "si",
+                                      "motivo": "solo Comuni"})
+    assert vecchio["per_imprese"] == "no" and "destinatari" not in vecchio and vecchio["edizione_in_corso"] == "incerto"
+
+
 SCHEDA_FIERE = {
     "titolo": "Fiere internazionali in Lombardia - secondo sportello", "ente": "Regione Lombardia",
     "gestore": "Unioncamere Lombardia", "url": "https://www.bandi.regione.lombardia.it/x", "territorio": "Lombardia",
@@ -332,6 +379,46 @@ def test_batch_preliminare_seconda_lettura_e_scheda(monkeypatch):
                 cur.execute("DELETE FROM annunci WHERE fonte_id = 'prova_batch'")
                 cur.execute("DELETE FROM bandi WHERE id IN (%s, %s)", (bando, sintesi))
                 cur.execute("DELETE FROM fonti WHERE id = 'prova_batch'")
+            conn.commit()
+
+
+@pytest.mark.skipif(not __import__("os").environ.get("PGHOST"), reason="serve un database Postgres di prova (PGHOST)")
+def test_batch_schede_non_profit_dopo_e_solo_con_la_variabile(monkeypatch):
+    """07/10: i bandi solo non profit vanno in coda dopo quelli per imprese e con l'API solo se SCHEDE_NON_PROFIT=1."""
+    from app.db.connessione import connetti
+    from app.db.migrazioni import applica_migrazioni
+
+    finto = FintoBatch()
+    monkeypatch.setenv("ANTHROPIC_API_KEY", "prova")
+    monkeypatch.delenv("SCHEDE_NON_PROFIT", raising=False)
+    monkeypatch.setattr(ia, "nuovo_client", lambda: finto)
+    base = {"agevolazione": "si", "edizione_in_corso": "si", "stato": "aperto", "testo_bando": "si", "motivo": "x"}
+    with connetti() as conn:
+        applica_migrazioni(conn)
+        ids = []
+        with conn.cursor() as cur:
+            for titolo, dest in (("prova non profit", ["non_profit"]), ("prova imprese", ["imprese"])):
+                cur.execute("INSERT INTO bandi (titolo, url, pagina_stato, allegati_cercati_il, documentazione, preliminare) "
+                            "VALUES (%s, 'https://esempio.it/np', 'trovata', now(), 'bando', %s) RETURNING id",
+                            (titolo, json.dumps(ia.firma({**base, "destinatari": dest}, "ia"))))
+                ids.append(cur.fetchone()["id"])
+        conn.commit()
+        non_profit, imprese = ids
+        try:
+            ia.cmd_schede_batch(conn)
+            miei = [r["custom_id"] for r in finto.lotti[-1] if r["custom_id"] in (f"sch-{non_profit}", f"sch-{imprese}")]
+            assert miei == [f"sch-{imprese}"]                      # di base il non profit non va all'API
+            with conn.cursor() as cur:
+                cur.execute("DELETE FROM chiamate_ia WHERE riferimento IN (%s, %s)", (f"sch-{non_profit}", f"sch-{imprese}"))
+            conn.commit()
+            monkeypatch.setenv("SCHEDE_NON_PROFIT", "1")
+            ia.cmd_schede_batch(conn)
+            miei = [r["custom_id"] for r in finto.lotti[-1] if r["custom_id"] in (f"sch-{non_profit}", f"sch-{imprese}")]
+            assert miei == [f"sch-{imprese}", f"sch-{non_profit}"]  # prima le imprese, anche se il non profit e' piu' vecchio
+        finally:
+            with conn.cursor() as cur:
+                cur.execute("DELETE FROM chiamate_ia WHERE riferimento IN (%s, %s)", (f"sch-{non_profit}", f"sch-{imprese}"))
+                cur.execute("DELETE FROM bandi WHERE id IN (%s, %s)", (non_profit, imprese))
             conn.commit()
 
 

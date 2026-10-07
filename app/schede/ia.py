@@ -17,6 +17,9 @@ prova del 25/09/2026 (docs/ricerche/2026-09-25_prova_ia.md) sono gia' qui:
     del bando? Solo se passa si chiede la scheda. Prima, gratis, i segnali di stato (app/schede/segnali.py): un
     bando con soli segnali di chiusura non va all'IA; un bando che l'IA dice chiuso ma che ha una scadenza futura
     nei dati della fonte si rilegge una seconda volta, con piu' ragionamento;
+  - dal 07/10 il preliminare dice anche i destinatari (imprese, non profit, enti pubblici, persone fisiche, altri) e
+    per_imprese si ricava da loro; i bandi solo non profit si schedano dopo quelli per imprese e con l'API solo se
+    SCHEDE_NON_PROFIT=1 (di base si fanno in sessione);
   - un tetto di spesa mensile anche nel programma (IA_TETTO_MESE_USD, di base 30 $), oltre a quello della Console;
   - le decisioni di Matteo non si sovrascrivono mai.
 
@@ -124,16 +127,23 @@ SCHEMA_SMISTAMENTO = {
     "required": ["risposte"], "additionalProperties": False,
 }
 
+# Chi puo' presentare domanda (07/10/2026, decisione di Matteo: i bandi per associazioni ed enti senza scopo di lucro
+# si mappano comunque, con priorita' piu' bassa delle imprese). `per_imprese` non lo dice piu' il modello: si ricava da
+# qui (per_imprese_da_destinatari) e resta nel preliminare perche' catalogo, email e strumenti lo leggono.
+DESTINATARI = ("imprese", "non_profit", "enti_pubblici", "persone_fisiche", "altri")
+DA_DETERMINARE = "da_determinare"     # bandi decisi prima del 07/10 senza dati sufficienti (script di derivazione)
+
 SCHEMA_PRELIMINARE = {
     "type": "object",
     "properties": {
-        "per_imprese": {"type": "string", "enum": ["si", "no", "incerto"]},
+        "destinatari": _elenco(DESTINATARI),
+        "agevolazione": {"type": "string", "enum": ["si", "no"]},     # no: gara, concorso, elenco fornitori, avviso
         "edizione_in_corso": {"type": "string", "enum": ["si", "no", "incerto"]},
         "stato": {"type": "string", "enum": ["aperto", "in_arrivo", "chiuso", "non_noto"]},
         "testo_bando": {"type": "string", "enum": ["si", "solo_sintesi", "no"]},
         "motivo": {"type": "string"},
     },
-    "required": ["per_imprese", "edizione_in_corso", "stato", "testo_bando", "motivo"], "additionalProperties": False,
+    "required": ["destinatari", "agevolazione", "edizione_in_corso", "stato", "testo_bando", "motivo"], "additionalProperties": False,
 }
 
 _TESTO, _NUMERO = {"type": "string"}, {"type": "number"}
@@ -262,10 +272,79 @@ def lotti(elementi: list, dimensione: int = DIMENSIONE_LOTTO) -> list[list]:
     return [elementi[i:i + dimensione] for i in range(0, len(elementi), dimensione)]
 
 
-def passa_preliminare(p: dict) -> tuple[bool, str]:
-    """Si chiede la scheda al modello solo se il controllo preliminare non ha trovato un motivo per fermarsi."""
+def per_imprese_da_destinatari(destinatari, agevolazione: str | None = None) -> str | None:
+    """`per_imprese` ricavato dai destinatari: "si" se tra loro ci sono le imprese, "no" se ci sono solo non profit,
+    enti pubblici o persone fisiche, "incerto" se la lista e' vuota o c'e' "altri" senza imprese (enti di formazione,
+    confidi... quando non si capisce se sono imprese). "no" anche se non e' un'agevolazione (gara, concorso, elenco
+    fornitori), come prima. None se mancano o sono "da_determinare": vale quello che c'era."""
+    if not isinstance(destinatari, list) or DA_DETERMINARE in destinatari:
+        return None
+    if agevolazione == "no":
+        return "no"
+    validi = [d for d in destinatari if d in DESTINATARI]
+    if "imprese" in validi:
+        return "si"
+    if not validi or "altri" in validi:
+        return "incerto"
+    return "no"
+
+
+def completa_destinatari(p: dict) -> dict:
+    """Pulisce i destinatari (solo valori ammessi, senza ripetizioni) e rende `per_imprese` coerente con loro.
+    Un preliminare vecchio (solo per_imprese, senza destinatari) resta com'e'."""
+    p = dict(p)
+    d = p.get("destinatari")
+    if isinstance(d, list):
+        ammessi = (*DESTINATARI, DA_DETERMINARE)
+        p["destinatari"] = list(dict.fromkeys(x for x in d if x in ammessi))
+        derivato = per_imprese_da_destinatari(p["destinatari"], p.get("agevolazione"))
+        if derivato:
+            p["per_imprese"] = derivato
+    elif "destinatari" in p:
+        p.pop("destinatari")
+    return p
+
+
+def pulisci_preliminare(grezzo: dict) -> dict:
+    """Un preliminare scritto in sessione (preliminare.json): solo le chiavi dello schema, valori fuori elenco -> il
+    "non so" (incerto, non_noto, lista vuota), per_imprese ricavato dai destinatari. Un file nel formato di prima del
+    07/10 (per_imprese invece dei destinatari) si accetta ancora: per_imprese resta quello scritto."""
+    pre: dict = {}
+    for k, s in SCHEMA_PRELIMINARE["properties"].items():
+        v = grezzo.get(k)
+        if s.get("type") == "array":
+            if isinstance(v, list):
+                pre[k] = v
+            continue
+        if "enum" in s and v not in s["enum"]:
+            if k == "agevolazione":
+                continue          # non detto: si tratta come agevolazione (il controllo di prima non lo chiedeva)
+            v = "non_noto" if "non_noto" in s["enum"] else "incerto"
+        pre[k] = v
+    if "destinatari" not in pre:
+        pre["per_imprese"] = grezzo.get("per_imprese") if grezzo.get("per_imprese") in ("si", "no", "incerto") else "incerto"
+    return completa_destinatari(pre)
+
+
+def solo_non_profit(p: dict | None) -> bool:
+    """Bando non per imprese ma aperto ad associazioni, ETS, fondazioni, ASD/SSD...: si mappa con priorita' bassa."""
+    return bool(p) and p.get("per_imprese") == "no" and p.get("agevolazione") != "no" \
+        and "non_profit" in (p.get("destinatari") or [])
+
+
+def schede_non_profit_con_api() -> bool:
+    """Le schede dei bandi solo non profit con l'API solo con SCHEDE_NON_PROFIT=1 (07/10: budget). In sessione si'."""
+    return os.environ.get("SCHEDE_NON_PROFIT", "0") == "1"
+
+
+def passa_preliminare(p: dict, non_profit: bool = False) -> tuple[bool, str]:
+    """Si chiede la scheda solo se il controllo preliminare non ha trovato un motivo per fermarsi. I bandi solo non
+    profit passano solo con `non_profit` (sessione, o API con SCHEDE_NON_PROFIT=1): di base no, per non spendere."""
     if p.get("per_imprese") == "no":
-        return False, "non e' per imprese"
+        if not solo_non_profit(p):
+            return False, "non e' per imprese (ne' per il non profit)"
+        if not non_profit:
+            return False, "solo non profit: scheda in sessione, o con l'API se SCHEDE_NON_PROFIT=1"
     if p.get("edizione_in_corso") == "no":
         return False, "edizione passata (archivio)"
     if p.get("stato") == "chiuso":
@@ -798,7 +877,9 @@ def bandi_da_schedare(conn, bando_id: int | None, limite: int) -> list[dict]:
         if bando_id:
             cur.execute("SELECT * FROM bandi WHERE id = %s", (bando_id,))
         else:
-            # Solo i bandi con il testo ufficiale tra i documenti (app/schede/documentazione.py, 01/10).
+            # Solo i bandi con il testo ufficiale tra i documenti (app/schede/documentazione.py, 01/10). Qui il
+            # preliminare non c'e' ancora, quindi i destinatari non si conoscono: l'ordine imprese prima / non profit
+            # dopo lo fanno cmd_schede_batch e gli strumenti di sessione; i solo non profit li ferma passa_preliminare.
             cur.execute(
                 """SELECT * FROM bandi WHERE pagina_stato = 'trovata' AND allegati_cercati_il IS NOT NULL
                    AND documentazione = 'bando' AND dati IS NULL AND preliminare IS NULL ORDER BY id LIMIT %s""", (limite,))
@@ -961,6 +1042,7 @@ def salva_preliminare_batch(conn, bando_id: int, dati: dict, seconda: bool, segn
 
 def firma(preliminare: dict, da: str) -> dict:
     """Chi ha deciso il controllo preliminare e quando: la situazione del bando (vista bandi_situazione) li mostra."""
+    preliminare = completa_destinatari(preliminare)   # per_imprese coerente con i destinatari (07/10)
     return {**preliminare, "deciso_da": preliminare.get("deciso_da") or da,
             "deciso_il": datetime.now(timezone.utc).isoformat(timespec="seconds")}
 
@@ -1040,7 +1122,7 @@ def cmd_schede(conn, bando_id: int | None, limite: int) -> int:
         pre = preliminare_diretto(conn, client, pr, b, segnali, registra)
         if pre is None:
             continue
-        ok, perche = passa_preliminare(pre)
+        ok, perche = passa_preliminare(completa_destinatari(pre), schede_non_profit_con_api())
         if not ok:
             print(f"[{b['id']}] niente scheda: {perche} ({pre.get('motivo')})")
             continue
@@ -1138,13 +1220,17 @@ def cmd_schede_batch(conn, limite_pre: int = LIMITE_PRELIMINARI_BATCH, limite_sc
                        AND ((dati IS NULL AND (preliminare IS NULL OR preliminare->>'seconda_lettura' = 'da_fare'
                              OR preliminare->>'deciso_da' IS DISTINCT FROM 'segnali'))
                             OR (dati IS NOT NULL AND da_aggiornare IS NOT NULL))
-                       ORDER BY id""")
+                       -- prima i bandi per imprese, poi quelli solo non profit (07/10: priorita' bassa)
+                       ORDER BY coalesce(preliminare->>'per_imprese', '') = 'no', id""")
         bandi = [dict(r) for r in cur.fetchall()]
     richieste: list[dict] = []
     n_pre = n_sch = 0
+    non_profit = schede_non_profit_con_api()    # di base 0: le schede solo non profit si fanno in sessione
     for b in bandi:
         pre = b["preliminare"]
         if b["dati"] is not None:
+            if pre and pre.get("per_imprese") == "no" and not (non_profit and solo_non_profit(pre)):
+                continue    # fuori target, o solo non profit con SCHEDE_NON_PROFIT=0: si aggiorna in sessione (07/10)
             # Scheda da aggiornare (regista: documenti nuovi, proroga, rettifica, chiusura). Una richiesta per versione.
             cid = f"sch-{b['id']}-v{b['versione']}"
             if cid not in gia and n_sch < limite_schede:
@@ -1166,7 +1252,7 @@ def cmd_schede_batch(conn, limite_pre: int = LIMITE_PRELIMINARI_BATCH, limite_sc
                 MODELLO_PRELIMINARE, pr.istr_pre, pr.preliminare(conn, b) + seconda_lettura(segnali), SCHEMA_PRELIMINARE,
                 16000, EFFORT["seconda_lettura"])})
             n_pre += 1
-        elif pre and passa_preliminare(pre)[0] and not pre.get("seconda_lettura") == "da_fare" \
+        elif pre and passa_preliminare(pre, non_profit)[0] and not pre.get("seconda_lettura") == "da_fare" \
                 and f"sch-{b['id']}" not in gia and n_sch < limite_schede:
             messaggio, _ = pr.scheda(conn, b)
             richieste.append({"custom_id": f"sch-{b['id']}", "params": parametri(
