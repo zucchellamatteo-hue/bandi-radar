@@ -290,7 +290,14 @@ def llms_txt(conn) -> str:
               f"- [Presentazione del servizio]({seo.assoluto('/')}): come funziona, prezzo, domande frequenti",
               f"- [Condizioni del supporto alla domanda]({seo.assoluto('/condizioni-supporto')}): compensi a successo",
               f"- [Termini e condizioni]({seo.assoluto('/termini')})",
-              f"- [Informativa privacy]({seo.assoluto('/privacy')})", "",
-              "## Optional", "",
+              f"- [Informativa privacy]({seo.assoluto('/privacy')})", ""]
+    try:                                                    # articoli del blog pubblicati (app/pubblico/blog.py)
+        from app.pubblico import blog
+
+        righe += blog.righe_llms(conn)
+    except Exception:  # noqa: BLE001 - /llms.txt non deve cadere per il blog
+        log.exception("articoli del blog non letti per /llms.txt")
+        conn.rollback()
+    righe += ["## Optional", "",
               f"- [Registrazione e prova gratuita]({seo.assoluto('/registrati')})", ""]
     return "\n".join(righe)

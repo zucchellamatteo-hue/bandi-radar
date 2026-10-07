@@ -27,6 +27,9 @@ PAGINE_PUBBLICHE = [("/", "daily", "1.0"), ("/condizioni-supporto", "monthly", "
                     ("/privacy", "yearly", "0.2"), ("/cookie", "yearly", "0.1"), ("/note-legali", "yearly", "0.1")]
 # File per i programmi (non vanno nella sitemap ma devono essere leggibili).
 FILE_PUBBLICI = ["/llms.txt", "/sitemap.xml", "/favicon.svg", "/immagini/"]
+# Sezioni pubbliche con pagine figlie (07/10): il blog. Nella sitemap vanno solo gli articoli pubblicati
+# (app/pubblico/blog.voci_sitemap); bozze e articoli archiviati rispondono 404/410 e non vi compaiono mai.
+SEZIONI_PUBBLICHE = ["/blog"]
 
 # Programmi dei motori di ricerca e di risposta IA a cui diciamo esplicitamente di si' (stesse regole di tutti).
 # OAI-SearchBot / ChatGPT-User: ricerca di ChatGPT; GPTBot: addestramento OpenAI; ClaudeBot, Claude-SearchBot,
@@ -52,18 +55,23 @@ def robots_txt(pubblica: bool) -> str:
     righe += [f"User-agent: {p}" for p in PROGRAMMI_IA]
     righe += ["Allow: /$", "Allow: /?"]                     # la home, anche con i parametri degli annunci
     righe += [f"Allow: {p}$" for p, _, _ in PAGINE_PUBBLICHE if p != "/"]
-    righe += [f"Allow: {p}" for p in FILE_PUBBLICI]
+    righe += [f"Allow: {p}" for p in FILE_PUBBLICI + SEZIONI_PUBBLICHE]
     righe += ["Disallow: /", "", f"Sitemap: {assoluto('/sitemap.xml')}", ""]
     return "\n".join(righe)
 
 
-def sitemap_xml(ultimo_aggiornamento: date | None = None) -> str:
+def sitemap_xml(ultimo_aggiornamento: date | None = None, articoli: list[tuple[str, str]] | None = None) -> str:
+    """`articoli`: (percorso, data dell'ultima modifica) delle pagine del blog pubblicate (app/pubblico/blog.py)."""
     oggi = (ultimo_aggiornamento or date.today()).isoformat()
     voci = []
     for percorso, freq, prio in PAGINE_PUBBLICHE:
         lastmod = f"<lastmod>{oggi}</lastmod>" if percorso == "/" else ""
         voci.append(f"<url><loc>{escape(assoluto(percorso))}</loc>{lastmod}<changefreq>{freq}</changefreq>"
                     f"<priority>{prio}</priority></url>")
+    for percorso, modificato in articoli or []:
+        freq, prio = ("weekly", "0.6") if percorso == "/blog" else ("monthly", "0.7")
+        voci.append(f"<url><loc>{escape(assoluto(percorso))}</loc><lastmod>{escape(modificato)}</lastmod>"
+                    f"<changefreq>{freq}</changefreq><priority>{prio}</priority></url>")
     return ('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
             + "\n".join(voci) + "\n</urlset>\n")
 
@@ -109,6 +117,6 @@ def servizio(descrizione: str, prezzo_mese: float, giorni_prova: int) -> dict:
                                               "valueAddedTaxIncluded": False}}}
 
 
-def domande_frequenti(faq: list[tuple[str, str]]) -> dict:
-    return {"@type": "FAQPage", "@id": assoluto("/#domande"),
+def domande_frequenti(faq: list[tuple[str, str]], percorso: str = "/") -> dict:
+    return {"@type": "FAQPage", "@id": assoluto(percorso + "#domande"),
             "mainEntity": [{"@type": "Question", "name": d, "acceptedAnswer": {"@type": "Answer", "text": r}} for d, r in faq]}
