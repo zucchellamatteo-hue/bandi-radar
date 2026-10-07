@@ -294,7 +294,8 @@ def _testo_semplice(testo: str) -> str:
 
 
 def _blocchi(md: str) -> list[tuple[str, object]]:
-    """Il Markdown diviso in blocchi: ("h2"|"h3"|"p", testo) o ("ul"|"ol", [voci])."""
+    """Il Markdown diviso in blocchi: ("h2"|"h3"|"p", testo), ("ul"|"ol", [voci]) o ("table", [righe di celle]).
+    La prima riga di una tabella e' l'intestazione (07/10)."""
     blocchi: list[tuple[str, object]] = []
     paragrafo: list[str] = []
 
@@ -307,6 +308,15 @@ def _blocchi(md: str) -> list[tuple[str, object]]:
         m_ol = re.match(r"^\d+[.)]\s+(.*)$", s)
         if not s:
             chiudi()
+        elif s.startswith("|") and s.endswith("|"):     # riga di tabella: | a | b |
+            chiudi()
+            celle = [c.strip() for c in s.strip("|").split("|")]
+            if all(re.fullmatch(r":?-{2,}:?", c) for c in celle if c):
+                continue                                  # riga di separazione sotto l'intestazione
+            if blocchi and blocchi[-1][0] == "table":
+                blocchi[-1][1].append(celle)
+            else:
+                blocchi.append(("table", [celle]))
         elif s.startswith("### "):
             chiudi()
             blocchi.append(("h3", s[4:].strip()))
@@ -341,6 +351,11 @@ def in_html(md: str) -> str:
             parti.append(f'<h2 id="{crea_slug(contenuto)}">{_in_linea(contenuto)}</h2>')
         elif tipo in ("h3", "p"):
             parti.append(f"<{tipo}>{_in_linea(contenuto)}</{tipo}>")
+        elif tipo == "table":
+            testa, *corpo = contenuto
+            th = "".join(f"<th>{_in_linea(c)}</th>" for c in testa)
+            righe = "".join("<tr>" + "".join(f"<td>{_in_linea(c)}</td>" for c in r) + "</tr>" for r in corpo)
+            parti.append(f'<div class="tabella"><table><thead><tr>{th}</tr></thead><tbody>{righe}</tbody></table></div>')
         else:
             voci = "".join(f"<li>{_in_linea(v)}</li>" for v in contenuto)
             parti.append(f"<{tipo}>{voci}</{tipo}>")
@@ -357,7 +372,8 @@ def domande_frequenti(md: str) -> list[tuple[str, str]]:
         elif dentro and tipo == "h3":
             faq.append((_testo_semplice(contenuto), []))
         elif dentro and faq:
-            testo = contenuto if isinstance(contenuto, str) else "; ".join(contenuto)
+            testo = contenuto if isinstance(contenuto, str) else "; ".join(
+                " | ".join(c) if isinstance(c, list) else c for c in contenuto)
             faq[-1][1].append(_testo_semplice(testo))
     return [(d, " ".join(r)) for d, r in faq if r]
 

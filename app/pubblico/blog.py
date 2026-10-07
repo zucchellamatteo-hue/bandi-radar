@@ -16,6 +16,10 @@ from app.pubblico import seo
 PAROLE_AL_MINUTO = 200
 
 STILE_BLOG = """<style>
+.tabella{overflow-x:auto;margin:1em 0}
+.tabella table{border-collapse:collapse;width:100%;font-size:.95em}
+.tabella th,.tabella td{border:1px solid #d5e1f0;padding:.45em .6em;text-align:left;vertical-align:top}
+.tabella th{background:#eef4fb}
 .blog-testa{padding-bottom:1rem}.blog-testa h1{font-size:2.2rem}
 .briciole{font-size:.9rem;color:var(--grigio);margin:0 0 .4rem}.briciole a{color:var(--grigio)}
 .dati-articolo{color:var(--grigio);font-size:.92rem;margin:.2rem 0 1rem}

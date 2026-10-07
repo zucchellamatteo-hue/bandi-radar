@@ -223,3 +223,11 @@ def test_bozze_preparate_dalle_sessioni_sono_valide():
             assert "|---" not in a["corpo"] and "<table" not in a["corpo"], v["slug"]    # niente tabelle (non supportate)
             slug.append(v["slug"])
     assert len(slug) == len(set(slug))
+
+
+def test_tabelle_nel_markdown():
+    from app.articoli import in_html
+
+    html = in_html("Testo\n\n| Voce | Valore |\n|---|---:|\n| Spesa | 200.000 € |\n| **Credito** | 27.000 € |\n\nFine")
+    assert "<table>" in html and "<th>Voce</th>" in html and "<td><strong>Credito</strong></td>" in html
+    assert "---" not in html
