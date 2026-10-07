@@ -38,6 +38,75 @@ def test_testo_dell_email(monkeypatch):
     assert "impresa=3&amp;supporto=1" in corpo
 
 
+def _stato(stato="aperto", scadenza=None, chiuso_il=None, ricontrollo=None):
+    return {"stato": stato, "scadenza": scadenza, "ora_scadenza": None, "chiuso_il": chiuso_il, "ricontrollo": ricontrollo}
+
+
+def test_eventi_dei_bandi_gia_segnalati():
+    tipi = lambda prima, ora, doc=(), avvisata=False: [e["tipo"] for e in ei.eventi_bando(prima, ora, list(doc), OGGI, avvisata)]  # noqa: E731
+    s = OGGI + timedelta(days=40)
+    assert tipi(_stato(scadenza=s), _stato(scadenza=s)) == []                                     # niente di nuovo
+    assert tipi(_stato(scadenza=s), _stato(scadenza=s + timedelta(days=30))) == ["prorogato"]
+    assert tipi(_stato(scadenza=s), _stato(scadenza=s - timedelta(days=20))) == ["scadenza_cambiata"]
+    assert tipi(_stato(), _stato(scadenza=s)) == ["scadenza_cambiata"]                            # prima senza data
+    # chiusura in anticipo, fondi esauriti, scadenza naturale (non e' una notizia), gia' chiuso prima
+    assert tipi(_stato(scadenza=s), _stato("chiuso", s, chiuso_il=OGGI)) == ["chiuso"]
+    assert tipi(_stato(scadenza=s), _stato("chiuso", s, ricontrollo={"stato": "esaurito"})) == ["esaurito"]
+    assert tipi(_stato(scadenza=OGGI - timedelta(days=1)), _stato("chiuso", OGGI - timedelta(days=1))) == []
+    assert tipi(_stato("chiuso", s, chiuso_il=OGGI), _stato("chiuso", s, chiuso_il=OGGI)) == []
+    assert tipi(_stato("chiuso", s), _stato("aperto", s + timedelta(days=10))) == ["riaperto"]
+    # chiuso gia' prima della segnalazione (scoperto da un nuovo controllo): si dice cosi', non "chiuso in anticipo il"
+    [e] = ei.eventi_bando(_stato(scadenza=s), _stato("chiuso", s, chiuso_il=date(2025, 10, 13)), [], OGGI, False, OGGI)
+    assert e["tipo"] == "chiuso" and "risulta chiuso dal 13/10/2025" in e["testo"]
+    # in scadenza entro 14 giorni, una volta sola
+    vicina = OGGI + timedelta(days=9)
+    assert tipi(_stato(scadenza=vicina), _stato(scadenza=vicina)) == ["in_scadenza"]
+    assert tipi(_stato(scadenza=vicina), _stato(scadenza=vicina), avvisata=True) == []
+    # nuovi documenti ufficiali
+    doc = [{"nome": "Domande frequenti", "categoria": "faq"}, {"nome": "Allegato 2", "categoria": "modulistica"}]
+    [e] = ei.eventi_bando(_stato(scadenza=s), _stato(scadenza=s), doc, OGGI, False)
+    assert e["tipo"] == "documenti" and "FAQ «Domande frequenti»" in e["testo"] and "modulistica «Allegato 2»" in e["testo"]
+    testo = ei.eventi_bando(_stato(scadenza=s), _stato(scadenza=s + timedelta(days=30)), [], OGGI, False)[0]["testo"]
+    assert testo == f"Scadenza prorogata: dal {s:%d/%m/%Y} al {s + timedelta(days=30):%d/%m/%Y}."
+
+
+def test_email_completa_e_ordine_delle_sezioni(monkeypatch):
+    monkeypatch.setenv("SITO_URL", "https://prova.it")
+    voci = [{"id": 8, "titolo": "Bando nuovo", "ente": "Camera di commercio", "scadenza": None, "sintesi": None,
+             "motivo": "nuovo", "livello": regole.COMPATIBILE, "da_verificare": []}]
+    aggiornamenti = ei.ordina_aggiornamenti([
+        {"id": 5, "titolo": "Bando chiuso", "ente": "Regione", "scadenza": OGGI + timedelta(days=30),
+         "eventi": [{"tipo": "chiuso", "testo": "Chiuso in anticipo: non si possono più presentare domande."}]},
+        {"id": 4, "titolo": "Bando che scade", "ente": None, "scadenza": OGGI + timedelta(days=5),
+         "eventi": [{"tipo": "in_scadenza", "testo": "Scade tra 5 giorni."}]}])
+    assert [a["id"] for a in aggiornamenti] == [4, 5]                       # prima le scadenze vicine
+    news = [{"id": 1, "titolo": "Novità", "testo": "Il pulsante Segnala.", "link": "/impresa/misure"}]
+    misure = [{"id": "fondo_garanzia_pmi", "nome": "Fondo di Garanzia", "sintesi": "Garanzia dello Stato."}]
+    imp = {"id": 3, "nome": "Rossi srl", "codice_disiscrizione": "abc"}
+    oggetto, testo, corpo = ei.componi(imp, voci, aggiornamenti, news, misure, totale=12)
+    assert oggetto == "1 bando adatto a Rossi srl e 2 novità sui bandi già segnalati"
+    posizioni = [testo.index(t) for t in ("Buongiorno Rossi srl", "NOVITÀ SUI BANDI CHE TI ABBIAMO SEGNALATO",
+                                          "NUOVI BANDI ADATTI", "AGEVOLAZIONI NAZIONALI", "NEWS", "sono 12",
+                                          "Richiedi supporto per la domanda»", imp_avvertenza())]
+    assert posizioni == sorted(posizioni)
+    assert "novità su 2 bandi che ti abbiamo già segnalato e un nuovo bando adatto" in testo
+    assert "https://prova.it/impresa/misure\n" in testo and "https://prova.it/impresa/misure/fondo_garanzia_pmi" in testo
+    assert "https://prova.it/impresa?impresa=3" in testo
+    # il bando chiuso non ha il link per chiedere supporto, quello in scadenza si'
+    assert "/impresa/bandi/4?impresa=3&supporto=1" in testo and "/impresa/bandi/5?impresa=3&supporto=1" not in testo
+    assert "<h3" in corpo and "Scopri di più" in corpo and "Vai ai tuoi bandi" in corpo
+
+    # sezioni vuote: non compaiono
+    oggetto, testo, corpo = ei.componi(imp, [], aggiornamenti[:1])
+    assert oggetto == "1 novità sui bandi già segnalati a Rossi srl"
+    for assente in ("NUOVI BANDI ADATTI", "AGEVOLAZIONI NAZIONALI", "NEWS", "In tutto, oggi"):
+        assert assente not in testo
+
+
+def imp_avvertenza():
+    return imp.AVVERTENZA
+
+
 # --- con il database ---
 
 @pytest.fixture
@@ -198,3 +267,43 @@ def test_disiscrizione_e_rotte_admin(ambiente):
     assert client.get("/api/email-imprese", auth=admin).status_code == 200
     assert client.post("/api/email-imprese/prepara", auth=admin).status_code == 200
     assert client.post("/api/email-imprese/0/invia", auth=admin).status_code == 404
+
+
+@db
+def test_novita_sui_bandi_segnalati_e_news(ambiente):
+    """Dopo la prima email: proroga e nuove FAQ arrivano la settimana dopo, una volta sola; il bando gia' annunciato
+    "in scadenza" non torna; la news pubblicata va una volta sola."""
+    from app import news
+    from app.db.connessione import connetti
+
+    _, i, compatibile, da_verificare = _impresa_con_bandi()
+    with connetti() as conn:
+        n = news.crea(conn, {"titolo": "Novità di prova", "testo": "Due righe.", "stato": "pubblicata",
+                             "da": OGGI, "a": OGGI + timedelta(days=30)}, "prova")
+        conn.commit()
+        ei.prepara(conn, OGGI)
+        [e] = _email_di(conn, i["id"])
+        assert n["id"] in e["contenuti"]["news"] and "Novità di prova" in e["testo"]
+        assert {b["bando_id"]: b["scadenza"] for b in e["bandi"]}[da_verificare] == (OGGI + timedelta(days=10)).isoformat()
+        ei.invia(conn, e["id"], "Matteo")
+
+        nuova_scadenza = OGGI + timedelta(days=90)
+        with conn.cursor() as cur:
+            cur.execute("UPDATE bandi SET scadenza = %s WHERE id = %s", (nuova_scadenza, compatibile))
+            cur.execute("""INSERT INTO allegati (bando_id, url, nome, tipo, categoria)
+                           VALUES (%s, 'https://esempio.it/faq.pdf', 'FAQ aggiornate', 'pdf', 'faq')""", (compatibile,))
+        conn.commit()
+
+        ei.prepara(conn, OGGI + timedelta(days=7))
+        [seconda] = [x for x in _email_di(conn, i["id"]) if x["settimana"] == "2026-W42"]
+        aggiornati = {a["bando_id"]: a["eventi"] for a in seconda["contenuti"]["aggiornamenti"]}
+        assert aggiornati[compatibile] == ["prorogato", "documenti"]
+        assert da_verificare not in aggiornati          # gia' annunciato in scadenza nella prima email
+        assert f"al {nuova_scadenza:%d/%m/%Y}" in seconda["testo"] and "FAQ «FAQ aggiornate»" in seconda["testo"]
+        assert n["id"] not in seconda["contenuti"]["news"] and "Novità di prova" not in seconda["testo"]
+        assert seconda["testo"].index("NOVITÀ SUI BANDI") < seconda["testo"].index("Richiedi supporto per la domanda»")
+        ei.invia(conn, seconda["id"], "Matteo")
+
+        ei.prepara(conn, OGGI + timedelta(days=14))     # la proroga e le FAQ non si ripetono
+        terze = [x for x in _email_di(conn, i["id"]) if x["settimana"] == "2026-W43"]
+        assert all(a["bando_id"] != compatibile for x in terze for a in x["contenuti"]["aggiornamenti"])

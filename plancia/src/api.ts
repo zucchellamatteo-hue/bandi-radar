@@ -104,6 +104,11 @@ export interface Passo {
   creato_il: string; aggiornato_il: string; aggiornato_da: string | null;
 }
 
+export interface News {
+  id: number; titolo: string; testo: string; link: string | null; da: string; a: string | null; pubblico: string;
+  stato: string; creata_da?: string | null; creata_il?: string; aggiornata_il?: string; aggiornata_da?: string | null;
+}
+
 export const NOMI_RUOLO_UTENTE: Record<RuoloUtente, string> = { admin: "amministratore", revisore: "revisore", impresa: "impresa" };
 
 export type Colore = "verde" | "giallo" | "rosso" | "pausa";
@@ -378,6 +383,11 @@ export const api = {
   creaPasso: (corpo: Partial<Passo>) => chiama<Passo>("/api/passi", { method: "POST", body: JSON.stringify(corpo) }),
   modificaPasso: (id: number, corpo: Partial<Passo>) => chiama<Passo>(`/api/passi/${id}`, { method: "PATCH", body: JSON.stringify(corpo) }),
   cancellaPasso: (id: number) => chiama(`/api/passi/${id}`, { method: "DELETE" }),
+  news: () => chiama<{ news: News[]; pubblici: Record<string, string>; stati: Record<string, string> }>("/api/news"),
+  newsAttive: () => chiama<News[]>("/api/news/attive"),
+  creaNews: (corpo: Partial<News>) => chiama<News>("/api/news", { method: "POST", body: JSON.stringify(corpo) }),
+  modificaNews: (id: number, corpo: Partial<News>) => chiama<News>(`/api/news/${id}`, { method: "PATCH", body: JSON.stringify(corpo) }),
+  cancellaNews: (id: number) => chiama(`/api/news/${id}`, { method: "DELETE" }),
   guida: () => chiama<{ id: string; titolo: string; testo: string; per: string[] }[]>("/api/guida"),
   cancellaAccount: (password: string) => chiama("/api/account/cancella", { method: "POST", body: JSON.stringify({ password }) }),
   utenti: () => chiama<Utente[]>("/api/utenti"),

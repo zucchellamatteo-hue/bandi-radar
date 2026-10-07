@@ -39,7 +39,7 @@ sezioni:
 
       - Impresa: **I miei bandi**, **Agevolazioni fiscali**, **Le mie imprese**, **Richieste di supporto**, **Abbonamento**.
       - Revisore con i permessi di base: **Catalogo**, **Misure**, **I miei giudizi** (e **Imprese** se ha quel permesso).
-      - Chi ha il permesso "lavoro": **Fonti**, **Catalogo**, **Misure**, **Profili**, **Annunci**, **Lavorazione**, **Supervisione**, **Doppioni**, **Novità**, **Feedback**, **Segnalazioni**; con il permesso "imprese" anche **Imprese** e **Campagne**.
+      - Chi ha il permesso "lavoro": **Fonti**, **Catalogo**, **Misure**, **Profili**, **Annunci**, **Lavorazione**, **Supervisione**, **Doppioni**, **Novità**, **Feedback**, **Segnalazioni**, **News**; con il permesso "imprese" anche **Imprese** e **Campagne**.
       - Amministratore: tutto, più **Utenti** e **Prossimi passi**.
 
       La voce **Guida** apre questa pagina: mostra solo le parti che ti riguardano.
@@ -169,6 +169,23 @@ sezioni:
       Puoi cambiare tipo, priorità, stato e responsabile direttamente dai menu nella riga, quando vuoi. Con **Modifica** cambi titolo e dettaglio (poi **Salva**); con **✗** cancelli la voce. I passi fatti spariscono dall'elenco: per rivederli spunta **mostra anche i fatti**. Chi ha il permesso "lavoro" vede l'elenco ma non può modificarlo.
 
       Le sessioni di Claude Code leggono questo elenco come la lista dei lavori da portare in produzione: partono dalle voci "da fare" con la priorità più alta, le aggiornano mentre lavorano e le segnano come fatte quando la modifica è unita in main. Più la descrizione è chiara, meno domande ti faranno.
+
+  - id: news
+    titolo: "News"
+    per: [lavoro]
+    testo: |
+      La pagina **News** serve a scrivere brevi notizie per chi segue i bandi: novità di Bandi Radar o notizie utili (una proroga importante, una misura nuova, un cambio di regole). Si scrivono qui, senza codice. Le vedono tutti quelli che hanno il permesso "lavoro"; scriverle, pubblicarle e cancellarle richiede il permesso "modifiche" (l'amministratore può sempre).
+
+      Per scriverne una:
+      1. Riempi **titolo** e **testo** (poche righe semplici, al massimo 1.200 caratteri).
+      2. Se vuoi, metti un **link**: un indirizzo che inizia con https:// oppure una pagina di Bandi Radar che inizia con / (per esempio /impresa/misure, la pagina delle agevolazioni fiscali).
+      3. Scegli il periodo: **dal** (da quando può partire) e **al** (fino a quando; vuoto = finché non la togli).
+      4. Scegli il pubblico: **solo imprese** oppure **imprese e collaboratori**.
+      5. Premi **Salva come bozza**.
+
+      Una bozza non va da nessuna parte. Quando è pronta premi **Pubblica**: da quel momento, nel suo periodo, entra nell'email del lunedì alle imprese (ogni impresa la riceve una volta sola) e compare in cima alla pagina **Guida** (alle imprese; ai collaboratori solo se il pubblico è "imprese e collaboratori"). Con **Rimetti in bozza** la fermi, con **Modifica** la correggi, con **✗** la cancelli.
+
+      Le sessioni di Claude possono preparare news in bozza: le trovi qui da rileggere e pubblicare.
 
   - id: segnala
     titolo: "Il pulsante Segnala"
@@ -365,7 +382,7 @@ sezioni:
       2. Scrivi le note: le vedi solo tu.
       3. Premi **Salva**.
 
-      Email settimanali da approvare. Il lunedì il sistema prepara un'email per ogni impresa con i bandi nuovi o in scadenza (mai due volte lo stesso bando). In questa fase partono solo dopo la tua approvazione.
+      Email settimanali da approvare. Il lunedì il sistema prepara un'email per ogni impresa: poche righe di introduzione, le novità sui bandi già segnalati (in scadenza entro 14 giorni, prorogati, chiusi in anticipo o esauriti, riaperti, nuovi documenti ufficiali), i bandi nuovi adatti (mai due volte lo stesso), le agevolazioni nazionali aggiunte da poco (al massimo 3), le news pubblicate (pagina **News**), il numero dei bandi adatti in tutto e l'invito a chiedere supporto. Ogni novità, misura o news arriva una volta sola. Se non ci sono né bandi nuovi né novità sui bandi già segnalati, l'email non viene preparata. In questa fase partono solo dopo la tua approvazione; se ne scarti una, le sue novità tornano la settimana dopo.
       - **Prepara adesso**: prepara subito le email della settimana, senza aspettare lunedì.
       - Clicca l'oggetto per vedere l'anteprima dell'email.
       - **Approva e invia**: l'email parte.
@@ -513,9 +530,14 @@ sezioni:
     titolo: "L'email settimanale"
     per: [impresa]
     testo: |
-      Ogni lunedì ricevi un'email per ciascuna tua impresa con i bandi nuovi o in scadenza adatti a lei. Lo stesso bando non ti arriva mai due volte.
+      Ogni lunedì ricevi un'email per ciascuna tua impresa, solo se c'è qualcosa di nuovo. Dentro trovi, nell'ordine:
+      - le **novità sui bandi che ti abbiamo già segnalato**: scadenza vicina (entro 14 giorni), proroga o cambio di scadenza, chiusura anticipata o fondi esauriti, riapertura, nuovi documenti ufficiali (FAQ, modulistica, decreti);
+      - i **nuovi bandi adatti** alla tua impresa: lo stesso bando non ti arriva mai due volte;
+      - le **agevolazioni nazionali** aggiunte da poco che possono interessarti;
+      - le **news** di Bandi Radar;
+      - quanti bandi adatti ci sono in tutto, con il link alla tua area.
 
-      Dall'email puoi aprire la scheda di un bando o chiedere subito il supporto per la domanda.
+      Dall'email puoi aprire la scheda di un bando o chiedere subito il supporto per la domanda. L'email è automatica: non rispondere, nessuno legge quella casella. Le news in corso le trovi anche in cima alla pagina **Guida**.
 
       Per non riceverla più:
       - apri il link in fondo all'email: si disattiva subito;
