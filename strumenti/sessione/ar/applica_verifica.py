@@ -5,7 +5,7 @@ import sys
 from app.db.connessione import connetti
 
 COLONNE = {"tipo_agevolazione", "contributo_massimo", "percentuale", "percentuale_fondo_perduto", "soggetti_ammessi",
-           "forma_incentivo", "scadenza", "data_apertura", "requisiti", "dotazione", "codici_ateco"}
+           "forma_incentivo", "territorio_regioni", "scadenza", "data_apertura", "requisiti", "dotazione", "codici_ateco"}
 JSONB = {"forma_incentivo"}
 cartella = sys.argv[1]
 with connetti() as conn, conn.cursor() as cur:
