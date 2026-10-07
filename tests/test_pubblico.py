@@ -187,3 +187,142 @@ def test_llms_txt(monkeypatch):
     assert r.text.startswith("# Bandi Radar\n\n> ")
     assert "## Domande frequenti" in r.text and "(https://bandinqiaro.it/condizioni-supporto)" in r.text
     assert "Siti pubblici controllati" in r.text
+    assert "Bandi aperti da visionare" in r.text and "con la scheda pronta" not in r.text
+
+
+# --- Bandi in vetrina (08/10/2026) ---------------------------------------------------------------------------------
+
+def test_riga_dell_agevolazione():
+    from app.pubblico import vetrina
+
+    assert vetrina.riga_bando({"tipi_agevolazione": ["fondo_perduto"], "contributo_massimo": 20000,
+                               "percentuale": 50}) == "Fondo perduto 50%, fino a 20.000 €"
+    assert vetrina.riga_bando({"tipi_agevolazione": ["voucher", "fondo_perduto"], "fondo_perduto_massimo": 20000,
+                               "percentuale_fondo_perduto": 42.5}) == "Voucher a fondo perduto 42,5%, fino a 20.000 €"
+    assert vetrina.riga_bando({"tipi_agevolazione": ["finanziamento_agevolato"], "finanziamento_massimo": 300000,
+                               "percentuale": 75}) == "Finanziamento agevolato, fino a 300.000 €"
+    assert vetrina.riga_bando({}) == "Contributo"
+
+
+def test_file_della_vetrina_valido():
+    """Ogni voce del file ha un bando o una misura (che esiste), date e priorita' scritte bene."""
+    from datetime import date
+
+    import yaml
+
+    from app import misure
+    from app.pubblico import vetrina
+
+    dati = yaml.safe_load(vetrina.FILE.read_text(encoding="utf-8"))
+    assert isinstance(dati.get("vetrina"), list)
+    for v in dati["vetrina"]:
+        assert bool(v.get("bando")) != bool(v.get("misura")), v
+        if v.get("bando"):
+            assert isinstance(v["bando"], int), v
+        else:
+            assert misure.una(v["misura"]), v
+        for k in ("da", "a"):
+            assert v.get(k) is None or isinstance(v[k], date), v
+        assert v.get("priorita") is None or isinstance(v["priorita"], int), v
+        assert set(v) <= {"bando", "misura", "priorita", "da", "a", "motivo", "titolo", "ente", "riga"}, v
+
+
+def test_voci_del_file_per_data_e_priorita(tmp_path):
+    from datetime import date
+
+    from app.pubblico import vetrina
+
+    f = tmp_path / "vetrina.yaml"
+    f.write_text("vetrina:\n  - {bando: 3, priorita: 2}\n  - {bando: 1, priorita: 1, da: 2026-10-01, a: 2026-10-31}\n"
+                 "  - {bando: 2, a: 2026-09-30}\n  - {misura: x}\n  - {nota: senza bando}\n", encoding="utf-8")
+    voci = vetrina.voci_file(date(2026, 10, 8), f)
+    assert [v.get("bando") or v.get("misura") for v in voci] == [1, 3, "x"]       # la 2 e' scaduta
+    assert [v.get("bando") for v in vetrina.voci_file(date(2026, 11, 1), f)] == [3, None]
+    assert vetrina.voci_file(percorso=tmp_path / "manca.yaml") == []
+
+
+def test_html_della_vetrina_accessibile():
+    from app.pubblico import vetrina
+
+    voci = [{"tipo": "bando", "id": 1, "titolo": "Bando <uno>", "ente": "Regione", "riga": "Fondo perduto 50%",
+             "quando": "Scade il 31/12/2026", "dove": "Veneto"},
+            {"tipo": "misura", "id": "m", "titolo": "Misura due", "ente": "MIMIT", "riga": "Beneficio",
+             "quando": "Sempre aperta", "dove": "Misura nazionale"}]
+    h = vetrina.html(voci)
+    assert "Bandi in vetrina" in h and "Bando &lt;uno&gt;" in h and "<uno>" not in h
+    assert h.count('class="voce attiva"') == 1 and h.count('class="voce"') == 1          # senza JS si vede la prima
+    assert h.count('href="/registrati"') == 2 and h.count("Scopri se fa per te") == 2
+    assert 'aria-roledescription="carosello"' in h and 'aria-label="1 di 2"' in h
+    assert '<div class="comandi" hidden>' in h                                          # puntini e pausa solo con JS
+    assert h.count('aria-current="true"') == 1 and "Mostra il bando 2 di 2: Misura due" in h
+    assert "prefers-reduced-motion" in h and 'setAttribute("aria-live", timer ? "off" : "polite")' in h
+    assert str(vetrina.GIRO_MS) in h and "__GIRO__" not in h
+    assert vetrina.html([]) == ""
+
+
+@db
+def test_vetrina_dal_file_e_in_automatico(tmp_path, monkeypatch):
+    from datetime import date, timedelta
+
+    from app.db.connessione import connetti
+    from app.db.migrazioni import applica_migrazioni
+    from app.pubblico import vetrina
+
+    oggi = date.today()
+    prove = [  # titolo, stato, scadenza, fondo perduto massimo, controllo
+        ("Vetrina buono", "aperto", oggi + timedelta(days=60), 50000, {}),
+        ("Vetrina chiuso", "chiuso", oggi - timedelta(days=1), 50000, {}),
+        ("Vetrina con errori", "aperto", oggi + timedelta(days=60), 80000, {"gravi": ["importo sbagliato"]}),
+        ("Vetrina enorme", "aperto", oggi + timedelta(days=60), 30_000_000, {}),
+        ("Vetrina in arrivo", "in_arrivo", oggi + timedelta(days=90), 20000, {}),
+    ]
+    with connetti() as conn:
+        applica_migrazioni(conn)
+        ids = {}
+        with conn.cursor() as cur:
+            for titolo, stato, scadenza, importo, controllo in prove:
+                cur.execute("""INSERT INTO bandi (titolo, ente, stato, scadenza, data_apertura, completezza, controllo,
+                                                  tipi_agevolazione, fondo_perduto_massimo, percentuale_fondo_perduto, vincoli)
+                               VALUES (%s, %s, %s, %s, %s, 'bando_ufficiale', %s, '{fondo_perduto}', %s, 50,
+                                       '{"territorio": "nessun_vincolo"}') RETURNING id""",
+                            (titolo, "Ente " + titolo, stato, scadenza, oggi + timedelta(days=30), json.dumps(controllo), importo))
+                ids[titolo] = cur.fetchone()["id"]
+        try:
+            f = tmp_path / "vetrina.yaml"
+            f.write_text(f"vetrina:\n  - {{bando: {ids['Vetrina chiuso']}, priorita: 1}}\n"
+                         f"  - {{bando: {ids['Vetrina in arrivo']}, priorita: 2, riga: 'Riga scritta a mano'}}\n"
+                         "  - {misura: iperammortamento_2026, priorita: 3}\n", encoding="utf-8")
+            monkeypatch.setattr(vetrina, "FILE", f)
+            voci = vetrina._scegli(conn, 10, oggi)              # 10: altri test possono lasciare bandi nel database
+            titoli = [v["titolo"] for v in voci]
+            assert titoli[:2] == ["Vetrina in arrivo", "Iperammortamento 2026 (Nuovo Piano Transizione 5.0)"]
+            assert voci[0]["riga"] == "Riga scritta a mano" and voci[0]["quando"].startswith("Domande dal ")
+            assert voci[0]["dove"] == "Tutta Italia" and voci[1]["dove"] == "Misura nazionale"
+            assert "Vetrina buono" in titoli                                     # aggiunto in automatico
+            assert not {"Vetrina chiuso", "Vetrina con errori", "Vetrina enorme"} & set(titoli)
+            buono = next(v for v in voci if v["titolo"] == "Vetrina buono")
+            assert buono["riga"] == "Fondo perduto 50%, fino a 50.000 €"
+            assert len(vetrina._scegli(conn, 1, oggi)) == 1
+        finally:
+            conn.rollback()
+
+
+@db
+def test_landing_con_la_vetrina_e_i_testi_nuovi(monkeypatch):
+    from app.db.connessione import connetti
+    from app.db.migrazioni import applica_migrazioni
+    from app.main import app
+    from app.pubblico import vetrina
+
+    with connetti() as conn:
+        applica_migrazioni(conn)
+        conn.commit()
+    landing._cache.clear()
+    vetrina._cache.clear()
+    t = TestClient(app).get("/presentazione").text
+    assert "Bandi in vetrina" in t and "Scopri se fa per te" in t                # almeno la misura del file
+    assert "bandi aperti da visionare" in t and "con la scheda pronta" not in t and "bandi aperti con la scheda" not in t
+    assert ("Ogni bando viene esaminato e riorganizzato in modo chiaro e semplice e ti segnaliamo quelli che fanno al "
+            "caso della tua impresa. Se vuoi, poi, un consulente ti aiuta con la predisposizione e la presentazione "
+            "della domanda.") in t
+    assert "Unione Europea, Ministeri, Regioni, Camere di Commercio e Comuni" in t

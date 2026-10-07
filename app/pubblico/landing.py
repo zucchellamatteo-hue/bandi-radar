@@ -15,7 +15,7 @@ import logging
 import time
 from datetime import date
 
-from app.pubblico import seo
+from app.pubblico import seo, vetrina
 
 log = logging.getLogger(__name__)
 CACHE_SECONDI = 900
@@ -26,6 +26,11 @@ PREZZO_LANCIO = 20
 TIPI_FONTE = [("regione", "Regioni e Province autonome"), ("nazionale", "Ministeri e agenzie nazionali"),
               ("ue", "Unione europea"), ("camera", "Camere di commercio"), ("capoluogo", "Comuni capoluogo"),
               ("provincia", "Province")]
+# Sottotitolo del primo schermo, testo di Matteo (08/10/2026); {fonti} = numero dei siti controllati.
+SOTTOTITOLO = ("Teniamo d'occhio {fonti} siti di Unione Europea, Ministeri, Regioni, Camere di Commercio e Comuni. "
+               "Ogni bando viene esaminato e riorganizzato in modo chiaro e semplice e ti segnaliamo quelli che fanno al "
+               "caso della tua impresa. Se vuoi, poi, un consulente ti aiuta con la predisposizione e la presentazione "
+               "della domanda.")
 NOMI_TIPI = {"fondo_perduto": "fondo perduto", "finanziamento_agevolato": "finanziamento agevolato", "voucher": "voucher",
              "garanzia": "garanzia", "credito_imposta": "credito d'imposta", "premio": "premio", "servizi": "servizi"}
 
@@ -90,7 +95,7 @@ def faq(n: dict | None, giorni_prova: int) -> list[tuple[str, str]]:
     from app.pubblico import PREZZI
 
     fonti = _n(n["fonti"]) if n else "centinaia di"
-    aperti = f" Oggi ({n['aggiornato']:%d/%m/%Y}) i bandi aperti o in arrivo con la scheda pronta sono {_n(n['proponibili'])}." if n else ""
+    aperti = f" Oggi ({n['aggiornato']:%d/%m/%Y}) ci sono {_n(n['proponibili'])} bandi aperti da visionare." if n else ""
     misure = (", ".join(n["nomi_misure"][:4]) + " e altre") if n and n["nomi_misure"] else "Conto Termico, Iperammortamento, Nuova Sabatini e altre"
     return [
         ("Che cos'è Bandi Radar?",
@@ -160,7 +165,7 @@ def _numeri_html(n: dict | None) -> str:
     if not n:
         return ""
     voci = [(_n(n["fonti"]), "siti pubblici controllati", "UE, ministeri, Regioni, Camere, Comuni"),
-            (_n(n["proponibili"]), "bandi aperti con la scheda", "pronti da proporre alle imprese"),
+            (_n(n["proponibili"]), "bandi aperti da visionare", "aperti o in arrivo, aggiornati ogni giorno"),
             (_n(n["esaminati"]), "bandi e avvisi esaminati", "anche i chiusi, per non perderne nessuno"),
             (_n(n["misure"]), "misure nazionali", "da sommare ai bandi (crediti d'imposta e simili)")]
     celle = "".join(f'<div class="cifra"><b>{a}</b><span>{b}</span><small>{c}</small></div>' for a, b, c in voci)
@@ -175,7 +180,7 @@ def _regioni_html(n: dict | None) -> str:
     tipi = ", ".join(f"{nome} {_n(num)}" for nome, num in n["tipi"][:5])
     return f"""<section id="regioni" class="grigia"><div class="contenitore">
 <h2>Bandi aperti oggi, regione per regione</h2>
-<p class="sottotitolo">Al {n['aggiornato']:%d/%m/%Y} ci sono <b>{_n(n['proponibili'])} bandi aperti o in arrivo</b> con la scheda pronta,
+<p class="sottotitolo">Al {n['aggiornato']:%d/%m/%Y} ci sono <b>{_n(n['proponibili'])} bandi aperti da visionare</b>,
 di cui <b>{_n(n['tutta_italia'])} validi in tutta Italia</b> (nazionali ed europei). Per tipo di agevolazione: {tipi}.</p>
 <ul class="regioni">{voci}</ul>
 <p class="piccolo">Un bando può valere per più regioni. I numeri cambiano ogni giorno: bandi nuovi, proroghe, chiusure.</p>
@@ -209,15 +214,19 @@ def presentazione(conn) -> str:
     n = numeri(conn)
     giorni = giorni_prova()
     domande = faq(n, giorni)
+    in_vetrina = vetrina.scegli(conn)                   # in alto i bandi in vetrina (app/pubblico/vetrina.yaml)
+    gia = {v["id"] for v in in_vetrina if v["tipo"] == "bando"}
     try:
-        schede = [_carta_esempio(b) for b in esempi(conn, 4)]
+        schede = [_carta_esempio(b) for b in esempi(conn, 6) if b["id"] not in gia][:3]
     except Exception:  # noqa: BLE001
         log.exception("esempi della pagina pubblica non letti")
         conn.rollback()
         schede = []
     fonti = _n(n["fonti"]) if n else "centinaia di"
-    prima = schede[0] if schede else ""                  # in alto la prima, sotto le altre
-    carte = "".join(schede[1:] if len(schede) > 1 else schede)
+    if in_vetrina:
+        prima, carte = vetrina.html(in_vetrina), "".join(schede)
+    else:                                               # senza vetrina: in alto la prima scheda d'esempio
+        prima, carte = (schede[0] if schede else ""), "".join(schede[1:] if len(schede) > 1 else schede)
     tipi_fonte = ""
     if n:
         tipi_fonte = "".join(f"<li><b>{_n(n['fonti_per_tipo'].get(k, 0))}</b> {nome}</li>"
@@ -229,12 +238,11 @@ def presentazione(conn) -> str:
 <section class="eroe"><div class="contenitore due">
 <div><p class="occhiello">Bandi per imprese · contributi a fondo perduto · finanziamenti agevolati</p>
 <h1>I bandi giusti per la tua impresa, <span>ogni settimana nella tua email</span></h1>
-<p class="sottotitolo">Teniamo d'occhio {fonti} siti di Unione europea, ministeri, Regioni, Camere di commercio e Comuni.
-Ogni bando diventa una scheda chiara e ti segnaliamo solo quelli adatti alla tua impresa. Se vuoi, un commercialista ti aiuta con la domanda.</p>
+<p class="sottotitolo">{_e(SOTTOTITOLO.format(fonti=fonti))}</p>
 <p class="azioni"><a class="bottone grande" href="/registrati">Prova gratis {giorni} giorni</a>
 <a class="bottone chiaro grande" href="#come">Come funziona</a></p>
 <p class="rassicura">Senza carta di credito · {PREZZO_LANCIO} € al mese + IVA dopo la prova · I dati della tua impresa restano anonimi</p></div>
-<div class="anteprima" aria-hidden="true">{prima}</div>
+<div class="anteprima"{'' if in_vetrina else ' aria-hidden="true"'}>{prima}</div>
 </div></section>
 {_numeri_html(n)}
 <section id="come"><div class="contenitore"><h2>Come funziona, in 3 passi</h2><ol class="passi">
@@ -278,7 +286,7 @@ def llms_txt(conn) -> str:
     if n:
         righe += [f"## Numeri al {n['aggiornato']:%d/%m/%Y}", "",
                   f"- Siti pubblici controllati: {_n(n['fonti'])}",
-                  f"- Bandi aperti o in arrivo con la scheda pronta: {_n(n['proponibili'])} (di cui {_n(n['tutta_italia'])} validi in tutta Italia)",
+                  f"- Bandi aperti da visionare: {_n(n['proponibili'])} (di cui {_n(n['tutta_italia'])} validi in tutta Italia)",
                   f"- Bandi e avvisi esaminati dall'inizio: {_n(n['esaminati'])}",
                   f"- Misure nazionali sempre aperte seguite: {_n(n['misure'])}", ""]
         if n["regioni"]:

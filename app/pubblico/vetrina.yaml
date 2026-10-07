@@ -1,0 +1,38 @@
+# Bandi in vetrina nella pagina di presentazione (riquadro a destra del primo schermo, 08/10/2026).
+#
+# Qui si scelgono a mano i bandi e le misure da mettere in vetrina: per esempio quelli piu' discussi sul web
+# (li cerca la ricerca settimanale dei bandi piu' discussi) o quelli che Matteo vuole far vedere. Aggiornare la
+# vetrina e' cambiare questo file con una pull request: niente codice.
+#
+# Ogni voce ha UNO tra:
+#   bando:   numero del bando (lo stesso della plancia, /bandi/<numero>)
+#   misura:  id della misura nazionale in app/misure/misure.yaml (es. iperammortamento_2026)
+# e poi, facoltativi:
+#   priorita: 1 = per primo (le voci si mostrano in ordine di priorita'; senza priorita' vanno in fondo)
+#   da, a:    date (AAAA-MM-GG) tra cui la voce resta in vetrina; senza date vale sempre
+#   motivo:   perche' e' in vetrina (solo per chi legge il file, non compare nella pagina)
+#   titolo, ente, riga: per riscrivere il titolo, l'ente o la riga dell'agevolazione mostrati
+#                       (es. riga: "Fondo perduto 50%, fino a 20.000 €")
+#
+# Regole automatiche (app/pubblico/vetrina.py): un bando compare solo se e' "proponibile" (scheda sul bando
+# ufficiale, senza errori gravi, per imprese), aperto o in arrivo e non scaduto; una misura solo se e' aperta.
+# Le voci che non passano si saltano senza errori. In vetrina vanno al massimo 4 voci: se qui ce ne sono meno di
+# 4 valide, il sistema aggiunge i bandi migliori per importo a fondo perduto e novita'.
+
+vetrina:
+  - bando: 175
+    priorita: 1
+    motivo: "Tra i piu' discussi di ottobre 2026 (n. 6); tutta Italia; precompilazione dal 20/10, domande dal 10/11, a sportello"
+  - misura: iperammortamento_2026
+    priorita: 2
+    ente: "MIMIT e MEF, con il GSE"
+    riga: "Deduzione maggiorata del 180% del costo: vale fino a circa il 43% della spesa"
+    motivo: "Nuovo Piano Transizione 5.0, tra i piu' discussi di ottobre 2026 (n. 22)"
+  - bando: 4407
+    priorita: 3
+    riga: "Fondo perduto 100% della spesa, fino a 3.000 € (screening e defibrillatore)"
+    motivo: "Fondo screening e DAE: piccolo importo ma per tutte le imprese, rimborso totale"
+  - bando: 2969
+    priorita: 4
+    a: 2026-10-22
+    motivo: "Tra i piu' discussi di ottobre 2026 (n. 56); fondo perduto all'80%, scade il 22/10/2026"
