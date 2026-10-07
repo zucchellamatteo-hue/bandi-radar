@@ -60,6 +60,9 @@ services:
       REGISTRAZIONE_APERTA: ${REGISTRAZIONE_APERTA:-0}             # 1 = le imprese possono registrarsi da sole
       EMAIL_IMPRESE_APPROVAZIONE: ${EMAIL_IMPRESE_APPROVAZIONE:-1} # 1 = le email alle imprese partono dopo l'ok di Matteo
       PAGINA_PUBBLICA: ${PAGINA_PUBBLICA:-0}       # 1 = "/" mostra la presentazione a chi non ha fatto l'accesso
+      BLOG_PUBBLICO: ${BLOG_PUBBLICO:-0}           # 1 = apre ai motori solo il blog (/blog, /llms.txt, sitemap), landing chiusa
+      GOOGLE_SITE_VERIFICATION: ${GOOGLE_SITE_VERIFICATION:-}  # codice del meta tag di Google Search Console
+      BING_SITE_VERIFICATION: ${BING_SITE_VERIFICATION:-}      # codice del meta tag di Bing Webmaster Tools (msvalidate.01)
       GOOGLE_ADS_ID: ${GOOGLE_ADS_ID:-}            # es. AW-123456789: misurazione delle campagne, solo con il consenso
       ESEMPI_BANDI: ${ESEMPI_BANDI:-}              # schede di esempio nella presentazione (id separati da virgola)
       GOOGLE_ANALYTICS_ID: ${GOOGLE_ANALYTICS_ID:-}  # es. G-XXXXXXX: Google Analytics 4, solo con il consenso
@@ -137,6 +140,7 @@ services:
       EMAIL_CONTATTO: ${EMAIL_CONTATTO:-}
       SITO_URL: ${SITO_URL:-https://finanzagevolata.qiaro.it}      # link nelle email settimanali alle imprese
       EMAIL_IMPRESE_APPROVAZIONE: ${EMAIL_IMPRESE_APPROVAZIONE:-1}
+      RAPPORTO_SEO: ${RAPPORTO_SEO:-giornaliero}    # email SEO/GEO a Matteo: giornaliero | settimanale | spento (07/10)
       ALLEGATI_CARTELLA: /srv/allegati
     volumes:
       - allegati:/srv/allegati            # documenti dei bandi (PDF, moduli, FAQ), una cartella per annuncio

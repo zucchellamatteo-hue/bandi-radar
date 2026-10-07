@@ -140,6 +140,19 @@ Valutazione del 05/10/2026: **non necessaria**. Motivi: non si trattano dati par
 | Conservazione | Tentativi di accesso: 30 giorni. Altri registri tecnici: [DURATA DI CONSERVAZIONE LOG] |
 | Misure specifiche | Accesso ai registri solo con chiave SSH |
 
+## T8-bis. Statistiche delle pagine pubbliche senza cookie (dal 07/10/2026)
+
+| Voce | Contenuto |
+|---|---|
+| Finalità | Contare le visite alle pagine pubbliche (/, /blog e articoli, /llms.txt, sitemap, robots.txt) per capire se il sito si fa trovare da Google e dai motori di risposta IA |
+| Base giuridica | Legittimo interesse (art. 6.1.f); i dati salvati sono anonimi fin dalla raccolta. Nessun cookie né altro dato nel browser: non si applica l'art. 122 Codice privacy, nessun banner |
+| Interessati | Visitatori delle pagine pubbliche che non hanno fatto l'accesso |
+| Categorie di dati | Solo contatori aggregati per giorno (tabella `visite`): pagina, dominio di provenienza (senza indirizzo completo), parametri utm, tipo di visitatore (persona, motore, programma IA, altro programma) con il nome del programma, numero di visite. **Non** si salvano IP, User-Agent completi, cookie o identificativi: lo User-Agent serve solo a riconoscere i programmi noti e poi si scarta |
+| Destinatari / responsabili | OVH (server) |
+| Trasferimenti extra UE | Nessuno |
+| Conservazione | Senza scadenza (dati anonimi) |
+| Misure specifiche | Codice in `app/visite`; le visite di chi ha fatto l'accesso non si contano; pagina Visite della plancia solo per chi ha il permesso "lavoro" |
+
 ## T9. Cookie di misurazione (Google Ads)
 
 | Voce | Contenuto |

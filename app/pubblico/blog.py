@@ -1,7 +1,8 @@
 """Blog pubblico (07/10/2026): /blog (elenco) e /blog/<slug> (articolo), HTML leggero nello stile della landing.
 
-Solo gli articoli pubblicati sono visibili e finiscono in sitemap.xml e /llms.txt; si indicizzano solo con
-PAGINA_PUBBLICA=1, come la landing. Ogni articolo mostra in testa "Aggiornato il", il riquadro "Bando chiuso" se il
+Solo gli articoli pubblicati sono visibili e finiscono in sitemap.xml e /llms.txt; si indicizzano con
+PAGINA_PUBBLICA=1 (tutto aperto) oppure con BLOG_PUBBLICO=1 (08/10: solo il blog aperto, landing ancora chiusa; in quel
+caso /llms.txt descrive solo il blog, vedi llms_txt_blog). Ogni articolo mostra in testa "Aggiornato il", il riquadro "Bando chiuso" se il
 bando collegato e' chiuso o scaduto (app/articoli.situazione_collegata), in fondo le fonti ufficiali e l'invito a
 registrarsi. Dati strutturati: Article, FAQPage (se c'e' la sezione "Domande frequenti") e BreadcrumbList.
 """
@@ -56,7 +57,7 @@ def _riquadro_chiuso(chiuso: dict | None) -> str:
 def pagina_articolo(conn, a: dict, anteprima: bool = False) -> str:
     """La pagina di un articolo. Con anteprima=True (plancia) mostra anche le bozze, mai indicizzate."""
     from app.abbonamenti import giorni_prova
-    from app.pubblico import _e, pagina, pubblica
+    from app.pubblico import _e, blog_pubblico, pagina, pubblica
 
     percorso = f"/blog/{a['slug']}"
     url = seo.assoluto(percorso)
@@ -74,8 +75,8 @@ def pagina_articolo(conn, a: dict, anteprima: bool = False) -> str:
     if anteprima:
         avviso = (f'<p class="bozza">Anteprima dalla plancia: articolo in stato «{_e(a.get("stato", "bozza"))}», '
                   "non visibile al pubblico finché non è pubblicato.</p>")
-    elif not pubblica():
-        avviso = '<p class="bozza">Anteprima: il sito non è ancora pubblico né indicizzato (PAGINA_PUBBLICA=0).</p>'
+    elif not blog_pubblico():
+        avviso = '<p class="bozza">Anteprima: il sito non è ancora pubblico né indicizzato (BLOG_PUBBLICO=0).</p>'
     corpo = f"""<section class="blog-testa"><div class="contenitore stretto">{avviso}
 <p class="briciole"><a href="/blog">Blog</a> › {_e(a['titolo'])}</p>
 <h1>{_e(a['titolo'])}</h1>
@@ -101,18 +102,18 @@ la domanda leggi sempre il bando ufficiale: requisiti, importi e scadenze posson
         articolo["datePublished"] = _iso(a["pubblicato_il"])
     if aggiornato:
         articolo["dateModified"] = _iso(aggiornato)
+    # Con la landing chiusa (solo blog aperto) le briciole partono dal blog: "/" non e' ancora una pagina pubblica.
+    passi = ([("Bandi Radar", seo.assoluto("/"))] if pubblica() else []) + [("Blog", seo.assoluto("/blog")), (a["titolo"], url)]
     briciole = {"@type": "BreadcrumbList", "itemListElement": [
-        {"@type": "ListItem", "position": 1, "name": "Bandi Radar", "item": seo.assoluto("/")},
-        {"@type": "ListItem", "position": 2, "name": "Blog", "item": seo.assoluto("/blog")},
-        {"@type": "ListItem", "position": 3, "name": a["titolo"], "item": url}]}
+        {"@type": "ListItem", "position": i, "name": nome, "item": dove} for i, (nome, dove) in enumerate(passi, 1)]}
     grafo = [org, articolo, briciole] + ([seo.domande_frequenti(faq, percorso)] if faq else [])
-    indicizza = pubblica() and not anteprima and a.get("stato") == "pubblicato"
+    indicizza = blog_pubblico() and not anteprima and a.get("stato") == "pubblicato"
     return pagina(f"{a['titolo']} | Bandi Radar", corpo, a["sommario"], indicizza=indicizza, percorso=percorso,
                   testa=STILE_BLOG + seo.json_ld(grafo))
 
 
 def pagina_elenco(conn) -> str:
-    from app.pubblico import _e, pagina, pubblica
+    from app.pubblico import _e, blog_pubblico, pagina
 
     voci = articoli.pubblicati(conn)
     carte = []
@@ -122,7 +123,7 @@ def pagina_elenco(conn) -> str:
         carte.append(f"""<article class="carta"><div class="piccolo">Aggiornato il {_data(a['aggiornato_il'])}{etichetta}</div>
 <h2><a href="/blog/{_e(a['slug'])}">{_e(a['titolo'])}</a></h2><p>{_e(a['sommario'])}</p>
 <p><a href="/blog/{_e(a['slug'])}">Leggi l'articolo →</a></p></article>""")
-    avviso = "" if pubblica() else '<p class="bozza">Anteprima: il sito non è ancora pubblico né indicizzato (PAGINA_PUBBLICA=0).</p>'
+    avviso = "" if blog_pubblico() else '<p class="bozza">Anteprima: il sito non è ancora pubblico né indicizzato (BLOG_PUBBLICO=0).</p>'
     elenco = (f'<div class="griglia elenco-articoli">{"".join(carte)}</div>' if carte
               else "<p>Stiamo preparando i primi articoli. Intanto puoi provare Bandi Radar gratis.</p>")
     corpo = f"""<section class="blog-testa eroe"><div class="contenitore">{avviso}
@@ -140,7 +141,7 @@ cercati e su quelli che pochi conoscono, scritti sui documenti ufficiali.</p></d
     org = seo.organizzazione("Bandi Radar: bandi e agevolazioni per imprese, schede chiare e segnalazioni su misura.")
     return pagina("Blog: bandi e agevolazioni per imprese spiegati semplici | Bandi Radar", corpo,
                   "Articoli brevi sui bandi per imprese più cercati e su quelli di nicchia: a chi servono, quanto valgono, "
-                  "scadenze, come si chiedono ed errori da evitare.", indicizza=pubblica(), percorso="/blog",
+                  "scadenze, come si chiedono ed errori da evitare.", indicizza=blog_pubblico(), percorso="/blog",
                   testa=STILE_BLOG + seo.json_ld([org, blog]))
 
 
@@ -164,3 +165,18 @@ def righe_llms(conn) -> list[str]:
         righe.append(f"- [{a['titolo']}]({seo.assoluto('/blog/' + a['slug'])}): {a['sommario']} "
                      f"Aggiornato il {_data(a['aggiornato_il'])}.{chiuso}")
     return righe + [""]
+
+
+def llms_txt_blog(conn) -> str:
+    """/llms.txt quando e' aperto solo il blog (BLOG_PUBBLICO=1, PAGINA_PUBBLICA=0): chi siamo in breve, il blog e gli
+    articoli pubblicati. Niente prezzi ne' domande frequenti della landing, che aspettano le decisioni di Matteo."""
+    from app.pubblico import landing
+
+    righe = [f"# {seo.NOME}", "", f"> {landing.descrizione_breve(landing.numeri(conn))}", "",
+             "Servizio italiano per imprese, PMI, professionisti e startup. Lingua: italiano. Il blog spiega in modo "
+             "semplice i bandi e le agevolazioni per imprese (europei, nazionali, regionali, delle Camere di commercio): "
+             "a chi servono, quanto valgono, scadenze, come si chiedono ed errori da evitare. Ogni articolo e' scritto sui "
+             "documenti ufficiali, riporta la data di aggiornamento e le fonti.", "",
+             "## Pagine", "", f"- [Blog di Bandi Radar]({seo.assoluto('/blog')}): elenco degli articoli", ""]
+    righe += righe_llms(conn)
+    return "\n".join(righe)
