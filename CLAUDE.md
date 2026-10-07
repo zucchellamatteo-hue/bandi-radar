@@ -4,7 +4,7 @@ Leggi questo file prima di qualunque lavoro. Obiettivi, priorità e modello di r
 
 ## Cos'è
 
-Sistema che raccoglie i bandi di finanza agevolata per imprese (UE, nazionali, regionali, camerali, capoluoghi), li trasforma in schede standard e li abbina ai profili anonimi dei clienti di Matteo (commercialista). Prodotto: `finanzagevolata.qiaro.it`. Lingua del progetto: **italiano** (codice e nomi tecnici in inglese, tutto il resto in italiano).
+Sistema che raccoglie i bandi di finanza agevolata per imprese (UE, nazionali, regionali, camerali, capoluoghi), li trasforma in schede standard e li abbina ai profili anonimi dei clienti di Matteo (commercialista). Prodotto: `bandinqiaro.it` (dal 07/10/2026; il vecchio `finanzagevolata.qiaro.it` rinvia lì con un 301). Lingua del progetto: **italiano** (codice e nomi tecnici in inglese, tutto il resto in italiano).
 
 ## Come si lavora
 
