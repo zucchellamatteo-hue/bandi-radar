@@ -7,6 +7,7 @@ di risposta IA.
   all'accesso come prima);
 - /termini, /privacy, /cookie, /condizioni-supporto, /note-legali: bozze in app/pubblico/testi/, da far rivedere a un
   professionista;
+- /blog e /blog/<slug>: il blog (app/pubblico/blog.py, articoli in app/articoli), solo gli articoli pubblicati;
 - /robots.txt, /sitemap.xml, /llms.txt, /favicon.svg, /immagini/...: SEO tecnica e GEO (app/pubblico/seo.py).
 La pagina di atterraggio e' in app/pubblico/landing.py; il dominio dei link canonici viene da SITO_URL.
 
@@ -188,7 +189,7 @@ def pagina(titolo: str, corpo: str, descrizione: str = "", indicizza: bool = Fal
 <main>{corpo}</main>
 <footer><span>© Bandi Radar · {_e(dominio)}{(' · ' + _e(titolare)) if titolare else ''}</span><a href="/termini">Termini</a>
 <a href="/privacy">Privacy</a><a href="/cookie">Cookie</a><a href="/condizioni-supporto">Condizioni del supporto</a>
-<a href="/note-legali">Note legali</a></footer>
+<a href="/note-legali">Note legali</a><a href="/blog">Blog</a></footer>
 {_cookie()}</body></html>"""
 
 

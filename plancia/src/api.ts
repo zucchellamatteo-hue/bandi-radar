@@ -123,6 +123,13 @@ export interface News {
   stato: string; creata_da?: string | null; creata_il?: string; aggiornata_il?: string; aggiornata_da?: string | null;
 }
 
+export interface Articolo {
+  id: number; titolo: string; slug: string; sommario: string; corpo: string; fonti: { nome: string; url: string }[];
+  bando_id: number | null; misura_id: string | null; autore: string | null; stato: string; pubblicato_il: string | null;
+  aggiornato_il: string; creato_da?: string | null; aggiornato_da?: string | null; bando_titolo?: string | null;
+  parole?: number; chiuso?: { cosa: string; titolo: string; motivo: string } | null;
+}
+
 export const NOMI_RUOLO_UTENTE: Record<RuoloUtente, string> = { admin: "amministratore", revisore: "revisore", impresa: "impresa" };
 
 export type Colore = "verde" | "giallo" | "rosso" | "pausa";
@@ -403,6 +410,12 @@ export const api = {
   creaNews: (corpo: Partial<News>) => chiama<News>("/api/news", { method: "POST", body: JSON.stringify(corpo) }),
   modificaNews: (id: number, corpo: Partial<News>) => chiama<News>(`/api/news/${id}`, { method: "PATCH", body: JSON.stringify(corpo) }),
   cancellaNews: (id: number) => chiama(`/api/news/${id}`, { method: "DELETE" }),
+  articoli: () => chiama<{ articoli: Articolo[]; stati: Record<string, string>; autore_predefinito: string;
+    misure: { id: string; nome: string }[] }>("/api/articoli"),
+  creaArticolo: (corpo: Record<string, unknown>) => chiama<Articolo>("/api/articoli", { method: "POST", body: JSON.stringify(corpo) }),
+  modificaArticolo: (id: number, corpo: Record<string, unknown>) => chiama<Articolo>(`/api/articoli/${id}`, { method: "PATCH", body: JSON.stringify(corpo) }),
+  cancellaArticolo: (id: number) => chiama(`/api/articoli/${id}`, { method: "DELETE" }),
+  anteprimaArticolo: (corpo: Record<string, unknown>) => chiama<{ html: string }>("/api/articoli/anteprima", { method: "POST", body: JSON.stringify(corpo) }),
   guida: () => chiama<{ id: string; titolo: string; testo: string; per: string[] }[]>("/api/guida"),
   cancellaAccount: (password: string) => chiama("/api/account/cancella", { method: "POST", body: JSON.stringify({ password }) }),
   utenti: () => chiama<Utente[]>("/api/utenti"),

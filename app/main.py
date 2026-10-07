@@ -23,13 +23,14 @@ from app.fatture.api import router as api_fatture
 from app.guida.api import router as api_guida
 from app.passi.api import router as api_passi
 from app.news.api import router as api_news
+from app.articoli.api import router as api_articoli
 from app.feedback.api import router as api_feedback
 from app.segnalazioni.api import router as api_segnalazioni
 from app.notifiche.api import router as api_notifiche
 from app.impresa.api import router as api_impresa
 from app.plancia.api import router as api_plancia
 from app import pubblico
-from app.pubblico import landing, seo
+from app.pubblico import blog, landing, seo
 from app.db.connessione import connetti
 from app.utenti.api import COOKIE, controlla_plancia
 from app.utenti.api import router as api_utenti
@@ -73,6 +74,7 @@ app.include_router(api_misure)
 app.include_router(api_fatture)
 app.include_router(api_passi)
 app.include_router(api_news)
+app.include_router(api_articoli)
 app.include_router(api_guida)
 app.include_router(api_account)
 app.include_router(api_plancia, dependencies=[Depends(controlla_plancia)])
@@ -97,7 +99,38 @@ def robots_txt():
 
 @app.get("/sitemap.xml")
 def sitemap_xml():
-    return Response(seo.sitemap_xml(), media_type="application/xml")
+    """Pagine pubbliche e articoli del blog pubblicati; se il database non risponde, solo le pagine fisse."""
+    try:
+        with connetti() as conn:
+            voci = blog.voci_sitemap(conn)
+    except Exception:  # noqa: BLE001 - la sitemap non deve cadere per il blog
+        voci = []
+    return Response(seo.sitemap_xml(articoli=voci), media_type="application/xml")
+
+
+@app.get("/blog", response_class=HTMLResponse)
+def blog_elenco():
+    """Elenco degli articoli pubblicati (app/pubblico/blog.py)."""
+    with connetti() as conn:
+        return HTMLResponse(blog.pagina_elenco(conn))
+
+
+@app.get("/blog/{slug}", response_class=HTMLResponse)
+def blog_articolo(slug: str):
+    """Un articolo: solo se pubblicato; le bozze non esistono per il pubblico (404), gli archiviati rispondono 410."""
+    from app import articoli
+
+    with connetti() as conn:
+        a = articoli.per_slug(conn, slug)
+        if a and a["stato"] == "pubblicato":
+            return HTMLResponse(blog.pagina_articolo(conn, a))
+    if a and a["stato"] == "archiviato":
+        return HTMLResponse(pubblico.pagina("Articolo non più disponibile - Bandi Radar",
+                                            '<section class="testo-legale"><h1>Articolo non più disponibile</h1><p>Questo '
+                                            'articolo è stato ritirato perché le informazioni non sono più attuali. '
+                                            '<a href="/blog">Vai al blog</a> o <a href="/registrati">prova Bandi Radar</a> '
+                                            'per vedere i bandi aperti.</p></section>'), status_code=410)
+    raise HTTPException(status_code=404, detail="non trovato")
 
 
 @app.get("/llms.txt", response_class=PlainTextResponse)

@@ -39,7 +39,7 @@ sezioni:
 
       - Impresa: **I miei bandi**, **Agevolazioni fiscali**, **Le mie imprese**, **Richieste di supporto**, **Abbonamento**.
       - Revisore con i permessi di base: **Catalogo**, **Misure**, **I miei giudizi** (e **Imprese** se ha quel permesso).
-      - Chi ha il permesso "lavoro": **Fonti**, **Catalogo**, **Misure**, **Profili**, **Annunci**, **Lavorazione**, **Supervisione**, **Doppioni**, **Novità**, **Feedback**, **Segnalazioni**, **News**; con il permesso "imprese" anche **Imprese** e **Campagne**.
+      - Chi ha il permesso "lavoro": **Fonti**, **Catalogo**, **Misure**, **Profili**, **Annunci**, **Lavorazione**, **Supervisione**, **Doppioni**, **Novità**, **Feedback**, **Segnalazioni**, **News**, **Blog**; con il permesso "imprese" anche **Imprese** e **Campagne**.
       - Amministratore: tutto, più **Utenti** e **Prossimi passi**.
 
       La voce **Guida** apre questa pagina: mostra solo le parti che ti riguardano.
@@ -186,6 +186,26 @@ sezioni:
       Una bozza non va da nessuna parte. Quando è pronta premi **Pubblica**: da quel momento, nel suo periodo, entra nell'email del lunedì alle imprese (ogni impresa la riceve una volta sola) e compare in cima alla pagina **Guida** (alle imprese; ai collaboratori solo se il pubblico è "imprese e collaboratori"). Con **Rimetti in bozza** la fermi, con **Modifica** la correggi, con **✗** la cancelli.
 
       Le sessioni di Claude possono preparare news in bozza: le trovi qui da rileggere e pubblicare.
+
+  - id: blog
+    titolo: "Blog"
+    per: [lavoro]
+    testo: |
+      La pagina **Blog** serve a scrivere gli articoli pubblici che compaiono su **/blog** (per esempio finanzagevolata.qiaro.it/blog): brevi guide sui bandi più cercati e su quelli di nicchia, pensate per farsi trovare da Google e dai motori di risposta come ChatGPT e portare chi legge a registrarsi. Le vedono tutti quelli che hanno il permesso "lavoro"; scrivere e correggere le bozze richiede il permesso "modifiche"; **pubblicare, rimettere in bozza e archiviare li fa solo l'amministratore**.
+
+      Per scrivere un articolo premi **Nuovo articolo** e riempi:
+      1. **titolo** e, se vuoi, l'**indirizzo** (/blog/...; vuoto = fatto dal titolo);
+      2. il **numero del bando** di cui parla e/o la **misura nazionale**: servono per il riquadro automatico "Bando chiuso";
+      3. il **sommario**: una o due frasi, è il testo che Google mostra sotto il titolo (ne legge circa 155 caratteri);
+      4. il **testo** in Markdown semplice: `## Titolo di sezione`, `### Sottotitolo`, righe che iniziano con `- ` o `1. ` per gli elenchi, `**grassetto**`, `[testo del link](https://...)`. La sezione `## Domande frequenti`, con ogni domanda in una riga `### ...?` seguita dalla risposta, diventa anche il dato per Google (FAQ);
+      5. le **fonti ufficiali**, una per riga: `nome | https://...`;
+      6. l'**autore** (vuoto = il commercialista, nome preso da `AUTORE_ARTICOLI` nel .env).
+
+      Con **Anteprima** vedi la pagina come la vedrà chi legge, anche prima di salvare. Un articolo nasce in **bozza** e non è visibile a nessuno. Quando l'amministratore preme **Pubblica** compare su /blog, nella mappa del sito (sitemap.xml) e in /llms.txt; finché la pagina pubblica è spenta (`PAGINA_PUBBLICA=0`) resta comunque fuori dagli indici dei motori di ricerca. **Rimetti in bozza** lo toglie dal sito; **Archivia** lo ritira per sempre (l'indirizzo risponde "articolo non più disponibile").
+
+      Ogni articolo mostra in testa "Aggiornato il" (l'ultima modifica del testo). Se il bando collegato chiude o scade, o la misura non è più aperta, la pagina mostra da sola il riquadro rosso **"Bando chiuso"** e qui compare un avviso: aggiornalo o archivialo.
+
+      Le sessioni di Claude preparano articoli in bozza (`python -m app.articoli carica FILE.json`): li trovi qui da rileggere e pubblicare. Prima di pubblicare controlla l'autore: finché `AUTORE_ARTICOLI` è vuoto compare il segnaposto "[NOME E COGNOME], commercialista".
 
   - id: segnala
     titolo: "Il pulsante Segnala"
