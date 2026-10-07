@@ -76,6 +76,14 @@ def test_file_delle_misure_valido():
             assert 0 <= float(b["percentuale_min"]) <= float(b["percentuale_max"]) <= 100, m["id"]
 
 
+def test_misure_aperte_hanno_gli_aspetti_fiscali():
+    """Revisione del 07/10/2026: ogni misura aperta dice come si tassa il beneficio (IRES/IRPEF/IRAP), e l'API lo passa."""
+    for m in misure.tutte():
+        if m["stato"] == "aperto":
+            assert len(m.get("fiscale") or "") > 80 and "IRAP" in m["fiscale"], m["id"]
+    assert "fiscale" in misure.una("iperammortamento_2026")
+
+
 def test_esempi_per_tutti_i_profili():
     """Ogni misura aperta ha un esempio per ciascun profilo tipo, con un profilo che esiste e un interesse valido."""
     profili = [p["id"] for p in misure.profili_esempio()]

@@ -68,6 +68,7 @@ function SchedaMisura({ m, base, profili }: { m: Misura; base: string; profili: 
       {voce("Come si ottiene", Array.isArray(m.come_si_ottiene) ? m.come_si_ottiene.join("\n") : m.come_si_ottiene)}
       {voce("Tempi", m.tempi)}
       {m.cumulabilita && voce("Si somma ai bandi?", `${m.cumulabilita.regola || ""}${m.cumulabilita.riferimento ? ` (${m.cumulabilita.riferimento})` : ""}`)}
+      {voce("Aspetti fiscali (IRES, IRPEF, IRAP)", m.fiscale)}
       {voce("Attenzione", Array.isArray(m.attenzione) ? m.attenzione.join("\n") : m.attenzione)}
       <EsempiPerImpresa esempi={m.esempi} profili={profili} />
       <p className="piccolo">Informazione indicativa: verificare la norma e le regole del gestore prima di investire.</p>

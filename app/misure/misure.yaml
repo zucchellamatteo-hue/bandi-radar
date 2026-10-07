@@ -9,6 +9,8 @@
 # della misura scritte qui sotto; dove un dettaglio non e' certo c'e' scritto "da verificare".
 # aggiunta_il (07/10/2026): quando la misura e' entrata in Bandi Radar. Le misure aperte aggiunte da poco compaiono una
 # volta nell'email del lunedi' delle imprese a cui sono adatte (app/notifiche/email_imprese.py).
+# fiscale (07/10/2026, revisione degli articoli del blog): per ogni misura aperta, in breve, come si tassa il
+# beneficio ai fini IRES/IRPEF/IRAP, con le fonti citate negli articoli rivisti; "da verificare" dove non e' chiarito.
 
 profili_esempio:
   - id: ufficio_servizi
@@ -61,7 +63,9 @@ misure:
     ente: "GSE (Gestore dei Servizi Energetici), per conto del MASE"
     norma: >-
       DM MASE 7 agosto 2025 (GU 26/09/2025, in vigore dal 25/12/2025), in particolare
-      art. 17 (cumulo), Titolo V artt. 24-28 (imprese); Regole Applicative GSE approvate il 19/12/2025.
+      art. 17 (cumulo), Titolo V artt. 24-28 (imprese; art. 25 requisiti, art. 26 spese, art. 27 intensita' e cumulo);
+      Regole Applicative GSE approvate il 19/12/2025. Per le imprese e' un aiuto in esenzione GBER
+      (Reg. UE 651/2014 artt. 38-bis e 41), non de minimis.
     url_ufficiale: "https://www.gse.it/servizi-per-te/efficienza-energetica/conto-termico-3-0"
     in_vigore_dal: "2025-12-25"
     in_vigore_fino_al: null
@@ -77,8 +81,10 @@ misure:
       Imprese di ogni dimensione (anche agricole e ditte individuali) che hanno la disponibilita'
       dell'edificio; Pubbliche amministrazioni ed Enti del Terzo Settore; privati per alcuni interventi.
       Per le imprese: interventi di efficienza (Titolo II) solo su edifici dell'ambito terziario
-      (categorie catastali indicate nelle Regole Applicative, es. gruppi B, C esclusi C/6-C/7, D escluso D/9, A/10);
-      impianti rinnovabili (Titolo III) anche altrove.
+      (tabella 6 delle Regole Applicative: A/10, gruppi B, C esclusi C/6-C/7, D escluso D/9, E esclusi E/2, E/4, E/6);
+      impianti rinnovabili (Titolo III) anche su edifici residenziali. Disponibilita' dell'edificio: proprieta' o altro
+      diritto reale o personale di godimento, anche l'affitto, con l'autorizzazione del proprietario (Modello 18 GSE).
+      Edificio esistente e accatastato.
     soggetti_ammessi: [impresa, libero_professionista, ente_terzo_settore, ente_pubblico, persona_fisica]
     dimensioni_ammesse: []
     settori_esclusi: >-
@@ -95,8 +101,14 @@ misure:
       Titolo III (rinnovabili termiche, fino a 2.000 kW): III.A pompe di calore; III.B sistemi ibridi;
       III.C generatori a biomassa (anche serre e calore di processo); III.D solare termico (fino a
       2.500 m2); III.E scaldacqua a pompa di calore; III.F allaccio a teleriscaldamento efficiente;
-      III.G microcogenerazione da rinnovabili. Requisito per le imprese: risparmio di almeno il 10%
-      di energia rispetto alla situazione prima (20% per i multi-intervento), secondo la pagina GSE.
+      III.G microcogenerazione da rinnovabili. Requisito per le imprese, solo per il Titolo II (art. 25):
+      riduzione del fabbisogno di energia primaria di almeno il 10% (20% per i multi-intervento), da dimostrare
+      con APE prima e dopo i lavori. Per le aziende agricole il Titolo III ammette anche la nuova installazione
+      (art. 25 c. 4). Spese ammesse anche prestazioni professionali e, per le PMI, APE prima e dopo (art. 26).
+      Software: solo come parte di un sistema di building automation II.F fornito e installato (BACS almeno in
+      classe B UNI EN ISO 52120-1, costo massimo 60 euro/m2); gestionali, licenze, cloud/SaaS, cybersecurity e IA
+      non sono ammessi. Non ammessi: IVA (art. 27 c. 7), costi non legati al miglioramento energetico, la parte
+      oltre i costi massimi unitari.
     categorie_spesa: [energia_efficienza, opere_edili_impianti]
     intensita: >-
       Imprese, Titolo II: base 25% dei costi ammissibili per intervento singolo, 30% per multi-intervento
@@ -126,7 +138,8 @@ misure:
     tempi: >-
       Pagamento entro l'ultimo giorno del mese successivo al bimestre in cui il GSE ammette l'istanza.
       Fino a 15.000 euro rata unica; oltre, rate annuali costanti (2 anni per pompe di calore fino a
-      35 kW, fino a 5 anni per isolamento e infissi). Trattenuta GSE 1% del contributo, max 250 euro + IVA.
+      35 kW, 5 anni per gli interventi del Titolo II e per gli impianti piu' grandi; con piu' interventi vale la
+      durata piu' lunga). Trattenuta GSE 1% del contributo, max 250 euro + IVA, sulla prima rata.
     cumulabilita:
       con_fondo_perduto: nei_limiti
       regola: >-
@@ -135,11 +148,11 @@ misure:
         fondi di rotazione e contributi in conto interessi (quindi si' Fondo di garanzia PMI e
         Nuova Sabatini). Per le imprese, art. 27: cumulabile con altri aiuti di Stato sugli stessi
         costi (es. bandi regionali/camerali) nel limite delle intensita' massime sopra (65%/60%,
-        65%/55%/45%). Il GSE (FAQ) considera incentivi statali anche detrazioni fiscali, crediti
-        d'imposta, Transizione 5.0 e iperammortamento: quindi NON cumulabile con iperammortamento
-        e crediti d'imposta sulle stesse spese (posizione prudente da seguire). Va dichiarato
+        65%/55%/45%). Il GSE (FAQ sul cumulo, KB0017765) considera incentivi statali anche detrazioni fiscali
+        (Ecobonus), crediti d'imposta, Transizione 5.0, superammortamento e iperammortamento: quindi NON
+        cumulabile con questi sulle stesse spese; esclusi anche i Certificati Bianchi. Va dichiarato
         ogni altro aiuto (codici COR del Registro Nazionale Aiuti).
-      riferimento: "DM 7/8/2025 artt. 17 e 27; Regole Applicative GSE par. 4.5"
+      riferimento: "DM 7/8/2025 artt. 17 e 27; Regole Applicative GSE par. 4.5; FAQ GSE sul cumulo (KB0017765)"
     attenzione: >-
       Richiesta preliminare prima dell'avvio dei lavori (anche un ordine firmato o un acconto fanno
       partire i lavori). Domanda entro 90 giorni dalla fine lavori, a pena di inammissibilita'.
@@ -155,7 +168,7 @@ misure:
           e aggiunge il solare termico per l'acqua calda: spesa 180.000 euro. Sul Titolo III una piccola impresa
           arriva al 65%, cioe' fino a circa 117.000 euro, ma il valore reale dipende dai costi massimi unitari
           (euro/kW, euro/m2) e puo' essere piu' basso. Richiesta preliminare al GSE prima di firmare l'ordine;
-          sopra i 15.000 euro il pagamento e' in rate annuali (quante, per questa taglia: da verificare).
+          contributo sopra i 15.000 euro e pompa di calore oltre 35 kW: pagamento in 5 rate annuali.
       - profilo: manifattura
         interesse: alto
         esempio: >-
@@ -163,15 +176,15 @@ misure:
           multi-intervento: 30% + 10 punti media impresa = 40%, cioe' 180.000 euro; 55% se la prestazione
           energetica migliora di almeno il 40%) e pompe di calore per 150.000 euro (Titolo III, media impresa 55%:
           82.500 euro). In tutto circa 262.500 euro su 600.000, entro i costi massimi unitari. Sulle stesse spese
-          niente iperammortamento ne' Ecobonus: bisogna scegliere.
+          niente iperammortamento, superammortamento ne' Ecobonus: bisogna scegliere.
       - profilo: logistica
         interesse: alto
         esempio: >-
           Sei magazzini da 3.000 m2, media impresa: LED in tutti per circa 40.000 euro a sede, 240.000 in tutto.
           Intervento singolo di efficienza (Titolo II): 25% + 10 punti media impresa = 35%, circa 84.000 euro,
           con una pratica per ogni edificio. I magazzini devono essere in una categoria catastale ammessa
-          (gruppo D escluso D/9: da verificare sede per sede) e risparmiare almeno il 10%; dove non sono
-          riscaldati non ci sono interventi termici da fare.
+          (gruppo D escluso D/9: da controllare sede per sede) e risparmiare almeno il 10% di energia primaria,
+          da dimostrare con APE prima e dopo; dove non sono riscaldati non ci sono interventi termici da fare.
       - profilo: artigiano
         interesse: alto
         esempio: >-
@@ -183,16 +196,16 @@ misure:
         interesse: alto
         esempio: >-
           Azienda con serre (piccola impresa) che installa un generatore a biomassa da 200 kW per scaldarle:
-          spesa 120.000 euro. Il Titolo III ammette la biomassa anche per serre e calore di processo: 65% per una
-          piccola impresa, fino a circa 78.000 euro entro i costi massimi unitari. Eventuali regole diverse per
-          gli aiuti al settore agricolo: da verificare con il GSE.
+          spesa 120.000 euro. Il Titolo III ammette la biomassa anche per serre e calore di processo e, per le
+          aziende agricole, anche la nuova installazione (art. 25 c. 4): 65% per una piccola impresa, fino a circa
+          78.000 euro entro i costi massimi unitari.
       - profilo: negozio
         interesse: medio
         esempio: >-
           Negozio di 150 m2 (categoria C/1, micro impresa) che passa a una pompa di calore da 12 kW (12.000 euro)
           e ai LED (6.000 euro). Pompa di calore al 65% = 7.800 euro; LED al 50% (multi-intervento) = 3.000 euro:
           circa 10.800 euro, in una sola rata perche' sotto i 15.000. Per il multi-intervento serve un risparmio
-          del 20%; se il locale e' in affitto serve la disponibilita' dell'edificio (assenso del proprietario: da verificare).
+          del 20%; se il locale e' in affitto basta il contratto, con l'autorizzazione del proprietario (Modello 18 GSE).
       - profilo: ufficio_servizi
         interesse: medio
         esempio: >-
@@ -205,8 +218,16 @@ misure:
         esempio: >-
           In coworking non c'e' un edificio a disposizione: niente Conto Termico. Con un ufficio in affitto si puo'
           al massimo cambiare la climatizzazione (pompa di calore da 8 kW, 6.000 euro: 65% = 3.900 euro), con
-          l'assenso del proprietario. Beneficio piccolo rispetto alle pratiche.
-    fonte_verificata_il: "2026-10-05"
+          l'autorizzazione del proprietario (Modello 18). Server, software e licenze non sono finanziabili.
+          Beneficio piccolo rispetto alle pratiche.
+    fiscale: >-
+      Contributo in conto impianti (Regole Applicative par. 4.6): niente ritenuta del 4%, fuori campo IVA.
+      IRES/IRPEF: non e' una sopravvenienza (art. 88 c. 3 lett. b TUIR), concorre al reddito pro quota insieme
+      all'ammortamento del bene (OIC 16: costo ridotto o risconto, stesso effetto). IRAP: per le societa' di
+      capitali concorre alla base imponibile (art. 5 c. 3 D.Lgs. 446/1997). Forfettari: da verificare con il
+      commercialista. Esempio: 65.000 euro di contributo su 100.000, ammortamento al 10%: circa 1.814 euro di
+      IRES+IRAP in piu' l'anno per 10 anni, beneficio netto circa 46.860 euro (47% della spesa).
+    fonte_verificata_il: "2026-10-07"
 
   - id: iperammortamento_2026
     nome: "Iperammortamento 2026 (Nuovo Piano Transizione 5.0)"
@@ -217,6 +238,8 @@ misure:
       Legge 30 dicembre 2025 n. 199 (Legge di bilancio 2026), art. 1, commi 427-436, allegati IV e V;
       DL 27 marzo 2026 n. 38, art. 7 (eliminato il vincolo di beni prodotti in UE/SEE);
       DM MIMIT-MEF 7 maggio 2026 (modalita' attuative); DD MIMIT 10 giugno 2026 (termini e modelli).
+      Dal 1/1/2027 la norma passa nell'art. 364 del nuovo TUIR (D.Lgs. 19 giugno 2026 n. 117) e gli allegati
+      IV e V diventano gli allegati E (beni materiali) ed F (beni immateriali), con lo stesso contenuto.
     url_ufficiale: "https://www.mimit.gov.it/it/incentivi/nuovo-piano-transizione-5-0-iperammortamento"
     in_vigore_dal: "2026-01-01"
     in_vigore_fino_al: "2028-09-30"
@@ -229,9 +252,10 @@ misure:
       recuperato negli anni di ammortamento. Servono comunicazioni al GSE, perizia e certificazione.
     a_chi_si_rivolge: >-
       Tutte le imprese residenti e le stabili organizzazioni in Italia, di ogni forma, settore e
-      dimensione, che determinano il reddito d'impresa. Esclusi (fonti secondarie concordi, da
-      verificare sul testo di legge): imprese in liquidazione o procedure concorsuali, imprese con
-      sanzioni interdittive D.Lgs. 231/2001, lavoratori autonomi, forfettari, imprese agricole a
+      dimensione, che determinano il reddito d'impresa. Esclusi per norma (comma 428; dal 2027 art. 364
+      nuovo TUIR): imprese in liquidazione volontaria o procedure concorsuali (o con procedimento in corso),
+      imprese con sanzioni interdittive D.Lgs. 231/2001. Esclusi perche' senza reddito d'impresa o senza
+      deduzione degli ammortamenti: professionisti e lavoratori autonomi, forfettari, imprese agricole a
       reddito catastale. Condizione: rispetto delle norme sulla sicurezza sul lavoro e regolarita' contributiva.
     soggetti_ammessi: [impresa]
     dimensioni_ammesse: []
@@ -240,9 +264,17 @@ misure:
       solo a chi ha reddito d'impresa tassabile (in perdita il beneficio si sposta negli anni o si perde).
     investimenti_ammessi: >-
       a) Beni materiali e immateriali nuovi elencati negli allegati IV e V alla L. 199/2025 (sostituiscono
-      gli ex allegati A e B dell'Industria 4.0), destinati a strutture produttive in Italia e interconnessi
-      al sistema aziendale di gestione della produzione o alla rete di fornitura. Dal DL 38/2026 non serve
-      piu' che siano prodotti in UE/SEE.
+      gli ex allegati A e B dell'Industria 4.0; dal 2027 allegati E ed F del nuovo TUIR), destinati a
+      strutture produttive in Italia e interconnessi al sistema aziendale di gestione della produzione o alla
+      rete di fornitura. Dal DL 38/2026 non serve piu' che siano prodotti in UE/SEE. Allegato IV comprende
+      anche magazzini automatici, AGV, casse self-checkout, totem e vetrine interconnesse, e un nuovo gruppo
+      hardware (server GPU, edge computing, storage, 5G privato, firewall industriali, backup) al servizio dei
+      beni 4.0; esclusi pc, notebook, tablet, stampanti e beni d'ufficio, amministrativi e contabili.
+      Allegato V (software): CAD/CAM, PLM, MES, SCADA, CMMS, logistica e supply chain, analytics, low-code,
+      IA generativa e agenti di IA, MLOps, EMS e carbon footprint, cybersecurity. ERP solo per i moduli di
+      produzione/logistica/filiera (non contabilita', fatturazione, paghe). Ammesse le licenze acquistate e
+      ammortizzabili (anche se girano in cloud); abbonamenti SaaS non ammessi perche' non ammortizzabili
+      (nessuna norma sul cloud come nel 2018; manca un chiarimento ufficiale).
       b) Beni per autoproduzione di energia rinnovabile destinata all'autoconsumo: gruppi di generazione
       elettrica, trasformatori e misuratori, impianti termici per calore di processo elettrificato,
       servizi ausiliari, accumuli; producibilita' massima 105% del fabbisogno della struttura produttiva;
@@ -265,8 +297,8 @@ misure:
         secondo: 100% x 24% = 24%; terzo: 50% x 24% = 12%. Solo per un'impresa in utile e capiente,
         distribuito sugli anni di ammortamento (o del leasing), quindi il valore attuale e' un po' piu'
         basso. Per ditte individuali e societa' di persone conta l'aliquota IRPEF marginale (puo' essere
-        piu' alta, fino al 43% piu' addizionali). Non riduce l'IRAP (da verificare). Se c'e' un contributo
-        a fondo perduto sullo stesso bene, la base si riduce (vedi ricerca).
+        piu' alta, fino al 43% piu' addizionali). Non riduce l'IRAP. Se c'e' un contributo a fondo perduto
+        sullo stesso bene, la base si riduce.
     come_si_ottiene: >-
       Tutto sulla piattaforma GSE (Area Clienti, SPID/CIE), per ogni struttura produttiva:
       1) comunicazione preventiva (piattaforma aperta dal 12/06/2026) con beni, importi, data prevista
@@ -283,7 +315,8 @@ misure:
       La maggiorazione si usa dal periodo d'imposta in cui si invia la comunicazione di completamento,
       se il bene e' entrato in funzione nello stesso periodo e dopo l'esito positivo del GSE; poi
       in dichiarazione dei redditi anno per anno, lungo tutta la durata dell'ammortamento (di solito
-      5-10 anni secondo i coefficienti) o del leasing.
+      5-10 anni secondo i coefficienti) o del leasing. Investimenti completati dal 1/1/2026 al 30/9/2028.
+      L'acconto delle imposte 2026 si calcola senza l'iperammortamento.
     cumulabilita:
       con_fondo_perduto: si
       regola: >-
@@ -303,10 +336,11 @@ misure:
       caratteristiche da allegato IV/V e interconnessione. Certificazione contabile di un revisore
       legale. Interconnessione entro il completamento: senza, niente beneficio. Termini delle
       comunicazioni perentori (mancato invio = beneficio perso). Decadenza se il bene viene venduto o
-      spostato all'estero durante la fruizione senza sostituirlo con un bene nuovo analogo, per
-      documenti mancanti o dichiarazioni false; controlli GSE nei termini dell'accertamento fiscale,
-      recupero con interessi e sanzioni. Beni nuovi, niente usato. Copertura finanziaria e eventuali
-      tetti di spesa complessivi: da verificare.
+      spostato all'estero durante la fruizione senza sostituirlo nello stesso anno con un bene nuovo con
+      caratteristiche analoghe o superiori, per documenti mancanti o dichiarazioni false; controlli GSE nei
+      termini dell'accertamento fiscale, recupero con interessi e sanzioni. Beni nuovi, niente usato.
+      Nessun tetto di spesa complessivo per le imprese: il MEF monitora l'andamento della spesa e il Ministro
+      puo' intervenire se supera le previsioni.
     esempi:
       - profilo: manifattura
         interesse: alto
@@ -319,11 +353,11 @@ misure:
       - profilo: logistica
         interesse: alto
         esempio: >-
-          Magazzino automatico con scaffalature robotizzate e software di gestione interconnesso per 800.000 euro
-          (presenza negli allegati IV/V da verificare con il perito): circa 345.600 euro di IRES in meno in piu'
-          anni. Il fotovoltaico sui tetti dei magazzini e' ammesso per l'autoconsumo entro il 105% del fabbisogno
+          Magazzino automatico interconnesso al gestionale, AGV e software di logistica per 800.000 euro
+          (magazzini automatici e software di logistica sono negli allegati IV/V): circa 345.600 euro di IRES in
+          meno in piu' anni. Il fotovoltaico sui tetti dei magazzini e' ammesso per l'autoconsumo entro il 105% del fabbisogno
           di ciascuna struttura, con comunicazioni separate per ogni struttura produttiva. Camion e furgoni non
-          sono beni 4.0 (eventuali casi particolari da verificare).
+          sono beni 4.0: non compaiono negli allegati.
       - profilo: artigiano
         interesse: alto
         esempio: >-
@@ -336,35 +370,45 @@ misure:
         esempio: >-
           Hotel (srl in utile) che installa 50 kW di fotovoltaico in autoconsumo per 60.000 euro: circa 25.900 euro
           di IRES in meno in piu' anni, se l'impianto non supera il 105% del fabbisogno. Le attrezzature da cucina
-          contano solo se sono negli allegati IV/V e interconnesse: da verificare con il perito. Se il fotovoltaico
+          contano solo se sono nell'allegato IV e interconnesse: da verificare con il perito. Se il fotovoltaico
           va nel Conto Termico insieme a una pompa di calore, sulle stesse spese bisogna scegliere.
       - profilo: agricola
         interesse: medio
         esempio: >-
           Trattore con guida satellitare e raccolta dati interconnessa da 150.000 euro: per una societa' agricola
           che tassa a bilancio, circa 64.800 euro di imposte in meno (43,2%) negli anni. Le imprese agricole a
-          reddito catastale sono escluse (da verificare sul testo di legge): per molte aziende agricole il
-          beneficio e' zero. La perizia la puo' firmare un agronomo.
+          reddito catastale non deducono ammortamenti, quindi di fatto sono escluse: per molte aziende agricole
+          il beneficio e' zero. La perizia la puo' firmare un agronomo.
       - profilo: negozio
         interesse: basso
         esempio: >-
-          Un negozio compra raramente beni 4.0. L'uso tipico e' il fotovoltaico in autoconsumo, se c'e' un tetto
-          disponibile: 20 kW per 25.000 euro, circa 10.800 euro di IRES in meno per una srl in utile. Perizia,
-          certificazione e quattro comunicazioni al GSE riducono parecchio il vantaggio netto.
+          Casse self-checkout, totem e vetrine interconnesse al gestionale sono ora nell'allegato IV: 40.000 euro
+          valgono circa 17.280 euro di IRES in meno per una srl in utile. In alternativa il fotovoltaico in
+          autoconsumo, se c'e' un tetto disponibile. Perizia, certificazione e quattro comunicazioni al GSE
+          riducono parecchio il vantaggio netto sugli importi piccoli.
       - profilo: ufficio_servizi
         interesse: basso
         esempio: >-
-          Computer e programmi da ufficio comuni non rientrano: servono beni degli allegati IV/V interconnessi.
-          Un software gestionale specialistico da 20.000 euro (se e' nell'allegato V: da verificare) darebbe circa
-          8.640 euro di IRES in meno negli anni, a fronte dei costi di perizia e certificazione. Gli studi
-          professionali senza reddito d'impresa sono esclusi.
+          Computer e programmi da ufficio, contabilita' e fatturazione non rientrano: servono beni degli allegati
+          IV/V interconnessi. Una licenza acquistata di un software dell'allegato V (es. cybersecurity) da 20.000
+          euro darebbe circa 8.640 euro di IRES in meno negli anni, a fronte dei costi di perizia e
+          certificazione; gli abbonamenti SaaS non valgono. Gli studi professionali senza reddito d'impresa sono esclusi.
       - profilo: startup
         interesse: basso
         esempio: >-
-          Server e software 4.0 per 50.000 euro varrebbero circa 21.600 euro di imposte in meno, ma solo quando
-          l'impresa avra' utili tassabili: in perdita il beneficio si sposta negli anni (riporto delle perdite: da
-          verificare) o si perde. Per una startup in perdita conta di piu' il credito ricerca e sviluppo, che si usa in F24.
-    fonte_verificata_il: "2026-10-05"
+          Server GPU e licenze acquistate di software dell'allegato V (es. IA generativa) per 50.000 euro varrebbero
+          circa 21.600 euro di imposte in meno, ma solo quando l'impresa avra' utili tassabili: in perdita il
+          beneficio si sposta negli anni (riporto delle perdite: da verificare con il commercialista) o si perde.
+          Gli abbonamenti SaaS non rientrano. Per una startup in perdita conta di piu' il credito ricerca e sviluppo, che si usa in F24.
+    fiscale: >-
+      Vale solo per le imposte sui redditi (IRES, o IRPEF per ditte individuali e societa' di persone):
+      deduzione extracontabile delle quote di ammortamento o dei canoni di leasing maggiorati. NON riduce
+      l'IRAP (comma 427 "ai fini delle imposte sui redditi", art. 4 DM 7/5/2026; per le misure analoghe
+      Circolare AdE 4/E/2017 par. 5.1): ai fini IRAP resta deducibile solo l'ammortamento normale.
+      Esempio: macchinario da 200.000 euro, srl, ammortamento in 5 anni: 17.280 euro di IRES in meno l'anno
+      (86.400 in tutto); i 72.000 euro annui di maggiorazione non contano per l'IRAP. Non e' un ricavo
+      tassabile e non si usa in F24. Acconto 2026 calcolato senza iperammortamento.
+    fonte_verificata_il: "2026-10-07"
 
   - id: credito_rs_2026
     nome: "Credito d'imposta ricerca e sviluppo"
@@ -372,8 +416,10 @@ misure:
     tipo: credito_imposta
     ente: "MIMIT (comunicazioni, certificazione) e Agenzia delle Entrate (utilizzo e controlli)"
     norma: >-
-      Legge 27 dicembre 2019 n. 160, art. 1, commi 198-209, e modifiche; DM 26 maggio 2020;
-      DL 29 marzo 2024 n. 39, art. 6 (comunicazioni preventive e consuntive).
+      Legge 27 dicembre 2019 n. 160, art. 1, commi 198-209, e modifiche (comma 200 spese, 203-bis base al
+      netto dei contributi, 204 utilizzo e regime fiscale); DM 26 maggio 2020; DL 29 marzo 2024 n. 39, art. 6
+      (comunicazioni preventive e consuntive); DL 73/2022 art. 23 e DPCM 15/9/2023 (certificazione tecnica);
+      Linee guida MIMIT 4 luglio 2024 sulla qualificazione delle attivita'. La L. 199/2025 non lo modifica.
     url_ufficiale: "https://www.mimit.gov.it/it/incentivi/credito-d-imposta-r-s"
     in_vigore_dal: "2023-01-01"
     in_vigore_fino_al: "2031-12-31"
@@ -384,26 +430,41 @@ misure:
       ricerca, quote di ammortamento di strumenti, materiali) come credito da usare in F24 per pagare
       tasse e contributi. Massimo 5 milioni l'anno. Non vale per l'acquisto di macchinari di produzione.
     a_chi_si_rivolge: >-
-      Tutte le imprese residenti in Italia, a prescindere da forma, settore e dimensione, che svolgono
-      attivita' di R&S ammissibili secondo il Manuale di Frascati e il DM 26/5/2020. Escluse le imprese
-      in liquidazione o procedure concorsuali e quelle con sanzioni interdittive (da verificare
-      l'elenco completo sul testo di legge).
+      Tutte le imprese residenti in Italia e le stabili organizzazioni, a prescindere da forma, settore,
+      dimensione e regime di determinazione del reddito (comma 199): anche imprese agricole a reddito
+      catastale e forfettari (spese contate per l'importo deducibile in via analitica, DM 26/5/2020 art. 6),
+      che svolgono attivita' di R&S ammissibili secondo il Manuale di Frascati e il DM 26/5/2020. Escluse
+      (comma 199) le imprese in liquidazione volontaria, fallimento o liquidazione giudiziale, liquidazione
+      coatta, concordato senza continuita' o altre procedure concorsuali (anche in corso di dichiarazione) e
+      quelle con sanzioni interdittive D.Lgs. 231/2001. Condizione: rispetto delle norme sulla sicurezza sul
+      lavoro e regolarita' contributiva.
     soggetti_ammessi: [impresa]
     dimensioni_ammesse: []
-    settori_esclusi: "Nessun settore escluso in quanto tale (da verificare)."
+    settori_esclusi: "Nessun settore escluso in quanto tale (comma 199)."
     investimenti_ammessi: >-
-      Spese per attivita' di ricerca fondamentale, ricerca industriale e sviluppo sperimentale:
-      personale, quote di ammortamento di beni materiali e software usati nel progetto, contratti di
-      ricerca extra-muros, servizi di consulenza, materiali e forniture, privative industriali (con
-      limiti percentuali fissati dalla norma, da verificare caso per caso).
+      Spese per attivita' di ricerca fondamentale, ricerca industriale e sviluppo sperimentale (comma 200):
+      a) personale, per le ore dedicate (timesheet giornalieri nominativi; amministratori e soci max 50% del
+      compenso fisso), al 150% per under 35 al primo impiego, a tempo indeterminato, con dottorato o laurea
+      magistrale tecnico-scientifica; b) quote di ammortamento, canoni e altre spese per beni materiali mobili
+      e software usati nel progetto, per la quota di uso in R&S, in tutto max 30% delle spese di personale;
+      c) ricerca extra muros, al 150% se con universita', enti di ricerca o startup innovative in Italia;
+      d) privative industriali (brevetti, topografie, varieta' vegetali) max 1 milione, non infragruppo;
+      e) consulenze max 20% delle spese di personale; f) materiali e forniture max 30%.
+      Software: R&S solo se il progetto risolve un'incertezza tecnologica (Frascati 2.68-2.73, Linee guida
+      MIMIT 2024: ammessi campi come IA, cybersecurity, big data, cloud, blockchain); non lo sono gestionali,
+      siti, personalizzazioni, integrazione di API di mercato, migrazioni in cloud. Licenze e abbonamenti
+      software usati nel progetto entrano nella voce b); per i servizi cloud la voce va verificata con il
+      certificatore. Non ammessi: macchinari di produzione, commercializzazione, modifiche di routine,
+      reverse engineering.
     categorie_spesa: [ricerca_sviluppo]
     intensita: >-
       10% della base di calcolo, massimo 5 milioni di euro per periodo d'imposta, per i periodi dal
       2023 al 2031. Base al netto di altre sovvenzioni o contributi ricevuti per le stesse spese.
       Nel 2026 aliquota unica 10% in tutta Italia: le maggiorazioni per il Mezzogiorno e le aree sisma
       (art. 244 DL 34/2020: 25% grandi, 35% medie, 45% piccole) valevano fino al 2025 e non risultano
-      prorogate dalla L. 199/2025 (pagina MIMIT senza maggiorazioni per il 2026, fonti secondarie concordi;
-      testo della legge non letto per intero).
+      prorogate dalla L. 199/2025 (la pagina MIMIT non le riporta per il 2026). Il costo della certificazione
+      contabile, per le imprese non obbligate alla revisione, si aggiunge al credito fino a 5.000 euro.
+      Non serve il rispetto del de minimis ne' del GBER.
     beneficio_stimato:
       percentuale_min: 10
       percentuale_max: 10
@@ -415,19 +476,25 @@ misure:
       dell'utilizzo; 2) comunicazione consuntiva a fine periodo; 3) certificazione contabile delle
       spese da revisore legale; 4) relazione tecnica sul progetto; facoltativa la certificazione
       tecnica di un certificatore iscritto all'albo MIMIT (protegge da contestazioni sulla
-      qualificazione); 5) indicazione in dichiarazione e utilizzo in F24 dal periodo successivo
-      (tre quote annuali, da verificare la regola vigente).
+      qualificazione, ha effetti vincolanti per l'Agenzia salvo attivita' diversa da quella svolta);
+      5) indicazione in dichiarazione (quadro RU) e utilizzo in F24 (codice tributo 6938) dal periodo successivo.
+      Le comunicazioni passano dalla piattaforma GSE con il modello MIMIT del 24/4/2024; senza, la
+      compensazione in F24 viene bloccata (ris. AdE 19/E/2024).
     tempi: >-
-      Il credito si usa in compensazione dal periodo d'imposta successivo a quello delle spese, dopo
-      la certificazione contabile e le comunicazioni al MIMIT (ripartizione in quote annuali: da verificare).
+      Il credito si usa in compensazione dal periodo d'imposta successivo a quello delle spese, in tre quote
+      annuali di pari importo (comma 204), dopo la certificazione contabile e le comunicazioni al MIMIT.
+      Per spese 2026: un terzo nel 2027, uno nel 2028, uno nel 2029. Non si puo' cedere.
     cumulabilita:
       con_fondo_perduto: nei_limiti
       regola: >-
-        Base di calcolo al netto delle sovvenzioni ricevute per le stesse spese; cumulabile con altre
-        agevolazioni sugli stessi costi se il totale (anche considerando la non tassazione del
-        credito) non supera il costo sostenuto. Il riferimento puntuale al comma della L. 160/2019
-        e' da verificare. Sui beni strumentali non si sovrappone all'iperammortamento (costi diversi).
-      riferimento: "L. 160/2019 art. 1 commi 198-209"
+        Base di calcolo al netto delle sovvenzioni ricevute per le stesse spese (comma 203-bis); cumulabile
+        con altre agevolazioni sugli stessi costi se il totale (anche considerando la non tassazione del
+        credito) non supera il costo sostenuto (comma 204). Esempio: bando regionale al 50% su 100.000 euro
+        di ricerca = base 50.000, credito 5.000. Con l'iperammortamento 2026 cumulabile se non coprono le
+        stesse quote di costo (quota di un bene iperammortizzato usato nel progetto: da verificare caso per
+        caso). Con il patent box (110%) puo' convivere sulle stesse spese nel limite del costo (norma ora nel
+        nuovo TUIR D.Lgs. 117/2026: riferimento da verificare con il commercialista).
+      riferimento: "L. 160/2019 art. 1 commi 203-bis e 204"
     attenzione: >-
       Rischio principale: contestazione della natura di R&S da parte dell'Agenzia (recupero con
       interessi e sanzioni); conviene la certificazione tecnica. Comunicazioni al MIMIT obbligatorie
@@ -470,8 +537,8 @@ misure:
         interesse: basso
         esempio: >-
           Sperimentazione con un'universita' su nuove varieta' o tecniche di trasformazione (50.000 euro): credito
-          di 5.000 euro. L'acquisto di macchine e impianti non conta. Accesso per le imprese agricole a reddito
-          catastale: da verificare.
+          di 5.000 euro. L'acquisto di macchine e impianti non conta. Ammesse anche le imprese agricole a reddito
+          catastale (comma 199).
       - profilo: ufficio_servizi
         interesse: basso
         esempio: >-
@@ -487,7 +554,12 @@ misure:
         esempio: >-
           Un bar, un ristorante o un hotel di norma non fa ricerca e sviluppo ammissibile: nuovi menu,
           ristrutturazioni e software di prenotazione non contano.
-    fonte_verificata_il: "2026-10-05"
+    fiscale: >-
+      Il credito non concorre al reddito (IRES/IRPEF) ne' alla base IRAP (comma 204): in dichiarazione si fa una
+      variazione in diminuzione; le spese che lo generano restano deducibili. Non rileva per gli artt. 61 e 109
+      c. 5 TUIR (interessi passivi e costi generali). Nessun limite annuo alle compensazioni ne' limite RU.
+      Esempio: se fosse tassato (IRES 24% + IRAP 3,9%), su 31.000 euro di credito se ne perderebbero circa 8.600.
+    fonte_verificata_il: "2026-10-07"
 
   - id: credito_zes_unica_2026
     nome: "Credito d'imposta ZES unica (investimenti nel Mezzogiorno e in Marche, Umbria, Abruzzo)"
@@ -496,7 +568,9 @@ misure:
     ente: "Agenzia delle Entrate (comunicazioni e utilizzo); Struttura di missione ZES"
     norma: >-
       Legge 30 dicembre 2025 n. 199, art. 1, commi 438-443 (anni 2026-2028); disciplina di base
-      art. 16 DL 124/2023; Provvedimento Agenzia delle Entrate 30 gennaio 2026 (modelli).
+      art. 16 DL 124/2023 (agricoltura primaria, pesca e acquacoltura: credito separato art. 16-bis);
+      decreto attuativo 17 maggio 2024; Provvedimento Agenzia delle Entrate 30 gennaio 2026 (modelli).
+      Aiuto di Stato a finalita' regionale (Reg. UE 651/2014, GBER).
     url_ufficiale: "https://www.agenziaentrate.gov.it/portale/credito-d-imposta-per-investimenti-nella-zes-unica-zes-2026-/che-cos-"
     in_vigore_dal: "2026-01-01"
     in_vigore_fino_al: "2028-12-31"
@@ -506,118 +580,155 @@ misure:
       strumentali in una struttura produttiva in Basilicata, Calabria, Campania, Molise, Puglia,
       Sardegna, Sicilia, Abruzzo, Marche o Umbria ricevono un credito d'imposta pari all'intensita'
       degli aiuti a finalita' regionale della zona (fino al 60% per una piccola impresa nelle regioni
-      meno sviluppate), ridotto in proporzione se le richieste superano le risorse.
+      meno sviluppate, 70% a Taranto), ridotto in proporzione se le richieste superano le risorse.
+      Il software non e' tra le spese ammesse.
       Si chiede ogni anno in una finestra precisa.
     a_chi_si_rivolge: >-
-      Imprese di ogni dimensione, gia' operative o che si insediano nella ZES unica, con
-      struttura produttiva nelle regioni indicate.
+      Imprese di ogni dimensione, forma giuridica e regime contabile, gia' operative o che si insediano
+      nella ZES unica, con struttura produttiva nelle regioni indicate (anche con sede altrove). In Abruzzo,
+      Marche e Umbria solo i comuni della Carta degli aiuti regionali (allegato 1 delle istruzioni AdE).
     soggetti_ammessi: [impresa]
     dimensioni_ammesse: []
     settori_esclusi: >-
-      Esclusi per la disciplina ZES (da verificare l'elenco aggiornato): siderurgia, carbone e lignite,
-      trasporti e relative infrastrutture, produzione/trasporto/distribuzione di energia e relative
-      infrastrutture, banda larga, settori creditizio, finanziario e assicurativo; regole specifiche
-      per agricoltura, pesca e acquacoltura (modelli e percentuali separati). Escluse imprese in difficolta'.
+      Esclusi (elenco dell'Agenzia delle Entrate): siderurgia, carbone e lignite, trasporti e relative
+      infrastrutture (ma magazzinaggio e attivita' di supporto ai trasporti sono ammessi), produzione,
+      stoccaggio, trasmissione e distribuzione di energia e relative infrastrutture, banda larga, settori
+      creditizio, finanziario e assicurativo; imprese in liquidazione, scioglimento o difficolta'.
+      Produzione agricola primaria, pesca e acquacoltura: credito ZES separato (art. 16-bis DL 124/2023,
+      altro modello); la trasformazione e commercializzazione di prodotti agricoli usa questo modello
+      (codice "casi particolari").
     investimenti_ammessi: >-
       Acquisto (anche in leasing) di macchinari, impianti e attrezzature nuovi destinati a strutture
-      produttive nella ZES; acquisto di terreni e acquisizione, realizzazione o ampliamento di immobili
-      strumentali (con limiti percentuali sul progetto, da verificare). Progetto da almeno 200.000 euro,
-      massimo 100 milioni per progetto (2026). Spese dal 1/1/2026 al 31/12/2026 per il credito 2026.
+      produttive nella ZES; acquisto di terreni e acquisto, costruzione o ampliamento di immobili
+      strumentali (anche usati), che valgono al massimo il 50% dell'investimento agevolato (risposta AdE
+      183/2025: un progetto di solo immobile non e' agevolabile). Solo "investimento iniziale" (nuovo
+      stabilimento, ampliamento, nuova produzione, cambiamento sostanziale del processo), non la semplice
+      sostituzione. Soglia di 200.000 euro sul costo complessivo del progetto (comprese le spese non
+      ammesse), credito calcolato su massimo 100 milioni. Spese dal 1/1/2026 al 31/12/2026 per il credito
+      2026. Non ammessi: software (licenze, cloud/SaaS, gestionali, MES, CAD, cybersecurity, IA), beni usati
+      (salvo immobili), materiali di consumo e merci, beni da societa' collegate o fuori mercato,
+      manutenzioni. L'hardware (server, sensori, robot) puo' rientrare come attrezzatura; il software di
+      controllo compreso nel prezzo della macchina in genere la segue (se fatturato a parte: da verificare).
     # Regioni della ZES unica: la misura compare solo per bandi e imprese di queste regioni.
     regioni: [ABR, BAS, CAL, CAM, MAR, MOL, PUG, SAR, SIC, UMB]
-    categorie_spesa: [macchinari_attrezzature, opere_edili_impianti, software_digitale]
+    categorie_spesa: [macchinari_attrezzature, opere_edili_impianti]
     intensita: >-
-      Intensita' massime della Carta degli aiuti a finalita' regionale 2022-2027 per la zona del comune
-      (maggiorate per piccole e medie imprese), nel rispetto del Reg. UE 651/2014 (GBER). Il credito
-      effettivo e' poi ridotto da una percentuale di riparto fissata dall'Agenzia in base alle risorse
-      (2,3 miliardi per il 2026): per il 2025 il credito fruibile e' stato il 60,3811% del richiesto,
-      portato al 75% con il contributo aggiuntivo della Legge di bilancio 2026. Percentuale 2026 da verificare.
-      Valori per regione e per comune da verificare sulla Carta.
+      Intensita' massime della Carta degli aiuti a finalita' regionale 2022-2027 (istruzioni AdE, progetti
+      fino a 50 milioni), piccola/media/grande impresa: Campania, Puglia, Calabria, Sicilia 60/50/40%;
+      Basilicata, Sardegna, Molise 50/40/30%; Taranto 70/60/50% e Sulcis-Iglesiente 60/50/40% (Fondo per una
+      transizione giusta); zone ammesse di Abruzzo, Marche, Umbria 35/25/15%. Sopra 50 milioni percentuali
+      piu' basse; +10 punti (zone a) o +5 (zone c) per investimenti STEP (Reg. UE 2024/795).
+      Il credito effettivo e' poi ridotto da una percentuale di riparto fissata dall'Agenzia in base alle
+      risorse (2,3 miliardi per il 2026): per il 2025 il credito fruibile e' stato il 60,3811% del richiesto,
+      portato al 75% con il contributo aggiuntivo della Legge di bilancio 2026. Percentuale 2026 non ancora
+      pubblicata (07/10/2026): arriva entro dieci giorni dalla scadenza delle integrative, fine gennaio 2027
+      (comma 441).
     beneficio_stimato:
       percentuale_min: 5
-      percentuale_max: 60
+      percentuale_max: 70
       nota: >-
         Beneficio = intensita' della zona x percentuale di riparto. Massimo teorico 60% (piccola impresa
-        in zona 107.3.a) prima del riparto; con un riparto del 75% come nel 2025 diventa 45%. Nelle aree
-        107.3.c (parti di Abruzzo, Marche, Umbria) l'intensita' e' molto piu' bassa. Credito d'imposta da
-        usare in F24: vale anche per imprese in perdita.
+        nelle regioni meno sviluppate; 70% a Taranto) prima del riparto; con un riparto del 75% come nel 2025
+        il 60% diventa 45%. Nelle zone ammesse di Abruzzo, Marche, Umbria 15-35%. Credito d'imposta da
+        usare in F24: vale anche per imprese in perdita. Probabilmente tassato come contributo (vedi fiscale).
     come_si_ottiene: >-
       1) Comunicazione preventiva all'Agenzia delle Entrate con il software gratuito, nella finestra
       annuale (per il 2026: dal 31/03/2026 al 30/05/2026, gia' chiusa) con spese gia' sostenute e previste;
       2) comunicazione integrativa a investimento realizzato (per il 2026: dal 03/01/2027 al 17/01/2027),
       a pena di decadenza, con certificazione delle spese da revisore legale;
-      3) utilizzo in compensazione in F24 dopo il provvedimento con la percentuale di riparto.
+      3) utilizzo in compensazione in F24 (codice tributo 7034), solo con i servizi telematici dell'Agenzia,
+      dal giorno lavorativo successivo al provvedimento con la percentuale di riparto e dopo la ricevuta di
+      riconoscimento. Per leasing e acquisti senza fattura elettronica la certificazione va inviata entro 30
+      giorni; sopra 150.000 euro di credito si usa dopo i controlli antimafia. Prossime finestre: dal 31/3 al
+      30/5/2027 e dal 31/3 al 30/5/2028.
     tempi: >-
-      Il credito diventa utilizzabile dopo la comunicazione integrativa e il provvedimento dell'Agenzia
-      sulla percentuale (indicativamente nel corso dell'anno successivo all'investimento, da verificare).
+      Investimenti da concludere entro il 31/12 dell'anno (2026: entro il 31/12/2026). Il credito diventa
+      utilizzabile dopo la comunicazione integrativa (3-17 gennaio 2027) e il provvedimento dell'Agenzia sulla
+      percentuale, entro dieci giorni dalla scadenza dell'integrativa (fine gennaio 2027). Nessun limite annuo
+      alle compensazioni (ne' 250.000 euro dei crediti agevolativi ne' tetto generale).
     cumulabilita:
       con_fondo_perduto: nei_limiti
       regola: >-
         E' un aiuto di Stato a finalita' regionale: cumulabile con aiuti de minimis e altri aiuti di Stato
         sugli stessi costi solo se il totale non supera l'intensita' massima della Carta degli aiuti
         regionali per quella zona e impresa; cumulabile con misure che non sono aiuti di Stato (es.
-        iperammortamento, che pero' si calcola sulla base netta). Un bando regionale al 40% su un bene
-        in zona con intensita' massima 40-60% lascia poco o nessuno spazio al credito ZES sugli stessi costi.
-      riferimento: "L. 199/2025 commi 438-443; Reg. UE 651/2014 art. 14 e art. 8"
+        iperammortamento, che pero' si calcola sulla base netta; regole di cumulo del suo decreto da
+        verificare) nei limiti della spesa sostenuta. Nel modello il credito = intensita' x costo meno gli
+        altri aiuti sugli stessi beni: piccola impresa in Puglia, 400.000 euro di investimento e bando
+        regionale di 100.000 euro = 240.000 - 100.000 = 140.000 euro prima del riparto. Con Transizione 5.0
+        valgono le regole dell'art. 38 c. 18 DL 19/2024. Altri aiuti da dichiarare nel quadro D del modello.
+      riferimento: "Art. 16 c. 5 DL 124/2023; DM 17/5/2024 art. 7; Reg. UE 651/2014 art. 14 e art. 8"
     attenzione: >-
       Finestra di comunicazione annuale stretta: chi ha perso quella del 2026 deve aspettare il 2027
-      (date da verificare). Il credito reale dipende dal riparto (incertezza fino al provvedimento).
-      Vincolo di mantenimento dell'attivita' nella zona per almeno 5 anni dopo il completamento (pena
-      revoca, da verificare il dettaglio). Investimento iniziale (nuovo stabilimento, ampliamento,
-      diversificazione), non semplice sostituzione. Certificazione contabile obbligatoria.
+      (dal 31/3 al 30/5/2027). Il credito reale dipende dal riparto (incertezza fino al provvedimento).
+      Effetto di incentivazione: il progetto (ordini vincolanti compresi) non deve essere partito prima del
+      1/1/2026 (risposta AdE 169/2026: leasing firmato a febbraio 2026, prima della comunicazione, va bene).
+      Vincoli: beni in funzione entro il secondo periodo d'imposta dopo l'acquisto; fino al quinto periodo
+      d'imposta dopo l'entrata in funzione i beni non si vendono, dismettono o spostano (leasing: va
+      riscattato); attivita' mantenuta nella zona per almeno 5 anni dopo il completamento, pena decadenza.
+      Investimento iniziale, non semplice sostituzione. Certificazione contabile obbligatoria. Comunicazione
+      integrativa a pena di decadenza, con importi non superiori alla preventiva.
     esempi:
       - profilo: manifattura
         interesse: alto
         esempio: >-
           Solo se lo stabilimento e' in una regione ZES. Esempio in Puglia: nuovo reparto con macchinari per
-          2.000.000 di euro, media impresa. Intensita' per una media impresa circa 50% (40% di base + 10 punti;
-          valore della Carta da verificare per il comune), ridotta dal riparto (75% nel 2025): circa 750.000 euro
-          di credito in F24. Serve un investimento iniziale (ampliamento o nuova produzione), mantenimento per
+          2.000.000 di euro, media impresa (fuori dall'area di Taranto). Intensita' 50%: credito richiesto
+          1.000.000 di euro, ridotto dal riparto (75% nel 2025, ipotesi): circa 750.000 euro di credito in F24. Serve un investimento iniziale (ampliamento o nuova produzione), mantenimento per
           5 anni e la comunicazione nella finestra annuale (quella del 2026 e' chiusa).
       - profilo: ristorazione_ricettivo
         interesse: medio
         esempio: >-
-          Hotel in Sicilia (piccola impresa) che amplia la struttura con nuove camere e attrezzature per 600.000 euro:
-          intensita' fino al 60%, circa 45% dopo un riparto come quello del 2025, cioe' circa 270.000 euro (limiti
-          sulla parte immobiliare: da verificare). Solo nelle regioni ZES, con un progetto da almeno 200.000 euro e
-          nella finestra di comunicazione annuale (2027: date da verificare).
+          Hotel in Sicilia (piccola impresa) che costruisce nuove camere (400.000 euro) e compra attrezzature nuove
+          (200.000 euro): l'immobile conta al massimo quanto il resto, quindi la spesa agevolata e' 400.000 euro.
+          Credito 400.000 x 60% x 75% (riparto ipotizzato) = circa 180.000 euro. Rifare gli arredi di camere
+          esistenti non e' un investimento iniziale. Finestra 2027: dal 31/3 al 30/5/2027.
       - profilo: artigiano
         interesse: medio
         esempio: >-
-          Laboratorio in Campania (micro impresa) che acquista un capannone e nuove macchine per 250.000 euro:
-          intensita' fino al 60%, circa 112.500 euro con un riparto del 75% (percentuale del 2026 da verificare).
+          Laboratorio in Campania (micro impresa) che acquista un capannone da 120.000 euro e nuove macchine per
+          130.000 euro per una nuova produzione (l'immobile resta sotto la meta'): 250.000 x 60% x 75% = circa
+          112.500 euro (percentuale di riparto 2026 non ancora nota).
           Sotto i 200.000 euro di progetto non si accede: per molti artigiani la soglia e' il vero ostacolo.
       - profilo: agricola
         interesse: medio
         esempio: >-
           Cantina o frantoio in Puglia che installa una nuova linea di imbottigliamento da 400.000 euro: con
           l'intensita' massima di una piccola impresa (60%) e un riparto del 75% il credito sarebbe circa
-          180.000 euro. Per agricoltura e trasformazione dei prodotti agricoli ci sono modelli e percentuali
-          separati: da verificare prima di contarci.
+          180.000 euro (trasformazione con il codice "casi particolari" di questo modello). La produzione
+          agricola primaria ha invece un credito ZES separato (art. 16-bis DL 124/2023), con un altro modello.
       - profilo: negozio
         interesse: basso
         esempio: >-
           Un negozio arriva raramente a 200.000 euro di investimento in beni strumentali, e rifare gli arredi non e'
-          un investimento iniziale. Possibile per l'apertura di un nuovo punto vendita importante in una regione ZES
-          (ammissibilita' del commercio: da verificare).
+          un investimento iniziale. Puo' valere per l'apertura di un nuovo punto vendita importante in una regione
+          ZES, con immobile e attrezzature.
       - profilo: ufficio_servizi
         interesse: basso
         esempio: >-
-          Un ufficio di servizi difficilmente arriva a 200.000 euro di macchinari e impianti. Caso possibile: acquisto
-          e allestimento di una nuova sede in una regione ZES, ma la parte immobiliare ha limiti percentuali (da verificare).
+          Un ufficio di servizi difficilmente arriva a 200.000 euro di macchinari e impianti, e il software non conta.
+          Caso possibile: acquisto e allestimento di una nuova sede in una regione ZES, ma l'immobile pesa al
+          massimo per meta' dell'investimento agevolato.
       - profilo: logistica
         interesse: basso
         esempio: >-
-          Trasporti e relative infrastrutture sono esclusi: un'impresa di autotrasporto non accede. Per il solo
-          magazzinaggio e la logistica conto terzi l'esclusione e' da verificare sul codice ATECO. Un'impresa di un
-          altro settore che costruisce un proprio magazzino al Sud invece puo' accedere.
+          Il trasporto (autotrasporto, marittimo, aereo) e' escluso: un'impresa di autotrasporto non accede. Il
+          magazzinaggio e le attivita' di supporto ai trasporti sono invece ammessi: un nuovo magazzino al Sud con
+          scaffalature, carrelli e impianti puo' rientrare.
       - profilo: startup
         interesse: basso
         esempio: >-
           Pochi beni materiali e quasi mai 200.000 euro di macchinari e impianti: di solito la ZES non serve. Il credito
           pero' si usa in F24 anche in perdita, quindi una startup del Sud che attrezza un laboratorio o una produzione
-          sopra la soglia dovrebbe considerarlo.
-    fonte_verificata_il: "2026-10-05"
+          sopra la soglia dovrebbe considerarlo. Software e persone non contano.
+    fiscale: >-
+      Da verificare: ne' l'art. 16 ne' il decreto attuativo dicono che il credito e' esente. Per il precedente
+      credito Mezzogiorno l'Agenzia ha chiarito che e' un contributo tassabile ai fini IRES/IRPEF e IRAP
+      (circ. 34/E/2016 par. 6); manca un chiarimento specifico per la ZES unica. Se tassato, lo e' come
+      contributo in conto impianti, pro quota con gli ammortamenti. Esempio: 500.000 euro di macchinari al
+      10%, credito 225.000: circa 6.280 euro di IRES+IRAP in piu' l'anno, vantaggio netto circa 162.000 euro
+      (32% della spesa) per un'impresa in utile.
+    fonte_verificata_il: "2026-10-07"
 
   - id: nuova_sabatini
     nome: "Nuova Sabatini (beni strumentali PMI)"
@@ -626,7 +737,8 @@ misure:
     ente: "MIMIT, tramite banche e intermediari convenzionati (CDP-ABI)"
     norma: >-
       Art. 2 DL 21 giugno 2013 n. 69 e successivi rifinanziamenti (Legge di bilancio 2026: 650 milioni,
-      200 per il 2026 e 450 per il 2027); DI 19 gennaio 2024 n. 43 (variante Capitalizzazione).
+      200 per il 2026 e 450 per il 2027); circolare MIMIT n. 410823 del 6/12/2022 (testo vigente, allegati
+      6/A e 6/B per i beni 4.0); DI 19 gennaio 2024 n. 43 (variante Capitalizzazione). Aiuto in esenzione GBER.
     url_ufficiale: "https://www.mimit.gov.it/it/incentivi/agevolazioni-per-gli-investimenti-delle-pmi-in-beni-strumentali-nuova-sabatini"
     in_vigore_dal: "2014-03-31"
     in_vigore_fino_al: null
@@ -639,21 +751,33 @@ misure:
       finanziamento. Sportello aperto fino a esaurimento risorse.
     a_chi_si_rivolge: >-
       Micro, piccole e medie imprese con sede o unita' locale in Italia, regolarmente costituite, non in
-      liquidazione o procedure concorsuali e non in difficolta'. Variante Capitalizzazione: PMI in
-      forma societaria con aumento di capitale.
+      liquidazione o procedure concorsuali e non in difficolta' (anche ditte individuali per la Sabatini
+      ordinaria). Variante Capitalizzazione: solo societa' di capitali che deliberano un aumento di capitale
+      pari ad almeno il 30% del finanziamento (escluse ditte individuali e societa' di persone).
     soggetti_ammessi: [impresa]
     dimensioni_ammesse: [micro, piccola, media]
     settori_esclusi: "Attivita' finanziarie e assicurative (secondo la classificazione ATECO 2025 indicata dal MIMIT). Ammessi agricoltura e pesca."
     investimenti_ammessi: >-
-      Acquisto o leasing di macchinari, attrezzature, impianti, beni strumentali ad uso produttivo,
-      hardware, software e tecnologie digitali, nuovi, con autonomia funzionale e correlati
-      all'attivita'. Esclusi terreni, fabbricati, beni usati o rigenerati, immobilizzazioni in corso.
+      Acquisto o leasing finanziario di macchinari, attrezzature, impianti, beni strumentali ad uso produttivo,
+      hardware, software e tecnologie digitali, nuovi di fabbrica, con autonomia funzionale, correlati
+      all'attivita' e nell'unita' locale dell'investimento (bilancio B.II.2-4 o B.I.3-4). Ammessi anche
+      veicoli commerciali nuovi mai immatricolati usati nell'attivita', trattori e macchine agricole,
+      colonnine e fotovoltaico non infisso al suolo solo dentro un programma piu' ampio, trasporto e
+      montaggio capitalizzati. Software: solo licenze capitalizzate (proprieta', licenza perpetua B.I.3,
+      licenza a tempo pagata tutta all'inizio B.I.4 e lunga almeno 3 anni; FAQ 6.4); abbonamenti SaaS/cloud a
+      canone esclusi. Esclusi (circolare punto 7.4): terreni, fabbricati e opere murarie, beni usati,
+      rigenerati o revamping, veicoli a km zero o gia' immatricolati e auto per trasporto privato, mera
+      sostituzione di un bene uguale, ricambi senza autonomia, consulenze, servizi, formazione, pubblicita',
+      scorte, beni pagati con permute o costruiti internamente, lease-back, fatture sotto 516,46 euro, IVA.
     categorie_spesa: [macchinari_attrezzature, software_digitale]
     intensita: >-
-      Finanziamento bancario o leasing 20.000 - 4.000.000 euro, durata massima 5 anni (garanzia del
-      Fondo PMI fino all'80% possibile). Contributo in conto impianti pari agli interessi convenzionali
-      su un piano di 5 anni: 2,75% annuo ordinario; 3,575% per investimenti 4.0 e green; Capitalizzazione
-      5% micro e piccole, 3,575% medie. Aiuto in esenzione (GBER), non de minimis.
+      Finanziamento bancario o leasing 20.000 - 4.000.000 euro, fino al 100% dell'investimento IVA esclusa,
+      durata massima 5 anni compreso un preammortamento fino a 12 mesi (garanzia del Fondo PMI fino all'80%
+      possibile). Contributo in conto impianti (non fondo perduto sulla spesa) pari agli interessi
+      convenzionali su un piano di 5 anni a rate semestrali: 2,75% annuo ordinario; 3,575% per investimenti
+      4.0 (beni dell'allegato 6/A con tutte e cinque le caratteristiche obbligatorie e due delle tre ulteriori,
+      software dell'allegato 6/B) e green; Capitalizzazione 5% micro e piccole, 3,575% medie. Un bene
+      dichiarato 4.0 che non lo e' non viene ammesso neanche come ordinario. Aiuto in esenzione (GBER), non de minimis.
     beneficio_stimato:
       percentuale_min: 7.7
       percentuale_max: 14.3
@@ -664,78 +788,90 @@ misure:
         formula della rata costante: da confrontare con il calcolatore MIMIT.
     come_si_ottiene: >-
       1) Domanda sulla piattaforma benistrumentali.dgiai.gov.it (SPID/CNS/CIE del legale rappresentante)
-      e invio alla banca o intermediario aderente, insieme alla richiesta di finanziamento, PRIMA
-      dell'investimento; 2) delibera del finanziamento e concessione del Ministero; 3) investimento
-      completato entro 12 mesi dal contratto di finanziamento (da verificare); 4) richiesta di
-      erogazione del contributo entro 120 giorni dal termine per completare l'investimento.
+      e invio via PEC alla banca o intermediario aderente, insieme alla richiesta di finanziamento, PRIMA
+      dell'investimento; 2) delibera del finanziamento e concessione del Ministero (contratto firmato dopo
+      la domanda); 3) acquisto pagato con bonifico, SEPA o Ri.Ba., con CUP e dicitura "art. 2, c. 4, D.L.
+      n. 69/2013" sulle fatture elettroniche; investimento completato entro 12 mesi dalla firma del
+      finanziamento; 4) richiesta di erogazione (modulo RU) entro 120 giorni dal termine per completare
+      l'investimento, con le dichiarazioni dei fornitori. Una domanda per ogni unita' locale.
     tempi: >-
-      Contributo erogato in un'unica soluzione per finanziamenti fino a 200.000 euro (dal 2022), altrimenti
-      in quote annuali nell'arco di 6 anni dall'ultimazione dell'investimento.
+      Contributo erogato in un'unica soluzione per finanziamenti fino a 200.000 euro, altrimenti in quote
+      annuali (la prima dopo la richiesta di erogazione, le altre ogni anno su richiesta). Pagamento di norma
+      entro 60 giorni dalla richiesta, se ci sono fondi in cassa e il DURC e' regolare.
     cumulabilita:
       con_fondo_perduto: nei_limiti
       regola: >-
         Cumulabile con altri aiuti di Stato sugli stessi costi se il cumulo non supera l'intensita'
         massima applicabile (FAQ MIMIT: con aiuti in esenzione vale la piu' alta delle intensita' delle
-        misure cumulate; con de minimis vale il limite della Sabatini; nel GBER per le PMI di norma 10-20%,
-        65% agricoltura, 50% pesca). Cumulabile con misure fiscali generali non aiuti di Stato
+        misure cumulate; con de minimis vale il limite della Sabatini; nel GBER 20% piccole e 10% medie
+        imprese, 65% agricoltura, 50% pesca). Cumulabile con misure fiscali generali non aiuti di Stato
         (iperammortamento, a suo tempo crediti 4.0/5.0) entro il costo sostenuto. Cumulabile con il Conto
         Termico (contributo in conto interessi ammesso dall'art. 17 DM 7/8/2025).
       riferimento: "FAQ MIMIT Nuova Sabatini 9.1, 9.2, 9.7, 9.9, 9.10; Reg. UE 651/2014"
     attenzione: >-
-      La domanda va fatta prima dell'investimento (ordini/fatture precedenti escludono il bene, da
-      verificare il dettaglio nelle FAQ). Sportello fino a esaurimento risorse (al 14/09/2026 disponibili
-      circa 1,199 miliardi Sabatini ordinaria e 77 milioni Capitalizzazione). Cumulo con un bando a fondo
-      perduto sugli stessi beni spesso limitato dall'intensita' massima. Revoca se i beni vengono venduti
-      o distolti entro 3 anni (da verificare). Obbligo assicurazione catastrofale (DM 18/6/2025).
+      La domanda va inviata via PEC alla banca prima dell'investimento: contratti, conferme d'ordine,
+      fatture o acconti precedenti fanno perdere l'agevolazione. Sportello fino a esaurimento risorse (al
+      14/09/2026 disponibili circa 1,199 miliardi Sabatini ordinaria e 77 milioni Capitalizzazione). Cumulo
+      con un bando a fondo perduto sugli stessi beni spesso limitato dall'intensita' massima. I beni vanno
+      tenuti in azienda e in uso produttivo per 3 anni dalla fine dell'investimento. Obbligo assicurazione
+      catastrofale (DM 18/6/2025).
     esempi:
       - profilo: manifattura
         interesse: alto
         esempio: >-
           Linea di produzione 4.0 da 1.200.000 euro in leasing a 5 anni: contributo sugli interessi al 3,575%, circa
-          il 10,1% del finanziamento, cioe' circa 121.200 euro, pagato in quote annuali (sopra i 200.000 euro).
+          il 10,1% del finanziamento, cioe' circa 121.100 euro, pagato in quote annuali (sopra i 200.000 euro).
           Domanda alla banca o alla societa' di leasing prima dell'ordine. Si somma all'iperammortamento sullo
           stesso bene entro il costo sostenuto (per prudenza, base dell'iperammortamento al netto del contributo).
       - profilo: artigiano
         interesse: alto
         esempio: >-
           Centro di lavoro 4.0 da 150.000 euro in leasing: contributo circa il 10,1% del finanziamento, cioe' circa
-          15.150 euro, in un'unica soluzione perche' sotto i 200.000 euro. Se il laboratorio e' una srl micro o piccola
-          e fa un aumento di capitale, la variante Capitalizzazione porta il tasso al 5% (circa 14,3%: 21.450 euro).
+          15.100 euro, in un'unica soluzione perche' sotto i 200.000 euro. Se il laboratorio e' una srl micro o piccola
+          e fa un aumento di capitale, la variante Capitalizzazione porta il tasso al 5% (circa 14,3%: 21.400 euro).
           Domanda prima dell'acquisto.
       - profilo: agricola
         interesse: alto
         esempio: >-
-          Trattore e attrezzature nuove per 120.000 euro finanziati in 5 anni: contributo circa 7,7%, cioe' 9.240 euro
-          (circa 12.120 se i beni sono 4.0, al 10,1%), in un'unica soluzione. L'agricoltura e' ammessa e il limite di
+          Trattore e attrezzature nuove per 120.000 euro finanziati in 5 anni: contributo circa 7,7%, cioe' circa
+          9.300 euro (circa 12.100 se i beni sono 4.0, al 10,1%), in un'unica soluzione. L'agricoltura e' ammessa e il limite di
           cumulo con altri aiuti e' piu' largo (65% in agricoltura). Domanda prima dell'acquisto.
       - profilo: logistica
         interesse: alto
         esempio: >-
           Carrelli elevatori elettrici, scaffalature e sistema di magazzino per 800.000 euro in leasing: se sono beni 4.0
-          contributo circa 10,1%, cioe' 80.800 euro in quote annuali; si puo' fare una domanda per ogni investimento
-          delle diverse sedi. Camion e furgoni per il trasporto conto terzi: ammissibilita' da verificare nelle FAQ MIMIT.
+          contributo circa 10,1%, cioe' circa 80.700 euro in quote annuali; serve una domanda per ogni unita' locale.
+          Camion e furgoni nuovi mai immatricolati sono ammessi se servono all'attivita' e non sostituiscono
+          semplicemente mezzi uguali (es. un Euro 6 al posto del vecchio camion: escluso).
       - profilo: ristorazione_ricettivo
         interesse: medio
         esempio: >-
-          Cucina professionale nuova per 120.000 euro in leasing a 5 anni: contributo circa 7,7%, cioe' 9.240 euro,
-          in un'unica soluzione. Esclusi lavori murari e opere sull'immobile; arredi delle camere: da verificare.
+          Cucina professionale nuova per 120.000 euro in leasing a 5 anni: contributo circa 7,7%, cioe' circa
+          9.300 euro, in un'unica soluzione. Esclusi lavori murari e opere sull'immobile; arredi delle camere: da verificare.
       - profilo: negozio
         interesse: medio
         esempio: >-
           Banchi frigo, casse e attrezzature per 50.000 euro con un finanziamento di 5 anni: contributo circa 7,7%,
-          cioe' circa 3.850 euro. Finanziamento minimo 20.000 euro; utile se l'attrezzatura si rinnova comunque a rate.
+          cioe' circa 3.900 euro. Finanziamento minimo 20.000 euro; utile se l'attrezzatura si rinnova comunque a rate.
       - profilo: ufficio_servizi
         interesse: medio
         esempio: >-
-          Computer, server e software per 40.000 euro in leasing: contributo circa 7,7%, cioe' circa 3.080 euro (circa
-          4.040 se i beni sono 4.0). Pratica semplice tramite la banca; non vale per comprare o ristrutturare l'ufficio.
+          Computer, server e licenze software perpetue per 40.000 euro: contributo circa 7,7%, cioe' circa 3.100 euro
+          (circa 4.000 se i software sono dell'allegato 6/B, es. cybersecurity). Niente per gli abbonamenti SaaS.
+          Pratica semplice tramite la banca; non vale per comprare o ristrutturare l'ufficio.
       - profilo: startup
         interesse: basso
         esempio: >-
-          Hardware per 30.000 euro finanziati: contributo circa 2.310 euro; con un aumento di capitale (variante
-          Capitalizzazione, 5%) circa 4.290 euro. Serve che una banca conceda il finanziamento, non scontato per una
+          Hardware e licenze per 30.000 euro finanziati: contributo circa 2.300 euro; con un aumento di capitale
+          (variante Capitalizzazione, 5%) circa 4.300 euro. Serve che una banca conceda il finanziamento, non scontato per una
           startup in perdita (aiuta la garanzia del Fondo PMI).
-    fonte_verificata_il: "2026-10-05"
+    fiscale: >-
+      Contributo in conto impianti (FAQ MIMIT 7.2), tassato: IRES/IRPEF pro quota con l'ammortamento (art. 88
+      c. 3 TUIR; OIC 16: costo ridotto o risconto passivo); IRAP anche (art. 11 c. 3 D.Lgs. 446/1997; ditte
+      individuali senza IRAP dal 2022). Niente ritenuta del 4% (art. 28 c. 2 DPR 600/1973), fuori campo IVA.
+      Esempio: srl, leasing di 200.000 euro per un bene 4.0, contributo circa 20.200 euro, ammortamento in
+      10 anni: circa 5.600 euro di IRES+IRAP in 10 anni, beneficio netto circa 14.600 euro.
+    fonte_verificata_il: "2026-10-07"
 
   - id: ecobonus_imprese_2026
     nome: "Ecobonus (detrazione per la riqualificazione energetica degli edifici)"
@@ -743,11 +879,12 @@ misure:
     tipo: detrazione_fiscale
     ente: "Agenzia delle Entrate (detrazione in dichiarazione); ENEA (comunicazione dei dati tecnici)"
     norma: >-
-      Art. 14 DL 4 giugno 2013 n. 63 (e art. 1 commi 344-347 L. 296/2006); aliquote 2025-2027 riscritte
-      dalla L. 30 dicembre 2024 n. 207, art. 1 comma 55; per il 2026 confermate al 36% (50% abitazione
-      principale) dalla L. 30 dicembre 2025 n. 199, art. 1 comma 22 (numero del comma da fonti secondarie);
-      requisiti tecnici DM MISE 6 agosto 2020; per lavori iniziati dal 4/2/2026 anche D.Lgs. 9 gennaio 2026 n. 5
-      e DM 26/10/2025 (requisiti minimi).
+      Art. 14 DL 4 giugno 2013 n. 63, comma 3-quinquies (e art. 1 commi 344-347 L. 296/2006); aliquote
+      2025-2027 riscritte dalla L. 30 dicembre 2024 n. 207, art. 1 comma 55; per il 2026 confermate al 36%
+      (50% abitazione principale) dalla L. 30 dicembre 2025 n. 199, art. 1 comma 22 (verificato su Normattiva);
+      building automation art. 1 comma 88 L. 208/2015; requisiti tecnici DM MISE 6 agosto 2020; per lavori
+      iniziati dal 4/2/2026 anche D.Lgs. 9 gennaio 2026 n. 5 e DM 26/10/2025 (requisiti minimi).
+      Dal 1/1/2027 la disciplina passa nell'art. 372 del nuovo TUIR (D.Lgs. 19 giugno 2026 n. 117), stesse aliquote.
     url_ufficiale: "https://www.agenziaentrate.gov.it/portale/schede/agevolazioni/detrazione-riqualificazione-energetica-55-2016/cosa-riqualificazione-55-2016"
     in_vigore_dal: "2025-01-01"
     in_vigore_fino_al: "2027-12-31"
@@ -755,15 +892,18 @@ misure:
     sintesi: >-
       Chi fa lavori di risparmio energetico su un edificio esistente (cappotto, infissi, schermature,
       pompe di calore, caldaie a condensazione, solare termico, building automation) puo' togliere dalle
-      tasse (IRES o IRPEF) il 36% della spesa sostenuta nel 2026, in 10 rate annuali uguali.
-      Per le imprese vale su tutti gli immobili posseduti o detenuti: strumentali, beni merce o patrimonio.
+      tasse (IRES o IRPEF, non IRAP) il 36% della spesa sostenuta nel 2026, in 10 rate annuali uguali.
+      Per le imprese conta la data di fine lavori (competenza). Vale su tutti gli immobili posseduti o
+      detenuti: strumentali, beni merce o patrimonio.
       Il 50% spetta solo per l'abitazione principale delle persone fisiche. Nel 2027 scende al 30%.
       Niente piu' cessione del credito ne' sconto in fattura: serve avere imposte da pagare.
     a_chi_si_rivolge: >-
       Tutti i contribuenti IRPEF e IRES che sostengono la spesa e possiedono o detengono l'immobile:
       societa' di capitali e di persone, ditte individuali, enti commerciali, professionisti, privati.
       Per i titolari di reddito d'impresa la detrazione spetta a prescindere dalla destinazione
-      dell'immobile ("strumentali", "beni merce" o "patrimoniali"), secondo l'Agenzia delle Entrate.
+      dell'immobile ("strumentali", "beni merce" o "patrimoniali"): risoluzione AdE 34/E/2020 e guida AdE
+      alla dichiarazione 2026. Anche l'inquilino o l'utilizzatore in leasing che paga i lavori, conservando
+      la dichiarazione di consenso del proprietario.
     soggetti_ammessi: [impresa, libero_professionista]
     dimensioni_ammesse: []
     settori_esclusi: >-
@@ -777,28 +917,38 @@ misure:
       60.000 (involucro + infissi insieme 60.000); schermature solari 60.000; collettori solari termici
       60.000; impianti di climatizzazione invernale (caldaie a condensazione, pompe di calore, sistemi
       ibridi, generatori a biomassa, scaldacqua a pompa di calore) 30.000 complessivi; microcogeneratori
-      100.000; building automation 15.000. In piu' costi massimi unitari (euro/m2, euro/kW, all. I DM).
-      Ammesse anche spese professionali (APE, asseverazione, direzione lavori).
+      100.000; building automation 15.000, solo su unita' residenziali (vademecum ENEA 23/09/2026: classe B
+      EN 15232; ammessi dispositivi, opere e spese tecniche; esclusi smartphone, tablet, PC). In piu' costi
+      massimi unitari (euro/m2, euro/kW, all. I DM). Ammesse anche spese professionali (APE, asseverazione,
+      direzione lavori). Senza impianto di riscaldamento ammessi solo collettori solari, schermature e
+      generatori a biomassa. Non ammessi: caldaia unica a combustibili fossili, edifici nuovi o ampliamenti,
+      LED e fotovoltaico, macchinari di produzione, software (licenze, gestionali, cloud/SaaS, energy
+      management venduto a parte, cybersecurity, IA).
     categorie_spesa: [energia_efficienza, opere_edili_impianti]
     intensita: >-
       Spese 2025 e 2026: 36% (50% solo se il titolare di proprieta' o diritto reale la sostiene
       sull'abitazione principale). Spese 2027: 30% (36% abitazione principale). Aliquota unica per tutti
       gli interventi (sono spariti il 65% e le maggiorazioni condominiali). Detrazione ripartita in 10 quote
-      annuali di pari importo, entro i limiti di detrazione per intervento indicati sopra.
+      annuali di pari importo, entro i limiti di detrazione per intervento indicati sopra. Per le imprese
+      (principio di competenza) conta la fine lavori o del singolo SAL: lavori finiti entro il 31/12/2026 = 36%,
+      finiti nel 2027 = 30%. Base: costo rimasto a carico, senza IVA se detraibile. Ipotesi di modifica delle
+      aliquote 2027 riportate dalla stampa a settembre 2026: nessun testo approvato, vale il 30%.
     beneficio_stimato:
       percentuale_min: 36
       percentuale_max: 36
       nota: >-
-        Per un'impresa e' sempre 36% della spesa ammessa (sostenuta nel 2026), recuperato in 10 anni in
+        Per un'impresa e' sempre 36% della spesa ammessa (lavori finiti nel 2026), recuperato in 10 anni in
         dichiarazione: valore attuale piu' basso. Solo se l'impresa ha imposte da pagare ogni anno: la quota
-        che non trova capienza si perde per l'IRPEF (per l'IRES da verificare se riportabile). Nel 2027 30%.
+        che non trova capienza si perde (IRPEF e IRES), senza rimborso ne' riporto. Nel 2027 30%.
     come_si_ottiene: >-
       1) Tecnico abilitato: verifica dei requisiti (trasmittanze, efficienze; per lavori iniziati dal
       4/2/2026 i nuovi requisiti del D.Lgs. 5/2026), APE dove richiesto, asseverazione con computo metrico
-      e congruita' delle spese. 2) Pagamenti: per le imprese non e' obbligatorio il bonifico "parlante"
-      (da verificare caso per caso; per persone fisiche e professionisti si'). 3) Entro 90 giorni dalla
-      fine lavori, invio della scheda descrittiva all'ENEA sul portale bonusfiscali.enea.it (sezione
-      dell'anno di fine lavori). 4) Detrazione in dichiarazione dei redditi dal periodo della spesa, per 10 anni.
+      e congruita' delle spese. 2) Pagamenti: per le imprese il bonifico "parlante" non e' obbligatorio
+      (bastano fatture e contratti); per persone fisiche e professionisti si'. 3) Entro 90 giorni dalla
+      fine lavori (o dal collaudo), invio della scheda descrittiva all'ENEA sul portale bonusfiscali.enea.it
+      (sezione dell'anno di fine lavori); per lavori iniziati dal 4/2/2026 e finiti prima del 25/6/2026 i
+      90 giorni decorrono dal 25/6/2026 (avviso ENEA). 4) Conservare ricevuta con CPID, asseverazione, APE,
+      fatture, consenso del proprietario. 5) Detrazione in dichiarazione dei redditi dal periodo della spesa, per 10 anni.
     tempi: >-
       Nessuna domanda preventiva e nessuna graduatoria: la detrazione spetta per legge se ci sono i
       requisiti. Il beneficio arriva in 10 quote annuali a partire dalla dichiarazione dell'anno della spesa.
@@ -811,8 +961,10 @@ misure:
         Termico 3.0 sugli stessi interventi (il DM 7/8/2025 art. 17 esclude chi ha altri incentivi statali,
         e il GSE ci comprende le detrazioni): bisogna scegliere uno dei due (per un'impresa il Conto Termico,
         25-65% subito, rende quasi sempre di piu'). Non si somma con altre detrazioni fiscali per gli
-        stessi lavori (es. bonus ristrutturazioni o sismabonus sulla stessa spesa).
-      riferimento: "Prassi Agenzia Entrate e ENEA (calcolo al netto dei contributi, fonti secondarie concordi; riferimento puntuale da verificare); DM MASE 7/8/2025 art. 17"
+        stessi lavori (es. bonus ristrutturazioni o sismabonus sulla stessa spesa); bonus diversi su lavori
+        diversi dello stesso cantiere si', con spese separate. Esempio: lavori per 30.000 euro con contributo
+        camerale di 10.000: Ecobonus su 20.000, cioe' 7.200 euro in 10 anni.
+      riferimento: "Guida AdE 'Tutte le agevolazioni della dichiarazione 2026', Riqualificazione energetica, par. Cumulabilita'; DM MASE 7/8/2025 art. 17"
     attenzione: >-
       Scheda ENEA entro 90 giorni dalla fine lavori. Requisiti tecnici cambiati per i lavori iniziati
       dal 4/2/2026 (D.Lgs. 5/2026: SCOP minimi per le pompe di calore, regole piu' strette per ibridi e
@@ -849,26 +1001,34 @@ misure:
         interesse: basso
         esempio: >-
           Negozio con climatizzazione nuova in pompa di calore da 12.000 euro: detrazione 4.320 euro in 10 anni, con
-          imposte capienti. Se il locale e' in affitto la detrazione spetta anche al conduttore che paga i lavori
-          (consenso del proprietario: da verificare). Il Conto Termico al 65% rende di piu'.
+          imposte capienti. Se il locale e' in affitto la detrazione spetta all'inquilino che paga i lavori, che deve
+          conservare la dichiarazione di consenso del proprietario. Il Conto Termico al 65% rende di piu'.
       - profilo: logistica
         interesse: basso
         esempio: >-
           Molti magazzini non hanno un impianto di riscaldamento, che e' una condizione richiesta: li' niente Ecobonus.
           Si applica agli uffici delle sedi (es. infissi per 20.000 euro: 7.200 euro in 10 anni). Per l'illuminazione
-          dei magazzini non c'e' Ecobonus; c'e' il Conto Termico.
+          LED dei magazzini non c'e' Ecobonus; c'e' il Conto Termico.
       - profilo: agricola
         interesse: basso
         esempio: >-
           Con il reddito agrario catastale le imposte sono basse e la detrazione rischia di non trovare capienza. Caso
           tipico: infissi o cappotto degli uffici aziendali (30.000 euro: 10.800 euro in 10 anni). Le serre di solito
-          non rientrano (edificio esistente con impianto di riscaldamento: da verificare).
+          non rientrano (edificio esistente con impianto di riscaldamento: da verificare caso per caso).
       - profilo: startup
         interesse: nullo
         esempio: >-
           In perdita e quasi sempre in affitto: una detrazione in 10 anni non serve. La parte che non trova imposte da
-          pagare si perde (per l'IRES riporto da verificare).
-    fonte_verificata_il: "2026-10-06"
+          pagare si perde, senza riporto. Software e piattaforme non sono agevolati.
+    fiscale: >-
+      Detrazione dall'IRES o IRPEF lorda; non riduce l'IRAP. Non e' tassata: non e' un ricavo e non concorre ne'
+      al reddito ne' al valore della produzione IRAP; il costo dei lavori resta deducibile o ammortizzabile per
+      intero (se in bilancio la detrazione riduce il costo si recupera con variazioni in diminuzione: norma di
+      comportamento AIDC 224/2024; manca un documento specifico dell'Agenzia, da confermare con il
+      commercialista). La quota incapiente si perde, senza rimborso ne' riporto. Esempio: srl, infissi per
+      50.000 euro finiti nel 2026: 18.000 euro di detrazione (1.800 l'anno) piu' circa 12.000 di IRES e 1.950
+      di IRAP risparmiate con l'ammortamento: circa 31.950 euro in tutto.
+    fonte_verificata_il: "2026-10-07"
 
   - id: sismabonus_imprese_2026
     nome: "Sismabonus (detrazione per interventi antisismici, anche su immobili produttivi)"
@@ -878,7 +1038,9 @@ misure:
     norma: >-
       Art. 16 commi 1-bis - 1-septies.1 DL 4 giugno 2013 n. 63; aliquote 2025-2027 dalla L. 207/2024
       art. 1 comma 55 lett. b) n. 2 (nuovo comma 1-septies.1); per il 2026 portate al 36% (50% abitazione
-      principale) dalla L. 199/2025; 10 quote annuali dall'art. 4-bis comma 4 DL 39/2024.
+      principale) dalla L. 199/2025, art. 1 comma 22; 10 quote annuali dall'art. 4-bis comma 4 DL 39/2024;
+      circolare AdE 8/E del 19/6/2025. Dal 1/1/2027 i commi del DL 63/2013 sono abrogati e la disciplina
+      passa nell'art. 371 del nuovo TUIR (D.Lgs. 19 giugno 2026 n. 117); secondo le prime analisi aliquote invariate.
     url_ufficiale: "https://www.agenziaentrate.gov.it/portale/aree-tematiche/casa/agevolazioni/sisma-bonus"
     in_vigore_dal: "2025-01-01"
     in_vigore_fino_al: "2027-12-31"
@@ -887,20 +1049,27 @@ misure:
       Chi fa lavori di adeguamento o miglioramento antisismico su edifici abitativi o adibiti ad
       attivita' produttive nelle zone sismiche 1, 2 e 3 puo' togliere dalle tasse (IRES o IRPEF) il 36%
       della spesa sostenuta nel 2026, fino a 96.000 euro di spesa per unita' immobiliare e per anno,
-      in 10 rate annuali. Vale anche per le societa'. Nel 2027 scende al 30%.
+      in 10 rate annuali. Vale anche per le societa'. Non riduce l'IRAP. Nel 2027 scende al 30%.
     a_chi_si_rivolge: >-
       Contribuenti IRPEF e IRES, comprese le imprese, che possiedono o detengono edifici residenziali o
       adibiti ad attivita' produttive (agricole, professionali, produttive di beni e servizi, commerciali)
-      in zona sismica 1, 2 o 3.
+      in zona sismica 1, 2 o 3 (circ. 29/E/2013; per le imprese a prescindere dall'uso dell'immobile:
+      strumentale, merce o patrimonio, ris. 34/E/2020).
     soggetti_ammessi: [impresa, libero_professionista]
     dimensioni_ammesse: []
     settori_esclusi: "Nessun settore escluso. Escluse le zone sismiche 4. Serve capienza d'imposta."
     investimenti_ammessi: >-
       Interventi antisismici e di messa in sicurezza statica (art. 16-bis comma 1 lett. i TUIR) sulle parti
-      strutturali, comprese le spese per classificazione e verifica sismica. Limite di spesa 96.000 euro per
-      unita' immobiliare per anno (se prosecuzione di lavori iniziati prima, si contano anche le spese gia'
-      detratte negli anni precedenti). Dal 2025 la percentuale e' fissa: il miglioramento di una o due
-      classi di rischio non da' piu' aliquote maggiori.
+      strutturali, compresa demolizione e ricostruzione antisismica, e spese per classificazione e verifica
+      sismica (comma 1-sexies). Es.: collegamenti trave-pilastro e tegolo-trave dei capannoni prefabbricati,
+      fondazioni, pilastri, solai, murature, coperture; spese tecniche. Non ammessi: zona 4, impianti,
+      macchinari, scaffalature, arredi, lavori solo energetici, spesa oltre il massimale, software (licenze,
+      gestionali, cloud, cybersecurity, IA); monitoraggio strutturale continuo previsto solo per il Superbonus,
+      per il Sismabonus da verificare. Limite di spesa 96.000 euro per unita' immobiliare per anno (se
+      prosecuzione di lavori iniziati prima, si contano anche le spese gia' detratte: circ. 8/E/2025, 80.000
+      gia' spesi = altri 16.000 al massimo). Dal 2025 la percentuale e' fissa: il miglioramento di una o due
+      classi di rischio non da' piu' aliquote maggiori. Sismabonus acquisti (comma 1-septies): 36% del prezzo
+      nel 2026 su massimo 96.000 euro per unita' (regole per acquirenti imprese da verificare).
     categorie_spesa: [opere_edili_impianti]
     intensita: >-
       Spese 2026: 36% (50% solo per l'abitazione principale delle persone fisiche). Spese 2027: 30% (36%).
@@ -912,22 +1081,27 @@ misure:
         Per un'impresa 36% della spesa fino a 96.000 euro per unita' immobiliare (massimo 34.560 euro di
         detrazione), in 10 anni e solo con imposte capienti. Oltre il massimale la spesa non da' beneficio.
     come_si_ottiene: >-
-      1) Progettista: asseverazione della classe di rischio prima e dopo e dell'efficacia degli interventi
-      (DM MIT 58/2017 e successive modifiche), da presentare con la richiesta del titolo edilizio
-      (dettaglio da verificare sulla guida dell'Agenzia). 2) Direttore lavori e collaudatore: attestazione
-      di conformita' a fine lavori. 3) Detrazione in dichiarazione per 10 anni. Nessuna domanda ad enti.
+      1) Verificare la zona sismica del comune (Protezione Civile o delibera regionale). 2) Progettista:
+      classificazione del rischio prima e dopo (linee guida DM 58/2017) e asseverazione modello Allegato B
+      (DM 329/2020), allegata alla SCIA o alla richiesta di permesso di costruire, comunque prima dell'inizio
+      dei lavori (remissione in bonis ammessa solo in alcuni casi). 3) Fine lavori: attestazioni di conformita'
+      del direttore dei lavori e del collaudatore (modelli B-1 e B-2). 4) Detrazione in dichiarazione per 10
+      anni. Nessuna domanda ad enti.
     tempi: "Nessuna domanda: beneficio in 10 quote annuali dalla dichiarazione dell'anno della spesa."
     cumulabilita:
       con_fondo_perduto: nei_limiti
       regola: >-
-        Come l'ecobonus: con un contributo a fondo perduto (regionale o locale) la detrazione spetta solo
-        sulla spesa rimasta a carico, se il bando lo consente (da verificare caso per caso). Non si somma
-        con altre detrazioni per la stessa spesa (ecobonus, bonus ristrutturazioni).
+        Come l'ecobonus: con un contributo a fondo perduto (regionale o locale) la detrazione spetta in linea
+        generale solo sulla spesa rimasta a carico, se il bando lo consente (da verificare caso per caso). Non
+        si somma con altre detrazioni per la stessa spesa (ecobonus, bonus ristrutturazioni): in un cantiere
+        misto spese strutturali ed energetiche separate. Il Conto Termico non copre lavori antisismici.
+        Non richiama de minimis ne' GBER: detrazione generale.
       riferimento: "Art. 16 DL 63/2013; prassi Agenzia Entrate (da verificare il riferimento puntuale)"
     attenzione: >-
       Solo zone sismiche 1, 2, 3 (verificare la classificazione del comune). Asseverazione del rischio
-      sismico nei tempi giusti, altrimenti la detrazione si perde. Niente cessione del credito ne' sconto
-      in fattura. Massimale per unita' immobiliare: su capannoni grandi il beneficio in percentuale e'
+      sismico prima dell'inizio dei lavori, altrimenti la detrazione e' a rischio. Niente cessione del credito
+      ne' sconto in fattura (art. 2 DL 11/2023), salvo titoli edilizi presentati prima del 17/2/2023 e alcuni
+      immobili danneggiati dai terremoti in Abruzzo, Lazio, Marche e Umbria. Massimale per unita' immobiliare: su capannoni grandi il beneficio in percentuale e'
       molto piu' basso del 36%. Verificare con il tecnico se il lavoro rientra anche in un bando regionale
       per la sicurezza sismica delle imprese.
     esempi:
@@ -973,7 +1147,15 @@ misure:
         interesse: nullo
         esempio: >-
           Sede in affitto o in coworking e spesso in perdita: non ci sono lavori strutturali da fare ne' imposte da ridurre.
-    fonte_verificata_il: "2026-10-06"
+    fiscale: >-
+      Detrazione dall'IRES o IRPEF lorda; non riduce l'IRAP. Non e' un contributo: nessun incasso da tassare.
+      La quota che non trova capienza si perde (niente riporto ne' rimborso). Il costo dei lavori segue le
+      regole ordinarie (di norma incrementa il fabbricato e si ammortizza, non la quota del terreno); se la
+      detrazione incida sulla deducibilita' del costo non e' chiarito da prassi specifica: da verificare con
+      il commercialista. Anno della spesa: per le imprese in contabilita' ordinaria di norma competenza.
+      Esempio: srl in zona 2, 96.000 euro nel 2026: 3.456 euro l'anno di IRES in meno per 10 anni; con IRES
+      lorda di soli 2.000 euro in un anno, 1.456 euro di quella quota sono persi.
+    fonte_verificata_il: "2026-10-07"
 
   - id: art_bonus
     nome: "Art Bonus (credito d'imposta per le donazioni alla cultura)"
@@ -982,7 +1164,8 @@ misure:
     ente: "Ministero della Cultura (portale artbonus.gov.it); Agenzia delle Entrate (utilizzo in F24)"
     norma: >-
       Art. 1 DL 31 maggio 2014 n. 83 (convertito dalla L. 106/2014), reso permanente dalla L. 28 dicembre
-      2015 n. 208 (Legge di stabilita' 2016), con successive modifiche.
+      2015 n. 208 (Legge di stabilita' 2016), con successive modifiche; circolare AdE 24/E del 31/7/2014;
+      risoluzione AdE 116/E del 17/12/2014 (codice tributo 6842).
     url_ufficiale: "https://artbonus.gov.it/beneficio-fiscale.html"
     in_vigore_dal: "2014-06-01"
     in_vigore_fino_al: null
@@ -991,11 +1174,11 @@ misure:
       Chi dona denaro a musei, biblioteche, archivi, monumenti e altri beni culturali pubblici, fondazioni
       lirico-sinfoniche, teatri e altri enti dello spettacolo ammessi recupera il 65% della donazione come
       credito d'imposta, in tre quote annuali uguali. Per le imprese il credito massimo e' il 5 per mille
-      dei ricavi annui; si usa in F24 (codice tributo 6842). Non e' un investimento dell'impresa: e' una
-      donazione, quindi non si abbina ai bandi.
+      dei ricavi annui; si usa in F24 (codice tributo 6842) dal periodo d'imposta successivo e non e' tassato.
+      Non e' un investimento dell'impresa: e' una donazione, quindi non si abbina ai bandi.
     a_chi_si_rivolge: >-
-      Persone fisiche, enti non commerciali e titolari di reddito d'impresa (qualunque forma e dimensione)
-      che fanno erogazioni liberali in denaro ai beneficiari ammessi.
+      Persone fisiche, enti non commerciali e titolari di reddito d'impresa (qualunque forma e dimensione,
+      compresi i forfettari: circ. AdE 34/E/2023) che fanno erogazioni liberali in denaro ai beneficiari ammessi.
     soggetti_ammessi: [impresa, libero_professionista, persona_fisica, ente_terzo_settore]
     dimensioni_ammesse: []
     settori_esclusi: "Nessuno."
@@ -1007,17 +1190,21 @@ misure:
       danza, circuiti di distribuzione, complessi strumentali, societa' concertistiche e corali, circhi e
       spettacoli viaggianti (secondo le condizioni di legge); c) realizzazione di nuove strutture, restauro
       e potenziamento di quelle esistenti di enti o istituzioni pubbliche dello spettacolo. Il beneficiario
-      deve essere registrato sul portale artbonus.gov.it. Enti ecclesiastici e privati: solo in casi
-      particolari (FAQ del portale, da verificare caso per caso). Una proposta di legge (2026) per estenderlo a
-      musei privati del Sistema museale nazionale, ETS e enti ecclesiastici non e' ancora legge.
+      deve essere registrato sul portale artbonus.gov.it. Enti ecclesiastici e privati: solo nei casi
+      specifici indicati dal portale. Una proposta di legge (2026) per estenderlo a musei privati del Sistema
+      museale nazionale, ETS e enti ecclesiastici non e' ancora legge. Non danno credito: donazioni in contanti
+      o in natura (beni, servizi, ore di lavoro, software), a enti o interventi non pubblicati, sponsorizzazioni
+      con ritorno pubblicitario, donazioni per acquistare beni culturali. Non finanzia software o
+      digitalizzazione dell'impresa che dona.
     # Nessuna categoria di spesa: e' una donazione, non una spesa di investimento. Cosi' non compare mai
     # tra le misure "da sommare" ai bandi (cumulabili() richiede categorie in comune).
     categorie_spesa: []
     intensita: >-
       Credito d'imposta del 65% delle erogazioni. Limite: per le imprese 5 per mille dei ricavi annui; per
       persone fisiche ed enti non commerciali 15% del reddito imponibile. Ripartito in tre quote annuali di
-      pari importo; la quota non usata si riporta negli anni successivi senza limiti di tempo. Il credito
-      non concorre alla base IRAP.
+      pari importo; la quota non usata si riporta negli anni successivi senza limiti di tempo. Il tetto del
+      5 per mille riguarda il credito (esempio del portale: 20 milioni di ricavi = credito massimo 100.000
+      euro, donazioni utili fino a circa 153.846 euro). Il credito non e' tassato (vedi fiscale).
     beneficio_stimato:
       percentuale_min: 65
       percentuale_max: 65
@@ -1027,17 +1214,20 @@ misure:
     come_si_ottiene: >-
       1) Scegliere un beneficiario e un progetto registrati su artbonus.gov.it. 2) Donare con mezzi
       tracciabili indicando la causale Art Bonus. 3) Conservare la ricevuta. 4) Indicare il credito in
-      dichiarazione e usarlo in F24 (codice tributo 6842), un terzo all'anno, dal periodo successivo
-      alla donazione (decorrenza da verificare sulle istruzioni F24).
-    tempi: "Nessuna domanda: credito in tre quote annuali, a partire dall'anno dopo la donazione (da verificare)."
+      dichiarazione (quadro RU) e usarlo in F24 (codice tributo 6842), un terzo all'anno, dal primo giorno
+      del periodo d'imposta successivo alla donazione. Professionisti e persone fisiche lo usano in
+      dichiarazione, gia' in quella dell'anno della donazione.
+    tempi: "Nessuna domanda: per le imprese credito in tre quote annuali in F24, dal primo giorno del periodo d'imposta successivo alla donazione."
     cumulabilita:
       con_fondo_perduto: si
       regola: >-
         Non riguarda le spese dei bandi: e' una donazione, non tocca i costi di un progetto agevolato.
-        Sulla stessa donazione non si sommano altre agevolazioni fiscali (es. deduzione come erogazione
-        liberale): da verificare nelle FAQ del portale. La donazione non deve avere un ritorno per l'impresa
-        (altrimenti e' una sponsorizzazione, con un trattamento fiscale diverso).
-      riferimento: "Art. 1 DL 83/2014; artbonus.gov.it, pagina Benefici fiscali e FAQ"
+        Sulla stessa donazione la legge disapplica la deduzione dell'art. 100 c. 2 lett. f) e g) TUIR (e la
+        detrazione del 19% per le persone fisiche): niente doppio beneficio; altre deduzioni per erogazioni
+        liberali sulla stessa somma (es. art. 100 lett. m): da valutare con il commercialista. La donazione
+        non deve avere un ritorno per l'impresa (altrimenti e' una sponsorizzazione, con un trattamento
+        fiscale diverso).
+      riferimento: "Art. 1 DL 83/2014; circolare AdE 24/E/2014; artbonus.gov.it, pagina Benefici fiscali"
     attenzione: >-
       Solo donazioni in denaro e tracciabili; beneficiario e intervento devono essere tra quelli ammessi
       dalla legge e pubblicati sul portale. Limite del 5 per mille dei ricavi: oltre, la parte di donazione
@@ -1081,14 +1271,20 @@ misure:
         interesse: basso
         esempio: >-
           Una societa' agricola con ricavi di 1,5 milioni puo' recuperare fino a 7.500 euro di credito l'anno. Per le
-          imprese agricole a reddito catastale l'accesso come titolari di reddito d'impresa e' da verificare (come persona
-          fisica vale il limite del 15% del reddito imponibile).
+          imprese agricole a reddito catastale il limite applicabile (5 per mille dei ricavi o 15% del reddito
+          imponibile) e' da verificare con il commercialista.
       - profilo: startup
         interesse: basso
         esempio: >-
           Con ricavi di 200.000 euro il tetto e' 1.000 euro di credito l'anno: di fatto irrilevante. Il credito si usa in
-          F24 anche in perdita, ma gli importi restano piccoli.
-    fonte_verificata_il: "2026-10-06"
+          F24 anche in perdita, ma gli importi restano piccoli. Regalare software o servizi al museo non da' credito.
+    fiscale: >-
+      Il credito non e' tassato: non rileva ai fini IRES/IRPEF (comprese addizionali) ne' IRAP, e non conta per
+      gli artt. 61 e 109 c. 5 TUIR (circ. AdE 24/E/2014). La donazione pero' non si deduce (disapplicata la
+      deduzione art. 100 c. 2 lett. f e g TUIR). Nessun limite RU (art. 1 c. 53 L. 244/2007) ne' limite
+      generale alle compensazioni. Esempio: srl con 3 milioni di ricavi dona 15.000 euro a novembre 2026:
+      credito 9.750 euro, 3.250 l'anno in F24 dal 2027 al 2029.
+    fonte_verificata_il: "2026-10-07"
 
   - id: incentivi_assunzione_2026
     nome: "Incentivi all'assunzione 2026 (Bonus Giovani, Bonus Donne, Bonus ZES)"
@@ -1097,8 +1293,8 @@ misure:
     ente: "INPS (domanda e controllo delle risorse), per conto del Ministero del Lavoro"
     norma: >-
       DL 30 aprile 2026 n. 62 ("decreto Lavoro 2026"), art. 1 (Bonus Donne), art. 2 (Bonus Giovani),
-      art. 3 (Bonus ZES), art. 7 (trattamento economico minimo); convertito in legge a giugno 2026
-      (estremi della legge di conversione ed eventuali modifiche: da verificare). Istruzioni INPS: circolari
+      art. 3 (Bonus ZES), art. 7 (trattamento economico minimo); convertito dalla L. 25 giugno 2026 n. 112
+      (testo vigente degli artt. 1-3 verificato su Normattiva). Istruzioni INPS: circolari
       n. 55 (Giovani), n. 56 (ZES) e n. 57 (Donne) del 14/05/2026; domande aperte con i messaggi n. 1966,
       1968 e 1970 dell'11/06/2026. Aiuti in esenzione: Reg. UE 651/2014 (GBER), artt. 32 e seguenti.
     url_ufficiale: "https://www.inps.it/it/it/inps-comunica/notizie/dettaglio-news-page.news.2026.06.bonus-inps-2026-al-via-le-domande-per-giovani-donne-e-zes.html"
@@ -1112,41 +1308,49 @@ misure:
       (800 se la lavoratrice risiede nella ZES), ZES 650 euro. Dura 12 o 24 mesi secondo lo svantaggio del
       lavoratore. Si chiede all'INPS online, anche prima di assumere; vale fino a esaurimento dei fondi annuali.
     a_chi_si_rivolge: >-
-      Datori di lavoro privati (studi professionali e altri datori non imprenditori: da verificare nelle circolari)
-      che assumono a tempo indeterminato, anche part-time (tetto ridotto in proporzione) e soci lavoratori di
-      cooperative. Esclusi: lavoro domestico, apprendistato, lavoro intermittente.
+      Datori di lavoro privati, anche non imprenditori (la norma dice "datori di lavoro privati": per gli studi
+      professionali conviene una conferma con il consulente del lavoro), che assumono a tempo indeterminato,
+      anche part-time (tetto ridotto in proporzione) e soci lavoratori di cooperative. Esclusi: lavoro
+      domestico, apprendistato, dirigenti e, secondo le istruzioni INPS, lavoro intermittente.
       Bonus Giovani: lavoratori che non hanno compiuto 35 anni e sono "svantaggiati" (es. senza un impiego
       regolarmente retribuito da almeno 6 mesi, oppure tra 15 e 24 anni, oppure senza diploma) o "molto
       svantaggiati" (senza impiego da 24 mesi, o da 12 mesi piu' un'altra condizione di svantaggio).
-      Bonus Donne: donne di qualsiasi eta' senza impiego regolarmente retribuito da 24 mesi, o da 12 mesi (6 in
-      alcuni casi) con un'altra condizione di svantaggio (eta' 15-24, niente diploma, oltre 50 anni, settori o
-      professioni con forte disparita' di genere...).
+      Bonus Donne: donne di qualsiasi eta', ovunque residenti, senza impiego regolarmente retribuito da 24 mesi,
+      o da 12 mesi con un'altra condizione di svantaggio (24 mesi di esonero); 12 mesi di esonero per chi rientra
+      in una sola categoria di svantaggio (es. senza impiego da 6 mesi, oltre 50 anni, senza diploma, settori o
+      professioni con forte disparita' di genere). Vincoli del Programma nazionale Giovani, donne e lavoro 2021-2027.
       Bonus ZES: solo datori con al massimo 10 dipendenti nel mese dell'assunzione, sede o unita' produttiva
       in Abruzzo, Basilicata, Calabria, Campania, Marche, Molise, Puglia, Sicilia, Sardegna o Umbria; lavoratori
       di almeno 35 anni disoccupati da almeno 24 mesi; personale non dirigente.
     soggetti_ammessi: [impresa, libero_professionista, ente_terzo_settore]
     dimensioni_ammesse: []
     settori_esclusi: >-
-      Nessun settore escluso in quanto tale; esclusi pubblica amministrazione, lavoro domestico, apprendistato.
+      Nessun settore escluso in quanto tale; esclusi pubblica amministrazione, lavoro domestico, apprendistato,
+      dirigenti.
       Non spetta per lavoratori occupati in Paesi extra UE non convenzionati. In agricoltura ed edilizia l'esonero
       sostituisce (non si somma a) le riduzioni contributive di settore: va fatto il conto di cosa conviene.
     investimenti_ammessi: >-
       Nessun investimento: si agevola il costo dei contributi previdenziali a carico del datore di lavoro per le
       nuove assunzioni a tempo indeterminato fatte nel 2026. Non valgono le trasformazioni di contratti a termine
       (per i giovani c'e' una misura a parte, art. 4 DL 62/2026, per le trasformazioni dal 1/8 al 31/12/2026).
-      Condizioni comuni: incremento occupazionale netto
-      rispetto alla media dei 12 mesi precedenti (salvo posti liberati da dimissioni, pensionamento, licenziamento
-      per giusta causa...), DURC regolare, rispetto dei contratti collettivi, nessun licenziamento collettivo o
-      per giustificato motivo oggettivo nella stessa unita' produttiva nei 6 mesi prima (Bonus ZES: anche nei 6
-      mesi dopo), trattamento economico non inferiore a quello dei contratti collettivi indicati dall'art. 7.
+      Condizioni comuni: incremento occupazionale netto mensile
+      rispetto alla media dei 12 mesi precedenti, al netto dei cali nelle societa' collegate (salvo posti liberati
+      da dimissioni, pensionamento, licenziamento per giusta causa...), DURC regolare, rispetto dei contratti
+      collettivi, nessun licenziamento collettivo o per giustificato motivo oggettivo nella stessa unita' produttiva
+      nei 6 mesi prima; in tutti e tre i bonus il licenziamento per giustificato motivo oggettivo del lavoratore
+      agevolato (o di uno con la stessa qualifica nella stessa unita') nei 6 mesi dopo comporta revoca e
+      restituzione; trattamento economico non inferiore a quello dei contratti collettivi indicati dall'art. 7;
+      principi generali dell'art. 31 D.Lgs. 150/2015 (es. diritti di precedenza). Non finanzia investimenti ne'
+      software, ma vale per qualunque profilo assunto, compresi sviluppatori e tecnici digitali.
     categorie_spesa: [personale]
     intensita: >-
       Esonero del 100% dei contributi previdenziali a carico del datore di lavoro (esclusi premi INAIL), con tetto
       mensile per lavoratore: Bonus Giovani 500 euro (650 in sede o unita' produttiva della ZES unica), 24 mesi
       per i molto svantaggiati e 12 mesi per gli altri svantaggiati; Bonus Donne 650 euro (800 per le residenti
       nella ZES unica), fino a 24 mesi (12 per alcune categorie); Bonus ZES 650 euro per 24 mesi. Limiti di spesa:
-      Giovani 109,7 milioni nel 2026 (252,4 nel 2027, 135,4 nel 2028); Donne 26,5 milioni nel 2026; ZES 26 milioni
-      nel 2026. Quando i fondi finiscono l'INPS non accoglie piu' domande.
+      Giovani 109,7 milioni nel 2026 (252,4 nel 2027, 135,4 nel 2028); Donne 26,5 milioni nel 2026 (63,7 nel 2027,
+      51,3 nel 2028); ZES 26 milioni nel 2026 (60 nel 2027, 34 nel 2028). Quando i fondi finiscono l'INPS non
+      accoglie piu' domande. Se un precedente datore ha usato solo una parte del bonus, si prosegue per i mesi residui.
     beneficio_stimato:
       percentuale_min: 13
       percentuale_max: 23
@@ -1168,8 +1372,8 @@ misure:
     tempi: >-
       Risposta dell'INPS nel modulo online (assunzione gia' fatta) o via PEC (assunzione da fare). Il risparmio
       arriva subito, mese per mese, sui contributi da versare, per 12 o 24 mesi. Termine finale per le domande
-      relative alle assunzioni 2026: da verificare (per i bonus 2024-2025 del decreto Coesione l'INPS ha chiuso
-      le domande il 30/09/2026).
+      relative alle assunzioni 2026: non ancora fissato al 07/10/2026 (il 30/09/2026 riguardava i bonus 2024-2025
+      del decreto Coesione).
     cumulabilita:
       con_fondo_perduto: nei_limiti
       regola: >-
@@ -1179,16 +1383,17 @@ misure:
         399-400) e con l'esonero dell'1% per la certificazione della parita' di genere. Essendo un aiuto in esenzione
         (GBER), con un bando regionale che paga gli stessi costi del personale il totale non puo' superare l'intensita'
         massima del regolamento (di solito 50% del costo salariale per 12 o 24 mesi): da verificare con il bando.
-      riferimento: "DL 62/2026 art. 2 c. 10 e art. 3 c. 9; circolari INPS 55, 56 e 57 del 14/05/2026, par. 9"
+      riferimento: "DL 62/2026 art. 1 c. 9, art. 2 c. 10 e art. 3 c. 9; circolari INPS 55, 56 e 57 del 14/05/2026, par. 9"
     attenzione: >-
       Solo tempo indeterminato e solo assunzioni dal 1/1 al 31/12/2026. Fondi annuali limitati (Bonus ZES e Donne
       circa 26 milioni ciascuno nel 2026): fare domanda presto, anche prima dell'assunzione. Senza incremento
       occupazionale netto (contato in ULA sui 12 mesi precedenti) l'esonero non spetta. Diritti di precedenza di
       altri lavoratori, licenziamenti nei 6 mesi precedenti o violazioni contributive fanno perdere il bonus.
-      Iscrizione delle offerte sulla piattaforma SIISL per i datori che ricevono incentivi pubblici (DL 159/2025
-      art. 14): verificare l'obbligo. Collegate ma distinte: esonero per le madri di almeno tre figli (L. 199/2025
-      commi 210-213, circolare INPS 82 del 29/07/2026, fino a 8.000 euro l'anno) e incentivo per le
-      trasformazioni a tempo indeterminato di giovani (art. 4 DL 62/2026, circolare 72/2026, messaggio 2518/2026).
+      Pubblicazione delle offerte sulla piattaforma SIISL per i datori che ricevono incentivi all'assunzione (DL
+      159/2025 art. 14): tempi e modalita' dell'obbligo da verificare. Domanda fatta prima di assumere: Unilav
+      entro 10 giorni o si perde la prenotazione. Collegate ma distinte: esonero per le madri di almeno tre figli
+      (L. 199/2025 commi 210-213, circolare INPS 82 del 29/07/2026, fino a 8.000 euro l'anno) e incentivo per le
+      trasformazioni a tempo indeterminato di giovani dal 1/8 al 31/12/2026 (art. 4 DL 62/2026, circolare 72/2026).
     esempi:
       - profilo: ristorazione_ricettivo
         interesse: alto
@@ -1214,14 +1419,16 @@ misure:
         interesse: medio
         esempio: >-
           Negozio di Bari con 4 dipendenti che assume una commessa di 40 anni disoccupata da 2 anni: Bonus ZES (ha
-          meno di 10 dipendenti) o Bonus Donne, fino a 650 euro al mese per 24 mesi; con 20.000 euro lordi l'anno i
-          contributi sono circa 500 euro al mese, quindi risparmio di circa 12.000 euro in due anni.
+          meno di 10 dipendenti, 650 euro al mese) o Bonus Donne (fino a 800 euro, perche' residente nella ZES), per
+          24 mesi; con 20.000 euro lordi l'anno i contributi sono circa 500 euro al mese, quindi risparmio di circa
+          12.000 euro in due anni.
       - profilo: ufficio_servizi
         interesse: medio
         esempio: >-
           Studio tecnico che assume un geometra di 23 anni al primo impiego (svantaggiato perche' sotto i 25 anni):
-          esonero fino a 500 euro al mese per 12 mesi, circa 6.000 euro. Per gli studi professionali (datori di
-          lavoro non imprenditori) l'accesso e' da verificare. L'apprendistato e' escluso.
+          esonero fino a 500 euro al mese per 12 mesi, circa 6.000 euro. La norma parla di "datori di lavoro privati",
+          quindi non solo imprese: per gli studi professionali conviene una conferma con il consulente del lavoro.
+          L'apprendistato e' escluso.
       - profilo: startup
         interesse: medio
         esempio: >-
@@ -1241,7 +1448,14 @@ misure:
           6.000 euro in 12 mesi, ma l'esonero non si somma alle riduzioni contributive per le zone montane o
           svantaggiate: conviene solo se supera la riduzione gia' goduta. La maggior parte degli operai agricoli e'
           a tempo determinato (OTD), esclusi.
-    fonte_verificata_il: "2026-10-06"
+    fiscale: >-
+      Non e' un contributo tassato ma un minor costo: il risparmio non si dichiara come ricavo, ma il costo del
+      personale deducibile scende dello stesso importo, quindi salgono IRES/IRPEF e IRAP (il costo del lavoro a
+      tempo indeterminato e' deducibile anche ai fini IRAP, art. 11 c. 4-octies D.Lgs. 446/1997). Esempio, srl
+      in utile: 6.000 euro di esonero = circa 1.440 euro di IRES e 234 di IRAP in piu', beneficio netto circa
+      4.300 euro (circa 72%). Si somma senza riduzioni alla maxi-deduzione dei nuovi assunti. Aiuto in esenzione
+      GBER, non de minimis.
+    fonte_verificata_il: "2026-10-07"
 
   - id: fondo_garanzia_pmi
     nome: "Fondo di Garanzia per le PMI"
@@ -1251,8 +1465,8 @@ misure:
     norma: >-
       L. 23 dicembre 1996 n. 662, art. 2 comma 100 lett. a); riforma dell'art. 15-bis DL 145/2023 ("DL Anticipi")
       in vigore dal 1/1/2024, modificata dalla L. 207/2024; regole 2025 prorogate per tutto il 2026 dall'art. 14
-      comma 1 DL 31 dicembre 2025 n. 200 (Milleproroghe); Disposizioni operative del Fondo e circolari MCC n. 21/2023
-      e n. 20/2024.
+      comma 1 DL 31 dicembre 2025 n. 200 (Milleproroghe); Disposizioni operative del Fondo e circolari MCC n. 21/2023,
+      n. 20/2024, n. 1/2026 (proroga) e n. 2/2026 (premio aggiuntivo per le banche).
     url_ufficiale: "https://www.fondidigaranzia.it/prorogate-per-il-2026-le-modalita-di-funzionamento-del-fondo-di-garanzia/"
     in_vigore_dal: "2000-01-01"
     in_vigore_fino_al: null
@@ -1261,33 +1475,44 @@ misure:
       Garanzia dello Stato sui finanziamenti bancari e sul leasing di PMI e professionisti: se l'impresa non paga,
       il Fondo rimborsa alla banca una parte del debito. Nel 2026 copre l'80% dei finanziamenti per investimenti
       (e quelli di startup, PMI innovative, microcredito, Nuova Sabatini, importo ridotto) e il 50% di quelli per
-      liquidita'. Non e' un contributo: aiuta ad avere il prestito, a un tasso piu' basso e senza dare altre
-      garanzie sulla parte coperta. Si chiede tramite la banca o un confidi.
+      liquidita'. Non e' un contributo: aiuta ad avere il prestito, a un tasso piu' basso e senza garanzie reali,
+      assicurative o bancarie sulla parte coperta (garanzie personali dei soci invece possibili). Commissione una
+      tantum: micro gratis, piccole 0,5%, medie 1% del garantito. Si chiede tramite la banca o un confidi.
     a_chi_si_rivolge: >-
       Micro, piccole e medie imprese iscritte al Registro delle imprese e professionisti iscritti agli ordini o alle
-      associazioni riconosciute; dalla riforma anche enti del terzo settore e, con percentuali piu' basse, le
-      small mid-cap (fino a 499 addetti). L'impresa deve essere valutata dal modello di rating del Fondo: la fascia
-      peggiore (5) non e' ammessa.
+      associazioni riconosciute; enti del terzo settore iscritti a RUNTS e REA (operazioni fino a 60.000 euro) e, con
+      percentuali piu' basse, le mid-cap (250-499 dipendenti, contando associate e collegate). L'impresa deve essere
+      valutata dal modello di rating del Fondo: la fascia peggiore (5) non e' ammessa. Startup non innovative con
+      meno di tre anni e senza bilanci valutabili: solo per investimenti e con mezzi propri pari almeno al 25% del
+      programma.
     soggetti_ammessi: [impresa, libero_professionista, ente_terzo_settore]
     dimensioni_ammesse: [micro, piccola, media]
     settori_esclusi: >-
-      Attivita' finanziarie e assicurative (con poche eccezioni). Agricoltura: ammissione e regole da verificare
-      (per le imprese agricole si usa spesso la garanzia ISMEA). Imprese in difficolta' o con sofferenze: escluse
-      o con limiti secondo il rating.
+      Esclusi (Disposizioni operative): attivita' finanziarie e assicurative, pubblica amministrazione, famiglie
+      come datori di lavoro domestico, organismi extraterritoriali. Le imprese agricole sono ammesse (con regole
+      apposite per gli investimenti delle PMI agricole; in alternativa la garanzia ISMEA). Esclusi anche: imprese in
+      difficolta', con sofferenze o esposizioni deteriorate verso la banca finanziatrice, in liquidazione, in fascia 5
+      di rating, con aiuti illegali non restituiti.
     investimenti_ammessi: >-
       Qualsiasi finanziamento legato all'attivita' d'impresa, a breve o medio-lungo termine: investimenti
-      (macchinari, impianti, immobili strumentali, veicoli, software, opere), liquidita' e scorte, consolidamento
-      di debiti (con nuova finanza, regole da verificare), leasing, operazioni sul capitale di rischio. Importo
-      massimo garantito per impresa: 5 milioni di euro (2,5 milioni per il capitale di rischio).
+      (macchinari, impianti, immobili strumentali, veicoli, opere, attivi immateriali ammortizzabili come licenze
+      software capitalizzate e sviluppo software esterno capitalizzato: copertura 80%), liquidita' e scorte (50%:
+      qui finiscono anche abbonamenti SaaS e cloud, canoni, consulenze, marketing), consolidamento di debiti (con
+      nuova finanza, regole da verificare con la banca), leasing, operazioni sul capitale di rischio, minibond.
+      Importo massimo garantito per impresa: 5 milioni di euro (2,5 milioni per il capitale di rischio).
     categorie_spesa: [macchinari_attrezzature, software_digitale, opere_edili_impianti, immobili, veicoli, scorte_circolante]
     intensita: >-
-      Garanzia diretta (o riassicurazione dei confidi) nel 2026: 80% per investimenti, importo ridotto, microcredito,
-      Nuova Sabatini, startup, startup e PMI innovative, incubatori certificati, enti del terzo settore; 50% per la
-      liquidita'. Percentuali piu' basse per le small mid-cap (es. 40% investimenti, 30% liquidita', secondo la
-      riforma 2024; da verificare per il 2026). Massimo 5 milioni garantiti per impresa. Commissione una tantum sulla
-      parte garantita secondo la riforma 2024: micro esenti, piccole 0,5%, medie 1%, small mid-cap 1,25% (da
-      verificare per il 2026). Sulla parte garantita la banca non puo' chiedere altre garanzie reali, assicurative
-      o bancarie. L'aiuto (equivalente sovvenzione lordo) va nel de minimis o nel GBER e nel Registro Nazionale Aiuti.
+      Garanzia diretta (o riassicurazione dei confidi) nel 2026: 80% per investimenti, importo ridotto (fino a
+      40.000 euro, 100.000 tramite confidi autorizzato), microcredito, Nuova Sabatini, startup, startup e PMI
+      innovative, incubatori certificati, enti del terzo settore (fino a 60.000 euro); 50% per la liquidita'.
+      Mid-cap: 40% investimenti e 30% liquidita' (circolare MCC 21/2023), operativita' legata all'autorizzazione UE:
+      da verificare con la banca. Massimo 5 milioni garantiti per impresa. Commissione una tantum sulla parte
+      garantita (Disposizioni operative tab. 5, art. 15-bis DL 145/2023): micro gratis, piccole 0,5%, medie 1%,
+      mid-cap 1,25%; nessuna commissione per Nuova Sabatini, startup e PMI innovative, incubatori, microcredito e,
+      per le operazioni ordinarie, per imprese del Mezzogiorno, imprese femminili, autotrasporto, imprese sociali,
+      PMI in contratto di rete. Sulla parte garantita la banca non puo' chiedere garanzie reali, assicurative
+      o bancarie, ma puo' chiedere garanzie personali. L'aiuto (equivalente sovvenzione lordo) va nel de minimis
+      o nel GBER (art. 17 per gli investimenti delle PMI) e nel Registro Nazionale Aiuti.
     beneficio_stimato:
       percentuale_min: null
       percentuale_max: null
@@ -1300,10 +1525,14 @@ misure:
       1) L'impresa chiede il finanziamento a una banca, societa' di leasing o intermediario e, insieme, la garanzia
       del Fondo (garanzia diretta); oppure si rivolge a un confidi, che garantisce e chiede la riassicurazione al
       Fondo. Non si presenta domanda direttamente al Fondo. 2) La banca carica la richiesta con i dati di bilancio
-      per il modello di rating. 3) Il Fondo delibera (Consiglio di gestione due volte a settimana) e la banca eroga.
+      per il modello di rating e, per gli investimenti, la descrizione del programma. In esenzione (GBER) la
+      domanda va firmata prima di avviare l'investimento; in de minimis il programma non deve essere partito da
+      piu' di 6 mesi. 3) Il Fondo delibera (date delle sedute sul sito del Fondo) e la banca eroga.
     tempi: >-
       Istruttoria rapida dopo l'invio della banca (di solito poche settimane, da verificare). Strumento permanente;
       le percentuali di copertura attuali valgono fino al 31/12/2026, poi dipendono dalla prossima proroga.
+      Dal 20/2/2026 le banche che usano molto la garanzia pagano un premio aggiuntivo al Fondo (circ. MCC 2/2026):
+      chiedere se viene ribaltato sul cliente.
     cumulabilita:
       con_fondo_perduto: nei_limiti
       regola: >-
@@ -1316,14 +1545,17 @@ misure:
       Le percentuali del 2026 sono una proroga di un anno (DL 200/2025): dal 2027 possono cambiare. Rating del Fondo:
       con bilanci deboli la garanzia puo' essere negata. Per la liquidita' la copertura e' solo il 50%. L'aiuto
       consuma il massimale de minimis se la garanzia e' concessa in quel regime: tenerne conto prima di chiedere
-      altri aiuti de minimis. La banca resta libera di non concedere il prestito anche con la garanzia.
+      altri aiuti de minimis (conta l'ESL calcolato dal Fondo, non l'importo garantito). Avviare l'investimento
+      prima della domanda in esenzione fa perdere la qualifica di investimento. La banca resta libera di non
+      concedere il prestito anche con la garanzia.
     esempi:
       - profilo: startup
         interesse: alto
         esempio: >-
           Startup innovativa che chiede 150.000 euro alla banca per sviluppo prodotto e capitale circolante: copertura
-          80% (120.000 euro garantiti) anche per la liquidita', senza commissione se e' una microimpresa. Spesso e'
-          l'unico modo per avere credito nei primi anni, quando i bilanci sono in perdita.
+          80% (120.000 euro garantiti) anche per la liquidita', senza commissione. Spesso e' l'unico modo per avere
+          credito nei primi anni, quando i bilanci sono in perdita. Una startup non iscritta come innovativa, con meno
+          di tre anni e senza bilanci valutabili, e' ammessa solo per investimenti e con almeno il 25% di mezzi propri.
       - profilo: artigiano
         interesse: alto
         esempio: >-
@@ -1334,14 +1566,13 @@ misure:
         interesse: alto
         esempio: >-
           Negozio che rinnova arredi e vetrine con un finanziamento di 50.000 euro: garanzia 80% (40.000 euro); per un
-          fido o un prestito di liquidita' per le scorte da 30.000 euro la copertura e' il 50%. Micro: nessuna
-          commissione.
+          fido per le scorte da 30.000 euro la copertura e' il 50% (15.000 euro). Micro: nessuna commissione.
       - profilo: ristorazione_ricettivo
         interesse: alto
         esempio: >-
           Hotel che ristruttura le camere con un mutuo di 800.000 euro: garanzia 80% (640.000 euro), commissione una
-          tantum circa 0,5% del garantito se piccola impresa (circa 3.200 euro); la banca non puo' chiedere altre
-          garanzie sulla parte coperta. Utile per finanziare la quota non coperta da un bando regionale sul turismo.
+          tantum 0,5% del garantito se piccola impresa del Centro-Nord (circa 3.200 euro), nulla al Sud; sulla parte
+          coperta la banca non puo' chiedere garanzie reali, ma puo' chiedere garanzie personali. Utile per finanziare la quota non coperta da un bando regionale sul turismo.
       - profilo: manifattura
         interesse: medio
         esempio: >-
@@ -1351,20 +1582,29 @@ misure:
       - profilo: logistica
         interesse: medio
         esempio: >-
-          Operatore logistico che finanzia carrelli, scaffalature e furgoni per 1,2 milioni: garanzia 80%. Se supera
-          i 250 addetti diventa small mid-cap con copertura piu' bassa (40% per gli investimenti, da verificare).
+          Operatore logistico che finanzia carrelli, scaffalature e furgoni per 1,2 milioni: garanzia 80%. Un'impresa
+          di autotrasporto non paga commissione, ma per i mezzi di trasporto valgono le condizioni del GBER. Sopra i
+          250 addetti (contando le collegate) diventa mid-cap con copertura piu' bassa (40% per gli investimenti,
+          operativita' da verificare con la banca).
       - profilo: ufficio_servizi
         interesse: medio
         esempio: >-
           Societa' di consulenza che chiede 100.000 euro di liquidita' per sostenere la crescita: garanzia 50%. Vale
           anche per i professionisti iscritti agli ordini. Utile soprattutto se la banca chiede garanzie personali ai soci.
       - profilo: agricola
-        interesse: basso
+        interesse: medio
         esempio: >-
-          Azienda agricola che finanzia una cella frigo da 100.000 euro: accesso al Fondo PMI da verificare; per le
-          imprese agricole lo strumento abituale e' la garanzia ISMEA, che funziona in modo simile. La parte di
-          trasformazione (cantina, caseificio) organizzata come impresa a se' puo' usare il Fondo PMI.
-    fonte_verificata_il: "2026-10-06"
+          Azienda agricola che finanzia una cella frigo da 100.000 euro: le imprese agricole sono ammesse, garanzia
+          80% (80.000 euro garantiti), con regole apposite per gli investimenti delle PMI agricole. In alternativa la
+          garanzia ISMEA, pensata per il settore: conviene chiedere alla banca quale costa meno.
+    fiscale: >-
+      La garanzia non genera reddito: nessuna somma incassata, nulla da tassare ai fini IRES, IRPEF o IRAP. Gli
+      interessi del prestito restano deducibili con le regole ordinarie (art. 96 TUIR per le societa'). La
+      commissione e' un onere accessorio al finanziamento, imputato per competenza sulla durata; se rientri nel
+      limite dell'art. 96 TUIR e se sia deducibile IRAP dipende dalla classificazione in bilancio: da verificare
+      con il commercialista. Conta come aiuto di Stato per il suo ESL (de minimis o GBER, Registro nazionale aiuti).
+      Esempio: piccola impresa del Nord, 200.000 euro in 5 anni, 160.000 garantiti: 800 euro di commissione una tantum.
+    fonte_verificata_il: "2026-10-07"
 
   - id: maxi_deduzione_assunzioni
     nome: "Maxi-deduzione del costo dei nuovi assunti (120% - 130%)"
@@ -1374,7 +1614,9 @@ misure:
     norma: >-
       Art. 4 D.Lgs. 30 dicembre 2023 n. 216; decreto attuativo MEF 25 giugno 2024; prorogata per i periodi
       d'imposta 2025, 2026 e 2027 dalla L. 30 dicembre 2024 n. 207, art. 1, commi 399 e 400. Chiarimenti:
-      Agenzia delle Entrate, circolare n. 1/E del 20/01/2025.
+      Agenzia delle Entrate, circolare n. 1/E del 20/01/2025. Dal 1/1/2027 l'art. 4 e l'allegato 1 del D.Lgs.
+      216/2023 sono abrogati dal nuovo TUIR (D.Lgs. 19 giugno 2026 n. 117), che riporta la misura con le stesse
+      regole e la proroga fino al 2027 nell'art. 104, commi 10-18, e le categorie al 130% nell'Allegato G.
     url_ufficiale: "https://www.agenziaentrate.gov.it/portale/-/comunicato-stampa-del-20-gennaio-2025-nuove-assunzioni"
     in_vigore_dal: "2024-01-01"
     in_vigore_fino_al: "2027-12-31"
@@ -1384,12 +1626,13 @@ misure:
       assunti maggiorato del 20%, cioe' il 120%; il 130% per alcune categorie (lavoratori molto svantaggiati,
       disabili, donne con almeno due figli minori, giovani ammessi agli incentivi per l'occupazione giovanile...).
       Vale anche per il 2026 (proroga fino al 2027). Nessuna domanda: si applica in dichiarazione. Per una societa'
-      in utile vale circa il 4,8% del costo dei nuovi assunti (7,2% per le categorie al 130%).
+      in utile vale circa il 4,8% del costo dei nuovi assunti (7,2% per le categorie al 130%). Non riduce l'IRAP.
     a_chi_si_rivolge: >-
       Imprese (societa' di capitali, di persone, ditte individuali, enti commerciali e stabili organizzazioni) e
       professionisti, con reddito determinato in modo analitico, che hanno esercitato l'attivita' per almeno 365
       giorni prima del periodo agevolato. Esclusi: imprese in liquidazione ordinaria, liquidazione giudiziale o altre
-      procedure liquidatorie, forfettari. Enti non commerciali solo per i dipendenti dell'attivita' commerciale.
+      procedure liquidatorie (le procedure di risanamento non escludono), forfettari. Enti non commerciali solo per i
+      dipendenti dell'attivita' commerciale, con contabilita' separata.
     soggetti_ammessi: [impresa, libero_professionista]
     dimensioni_ammesse: []
     settori_esclusi: >-
@@ -1397,55 +1640,67 @@ misure:
       analiticamente (es. forfettari, imprese agricole con solo reddito agrario catastale), e rende poco a chi e' in perdita.
     investimenti_ammessi: >-
       Nessun investimento: il costo del personale a tempo indeterminato assunto in piu' (voci B9 del conto
-      economico: salari, oneri sociali, TFR, quiescenza, altri costi; esclusi buoni pasto, formazione, trasferte).
+      economico: salari, oneri sociali, TFR, quiescenza, altri costi; esclusi buoni pasto, formazione, vitto e
+      alloggio, trasferte, auto in uso promiscuo; circolare 1/E/2025). Gli apprendisti contano come tempo
+      indeterminato (circolare 1/E). Non contano collaboratori, freelance e consulenti a partita IVA. Non copre
+      software ne' investimenti, ma vale per qualunque profilo assunto (anche sviluppatori e tecnici digitali).
       Condizioni a fine periodo d'imposta: aumento del numero medio dei dipendenti a tempo indeterminato rispetto
       al periodo precedente e aumento anche del numero complessivo dei dipendenti (compresi i tempi determinati).
     categorie_spesa: [personale]
     intensita: >-
       Maggiorazione del 20% (30% per le categorie dell'allegato 1 al D.Lgs. 216/2023) del minore tra il costo dei
       nuovi assunti a tempo indeterminato e l'aumento del costo complessivo del personale rispetto al periodo
-      precedente. Solo imposte sui redditi, non IRAP. Negli acconti non si tiene conto della maggiorazione.
+      precedente; con assunti sia al 120% sia al 130%, se l'aumento complessivo e' minore si divide in proporzione
+      al costo (esempio 3 della circolare 1/E). Categorie al 130%: molto svantaggiati (Reg. UE 651/2014), disabili
+      (L. 68/1999) e svantaggiati L. 381/1991, donne con almeno due figli minori o senza impiego da 6 mesi in aree
+      indicate da decreto, donne vittime di violenza, giovani ammessi agli incentivi art. 27 DL 48/2023, lavoratori
+      con sede in regioni a basso PIL pro capite (elenco preciso da verificare), ex percettori del reddito di
+      cittadinanza senza requisiti per l'Assegno di inclusione. Solo imposte sui redditi, non IRAP. Negli acconti
+      non si tiene conto della maggiorazione (L. 207/2024 c. 400).
     beneficio_stimato:
       percentuale_min: 4.8
       percentuale_max: 12.9
       nota: >-
         Risparmio = maggiorazione x aliquota. Societa' di capitali (IRES 24%): 20% x 24% = 4,8% del costo dei nuovi
-        assunti, 30% x 24% = 7,2%. Ditte individuali e societa' di persone (IRPEF marginale 35-43%): dal 7% al 12,9%.
+        assunti, 30% x 24% = 7,2%. Ditte individuali, soci di societa' di persone e professionisti (IRPEF 2026: 33%
+        tra 28.000 e 50.000 euro, 43% sopra): dal 6,6% (20% x 33%) al 12,9% (30% x 43%), piu' addizionali.
         Solo con un reddito imponibile capiente; in perdita aumenta la perdita riportabile.
     come_si_ottiene: >-
       Nessuna domanda. A fine anno il commercialista verifica l'incremento dei dipendenti a tempo indeterminato e
       complessivo (medie in ULA, rispetto al periodo precedente), calcola il costo dei nuovi assunti e l'aumento del
       costo del personale, applica il 20% o 30% e deduce la maggiorazione come variazione in diminuzione nella
-      dichiarazione dei redditi. Conservare la documentazione sulle categorie di lavoratori al 130%.
+      dichiarazione dei redditi (codice del rigo da controllare nelle istruzioni del modello dell'anno). Conservare
+      la documentazione sulle categorie di lavoratori al 130%, raccolta al momento dell'assunzione.
     tempi: "Beneficio nella dichiarazione dei redditi del periodo d'imposta dell'assunzione (2026: dichiarazione del 2027)."
     cumulabilita:
       con_fondo_perduto: si
       regola: >-
-        Misura fiscale generale (non aiuto di Stato secondo l'impostazione corrente; da verificare per casi
-        particolari). Si somma espressamente, senza riduzioni, con i Bonus Giovani, Donne e ZES 2026 (DL 62/2026,
-        richiamato nelle circolari INPS). Con un contributo a fondo perduto sui costi del personale: il contributo e'
+        Misura fiscale generale, senza bando: non e' concessa in de minimis e non consuma quel massimale. Si somma
+        espressamente, senza riduzioni, con i Bonus Giovani, Donne e ZES 2026 (DL 62/2026 art. 1 c. 9, art. 2 c. 10,
+        art. 3 c. 9). Con un contributo a fondo perduto sui costi del personale: il contributo e'
         un ricavo tassato, la maggiorazione resta sul costo; eventuali divieti di cumulo del bando vanno controllati.
-      riferimento: "D.Lgs. 216/2023 art. 4; L. 207/2024 art. 1 c. 399-400; circolare AE 1/E 2025; circolari INPS 55-57/2026"
+      riferimento: "D.Lgs. 216/2023 art. 4 (dal 2027 art. 104 c. 10-18 nuovo TUIR); L. 207/2024 art. 1 c. 399-400; circolare AE 1/E 2025; DL 62/2026"
     attenzione: >-
       Serve un aumento netto sia dei tempi indeterminati sia del totale dei dipendenti: se si assume a tempo
       indeterminato ma scadono contratti a termine non rinnovati, il beneficio puo' sparire. Nei gruppi si guarda
-      all'incremento di gruppo. Le trasformazioni da tempo determinato contano solo se aumentano il numero dei
-      tempi indeterminati (dettaglio nella circolare 1/E). Attivita' da almeno 365 giorni. Categorie al 130% da
-      documentare. Apprendisti: conteggio da verificare.
+      all'incremento al netto dei cali nelle societa' controllate o collegate. Le trasformazioni da tempo
+      determinato non aumentano il totale dei dipendenti (dettaglio nella circolare 1/E). Attivita' da almeno 365
+      giorni. Categorie al 130% da documentare. Gli apprendisti contano come tempo indeterminato.
     esempi:
       - profilo: manifattura
         interesse: alto
         esempio: >-
           Srl in utile che passa da 80 a 85 dipendenti a tempo indeterminato, con 200.000 euro di costo per i 5 nuovi
           assunti (e un aumento del costo del personale almeno pari): maggiorazione 40.000 euro, risparmio IRES circa
-          9.600 euro; se 2 dei 5 sono molto svantaggiati la maggiorazione sale al 30% per quei due. Si somma ai bonus
-          contributivi INPS per gli stessi lavoratori.
+          9.600 euro; se 2 dei 5 sono molto svantaggiati (40.000 euro ciascuno) la maggiorazione diventa 48.000 euro,
+          circa 11.500 euro di IRES. Si somma ai bonus contributivi INPS per gli stessi lavoratori.
       - profilo: logistica
         interesse: alto
         esempio: >-
           Operatore logistico che apre un nuovo magazzino e assume 15 persone a tempo indeterminato per 540.000 euro
-          di costo: maggiorazione 108.000 euro, risparmio IRES circa 25.900 euro. Attenzione ai contratti a termine
-          e ai somministrati non rinnovati negli altri depositi: conta il totale dei dipendenti.
+          di costo: maggiorazione 108.000 euro, risparmio IRES circa 25.900 euro; se il magazzino e' in una regione
+          del Mezzogiorno compresa tra le aree della norma, 130%: maggiorazione 162.000 euro, circa 38.900 euro.
+          Attenzione ai contratti a termine non rinnovati negli altri depositi: conta il totale dei dipendenti.
       - profilo: ristorazione_ricettivo
         interesse: medio
         esempio: >-
@@ -1456,19 +1711,21 @@ misure:
         interesse: medio
         esempio: >-
           Ditta individuale artigiana che assume il primo operaio a tempo indeterminato (30.000 euro di costo):
-          maggiorazione 6.000 euro, risparmio IRPEF circa 2.100-2.580 euro con aliquota del 35-43%. Serve l'attivita'
-          da almeno un anno e un reddito capiente; il conteggio degli apprendisti e' da verificare.
+          maggiorazione 6.000 euro, risparmio IRPEF circa 1.980-2.580 euro con aliquota del 33-43%. Serve l'attivita'
+          da almeno un anno e un reddito capiente; anche un apprendista conta (l'apprendistato e' di regola a tempo
+          indeterminato, circolare 1/E).
       - profilo: ufficio_servizi
         interesse: medio
         esempio: >-
           Societa' di consulenza in utile che assume un consulente junior per 40.000 euro di costo annuo: maggiorazione
           8.000 euro, risparmio IRES circa 1.920 euro; se il giovane era ammesso agli incentivi per l'occupazione
-          giovanile, 30% e circa 2.880 euro. Vale anche per gli studi professionali in contabilita' analitica.
+          giovanile, 30% e circa 2.880 euro. Vale anche per professionisti e studi associati con reddito determinato
+          analiticamente.
       - profilo: negozio
         interesse: basso
         esempio: >-
           Snc con un negozio che assume una commessa a tempo indeterminato (28.000 euro di costo): maggiorazione 5.600
-          euro, risparmio IRPEF dei soci circa 1.960-2.400 euro. Non spetta se l'impresa e' nel forfettario.
+          euro, risparmio IRPEF dei soci circa 1.850-2.410 euro (33-43%). Non spetta se l'impresa e' nel forfettario.
       - profilo: startup
         interesse: basso
         esempio: >-
@@ -1481,7 +1738,13 @@ misure:
           Azienda agricola che dichiara solo il reddito agrario catastale: la maggiorazione non serve, perche' il
           reddito non si calcola sui costi. Puo' interessare solo se c'e' una societa' di trasformazione (cantina,
           caseificio) con reddito d'impresa e bilancio.
-    fonte_verificata_il: "2026-10-06"
+    fiscale: >-
+      Solo imposte sui redditi (IRES o IRPEF), non IRAP. Variazione in diminuzione extracontabile nel modello
+      Redditi; gli acconti dell'anno dopo si calcolano senza la maggiorazione (il vantaggio arriva con il saldo);
+      in perdita aumenta la perdita riportabile. IRPEF 2026 al 33% tra 28.000 e 50.000 euro e al 43% sopra.
+      Esempio: srl con utile di 300.000 euro, 3 assunti per 120.000 euro e costo del personale +130.000:
+      maggiorazione 24.000 euro, IRES risparmiata 5.760 euro, IRAP invariata.
+    fonte_verificata_il: "2026-10-07"
 
 # Misure valutate e NON inserite (dettaglio nella ricerca):
 # - Bonus barriere architettoniche 75% (art. 119-ter DL 34/2020): solo per le spese fino al 31/12/2025,
