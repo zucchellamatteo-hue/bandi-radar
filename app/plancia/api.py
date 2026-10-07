@@ -547,6 +547,24 @@ def bandi_del_profilo(codice: str) -> dict:
         return {"codice": codice, **_abbinamento(conn, profilo)}
 
 
+@router.get("/profili/{codice}/vista-impresa")
+def vista_impresa_del_profilo(codice: str) -> dict:
+    """La pagina "I miei bandi" come la vede l'impresa, per qualunque profilo (07/10, Matteo): bandi adatti, da valutare
+    e di altre regioni, misure nazionali utili. Per i profili delle imprese iscritte c'e' anche il nome dell'impresa."""
+    from app import impresa
+    from app.abbinamento import catalogo
+
+    riga = leggi_profilo(codice)
+    profilo = _modello_profilo().model_validate(riga["profilo"]).per_regole()
+    with connetti() as conn:
+        with conn.cursor() as cur:
+            cur.execute("SELECT id, nome FROM imprese WHERE profilo_codice = %s", (codice,))
+            iscritta = cur.fetchone()
+        nome = iscritta["nome"] if iscritta else f"profilo {codice}"
+        return {"impresa": {"id": iscritta["id"] if iscritta else None, "nome": nome, "codice": codice},
+                **impresa.vista_del_profilo(profilo, catalogo.carica_bandi(conn))}
+
+
 @router.post("/abbina")
 def abbina_profilo(corpo: dict) -> dict:
     """Abbinamento di un profilo senza salvarlo (prove dalla plancia; piu' avanti Qiaro / Contract to Cash)."""

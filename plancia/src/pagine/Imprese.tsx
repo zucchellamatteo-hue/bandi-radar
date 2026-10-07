@@ -102,7 +102,7 @@ export default function Imprese() {
         <table>
           <thead><tr><th>Impresa</th><th>Utente</th><th>Sedi</th><th>Email settimanale</th><th>Richieste</th><th>Iscritta</th></tr></thead>
           <tbody>{imprese.map((i) => (
-            <tr key={i.id}><td>{i.nome}</td><td>{i.utente_nome || ""} {i.email}{i.attivo ? "" : " (accesso tolto)"}</td><td>{i.sedi}</td>
+            <tr key={i.id}><td>{i.nome}{i.profilo_codice && <div className="piccolo"><Link to={`/profili/${encodeURIComponent(i.profilo_codice)}/impresa`}>i suoi bandi</Link></div>}</td><td>{i.utente_nome || ""} {i.email}{i.attivo ? "" : " (accesso tolto)"}</td><td>{i.sedi}</td>
               <td>{i.email_settimanale ? "sì" : "no"}</td><td>{i.richieste}</td><td>{data(i.creata_il)}</td></tr>))}</tbody>
         </table>)}
     </>

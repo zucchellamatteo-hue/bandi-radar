@@ -258,7 +258,7 @@ sezioni:
 
       **Novità**. Una voce per settimana, con le stesse novità dell'email del lunedì.
 
-      **Profili**. Profili d'impresa di prova, anonimi (solo un codice, mai nomi o partite IVA). Compili il modulo e vedi i bandi aperti o in arrivo divisi in compatibili, da verificare ed esclusi, con il motivo. **Prova senza salvare** non registra nulla.
+      **Profili**. Profili d'impresa di prova, anonimi (solo un codice, mai nomi o partite IVA). Compili il modulo e vedi i bandi aperti o in arrivo divisi in compatibili, da verificare ed esclusi, con il motivo. **Prova senza salvare** non registra nulla. **Come la vede l'impresa** apre la pagina "I miei bandi" calcolata per quel profilo, uguale a quella dell'area impresa (riepilogo, bandi adatti, potenzialmente applicabili, di altre regioni, agevolazioni nazionali); nella pagina **Imprese** il link "i suoi bandi" fa lo stesso per ogni impresa iscritta.
 
       **Feedback**. I giudizi di revisori e imprese sulle schede, con lo stato.
 
@@ -472,13 +472,22 @@ sezioni:
     titolo: "I miei bandi"
     per: [impresa]
     testo: |
-      In **I miei bandi** trovi i bandi aperti o in arrivo che fanno per te, in due gruppi:
-      - **✓ Adatti alla tua impresa**: in base ai dati che hai indicato, puoi partecipare.
-      - **? Da verificare**: manca un dato oppure il bando pone una condizione da controllare. Sotto il titolo trovi cosa verificare.
+      In **I miei bandi** trovi i bandi aperti o in arrivo che fanno per te.
 
-      I bandi a cui sicuramente non puoi partecipare non compaiono. A parità di gruppo vengono prima i bandi a fondo perduto.
+      In alto, il riepilogo: quanti bandi sono adatti, quanti da valutare, quanti scadono entro 15 giorni (premi il riquadro per vedere solo quelli) e quanti sono nuovi, cioè arrivati in Bandi Radar negli ultimi 7 giorni. Se nel profilo manca un dato utile (codice ATECO, dimensione, data di costituzione) un avviso ti dice quanti bandi si chiarirebbero completandolo.
 
-      Per ogni bando vedi l'ente, una breve sintesi, lo stato, la scadenza, il tipo di agevolazione e l'importo massimo. **Mostra altri** allunga l'elenco.
+      Sotto, due filtri: **tipo di agevolazione** (fondo perduto e voucher, credito d'imposta, finanziamento agevolato, garanzia, altre) e **scadenza** (entro 15 giorni, 30 giorni, 3 mesi, senza scadenza). **Togli i filtri** li azzera.
+
+      I bandi sono in gruppi:
+      - **Bandi adatti**: tutti i requisiti che il bando chiede sono verificati sui dati della tua impresa.
+      - **Bandi potenzialmente applicabili**: c'è un requisito da controllare nel bando o un dato che manca nel profilo. Ogni bando dice il motivo in parole semplici, per esempio "serve verificare il codice ATECO".
+      - **Bandi di altre regioni** (si apre con un clic, in fondo ai potenzialmente applicabili): bandi di enti di un'altra regione; servirebbe una sede o il progetto lì.
+
+      In ogni gruppo vengono prima i bandi a fondo perduto, poi quelli che scadono prima. I bandi a cui non puoi partecipare, compresi quelli per enti, associazioni e terzo settore, non compaiono.
+
+      Ogni bando è una scheda con titolo, ente e territorio, tipo e intensità dell'agevolazione (per esempio "Fondo perduto 50%, fino a 20.000 €"), scadenza (in rosso se entro 15 giorni), l'etichetta **Nuovo** o **In scadenza**, il motivo, e due pulsanti: **Apri la scheda** e **Richiedi supporto**. **Mostra altri** allunga l'elenco.
+
+      In fondo, **Agevolazioni nazionali sempre aperte**: crediti d'imposta e contributi a sportello adatti alla tua impresa, che spesso si sommano ai bandi. Se dal codice ATECO si capisce che tipo di impresa sei (ufficio, negozio, hotel o ristorante, artigiano, manifattura, logistica, agricola, startup) vedi anche un esempio pratico e l'interesse per un'impresa come la tua.
 
       È un'informazione indicativa: verifica sempre il bando ufficiale.
 
@@ -488,9 +497,10 @@ sezioni:
     testo: |
       Clicca il titolo di un bando per aprire la sua scheda.
 
-      - In cima: stato, ente, data di apertura, scadenza (con l'ora, se c'è) e **bando ufficiale ↗** per andare al sito dell'ente.
+      - In cima: stato, ente e territorio; tre riquadri con l'agevolazione in una riga, la scadenza (in rosso se mancano 15 giorni o meno, con i giorni che restano) e come si presenta la domanda, con **bando ufficiale ↗** per andare al sito dell'ente.
+      - Subito sotto, in verde se il bando è adatto alla tua impresa, in giallo se è da valutare, con l'elenco di cosa verificare in parole semplici.
       - Il riquadro d'avvertenza ricorda che la scheda è un riassunto: fa fede il bando ufficiale.
-      - **Per** (il nome della tua impresa): perché il bando è adatto, cosa resta da verificare, i punti a favore e le cose da controllare.
+      - **Da sapere per** (il nome della tua impresa): i punti a favore e le cose da controllare.
       - **In breve**: sintesi, agevolazione, fondo perduto, prestito, progetto ammesso, dotazione del bando.
       - La forma dell'incentivo, a chi si rivolge, cosa finanzia, cosa serve.
       - Le agevolazioni fiscali che si possono sommare al bando per gli stessi investimenti, se ci sono.

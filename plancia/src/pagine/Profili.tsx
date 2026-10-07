@@ -63,6 +63,7 @@ export default function Profili() {
       <div className="filtri" style={{ marginTop: ".8rem" }}>
         {modifiche && <button onClick={salva} disabled={inCorso}>Salva e abbina</button>}
         <button onClick={prova} disabled={inCorso}>Prova senza salvare</button>
+        {codice && <Link to={`/profili/${encodeURIComponent(codice)}/impresa`}><button>Come la vede l'impresa</button></Link>}
         {modifiche && codice && <button onClick={cancella} disabled={inCorso}>Cancella il profilo</button>}
         {inCorso && <span className="piccolo">Calcolo…</span>}
       </div>

@@ -73,6 +73,15 @@ def test_imprese_bandi_e_scheda_ridotta(ambiente):
     ids = [b["id"] for b in bandi["bandi"]]
     assert aperto in ids and chiuso not in ids
     assert all(b["esito"]["livello"] != "escluso" for b in bandi["bandi"]) and "qualita" not in bandi["bandi"][0]
+    # Pagina "I miei bandi" (07/10): gruppo, agevolazione in una riga, motivo, riepilogo e misure nazionali.
+    riga = next(b for b in bandi["bandi"] if b["id"] == aperto)
+    assert riga["gruppo"] in ("adatti", "da_valutare") and riga["agevolazione"] == "Fondo perduto, fino a 50.000 €"
+    assert riga["motivo"] and riga["fondo_perduto"] is True and riga["giorni_alla_scadenza"] == 30 and not riga["in_scadenza"]
+    assert {"adatti", "da_valutare", "in_scadenza", "nuovi"} <= set(bandi["conteggi"]) and "misure" in bandi["misure"]
+    admin = accesso_di_prova("admin")
+    vista = c.get(f"/api/profili/{impresa['profilo_codice']}/vista-impresa", auth=admin).json()
+    assert vista["impresa"]["nome"] == "Rossi Software srl" and [b["id"] for b in vista["bandi"]] == ids
+    assert c.get(f"/api/profili/{impresa['profilo_codice']}/vista-impresa", auth=io).status_code == 403
 
     scheda = c.get(f"/api/impresa/bandi/{aperto}", auth=io).json()
     assert scheda["titolo"] == "Bando digitale Lombardia" and "verificare" in scheda["avvertenza"]

@@ -210,11 +210,71 @@ def _dove(regioni, province, comuni) -> str:
     return ", ".join(parti) or "nel territorio del bando"
 
 
+# Bandi non per imprese (07/10/2026, email di prova di Matteo: bandi 809 e 3883 proposti come "da verificare"). Chi fa
+# attivita' economica: impresa, professionista, aspirante imprenditore. Gli altri soggetti non sono imprese.
+_IMPRENDITORIALI = {"impresa", "libero_professionista", "aspirante_imprenditore"}
+# Parole che dicono che tra i destinatari ci sono anche imprese o professionisti (se mancano, il bando e' per altri).
+_PAROLE_IMPRESA = re.compile(r"impres|aziend|societ[aà]|\bditt[ae]\b|operatori economici|\bm?pmi\b|consorzi|cooperativ|"
+                             r"start-?up|professionist|commercian|esercent|artigian|datori di lavoro|partita iva|"
+                             r"lavorator[ei] autonom", re.IGNORECASE)
+# Frasi che ammettono le imprese solo in casi particolari, in un bando fatto per enti e associazioni.
+_IMPRESE_SOLO_IN_PARTE = re.compile(
+    r"solo per (le )?iniziative (senza|non a) scopo di lucro|"
+    r"non (devono|possono) essere (usat|utilizzat)\w* per attivit[aà] economic\w*|"
+    r"imprese singole possono beneficiare solo|non sono ammesse le imprese", re.IGNORECASE)
+_SOLO_SOCIALI = re.compile(r"(impres[ae]|cooperativ[ae])( \w+)? social[ei]", re.IGNORECASE)
+_TITOLO_NON_PROFIT = re.compile(r"senza scopo di lucro|non a scopo di lucro|no[- ]?profit|terzo settore|volontariato",
+                                re.IGNORECASE)
+
+
+def _non_per_imprese(b: dict, soggetto: str | None, stato: str) -> str | None:
+    """Il motivo per cui un bando che a parole non esclude le imprese in realta' non e' per loro, oppure None.
+    Prudente: si guarda solo quando l'elenco dei beneficiari non contiene imprese (o le ammette solo per iniziative
+    senza scopo di lucro) e il testo "a chi si rivolge" non parla di imprese."""
+    if soggetto not in _IMPRENDITORIALI or stato == "nessun_vincolo":
+        return None
+    elenco = b.get("soggetti_ammessi") or []
+    ammessi = set(elenco)
+    testo = " ".join((b.get("a_chi_si_rivolge") or "").split())
+    if ammessi & _IMPRENDITORIALI:
+        parte = _IMPRESE_SOLO_IN_PARTE.search(testo)
+        if parte and elenco[0] not in _IMPRENDITORIALI:
+            return f"il bando è per enti e associazioni: le imprese solo in casi particolari («{parte.group(0)}»)"
+        return None
+    if ammessi and "altro" not in ammessi:
+        return None   # "ammessi solo: ..." lo dice gia' la regola dei soggetti
+    if _PAROLE_IMPRESA.search(testo):
+        return None
+    if testo and (ammessi or b.get("per_imprese") == "incerto"):
+        return f"il bando non è per imprese: si rivolge a {testo[:140].rstrip(' ,;.')}{'…' if len(testo) > 140 else ''}"
+    if b.get("per_imprese") == "incerto" or _TITOLO_NON_PROFIT.search(b.get("titolo") or ""):
+        return "dal bando non risulta che le imprese possano partecipare"
+    return None
+
+
+def _solo_imprese_sociali(b: dict) -> bool:
+    """Le sole imprese ammesse sono imprese o cooperative sociali (es. bando 519)."""
+    testo = b.get("a_chi_si_rivolge") or ""
+    return bool(_SOLO_SOCIALI.search(testo)) and not _PAROLE_IMPRESA.search(_SOLO_SOCIALI.sub(" ", testo)) \
+        and (b.get("soggetti_ammessi") or ["impresa"])[0] != "impresa"
+
+
 def _soggetti(b: dict, p: dict, e: Esito, parziale: bool) -> None:
     soggetto = "aspirante_imprenditore" if p.get("da_costituire") else p.get("soggetto")
     if parziale and not soggetto:
         return
     stato = _stato(b, "soggetti")
+    motivo = _non_per_imprese(b, soggetto, stato)
+    if motivo:
+        e.escludi(motivo)
+        return
+    if stato == "vincolo" and soggetto in _IMPRENDITORIALI and _solo_imprese_sociali(b):
+        sociale = (p.get("requisiti") or {}).get("impresa_sociale")
+        if sociale is False:
+            e.escludi("riservato a imprese e cooperative sociali")
+        elif sociale is None:
+            e.verifica("tra le imprese ammette solo le imprese sociali: dato mancante nel profilo")
+        return
     if stato == "nessun_vincolo":
         return
     if stato == "non_noto":

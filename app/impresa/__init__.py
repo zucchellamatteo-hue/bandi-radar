@@ -12,6 +12,7 @@ import secrets
 from datetime import date
 
 from app.abbinamento import catalogo, regole
+from app.impresa import vista
 
 # Fasce del modulo guidato: l'abbinamento non inventa i numeri, quindi dalle fasce si ricava solo la dimensione
 # (raccomandazione UE 2003/361); dipendenti e fatturato esatti restano vuoti e i bandi con soglie diventano
@@ -29,8 +30,8 @@ AVVERTENZA = "Informazione indicativa: verificare sempre il bando ufficiale prim
 CAMPI_SCHEDA_RIDOTTA = ("id", "titolo", "ente", "territorio", "url", "stato", "data_apertura", "ora_apertura", "scadenza",
                         "ora_scadenza", "chiuso_il", "sintesi", "a_chi_si_rivolge", "cosa_finanzia", "spese_ammesse",
                         "requisiti", "tipi_agevolazione", "tipo_agevolazione", "contributo_massimo", "percentuale",
-                        "fondo_perduto_massimo", "finanziamento_massimo", "spesa_minima", "spesa_massima", "dotazione",
-                        "modalita_selezione", "forma_incentivo", "vincoli_spese", "versione")
+                        "percentuale_fondo_perduto", "fondo_perduto_massimo", "finanziamento_massimo", "spesa_minima",
+                        "spesa_massima", "dotazione", "modalita_selezione", "forma_incentivo", "vincoli_spese", "versione")
 
 
 class ErroreImpresa(ValueError):
@@ -139,17 +140,29 @@ def leggi(conn, utente_id: int, impresa_id: int) -> dict:
 
 def pertinenti(bandi: list[dict], profilo: dict, oggi: date | None = None) -> list[tuple[dict, regole.Esito]]:
     """I bandi da mostrare all'impresa: compatibili o da verificare, proponibili (scheda sul bando ufficiale), aperti o in
-    arrivo. Mai gli esclusi. E' lo stesso abbinamento del catalogo e dei profili; nell'ordine, a parita' di livello,
-    prima i bandi a fondo perduto."""
-    return catalogo.prima_il_fondo_perduto(catalogo.abbina(bandi, profilo, oggi))
+    arrivo. Mai gli esclusi. E' lo stesso abbinamento del catalogo e dei profili. Ordine della pagina "I miei bandi"
+    (07/10): adatti, da valutare, di altre regioni; in ogni gruppo prima il fondo perduto, poi la scadenza."""
+    return vista.ordina(catalogo.abbina(bandi, profilo, oggi))
 
 
-def riga_bando(b: dict, esito: regole.Esito) -> dict:
-    """Riga dell'elenco "I miei bandi": niente dati di lavorazione (qualita', livelli delle fonti)."""
+def riga_bando(b: dict, esito: regole.Esito, oggi: date | None = None) -> dict:
+    """Card dell'elenco "I miei bandi": niente dati di lavorazione (qualita', livelli delle fonti), in piu' il gruppo,
+    l'agevolazione in una riga, il motivo in parole semplici, scadenza vicina e "nuovo"."""
     r = catalogo.riga(b, esito)
     for interno in ("qualita", "livelli", "completezza"):
         r.pop(interno, None)
-    return r
+    return vista.arricchisci(r, b, esito, oggi or date.today())
+
+
+def vista_del_profilo(profilo: dict, bandi: list[dict], oggi: date | None = None) -> dict:
+    """Bandi in tre gruppi, conteggi del riepilogo e misure nazionali utili: la pagina "I miei bandi" per un profilo
+    (gia' passato da Profilo.per_regole). La usano l'impresa e Matteo (vista impresa di ogni profilo)."""
+    from app import misure
+
+    oggi = oggi or date.today()
+    righe = [riga_bando(b, e, oggi) for b, e in pertinenti(bandi, profilo, oggi)]
+    return {"conteggi": vista.conteggi(righe), "bandi": righe, "misure": misure.per_profilo(profilo),
+            "giorni_in_scadenza": vista.GIORNI_IN_SCADENZA, "giorni_nuovo": vista.GIORNI_NUOVO, "avvertenza": AVVERTENZA}
 
 
 def bandi_dell_impresa(conn, utente_id: int, impresa_id: int, bandi: list[dict] | None = None) -> dict:
@@ -157,12 +170,8 @@ def bandi_dell_impresa(conn, utente_id: int, impresa_id: int, bandi: list[dict] 
     from app.abbinamento.profilo import Profilo
 
     profilo = Profilo.model_validate(impresa["profilo"]).per_regole()
-    risultati = pertinenti(bandi if bandi is not None else catalogo.carica_bandi(conn), profilo)
-    conteggi = {"compatibile": 0, "da_verificare": 0}
-    for _, e in risultati:
-        conteggi[e.livello] += 1
-    return {"impresa": {"id": impresa["id"], "nome": impresa["nome"]}, "conteggi": conteggi,
-            "bandi": [riga_bando(b, e) for b, e in risultati]}
+    return {"impresa": {"id": impresa["id"], "nome": impresa["nome"]},
+            **vista_del_profilo(profilo, bandi if bandi is not None else catalogo.carica_bandi(conn))}
 
 
 def imprese_per_bando(conn, utente_id: int, bando_id: int) -> list[dict]:
@@ -178,7 +187,8 @@ def imprese_per_bando(conn, utente_id: int, bando_id: int) -> list[dict]:
     trovate = []
     for i in imprese:
         for b, e in pertinenti(bandi, Profilo.model_validate(i["profilo"]).per_regole()):
-            trovate.append({"id": i["id"], "nome": i["nome"], "esito": e.come_dict()})
+            trovate.append({"id": i["id"], "nome": i["nome"], "esito": e.come_dict(), "motivo": vista.motivo(e),
+                            "da_verificare_semplici": vista.motivi_semplici(e)})
     return trovate
 
 
@@ -198,7 +208,7 @@ def scheda_ridotta(conn, utente_id: int, bando_id: int) -> dict:
         documenti = [dict(r) for r in cur.fetchall()]
     from app import misure
 
-    return {**b, "imprese": imprese, "documenti_ufficiali": [{"nome": d["nome"], "url": d["url"]} for d in documenti],
+    return {**b, "agevolazione": vista.agevolazione(b), "imprese": imprese, "documenti_ufficiali": [{"nome": d["nome"], "url": d["url"]} for d in documenti],
             "avvertenza": AVVERTENZA, "misure_cumulabili": misure.cumulabili(b, profilo)}
 
 
@@ -276,7 +286,7 @@ def email_richiesta(r: dict, utente: dict) -> tuple[str, str]:
 def imprese_tutte(conn) -> list[dict]:
     """Per l'admin: imprese iscritte con l'utente, le sedi e se ricevono l'email."""
     with conn.cursor() as cur:
-        cur.execute("""SELECT i.id, i.nome, i.email_settimanale, i.creata_il, u.email, u.nome AS utente_nome, u.attivo,
+        cur.execute("""SELECT i.id, i.nome, i.profilo_codice, i.email_settimanale, i.creata_il, u.email, u.nome AS utente_nome, u.attivo,
                               jsonb_array_length(coalesce(p.profilo->'sedi', '[]')) AS sedi,
                               (SELECT count(*) FROM richieste_supporto r WHERE r.impresa_id = i.id) AS richieste
                        FROM imprese i JOIN utenti u ON u.id = i.utente_id JOIN profili p ON p.codice = i.profilo_codice
