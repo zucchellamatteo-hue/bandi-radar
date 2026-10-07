@@ -404,7 +404,9 @@ sezioni:
       2. Scrivi le note: le vedi solo tu.
       3. Premi **Salva**.
 
-      Email settimanali da approvare. Il lunedì il sistema prepara un'email per ogni impresa: poche righe di introduzione, le novità sui bandi già segnalati (in scadenza entro 14 giorni, prorogati, chiusi in anticipo o esauriti, riaperti, nuovi documenti ufficiali), i bandi nuovi adatti (mai due volte lo stesso), le agevolazioni nazionali aggiunte da poco (al massimo 3), le news pubblicate (pagina **News**), il numero dei bandi adatti in tutto e l'invito a chiedere supporto. Ogni novità, misura o news arriva una volta sola. Se non ci sono né bandi nuovi né novità sui bandi già segnalati, l'email non viene preparata. In questa fase partono solo dopo la tua approvazione; se ne scarti una, le sue novità tornano la settimana dopo.
+      Email settimanali da approvare. Il lunedì il sistema prepara un'email per ogni impresa, nell'ordine: poche righe di introduzione; i **nuovi bandi adatti** (mai due volte lo stesso, al massimo 15: prima i compatibili, poi il fondo perduto più alto, poi la scadenza; per gli altri la riga "Altri N bandi adatti ti aspettano nel tuo portale"); le **novità sui bandi già segnalati** (in scadenza entro 14 giorni, prorogati, scadenza cambiata, riaperti, nuovi documenti ufficiali); in fondo i **bandi segnalati che si sono chiusi** (scaduti, chiusi in anticipo, fondi esauriti) solo se la chiusura è dell'ultima settimana; poi le agevolazioni nazionali aggiunte da poco (al massimo 3), le news pubblicate (pagina **News**), il numero dei bandi adatti in tutto e l'invito a chiedere supporto. Ogni novità, misura o news arriva una volta sola. Se non ci sono né bandi nuovi né novità sui bandi già segnalati, l'email non viene preparata. In questa fase partono solo dopo la tua approvazione; se ne scarti una, le sue novità tornano la settimana dopo.
+      La **prima email** di un'impresa è di **benvenuto**: i 10 bandi più interessanti tra quelli aperti oggi e la riga "Altri N bandi adatti ti aspettano nel tuo portale", senza le sezioni sui bandi già segnalati. Quando un'email parte, i bandi rimasti fuori per il tetto (10 o 15) si segnano come "visti nel portale": le settimane dopo non tornano come nuovi, così l'email parla solo dei bandi davvero nuovi.
+      Se un bando segnalato a un'impresa risulta chiuso già da prima della segnalazione, l'errore è nei nostri dati: non va nell'email ma diventa una segnalazione "Stato o scadenza sbagliati" nella pagina **Segnalazioni**.
       - **Prepara adesso**: prepara subito le email della settimana, senza aspettare lunedì.
       - Clicca l'oggetto per vedere l'anteprima dell'email.
       - **Approva e invia**: l'email parte.
@@ -562,9 +564,12 @@ sezioni:
     titolo: "L'email settimanale"
     per: [impresa]
     testo: |
-      Ogni lunedì ricevi un'email per ciascuna tua impresa, solo se c'è qualcosa di nuovo. Dentro trovi, nell'ordine:
-      - le **novità sui bandi che ti abbiamo già segnalato**: scadenza vicina (entro 14 giorni), proroga o cambio di scadenza, chiusura anticipata o fondi esauriti, riapertura, nuovi documenti ufficiali (FAQ, modulistica, decreti);
-      - i **nuovi bandi adatti** alla tua impresa: lo stesso bando non ti arriva mai due volte;
+      La prima email, appena ti iscrivi, è di benvenuto: i bandi più interessanti per la tua impresa tra quelli aperti oggi (al massimo 10); gli altri adatti li trovi nella tua area.
+
+      Poi ogni lunedì ricevi un'email per ciascuna tua impresa, solo se c'è qualcosa di nuovo. Dentro trovi, nell'ordine:
+      - i **nuovi bandi adatti** alla tua impresa (i più interessanti, al massimo 15; gli altri nella tua area): lo stesso bando non ti arriva mai due volte;
+      - le **novità sui bandi che ti abbiamo già segnalato**: scadenza vicina (entro 14 giorni), proroga o cambio di scadenza, riapertura, nuovi documenti ufficiali (FAQ, modulistica, decreti);
+      - in fondo, i **bandi segnalati che si sono chiusi** nell'ultima settimana (scaduti, chiusi in anticipo, fondi esauriti);
       - le **agevolazioni nazionali** aggiunte da poco che possono interessarti;
       - le **news** di Bandi Radar;
       - quanti bandi adatti ci sono in tutto, con il link alla tua area.
