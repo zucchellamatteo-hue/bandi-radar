@@ -31,8 +31,8 @@ def con_avviso(testo: str, html: str | None) -> tuple[str, str | None]:
     avviso = avviso_non_rispondere()
     testo = f"{testo.rstrip()}\n\n--\n{avviso}\n"
     if html:
-        piede = (f'<p style="margin-top:24px;padding-top:12px;border-top:1px solid #ddd;color:#777;font-size:12px">'
-                 f"{html_mod.escape(avviso)}</p>")
+        piede = (f'<p style="max-width:640px;margin:24px auto 0;padding-top:12px;border-top:1px solid #e2e8f0;'
+                 f'color:#64748b;font-size:12px">{html_mod.escape(avviso)}</p>')
         html = html.replace("</body>", piede + "</body>") if "</body>" in html else html + piede
     return testo, html
 
