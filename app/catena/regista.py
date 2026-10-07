@@ -8,7 +8,8 @@ Ogni ora, dopo la raccolta, porta avanti annunci e bandi di un passo e sblocca q
      simili = bandi diversi, graduatorie o proroghe di un bando che non abbiamo = archiviate, i "simili" all'IA;
   4. pagina ufficiale (i "non trovati" si riprovano dopo 14 giorni) e documenti;
   5. ricontrollo dei documenti dei bandi aperti con la scheda (ogni 14 giorni): se ne arrivano di nuovi, la scheda
-     va aggiornata; lo stesso se arriva una proroga, una rettifica o una chiusura;
+     va aggiornata; lo stesso se arriva una proroga, una rettifica o una chiusura; ogni 14 giorni anche i documenti dei
+     bandi aperti "in disparte" (manca il testo ufficiale: l'ente puo' pubblicarlo dopo), col filtro da rifare;
   6. filtro "c'e' il bando?" (senza IA);
   7. IA con la Batch API: risposte arrivate, smistamento dei "da rivedere", controlli preliminari, schede nuove e
      schede da aggiornare (solo bandi con il testo ufficiale).
@@ -28,6 +29,7 @@ SOGLIA_DIVERSO = 0.5           # sotto: bandi diversi. Tra le due soglie decide 
 DOPPIONI_IA_PER_GIRO = 40      # chiamate dirette, poche e piccole
 RICONTROLLO_GIORNI = 14        # documenti dei bandi aperti, pagine non trovate
 RICONTROLLI_PER_GIRO = 5
+RICONTROLLI_IN_DISPARTE_PER_GIRO = 10   # ~800 bandi in disparte ogni 14 giorni: circa 60 al giorno, 240 di capienza
 
 
 def evento(cur, oggetto: str, oggetto_id: int | None, passo: str, esito: str, motivo: str | None = None) -> None:
@@ -200,6 +202,42 @@ def ricontrolla_documenti(conn, limite: int = RICONTROLLI_PER_GIRO) -> int:
     return nuovi_bandi
 
 
+@con_blocco("ricontrollo_disparte", 0)
+def ricontrolla_in_disparte(conn, limite: int = RICONTROLLI_IN_DISPARTE_PER_GIRO) -> int:
+    """Bandi aperti o in arrivo "in disparte" (vista bandi_situazione: manca il testo ufficiale) con i documenti
+    guardati piu' di RICONTROLLO_GIORNI fa: si riapre la pagina ufficiale, perche' spesso l'ente pubblica il bando dopo
+    la notizia (08/10: 367 dei 410 non UE non erano mai stati ricercati). Se arrivano documenti nuovi, salva_bando
+    rimette documentazione a NULL e il filtro "c'e' il bando?" la ricalcola nello stesso giro; se il bando ha gia' una
+    scheda (fatta su una sintesi), va anche aggiornata."""
+    from app.schede import allegati
+
+    with conn.cursor() as cur:
+        cur.execute("""SELECT b.id, b.dati IS NOT NULL AS con_scheda FROM bandi_situazione s JOIN bandi b ON b.id = s.id
+                       WHERE s.situazione = 'in_disparte' AND b.stato IN ('aperto', 'in_arrivo') AND b.unito_a IS NULL
+                       AND b.pagina_stato = 'trovata' AND b.url IS NOT NULL
+                       AND b.allegati_cercati_il < now() - make_interval(days => %s)
+                       ORDER BY b.allegati_cercati_il LIMIT %s""", (RICONTROLLO_GIORNI, limite))
+        bandi = [dict(r) for r in cur.fetchall()]
+    con_novita = 0
+    for b in bandi:
+        with conn.cursor() as cur:
+            prima = allegati.impronte_documenti(cur, b["id"])
+        allegati.esegui(bando_id=b["id"])
+        with conn.cursor() as cur:
+            nuovi = allegati.impronte_documenti(cur, b["id"]) - prima
+            # Anche se la pagina non ha risposto: si riprova tra RICONTROLLO_GIORNI, non al giro dopo.
+            cur.execute("UPDATE bandi SET allegati_cercati_il = now() WHERE id = %s", (b["id"],))
+            if nuovi:
+                con_novita += 1
+                cur.execute("UPDATE bandi SET documentazione = NULL WHERE id = %s", (b["id"],))
+                if b["con_scheda"]:
+                    cur.execute("UPDATE bandi SET da_aggiornare = %s WHERE id = %s AND da_aggiornare IS NULL",
+                                (f"{len(nuovi)} documenti nuovi sulla pagina ufficiale", b["id"]))
+            evento(cur, "bando", b["id"], "ricontrollo in disparte", f"{len(nuovi)} nuovi")
+        conn.commit()
+    return con_novita
+
+
 @con_blocco("ricontrollo_stato", {})
 def ricontrolla_stato(conn, modulo) -> dict:
     """Pagine ufficiali dei bandi proponibili non chiusi, una volta a settimana: un avviso di chiusura comparso dopo
@@ -282,11 +320,13 @@ def giro() -> dict:
         allegati.esegui(limite=int(os.environ.get("CATENA_ALLEGATI_PER_GIRO", "25")))
         with connetti() as conn:
             riepilogo["documenti_nuovi"] = ricontrolla_documenti(conn)
+            riepilogo["disparte_nuovi"] = ricontrolla_in_disparte(conn)
             riepilogo["schede_da_aggiornare"] = segna_aggiornamenti(conn)
         n = _conta("SELECT count(DISTINCT bando_id) AS b, count(*) FILTER (WHERE errore IS NULL) AS f, "
                    "count(*) FILTER (WHERE errore IS NOT NULL) AS e FROM allegati WHERE scaricato_il >= %s", inizio)
         return (f"{n['f']} file scaricati per {n['b']} bandi ({n['e']} non scaricati); ricontrollo: "
-                f"{riepilogo['documenti_nuovi']} bandi con documenti nuovi; {riepilogo['schede_da_aggiornare']} schede da aggiornare")
+                f"{riepilogo['documenti_nuovi']} bandi con documenti nuovi, {riepilogo['disparte_nuovi']} in disparte "
+                f"con documenti nuovi; {riepilogo['schede_da_aggiornare']} schede da aggiornare")
 
     def stato_pagine(inizio):
         from app.schede import ricontrollo_stato

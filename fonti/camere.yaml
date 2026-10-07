@@ -455,6 +455,8 @@
     è solo una pagina di orientamento. Nessun RSS (rss.asp 404).
 
     '
+  pagina_ufficiale:                    # 08/10: la scheda del bando rimanda con "Vai al bando" alla pagina con i documenti
+    segui_link: {testi: ["vai al bando"], stesso_sito: true}
 
 - id: cciaa_verona_contributi_api
   nome: CCIAA Verona - Contributi e patrocini (API Plone)

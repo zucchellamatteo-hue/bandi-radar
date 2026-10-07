@@ -37,7 +37,8 @@ from bs4 import BeautifulSoup
 
 from app.raccolta.robots import permesso
 from app.raccolta.scarica import NonPermesso, regole_robots, scarica
-from app.schede.allegati import _SCARICA, Pausa, _togli_cornice, candidati_plone, testo_html, testo_plone, tipo_da_url
+from app.schede.allegati import (Pausa, _togli_cornice, candidati_plone, domini_plone, e_link_a_file, testo_html, testo_plone,
+                                 tipo_da_url, usa_plone)
 from app.schede.bandi import _e_pagina_di_servizio, url_chiave
 from app.schede.smista import normalizza
 from app.db.blocchi import con_blocco
@@ -47,6 +48,7 @@ LIMITE_PREDEFINITO = 100
 _PORTALE_ENTE = re.compile(r"(^|\.)(comune|camcom|regione|provincia|invitalia|ministero)\w*\.", re.IGNORECASE)
 RIPROVA_NON_TROVATI_GIORNI = 14
 TESTO_MINIMO = 400          # caratteri di testo utile sotto i quali una pagina e' "vuota"
+MINIMO_DOCUMENTI_NON_LOGIN = 3   # con almeno tanti documenti una pagina non e' "di accesso", anche con un campo password
 
 # Parole che in una pagina di un bando ci sono quasi sempre.
 _SEGNI_BANDO = re.compile(
@@ -97,9 +99,12 @@ def valuta_pagina(html: str, url: str) -> tuple[bool, str]:
     testo = testo_html(str(zuppa)) or ""
     norm = normalizza(testo)
     documenti = sum(1 for a in zuppa.find_all("a", href=True)
-                    if tipo_da_url(urljoin(url, a["href"])) or _SCARICA.search(urlsplit(urljoin(url, a["href"])).path))
+                    if tipo_da_url(urljoin(url, a["href"])) or e_link_a_file(urljoin(url, a["href"])))
     segni = len(_SEGNI_BANDO.findall(norm))
-    if ha_password or (len(_SEGNI_LOGIN.findall(norm)) >= 2 and len(testo) < 2000 and segni < 3):
+    # Una casella di accesso nella testata non fa della pagina un login se la pagina ha i documenti del bando
+    # (Finmolise, 08/10: campo password del sito e 13 documenti).
+    login = ha_password or (len(_SEGNI_LOGIN.findall(norm)) >= 2 and len(testo) < 2000 and segni < 3)
+    if login and documenti < MINIMO_DOCUMENTI_NON_LOGIN:
         return False, "pagina di accesso (login)"
     if len(testo) < TESTO_MINIMO and documenti == 0:
         return False, f"pagina vuota ({len(testo)} caratteri di testo)"
@@ -183,8 +188,9 @@ def indirizzo_pagina(a: AnnuncioDelBando, regole: dict, indirizzo_fonte: str | N
 
 
 def esegui_regole(client, pausa, annunci: list[AnnuncioDelBando], regole_fonti: dict[str, dict],
-                  indirizzi_fonti: dict[str, str] | None = None) -> Esito:
-    """Prova i candidati, dal piu' affidabile, finche' uno contiene un bando."""
+                  indirizzi_fonti: dict[str, str] | None = None, siti_plone: set[str] | None = None) -> Esito:
+    """Prova i candidati, dal piu' affidabile, finche' uno contiene un bando. `siti_plone`: i domini dei siti
+    Plone/Volto del registro (allegati.domini_plone), per leggere dall'API anche le pagine arrivate da altre fonti."""
     provati: list[str] = []
     visti: set[str] = set()
     indirizzi_fonti = indirizzi_fonti or {}
@@ -238,7 +244,7 @@ def esegui_regole(client, pausa, annunci: list[AnnuncioDelBando], regole_fonti: 
                 if esito:
                     return esito
         ok, perche = valuta_pagina(risposta.text, str(risposta.url))
-        if not ok and regole.get("documenti") == "plone_api":
+        if not ok and (regole.get("documenti") == "plone_api" or usa_plone(str(risposta.url), siti_plone or set())):
             # Pagina Volto: testo e documenti stanno nell'API del sito, non nell'HTML.
             testo = normalizza(testo_plone(client, pausa, str(risposta.url)) or "")
             documenti = len(candidati_plone(client, pausa, str(risposta.url)))
@@ -350,6 +356,7 @@ def esegui(bando_id: int | None = None, limite: int = LIMITE_PREDEFINITO, rifai_
                      **({"_ignora_robots": True} if f.ignora_robots else {})}
               for f in registro}
     indirizzi = {f.id: f.url for f in registro if f.url}
+    siti_plone = domini_plone(registro)
     conteggi: Counter = Counter()
     motivi_mancati: Counter = Counter()
     with connetti() as conn, nuovo_client() as client:
@@ -358,7 +365,7 @@ def esegui(bando_id: int | None = None, limite: int = LIMITE_PREDEFINITO, rifai_
         bandi = bandi_da_cercare(conn, bando_id, limite, rifai_non_trovati)
         print(f"Bandi da cercare: {len(bandi)}")
         for b in bandi:
-            esito = esegui_regole(client, pausa, annunci_del_bando(conn, b["id"]), regole, indirizzi)
+            esito = esegui_regole(client, pausa, annunci_del_bando(conn, b["id"]), regole, indirizzi, siti_plone)
             conteggi[esito.stato] += 1
             if esito.stato == "trovata":
                 print(f"trovata     [{b['id']}] {b['titolo'][:70]}\n            {esito.url}\n            ({esito.motivo})", flush=True)
