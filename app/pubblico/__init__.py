@@ -101,6 +101,18 @@ h2{font-size:1.75rem;line-height:1.2;color:var(--blu);margin:0 0 1.2rem;letter-s
 .occhiello{color:var(--accento);font-weight:650;font-size:.9rem;text-transform:uppercase;letter-spacing:.05em;margin:0}
 .azioni{display:flex;flex-wrap:wrap;gap:.8rem;margin:1.5rem 0 .8rem}.rassicura{color:var(--grigio);font-size:.92rem}
 .anteprima .carta{transform:rotate(1deg);box-shadow:0 12px 40px rgba(22,62,122,.16)}
+.anteprima .vetrina{transform:none;padding:1.1rem 1.3rem .6rem}.vetrina h2.etichetta{margin:0 0 .5rem;color:var(--accento)}
+.vetrina .voci{display:grid}.vetrina .voce{grid-area:1/1;display:flex;flex-direction:column;visibility:hidden;opacity:0}
+.vetrina .voce.attiva{visibility:visible;opacity:1;transition:opacity .5s ease}.vetrina h3{font-size:1.08rem;line-height:1.3}
+.vetrina .agevolazione{margin:.3rem 0;color:var(--blu)}.vetrina .agevolazione b{font-size:1.02rem}.vetrina .agevolazione .tipo{margin-right:.2rem}
+.vetrina .quando{margin:0 0 .8rem;color:#b0392f;font-weight:600;font-size:.92rem}.vetrina .voce .bottone{align-self:flex-start;margin-top:auto}
+.vetrina .comandi{display:flex;align-items:center;justify-content:space-between;margin-top:.3rem}
+.vetrina .puntini{display:flex}.vetrina .puntini button{width:44px;height:44px;border:0;background:none;cursor:pointer;padding:0;display:inline-flex;align-items:center;justify-content:center}
+.vetrina .puntini button:before{content:"";width:11px;height:11px;border-radius:50%;background:#c3d3ea;transition:background .2s,transform .2s}
+.vetrina .puntini button[aria-current]:before{background:var(--accento);transform:scale(1.25)}
+.vetrina .pausa{min-height:44px;background:none;border:0;color:var(--grigio);cursor:pointer;font-size:.85rem;padding:0 .4rem}
+.vetrina [hidden]{display:none!important}.vetrina button:focus-visible{outline:2px solid var(--accento);outline-offset:-4px;border-radius:8px}
+@media(prefers-reduced-motion:reduce){.vetrina .voce,.vetrina .puntini button:before{transition:none}}
 .griglia{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1.2rem}
 .carta{background:#fff;border:1px solid var(--bordo);border-radius:14px;padding:1.2rem 1.3rem;box-shadow:0 2px 10px rgba(22,62,122,.06)}
 .scheda h3{font-size:1.02rem}.riga-tipi{display:flex;flex-wrap:wrap;gap:.3rem;align-items:center}

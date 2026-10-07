@@ -226,6 +226,19 @@ sezioni:
       Ogni due settimane guarda soprattutto: persone arrivate da Google e dai motori IA, quali articoli leggono i programmi IA, quali pagine portano registrazioni.
 
       Gli stessi numeri arrivano all'amministratore ogni mattina per email (**rapporto SEO/GEO**, dalle 7): ieri contro il giorno prima e il totale degli ultimi 7 giorni, provenienze con i motori IA evidenziati, letture dei programmi IA e dei motori pagina per pagina, nuove imprese registrate e la riga di Google Search Console (per ora "non ancora collegato"). La frequenza si cambia con `RAPPORTO_SEO` nel .env.
+  - id: vetrina
+    titolo: "Bandi in vetrina (pagina di presentazione)"
+    per: [admin]
+    testo: |
+      Nel primo schermo della pagina di presentazione (/presentazione, e "/" quando la pagina è pubblica) il riquadro **Bandi in vetrina** mostra da 1 a 4 bandi o misure nazionali, uno alla volta: titolo, ente, territorio, agevolazione in una riga, scadenza e il pulsante **Scopri se fa per te**, che porta alla registrazione. La scheda completa non si vede: è per gli abbonati. Il riquadro scorre da solo ogni 5,5 secondi, si ferma con il mouse sopra o toccandolo, ha i puntini per scegliere e il pulsante Pausa; chi ha attivato "riduci movimento" sul telefono o sul computer lo vede fermo.
+
+      **Come si cambia la vetrina.** Le voci sono nel file `app/pubblico/vetrina.yaml`: si cambia con una pull request (lo può fare una sessione di Claude su tua richiesta), niente codice. Ogni voce ha il numero del **bando** (quello della plancia) oppure l'id della **misura** nazionale (es. `iperammortamento_2026`), e se serve:
+      - **priorita**: 1 = per primo;
+      - **da** e **a**: le date (AAAA-MM-GG) tra cui resta in vetrina;
+      - **riga**, **titolo**, **ente**: per scrivere a mano l'agevolazione o accorciare il titolo (es. `riga: "Fondo perduto 50%, fino a 20.000 €"`);
+      - **motivo**: perché è in vetrina (non compare nella pagina).
+
+      La ricerca settimanale dei bandi più discussi sul web aggiorna questo file con i bandi del momento. Un bando compare solo se è **proponibile** (scheda sul bando ufficiale, senza errori gravi, per imprese), aperto o in arrivo e non scaduto; una misura solo se è aperta: le voci scadute o chiuse si saltano da sole. Se le voci valide sono meno di 4, il sistema aggiunge in automatico i bandi migliori: a fondo perduto o voucher, adatti anche alle piccole imprese, con un importo massimo tra 10.000 € e 1 milione, con almeno due settimane davanti, prima i più recenti e poi i più generosi, un bando per ente. La vetrina si ricalcola ogni 15 minuti (subito, se cambia il file).
 
   - id: segnala
     titolo: "Il pulsante Segnala"
