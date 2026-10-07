@@ -101,7 +101,8 @@ export interface MisuraBreve {
 export type Interesse = "alto" | "medio" | "basso" | "nullo";
 export interface ProfiloEsempio { id: string; nome: string; descrizione?: string }
 export interface EsempioMisura { profilo: string; profilo_nome: string; interesse: Interesse; esempio: string }
-export type Misura = Record<string, any> & { id: string; nome: string; esempi?: EsempioMisura[] };
+// fiscale (07/10/2026): come si tassa il beneficio (IRES/IRPEF/IRAP), in breve, per le misure aperte.
+export type Misura = Record<string, any> & { id: string; nome: string; esempi?: EsempioMisura[]; fiscale?: string };
 
 // Fattura elettronica (app/fatture).
 export interface DatiFatturazione {
