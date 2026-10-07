@@ -18,6 +18,7 @@ Uso:
   python -m app.schede.allegati --bando 45    # un bando preciso, anche se gia' cercato
   python -m app.schede.allegati --annuncio 123   # la pagina di un annuncio preciso, anche se non e' smistato
   python -m app.schede.allegati --rileggi-illeggibili [--prova]   # rilegge con l'OCR i PDF senza testo leggibile
+  python -m app.schede.allegati --rileggi-altro [--prova]   # i file "altro" gia' scaricati: tipo dai primi byte, testo
 
 I PDF senza testo leggibile (scansioni, font senza tabella dei caratteri) si leggono con l'OCR (tesseract,
 installato nell'immagine della raccolta); se neanche l'OCR da' un testo sensato, il testo resta vuoto.
@@ -75,6 +76,22 @@ _ESTENSIONE = re.compile(r"\.(" + "|".join(ESTENSIONI) + r")(?=/|$)")
 _SCARICA = re.compile(r"/(?:@@download|at_download|download)(?:/[^/]+|\.aspx)?/?$", re.IGNORECASE)
 # Liferay (Azienda Zero del Veneto e molti siti della PA, 06/10): /documents/<numero>/<codice> senza estensione.
 _LIFERAY = re.compile(r"/documents/\d+/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/?$", re.IGNORECASE)
+# Altri link a file senza estensione, riconosciuti da percorso e parametri (diagnosi dei testi mancanti, 08/10):
+#   /allegato.aspx?pk=68108                           Regione Valle d'Aosta
+#   /bancadati/atti/Contenuto.xml?id=5530223&...      Regione Toscana (atti e BURT: PDF senza estensione)
+#   /it/attachments/file/view?hash=113de1a5...        Finlombarda
+#   /output_allegato.php?id=1445119                   Camere di commercio sul portale ISWEB (Chieti-Pescara)
+_FILE_SENZA_ESTENSIONE = re.compile(
+    r"/allegato\.aspx\?(?:.*&)?pk=\d+|/bancadati/(?:atti|burt)/contenuto\.xml\?(?:.*&)?id=\d+|"
+    r"/attachments/file/view\?(?:.*&)?hash=[0-9a-f]+|/output_allegato\.php\?(?:.*&)?id=\d+", re.IGNORECASE)
+
+
+def e_link_a_file(url: str) -> bool:
+    """Il link porta a un file anche se non ha l'estensione (Plone, myCIVIS, Liferay, Valle d'Aosta, Toscana,
+    Finlombarda, ISWEB): il tipo vero si decide quando si scarica."""
+    parti = urlsplit(url)
+    return bool(_SCARICA.search(parti.path) or _LIFERAY.search(parti.path)
+                or _FILE_SENZA_ESTENSIONE.search(parti.path + "?" + parti.query))
 _FAQ = re.compile(r"(?<!\w)(faq|domande frequenti|domande e risposte)(?!\w)", re.IGNORECASE)
 _SPAZI = re.compile(r"\s+")
 # Testi dei link che non dicono nulla: meglio il nome del file.
@@ -126,9 +143,15 @@ def tipo_da_url(url: str) -> str | None:
     return trovate[-1] if trovate else None
 
 
+_PARAMETRO_NOME = re.compile(r"^(nome_?file|file_?name)$", re.IGNORECASE)
+
+
 def _nome_da_url(url: str) -> str:
     if not _ESTENSIONE.search(unquote(urlsplit(url).path).lower()) and _nome_nella_query(url):
         return _nome_nella_query(url)
+    for chiave, valore in parse_qsl(urlsplit(url).query):   # Toscana: Contenuto.xml?id=...&nomeFile=Decreto+n.20043...
+        if _PARAMETRO_NOME.match(chiave) and valore.strip():
+            return valore.strip()
     percorso = unquote_plus(urlsplit(url).path).rstrip("/")   # molti siti scrivono gli spazi come +
     parti = [p for p in percorso.split("/") if p]
     # Liferay: il nome del file e' la parte con l'estensione, non l'ultima.
@@ -260,7 +283,7 @@ def trova_allegati(html: str, base_url: str, firma: re.Pattern | None = None,
         tipo = tipo_da_url(url)
         if tipo is None and (_FAQ.search(testo) or _FAQ.search(unquote(urlsplit(url).path))):
             tipo = "faq"
-        if tipo is None and (_SCARICA.search(urlsplit(url).path) or _LIFERAY.search(urlsplit(url).path)):
+        if tipo is None and e_link_a_file(url):
             tipo = "file"
         if tipo is None:
             continue
@@ -313,8 +336,8 @@ def _scrivi(blocchi: Iterable[bytes], destinazione: Path, massimo: int) -> tuple
 
 
 def scarica_file(client: httpx.Client, url: str, destinazione: Path, massimo: int,
-                 ignora_robots: bool = False) -> tuple[int, str, str]:
-    """Scarica in streaming un file in `destinazione`. Ritorna (byte, sha256, content-type).
+                 ignora_robots: bool = False) -> tuple[int, str, str, str]:
+    """Scarica in streaming un file in `destinazione`. Ritorna (byte, sha256, content-type, content-disposition).
 
     Se il server dichiara una dimensione oltre il limite non si scarica nulla; se non la dichiara,
     ci si ferma appena si supera il limite. Nessun file parziale resta su disco.
@@ -327,7 +350,44 @@ def scarica_file(client: httpx.Client, url: str, destinazione: Path, massimo: in
         if dichiarata.isdigit() and int(dichiarata) > massimo:
             raise TroppoGrande(f"{int(dichiarata) // (1024 * 1024)} MB, oltre il limite di {massimo // (1024 * 1024)} MB")
         n, impronta = _scrivi(risposta.iter_bytes(64 * 1024), destinazione, massimo)
-        return n, impronta, risposta.headers.get("content-type", "").split(";")[0].strip().lower()
+        return (n, impronta, risposta.headers.get("content-type", "").split(";")[0].strip().lower(),
+                risposta.headers.get("content-disposition", ""))
+
+
+_NOME_IN_DISPOSIZIONE = re.compile(r"filename\*?\s*=\s*(?:[\w-]+'[\w-]*')?\"?([^\";]+)", re.IGNORECASE)
+
+
+def tipo_dal_contenuto(dati: bytes, disposizione: str = "") -> str | None:
+    """Il formato di un file dai primi byte, o dal nome in Content-Disposition. Serve quando il server manda
+    "application/octet-stream" (myCIVIS, Provincia di Bolzano: 1.114 PDF finiti tra gli "altro" e mai letti, 08/10).
+    %PDF -> pdf; PK (zip) -> docx, xlsx, odt o zip secondo il contenuto; D0 CF 11 E0 (Office vecchio) -> doc o xls.
+    None se non si riconosce."""
+    m = _NOME_IN_DISPOSIZIONE.search(disposizione or "")
+    dal_nome = None
+    if m:
+        trovate = _ESTENSIONE.findall(unquote(m.group(1)).strip().lower())
+        dal_nome = trovate[-1] if trovate else None
+    if dati.lstrip()[:5] == b"%PDF-":
+        return "pdf"
+    if dati[:4096].find(b"%PDF-") >= 0:
+        return "p7m"          # PDF dentro una busta di firma: si legge come i .p7m
+    if dati[:4] == b"PK\x03\x04":
+        try:
+            with zipfile.ZipFile(io.BytesIO(dati)) as z:
+                nomi = set(z.namelist())
+                mimetype = z.read("mimetype").decode("ascii", "replace") if "mimetype" in nomi else ""
+        except (zipfile.BadZipFile, KeyError, OSError):
+            return dal_nome or "zip"
+        if "word/document.xml" in nomi:
+            return "docx"
+        if "xl/workbook.xml" in nomi:
+            return "xlsx"
+        if mimetype == "application/vnd.oasis.opendocument.text":
+            return "odt"
+        return "zip"
+    if dati[:4] == b"\xd0\xcf\x11\xe0":
+        return dal_nome if dal_nome in ("doc", "xls") else "doc"
+    return dal_nome
 
 
 def _nome_file_sicuro(nome: str, tipo: str) -> str:
@@ -353,11 +413,30 @@ def testo_pdf(dati: bytes) -> str | None:
     return testo or None
 
 
+def _togli_moduli(zuppa: BeautifulSoup) -> None:
+    """Toglie i moduli (ricerca, accesso, newsletter), ma non quelli che contengono la pagina. I siti ASP.NET
+    (Regione Valle d'Aosta, GSE, BUR Veneto: 08/10) mettono tutto dentro <form id="form1">: togliendolo la pagina
+    restava vuota e l'ente veniva scartato. Un modulo resta se contiene <main>/<article> o piu' di meta' del testo."""
+    def lunghezza(tag) -> int:
+        return len(_SPAZI.sub("", tag.get_text()))
+
+    totale = lunghezza(zuppa)
+    for modulo in list(zuppa.find_all("form")):
+        if modulo.decomposed:
+            continue
+        if modulo.find(["main", "article"]) is not None or modulo.find(attrs={"role": "main"}) is not None:
+            continue
+        if totale and lunghezza(modulo) * 2 > totale:
+            continue
+        modulo.decompose()
+
+
 def testo_html(html: str) -> str | None:
     """Il testo leggibile di una pagina (per le FAQ), senza menu, script e pie' di pagina."""
     zuppa = BeautifulSoup(html, "html.parser")
-    for tag in zuppa(["script", "style", "noscript", "nav", "header", "footer", "form"]):
+    for tag in zuppa(["script", "style", "noscript", "nav", "header", "footer"]):
         tag.decompose()
+    _togli_moduli(zuppa)
     righe = (_SPAZI.sub(" ", r).strip() for r in zuppa.get_text("\n").splitlines())
     testo = "\n".join(r for r in righe if r)
     return testo or None
@@ -539,6 +618,27 @@ def candidati_plone(client: httpx.Client, pausa: Pausa, url_pagina: str, massimo
     return trovati
 
 
+def _dominio_plone(url: str) -> str:
+    """Il dominio di un sito Plone del registro: senza "www." e, se ha almeno quattro parti, senza la prima
+    (imprese.regione.emilia-romagna.it -> regione.emilia-romagna.it), cosi' vale anche per i siti fratelli
+    (fesr.regione.emilia-romagna.it). Le Camere (vr.camcom.it) restano come sono: camcom.it sarebbe di tutte."""
+    sito = urlsplit(url).netloc.lower().removeprefix("www.")
+    parti = sito.split(".")
+    return ".".join(parti[1:]) if len(parti) >= 4 else sito
+
+
+def domini_plone(fonti: Iterable) -> set[str]:
+    """I domini delle fonti del registro con i documenti nell'API Plone/Volto (documenti_plone)."""
+    return {_dominio_plone(f.url) for f in fonti if f.documenti_plone and f.url}
+
+
+def usa_plone(url: str, domini: set[str]) -> bool:
+    """La pagina sta su un sito Plone/Volto del registro, anche se il bando e' arrivato da un'altra fonte (catalogo
+    incentivi.gov.it: fesr.regione.emilia-romagna.it, 08/10). Prima si decideva per fonte, non per sito."""
+    sito = urlsplit(url).netloc.lower().removeprefix("www.")
+    return any(sito == d or sito.endswith("." + d) for d in domini)
+
+
 def testo_plone(client: httpx.Client, pausa: Pausa, url_pagina: str) -> str | None:
     """Il testo di una pagina Plone/Volto letto dall'API: descrizione piu' i blocchi di testo. Nell'HTML delle
     pagine Volto (Emilia-Romagna) spesso c'e' solo lo scheletro della pagina, costruita poi con JavaScript."""
@@ -597,9 +697,49 @@ _SOTTOPAGINE = re.compile(r"^(normativa|faq|documenti|documentazione|allegati|mo
                           r"come-presentare-la-domanda|domande-frequenti)/?$", re.IGNORECASE)
 MASSIMO_SOTTOPAGINE = 4
 
+# Pagine "atto" (08/10, diagnosi dei testi mancanti): alcuni siti non mettono il decreto o l'avviso sulla pagina della
+# misura ma su una pagina a parte, dove sta il PDF. Per dominio del link: quali percorsi sono pagine di un atto.
+PAGINE_ATTO = {
+    "mimit.gov.it": re.compile(r"^/it/normativa/[^/]+/[^/]+"),          # decreti, circolari e avvisi del MIMIT
+    "regione.lazio.it": re.compile(r"^/documenti/\d+/?$"),             # atti della Regione Lazio (anche da Lazio Europa)
+    "trasparenza.chpe.camcom.it": re.compile(r"^/archivio19_regolamenti_", re.IGNORECASE),   # Camera di Chieti-Pescara
+}
+MASSIMO_PAGINE_ATTO = 4
+_MESI = {m: i for i, m in enumerate(("gennaio", "febbraio", "marzo", "aprile", "maggio", "giugno", "luglio", "agosto",
+                                     "settembre", "ottobre", "novembre", "dicembre"), start=1)}
+_DATA_IN_LETTERE = re.compile(r"(\d{1,2})(?:°|º)?[\s_-]+(" + "|".join(_MESI) + r")[\s_-]+(20\d{2})", re.IGNORECASE)
+
+
+def _data_nel_testo(testo: str) -> str:
+    """Come _data_nel_nome, anche con il mese in lettere ("5 settembre 2025", "...-5-settembre-2025-..."): AAAAMMGG."""
+    m = _DATA_IN_LETTERE.search(testo)
+    if m:
+        return f"{m.group(3)}{_MESI[m.group(2).lower()]:02d}{int(m.group(1)):02d}"
+    return _data_nel_nome(testo)
+
+
+def pagine_atto(html: str, base_url: str) -> list[str]:
+    """I link del contenuto alle pagine "atto" di PAGINE_ATTO, prima i piu' recenti (data nel testo del link o
+    nell'indirizzo), al massimo MASSIMO_PAGINE_ATTO."""
+    zuppa = BeautifulSoup(html, "html.parser")
+    _togli_cornice(zuppa)
+    pagina = urldefrag(base_url).url
+    trovate: list[tuple[str, str]] = []
+    for a in zuppa.find_all("a", href=True):
+        url = urldefrag(urljoin(base_url, a["href"].strip())).url
+        parti = urlsplit(url)
+        regola = PAGINE_ATTO.get(parti.netloc.lower().removeprefix("www."))
+        if regola is None or not regola.search(parti.path) or url == pagina or any(u == url for _, u in trovate):
+            continue
+        testo = f"{a.get_text(' ')} {a.get('title') or ''} {unquote(parti.path)}"
+        trovate.append((_data_nel_testo(testo), url))
+    trovate.sort(key=lambda x: x[0], reverse=True)    # ordinamento stabile: a parita' di data, l'ordine della pagina
+    return [u for _, u in trovate[:MASSIMO_PAGINE_ATTO]]
+
 
 def sottopagine(html: str, base_url: str) -> list[str]:
-    """Le sottopagine della pagina ufficiale con i documenti (es. /normativa, /faq), al massimo MASSIMO_SOTTOPAGINE."""
+    """Le sottopagine della pagina ufficiale con i documenti (es. /normativa, /faq), al massimo MASSIMO_SOTTOPAGINE,
+    poi le pagine "atto" (pagine_atto)."""
     radice = urlsplit(base_url)
     prefisso = radice.path.rstrip("/") + "/"
     trovate: list[str] = []
@@ -610,7 +750,8 @@ def sottopagine(html: str, base_url: str) -> list[str]:
             continue
         if _SOTTOPAGINE.match(parti.path[len(prefisso):]) and url not in trovate:
             trovate.append(url)
-    return trovate[:MASSIMO_SOTTOPAGINE]
+    trovate = trovate[:MASSIMO_SOTTOPAGINE]
+    return trovate + [u for u in pagine_atto(html, base_url) if u not in trovate]
 
 
 def elabora_annuncio(client: httpx.Client, annuncio_id: int, url_annuncio: str, cartella: Path, pausa: Pausa,
@@ -640,8 +781,10 @@ def elabora_pagina(client: httpx.Client, sottocartella: str, url_pagina: str, ca
     risultati: list[Risultato] = []
     cartella_annuncio = cartella / sottocartella
     tipo_pagina = tipo_da_url(pagina)
-    if tipo_pagina:   # la pagina e' direttamente un documento
-        candidati = [Candidato(pagina, _nome_da_url(pagina), tipo_pagina)]
+    parti_pagina = urlsplit(pagina)
+    if tipo_pagina or _FILE_SENZA_ESTENSIONE.search(parti_pagina.path + "?" + parti_pagina.query):
+        # la pagina e' direttamente un documento (anche senza estensione: atti della Toscana)
+        candidati = [Candidato(pagina, _nome_da_url(pagina), tipo_pagina or "file")]
     else:
         pausa.attendi(pagina, ignora_robots=ignora(pagina))
         risposta = scarica(client, pagina, accept="text/html,application/xhtml+xml", ignora_robots=ignora(pagina))
@@ -656,7 +799,7 @@ def elabora_pagina(client: httpx.Client, sottocartella: str, url_pagina: str, ca
                 except (NonPermesso, httpx.HTTPError):
                     continue
                 visti = {c.url for c in candidati}
-                if "faq" in sotto.lower() or "domande" in sotto.lower():
+                if urlsplit(sotto).path.rstrip("/").rsplit("/", 1)[-1].lower() in ("faq", "domande-frequenti"):
                     candidati.append(Candidato(sotto, "FAQ (pagina)", "faq"))
                 candidati += [c for c in trova_allegati(r_sotto.text, str(r_sotto.url)) if c.url not in visti and c.url != pagina]
         copia = _copia_pagina(risposta, pagina, cartella, cartella_annuncio)
@@ -673,6 +816,9 @@ def elabora_pagina(client: httpx.Client, sottocartella: str, url_pagina: str, ca
             if testo_api and len(testo_api) > len(copia.testo_estratto or ""):
                 copia.testo_estratto = testo_api     # la pagina Volto ha il testo solo nell'API
     candidati = [c for c in candidati if c.url not in gia_presenti]
+    # Prima bando e decreti, poi FAQ, graduatorie, altro e modulistica: con il limite di MASSIMO_FILE_ANNUNCIO file le
+    # graduatorie in cima alla pagina lasciavano fuori l'avviso (Calabria 1611 e 3349, Invitalia FNEE 4195: 08/10).
+    candidati.sort(key=lambda c: ORDINE_CATEGORIE.get(categoria_allegato(c.nome, c.url, c.tipo), 5))
 
     usati, contati = 0, gia_scaricati
     for c in candidati:
@@ -688,7 +834,7 @@ def elabora_pagina(client: httpx.Client, sottocartella: str, url_pagina: str, ca
         temporaneo = cartella_annuncio / f".in_corso_{os.getpid()}"
         try:
             pausa.attendi(c.url, ignora_robots=ignora(c.url))
-            n, impronta, mime = scarica_file(client, c.url, temporaneo, min(MASSIMO_FILE, restano), ignora(c.url))
+            n, impronta, mime, disposizione = scarica_file(client, c.url, temporaneo, min(MASSIMO_FILE, restano), ignora(c.url))
         except TroppoGrande as exc:
             r.errore = f"troppo grande: {exc}"
             continue
@@ -705,11 +851,16 @@ def elabora_pagina(client: httpx.Client, sottocartella: str, url_pagina: str, ca
             temporaneo.unlink(missing_ok=True)
             r.errore = f"indirizzo non valido: {str(exc)[:150]}"
             continue
-        if c.tipo in ("faq", "file") and mime in TIPI_MIME:
-            r.tipo = TIPI_MIME[mime]          # la "FAQ" o il link senza estensione e' un documento (es. un PDF)
-        elif c.tipo == "file" and mime not in ("text/html", "application/xhtml+xml"):
-            r.tipo = "altro"                  # formato non previsto: si conserva, ma non se ne legge il testo
-        elif c.tipo != "faq" and mime in ("text/html", "application/xhtml+xml"):
+        e_html = mime in ("text/html", "application/xhtml+xml")
+        if c.tipo in ("faq", "file") and not e_html:
+            # La "FAQ" o il link senza estensione e' un documento (es. un PDF). Il tipo si legge dai primi byte o dal
+            # nome in Content-Disposition, poi dal Content-Type: myCIVIS manda i PDF come application/octet-stream,
+            # molti server i DOCX come application/zip.
+            with open(temporaneo, "rb") as f:
+                inizio = f.read(4096)
+            dal_contenuto = tipo_dal_contenuto(temporaneo.read_bytes() if inizio[:2] == b"PK" else inizio, disposizione)
+            r.tipo = dal_contenuto or TIPI_MIME.get(mime) or ("altro" if c.tipo == "file" else c.tipo)
+        elif c.tipo != "faq" and e_html:
             temporaneo.unlink(missing_ok=True)
             r.errore = "il link porta a una pagina web, non a un documento"
             continue
@@ -959,8 +1110,19 @@ def salva(conn, annuncio_id: int, risultati: list[Risultato]) -> None:
     conn.commit()
 
 
-def salva_bando(conn, bando_id: int, risultati: list[Risultato]) -> None:
+def impronte_documenti(cur, bando_id: int) -> set[str]:
+    """Le impronte dei documenti del bando che contano per il filtro "c'e' il bando?" (non pagine, non modulistica)."""
+    cur.execute("""SELECT impronta FROM allegati WHERE bando_id = %s AND annuncio_id IS NULL AND errore IS NULL
+                   AND impronta IS NOT NULL AND tipo <> 'pagina' AND categoria IS DISTINCT FROM 'modulistica'""", (bando_id,))
+    return {r["impronta"] for r in cur.fetchall()}
+
+
+def salva_bando(conn, bando_id: int, risultati: list[Risultato]) -> int:
+    """Salva i documenti del bando. Se ne arrivano di nuovi (impronte mai viste), `documentazione` torna NULL perche'
+    il filtro "c'e' il bando?" la ricalcoli (08/10: 5 bandi avevano il decreto tra i documenti ma restavano "sintesi",
+    valutati prima del suo arrivo). Ritorna quanti documenti nuovi."""
     with conn.cursor() as cur:
+        prima = impronte_documenti(cur, bando_id)
         for r in risultati:
             cur.execute(
                 """
@@ -975,8 +1137,12 @@ def salva_bando(conn, bando_id: int, risultati: list[Risultato]) -> None:
                 (bando_id, r.url, r.nome, r.tipo, categoria_allegato(r.nome, r.url, r.tipo, r.testo_estratto), r.dimensione,
                  r.impronta, r.percorso_locale, r.testo_estratto, r.errore),
             )
+        nuovi = impronte_documenti(cur, bando_id) - prima
         cur.execute("UPDATE bandi SET allegati_cercati_il = now() WHERE id = %s", (bando_id,))
+        if nuovi:
+            cur.execute("UPDATE bandi SET documentazione = NULL WHERE id = %s AND documentazione IS NOT NULL", (bando_id,))
     conn.commit()
+    return len(nuovi)
 
 
 def segna_cercato(conn, annuncio_id: int | None = None, bando_id: int | None = None) -> None:
@@ -1006,6 +1172,7 @@ def esegui(annuncio_id: int | None = None, limite: int = LIMITE_PREDEFINITO, car
         print(f"La cartella degli allegati {cartella} non e' scrivibile.", file=sys.stderr)
         return 2
     registro = {f.id: f for f in carica_registro(CARTELLA_FONTI)}
+    siti_plone = domini_plone(registro.values())
     file_totali = byte_totali = errori_totali = 0
     with connetti() as conn, nuovo_client() as client:
         applica_migrazioni(conn)
@@ -1023,7 +1190,7 @@ def esegui(annuncio_id: int | None = None, limite: int = LIMITE_PREDEFINITO, car
                 fonti = [registro[f] for f in fonti_del_bando(conn, x["id"]) if f in registro]
                 sito = urlsplit(x["url"]).netloc
                 ignora = any(f.ignora_robots and urlsplit(f.url or "").netloc == sito for f in fonti)
-                plone = any(f.documenti_plone for f in fonti)
+                plone = any(f.documenti_plone for f in fonti) or usa_plone(x["url"], siti_plone)
                 presenti = gia_scaricati(conn, bando_id=x["id"])
                 campi_testo = [f.pagina_ufficiale["testo_dai_dati"] for f in fonti if f.pagina_ufficiale.get("testo_dai_dati")]
                 firma, altre = firme_pagina_condivisa(conn, x)
@@ -1122,6 +1289,51 @@ def rileggi_illeggibili(cartella: Path = CARTELLA, bando_id: int | None = None, 
     return 0
 
 
+def rileggi_altro(cartella: Path = CARTELLA, bando_id: int | None = None, prova: bool = False) -> int:
+    """Rilegge i file gia' scaricati segnati "altro" (formato non riconosciuto dal Content-Type): se dai primi byte sono
+    PDF, DOCX, DOC... si corregge il tipo, si estrae il testo e si rifa' la categoria. Ai bandi con testo nuovo
+    `documentazione` torna NULL, cosi' il filtro "c'e' il bando?" la ricalcola (08/10: 1.114 PDF di myCIVIS)."""
+    from collections import Counter
+
+    from app.db.connessione import connetti
+
+    conteggi: Counter = Counter()
+    bandi_toccati: set[int] = set()
+    with connetti() as conn:
+        with conn.cursor() as cur:
+            cur.execute("SELECT id, bando_id, nome, url, percorso_locale FROM allegati WHERE tipo = 'altro' AND errore IS NULL"
+                        " AND percorso_locale IS NOT NULL" + (" AND bando_id = %s" if bando_id else "") + " ORDER BY id",
+                        (bando_id,) if bando_id else ())
+            righe = [dict(r) for r in cur.fetchall()]
+        print(f"File 'altro' da controllare: {len(righe)}", flush=True)
+        for r in righe:
+            percorso = cartella / r["percorso_locale"]
+            if not percorso.exists():
+                conteggi["mancante"] += 1
+                continue
+            tipo = tipo_dal_contenuto(percorso.read_bytes())
+            conteggi[tipo or "non riconosciuto"] += 1
+            if not tipo:
+                continue
+            testo = estrai_testo(percorso, tipo)
+            categoria = categoria_allegato(r["nome"] or "", r["url"] or "", tipo, testo)
+            print(f"{tipo:5} [allegato {r['id']}, bando {r['bando_id']}] {(r['nome'] or '')[:60]}: "
+                  f"{len(testo or '')} caratteri, {categoria}", flush=True)
+            if prova:
+                continue
+            with conn.cursor() as cur:
+                cur.execute("UPDATE allegati SET tipo = %s, testo_estratto = %s, categoria = %s WHERE id = %s",
+                            (tipo, testo, categoria, r["id"]))
+                if testo and r["bando_id"]:
+                    cur.execute("UPDATE bandi SET documentazione = NULL WHERE id = %s AND documentazione IS NOT NULL",
+                                (r["bando_id"],))
+                    bandi_toccati.add(r["bando_id"])
+            conn.commit()
+    print(("PROVA: " if prova else "") + "tipi trovati: " + ", ".join(f"{k} {v}" for k, v in conteggi.most_common()))
+    print("Bandi con testo nuovo (il filtro li rivaluta):", " ".join(str(b) for b in sorted(bandi_toccati)) or "nessuno")
+    return 0
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description="Scarica allegati e FAQ dalla pagina ufficiale dei bandi.")
     parser.add_argument("--bando", type=int, metavar="ID", help="solo questo bando (anche se gia' cercato)")
@@ -1130,12 +1342,16 @@ def main(argv: list[str] | None = None) -> int:
                         help=f"al massimo N bandi per giro (default {LIMITE_PREDEFINITO})")
     parser.add_argument("--rileggi-illeggibili", action="store_true",
                         help="rilegge (anche con l'OCR) i PDF gia' scaricati senza testo leggibile, poi si ferma")
-    parser.add_argument("--prova", action="store_true", help="con --rileggi-illeggibili: mostra, non salva")
+    parser.add_argument("--rileggi-altro", action="store_true",
+                        help="riconosce dai primi byte i file gia' scaricati segnati 'altro' (PDF, DOCX...) e ne legge il testo")
+    parser.add_argument("--prova", action="store_true", help="con --rileggi-illeggibili o --rileggi-altro: mostra, non salva")
     parser.add_argument("--paralleli", type=int, default=1, metavar="N",
                         help="con --rileggi-illeggibili: N file letti insieme (l'OCR usa un processore per file)")
     args = parser.parse_args(argv)
     if args.rileggi_illeggibili:
         return rileggi_illeggibili(bando_id=args.bando, prova=args.prova, paralleli=args.paralleli)
+    if args.rileggi_altro:
+        return rileggi_altro(bando_id=args.bando, prova=args.prova)
     return esegui(args.annuncio, args.limite, bando_id=args.bando)
 
 

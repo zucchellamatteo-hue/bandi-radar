@@ -330,6 +330,8 @@
   scorta:
     parametro: pag
     pagine: 10
+  pagina_ufficiale:                    # 08/10: la scheda dell'avviso rimanda con "Vai alla pagina" alla pagina con i documenti
+    segui_link: {testi: ["vai alla pagina"], stesso_sito: true}
 
 - id: fvg_notizie_rss
   nome: Regione FVG - RSS notizie in evidenza

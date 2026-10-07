@@ -79,7 +79,10 @@ def url_chiave(url: str | None) -> str | None:
 
 
 def _e_pagina_di_servizio(chiave: str) -> bool:
-    """Indirizzi che non sono la pagina di un bando: API, dati aperti, feed."""
+    """Indirizzi che non sono la pagina di un bando: API, dati aperti, feed. Eccezione: la banca dati degli atti della
+    Toscana (www301.regione.toscana.it/bancadati/atti/Contenuto.xml?id=...) e' un atto, non un file di dati (08/10)."""
+    if re.search(r"/bancadati/(atti|burt)/", chiave, re.I):
+        return False
     return bool(re.search(r"(\.json|\.xml|\.csv|/api/|/feed/?$|/rss)", chiave, re.I))
 
 
