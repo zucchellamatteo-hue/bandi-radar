@@ -7,3 +7,6 @@
 __pycache__/
 *.pyc
 .venv/
+
+# Cartella locale di Claude Code (copie di lavoro degli agenti, impostazioni): mai nel repository
+.claude/
