@@ -19,7 +19,7 @@ from app.db.connessione import connetti
 
 
 def main(argv: list[str] | None = None) -> int:
-    p = argparse.ArgumentParser(prog="python -m app.utenti", description="Utenti di Bandi Radar")
+    p = argparse.ArgumentParser(prog="python -m app.utenti", description="Utenti di bandinQiaro")
     sub = p.add_subparsers(dest="comando", required=True)
     c = sub.add_parser("crea", help="crea un utente e stampa il link per scegliere la password")
     c.add_argument("--email", required=True)

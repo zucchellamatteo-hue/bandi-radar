@@ -1,14 +1,14 @@
-"""Profili ANONIMI delle imprese prospect per le campagne di Bandi Radar (05/10/2026).
+"""Profili ANONIMI delle imprese prospect per le campagne di bandinQiaro (05/10/2026).
 
 Gira sul computer di Matteo, accanto al database `leadgen` (docs/ricerche/2026-09-25_schema_anagrafiche_leadgen.md).
-A Bandi Radar va solo il file profili_anonimi.json: per ogni impresa un codice casuale e i dati che servono
+A bandinQiaro va solo il file profili_anonimi.json: per ogni impresa un codice casuale e i dati che servono
 all'abbinamento (forma giuridica, provincia, ATECO, dimensione stimata, dipendenti, fatturato). Nomi, P.IVA,
 email, telefoni, indirizzi, soci restano qui: la corrispondenza codice -> P.IVA va in corrispondenze.csv, che NON
-si manda a nessuno e serve per completare a casa le lettere preparate da Bandi Radar.
+si manda a nessuno e serve per completare a casa le lettere preparate da bandinQiaro.
 
 Uso (nella cartella del progetto lead-generation, con il suo ambiente Python che ha gia' psycopg):
     python esporta_profili.py --env C:\\Users\\matte\\lead-generation\\.env --uscita C:\\Users\\matte\\bandi_radar_export
-Poi carica profili_anonimi.json nella pagina Campagne di Bandi Radar.
+Poi carica profili_anonimi.json nella pagina Campagne di bandinQiaro.
 """
 
 from __future__ import annotations
@@ -25,7 +25,7 @@ from pathlib import Path
 
 import psycopg
 
-# Suffissi della ragione sociale -> forma giuridica di Bandi Radar (app/schede/campi.py).
+# Suffissi della ragione sociale -> forma giuridica di bandinQiaro (app/schede/campi.py).
 FORME = [
     (r"\bS\.?\s?R\.?\s?L\.?\s?S\.?\b|SEMPLIFICATA", "srls"),
     (r"\bS\.?\s?R\.?\s?L\.?\b|RESPONSABILITA'? LIMITATA", "srl"),
@@ -137,7 +137,7 @@ def main() -> int:
         w.writerow(["codice", "partita_iva", "denominazione"])
         w.writerows(corrispondenze)
     print(f"Profili anonimi: {len(profili)} (scartate {scartate} senza provincia o ATECO).")
-    print(f"Da caricare in Bandi Radar: {args.uscita / 'profili_anonimi.json'}")
+    print(f"Da caricare in bandinQiaro: {args.uscita / 'profili_anonimi.json'}")
     print(f"Da NON mandare a nessuno: {args.uscita / 'corrispondenze.csv'} e segreto_codici.txt")
     return 0
 

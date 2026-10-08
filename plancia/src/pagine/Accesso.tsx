@@ -23,7 +23,7 @@ export function Accesso({ entrato }: { entrato: (u: Utente) => void }) {
 
   return (
     <div className="accesso">
-      <div className="logo-accesso">Bandi Radar</div>
+      <div className="logo-accesso">bandinQiaro</div>
       <p className="piccolo">Finanza agevolata per le imprese · <a href="/presentazione">cos'è</a></p>
       <form onSubmit={invia}>
         <label>Email<input type="text" inputMode="email" autoComplete="username" required value={email} onChange={(e) => setEmail(e.target.value)} /></label>
@@ -67,7 +67,7 @@ export function ImpostaPassword({ entrato }: { entrato: (u: Utente) => void }) {
 
   return (
     <div className="accesso">
-      <div className="logo-accesso">Bandi Radar</div>
+      <div className="logo-accesso">bandinQiaro</div>
       {chi && <p>{chi.scopo === "invito" ? "Benvenuto" : "Nuova password per"} <strong>{chi.nome || chi.email}</strong></p>}
       {chi ? (
         <form onSubmit={invia}>
@@ -99,7 +99,7 @@ export function Registrati() {
   };
   return (
     <div className="accesso">
-      <div className="logo-accesso">Bandi Radar</div>
+      <div className="logo-accesso">bandinQiaro</div>
       <p className="piccolo">I bandi per la tua impresa, ogni settimana.</p>
       {aperta === false && <div className="avviso">Le registrazioni non sono ancora aperte: scrivici per avere un invito.</div>}
       {messaggio ? <div className="avviso">{messaggio}</div> : aperta && (
@@ -127,7 +127,7 @@ export function ConfermaEmail({ entrato }: { entrato: (u: Utente) => void }) {
   }, []);
   return (
     <div className="accesso">
-      <div className="logo-accesso">Bandi Radar</div>
+      <div className="logo-accesso">bandinQiaro</div>
       {errore ? <><div className="allarme">{errore}</div><p><a href="/">Vai all'accesso</a></p></> : <p>Confermo l'indirizzo…</p>}
     </div>
   );
@@ -143,10 +143,10 @@ export function Disiscrizione() {
   }, []);
   return (
     <div className="accesso">
-      <div className="logo-accesso">Bandi Radar</div>
+      <div className="logo-accesso">bandinQiaro</div>
       {esito ? <p>Fatto: <b>{esito}</b> non riceverà più l'email settimanale. Puoi riattivarla quando vuoi dalla pagina
         "Le mie imprese".</p> : errore ? <div className="allarme">Link non valido.</div> : <p>Un momento…</p>}
-      <p className="piccolo"><a href="/">Vai a Bandi Radar</a></p>
+      <p className="piccolo"><a href="/">Vai a bandinQiaro</a></p>
     </div>
   );
 }

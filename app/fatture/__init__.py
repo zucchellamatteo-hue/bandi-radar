@@ -158,7 +158,7 @@ def genera_xml(numero: str, data_doc: date, cliente: dict, righe: list[dict], pr
         "</FatturaElettronicaHeader>"
         "<FatturaElettronicaBody><DatiGenerali><DatiGeneraliDocumento>" + _t("TipoDocumento", "TD01") + _t("Divisa", "EUR")
         + _t("Data", data_doc.isoformat()) + _t("Numero", numero) + _t("ImportoTotaleDocumento", totale_doc)
-        + _t("Causale", "Abbonamento Bandi Radar") + "</DatiGeneraliDocumento></DatiGenerali>"
+        + _t("Causale", "Abbonamento bandinQiaro") + "</DatiGeneraliDocumento></DatiGenerali>"
         "<DatiBeniServizi>" + "".join(linee) + "<DatiRiepilogo>" + _t("AliquotaIVA", ALIQUOTA)
         + _t("ImponibileImporto", soldi(imponibile)) + _t("Imposta", imposta) + _t("EsigibilitaIVA", "I") + "</DatiRiepilogo>"
         "</DatiBeniServizi>"
@@ -188,7 +188,7 @@ def righe_da_stripe(fattura_stripe: dict) -> list[dict]:
         if importo == 0:
             continue
         periodo = linea.get("period") or {}
-        descrizione = linea.get("description") or "Abbonamento Bandi Radar"
+        descrizione = linea.get("description") or "Abbonamento bandinQiaro"
         if periodo.get("start") and periodo.get("end"):
             dal = datetime.fromtimestamp(periodo["start"], timezone.utc).date()
             al = datetime.fromtimestamp(periodo["end"], timezone.utc).date()

@@ -7,7 +7,7 @@
 # esempi (06/10/2026, richiesta di Matteo): per ogni misura aperta, un caso pratico per ciascun profilo tipo
 # di profili_esempio, con l'interesse (alto, medio, basso, nullo). Numeri indicativi calcolati con le regole
 # della misura scritte qui sotto; dove un dettaglio non e' certo c'e' scritto "da verificare".
-# aggiunta_il (07/10/2026): quando la misura e' entrata in Bandi Radar. Le misure aperte aggiunte da poco compaiono una
+# aggiunta_il (07/10/2026): quando la misura e' entrata in bandinQiaro. Le misure aperte aggiunte da poco compaiono una
 # volta nell'email del lunedi' delle imprese a cui sono adatte (app/notifiche/email_imprese.py).
 # fiscale (07/10/2026, revisione degli articoli del blog): per ogni misura aperta, in breve, come si tassa il
 # beneficio ai fini IRES/IRPEF/IRAP, con le fonti citate negli articoli rivisti; "da verificare" dove non e' chiarito.

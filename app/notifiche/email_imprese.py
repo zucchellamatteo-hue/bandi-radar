@@ -113,7 +113,7 @@ def link_scheda(bando_id: int, impresa_id: int, supporto: bool = False) -> str:
 
 
 def link_assoluto(link: str | None) -> str | None:
-    """I link delle news possono essere pagine di Bandi Radar ("/impresa/misure"): diventano indirizzi completi."""
+    """I link delle news possono essere pagine di bandinQiaro ("/impresa/misure"): diventano indirizzi completi."""
     if not link:
         return None
     return utenti.sito_url() + link if link.startswith("/") else link
@@ -134,7 +134,7 @@ def introduzione(voci: list[dict], aggiornamenti: list[dict], benvenuto: bool = 
     chi_siamo = ("Ogni giorno controlliamo i siti di Unione europea, ministeri, Regioni, Camere di commercio e Comuni "
                  "capoluogo e ti scriviamo solo quello che riguarda la tua impresa.")
     if benvenuto:
-        return (f"benvenuto in Bandi Radar! {chi_siamo} Ecco i bandi più interessanti per la tua impresa tra quelli "
+        return (f"benvenuto in bandinQiaro! {chi_siamo} Ecco i bandi più interessanti per la tua impresa tra quelli "
                 "aperti oggi. Da lunedì prossimo ti scriveremo una volta alla settimana, solo per i bandi nuovi e per le "
                 "novità importanti su quelli che ti abbiamo segnalato.")
     novita, chiusi = dividi_aggiornamenti(aggiornamenti)
@@ -148,9 +148,9 @@ def introduzione(voci: list[dict], aggiornamenti: list[dict], benvenuto: bool = 
         parti.append(_quanti(len(chiusi), "un bando segnalato che si è appena chiuso",
                              "bandi segnalati che si sono appena chiusi"))
     if not parti:
-        return f"ecco il punto della settimana di Bandi Radar sui bandi per la tua impresa. {chi_siamo}"
+        return f"ecco il punto della settimana di bandinQiaro sui bandi per la tua impresa. {chi_siamo}"
     elenco = parti[0] if len(parti) == 1 else ", ".join(parti[:-1]) + " e " + parti[-1]
-    return f"ecco il punto della settimana di Bandi Radar. {chi_siamo} Questa settimana trovi {elenco}."
+    return f"ecco il punto della settimana di bandinQiaro. {chi_siamo} Questa settimana trovi {elenco}."
 
 
 def _riga_scadenza(b: dict) -> str:
@@ -252,20 +252,20 @@ def ordina_aggiornamenti(aggiornamenti: list[dict]) -> list[dict]:
 
 def _oggetto(nome: str, voci: list[dict], aggiornamenti: list[dict], benvenuto: bool = False) -> str:
     if benvenuto:
-        return (f"Benvenuto in Bandi Radar: "
+        return (f"Benvenuto in bandinQiaro: "
                 + (f"i {len(voci)} bandi più interessanti per {nome}" if len(voci) > 1
                    else f"il bando più interessante per {nome}"))
     in_scadenza = sum(1 for v in voci if v["motivo"] == "in_scadenza")
     novita = f"{len(aggiornamenti)} novità sui bandi già segnalati" if aggiornamenti else ""
     if not voci:
-        return f"{novita[0].upper()}{novita[1:]} a {nome}" if novita else f"Bandi Radar: la settimana di {nome}"
+        return f"{novita[0].upper()}{novita[1:]} a {nome}" if novita else f"bandinQiaro: la settimana di {nome}"
     oggetto = f"{len(voci)} {'nuovo bando adatto' if len(voci) == 1 else 'nuovi bandi adatti'} a {nome}"
     if in_scadenza:
         oggetto += f" ({in_scadenza} in scadenza)"
     return oggetto + (f" e {novita}" if novita else "")
 
 
-def documento_html(corpo: str, titolo: str = "Bandi Radar") -> str:
+def documento_html(corpo: str, titolo: str = "bandinQiaro") -> str:
     """Pagina completa: nell'head il carattere Outfit (dove il programma di posta lo carica), nel body il contenuto.
     L'avviso "non rispondere" (app/notifiche/email.py) si aggiunge prima di </body> al momento dell'invio."""
     return ("<!DOCTYPE html><html lang='it'><head><meta charset='utf-8'>"
@@ -302,7 +302,7 @@ def componi(imp: dict, voci: list[dict], aggiornamenti: list[dict] | None = None
     parti = [f"<div style='max-width:640px;margin:0 auto;background:#ffffff;border-radius:16px;padding:28px 26px;"
              f"font-family:{CARATTERE};color:{INCHIOSTRO};font-size:15px;line-height:1.55'>",
              f"<div style='font-size:13px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:{BLU}'>"
-             f"Bandi Radar</div>",
+             f"bandinQiaro</div>",
              f"<h1 style='font-family:{CARATTERE};font-size:26px;font-weight:600;letter-spacing:-0.4px;line-height:1.2;"
              f"margin:6px 0 18px;color:{INCHIOSTRO}'>{'Benvenuto' if benvenuto else 'Il punto della settimana'}</h1>",
              f"<p style='margin:0 0 10px'>Buongiorno <b>{html.escape(nome)}</b>,</p>",
@@ -434,17 +434,17 @@ def componi(imp: dict, voci: list[dict], aggiornamenti: list[dict] | None = None
                      f"Vai ai tuoi bandi</a></p>")
     supporto = ("Hai trovato un bando che fa per te? Apri la scheda e premi «Richiedi supporto per la domanda»: i nostri "
                 "consulenti verificano con te requisiti, spese ammesse e tempi, e ti aiutano a preparare la domanda.")
-    righe += [supporto, "", "Buon lavoro,", "Bandi Radar", ""]
+    righe += [supporto, "", "Buon lavoro,", "bandinQiaro", ""]
     parti.append(f"<div style='background:#eff6ff;border-radius:12px;padding:16px 18px;margin:22px 0'>"
-                 f"{html.escape(supporto)}</div><p style='margin:0 0 6px'>Buon lavoro,<br><b>Bandi Radar</b></p>")
+                 f"{html.escape(supporto)}</div><p style='margin:0 0 6px'>Buon lavoro,<br><b>bandinQiaro</b></p>")
 
     righe += [impresa.AVVERTENZA, "", f"Non vuoi piu' ricevere questa email? {disiscrizione}", "",
-              "Bandi Radar - finanzagevolata.qiaro.it"]
+              "bandinQiaro - bandinqiaro.it"]
     parti += [f"<p style='color:{GRIGIO};font-size:12px;margin-top:24px;line-height:1.5'>"
               f"{html.escape(impresa.AVVERTENZA)}</p>",
               f"<p style='color:{GRIGIO_CHIARO};font-size:12px'>Non vuoi piu' ricevere questa email? "
               f"<a href='{html.escape(disiscrizione)}' style='color:{GRIGIO_CHIARO}'>Disiscriviti</a>.<br>"
-              f"Bandi Radar - finanzagevolata.qiaro.it</p></div>"]
+              f"bandinQiaro - bandinqiaro.it</p></div>"]
     return oggetto, "\n".join(righe), documento_html("\n".join(parti), oggetto)
 
 

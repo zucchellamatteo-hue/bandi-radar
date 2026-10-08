@@ -40,7 +40,7 @@ def importo(b: dict):
 
 
 def crea(conn, nome: str, giorni: int, profili: list[dict], chi: str) -> int:
-    """Salva la campagna e i profili (controllati come i profili di Bandi Radar: niente dati identificativi)."""
+    """Salva la campagna e i profili (controllati come i profili di bandinQiaro: niente dati identificativi)."""
     if not profili:
         raise ErroreCampagna("Il file non contiene profili.")
     if len(profili) > MASSIMO_PROSPETTI:
@@ -171,7 +171,7 @@ def testo(prospetto: dict, sito: str, prezzo: int = 30, giorni_prova: int = 14) 
         + (f"\n…e altri {altri} bandi compatibili.\n" if altri > 0 else "")
         + (f"\n{comp[0]['cumulo']}\n" if comp[0].get("cumulo") else "")
         + "\nSono informazioni indicative, da verificare sul bando ufficiale insieme a voi.\n\n"
-        f"Con Bandi Radar ricevete ogni settimana solo i bandi adatti alla vostra impresa, con schede chiare: "
+        f"Con bandinQiaro ricevete ogni settimana solo i bandi adatti alla vostra impresa, con schede chiare: "
         f"{prezzo} € al mese + IVA, con {giorni_prova} giorni di prova gratuita. "
         "Se un bando vi interessa, possiamo preparare e presentare la domanda per voi senza costi fissi: "
         "solo una percentuale del contributo, se viene concesso.\n\n"

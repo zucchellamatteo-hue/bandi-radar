@@ -1,4 +1,4 @@
-"""Segnali di stato gratuiti: aperto o chiuso, senza IA, da quello che Bandi Radar sa gia' di un bando.
+"""Segnali di stato gratuiti: aperto o chiuso, senza IA, da quello che bandinQiaro sa gia' di un bando.
 
 La valutazione del 27/09 ha visto il controllo preliminare far passare bandi chiusi che si potevano fermare con
 un'occhiata: la scadenza nei dati della fonte (API dei siti, catalogo incentivi.gov.it, Portale UE), "Bando

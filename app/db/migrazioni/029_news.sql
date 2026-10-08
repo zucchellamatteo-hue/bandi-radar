@@ -31,9 +31,9 @@ ALTER TABLE allegati ALTER COLUMN creato_il SET DEFAULT now();
 
 -- Prima news, in bozza: Matteo la rilegge e la pubblica dalla pagina News.
 INSERT INTO news (titolo, testo, link, da, a, pubblico, stato, creata_da)
-SELECT 'Novità di Bandi Radar: segnalazioni, smartphone e agevolazioni nazionali',
+SELECT 'Novità di bandinQiaro: segnalazioni, smartphone e agevolazioni nazionali',
        'Da questa settimana in ogni pagina c''è il pulsante "Segnala": se un bando manca, una scadenza è sbagliata o '
-       || 'qualcosa non torna, scrivicelo in due righe e lo controlliamo. Bandi Radar ora si usa comodamente anche dallo '
+       || 'qualcosa non torna, scrivicelo in due righe e lo controlliamo. bandinQiaro ora si usa comodamente anche dallo '
        || 'smartphone. Nella sezione "Agevolazioni fiscali" trovi nuove misure nazionali, con esempi pratici per tipo di '
        || 'impresa: incentivi alle assunzioni 2026 (Bonus Giovani, Bonus Donne, Bonus ZES), maxi-deduzione del costo dei '
        || 'nuovi assunti, Fondo di Garanzia per le PMI, Ecobonus e Sismabonus per gli immobili dell''impresa, Art Bonus.',

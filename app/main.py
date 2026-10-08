@@ -1,4 +1,4 @@
-"""Bandi Radar - applicazione web.
+"""bandinQiaro - applicazione web.
 
 Espone:
 - GET /health  : stato dell'applicazione e del database, senza autenticazione (usato dal healthcheck)
@@ -38,7 +38,7 @@ from app.utenti.api import router as api_utenti
 from app import visite
 from app.visite.api import router as api_visite
 
-app = FastAPI(title="Bandi Radar", docs_url=None, redoc_url=None, openapi_url=None)
+app = FastAPI(title="bandinQiaro", docs_url=None, redoc_url=None, openapi_url=None)
 CARTELLA_PLANCIA = Path(__file__).resolve().parents[1] / "plancia" / "dist"
 
 
@@ -63,7 +63,7 @@ def health() -> JSONResponse:
 
 
 _PAGINA_IN_COSTRUZIONE = """<!doctype html><html lang="it"><head><meta charset="utf-8"><meta name="robots" content="noindex">
-<title>Bandi Radar</title></head><body style="font-family:system-ui;padding:2rem"><h1>Bandi Radar</h1>
+<title>bandinQiaro</title></head><body style="font-family:system-ui;padding:2rem"><h1>bandinQiaro</h1>
 <p>La plancia non e' stata costruita in questa immagine (manca plancia/dist).</p></body></html>"""
 
 app.include_router(api_utenti)
@@ -143,10 +143,10 @@ def blog_articolo(slug: str):
         if a and a["stato"] == "pubblicato":
             return HTMLResponse(blog.pagina_articolo(conn, a))
     if a and a["stato"] == "archiviato":
-        return HTMLResponse(pubblico.pagina("Articolo non più disponibile - Bandi Radar",
+        return HTMLResponse(pubblico.pagina("Articolo non più disponibile - bandinQiaro",
                                             '<section class="testo-legale"><h1>Articolo non più disponibile</h1><p>Questo '
                                             'articolo è stato ritirato perché le informazioni non sono più attuali. '
-                                            '<a href="/blog">Vai al blog</a> o <a href="/registrati">prova Bandi Radar</a> '
+                                            '<a href="/blog">Vai al blog</a> o <a href="/registrati">prova bandinQiaro</a> '
                                             'per vedere i bandi aperti.</p></section>'), status_code=410)
     raise HTTPException(status_code=404, detail="non trovato")
 

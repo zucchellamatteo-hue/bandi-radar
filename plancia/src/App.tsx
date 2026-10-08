@@ -67,7 +67,7 @@ export default function App() {
   return (
     <ContestoUtente.Provider value={utente}>
       <header className={gruppi.length > 1 ? "barra barra-gruppi" : "barra"}>
-        <span className="logo">Bandi Radar</span>
+        <span className="logo">bandinQiaro</span>
         <Segnala />
         <button className="menu-pulsante" aria-expanded={menuAperto} aria-controls="menu-corpo"
           onClick={() => setMenuAperto(!menuAperto)}>{menuAperto ? "✕" : "☰"} {nomePagina}</button>

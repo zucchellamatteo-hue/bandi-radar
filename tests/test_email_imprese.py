@@ -156,8 +156,8 @@ def test_email_di_benvenuto(monkeypatch):
                       "eventi": [{"tipo": "chiuso", "testo": "Chiuso in anticipo."}]}]
     imp = {"id": 3, "nome": "Rossi srl", "codice_disiscrizione": "abc"}
     oggetto, testo, corpo = ei.componi(imp, voci, aggiornamenti, totale=17, altri=7, benvenuto=True)
-    assert oggetto == "Benvenuto in Bandi Radar: i 10 bandi più interessanti per Rossi srl"
-    assert "benvenuto in Bandi Radar" in testo and "tra quelli aperti oggi" in testo
+    assert oggetto == "Benvenuto in bandinQiaro: i 10 bandi più interessanti per Rossi srl"
+    assert "benvenuto in bandinQiaro" in testo and "tra quelli aperti oggi" in testo
     assert "I BANDI PIÙ INTERESSANTI PER LA TUA IMPRESA" in testo
     for assente in ("NOVITÀ SUI BANDI", "SI SONO CHIUSI", "Bando chiuso", "NUOVI BANDI ADATTI"):
         assert assente not in testo
@@ -420,7 +420,7 @@ def test_prima_email_di_benvenuto_e_visti_nel_portale(ambiente):
         assert ids == ricchi[:10]                                   # massimo 10, dal fondo perduto piu' alto
         visti = e["contenuti"]["visti_portale"]
         assert e["contenuti"]["benvenuto"] is True and set(visti) == {*ricchi[10:], compatibile, da_verificare}
-        assert e["oggetto"].startswith("Benvenuto in Bandi Radar: i 10 bandi")
+        assert e["oggetto"].startswith("Benvenuto in bandinQiaro: i 10 bandi")
         assert "Altri 4 bandi adatti ti aspettano nel tuo portale" in e["testo"]
         assert "NOVITÀ SUI BANDI" not in e["testo"] and "SI SONO CHIUSI" not in e["testo"]
         assert "tra quelli aperti oggi" in e["testo"]

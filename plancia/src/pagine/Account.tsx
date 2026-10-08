@@ -19,7 +19,7 @@ export default function Account() {
       <h1>Il mio account</h1>
       <p><b>{u.nome || u.email}</b> · {u.email} · {NOMI_RUOLO_UTENTE[u.ruolo]}</p>
       <h2>I miei dati</h2>
-      <p>Scarica in un file tutti i dati che Bandi Radar conserva su di te: account, imprese e profili, richieste di supporto,
+      <p>Scarica in un file tutti i dati che bandinQiaro conserva su di te: account, imprese e profili, richieste di supporto,
         giudizi, abbonamento, dati di fatturazione, accessi recenti. La password non c'è: la salviamo solo in forma cifrata.</p>
       <p><a href="/api/account/dati"><button>Scarica i miei dati</button></a></p>
       <h2>Cancellare l'account</h2>

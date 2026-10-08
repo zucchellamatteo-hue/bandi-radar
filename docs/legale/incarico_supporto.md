@@ -141,7 +141,7 @@ Il Professionista e i suoi collaboratori mantengono riservate le informazioni e 
 
 12.1 Per le attività dell'incarico il Professionista agisce come **titolare autonomo** del trattamento dei dati personali del Cliente e delle persone che lavorano per lui. L'informativa è [ALLEGATA / DISPONIBILE A [LINK]].
 
-12.2 I documenti dell'incarico sono conservati [NEL GESTIONALE DELLO STUDIO / ALTRO], non nel servizio Bandi Radar, e non sono inviati a servizi di intelligenza artificiale. [DA AGGIORNARE SE CAMBIA, VEDI `docs/PIANO_PRATICHE.md`.]
+12.2 I documenti dell'incarico sono conservati [NEL GESTIONALE DELLO STUDIO / ALTRO], non nel servizio bandinQiaro, e non sono inviati a servizi di intelligenza artificiale. [DA AGGIORNARE SE CAMBIA, VEDI `docs/PIANO_PRATICHE.md`.]
 
 12.3 Il Cliente garantisce di aver informato le persone i cui dati comunica al Professionista (per esempio soci, dipendenti, titolari effettivi).
 

@@ -39,7 +39,7 @@ def test_api_e_news_attive():
     admin = accesso_di_prova("admin")
     r = c.get("/api/news", auth=admin).json()
     # la prima news (migrazione 029) e' una bozza da approvare
-    esempio = [n for n in r["news"] if n["titolo"].startswith("Novità di Bandi Radar")]
+    esempio = [n for n in r["news"] if n["titolo"].startswith("Novità di bandinQiaro")]
     assert esempio and esempio[0]["stato"] == "bozza" and r["pubblici"]["tutti"]
 
     oggi = date.today()

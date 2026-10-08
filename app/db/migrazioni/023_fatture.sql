@@ -1,5 +1,5 @@
 -- Fattura elettronica (05/10/2026): dati di fatturazione dei clienti e fatture emesse per gli abbonamenti pagati.
--- L'XML FatturaPA lo genera Bandi Radar (app/fatture), l'invio allo SdI lo fa Invoicetronic; la conservazione a norma
+-- L'XML FatturaPA lo genera bandinQiaro (app/fatture), l'invio allo SdI lo fa Invoicetronic; la conservazione a norma
 -- e' quella gratuita dell'Agenzia delle Entrate. Tabelle separate dai profili: all'IA non arriva niente di qui.
 CREATE TABLE IF NOT EXISTS dati_fatturazione (
     utente_id           bigint PRIMARY KEY REFERENCES utenti(id) ON DELETE CASCADE,

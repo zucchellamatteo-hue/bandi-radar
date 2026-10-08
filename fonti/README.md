@@ -1,6 +1,6 @@
 # Registro delle fonti
 
-Qui vive l'elenco delle fonti che Bandi Radar controlla. **Aggiungere una fonte è aggiungere una voce a uno di questi file**, non scrivere codice. I file sono in formato YAML (testo con rientri), uno per gruppo:
+Qui vive l'elenco delle fonti che bandinQiaro controlla. **Aggiungere una fonte è aggiungere una voce a uno di questi file**, non scrivere codice. I file sono in formato YAML (testo con rientri), uno per gruppo:
 
 | File | Contenuto |
 |---|---|

@@ -1,4 +1,4 @@
-# Documentazione legale per vendere Bandi Radar
+# Documentazione legale per vendere bandinQiaro
 
 **Bozza del 05/10/2026, da far rivedere a un professionista** (avvocato, consulente privacy e, per la parte fiscale e ordinistica, un collega commercialista o l'Ordine). Questa cartella è interna: **non viene pubblicata sul sito**. I testi pubblici (termini, privacy, cookie, supporto, note legali) stanno in `app/pubblico/testi/`.
 
@@ -15,12 +15,12 @@ Legenda dello stato:
 
 | Voce | Cosa serve | Stato |
 |---|---|---|
-| Chi è il fornitore | Decidere se Bandi Radar lo vende lo studio di Matteo (attività professionale) o una società separata (per esempio una Srl). Da questa scelta dipendono tutti i segnaposto `[RAGIONE SOCIALE DEL TITOLARE]`, la fatturazione, l'assicurazione e la compatibilità con l'Ordine. | Da fare (Matteo) + Professionista |
+| Chi è il fornitore | Decidere se bandinQiaro lo vende lo studio di Matteo (attività professionale) o una società separata (per esempio una Srl). Da questa scelta dipendono tutti i segnaposto `[RAGIONE SOCIALE DEL TITOLARE]`, la fatturazione, l'assicurazione e la compatibilità con l'Ordine. | Da fare (Matteo) + Professionista |
 | Compatibilità con l'Ordine dei commercialisti | Il d.lgs. 139/2005 (art. 4) rende incompatibile con l'iscrizione l'esercizio di attività d'impresa, salvo eccezioni. Vendere un abbonamento a un servizio informativo è un'attività commerciale: va verificato (note interpretative del CNDCEC sulle incompatibilità, eventualmente quesito all'Ordine locale) se Matteo può farlo dallo studio, o se serve una società in cui abbia un ruolo compatibile (per esempio socio senza poteri di amministrazione). Il **supporto alla domanda a success fee** invece è un'attività tipicamente professionale e può restare allo studio. | Professionista |
 | Codice ATECO | Scegliere il codice dell'attività di vendita degli abbonamenti (classificazione ATECO 2025). Candidati da valutare: servizi di informazione (gruppo 63.9), elaborazione dati e servizi correlati (63.1), consulenza imprenditoriale (70.2) per la parte di supporto. Da decidere insieme alla forma del fornitore; se l'attività va nello studio, valutare se aggiungere un codice secondario. | Da fare (Matteo) |
 | Iscrizioni | Se società: atto costitutivo, iscrizione al Registro delle imprese, PEC, comunicazione di inizio attività con il codice ATECO. Se studio: eventuale variazione della dichiarazione IVA di inizio/variazione attività (modello AA9/AA7) con il nuovo codice. | Da fare (Matteo) |
 | Note legali sul sito | Dati obbligatori del fornitore (art. 7 d.lgs. 70/2003, art. 2250 c.c.). | Bozza fatta: `app/pubblico/testi/note_legali.html` (manca il collegamento alla pagina `/note-legali`, Tecnico) |
-| Marchio e dominio | Verificare che il nome "Bandi Radar" non sia già un marchio registrato per servizi simili; valutare la registrazione. Dominio `finanzagevolata.qiaro.it`: controllare a chi è intestato `qiaro.it`. | Da fare (Matteo) |
+| Marchio e dominio | Verificare che il nome "bandinQiaro" non sia già un marchio registrato per servizi simili; valutare la registrazione. Dominio `bandinqiaro.it` (dal 07/10; il vecchio `finanzagevolata.qiaro.it` rinvia lì): controllare a chi sono intestati. | Da fare (Matteo) |
 
 ## 2. Fisco e fatturazione
 

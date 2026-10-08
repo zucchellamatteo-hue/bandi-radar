@@ -215,10 +215,10 @@ def pagina(titolo: str, corpo: str, descrizione: str = "", indicizza: bool = Fal
 <title>{_e(titolo)}</title><meta name="description" content="{_e(descrizione)}">{meta}
 <link rel="icon" href="/favicon.svg" type="image/svg+xml"><meta name="theme-color" content="#163e7a">
 {seo.meta_verifica()}<style>{STILE}</style>{testa}</head><body>
-<header><a class="logo" href="{logo}">{LOGO}<span>Bandi Radar</span></a><nav>{voci}<a href="/accedi">Accedi</a>
+<header><a class="logo" href="{logo}">{LOGO}<span>bandinQiaro</span></a><nav>{voci}<a href="/accedi">Accedi</a>
 <a class="bottone" href="/registrati">Prova gratis</a></nav></header>
 <main>{corpo}</main>
-<footer><span>© Bandi Radar · {_e(dominio)}{(' · ' + _e(titolare)) if titolare else ''}</span><a href="/termini">Termini</a>
+<footer><span>© bandinQiaro · {_e(dominio)}{(' · ' + _e(titolare)) if titolare else ''}</span><a href="/termini">Termini</a>
 <a href="/privacy">Privacy</a><a href="/cookie">Cookie</a><a href="/condizioni-supporto">Condizioni del supporto</a>
 <a href="/note-legali">Note legali</a><a href="/blog">Blog</a></footer>
 {_cookie()}</body></html>"""
@@ -255,5 +255,5 @@ def legale(nome: str) -> str | None:
     file, titolo = LEGALI[nome]
     percorso = TESTI / file
     testo = percorso.read_text(encoding="utf-8") if percorso.is_file() else f"<h1>{_e(titolo)}</h1><p>Testo in preparazione.</p>"
-    return pagina(f"{titolo} - Bandi Radar", f'<section class="testo-legale">{testo}</section>', titolo,
+    return pagina(f"{titolo} - bandinQiaro", f'<section class="testo-legale">{testo}</section>', titolo,
                   indicizza=pubblica(), percorso=f"/{nome}")

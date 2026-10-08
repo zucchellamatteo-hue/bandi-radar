@@ -8,7 +8,7 @@
 |---|---|---|
 | Email settimanale con i bandi adatti all'impresa | **No** | È il servizio che il cliente ha chiesto (esecuzione del contratto). Resta il link per non riceverla più. |
 | Email di servizio: conferma account, recupero password, scadenza della prova, pagamenti, modifiche ai termini | **No** | Servono a far funzionare il contratto. Non devono contenere promozioni. |
-| Email promozionali a chi è già cliente, su servizi **analoghi** a quello acquistato (per esempio un nuovo piano di Bandi Radar) | No consenso preventivo, ma **diritto di opporsi** detto alla raccolta dell'email e in ogni messaggio | Art. 130, comma 4, Codice privacy ("soft spam"). Solo all'email data per l'acquisto, solo per servizi simili. |
+| Email promozionali a chi è già cliente, su servizi **analoghi** a quello acquistato (per esempio un nuovo piano di bandinQiaro) | No consenso preventivo, ma **diritto di opporsi** detto alla raccolta dell'email e in ogni messaggio | Art. 130, comma 4, Codice privacy ("soft spam"). Solo all'email data per l'acquisto, solo per servizi simili. |
 | Email promozionali su altri servizi (per esempio servizi dello studio, supporto a success fee proposto di iniziativa nostra, newsletter) | **Sì** | Art. 130, commi 1-2, Codice privacy. |
 | Email, PEC, SMS o messaggi a **prospect** (imprese che non ci hanno mai contattato) | **Sì, sempre** | Vale anche per indirizzi aziendali, PEC di imprese e indirizzi pubblicati su siti o registri: il fatto che siano pubblici non autorizza a scrivere. |
 
@@ -25,7 +25,7 @@
 
 ## Testo della casella (registrazione e area personale)
 
-> ☐ Voglio ricevere via email novità e offerte su Bandi Radar e sui servizi di [RAGIONE SOCIALE DEL TITOLARE] per le imprese (al massimo [FREQUENZA, PER ESEMPIO UNA O DUE AL MESE]). Facoltativo, posso cambiare idea quando voglio.
+> ☐ Voglio ricevere via email novità e offerte su bandinQiaro e sui servizi di [RAGIONE SOCIALE DEL TITOLARE] per le imprese (al massimo [FREQUENZA, PER ESEMPIO UNA O DUE AL MESE]). Facoltativo, posso cambiare idea quando voglio.
 
 Variante più breve:
 
@@ -43,7 +43,7 @@ Da mostrare nel checkout o nella conferma dell'abbonamento, se si vogliono manda
 
 ## Testo di disiscrizione (in fondo a ogni email promozionale)
 
-> Ricevi questa email perché hai scelto di ricevere novità e offerte da [RAGIONE SOCIALE DEL TITOLARE] [OPPURE: perché sei cliente di Bandi Radar]. Se non vuoi riceverne altre, <a href="[LINK DISISCRIZIONE]">disiscriviti con un clic</a>: non ti chiederemo di accedere né di spiegare il motivo. [RAGIONE SOCIALE DEL TITOLARE], [SEDE].
+> Ricevi questa email perché hai scelto di ricevere novità e offerte da [RAGIONE SOCIALE DEL TITOLARE] [OPPURE: perché sei cliente di bandinQiaro]. Se non vuoi riceverne altre, <a href="[LINK DISISCRIZIONE]">disiscriviti con un clic</a>: non ti chiederemo di accedere né di spiegare il motivo. [RAGIONE SOCIALE DEL TITOLARE], [SEDE].
 
 Pagina di conferma dopo il clic:
 
@@ -57,6 +57,6 @@ Il link "non voglio più l'email" esiste già (codice di disiscrizione per impre
 
 ## Requisiti tecnici delle email promozionali (promemoria)
 
-- Mittente riconoscibile (dominio `finanzagevolata.qiaro.it`) e oggetto non ingannevole.
+- Mittente riconoscibile (dominio `bandinqiaro.it`) e oggetto non ingannevole.
 - Intestazioni `List-Unsubscribe` e `List-Unsubscribe-Post` per la disiscrizione con un clic.
 - Lista separata da quella delle email di servizio: chi si disiscrive dalle promozioni continua a ricevere le email del servizio.

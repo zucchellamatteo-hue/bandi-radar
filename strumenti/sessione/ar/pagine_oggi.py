@@ -1,5 +1,5 @@
 """Punto 1 del piano del 03/10: scarica la pagina ufficiale DI OGGI dei bandi da ricontrollare (regole di chiusura +
-proponibili senza stato + id dati a mano), una pagina per sito alla volta, robots.txt, User-Agent di Bandi Radar.
+proponibili senza stato + id dati a mano), una pagina per sito alla volta, robots.txt, User-Agent BandiRadar.
 Scrive /out/stato/pagine/<id>.md: dati della scheda, testo di oggi, testo salvato prima. Non scrive nel database.
 Uso: pagine_oggi.py [id ...]"""
 import json

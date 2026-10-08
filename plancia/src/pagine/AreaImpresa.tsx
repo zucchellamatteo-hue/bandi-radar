@@ -27,7 +27,7 @@ export function MieiBandi() {
   if (!imprese) return <div className="caricamento">Caricamento…</div>;
   if (!imprese.length) return (
     <>
-      <h1>Benvenuto in Bandi Radar</h1>
+      <h1>Benvenuto in bandinQiaro</h1>
       <div className="avviso">Per vedere i bandi adatti, descrivi prima la tua impresa: dove ha le sedi, cosa fa (codice ATECO),
         quanto è grande. Bastano pochi minuti.</div>
       <p><Link to="/impresa/imprese/nuova"><button className="primario">Descrivi la tua impresa</button></Link></p>
@@ -377,7 +377,7 @@ export function ModuloImpresa() {
     } catch (e) { setErrore(e instanceof Error ? e.message : String(e)); }
   };
   const cancella = async () => {
-    if (!confirm(`Togliere ${nomeImpresa} da Bandi Radar?`)) return;
+    if (!confirm(`Togliere ${nomeImpresa} da bandinQiaro?`)) return;
     await api.cancellaImpresa(Number(id)); vai("/impresa/imprese");
   };
   return (
@@ -460,7 +460,7 @@ export function Abbonamento() {
       {a.portale && <p><button onClick={() => vai(api.portale)}>Gestisci abbonamento: carta, fatture, disdetta</button></p>}
       {!a.stripe && <p className="piccolo">I pagamenti online non sono ancora attivi.</p>}
       {errore && <div className="allarme">{errore}</div>}
-      <p className="piccolo">Pagamento sicuro con Stripe: i dati della carta non passano da Bandi Radar. <a href="/termini">Termini del servizio</a>.</p>
+      <p className="piccolo">Pagamento sicuro con Stripe: i dati della carta non passano da bandinQiaro. <a href="/termini">Termini del servizio</a>.</p>
       <ModuloFatturazione />
     </>
   );

@@ -122,7 +122,7 @@ def email_imprese_della_settimana() -> str | None:
         destinatario = os.environ.get("EMAIL_MATTEO")
         if da_approvare and destinatario:
             avviso = "; avviso a Matteo: " + utenti.manda(
-                destinatario, f"Bandi Radar: {da_approvare} email per le imprese da approvare",
+                destinatario, f"bandinQiaro: {da_approvare} email per le imprese da approvare",
                 f"{da_approvare} email per le imprese da approvare: {utenti.sito_url()}/imprese\n")
         riepilogo = (f"{conteggi['create']} email preparate per {conteggi['imprese']} imprese, "
                      f"{da_approvare} da approvare{avviso}")

@@ -19,7 +19,7 @@ def test_componi_riepilogo():
         "fonti_attive": 250,
     }
     oggetto, testo, corpo_html = componi(dati, da, a)
-    assert oggetto == "Bandi Radar: 2 novità nella settimana 17/09–24/09/2026"
+    assert oggetto == "bandinQiaro: 2 novità nella settimana 17/09–24/09/2026"
     assert "== Regioni (1)" in testo and "== Camere di Commercio (1)" in testo
     assert "[Regione Lombardia] 17/09 Bando <test>" in testo
     assert "Fonte rotta: errore (HTTP 500)" in testo
@@ -32,7 +32,7 @@ def test_email_automatiche_dicono_di_non_rispondere(monkeypatch):
     monkeypatch.delenv("EMAIL_MITTENTE", raising=False)
     monkeypatch.setenv("SITO_URL", "https://esempio.it")
     monkeypatch.setenv("EMAIL_CONTATTO", "info@esempio.it")
-    assert email.mittente() == "Bandi Radar <non-rispondere@esempio.it>"
+    assert email.mittente() == "bandinQiaro <non-rispondere@esempio.it>"
     testo, html = email.con_avviso("Ciao", "<html><body><p>Ciao</p></body></html>")
     assert "non rispondere" in testo and "info@esempio.it" in testo
     assert "non rispondere" in html and html.endswith("</p></body></html>")
@@ -41,4 +41,4 @@ def test_email_automatiche_dicono_di_non_rispondere(monkeypatch):
     monkeypatch.setattr(email.httpx, "post", lambda url, json, headers, timeout: inviate.append(json) or
                         type("R", (), {"raise_for_status": lambda self: None})())
     assert email.invia("a@b.it", "Oggetto", "Testo") == "inviata"
-    assert inviate[0]["from"] == "Bandi Radar <non-rispondere@esempio.it>" and "non rispondere" in inviate[0]["text"]
+    assert inviate[0]["from"] == "bandinQiaro <non-rispondere@esempio.it>" and "non rispondere" in inviate[0]["text"]

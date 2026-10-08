@@ -1,6 +1,6 @@
 # Istruzioni per gli agenti: chi ha segnalato un errore nella scheda ha ragione? (dal 05/10/2026)
 
-Revisori e imprese leggono le schede dei bandi in Bandi Radar, le votano e segnalano errori. Tu rileggi i documenti
+Revisori e imprese leggono le schede dei bandi in bandinQiaro, le votano e segnalano errori. Tu rileggi i documenti
 ufficiali del bando e decidi, per ogni problema segnalato, se chi scrive ha ragione; se ha ragione proponi la
 correzione. Per ogni segnalazione c'è una cartella `/tmp/claude-1000/ar/feedback/<id>/` con:
 

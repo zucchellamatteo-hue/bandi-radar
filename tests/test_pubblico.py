@@ -22,7 +22,7 @@ def test_pagine_legali_senza_database(monkeypatch):
     c = TestClient(app)
     for nome in ("termini", "privacy", "cookie", "condizioni-supporto", "note-legali"):
         r = c.get(f"/{nome}")
-        assert r.status_code == 200 and "Bandi Radar" in r.text, nome
+        assert r.status_code == 200 and "bandinQiaro" in r.text, nome
         assert 'content="noindex, nofollow"' in r.text          # finche' la pagina non e' accesa
         assert f'<link rel="canonical" href="https://bandinqiaro.it/{nome}">' in r.text
     assert pubblico.legale("inventata") is None
@@ -184,7 +184,7 @@ def test_llms_txt(monkeypatch):
     monkeypatch.setenv("SITO_URL", "https://bandinqiaro.it")
     r = TestClient(app).get("/llms.txt")
     assert r.status_code == 200 and r.headers["content-type"].startswith("text/markdown")
-    assert r.text.startswith("# Bandi Radar\n\n> ")
+    assert r.text.startswith("# bandinQiaro\n\n> ")
     assert "## Domande frequenti" in r.text and "(https://bandinqiaro.it/condizioni-supporto)" in r.text
     assert "Siti pubblici controllati" in r.text
     assert "Bandi aperti da visionare" in r.text and "con la scheda pronta" not in r.text
