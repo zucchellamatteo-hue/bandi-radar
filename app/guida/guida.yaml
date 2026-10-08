@@ -39,8 +39,8 @@ sezioni:
 
       - Impresa: **I miei bandi**, **Agevolazioni fiscali**, **Le mie imprese**, **Richieste di supporto**, **Abbonamento**.
       - Revisore con i permessi di base: **Catalogo**, **Misure**, **I miei giudizi** (e **Imprese** se ha quel permesso).
-      - Chi ha il permesso "lavoro": **Fonti**, **Catalogo**, **Misure**, **Profili**, **Annunci**, **Lavorazione**, **Supervisione**, **Doppioni**, **Novità**, **Feedback**, **Segnalazioni**, **News**, **Blog**, **Visite**; con il permesso "imprese" anche **Imprese** e **Campagne**.
-      - Amministratore: tutto, più **Utenti** e **Prossimi passi**.
+      - Chi ha il permesso "lavoro": **Fonti**, **Catalogo**, **Misure**, **Profili**, **Annunci**, **Lavorazione**, **Supervisione**, **Doppioni**, **Novità**, **Feedback**, **Segnalazioni**, **News**, **Blog**, **Visite**, **Prossimi passi** (in sola lettura); con il permesso "imprese" anche **Imprese** e **Campagne**.
+      - Amministratore: tutto, più **Utenti** e l'anteprima dell'area clienti. Le voci sono divise in tre gruppi colorati secondo chi altro le vede: **Solo io** (giallo: Utenti), **Collaboratori** (azzurro: le pagine che vede anche un revisore con il permesso "lavoro" o "imprese"), **Clienti** (verde: I miei bandi, Agevolazioni fiscali, Le mie imprese, Richieste di supporto, Abbonamento, come le vede un'impresa, e la Guida). Sul computer i gruppi stanno su due righe (sotto, a tutta larghezza, Collaboratori); sul telefono, nel menu **☰**, ogni gruppo ha il suo titolo. Revisori e imprese vedono il loro menu senza gruppi.
 
       La voce **Guida** apre questa pagina: mostra solo le parti che ti riguardano.
 

@@ -163,3 +163,7 @@
 ## 09/10/2026
 
 - Valutazione SEO/GEO esterna: SEO 5/10, GEO 3/10 (sito non ancora indicizzato, nessuna menzione esterna; base tecnica e articolo buoni). docs/revisioni/2026-10-09_valutazione_seo_geo.md.
+
+## 09/10/2026
+
+- **Menu dell'amministratore diviso in tre gruppi** (richiesta di Matteo): solo per l'admin le voci della barra sono raggruppate secondo chi altro le vede, ricavato dalle regole dei permessi (`plancia/src/menu.ts`): ogni voce sta nel gruppo del pubblico più ampio. **Solo io** (giallo): Utenti, l'unica pagina riservata all'admin (Supervisione, Prossimi passi e le altre pagine di lavoro le legge anche un revisore con il permesso "lavoro"; Imprese e Campagne chi ha "imprese"). **Collaboratori** (azzurro): Fonti, Catalogo, Misure, Profili, Annunci, Lavorazione, Supervisione, Doppioni, Novità, Feedback, Segnalazioni, News, Blog, Visite, Imprese, Campagne, Prossimi passi. **Clienti** (verde): l'area impresa in anteprima (I miei bandi, Agevolazioni fiscali, Le mie imprese, Richieste di supporto, Abbonamento: pagine che c'erano già per l'admin ma non erano nel menu) e la Guida, che vedono tutti. Sul computer due righe (sopra Solo io e Clienti accanto al logo, sotto Collaboratori a tutta larghezza); sul telefono il menu ☰ di sempre con il titolo di ogni gruppo. Per revisori e imprese il menu non cambia.

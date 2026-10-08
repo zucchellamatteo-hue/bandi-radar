@@ -30,6 +30,7 @@ import Account from "./pagine/Account";
 import { Abbonamento, MieImprese, MieiBandi, MieRichieste, ModuloImpresa, SchedaImpresa, VistaImpresaProfilo } from "./pagine/AreaImpresa";
 import { ContestoUtente, puo } from "./utente";
 import { useTabelleMobili } from "./tabelle";
+import { gruppiMenu } from "./menu";
 
 
 export default function App() {
@@ -54,21 +55,10 @@ export default function App() {
   const admin = utente.ruolo === "admin";
   const lavoro = puo(utente, "lavoro");      // tutte le pagine di lavoro (in sola lettura senza "modifiche")
   const imprese = puo(utente, "imprese");
-  // Le voci del menu: [indirizzo, nome, solo indirizzo esatto]. Sul computer stanno in fila nella barra, sul telefono
-  // in un menu a tendina aperto dal pulsante "☰" (06/10).
-  const voci: [string, string, boolean?][] = lavoro ? [
-    ["/", "Fonti", true], ["/catalogo", "Catalogo"], ["/misure", "Misure"], ["/profili", "Profili"], ["/annunci", "Annunci", true],
-    ["/lavorazione", "Lavorazione"], ["/supervisione", "Supervisione"], ["/doppioni", "Doppioni"], ["/novita", "Novità"],
-    ["/feedback", "Feedback"], ["/segnalazioni", "Segnalazioni"], ["/news", "News"], ["/articoli", "Blog"], ["/visite", "Visite"],
-    ...(imprese ? [["/imprese", "Imprese"], ["/campagne", "Campagne"]] as [string, string][] : []),
-    ["/passi", "Prossimi passi"], ...(admin ? [["/utenti", "Utenti"]] as [string, string][] : []), ["/guida", "Guida"],
-  ] : utente.ruolo === "impresa" ? [
-    ["/impresa", "I miei bandi", true], ["/impresa/misure", "Agevolazioni fiscali"], ["/impresa/imprese", "Le mie imprese"],
-    ["/impresa/richieste", "Richieste di supporto"], ["/impresa/abbonamento", "Abbonamento"], ["/guida", "Guida"],
-  ] : utente.ruolo === "revisore" ? [
-    ["/catalogo", "Catalogo"], ["/misure", "Misure"], ["/feedback", "I miei giudizi"],
-    ...(imprese ? [["/imprese", "Imprese"], ["/campagne", "Campagne"]] as [string, string][] : []), ["/guida", "Guida"],
-  ] : [];
+  // Le voci del menu (menu.ts): sul computer stanno in fila nella barra, sul telefono in un menu a tendina aperto dal
+  // pulsante "☰" (06/10). Per l'admin sono divise in tre gruppi secondo chi altro le vede (09/10).
+  const gruppi = gruppiMenu(utente);
+  const voci = gruppi.flatMap((g) => g.voci);
   const attiva = [...voci].sort((a, b) => b[0].length - a[0].length).find(([to, , fine]) =>
     fine ? posizione.pathname === to : posizione.pathname === to || posizione.pathname.startsWith(to + "/"));
   // Sul telefono il pulsante del menu dice in che pagina si e'; le pagine di dettaglio prendono il nome della loro sezione.
@@ -76,14 +66,20 @@ export default function App() {
     .find(([inizio]) => posizione.pathname.startsWith(inizio))?.[1] || "Menu";
   return (
     <ContestoUtente.Provider value={utente}>
-      <header className="barra">
+      <header className={gruppi.length > 1 ? "barra barra-gruppi" : "barra"}>
         <span className="logo">Bandi Radar</span>
         <Segnala />
         <button className="menu-pulsante" aria-expanded={menuAperto} aria-controls="menu-corpo"
           onClick={() => setMenuAperto(!menuAperto)}>{menuAperto ? "✕" : "☰"} {nomePagina}</button>
         <div id="menu-corpo" className={`menu-corpo${menuAperto ? " aperto" : ""}`}>
-          {voci.length > 0 && <nav>{voci.map(([to, testo, fine], i) => <span key={to}>
+          {gruppi.length === 1 && <nav>{gruppi[0].voci.map(([to, testo, fine], i) => <span key={to}>
             {i > 0 && <span className="sep">{" · "}</span>}<NavLink to={to} end={fine} className={classe}>{testo}</NavLink></span>)}</nav>}
+          {gruppi.length > 1 && <nav className="gruppi">{gruppi.map((g) =>
+            <div key={g.chiave} className={`gruppo-menu gruppo-${g.chiave}`} role="group" aria-label={g.spiegazione} title={g.spiegazione}>
+              <span className="titolo-gruppo" aria-hidden="true">{g.titolo}</span>
+              {g.voci.map(([to, testo, fine], i) => <span key={to}>
+                {i > 0 && <span className="sep">{" · "}</span>}<NavLink to={to} end={fine} className={classe}>{testo}</NavLink></span>)}
+            </div>)}</nav>}
           <span className="chi-sono">
             <NavLink to="/account" className={classe} title="Il mio account">{utente.nome || utente.email}</NavLink> <span className="piccolo">({NOMI_RUOLO_UTENTE[utente.ruolo]})</span>{" "}
             <button onClick={esci}>Esci</button>

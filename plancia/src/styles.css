@@ -339,3 +339,33 @@ button.mostra-altri { width: 100%; padding: .6rem; font-weight: 600; }
   .anteprima-sfondo { padding: 0; }
   .anteprima-finestra { border-radius: 0; }
 }
+
+/* Menu dell'amministratore in tre gruppi (09/10): "Solo io", "Collaboratori", "Clienti", ognuno con il suo colore.
+   Revisori e imprese hanno il menu di sempre (un gruppo solo, senza titolo).
+   Sul computer due righe: sopra logo, "Solo io", "Clienti" e nome; sotto "Collaboratori" (il lavoro di tutti i giorni)
+   a tutta larghezza. Tra le voci di un gruppo niente puntini, solo spazio. */
+@media (min-width: 701px) {
+  header.barra.barra-gruppi { flex-wrap: wrap; column-gap: 1rem; row-gap: .4rem; padding-top: .45rem; padding-bottom: .45rem; }
+  header.barra nav.gruppi { display: contents; }
+  header.barra nav.gruppi .gruppo-collaboratori { order: 5; flex: 1 1 100%; }
+  .gruppo-menu .sep { display: none; }
+  header.barra .gruppo-menu a { padding-left: .1rem; padding-right: .1rem; }
+}
+.gruppo-menu { display: flex; flex-wrap: wrap; align-items: center; column-gap: .6rem; padding: 0 .7rem 0 .4rem; border: 1px solid var(--bordo);
+  border-radius: 8px; line-height: 1.9; font-size: .9rem; }
+.gruppo-menu .titolo-gruppo { font-size: .66rem; font-weight: 750; text-transform: uppercase; letter-spacing: .05em; margin-right: -.2rem;
+  padding: .05rem .4rem; border-radius: 4px; line-height: 1.5; white-space: nowrap; }
+.gruppo-admin { background: #fff6e3; border-color: #efd9a6; }
+.gruppo-admin .titolo-gruppo { background: #f5e1b5; color: #7a5300; }
+.gruppo-collaboratori { background: #f0f5fc; border-color: #cddbed; }
+.gruppo-collaboratori .titolo-gruppo { background: #d9e6f6; color: var(--blu-scuro); }
+.gruppo-clienti { background: #eff8f2; border-color: #c4e3d0; }
+.gruppo-clienti .titolo-gruppo { background: #d3eedd; color: #1e6b3e; }
+@media (max-width: 700px) {
+  /* Sul telefono i gruppi stanno uno sotto l'altro nel menu a tendina, con il titolo come intestazione. */
+  header.barra .menu-corpo nav.gruppi { flex-direction: column; flex-wrap: nowrap; gap: 0; padding: 0; }
+  .gruppo-menu { display: block; border: none; border-radius: 0; padding: 0; font-size: inherit; line-height: inherit; }
+  .gruppo-menu + .gruppo-menu { border-top: 1px solid var(--bordo); }
+  .gruppo-menu > span { display: block; }
+  .gruppo-menu .titolo-gruppo { display: block; margin: 0; border-radius: 0; padding: .6rem 1.2rem .45rem; font-size: .76rem; }
+}
