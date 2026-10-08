@@ -1,4 +1,4 @@
-# bandinQiaro — piano d'azione (aggiornato al 09/10/2026)
+# bandinQiaro — piano d'azione (aggiornato all'08/10/2026 sera)
 
 Riepilogo di fine sessione (05-09/10/2026) chiesto da Matteo. Va letto insieme a `docs/VISIONE.md`,
 `docs/PIANO_QUALITA.md` e `docs/PIANO_SEO_GEO.md`, e aggiornato a ogni passo.
@@ -16,10 +16,10 @@ graduatorie per il bando.
 
 | # | Azione | Stato | Chi |
 |---|---|---|---|
-| 0 | **Procedura nuova del regista**: tipo di agevolazione (misura di legge / sportello a regole fisse / bando vero) → verifica del documento (è l'avviso di questo bando, edizione giusta, approvato?) → scheda solo con documento verificato → secondo controllo obbligatorio → proponibile. Senza documento: lista "da recuperare" con il motivo | **da avviare** (manca l'ok di Matteo) | Claude |
-| 1 | Secondo controllo su tutte le ~406 schede proponibili (in sessione, ~20 al giro, scadenza vicina prima) | in corso: 116 fatte | Claude |
+| 0 | **Procedura nuova del regista**: tipo di agevolazione → verifica del documento → scheda solo con documento verificato → secondo controllo obbligatorio → proponibile; senza documento lista "da recuperare" con il motivo | **pronta, spenta**: si accende con la PR 126 (ripasso: 400 restano, 25 escono) | Claude, via di **Matteo** |
+| 1 | Secondo controllo su tutte le schede proponibili | **fatto** il 08/10 (379 + 97 solo documento; 58 gravi corretti) | Claude |
 | 2 | Automatizzare il secondo controllo con un modello economico (prova Gemini 3.8 Flash su server UE, < 10 $) | in attesa del via di Matteo | Matteo / Claude |
-| 3 | Regola automatica "chi presenta la domanda": se solo enti, associazioni o intermediari, non si propone alle imprese | da fare (dentro la procedura) | Claude |
+| 3 | Regola automatica "chi presenta la domanda": se solo enti, associazioni o intermediari, non si propone alle imprese | in parte: 22 casi corretti il 08/10; la regola resta nel controllo preliminare e nel secondo controllo | Claude |
 | 4 | Testi ufficiali mancanti: filtro più severo; ricerca a mano dei ~220 casi che il codice non risolve, dai più importanti; Portale UE (~345, ricerca Horizon) a bassa priorità | in corso (correzioni del 08/10: +71 bandi con documenti, molti falsi positivi del filtro) | Claude |
 | 5 | Doppioni ed edizioni mescolate: stessa pagina ufficiale in due schede = grave (salvo pagine elenco) | da fare | Claude |
 | 6 | Ricerca settimanale dei bandi più discussi + aggiornamento della vetrina | da fare (primo giro 06/10) | Claude |
@@ -41,7 +41,7 @@ cookie (pagina Visite) e rapporto SEO/GEO ogni mattina via email; landing in ant
 
 | # | Mossa | Chi |
 |---|---|---|
-| 1 | Collegare Google Search Console e Bing Webmaster Tools, inviare la sitemap, chiedere l'indicizzazione (prompt Cowork) | **Matteo** |
+| 1 | Collegare Google Search Console e Bing Webmaster Tools, inviare la sitemap, chiedere l'indicizzazione | **fatto** da Matteo il 08/10 | Matteo |
 | 2 | Rendere privato il repository GitHub (oggi pubblico: contiene le bozze e la strategia) dopo aver dato al server la chiave di accesso | Claude prepara la chiave, **Matteo** la aggiunge su GitHub |
 | 3 | Pubblicare 2-3 articoli a settimana (uno per argomento: guida completa, non anche il breve) | **Matteo** pubblica, agenti rivedono |
 | 4 | Firma degli articoli: oggi "Redazione bandinQiaro – contenuti verificati da un dottore commercialista iscritto all'Albo"; con nome e iscrizione il segnale per Google è più forte | **Matteo** decide |
@@ -55,8 +55,8 @@ cookie (pagina Visite) e rapporto SEO/GEO ogni mattina via email; landing in ant
 ## 3. Cose che deve fare Matteo, in ordine
 
 **Questa settimana**
-1. Dare l'**ok alla procedura nuova** del regista (punto 0 del piano qualità).
-2. **Search Console e Bing** con il prompt per Cowork (10 minuti).
+1. ~~Ok alla procedura nuova~~ (dato l'08/10). **Nuovo: via per accenderla** (PR 126): 25 bandi escono dalle proposte finché non si recupera il documento.
+2. ~~Search Console e Bing~~ (fatto l'08/10). **Email nello spam**: chiedere a Luca "Non è spam", scegliere la casella per `EMAIL_CONTATTO` (prossimo passo n. 44).
 3. **Repository privato**: dire "ok chiave" → Claude prepara la chiave del server → Matteo la aggiunge su GitHub
    (Settings → Deploy keys) → poi rende privato il repository.
 4. Leggere la **scheda Nuova Sabatini** rifatta (pagina Misure) e dire se il modello va bene per le altre misure.
