@@ -102,7 +102,14 @@ Per ogni pezzo: **cosa fa**, **quando gira**, **dove si vede**, **file principal
 - **Quando gira.** Ogni ora, ultimo passo del regista. A mano: `python -m app.schede.controlli [--tutti] [--bando ID]`. La verifica con l'IA: solo in sessione, su richiesta.
 - **Dove si vede.** Pagina **Lavorazione**, sezione **Da rivedere** (prima i gravi; casella "solo i gravi"); **Supervisione** → Controllo delle schede.
 - **File principale.** `app/schede/controlli.py` (verifica con l'IA: `strumenti/sessione/ar/ISTRUZIONI_VERIFICA_IA.md` ed `esporta_verifica.py`).
-- **Limiti noti.** Vede solo errori "di forma" (date, numeri, documenti, campi vuoti): un contenuto sbagliato ma plausibile (bando non per imprese, scadenza letta male) lo trova solo la verifica con l'IA o un revisore. La verifica con l'IA non è ancora automatica e non ha uno strumento di importazione.
+- **Limiti noti.** Vede solo errori "di forma" (date, numeri, documenti, campi vuoti): un contenuto sbagliato ma plausibile (bando non per imprese, scadenza letta male) lo trova solo la verifica con l'IA (secondo controllo) o un revisore. Il secondo controllo non è ancora automatico: si fa in sessione.
+
+### 8b. Procedura nuova: tipo di agevolazione, documento verificato, secondo controllo (dal 08/10)
+
+- **Cosa fa.** Prima di proporre un bando si sanno tre cose, salvate su ogni bando: il **tipo di agevolazione** (`tipo_procedura`: misura di legge, sportello a regole fisse, bando con la sua edizione), la **verifica del documento** (`verifica_documento`: tra i documenti c'è davvero il testo ufficiale di questo bando, dell'edizione in corso e approvato? se no, il motivo: manca, solo sintesi, altro bando, edizione vecchia, bozza, atto generico, graduatoria) e il **secondo controllo** della scheda con il testo del bando (`secondo_controllo`: corretta, da correggere, grave; vale finché la scheda non viene rifatta). Il controllo preliminare dell'IA risponde anche alle prime due domande e il regista copia le risposte (mai sopra quelle della sessione o di Matteo); il secondo controllo si fa in sessione e si importa con `importa_verifica.py`.
+- **La regola.** Un bando con la scheda sul bando ufficiale si propone solo a procedura finita: documento verificato e secondo controllo senza errori gravi aperti. **Oggi la regola è calcolata ma spenta**: si accende con la PR 126 (migrazione 036) dopo il via di Matteo, quando il secondo controllo copre tutti i proponibili. Accesa, i bandi non ancora pronti passano "in lavorazione" (documento da verificare, secondo controllo da fare, errori da correggere) e quelli con il documento sbagliato "in disparte" (lista da recuperare).
+- **Comandi.** `python -m app.catena.procedura` (ripasso dei proponibili con la regola nuova), `--da-recuperare` (bandi aperti senza documento verificato, con il motivo, prima gli italiani), `--bando ID`.
+- **File principale.** `app/catena/procedura.py` (migrazione 035); strumenti di sessione `esporta_verifica.py --prossimi`, `applica_verifica.py`, `importa_verifica.py`.
 
 ### 9. Il regista e la Supervisione
 
