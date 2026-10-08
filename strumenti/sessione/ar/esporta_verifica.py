@@ -3,6 +3,8 @@ Per ognuno scrive /out/verifica/<cartella>/<id>/scheda.json (campi principali) e
 
 Uso:
   esporta_verifica.py N [seme] [id ...]          N proponibili a caso (campione), piu' id dati a mano
+  esporta_verifica.py --documento N CARTELLA     i proponibili con il secondo controllo ma senza la verifica del
+                                                 documento (controllati prima del 08/10): ISTRUZIONI_DOCUMENTO.md
   esporta_verifica.py --prossimi N CARTELLA      i prossimi N proponibili senza secondo controllo, scadenza piu' vicina
                                                  prima (08/10, procedura nuova del regista): esclusi quelli con
                                                  bandi.secondo_controllo e quelli gia' verificati in /out/verifica/*/
@@ -38,7 +40,14 @@ def scrivi(cur, righe: list[dict], out: Path) -> None:
 def main() -> int:
     os.umask(0)
     with connetti() as conn, conn.cursor() as cur:
-        if sys.argv[1:2] == ["--prossimi"]:
+        if sys.argv[1:2] == ["--documento"]:
+            n, out = int(sys.argv[2]), Path("/out/verifica") / sys.argv[3]
+            cur.execute(f"""SELECT {CAMPI} FROM bandi_situazione s JOIN bandi b ON b.id = s.id
+                            WHERE s.situazione = 'proponibile' AND b.secondo_controllo IS NOT NULL
+                              AND b.verifica_documento IS NULL
+                            ORDER BY b.scadenza NULLS LAST, b.id LIMIT %s""", (n,))
+            righe = [dict(r) for r in cur.fetchall()]
+        elif sys.argv[1:2] == ["--prossimi"]:
             n, out = int(sys.argv[2]), Path("/out/verifica") / sys.argv[3]
             cur.execute("SELECT 1 FROM information_schema.columns WHERE table_name = 'bandi' AND column_name = 'secondo_controllo'")
             senza = "AND b.secondo_controllo IS NULL" if cur.fetchone() else ""

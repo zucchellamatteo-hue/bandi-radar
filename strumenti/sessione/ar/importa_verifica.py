@@ -2,8 +2,10 @@
 /out/verifica/<cartella>/<id>/verifica_ia.json scrive bandi.secondo_controllo e, se la verifica li ha (dal 08/10),
 bandi.tipo_procedura e bandi.verifica_documento (procedura nuova del regista, app/catena/procedura.py).
 
-Uso: importa_verifica.py [--corrette] [--prova] CARTELLA [CARTELLA ...]
-  --corrette   gli errori gravi di queste cartelle sono gia' stati corretti (applica_verifica.py o SQL a mano)
+Uso: importa_verifica.py [--corrette] [--solo-documento] [--prova] CARTELLA [CARTELLA ...]
+  --corrette        gli errori gravi di queste cartelle sono gia' stati corretti (applica_verifica.py o SQL a mano)
+  --solo-documento  file documento.json (ISTRUZIONI_DOCUMENTO.md): solo tipo di agevolazione e verifica del
+                    documento, il secondo controllo gia' salvato non si tocca
 La data del controllo e' quella del file. Un controllo piu' vecchio di quello gia' salvato non lo sostituisce."""
 import json
 import sys
@@ -38,10 +40,31 @@ def leggi(percorso: Path, cartella: str, corrette: bool) -> dict:
     return r
 
 
+def solo_documento(cartelle: list[str], prova: bool) -> int:
+    righe = [leggi(p, c, False) for c in cartelle
+             for p in sorted(Path("/out/verifica", c).glob("*/documento.json")) if p.parent.name.isdigit()]
+    salvati = 0
+    with connetti() as conn, conn.cursor() as cur:
+        for r in righe:
+            if not r["verifica_documento"]:
+                continue
+            cur.execute("""UPDATE bandi SET tipo_procedura = coalesce(%s, tipo_procedura), verifica_documento = %s::jsonb
+                           WHERE id = %s AND coalesce(verifica_documento->>'deciso_da', '') <> 'matteo'""",
+                        (r["tipo_procedura"], json.dumps(r["verifica_documento"]), r["id"]))
+            salvati += cur.rowcount
+        conn.rollback() if prova else conn.commit()
+    no = sum(1 for r in righe if (r["verifica_documento"] or {}).get("verificato") == "no")
+    print(("PROVA: " if prova else "") + f"{len(righe)} verifiche del documento lette ({no} con il documento non valido), "
+          f"{salvati} salvate")
+    return 0
+
+
 def main() -> int:
     argomenti = sys.argv[1:]
     corrette, prova = "--corrette" in argomenti, "--prova" in argomenti
     cartelle = [a for a in argomenti if not a.startswith("--")]
+    if "--solo-documento" in argomenti:
+        return solo_documento(cartelle, prova)
     righe = [leggi(p, c, corrette) for c in cartelle
              for p in sorted(Path("/out/verifica", c).glob("*/verifica_ia.json")) if p.parent.name.isdigit()]
     salvati = 0
