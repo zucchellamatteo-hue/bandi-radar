@@ -65,6 +65,7 @@ function SchedaMisura({ m, base, profili }: { m: Misura; base: string; profili: 
       {voce("A chi si rivolge", m.a_chi_si_rivolge)}
       {voce("Spese e investimenti ammessi", m.investimenti_ammessi)}
       {voce("Quanto vale", m.intensita)}
+      <TabelleIntensita tabelle={m.tabella_intensita} />
       {voce("Come si ottiene", Array.isArray(m.come_si_ottiene) ? m.come_si_ottiene.join("\n") : m.come_si_ottiene)}
       {voce("Tempi", m.tempi)}
       {m.cumulabilita && voce("Si somma ai bandi?", `${m.cumulabilita.regola || ""}${m.cumulabilita.riferimento ? ` (${m.cumulabilita.riferimento})` : ""}`)}
@@ -73,6 +74,24 @@ function SchedaMisura({ m, base, profili }: { m: Misura; base: string; profili: 
       <EsempiPerImpresa esempi={m.esempi} profili={profili} />
       <p className="piccolo">Informazione indicativa: verificare la norma e le regole del gestore prima di investire.</p>
     </>
+  );
+}
+
+// Tabelle facoltative della scheda (campo tabella_intensita del YAML): tassi e importi per linea, regole per dimensione.
+// Sul telefono diventano schede impilate come tutte le tabelle (tabelle.ts).
+type TabellaMisura = { titolo?: string; colonne: string[]; righe: string[][]; nota?: string };
+function TabelleIntensita({ tabelle }: { tabelle?: TabellaMisura[] }) {
+  if (!Array.isArray(tabelle) || !tabelle.length) return null;
+  return (
+    <>{tabelle.map((t, i) => (
+      <div key={i} className="tabella-misura">
+        {t.titolo && <h3>{t.titolo}</h3>}
+        <table>
+          <thead><tr>{t.colonne.map((c) => <th key={c}>{c}</th>)}</tr></thead>
+          <tbody>{t.righe.map((r, j) => <tr key={j}>{r.map((c, k) => <td key={k}>{k === 0 ? <b>{c}</b> : c}</td>)}</tr>)}</tbody>
+        </table>
+        {t.nota && <p className="piccolo">{t.nota}</p>}
+      </div>))}</>
   );
 }
 

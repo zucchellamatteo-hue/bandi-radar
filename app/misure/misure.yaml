@@ -736,142 +736,270 @@ misure:
     tipo: contributo_conto_interessi
     ente: "MIMIT, tramite banche e intermediari convenzionati (CDP-ABI)"
     norma: >-
-      Art. 2 DL 21 giugno 2013 n. 69 e successivi rifinanziamenti (Legge di bilancio 2026: 650 milioni,
-      200 per il 2026 e 450 per il 2027); circolare MIMIT n. 410823 del 6/12/2022 (testo vigente, allegati
-      6/A e 6/B per i beni 4.0); DI 19 gennaio 2024 n. 43 (variante Capitalizzazione). Aiuto in esenzione GBER.
+      Art. 2 DL 21 giugno 2013 n. 69 (art. 21 DL 34/2019 per la Capitalizzazione) e successivi rifinanziamenti
+      (Legge di bilancio 2026: 650 milioni, 200 per il 2026 e 450 per il 2027); DI 22 aprile 2022 (disciplina
+      vigente) e DI 19 gennaio 2024 n. 43 (Capitalizzazione); circolare MIMIT n. 410823 del 6/12/2022, testo
+      vigente con allegati (6/A e 6/B beni e software 4.0, 6/C certificazioni green). Aiuto in esenzione:
+      art. 17 GBER (Reg. UE 651/2014), ABER (Reg. 2022/2472) per l'agricoltura, FIBER (Reg. 2022/2473) per la pesca.
     url_ufficiale: "https://www.mimit.gov.it/it/incentivi/agevolazioni-per-gli-investimenti-delle-pmi-in-beni-strumentali-nuova-sabatini"
     in_vigore_dal: "2014-03-31"
     in_vigore_fino_al: null
     stato: aperto
     sintesi: >-
-      Le PMI che comprano (o prendono in leasing) macchinari, impianti, attrezzature, hardware e
-      software nuovi con un finanziamento bancario da 20.000 euro a 4 milioni ricevono dal Ministero
-      un contributo pari agli interessi di un finanziamento di 5 anni al 2,75% (3,575% se il bene e'
-      4.0 o green; 5% per micro e piccole che si capitalizzano). In pratica circa il 7,7-14% del
-      finanziamento. Sportello aperto fino a esaurimento risorse.
+      Le micro, piccole e medie imprese che comprano (o prendono in leasing) macchinari, impianti, attrezzature,
+      hardware e software nuovi con un finanziamento bancario o un leasing da 20.000 euro a 4 milioni ricevono dal
+      Ministero un contributo pari agli interessi di un finanziamento "di riferimento" di 5 anni: al 2,75% per i
+      beni ordinari, al 3,575% per i beni 4.0 e green, al 5% (micro e piccole) o 3,575% (medie) per le societa'
+      di capitali che fanno anche un aumento di capitale (Sabatini Capitalizzazione). Tradotto: dal 7,7% al 14,3%
+      dell'importo finanziato. Non e' un fondo perduto sul prezzo e non abbassa la rata della banca: e' una somma
+      che arriva a investimento finito (tutta insieme fino a 200.000 euro di finanziamento, altrimenti in quote
+      annuali). Le grandi imprese e le mid-cap sono escluse. Sportello aperto fino a esaurimento delle risorse.
     a_chi_si_rivolge: >-
-      Micro, piccole e medie imprese con sede o unita' locale in Italia, regolarmente costituite, non in
-      liquidazione o procedure concorsuali e non in difficolta' (anche ditte individuali per la Sabatini
-      ordinaria). Variante Capitalizzazione: solo societa' di capitali che deliberano un aumento di capitale
-      pari ad almeno il 30% del finanziamento (escluse ditte individuali e societa' di persone).
+      Solo PMI secondo la definizione europea (Raccomandazione 2003/361/CE, imprese associate e collegate
+      comprese; FAQ 4.3), verificata alla data della domanda (FAQ 4.2): micro (meno di 10 occupati e fatturato o
+      attivo fino a 2 milioni), piccola (meno di 50 occupati e fatturato o attivo fino a 10 milioni), media (meno
+      di 250 occupati e fatturato fino a 50 milioni o attivo fino a 43 milioni). Grandi imprese e mid-cap
+      (come le imprese fino a 499 dipendenti che il Fondo di Garanzia ammette) sono
+      escluse.
+
+      Requisiti (circolare, punto 4): iscrizione al Registro delle imprese (o delle imprese di pesca);
+      sede legale o unita' locale in Italia (un'impresa di un altro Stato UE puo' fare domanda e attivare
+      l'unita' locale entro la richiesta di erogazione); non in liquidazione volontaria o procedure concorsuali
+      liquidatorie; non "in difficolta'" secondo le regole UE; nessun aiuto illegale da restituire. Tutti i
+      settori sono ammessi (agricoltura, pesca, trasporti compresi) tranne le attivita' finanziarie e assicurative.
+
+      Chi puo' chiedere cosa: linea ordinaria, 4.0 e green aperte a tutte le PMI, anche ditte individuali e
+      societa' di persone iscritte al Registro delle imprese; la variante Capitalizzazione solo
+      alle PMI societa' di capitali (srl, spa, srls) che deliberano un aumento di capitale in denaro di almeno
+      il 30% del finanziamento, senza amministratori o soci condannati per il reato dell'art. 2632 c.c.
     soggetti_ammessi: [impresa]
     dimensioni_ammesse: [micro, piccola, media]
-    settori_esclusi: "Attivita' finanziarie e assicurative (secondo la classificazione ATECO 2025 indicata dal MIMIT). Ammessi agricoltura e pesca."
+    settori_esclusi: "Attivita' finanziarie e assicurative (sezione L ATECO 2025 secondo la FAQ 5.1). Ammessi agricoltura, pesca e trasporti (per i trasporti i mezzi solo dentro un programma di investimento, circolare 6.6)."
     investimenti_ammessi: >-
       Acquisto o leasing finanziario di macchinari, attrezzature, impianti, beni strumentali ad uso produttivo,
       hardware, software e tecnologie digitali, nuovi di fabbrica, con autonomia funzionale, correlati
-      all'attivita' e nell'unita' locale dell'investimento (bilancio B.II.2-4 o B.I.3-4). Ammessi anche
-      veicoli commerciali nuovi mai immatricolati usati nell'attivita', trattori e macchine agricole,
-      colonnine e fotovoltaico non infisso al suolo solo dentro un programma piu' ampio, trasporto e
-      montaggio capitalizzati. Software: solo licenze capitalizzate (proprieta', licenza perpetua B.I.3,
-      licenza a tempo pagata tutta all'inizio B.I.4 e lunga almeno 3 anni; FAQ 6.4); abbonamenti SaaS/cloud a
-      canone esclusi. Esclusi (circolare punto 7.4): terreni, fabbricati e opere murarie, beni usati,
-      rigenerati o revamping, veicoli a km zero o gia' immatricolati e auto per trasporto privato, mera
-      sostituzione di un bene uguale, ricambi senza autonomia, consulenze, servizi, formazione, pubblicita',
-      scorte, beni pagati con permute o costruiti internamente, lease-back, fatture sotto 516,46 euro, IVA.
+      all'attivita' e nell'unita' locale dell'investimento (bilancio B.II.2-4 o B.I.3-4). Il programma deve essere
+      un "investimento iniziale" nel senso dell'art. 17 GBER (circolare 6.5): nuovo stabilimento, ampliamento,
+      diversificazione della produzione o cambiamento sostanziale del processo; per questo la mera sostituzione
+      di un bene uguale e' esclusa.
+
+      Tre linee, anche nella stessa domanda con importi separati (circolare 7.7):
+      (1) ORDINARIA, beni strumentali; (2) 4.0, beni materiali dell'allegato 6/A (tutte e cinque le
+      caratteristiche obbligatorie, due delle tre ulteriori, interconnessione dichiarata nel modulo RU) e software
+      dell'allegato 6/B (MES, SCADA, CMMS, IoT industriale, cybersecurity, IA per la produzione...); (3) GREEN,
+      macchinari, impianti e attrezzature a basso impatto ambientale in programmi per migliorare la sostenibilita'
+      di prodotti o processi, con una certificazione dell'allegato 6/C: o dell'impresa (es. EMAS, ISO 14001) o
+      del singolo bene (es. Ecolabel, EPD o autodichiarazione ambientale del produttore; FAQ 6.B.2). Un bene
+      dichiarato 4.0 o green che non lo e' non viene ammesso neanche sulla linea ordinaria. Ammessi anche
+      veicoli commerciali nuovi mai immatricolati usati nell'attivita', trattori e macchine agricole, colonnine
+      e fotovoltaico non infisso al suolo solo dentro un programma piu' ampio (da soli solo per produttori di
+      energia e aziende agricole), trasporto e montaggio capitalizzati.
+
+      Software: solo licenze capitalizzate
+      (proprieta', licenza perpetua B.I.3, licenza a tempo pagata tutta all'inizio B.I.4 e lunga almeno 3 anni;
+      FAQ 6.4); abbonamenti SaaS/cloud a canone esclusi. Esclusi (circolare punto 7.4): terreni, fabbricati e
+      opere murarie, beni usati, rigenerati o revamping, veicoli a km zero o gia' immatricolati e auto per
+      trasporto privato, ricambi senza autonomia, consulenze, servizi, formazione, pubblicita', scorte, utenze,
+      beni pagati con permute o costruiti internamente, lease-back, fatture sotto 516,46 euro, IVA e spese del
+      contratto di finanziamento.
     categorie_spesa: [macchinari_attrezzature, software_digitale]
     intensita: >-
-      Finanziamento bancario o leasing 20.000 - 4.000.000 euro, fino al 100% dell'investimento IVA esclusa,
-      durata massima 5 anni compreso un preammortamento fino a 12 mesi (garanzia del Fondo PMI fino all'80%
-      possibile). Contributo in conto impianti (non fondo perduto sulla spesa) pari agli interessi
-      convenzionali su un piano di 5 anni a rate semestrali: 2,75% annuo ordinario; 3,575% per investimenti
-      4.0 (beni dell'allegato 6/A con tutte e cinque le caratteristiche obbligatorie e due delle tre ulteriori,
-      software dell'allegato 6/B) e green; Capitalizzazione 5% micro e piccole, 3,575% medie. Un bene
-      dichiarato 4.0 che non lo e' non viene ammesso neanche come ordinario. Aiuto in esenzione (GBER), non de minimis.
+      IL FINANZIAMENTO (circolare 5.2). Lo concede una banca o una societa' di leasing aderente alla convenzione
+      MIMIT-ABI-CDP, alle sue condizioni di tasso e garanzie: da 20.000 a 4.000.000 euro per impresa (conta la
+      somma dei finanziamenti Sabatini ancora in corso), fino al 100% dell'investimento IVA esclusa, durata
+      massima 5 anni compreso un preammortamento (o prelocazione) fino a 12 mesi, firmato solo dopo la domanda ed
+      erogato in un'unica soluzione entro 30 giorni (nel leasing al fornitore, alla consegna; opzione di acquisto
+      esercitata subito). Puo' avere la garanzia del Fondo di Garanzia per le PMI fino all'80%, chiesta dalla
+      banca (FAQ 8.1). La banca puo' ridurre importo o durata in base al merito di credito: il contributo segue
+      l'importo deliberato.
+
+      IL CONTRIBUTO (circolare 8.1 e 8.12). E' un contributo in conto impianti pari agli interessi di un
+      finanziamento convenzionale, cioe' immaginario: stesso importo del finanziamento vero, 5 anni, 10 rate
+      semestrali costanti, tasso annuo fisso stabilito dalla legge. Il tasso dipende dalla linea e, solo nella
+      Capitalizzazione, dalla dimensione: ordinaria 2,75% per tutte le PMI; 4.0 e green 3,575% per tutte le PMI;
+      Capitalizzazione 5% per micro e piccole, 3,575% per le medie. Micro e piccole sono trattate allo stesso modo
+      in tutte le linee; le medie hanno meno solo nella Capitalizzazione (stesso tasso della 4.0, nessun vantaggio
+      in piu') e un tetto di aiuto piu' basso (vedi sotto). Il tasso vero della banca, il preammortamento e la
+      durata reale non cambiano il contributo.
+
+      DA DOVE VENGONO 7,7% / 10,1% / 14,3%. Ogni semestre si applica meta' del tasso annuo al debito che resta;
+      le 10 rate sono uguali, quindi il debito scende e gli interessi si calcolano su un capitale medio di circa
+      il 56% del finanziamento. Per questo il contributo vale circa 2,8 volte il tasso annuo, non 5 volte. In
+      formula (la stessa del foglio di calcolo MIMIT): i = tasso annuo / 2; rata = F x i / (1 - (1 + i)^-10);
+      contributo = 10 x rata - F. Risultato: 2,75% -> 7,72% del finanziamento; 3,575% -> 10,09%; 5% -> 14,26%.
+      Esempi: su 100.000 euro 7.717 (ordinaria), 10.092 (4.0, green, Capitalizzazione medie), 14.259
+      (Capitalizzazione micro e piccole); su 500.000 euro 38.587, 50.462 e 71.294; al minimo di 20.000 euro 1.543,
+      2.018 e 2.852; al massimo di 4 milioni 308.695, 403.695 e 570.351. La percentuale e' sul finanziamento: se
+      un bene da 100.000 euro e' finanziato per 60.000, il contributo e' sui 60.000 (circa 4,6-8,6% del costo).
+
+      I TETTI EUROPEI. La Sabatini e' un aiuto di Stato in esenzione (non de minimis): fuori da agricoltura e pesca
+      si applica l'art. 17 GBER, aiuti agli investimenti delle PMI, con intensita' massima del 20% dei costi per
+      le piccole imprese (micro comprese) e del 10% per le medie, uguale in tutta Italia (non e' un aiuto
+      regionale: nel Mezzogiorno non ci sono tetti piu' alti ne' tassi maggiorati). Agricoltura (ABER): 65%, con
+      al massimo 600.000 euro di aiuto per progetto nella produzione primaria; pesca e acquacoltura (FIBER): 50%,
+      progetti fino a 2,5 milioni di spesa e aiuto fino a 1,25 milioni l'anno (circolare 8.3-8.7, FAQ 9.1).
+      L'intensita' si misura come ESL, il valore attualizzato del contributo diviso per i costi ammessi
+      attualizzati (tasso di riferimento UE + 1 punto; circolare 8.9-8.10): un contributo pagato in quote annuali
+      vale un po' meno della cifra nominale. Da sola la Sabatini resta di norma sotto i tetti: 7,7% e 14,3%
+      contro il 20% delle piccole, 7,7% contro il 10% delle medie. Il caso stretto e' la media impresa sulle
+      linee al 3,575%: il contributo nominale e' il 10,09% del finanziamento, quindi con un finanziamento pari al
+      100% dell'investimento e pagamento in un'unica soluzione puo' superare di poco il 10%; se l'ESL supera il
+      massimo il Ministero riduce il contributo fino al massimo concedibile e il finanziamento resta (circolare
+      8.11, scritto per il cumulo con altri aiuti, Fondo di Garanzia compreso); quanto pesi in pratica: da
+      verificare sul provvedimento di concessione. La stessa regola vale se sugli stessi beni ci sono altri aiuti
+      di Stato (bando a fondo perduto, credito ZES, garanzia pubblica): per una media impresa il margine e'
+      quasi nullo, per una piccola resta circa il 5-12% dei costi.
+
+      NON PIU' ATTIVE O NON PARTITE. La "Sabatini Sud" (tasso 5,5% per micro e piccole del Mezzogiorno), prevista
+      nel 2022, non compare nella circolare vigente ne' nella pagina MIMIT: oggi non e' una linea richiedibile.
+      Nessuna linea PNRR o maggiorazione nuova risulta nel 2025-2026: le leggi di bilancio hanno solo aggiunto
+      risorse.
+    tabella_intensita:
+      - titolo: "Contributo per linea di investimento"
+        colonne: ["Linea", "Chi puo' chiederla", "Tasso convenzionale", "Contributo sul finanziamento", "Su 100.000 euro", "Su 500.000 euro"]
+        righe:
+          - ["Ordinaria (beni strumentali)", "Tutte le PMI, anche ditte individuali", "2,75%", "7,72%", "7.717 euro", "38.587 euro"]
+          - ["4.0 (allegati 6/A e 6/B)", "Tutte le PMI", "3,575%", "10,09%", "10.092 euro", "50.462 euro"]
+          - ["Green (certificazione allegato 6/C)", "Tutte le PMI", "3,575%", "10,09%", "10.092 euro", "50.462 euro"]
+          - ["Capitalizzazione", "Micro e piccole societa' di capitali con aumento di capitale >= 30% del finanziamento", "5%", "14,26%", "14.259 euro", "71.294 euro"]
+          - ["Capitalizzazione", "Medie societa' di capitali con aumento di capitale >= 30% del finanziamento", "3,575%", "10,09%", "10.092 euro", "50.462 euro"]
+        nota: >-
+          Contributo = interessi di un finanziamento immaginario di 5 anni a 10 rate semestrali costanti, stesso
+          importo del finanziamento vero (formula del foglio di calcolo MIMIT). Percentuali sull'importo finanziato,
+          non sul costo del bene. Fino a 200.000 euro di finanziamento il contributo arriva in un'unica soluzione,
+          sopra in quote annuali.
+      - titolo: "Cosa cambia con la dimensione dell'impresa"
+        colonne: ["Dimensione (definizione UE)", "Linee e tassi", "Tetto di aiuto sugli stessi costi (ESL)", "In pratica"]
+        righe:
+          - ["Micro: meno di 10 occupati, fatturato o attivo fino a 2 milioni", "Ordinaria 2,75%; 4.0 e green 3,575%; Capitalizzazione 5% (solo se societa' di capitali)", "20% (come le piccole)", "Margine ampio: con la Capitalizzazione il 14,3%, e restano circa 5,7 punti per altri aiuti"]
+          - ["Piccola: meno di 50 occupati, fatturato o attivo fino a 10 milioni", "Ordinaria 2,75%; 4.0 e green 3,575%; Capitalizzazione 5% (solo se societa' di capitali)", "20%", "Come la micro"]
+          - ["Media: meno di 250 occupati, fatturato fino a 50 milioni o attivo fino a 43 milioni", "Ordinaria 2,75%; 4.0 e green 3,575%; Capitalizzazione 3,575% (nessun vantaggio sulla 4.0)", "10%", "Sulle linee al 3,575% il contributo (10,09%) e' gia' al tetto: quasi nessun margine per un bando sugli stessi beni"]
+          - ["Grande impresa e mid-cap", "Escluse", "-", "Valutare iperammortamento o altri strumenti"]
+          - ["PMI agricole (ABER)", "Stessi tassi", "65% (aiuto massimo 600.000 euro per progetto nella produzione primaria)", "Cumulo con altri aiuti molto piu' largo"]
+          - ["PMI della pesca e acquacoltura (FIBER)", "Stessi tassi", "50% (spesa fino a 2,5 milioni)", "Cumulo largo"]
+        nota: >-
+          Fuori da agricoltura e pesca vale l'art. 17 GBER, uguale in tutta Italia: nessun tetto o tasso piu' alto
+          nel Mezzogiorno. Se il contributo, da solo o sommato ad altri aiuti sugli stessi costi, supera il tetto,
+          il Ministero lo riduce fino al massimo; il finanziamento resta (circolare 8.11).
     beneficio_stimato:
       percentuale_min: 7.7
       percentuale_max: 14.3
       nota: >-
-        Calcolo su piano convenzionale a rate semestrali per 5 anni: al 2,75% gli interessi sono circa
-        il 7,7% del finanziamento; al 3,575% circa il 10,1%; al 5% circa il 14,3%. La percentuale e' sul
-        finanziamento, non sul costo totale se il bene e' finanziato solo in parte. Stima nostra con la
-        formula della rata costante: da confrontare con il calcolatore MIMIT.
+        Percentuale dell'importo finanziato (non del costo, se il bene e' finanziato solo in parte): 7,72% con la
+        linea ordinaria (2,75%), 10,09% con le linee 4.0 e green o con la Capitalizzazione delle medie (3,575%),
+        14,26% con la Capitalizzazione di micro e piccole (5%). Sono gli interessi di un finanziamento immaginario
+        di 5 anni a rate semestrali costanti, calcolati con la formula del foglio di calcolo MIMIT (verificata
+        il 08/10/2026). Il tetto UE (20% piccole, 10% medie) puo' ridurre il contributo se ci sono altri aiuti
+        sugli stessi beni.
     come_si_ottiene: >-
-      1) Domanda sulla piattaforma benistrumentali.dgiai.gov.it (SPID/CNS/CIE del legale rappresentante)
-      e invio via PEC alla banca o intermediario aderente, insieme alla richiesta di finanziamento, PRIMA
-      dell'investimento; 2) delibera del finanziamento e concessione del Ministero (contratto firmato dopo
-      la domanda); 3) acquisto pagato con bonifico, SEPA o Ri.Ba., con CUP e dicitura "art. 2, c. 4, D.L.
-      n. 69/2013" sulle fatture elettroniche; investimento completato entro 12 mesi dalla firma del
-      finanziamento; 4) richiesta di erogazione (modulo RU) entro 120 giorni dal termine per completare
-      l'investimento, con le dichiarazioni dei fornitori. Una domanda per ogni unita' locale.
+      1) Domanda sulla piattaforma benistrumentali.dgiai.gov.it (SPID/CNS/CIE del legale rappresentante), in bollo
+      salvo agricoltura e pesca, inviata via PEC alla banca o societa' di leasing aderente insieme alla richiesta
+      di finanziamento, PRIMA di qualsiasi ordine, conferma, fattura o acconto (circolare 6.7). Una domanda per
+      ogni unita' locale; nella domanda si divide l'importo tra linea ordinaria, 4.0 e green. Per la
+      Capitalizzazione la delibera di aumento di capitale va presa nei 6 mesi prima della domanda.
+
+      2) La banca delibera e prenota le risorse; il Ministero concede il contributo (con la documentazione
+      antimafia se supera 150.000 euro); il contratto di finanziamento si firma dopo la domanda.
+      Capitalizzazione: aumento sottoscritto e versato almeno al 25% entro 30 giorni dalla concessione.
+
+      3) Acquisto pagato con bonifico, SEPA o Ri.Ba., con CUP e dicitura "art. 2, c. 4, D.L. n. 69/2013" sulle
+      fatture elettroniche; investimento completato entro 12 mesi dalla firma del finanziamento.
+
+      4) Richiesta di erogazione (modulo RU) entro 120 giorni dal termine per completare l'investimento, con le dichiarazioni dei fornitori e, per 4.0 e green,
+      le attestazioni su allegati 6/A-6/B e sulle certificazioni 6/C.
     tempi: >-
-      Contributo erogato in un'unica soluzione per finanziamenti fino a 200.000 euro, altrimenti in quote
-      annuali (la prima dopo la richiesta di erogazione, le altre ogni anno su richiesta). Pagamento di norma
-      entro 60 giorni dalla richiesta, se ci sono fondi in cassa e il DURC e' regolare.
+      Contributo in un'unica soluzione se il finanziamento deliberato non supera 200.000 euro (legge 234/2021,
+      circolare 13.2, nei limiti delle risorse); sopra, in quote annuali secondo il piano del provvedimento di
+      concessione, che si chiude entro il sesto anno dalla fine dell'investimento: la prima dopo il modulo RU, le
+      successive su richiesta ogni anno, non prima di 12 mesi dalla precedente ed entro i 12 mesi successivi (FAQ
+      10.6). Pagamento di norma entro 60 giorni dalla richiesta, se ci sono fondi in cassa e il DURC e' regolare.
+      Capitalizzazione: con il pagamento in quote l'aumento di capitale va versato almeno in proporzione alle
+      quote; in unica soluzione, tutto prima della richiesta.
     cumulabilita:
       con_fondo_perduto: nei_limiti
       regola: >-
-        Cumulabile con altri aiuti di Stato sugli stessi costi se il cumulo non supera l'intensita'
-        massima applicabile (FAQ MIMIT: con aiuti in esenzione vale la piu' alta delle intensita' delle
-        misure cumulate; con de minimis vale il limite della Sabatini; nel GBER 20% piccole e 10% medie
-        imprese, 65% agricoltura, 50% pesca). Cumulabile con misure fiscali generali non aiuti di Stato
-        (iperammortamento, a suo tempo crediti 4.0/5.0) entro il costo sostenuto. Cumulabile con il Conto
-        Termico (contributo in conto interessi ammesso dall'art. 17 DM 7/8/2025).
-      riferimento: "FAQ MIMIT Nuova Sabatini 9.1, 9.2, 9.7, 9.9, 9.10; Reg. UE 651/2014"
+        Cumulabile con altri aiuti di Stato sugli stessi costi, de minimis compresi, se il totale non supera
+        l'intensita' massima applicabile in base ai regolamenti di esenzione (circolare 8.8, FAQ 9.2): nel GBER
+        20% per le piccole e 10% per le medie imprese, 65% in agricoltura, 50% nella pesca. Per una media impresa
+        sulle linee al 3,575% il tetto e' gia' raggiunto. Ammessa con il credito d'imposta Mezzogiorno/ZES nei
+        limiti delle intensita' (FAQ 9.6). Cumulabile con misure fiscali generali che non sono aiuti di Stato
+        (iperammortamento, a suo tempo crediti 4.0/5.0) entro il costo sostenuto (FAQ 9.5). Cumulabile con il
+        Conto Termico (contributo in conto interessi ammesso dall'art. 17 DM 7/8/2025). Se il cumulo supera il
+        tetto, il Ministero riduce il contributo Sabatini (circolare 8.11).
+      riferimento: "Circolare MIMIT 410823/2022 punti 8.5-8.11; FAQ MIMIT Nuova Sabatini 9.1, 9.2, 9.5, 9.6, 9.7, 9.9, 9.10; Reg. UE 651/2014 art. 17"
     attenzione: >-
       La domanda va inviata via PEC alla banca prima dell'investimento: contratti, conferme d'ordine,
-      fatture o acconti precedenti fanno perdere l'agevolazione. Sportello fino a esaurimento risorse (al
-      14/09/2026 disponibili circa 1,199 miliardi Sabatini ordinaria e 77 milioni Capitalizzazione). Cumulo
-      con un bando a fondo perduto sugli stessi beni spesso limitato dall'intensita' massima. I beni vanno
-      tenuti in azienda e in uso produttivo per 3 anni dalla fine dell'investimento. Obbligo assicurazione
-      catastrofale (DM 18/6/2025).
+      fatture o acconti precedenti (anche lo stesso giorno) fanno perdere tutto. Il contributo non riduce la rata:
+      la banca applica il suo tasso e l'impresa paga tutto il finanziamento; il contributo arriva dopo. Sportello
+      fino a esaurimento risorse (al 14/09/2026 disponibili circa 1,199 miliardi Sabatini e 77 milioni
+      Capitalizzazione). Dimensione d'impresa calcolata con le associate e collegate: una "piccola" che fa parte
+      di un gruppo puo' risultare media o grande. Cumulo con un bando a fondo perduto sugli stessi beni spesso
+      limitato dall'intensita' massima, soprattutto per le medie. I beni vanno tenuti in azienda e in uso
+      produttivo per 3 anni dalla fine dell'investimento. Obbligo assicurazione catastrofale (DM 18/6/2025).
     esempi:
       - profilo: manifattura
         interesse: alto
         esempio: >-
-          Linea di produzione 4.0 da 1.200.000 euro in leasing a 5 anni: contributo sugli interessi al 3,575%, circa
-          il 10,1% del finanziamento, cioe' circa 121.100 euro, pagato in quote annuali (sopra i 200.000 euro).
-          Domanda alla banca o alla societa' di leasing prima dell'ordine. Si somma all'iperammortamento sullo
-          stesso bene entro il costo sostenuto (per prudenza, base dell'iperammortamento al netto del contributo).
+          Media impresa, linea di produzione 4.0 da 1.200.000 euro in leasing a 5 anni: contributo al 3,575%, circa il
+          10,1% del finanziamento, cioe' circa 121.100 euro, in quote annuali (sopra i 200.000 euro). Essendo media il
+          tetto UE e' il 10%: il contributo e' gia' al limite (puo' essere ridotto di poco) e non resta spazio per un
+          bando a fondo perduto sugli stessi beni; la Capitalizzazione non conviene (per le medie resta al 3,575%).
+          Si somma all'iperammortamento entro il costo sostenuto (per prudenza, base dell'iperammortamento al netto
+          del contributo). Domanda alla societa' di leasing prima dell'ordine.
       - profilo: artigiano
         interesse: alto
         esempio: >-
           Centro di lavoro 4.0 da 150.000 euro in leasing: contributo circa il 10,1% del finanziamento, cioe' circa
           15.100 euro, in un'unica soluzione perche' sotto i 200.000 euro. Se il laboratorio e' una srl micro o piccola
-          e fa un aumento di capitale, la variante Capitalizzazione porta il tasso al 5% (circa 14,3%: 21.400 euro).
-          Domanda prima dell'acquisto.
+          e i soci versano un aumento di capitale di almeno 45.000 euro (30% del finanziamento), la Capitalizzazione
+          porta il tasso al 5%: circa 14,3%, cioe' 21.400 euro. Una snc o ditta individuale resta al 10,1%. Tetto UE
+          20%: resta spazio per un bando regionale sugli stessi beni. Domanda prima dell'acquisto.
       - profilo: agricola
         interesse: alto
         esempio: >-
           Trattore e attrezzature nuove per 120.000 euro finanziati in 5 anni: contributo circa 7,7%, cioe' circa
-          9.300 euro (circa 12.100 se i beni sono 4.0, al 10,1%), in un'unica soluzione. L'agricoltura e' ammessa e il limite di
-          cumulo con altri aiuti e' piu' largo (65% in agricoltura). Domanda prima dell'acquisto.
+          9.300 euro (circa 12.100 se i beni sono 4.0, al 10,1%), in un'unica soluzione. L'agricoltura e' ammessa e il
+          tetto di cumulo con altri aiuti e' il 65% (ABER), quindi resta molto spazio per altri aiuti sugli stessi
+          beni. Domanda prima dell'acquisto.
       - profilo: logistica
         interesse: alto
         esempio: >-
           Carrelli elevatori elettrici, scaffalature e sistema di magazzino per 800.000 euro in leasing: se sono beni 4.0
           contributo circa 10,1%, cioe' circa 80.700 euro in quote annuali; serve una domanda per ogni unita' locale.
-          Camion e furgoni nuovi mai immatricolati sono ammessi se servono all'attivita' e non sostituiscono
-          semplicemente mezzi uguali (es. un Euro 6 al posto del vecchio camion: escluso).
+          Con piu' di 50 addetti l'impresa e' di solito media: tetto 10%, nessun margine per altri aiuti sugli stessi
+          beni. Camion e furgoni nuovi mai immatricolati sono ammessi dentro un programma di investimento, non come
+          semplice sostituzione di mezzi uguali (es. un Euro 6 al posto del vecchio camion: escluso).
       - profilo: ristorazione_ricettivo
         interesse: medio
         esempio: >-
           Cucina professionale nuova per 120.000 euro in leasing a 5 anni: contributo circa 7,7%, cioe' circa
-          9.300 euro, in un'unica soluzione. Esclusi lavori murari e opere sull'immobile; arredi delle camere: da verificare.
+          9.300 euro, in un'unica soluzione; se gli apparecchi hanno una certificazione ambientale dell'allegato 6/C
+          (linea green, dentro un programma per ridurre l'impatto ambientale) circa 12.100 euro. Esclusi lavori murari e opere sull'immobile; arredi delle camere: da verificare.
       - profilo: negozio
         interesse: medio
         esempio: >-
           Banchi frigo, casse e attrezzature per 50.000 euro con un finanziamento di 5 anni: contributo circa 7,7%,
-          cioe' circa 3.900 euro. Finanziamento minimo 20.000 euro; utile se l'attrezzatura si rinnova comunque a rate.
+          cioe' circa 3.900 euro, in un'unica soluzione. Finanziamento minimo 20.000 euro; utile se l'attrezzatura si
+          rinnova comunque a rate. Micro o piccola impresa: tetto 20%, si puo' sommare a un bando camerale.
       - profilo: ufficio_servizi
         interesse: medio
         esempio: >-
           Computer, server e licenze software perpetue per 40.000 euro: contributo circa 7,7%, cioe' circa 3.100 euro
-          (circa 4.000 se i software sono dell'allegato 6/B, es. cybersecurity). Niente per gli abbonamenti SaaS.
-          Pratica semplice tramite la banca; non vale per comprare o ristrutturare l'ufficio.
+          (circa 4.000 se i software sono dell'allegato 6/B, es. cybersecurity, al 10,1%). Niente per gli abbonamenti
+          SaaS. Pratica semplice tramite la banca; non vale per comprare o ristrutturare l'ufficio.
       - profilo: startup
         interesse: basso
         esempio: >-
-          Hardware e licenze per 30.000 euro finanziati: contributo circa 2.300 euro; con un aumento di capitale
-          (variante Capitalizzazione, 5%) circa 4.300 euro. Serve che una banca conceda il finanziamento, non scontato per una
-          startup in perdita (aiuta la garanzia del Fondo PMI).
+          Hardware e licenze per 30.000 euro finanziati: contributo circa 2.300 euro; se e' una srl e i soci versano un
+          aumento di capitale di almeno 9.000 euro (variante Capitalizzazione, 5%) circa 4.300 euro. Serve che una banca
+          conceda il finanziamento, non scontato per una startup in perdita (aiuta la garanzia del Fondo PMI).
     fiscale: >-
       Contributo in conto impianti (FAQ MIMIT 7.2), tassato: IRES/IRPEF pro quota con l'ammortamento (art. 88
       c. 3 TUIR; OIC 16: costo ridotto o risconto passivo); IRAP anche (art. 11 c. 3 D.Lgs. 446/1997; ditte
       individuali senza IRAP dal 2022). Niente ritenuta del 4% (art. 28 c. 2 DPR 600/1973), fuori campo IVA.
       Esempio: srl, leasing di 200.000 euro per un bene 4.0, contributo circa 20.200 euro, ammortamento in
       10 anni: circa 5.600 euro di IRES+IRAP in 10 anni, beneficio netto circa 14.600 euro.
-    fonte_verificata_il: "2026-10-07"
+    fonte_verificata_il: "2026-10-08"
 
   - id: ecobonus_imprese_2026
     nome: "Ecobonus (detrazione per la riqualificazione energetica degli edifici)"

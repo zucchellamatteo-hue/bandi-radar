@@ -150,3 +150,14 @@ def test_misure_vere_hanno_la_data_di_aggiunta():
 
     aperte = [m for m in misure.tutte() if m.get("stato") == "aperto"]
     assert aperte and all(isinstance(m.get("aggiunta_il"), date) for m in aperte)
+
+
+def test_tabelle_intensita_ben_formate():
+    """Campo facoltativo tabella_intensita (Nuova Sabatini, 09/10): ogni tabella ha colonne e righe della stessa larghezza."""
+    con_tabelle = [m for m in misure.tutte() if m.get("tabella_intensita")]
+    assert "nuova_sabatini" in {m["id"] for m in con_tabelle}
+    for m in con_tabelle:
+        for t in m["tabella_intensita"]:
+            assert t.get("colonne") and t.get("righe"), m["id"]
+            assert all(len(r) == len(t["colonne"]) for r in t["righe"]), (m["id"], t.get("titolo"))
+            assert all(isinstance(c, str) and c for r in t["righe"] for c in r), (m["id"], t.get("titolo"))
