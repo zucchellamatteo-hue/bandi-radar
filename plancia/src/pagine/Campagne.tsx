@@ -3,7 +3,7 @@ import { Link, useParams } from "react-router-dom";
 import { api, data, euro } from "../api";
 
 // Campagne di lancio (05/10/2026): profili anonimi delle imprese di Matteo abbinati ai bandi recenti, con la bozza del
-// testo da completare sul suo computer. Niente nomi in Bandi Radar.
+// testo da completare sul suo computer. Niente nomi in bandinQiaro.
 export default function Campagne() {
   const { id } = useParams();
   return id ? <Dettaglio id={Number(id)} /> : <Elenco />;
@@ -44,7 +44,7 @@ function Elenco() {
       <Avvertenza />
       <p>Come si fa: 1) sul tuo computer lanci <code>strumenti/anagrafiche/esporta_profili.py</code>, che legge il database delle
         anagrafiche e prepara <code>profili_anonimi.json</code> (solo codici e dati di categoria, niente nomi); 2) lo carichi qui;
-        3) Bandi Radar trova per ogni impresa i bandi compatibili usciti negli ultimi giorni e prepara la bozza del testo; 4) scarichi il
+        3) bandinQiaro trova per ogni impresa i bandi compatibili usciti negli ultimi giorni e prepara la bozza del testo; 4) scarichi il
         CSV e lo unisci a casa con <code>corrispondenze.csv</code> (codice → impresa).</p>
       <form className="filtri" onSubmit={carica}>
         <input type="text" value={nome} onChange={(e) => setNome(e.target.value)} placeholder="nome della campagna" />

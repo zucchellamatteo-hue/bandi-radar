@@ -2,7 +2,7 @@
 
 La verifica a campione del 02/10 ha trovato bandi "aperti" che la pagina ufficiale dava per chiusi: la smentita non
 sta nel testo del bando ma nell'avviso pubblicato dopo sulla pagina ("piattaforma chiusa", "dotazione esaurita").
-Qui, come l'osservatore delle fonti: si riscarica la pagina ufficiale (robots.txt, User-Agent di Bandi Radar, una
+Qui, come l'osservatore delle fonti: si riscarica la pagina ufficiale (robots.txt, User-Agent BandiRadar, una
 pagina per sito alla volta), si confronta con la versione salvata e si cercano frasi di chiusura **solo nelle righe
 nuove** (le formule "salvo chiusura anticipata" stanno nel testo da sempre). Se compaiono, la scheda diventa "da
 aggiornare" con il motivo e la pagina salvata prende il testo di oggi, cosi' la nuova scheda lo legge.

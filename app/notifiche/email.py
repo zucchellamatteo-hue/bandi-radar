@@ -18,7 +18,7 @@ def mittente() -> str:
     if os.environ.get("EMAIL_MITTENTE"):
         return os.environ["EMAIL_MITTENTE"]
     dominio = urlparse(os.environ.get("SITO_URL") or "https://finanzagevolata.qiaro.it").hostname
-    return f"Bandi Radar <non-rispondere@{dominio}>"
+    return f"bandinQiaro <non-rispondere@{dominio}>"
 
 
 def avviso_non_rispondere() -> str:

@@ -1,4 +1,4 @@
-# Bandi Radar - servizi di produzione.
+# bandinQiaro - servizi di produzione.
 # Si avvia con: docker compose up -d --build
 # Le variabili ${...} arrivano dal file .env accanto a questo file (vedi deploy/env.example).
 

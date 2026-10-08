@@ -1,4 +1,4 @@
-"""I sistemi automatici di Bandi Radar: nome, spiegazione, programmazione, esecuzioni e dati (01/10/2026, richiesta di
+"""I sistemi automatici di bandinQiaro: nome, spiegazione, programmazione, esecuzioni e dati (01/10/2026, richiesta di
 Matteo). La pagina Supervisione della plancia li mostra tutti in un posto: cosa e' in corso, com'e' andata l'ultima
 volta, quando riparte, e cliccando i dati di ognuno.
 

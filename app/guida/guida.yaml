@@ -1,4 +1,4 @@
-# Guida della piattaforma Bandi Radar (05/10/2026, aggiornata il 06/10: Da rivedere, ricerca per numero, misure, pulsante Segnala, uso dal telefono).
+# Guida della piattaforma bandinQiaro (05/10/2026, aggiornata il 06/10: Da rivedere, ricerca per numero, misure, pulsante Segnala, uso dal telefono).
 # Ogni sezione si vede se l'utente ha ALMENO UNO dei valori in "per": "tutti", "admin", "impresa" oppure i permessi
 # "catalogo", "giudizi", "lavoro", "modifiche", "imprese". L'amministratore vede tutto.
 # Testo: paragrafi separati da una riga vuota, elenchi con "- " o "1. ", **grassetto** per pulsanti e voci di menu.
@@ -18,7 +18,7 @@ sezioni:
 
       Se il link è scaduto o già usato, la pagina lo dice: chiedi un link nuovo a chi ti ha invitato.
 
-      Le volte successive vai su https://finanzagevolata.qiaro.it, scrivi email e password e premi **Entra**. L'accesso resta aperto sullo stesso browser per 30 giorni.
+      Le volte successive vai su https://bandinqiaro.it, scrivi email e password e premi **Entra**. L'accesso resta aperto sullo stesso browser per 30 giorni.
 
       Password dimenticata:
       1. Nella pagina di accesso clicca **Password dimenticata?**.
@@ -174,11 +174,11 @@ sezioni:
     titolo: "News"
     per: [lavoro]
     testo: |
-      La pagina **News** serve a scrivere brevi notizie per chi segue i bandi: novità di Bandi Radar o notizie utili (una proroga importante, una misura nuova, un cambio di regole). Si scrivono qui, senza codice. Le vedono tutti quelli che hanno il permesso "lavoro"; scriverle, pubblicarle e cancellarle richiede il permesso "modifiche" (l'amministratore può sempre).
+      La pagina **News** serve a scrivere brevi notizie per chi segue i bandi: novità di bandinQiaro o notizie utili (una proroga importante, una misura nuova, un cambio di regole). Si scrivono qui, senza codice. Le vedono tutti quelli che hanno il permesso "lavoro"; scriverle, pubblicarle e cancellarle richiede il permesso "modifiche" (l'amministratore può sempre).
 
       Per scriverne una:
       1. Riempi **titolo** e **testo** (poche righe semplici, al massimo 1.200 caratteri).
-      2. Se vuoi, metti un **link**: un indirizzo che inizia con https:// oppure una pagina di Bandi Radar che inizia con / (per esempio /impresa/misure, la pagina delle agevolazioni fiscali).
+      2. Se vuoi, metti un **link**: un indirizzo che inizia con https:// oppure una pagina di bandinQiaro che inizia con / (per esempio /impresa/misure, la pagina delle agevolazioni fiscali).
       3. Scegli il periodo: **dal** (da quando può partire) e **al** (fino a quando; vuoto = finché non la togli).
       4. Scegli il pubblico: **solo imprese** oppure **imprese e collaboratori**.
       5. Premi **Salva come bozza**.
@@ -191,7 +191,7 @@ sezioni:
     titolo: "Blog"
     per: [lavoro]
     testo: |
-      La pagina **Blog** serve a scrivere gli articoli pubblici che compaiono su **/blog** (per esempio finanzagevolata.qiaro.it/blog): brevi guide sui bandi più cercati e su quelli di nicchia, pensate per farsi trovare da Google e dai motori di risposta come ChatGPT e portare chi legge a registrarsi. Le vedono tutti quelli che hanno il permesso "lavoro"; scrivere e correggere le bozze richiede il permesso "modifiche"; **pubblicare, rimettere in bozza e archiviare li fa solo l'amministratore**.
+      La pagina **Blog** serve a scrivere gli articoli pubblici che compaiono su **/blog** (per esempio bandinqiaro.it/blog): brevi guide sui bandi più cercati e su quelli di nicchia, pensate per farsi trovare da Google e dai motori di risposta come ChatGPT e portare chi legge a registrarsi. Le vedono tutti quelli che hanno il permesso "lavoro"; scrivere e correggere le bozze richiede il permesso "modifiche"; **pubblicare, rimettere in bozza e archiviare li fa solo l'amministratore**.
 
       Per scrivere un articolo premi **Nuovo articolo** e riempi:
       1. **titolo** e, se vuoi, l'**indirizzo** (/blog/...; vuoto = fatto dal titolo);
@@ -463,7 +463,7 @@ sezioni:
     titolo: "Campagne"
     per: [imprese]
     testo: |
-      La pagina **Campagne** abbina i profili anonimi delle imprese del tuo archivio ai bandi usciti di recente e prepara una bozza di lettera per ognuna. In Bandi Radar non entrano mai nomi, partite IVA o contatti.
+      La pagina **Campagne** abbina i profili anonimi delle imprese del tuo archivio ai bandi usciti di recente e prepara una bozza di lettera per ognuna. In bandinQiaro non entrano mai nomi, partite IVA o contatti.
 
       1. Sul tuo computer, nella cartella del progetto delle anagrafiche, lancia lo script strumenti/anagrafiche/esporta_profili.py. Legge il database delle anagrafiche e crea due file: profili_anonimi.json (solo codici e dati di categoria: forma giuridica, provincia, ATECO, dimensione stimata) e corrispondenze.csv (codice e impresa, che resta sul tuo computer e non va mandato a nessuno).
       2. In **Campagne** scrivi il nome della campagna, scegli di quanti giorni prendere i bandi (di base 60), scegli il file profili_anonimi.json e premi **Carica e analizza**.
@@ -534,7 +534,7 @@ sezioni:
     testo: |
       In **I miei bandi** trovi i bandi aperti o in arrivo che fanno per te.
 
-      In alto, il riepilogo: quanti bandi sono adatti, quanti da valutare, quanti scadono entro 15 giorni (premi il riquadro per vedere solo quelli) e quanti sono nuovi, cioè arrivati in Bandi Radar negli ultimi 7 giorni. Se nel profilo manca un dato utile (codice ATECO, dimensione, data di costituzione) un avviso ti dice quanti bandi si chiarirebbero completandolo.
+      In alto, il riepilogo: quanti bandi sono adatti, quanti da valutare, quanti scadono entro 15 giorni (premi il riquadro per vedere solo quelli) e quanti sono nuovi, cioè arrivati in bandinQiaro negli ultimi 7 giorni. Se nel profilo manca un dato utile (codice ATECO, dimensione, data di costituzione) un avviso ti dice quanti bandi si chiarirebbero completandolo.
 
       Sotto, due filtri: **tipo di agevolazione** (fondo perduto e voucher, credito d'imposta, finanziamento agevolato, garanzia, altre) e **scadenza** (entro 15 giorni, 30 giorni, 3 mesi, senza scadenza). **Togli i filtri** li azzera.
 
@@ -607,7 +607,7 @@ sezioni:
       - le **novità sui bandi che ti abbiamo già segnalato**: scadenza vicina (entro 14 giorni), proroga o cambio di scadenza, riapertura, nuovi documenti ufficiali (FAQ, modulistica, decreti);
       - in fondo, i **bandi segnalati che si sono chiusi** nell'ultima settimana (scaduti, chiusi in anticipo, fondi esauriti);
       - le **agevolazioni nazionali** aggiunte da poco che possono interessarti;
-      - le **news** di Bandi Radar;
+      - le **news** di bandinQiaro;
       - quanti bandi adatti ci sono in tutto, con il link alla tua area.
 
       Dall'email puoi aprire la scheda di un bando o chiedere subito il supporto per la domanda. L'email è automatica: non rispondere, nessuno legge quella casella. Le news in corso le trovi anche in cima alla pagina **Guida**.
@@ -624,7 +624,7 @@ sezioni:
     testo: |
       In **Abbonamento** vedi lo stato del tuo abbonamento (in prova, attivo, gratuito…) e, se sei in prova, quanti giorni restano.
 
-      In questa fase l'accesso è gratuito per tutti e i pagamenti online non sono ancora attivi: non devi fare niente. Quando partiranno, potrai scegliere il piano mensile o annuale in questa pagina; ogni impresa o sede in più avrà un piccolo costo aggiuntivo, indicato qui. Il pagamento avverrà con Stripe: i dati della carta non passano da Bandi Radar.
+      In questa fase l'accesso è gratuito per tutti e i pagamenti online non sono ancora attivi: non devi fare niente. Quando partiranno, potrai scegliere il piano mensile o annuale in questa pagina; ogni impresa o sede in più avrà un piccolo costo aggiuntivo, indicato qui. Il pagamento avverrà con Stripe: i dati della carta non passano da bandinQiaro.
 
       Dati di fatturazione. Servono per la fattura elettronica e puoi inserirli già da ora:
       1. Compila ragione sociale, partita IVA, codice fiscale (se diverso), codice destinatario SDI oppure PEC.

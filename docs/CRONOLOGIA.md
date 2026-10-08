@@ -162,6 +162,7 @@
 
 ## 09/10/2026
 
+- **Nuovo nome: bandinQiaro** (decisione di Matteo; dominio bandinqiaro.it). Il nome cambia in tutto ciò che vedono utenti, clienti, motori di ricerca ed email: plancia, landing e blog (titoli, Open Graph, dati strutturati, /llms.txt, robots.txt, immagine di anteprima), testi legali, email (oggetti, firme, mittente predefinito "bandinQiaro <non-rispondere@...>"), guida, fatture e abbonamenti. Restano invariati i nomi tecnici (repository, cartelle, servizi, database, moduli) e lo User-Agent BandiRadar del raccoglitore. I testi già nel database (articoli, news) si aggiornano con uno script SQL a parte.
 - Valutazione SEO/GEO esterna: SEO 5/10, GEO 3/10 (sito non ancora indicizzato, nessuna menzione esterna; base tecnica e articolo buoni). docs/revisioni/2026-10-09_valutazione_seo_geo.md.
 
 ## 09/10/2026

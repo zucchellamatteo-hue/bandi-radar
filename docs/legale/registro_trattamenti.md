@@ -1,4 +1,4 @@
-# Registro delle attività di trattamento — Bandi Radar
+# Registro delle attività di trattamento — bandinQiaro
 
 **Bozza del 05/10/2026, da far rivedere a un professionista.** Documento interno, non pubblicato. Registro tenuto dal titolare ai sensi dell'art. 30, paragrafo 1, del Regolamento (UE) 2016/679 (GDPR). Va aggiornato ogni volta che cambia un trattamento, un fornitore o una misura di sicurezza; in fondo c'è lo storico delle versioni.
 
@@ -10,7 +10,7 @@
 | Contatti | [EMAIL DI CONTATTO] — PEC [PEC] |
 | Rappresentante legale | [NOME E RUOLO DEL RAPPRESENTANTE LEGALE] |
 | Responsabile della protezione dei dati (DPO) | Non nominato: non obbligatorio (nessun trattamento su larga scala di dati particolari né monitoraggio sistematico su larga scala). [CONFERMARE] |
-| Servizio | Bandi Radar, `finanzagevolata.qiaro.it`: raccolta di bandi pubblici di finanza agevolata, schede, abbinamento al profilo dell'impresa, email settimanale; supporto alla domanda a success fee |
+| Servizio | bandinQiaro, `bandinqiaro.it`: raccolta di bandi pubblici di finanza agevolata, schede, abbinamento al profilo dell'impresa, email settimanale; supporto alla domanda a success fee |
 | Persone autorizzate | Matteo (amministratore); collaboratori dello studio e revisori con ruolo "revisore" (vedono catalogo e schede, non i dati dei clienti salvo permesso "imprese"). [ELENCO NOMINATIVO E DATA DELLE AUTORIZZAZIONI SCRITTE, TENUTO A PARTE] |
 
 ## Misure di sicurezza comuni a tutti i trattamenti
@@ -108,11 +108,11 @@ Valutazione del 05/10/2026: **non necessaria**. Motivi: non si trattano dati par
 | Finalità | Ricevere le richieste "Richiedi supporto per la domanda", ricontattare l'impresa, valutare e svolgere l'incarico a success fee |
 | Base giuridica | Misure precontrattuali su richiesta e contratto (art. 6.1.b); obblighi di legge per l'antiriciclaggio e la parte fiscale (art. 6.1.c) |
 | Interessati | Clienti; legali rappresentanti e titolari effettivi delle imprese (per l'antiriciclaggio) |
-| Categorie di dati | In Bandi Radar: impresa, bando, messaggio libero, stato, appunti di Matteo. Fuori da Bandi Radar (gestionale dello studio): documenti per la domanda, documenti d'identità, dati per l'adeguata verifica |
+| Categorie di dati | In bandinQiaro: impresa, bando, messaggio libero, stato, appunti di Matteo. Fuori da bandinQiaro (gestionale dello studio): documenti per la domanda, documenti d'identità, dati per l'adeguata verifica |
 | Destinatari / responsabili | OVH; Resend (avviso a Matteo); enti che gestiscono i bandi (titolari autonomi) quando si invia la domanda; collaboratori autorizzati |
 | Trasferimenti extra UE | Resend per l'avviso [VERIFICARE] |
 | Conservazione | Richieste non diventate incarico: [DURATA DI CONSERVAZIONE RICHIESTE]. Incarichi: 10 anni dalla fine (prescrizione e antiriciclaggio) |
-| Misure specifiche | Visibili solo ad admin e a chi ha il permesso "imprese"; nessun invio all'IA. I documenti delle pratiche oggi non passano da Bandi Radar: se cambierà (vedi `docs/PIANO_PRATICHE.md`), aggiornare questa scheda e rifare la valutazione d'impatto |
+| Misure specifiche | Visibili solo ad admin e a chi ha il permesso "imprese"; nessun invio all'IA. I documenti delle pratiche oggi non passano da bandinQiaro: se cambierà (vedi `docs/PIANO_PRATICHE.md`), aggiornare questa scheda e rifare la valutazione d'impatto |
 
 ## T7. Giudizi e segnalazioni sulle schede (feedback)
 
@@ -170,7 +170,7 @@ Valutazione del 05/10/2026: **non necessaria**. Motivi: non si trattano dati par
 
 | Voce | Contenuto |
 |---|---|
-| Finalità | Far conoscere Bandi Radar a imprese che non sono clienti |
+| Finalità | Far conoscere bandinQiaro a imprese che non sono clienti |
 | Base giuridica | **Consenso** (art. 6.1.a e art. 130 Codice privacy) per email, SMS, telefonate automatiche e PEC promozionali, anche verso indirizzi aziendali. Per i clienti già acquisiti: email su servizi analoghi senza consenso preventivo ma con diritto di opposizione in ogni messaggio (art. 130, comma 4, "soft spam") |
 | Interessati | Prospect (imprese e loro referenti); clienti |
 | Categorie di dati | Email e nome di chi si è iscritto con consenso; per l'archivio anagrafiche (`docs/ricerche/2026-09-25_schema_anagrafiche_leadgen.md`): dati d'impresa da registri pubblici |

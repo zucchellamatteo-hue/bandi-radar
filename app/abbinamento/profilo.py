@@ -24,7 +24,7 @@ from app.schede.campi import CATEGORIE_SPESA, FORME_GIURIDICHE, REGIONI, REQUISI
 SOGGETTI_PROFILO = ("impresa", "libero_professionista", "ente_terzo_settore")
 REQUISITI_PROFILO = tuple(r for r in REQUISITI_SPECIALI if r != "altro")
 
-# Cose che non devono mai entrare in Bandi Radar: codice fiscale, partita IVA, email, telefono.
+# Cose che non devono mai entrare in bandinQiaro: codice fiscale, partita IVA, email, telefono.
 _CODICE_FISCALE = re.compile(r"\b[A-Z]{6}\d{2}[A-Z]\d{2}[A-Z]\d{3}[A-Z]\b", re.IGNORECASE)
 _PARTITA_IVA = re.compile(r"(?<!\d)\d{11}(?!\d)")
 _EMAIL = re.compile(r"[\w.+-]+@[\w-]+\.[\w.]+")

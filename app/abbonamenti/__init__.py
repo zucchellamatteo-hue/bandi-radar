@@ -25,7 +25,7 @@ import httpx
 API = "https://api.stripe.com/v1"
 CHIAVI_PREZZI = {"mensile": "br_mensile", "annuale": "br_annuale", "impresa": "br_impresa_extra", "sede": "br_sede_extra"}
 CENTESIMI = {"br_mensile": 3000, "br_annuale": 2000, "br_impresa_extra": 1000, "br_sede_extra": 500}
-NOMI_PREZZI = {"br_mensile": "Bandi Radar - mensile", "br_annuale": "Bandi Radar - annuale (impegno 12 mesi, pagato ogni mese)",
+NOMI_PREZZI = {"br_mensile": "bandinQiaro - mensile", "br_annuale": "bandinQiaro - annuale (impegno 12 mesi, pagato ogni mese)",
                "br_impresa_extra": "Impresa in piu'", "br_sede_extra": "Sede in piu' della stessa impresa"}
 STATI_CON_ACCESSO = ("attivo", "in_ritardo", "gratuito")   # in ritardo: Stripe riprova l'addebito, intanto si entra
 
@@ -367,7 +367,7 @@ def prepara_stripe() -> list[str]:
         p = chiama("POST", "/prices", {"currency": "eur", "unit_amount": str(centesimi), "recurring[interval]": "month",
                                        "lookup_key": lk, "tax_behavior": iva, "product_data[name]": NOMI_PREZZI[lk]})
         fatti.append(f"{lk}: creato {p['id']}")
-    comune = {"business_profile[headline]": "Bandi Radar - il tuo abbonamento",
+    comune = {"business_profile[headline]": "bandinQiaro - il tuo abbonamento",
               "business_profile[privacy_policy_url]": f"{sito_url()}/privacy",
               "business_profile[terms_of_service_url]": f"{sito_url()}/termini",
               "features[invoice_history][enabled]": "true", "features[payment_method_update][enabled]": "true",

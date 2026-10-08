@@ -1,4 +1,4 @@
-# Bandi Radar — regole di lavoro
+# bandinQiaro (progetto bandi-radar) — regole di lavoro
 
 Leggi questo file prima di qualunque lavoro. Obiettivi, priorità e modello di ricavi decisi da Matteo sono in `docs/VISIONE.md`; i due piani da eseguire in sequenza sono `docs/PIANO_QUALITA.md` (da 7 a 9) e `docs/PIANO_SEO_GEO.md`, da aggiornare a ogni passo (affidabilità 9/10 prima di vendere, non perdere le misure famose, IA entro 100 $ al mese). Il piano completo e le decisioni prese sono in `docs/PIANO_PROGETTO.md`: è la memoria condivisa del progetto, va tenuto aggiornato quando una decisione cambia.
 
@@ -26,7 +26,7 @@ Sistema che raccoglie i bandi di finanza agevolata per imprese (UE, nazionali, r
 
 - Python per raccolta, schede e abbinamento; Postgres come database; React per plancia e cruscotto; tutto in **Docker Compose**; Caddy davanti per HTTPS.
 - **L'osservatore delle pagine non usa l'IA**: scarica, confronta con la versione precedente, passa all'IA solo il frammento cambiato. IA (API Anthropic, Claude Opus 5.5 per smistamento, controllo preliminare e schede: decisione del 28/09) solo dalla Fase 3, e solo sui bandi con il testo ufficiale tra i documenti (filtro senza IA, 01/10).
-- I profili clienti sono **anonimi**: niente nomi, email o dati identificativi in Bandi Radar né nelle chiamate all'IA.
+- I profili clienti sono **anonimi**: niente nomi, email o dati identificativi in bandinQiaro né nelle chiamate all'IA.
 - Email transazionali con Resend, dal dominio `finanzagevolata.qiaro.it`.
 - Il registro delle fonti (~180 voci) è un file di configurazione: aggiungere una fonte è aggiungere una riga, non scrivere codice. Ogni fonte ha modalità di lettura (API, RSS, HTML, browser senza interfaccia), frequenza, e data dell'ultimo record trovato.
 

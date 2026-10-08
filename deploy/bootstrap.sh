@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Bandi Radar - preparazione del VPS (Ubuntu 24.04, OVH).
+# bandinQiaro - preparazione del VPS (Ubuntu 24.04, OVH).
 # Si lancia UNA volta, da root, sul server appena creato:
 #   curl -fsSL https://raw.githubusercontent.com/zucchellamatteo-hue/bandi-radar/main/deploy/bootstrap.sh | sudo bash
 # E' idempotente: rilanciarlo non fa danni.
@@ -96,7 +96,7 @@ chmod +x /usr/local/bin/bandi-radar-deploy
 
 cat > /etc/systemd/system/bandi-radar-deploy.service <<'UNIT'
 [Unit]
-Description=Bandi Radar: aggiornamento da GitHub
+Description=bandinQiaro: aggiornamento da GitHub
 After=network-online.target docker.service
 [Service]
 Type=oneshot
@@ -107,7 +107,7 @@ UNIT
 
 cat > /etc/systemd/system/bandi-radar-deploy.timer <<'UNIT'
 [Unit]
-Description=Bandi Radar: controlla GitHub ogni 5 minuti
+Description=bandinQiaro: controlla GitHub ogni 5 minuti
 [Timer]
 OnBootSec=2min
 OnUnitActiveSec=5min

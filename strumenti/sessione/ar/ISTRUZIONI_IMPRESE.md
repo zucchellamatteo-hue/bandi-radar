@@ -1,6 +1,6 @@
 # Istruzioni per gli agenti: il bando è per imprese? (sessione del 03/10/2026)
 
-Bandi Radar propone bandi di finanza agevolata alle **imprese** clienti di un commercialista. Le regole automatiche
+bandinQiaro propone bandi di finanza agevolata alle **imprese** clienti di un commercialista. Le regole automatiche
 hanno trovato in questi bandi frasi che fanno pensare a beneficiari diversi dalle imprese (enti pubblici, scuole,
 associazioni sportive dilettantistiche, enti non commerciali, enti del terzo settore, persone fisiche). Spesso è un
 falso allarme: l'elenco dei beneficiari comprende anche le imprese.

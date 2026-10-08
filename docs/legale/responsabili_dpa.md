@@ -17,7 +17,7 @@ Dove archiviare le copie: [CARTELLA DELLO STUDIO PER I DOCUMENTI PRIVACY] (non n
 
 ## Elenco
 
-| Fornitore | Cosa fa per Bandi Radar | Dati personali | Ruolo | Dove si accetta il DPA | Trasferimenti extra UE | Stato |
+| Fornitore | Cosa fa per bandinQiaro | Dati personali | Ruolo | Dove si accetta il DPA | Trasferimenti extra UE | Stato |
 |---|---|---|---|---|---|---|
 | **OVH SAS** (Roubaix, Francia) | Server VPS a Gravelines: applicazione, database, backup | Tutti i dati del servizio | Responsabile | Il DPA è un allegato delle condizioni contrattuali di OVHcloud, accettato con l'ordine; si scarica dallo spazio clienti (sezione contratti) | No: dati in Francia. Verificare nel DPA i sub-responsabili ed eventuali accessi da fuori UE per assistenza | Da archiviare la copia |
 | **Resend** (Stati Uniti) | Invio delle email: inviti, conferme, recupero password, email settimanale, avvisi di supporto | Email, nome, nome dell'impresa, contenuto delle email | Responsabile | DPA pubblicato sul sito di Resend (pagina legale), da accettare/firmare secondo le loro istruzioni; verificare se è possibile scegliere una regione UE per l'invio | Sì: verificare DPF e SCC nel DPA | Da fare (prima di attivare l'invio ai clienti) |

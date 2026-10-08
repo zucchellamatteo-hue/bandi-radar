@@ -1,4 +1,4 @@
-"""I miei dati (05/10/2026, GDPR artt. 15, 17 e 20): ogni utente scarica tutto cio' che Bandi Radar tiene su di lui e
+"""I miei dati (05/10/2026, GDPR artt. 15, 17 e 20): ogni utente scarica tutto cio' che bandinQiaro tiene su di lui e
 puo' cancellare il proprio account.
 
 Cosa resta dopo la cancellazione: le fatture emesse (obbligo di conservazione fiscale, 10 anni), senza piu' il
@@ -29,7 +29,7 @@ def esporta(conn, utente_id: int) -> dict:
         utente = dict(cur.fetchone())
         dati = {
             "esportati_il": datetime.now(timezone.utc).isoformat(),
-            "nota": "Tutti i dati che Bandi Radar conserva sul tuo account (password esclusa: si salva solo in forma cifrata).",
+            "nota": "Tutti i dati che bandinQiaro conserva sul tuo account (password esclusa: si salva solo in forma cifrata).",
             "utente": utente,
             "imprese": _righe(cur, """SELECT i.id, i.nome, i.dati, i.email_settimanale, i.creata_il, p.profilo
                                        FROM imprese i JOIN profili p ON p.codice = i.profilo_codice WHERE i.utente_id = %s""",

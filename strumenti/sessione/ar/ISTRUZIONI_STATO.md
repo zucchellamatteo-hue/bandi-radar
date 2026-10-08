@@ -1,6 +1,6 @@
 # Istruzioni per gli agenti: il bando è ancora aperto? (sessione del 03/10/2026)
 
-Oggi è il 03/10/2026. Bandi Radar propone ai clienti solo bandi aperti o in arrivo. Per ogni bando c'è un file
+Oggi è il 03/10/2026. bandinQiaro propone ai clienti solo bandi aperti o in arrivo. Per ogni bando c'è un file
 `/tmp/claude-1000/ar/stato/pagine/<id>.md` con: i dati della scheda, il motivo del ricontrollo, la pagina ufficiale
 **scaricata oggi** e quella salvata prima.
 

@@ -85,7 +85,7 @@ def numeri(conn) -> dict | None:
 
 def descrizione_breve(n: dict | None) -> str:
     fonti = f"{_n(n['fonti'])} siti pubblici" if n else "centinaia di siti pubblici"
-    return (f"Bandi Radar controlla con regolarità {fonti} (Unione europea, ministeri, Regioni, Camere di commercio, Comuni), "
+    return (f"bandinQiaro controlla con regolarità {fonti} (Unione europea, ministeri, Regioni, Camere di commercio, Comuni), "
             "trasforma i bandi per imprese in schede chiare e segnala ogni settimana solo quelli adatti alla tua impresa. "
             "Un commercialista può aiutarti a presentare la domanda.")
 
@@ -98,7 +98,7 @@ def faq(n: dict | None, giorni_prova: int) -> list[tuple[str, str]]:
     aperti = f" Oggi ({n['aggiornato']:%d/%m/%Y}) ci sono {_n(n['proponibili'])} bandi aperti da visionare." if n else ""
     misure = (", ".join(n["nomi_misure"][:4]) + " e altre") if n and n["nomi_misure"] else "Conto Termico, Iperammortamento, Nuova Sabatini e altre"
     return [
-        ("Che cos'è Bandi Radar?",
+        ("Che cos'è bandinQiaro?",
          "È un servizio in abbonamento per imprese e professionisti che raccoglie i bandi di finanza agevolata "
          "(contributi a fondo perduto, finanziamenti agevolati, voucher, garanzie, crediti d'imposta) pubblicati da Unione "
          "europea, Stato, Regioni, Camere di commercio e Comuni capoluogo, li riassume in schede chiare e segnala a ogni "
@@ -129,7 +129,7 @@ def faq(n: dict | None, giorni_prova: int) -> list[tuple[str, str]]:
         ("Che differenza c'è tra un bando e una misura nazionale?",
          "Un bando ha requisiti, una dotazione e di solito una scadenza. Le misure nazionali (" + misure + ") sono "
          "agevolazioni sempre aperte o a sportello che spesso si possono sommare a un bando per lo stesso investimento: "
-         "Bandi Radar le indica nella scheda del bando quando le spese coincidono."),
+         "bandinQiaro le indica nella scheda del bando quando le spese coincidono."),
         ("Che fine fanno i dati della mia impresa?",
          "Servono solo a scegliere i bandi. Il nome dell'impresa è tenuto separato dal profilo e non viene mai mandato a "
          "servizi esterni, nemmeno all'intelligenza artificiale. Puoi scaricare i tuoi dati o cancellare l'account in "
@@ -169,7 +169,7 @@ def _numeri_html(n: dict | None) -> str:
             (_n(n["esaminati"]), "bandi e avvisi esaminati", "anche i chiusi, per non perderne nessuno"),
             (_n(n["misure"]), "misure nazionali", "da sommare ai bandi (crediti d'imposta e simili)")]
     celle = "".join(f'<div class="cifra"><b>{a}</b><span>{b}</span><small>{c}</small></div>' for a, b, c in voci)
-    return (f'<section class="numeri" aria-label="Bandi Radar in numeri"><div class="contenitore"><div class="cifre">{celle}</div>'
+    return (f'<section class="numeri" aria-label="bandinQiaro in numeri"><div class="contenitore"><div class="cifre">{celle}</div>'
             f'<p class="aggiornato">Dati aggiornati al {n["aggiornato"]:%d/%m/%Y}, dal nostro archivio.</p></div></section>')
 
 
@@ -250,7 +250,7 @@ def presentazione(conn) -> str:
 <li><b>Vedi subito i bandi adatti</b><span>Per ogni bando una scheda chiara: a chi si rivolge, quanto dà, cosa finanzia, entro quando, cosa resta da verificare e il link al bando ufficiale.</span></li>
 <li><b>Ricevi le novità ogni lunedì</b><span>Un'email con i bandi nuovi e quelli in scadenza per la tua impresa, mai due volte lo stesso. Se un bando ti interessa, chiedi supporto con un clic.</span></li>
 </ol></div></section>
-<section id="cosa" class="grigia"><div class="contenitore"><h2>Cosa trovi in Bandi Radar</h2><div class="griglia">
+<section id="cosa" class="grigia"><div class="contenitore"><h2>Cosa trovi in bandinQiaro</h2><div class="griglia">
 <div class="carta"><h3>Tutte le fonti, in un posto</h3><p>Non devi più girare tra siti e PDF: leggiamo noi gli enti che pubblicano bandi per le imprese.</p>
 <ul class="fonti">{tipi_fonte}</ul></div>
 <div class="carta"><h3>Schede chiare sul testo ufficiale</h3><p>Beneficiari, territorio, spese ammesse, importi, percentuali, scadenze e modalità di domanda, in italiano semplice. Le schede con errori gravi non vengono proposte.</p></div>
@@ -268,7 +268,7 @@ def presentazione(conn) -> str:
     descrizione = descrizione_breve(n)
     jsonld = seo.json_ld([seo.organizzazione(descrizione), seo.sito_web(),
                           seo.servizio(descrizione, PREZZO_LANCIO, giorni), seo.domande_frequenti(domande)])
-    return pagina("Bandi per imprese e contributi a fondo perduto | Bandi Radar", corpo,
+    return pagina("Bandi per imprese e contributi a fondo perduto | bandinQiaro", corpo,
                   "Bandi e contributi a fondo perduto per imprese da UE, Stato, Regioni e Camere di commercio: "
                   "schede chiare e solo i bandi adatti a te, ogni settimana. Prova gratis.",
                   indicizza=pubblica(), percorso="/", testa=jsonld)

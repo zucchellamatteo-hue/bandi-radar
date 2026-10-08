@@ -40,7 +40,7 @@ Dal momento in cui in `main` c'è il file `docker-compose.yml`, il server prova 
 
 - Stato dei servizi: `cd /srv/bandi-radar && sudo -u deploy docker compose ps`. Devono comparire tre righe, `db`, `app` e `caddy`, tutte `Up`; `db` e `app` con `(healthy)`.
 - Salute dell'applicazione e del database, senza password: `curl -s https://finanzagevolata.qiaro.it/health` risponde `{"status":"ok","database":"ok"}`.
-- Nel browser: https://finanzagevolata.qiaro.it chiede utente e password (quelli di `BASIC_AUTH_USER` e `BASIC_AUTH_PASSWORD`) e poi mostra la pagina "Bandi Radar - Sito in costruzione" con il lucchetto del certificato valido.
+- Nel browser: https://finanzagevolata.qiaro.it chiede utente e password (quelli di `BASIC_AUTH_USER` e `BASIC_AUTH_PASSWORD`) e poi mostra la pagina "bandinQiaro - Sito in costruzione" con il lucchetto del certificato valido.
 - Se qualcosa non va: `journalctl -u bandi-radar-deploy.service -n 30` mostra l'errore dell'ultimo avvio (per esempio una variabile mancante in `.env`); `cd /srv/bandi-radar && sudo -u deploy docker compose logs --tail 50` i log dei tre servizi.
 
 **Se cambi il file `.env`** (nuova password, nuova variabile): i container vanno riavviati a mano una volta, perché l'aggiornamento automatico riparte solo quando cambia il codice su GitHub:

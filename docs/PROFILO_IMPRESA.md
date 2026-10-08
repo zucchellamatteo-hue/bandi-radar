@@ -1,6 +1,6 @@
 # Il profilo d'impresa anonimo
 
-*Deciso il 29/09/2026 (anticipo della Fase 4). Controlli in `app/abbinamento/profilo.py`, regole di confronto in `app/abbinamento/regole.py`, tabella `profili` (migrazione `010`). È il riferimento per chi manda profili a Bandi Radar: oggi Matteo dalla plancia (pagina Profili), poi lo script delle anagrafiche e Qiaro / Contract to Cash via API. Il formato è lo stesso: cambia solo chi lo manda.*
+*Deciso il 29/09/2026 (anticipo della Fase 4). Controlli in `app/abbinamento/profilo.py`, regole di confronto in `app/abbinamento/regole.py`, tabella `profili` (migrazione `010`). È il riferimento per chi manda profili a bandinQiaro: oggi Matteo dalla plancia (pagina Profili), poi lo script delle anagrafiche e Qiaro / Contract to Cash via API. Il formato è lo stesso: cambia solo chi lo manda.*
 
 ## Privacy (piano §2 e §8, da non riaprire)
 

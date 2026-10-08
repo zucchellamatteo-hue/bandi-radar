@@ -326,11 +326,11 @@ def registra(conn, email: str, password: str, nome: str | None) -> tuple[dict, s
 
 
 def email_conferma(link: str) -> tuple[str, str]:
-    testo = ("Buongiorno,\n\ngrazie per esserti registrato a Bandi Radar.\n\n"
+    testo = ("Buongiorno,\n\ngrazie per esserti registrato a bandinQiaro.\n\n"
              f"Per confermare il tuo indirizzo email apri questo link (vale 3 giorni):\n{link}\n\n"
              "Poi potrai descrivere la tua impresa e vedere i bandi adatti.\n\n"
-             "Se non sei stato tu, ignora questa email.\n\nBandi Radar - finanzagevolata.qiaro.it\n")
-    return "Conferma il tuo indirizzo su Bandi Radar", testo
+             "Se non sei stato tu, ignora questa email.\n\nbandinQiaro - bandinqiaro.it\n")
+    return "Conferma il tuo indirizzo su bandinQiaro", testo
 
 
 # --- testi delle email ---
@@ -341,19 +341,19 @@ NOMI_RUOLO = {"admin": "amministratore", "revisore": "revisore delle schede", "i
 def email_invito(utente: dict, link: str, invitato_da: str | None = None) -> tuple[str, str]:
     chi = f" da {invitato_da}" if invitato_da else ""
     testo = (f"Buongiorno{(' ' + utente['nome']) if utente.get('nome') else ''},\n\n"
-             f"sei stato invitato{chi} su Bandi Radar (finanza agevolata per le imprese) "
+             f"sei stato invitato{chi} su bandinQiaro (finanza agevolata per le imprese) "
              f"come {NOMI_RUOLO.get(utente['ruolo'], utente['ruolo'])}.\n\n"
              f"Per scegliere la password ed entrare apri questo link (vale 7 giorni):\n{link}\n\n"
-             f"Il tuo nome utente e' questo indirizzo email.\n\nBandi Radar - finanzagevolata.qiaro.it\n")
-    return "Invito a Bandi Radar", testo
+             f"Il tuo nome utente e' questo indirizzo email.\n\nbandinQiaro - bandinqiaro.it\n")
+    return "Invito a bandinQiaro", testo
 
 
 def email_recupero(link: str) -> tuple[str, str]:
-    testo = ("Buongiorno,\n\nabbiamo ricevuto una richiesta per cambiare la password di Bandi Radar.\n\n"
+    testo = ("Buongiorno,\n\nabbiamo ricevuto una richiesta per cambiare la password di bandinQiaro.\n\n"
              f"Per sceglierne una nuova apri questo link (vale 2 ore):\n{link}\n\n"
              "Se non sei stato tu, ignora questa email: la password resta quella di prima.\n\n"
-             "Bandi Radar - finanzagevolata.qiaro.it\n")
-    return "Nuova password per Bandi Radar", testo
+             "bandinQiaro - bandinqiaro.it\n")
+    return "Nuova password per bandinQiaro", testo
 
 
 def manda(destinatario: str, oggetto: str, testo: str, html: str | None = None) -> str:

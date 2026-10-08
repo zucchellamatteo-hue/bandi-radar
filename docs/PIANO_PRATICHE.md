@@ -6,7 +6,7 @@
 
 ## 1. L'idea in breve
 
-Oggi Bandi Radar trova i bandi, scrive la scheda e la abbina ai profili. Il passo successivo è **lavorare la pratica**: quando un'impresa si affida allo studio per un bando, il sistema le chiede i documenti giusti, li controlla, ne estrae i dati per compilare i moduli del bando e chiede chiarimenti quando qualcosa non va. Matteo resta il professionista che firma: rivede e decide, gli agenti preparano.
+Oggi bandinQiaro trova i bandi, scrive la scheda e la abbina ai profili. Il passo successivo è **lavorare la pratica**: quando un'impresa si affida allo studio per un bando, il sistema le chiede i documenti giusti, li controlla, ne estrae i dati per compilare i moduli del bando e chiede chiarimenti quando qualcosa non va. Matteo resta il professionista che firma: rivede e decide, gli agenti preparano.
 
 ```
  scheda del bando ──► CHECKLIST DEL BANDO ──► PRATICA DELL'IMPRESA ──► CONTROLLI ──► MODULI COMPILATI ──► revisione di Matteo ──► invio
@@ -39,8 +39,8 @@ Oggi Bandi Radar trova i bandi, scrive la scheda e la abbina ai profili. Il pass
 
 ## 4. Criticità da segnalare (le più importanti prima)
 
-1. **Privacy: è un cambio di architettura.** Oggi Bandi Radar **non conosce i clienti per nome** (scelta del 23/09, §2 del piano) e all'IA non arrivano dati identificativi (CLAUDE.md). Le pratiche invece trattano documenti pieni di dati personali: documenti d'identità, codici fiscali dei soci, bilanci, dichiarazioni dei redditi. Servono quindi: (a) un **modulo separato** "Pratiche" con il suo database e i suoi accessi, collegato a Bandi Radar solo con il codice anonimo del profilo; (b) una **decisione esplicita** sull'IA: per controllare e estrarre i dati, gli agenti devono leggere quei documenti. Si può fare (accordo sul trattamento dati con Anthropic, nessun addestramento sui dati inviati, conservazione minima), ma cambia una regola decisa e va scritto nell'informativa ai clienti; (c) documenti cifrati sul disco, accessi registrati, tempi di conservazione (per esempio cancellazione 10 anni dopo la chiusura per le pratiche concesse, prima per quelle abbandonate), backup cifrati. La revisione del professionista privacy prevista per la Fase 6 diventa più importante.
-2. **Contract to Cash.** L'area riservata dell'impresa potrebbe vivere in C2C (Sergio), che già conosce i clienti. Prima di costruirla in Bandi Radar conviene chiedere a Sergio se C2C ha già accessi dei clienti, caricamento di file e notifiche: rifarle due volte sarebbe uno spreco.
+1. **Privacy: è un cambio di architettura.** Oggi bandinQiaro **non conosce i clienti per nome** (scelta del 23/09, §2 del piano) e all'IA non arrivano dati identificativi (CLAUDE.md). Le pratiche invece trattano documenti pieni di dati personali: documenti d'identità, codici fiscali dei soci, bilanci, dichiarazioni dei redditi. Servono quindi: (a) un **modulo separato** "Pratiche" con il suo database e i suoi accessi, collegato a bandinQiaro solo con il codice anonimo del profilo; (b) una **decisione esplicita** sull'IA: per controllare e estrarre i dati, gli agenti devono leggere quei documenti. Si può fare (accordo sul trattamento dati con Anthropic, nessun addestramento sui dati inviati, conservazione minima), ma cambia una regola decisa e va scritto nell'informativa ai clienti; (c) documenti cifrati sul disco, accessi registrati, tempi di conservazione (per esempio cancellazione 10 anni dopo la chiusura per le pratiche concesse, prima per quelle abbandonate), backup cifrati. La revisione del professionista privacy prevista per la Fase 6 diventa più importante.
+2. **Contract to Cash.** L'area riservata dell'impresa potrebbe vivere in C2C (Sergio), che già conosce i clienti. Prima di costruirla in bandinQiaro conviene chiedere a Sergio se C2C ha già accessi dei clienti, caricamento di file e notifiche: rifarle due volte sarebbe uno spreco.
 3. **Sicurezza dei caricamenti.** File da sconosciuti su un server pubblico: limiti di dimensione e di tipo, controllo antivirus (ClamAV) prima di aprirli, mai eseguirli, nomi di file ripuliti, accesso dell'impresa solo alle sue pratiche, accesso di Matteo con secondo fattore.
 4. **Responsabilità professionale.** I controlli degli agenti aiutano, non garantiscono. La domanda la presenta l'impresa (o lo studio con delega) con SPID o firma digitale del legale rappresentante: il sistema prepara, non invia. Ogni modulo compilato porta la revisione di Matteo, e nei termini del servizio va scritto che l'esito dipende dal bando e dai dati forniti.
 5. **Qualità a monte.** La checklist è buona quanto la scheda e la modulistica. La sessione del 03/10 ha visto bandi chiusi o non per imprese tra i proponibili e allegati mancanti: la checklist va generata solo su schede verificate (meglio dopo il voto di Matteo, campo `qualita`) e rifatta quando la scheda cambia.
@@ -64,7 +64,7 @@ Ordine scelto perché ogni fase serve da sola: già dopo P1 Matteo può usare le
 
 ## 6. I dati (bozza)
 
-- `checklist_bando` (in Bandi Radar, senza dati dei clienti): bando, versione della scheda, data, autore (agente o Matteo), stato (bozza / approvata), voci. Voce: codice del catalogo o "particolare", descrizione, obbligatoria o premiale, a chi si applica (tutti, società, ditte individuali, una linea del bando), modulo ufficiale collegato (allegato), fonte (articolo del bando).
+- `checklist_bando` (in bandinQiaro, senza dati dei clienti): bando, versione della scheda, data, autore (agente o Matteo), stato (bozza / approvata), voci. Voce: codice del catalogo o "particolare", descrizione, obbligatoria o premiale, a chi si applica (tutti, società, ditte individuali, una linea del bando), modulo ufficiale collegato (allegato), fonte (articolo del bando).
 - Nel modulo Pratiche (dati identificati, database separato): `imprese` (anagrafica e collegamento al codice del profilo anonimo), `utenti` (accessi dell'impresa e dello studio), `pratiche` (impresa, bando, versione della checklist, stato, date), `voci_pratica` (stato: da caricare / caricato / da rifare / approvato, con il motivo), `documenti` (archivio dell'impresa: tipo, file cifrato, validità, esito dei controlli, dati estratti), `messaggi` (pratica, autore: impresa / studio / agente, testo, allegati, letto il, approvato da Matteo), `notifiche` (destinatario, tipo, collegamento, inviata per email il).
 
 ## 7. Gli agenti
@@ -82,7 +82,7 @@ Stesse regole delle schede: niente invenzioni, fonte per ogni affermazione, cont
 ## 8. Decisioni che servono da Matteo
 
 1. **IA sui documenti dei clienti**: si accetta che gli agenti leggano documenti con dati personali (cambia una regola del 23/09)? In alternativa i controlli restano senza IA e l'estrazione si fa in sessione da Matteo.
-2. **Dove vive l'area riservata**: modulo Pratiche dentro Bandi Radar (database separato) o in Contract to Cash? Serve una domanda a Sergio.
+2. **Dove vive l'area riservata**: modulo Pratiche dentro bandinQiaro (database separato) o in Contract to Cash? Serve una domanda a Sergio.
 3. **Cosa sta nell'abbonamento base** e cosa a pagamento (proposta al §4.8).
 4. **Approvazione dei messaggi degli agenti**: tutti nel pilota (proposta) o solo le richieste di documenti nuovi?
 5. **Conservazione dei documenti**: per quanto tempo, e chi li può cancellare.

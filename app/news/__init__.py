@@ -47,7 +47,7 @@ def _controlla(d: dict, nuova: bool) -> dict:
     if "link" in v:
         v["link"] = (v["link"] or "").strip() or None
         if v["link"] and not (v["link"].startswith(("https://", "http://")) or v["link"].startswith("/")):
-            raise ErroreNews("Il link deve iniziare con https:// (oppure / per una pagina di Bandi Radar).")
+            raise ErroreNews("Il link deve iniziare con https:// (oppure / per una pagina di bandinQiaro).")
     if "da" in v:
         v["da"] = _data(v["da"]) or date.today()
     if "a" in v:

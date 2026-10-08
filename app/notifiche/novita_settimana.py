@@ -66,7 +66,7 @@ def componi(dati: dict, da: datetime, a: datetime) -> tuple[str, str, str]:
     """Ritorna (oggetto, testo semplice, html)."""
     annunci = dati["annunci"]
     periodo = f"{da.date().strftime('%d/%m')}–{a.date().strftime('%d/%m/%Y')}"
-    oggetto = f"Bandi Radar: {len(annunci)} novità nella settimana {periodo}"
+    oggetto = f"bandinQiaro: {len(annunci)} novità nella settimana {periodo}"
     esiti = dati["esiti"]
     stato = (f"Fonti attive: {dati['fonti_attive']}. Ultimo controllo: {esiti.get('ok', 0)} ok, "
              f"{esiti.get('errore', 0)} in errore, {esiti.get('struttura_cambiata', 0)} con struttura cambiata, "

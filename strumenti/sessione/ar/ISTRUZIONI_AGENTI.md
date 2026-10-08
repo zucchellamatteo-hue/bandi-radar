@@ -1,4 +1,4 @@
-# Istruzioni per gli agenti che smaltiscono l'arretrato di Bandi Radar (sessione del 28/09/2026)
+# Istruzioni per gli agenti che smaltiscono l'arretrato di bandinQiaro (sessione del 28/09/2026)
 
 Lavori al posto dell'API Anthropic: fai esattamente quello che farebbe il modello chiamato dal programma, leggendo
 gli stessi testi. Cartella di lavoro: `/tmp/claude-1000/ar/`. Per ogni bando c'è una cartella `fascicoli/<id>/`.

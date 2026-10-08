@@ -1,7 +1,7 @@
 """SEO tecnica e GEO della parte pubblica (07/10/2026): indirizzo del sito, robots.txt, sitemap.xml, /llms.txt e dati
 strutturati JSON-LD (schema.org).
 
-Il dominio viene da SITO_URL (oggi finanzagevolata.qiaro.it, in arrivo bandinqiaro.it): URL canonici, sitemap e
+Il dominio viene da SITO_URL (bandinqiaro.it dal 07/10; prima finanzagevolata.qiaro.it): URL canonici, sitemap e
 llms.txt lo seguono da soli, cosi' cambiare dominio e' cambiare una variabile.
 
 Regole di indicizzazione:
@@ -22,7 +22,7 @@ import os
 from datetime import date
 from xml.sax.saxutils import escape
 
-NOME = "Bandi Radar"
+NOME = "bandinQiaro"
 
 # Pagine pubbliche indicizzabili: (percorso, frequenza di cambio per la sitemap, priorita').
 PAGINE_PUBBLICHE = [("/", "daily", "1.0"), ("/condizioni-supporto", "monthly", "0.4"), ("/termini", "yearly", "0.2"),
@@ -51,12 +51,12 @@ def assoluto(percorso: str) -> str:
 def robots_txt(pubblica: bool, blog: bool = False) -> str:
     """`pubblica`: tutta la parte pubblica aperta; `blog`: aperto solo il blog (con i file che gli servono)."""
     if not pubblica and not blog:
-        return ("# Bandi Radar: sito non ancora aperto ai motori di ricerca (PAGINA_PUBBLICA=0).\n"
+        return ("# bandinQiaro: sito non ancora aperto ai motori di ricerca (PAGINA_PUBBLICA=0).\n"
                 "User-agent: *\nDisallow: /\n")
     if pubblica:
-        righe = ["# Bandi Radar: si leggono solo le pagine pubbliche; plancia, area riservata e API restano chiuse."]
+        righe = ["# bandinQiaro: si leggono solo le pagine pubbliche; plancia, area riservata e API restano chiuse."]
     else:
-        righe = ["# Bandi Radar: per ora e' aperto solo il blog (BLOG_PUBBLICO=1); il resto del sito e' chiuso."]
+        righe = ["# bandinQiaro: per ora e' aperto solo il blog (BLOG_PUBBLICO=1); il resto del sito e' chiuso."]
     righe += ["# I motori di risposta IA sono benvenuti con le stesse regole.", "User-agent: *"]
     righe += [f"User-agent: {p}" for p in PROGRAMMI_IA]
     if pubblica:

@@ -26,7 +26,7 @@ def _valida(xml: str) -> None:
 
 
 def test_xml_valido_per_lo_schema_ufficiale():
-    righe = [{"descrizione": "Bandi Radar - mensile", "quantita": 1, "prezzo_unitario": "30.00"},
+    righe = [{"descrizione": "bandinQiaro - mensile", "quantita": 1, "prezzo_unitario": "30.00"},
              {"descrizione": "Impresa in più", "quantita": 2, "prezzo_unitario": "10.00"}]
     xml = fatture.genera_xml("1/BR", date(2026, 10, 5), CLIENTE, righe, "0000A", EMITTENTE)
     _valida(xml)
@@ -99,7 +99,7 @@ def test_fattura_dal_pagamento_stripe(monkeypatch):
 
     evento = {"id": f"evt_fatt{utente_id}", "type": "invoice.paid", "data": {"object": {
         "id": f"in_{utente_id}", "customer": f"cus_f{utente_id}", "lines": {"data": [
-            {"description": "Bandi Radar - mensile", "quantity": 1, "amount": 3000,
+            {"description": "bandinQiaro - mensile", "quantity": 1, "amount": 3000,
              "period": {"start": int(time.time()), "end": int(time.time()) + 30 * 86400}},
             {"description": "Sede in più", "quantity": 1, "amount": 500}]}}}}
     corpo = json.dumps(evento).encode()

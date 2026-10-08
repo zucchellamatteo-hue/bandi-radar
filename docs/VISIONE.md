@@ -1,4 +1,4 @@
-# Bandi Radar — visione, obiettivi e richieste di Matteo
+# bandinQiaro — visione, obiettivi e richieste di Matteo
 
 Pensiero di Matteo del 06/10/2026, riorganizzato. È il riferimento per le priorità: quando una decisione cambia,
 si aggiorna qui (e in `docs/CRONOLOGIA.md`).

@@ -29,7 +29,7 @@ export default function News() {
   return (
     <>
       <h1>News</h1>
-      <p className="piccolo">Poche righe sulle novità di Bandi Radar o su notizie utili a chi segue i bandi. Una news nasce
+      <p className="piccolo">Poche righe sulle novità di bandinQiaro o su notizie utili a chi segue i bandi. Una news nasce
         in <b>bozza</b>: quando la <b>pubblichi</b>, nel periodo scelto entra nell'email del lunedì alle imprese (una volta
         sola per impresa) e compare in cima alla loro Guida. Pubblico "imprese e collaboratori": la vedono anche revisori e staff.</p>
       {modifiche && <form className="riquadro" onSubmit={async (e) => {

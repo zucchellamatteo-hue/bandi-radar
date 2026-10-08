@@ -1,6 +1,6 @@
 # Testi legali della pagina pubblica
 
-Frammenti HTML (solo contenuto, senza stili né script) che la pagina pubblica di Bandi Radar inserisce nel proprio modello:
+Frammenti HTML (solo contenuto, senza stili né script) che la pagina pubblica di bandinQiaro inserisce nel proprio modello:
 
 - `termini.html` — Termini e condizioni del servizio in abbonamento (rivolto a imprese e professionisti), con la sezione 16 "Approvazione specifica delle clausole" (artt. 1341-1342 c.c.).
 - `privacy.html` — Informativa privacy (artt. 13-14 GDPR).

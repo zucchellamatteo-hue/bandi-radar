@@ -1,4 +1,4 @@
-# Bandi Radar: manuale del server
+# bandinQiaro: manuale del server
 
 *Aggiornato al 28/09/2026, Fase 3 (bandi, pagine ufficiali, allegati e prime schede in produzione; lettura della scorta e segnali di stato). Per i dettagli passo-passo vedi `deploy/README.md`.*
 

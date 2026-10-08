@@ -87,13 +87,13 @@ def pagina_articolo(conn, a: dict, anteprima: bool = False) -> str:
 {articoli.in_html(a['corpo'])}
 {f'<h2 id="fonti-ufficiali">Fonti ufficiali</h2><ul>{fonti_html}</ul>' if fonti_html else ''}
 <div class="invito"><h2>Quali bandi fanno per la tua impresa?</h2>
-<p>Bandi Radar controlla ogni giorno i siti di Unione europea, ministeri, Regioni e Camere di commercio e ti segnala
+<p>bandinQiaro controlla ogni giorno i siti di Unione europea, ministeri, Regioni e Camere di commercio e ti segnala
 solo i bandi adatti alla tua impresa, con una scheda chiara. Prova gratis per {giorni} giorni, senza carta.</p>
 <p class="azioni"><a class="bottone grande" href="/registrati">Registrati e prova gratis</a> {ufficiale}</p></div>
 <p class="piccolo">Articolo informativo, scritto sui documenti ufficiali alla data di aggiornamento. Prima di presentare
 la domanda leggi sempre il bando ufficiale: requisiti, importi e scadenze possono cambiare.</p>
 </div></section>"""
-    org = seo.organizzazione("Bandi Radar: bandi e agevolazioni per imprese, schede chiare e segnalazioni su misura.")
+    org = seo.organizzazione("bandinQiaro: bandi e agevolazioni per imprese, schede chiare e segnalazioni su misura.")
     articolo = {"@type": "Article", "@id": url + "#articolo", "headline": a["titolo"][:110], "description": a["sommario"],
                 "inLanguage": "it-IT", "mainEntityOfPage": url, "url": url, "image": seo.assoluto("/immagini/anteprima.png"),
                 "author": {"@type": "Person", "name": autore}, "publisher": {"@id": seo.assoluto("/#organizzazione")},
@@ -103,12 +103,12 @@ la domanda leggi sempre il bando ufficiale: requisiti, importi e scadenze posson
     if aggiornato:
         articolo["dateModified"] = _iso(aggiornato)
     # Con la landing chiusa (solo blog aperto) le briciole partono dal blog: "/" non e' ancora una pagina pubblica.
-    passi = ([("Bandi Radar", seo.assoluto("/"))] if pubblica() else []) + [("Blog", seo.assoluto("/blog")), (a["titolo"], url)]
+    passi = ([("bandinQiaro", seo.assoluto("/"))] if pubblica() else []) + [("Blog", seo.assoluto("/blog")), (a["titolo"], url)]
     briciole = {"@type": "BreadcrumbList", "itemListElement": [
         {"@type": "ListItem", "position": i, "name": nome, "item": dove} for i, (nome, dove) in enumerate(passi, 1)]}
     grafo = [org, articolo, briciole] + ([seo.domande_frequenti(faq, percorso)] if faq else [])
     indicizza = blog_pubblico() and not anteprima and a.get("stato") == "pubblicato"
-    return pagina(f"{a['titolo']} | Bandi Radar", corpo, a["sommario"], indicizza=indicizza, percorso=percorso,
+    return pagina(f"{a['titolo']} | bandinQiaro", corpo, a["sommario"], indicizza=indicizza, percorso=percorso,
                   testa=STILE_BLOG + seo.json_ld(grafo))
 
 
@@ -125,21 +125,21 @@ def pagina_elenco(conn) -> str:
 <p><a href="/blog/{_e(a['slug'])}">Leggi l'articolo →</a></p></article>""")
     avviso = "" if blog_pubblico() else '<p class="bozza">Anteprima: il sito non è ancora pubblico né indicizzato (BLOG_PUBBLICO=0).</p>'
     elenco = (f'<div class="griglia elenco-articoli">{"".join(carte)}</div>' if carte
-              else "<p>Stiamo preparando i primi articoli. Intanto puoi provare Bandi Radar gratis.</p>")
+              else "<p>Stiamo preparando i primi articoli. Intanto puoi provare bandinQiaro gratis.</p>")
     corpo = f"""<section class="blog-testa eroe"><div class="contenitore">{avviso}
-<p class="occhiello">Blog di Bandi Radar</p><h1>Bandi e agevolazioni per imprese, spiegati semplici</h1>
+<p class="occhiello">Blog di bandinQiaro</p><h1>Bandi e agevolazioni per imprese, spiegati semplici</h1>
 <p class="sottotitolo">A chi servono, quanto valgono, come si chiedono e gli errori da evitare: articoli brevi sui bandi più
 cercati e su quelli che pochi conoscono, scritti sui documenti ufficiali.</p></div></section>
 <section><div class="contenitore">{elenco}</div></section>
 <section class="finale"><div class="contenitore"><h2>Scopri quali bandi aperti fanno per la tua impresa</h2>
 <p>Descrivi la tua impresa e guarda subito l'elenco, con una scheda chiara per ogni bando.</p>
 <p><a class="bottone grande bianco" href="/registrati">Inizia la prova gratuita</a></p></div></section>"""
-    blog = {"@type": "Blog", "@id": seo.assoluto("/blog#blog"), "name": "Blog di Bandi Radar", "url": seo.assoluto("/blog"),
+    blog = {"@type": "Blog", "@id": seo.assoluto("/blog#blog"), "name": "Blog di bandinQiaro", "url": seo.assoluto("/blog"),
             "inLanguage": "it-IT", "publisher": {"@id": seo.assoluto("/#organizzazione")},
             "blogPost": [{"@type": "Article", "headline": a["titolo"][:110], "url": seo.assoluto(f"/blog/{a['slug']}"),
                           "datePublished": _iso(a["pubblicato_il"]), "dateModified": _iso(a["aggiornato_il"])} for a in voci]}
-    org = seo.organizzazione("Bandi Radar: bandi e agevolazioni per imprese, schede chiare e segnalazioni su misura.")
-    return pagina("Blog: bandi e agevolazioni per imprese spiegati semplici | Bandi Radar", corpo,
+    org = seo.organizzazione("bandinQiaro: bandi e agevolazioni per imprese, schede chiare e segnalazioni su misura.")
+    return pagina("Blog: bandi e agevolazioni per imprese spiegati semplici | bandinQiaro", corpo,
                   "Articoli brevi sui bandi per imprese più cercati e su quelli di nicchia: a chi servono, quanto valgono, "
                   "scadenze, come si chiedono ed errori da evitare.", indicizza=blog_pubblico(), percorso="/blog",
                   testa=STILE_BLOG + seo.json_ld([org, blog]))
@@ -177,6 +177,6 @@ def llms_txt_blog(conn) -> str:
              "semplice i bandi e le agevolazioni per imprese (europei, nazionali, regionali, delle Camere di commercio): "
              "a chi servono, quanto valgono, scadenze, come si chiedono ed errori da evitare. Ogni articolo e' scritto sui "
              "documenti ufficiali, riporta la data di aggiornamento e le fonti.", "",
-             "## Pagine", "", f"- [Blog di Bandi Radar]({seo.assoluto('/blog')}): elenco degli articoli", ""]
+             "## Pagine", "", f"- [Blog di bandinQiaro]({seo.assoluto('/blog')}): elenco degli articoli", ""]
     righe += righe_llms(conn)
     return "\n".join(righe)

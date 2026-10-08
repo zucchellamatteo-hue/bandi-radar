@@ -143,7 +143,7 @@ def componi(d: dict, oggi: date) -> tuple[str, str, str]:
     p = d["periodi"]
     settimanale = d["frequenza"] == "settimanale"
     nc, np_ = p["nome_corrente"], p["nome_precedente"]
-    oggetto = (f"Bandi Radar SEO/GEO {'settimana al' if settimanale else 'del'} {oggi:%d/%m}: "
+    oggetto = (f"bandinQiaro SEO/GEO {'settimana al' if settimanale else 'del'} {oggi:%d/%m}: "
                f"{d['persone']['corrente']} visite di persone, {d['da_ia']['corrente']} dai motori IA")
     s1, s2 = p["sette"]
     righe_numeri = [
