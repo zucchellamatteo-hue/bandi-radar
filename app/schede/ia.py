@@ -141,9 +141,16 @@ SCHEMA_PRELIMINARE = {
         "edizione_in_corso": {"type": "string", "enum": ["si", "no", "incerto"]},
         "stato": {"type": "string", "enum": ["aperto", "in_arrivo", "chiuso", "non_noto"]},
         "testo_bando": {"type": "string", "enum": ["si", "solo_sintesi", "no"]},
+        # Procedura nuova del regista (08/10, app/catena/procedura.py): che tipo di agevolazione e' e se il documento
+        # e' davvero il testo ufficiale giusto. Il regista li copia in bandi.tipo_procedura e bandi.verifica_documento.
+        "tipo_procedura": {"type": "string", "enum": ["misura_di_legge", "sportello", "bando", "incerto"]},
+        "documento": {"type": "string", "enum": ["verificato", "manca", "solo_sintesi", "altro_bando", "edizione_vecchia",
+                                                 "bozza", "atto_generico", "graduatoria", "incerto"]},
+        "documento_nome": {"type": "string"},
         "motivo": {"type": "string"},
     },
-    "required": ["destinatari", "agevolazione", "edizione_in_corso", "stato", "testo_bando", "motivo"], "additionalProperties": False,
+    "required": ["destinatari", "agevolazione", "edizione_in_corso", "stato", "testo_bando", "tipo_procedura", "documento",
+                 "documento_nome", "motivo"], "additionalProperties": False,
 }
 
 _TESTO, _NUMERO = {"type": "string"}, {"type": "number"}

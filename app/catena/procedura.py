@@ -88,6 +88,33 @@ ESITO_SQL = """CASE
     ELSE 'pronto' END"""
 
 
+def copia_dal_preliminare(conn) -> int:
+    """Il controllo preliminare dell'IA (dal 08/10) risponde anche a tipo di agevolazione e verifica del documento: qui
+    le risposte passano nelle colonne della procedura. Le decisioni della sessione o di Matteo non si toccano; una
+    risposta "incerto" lascia il documento da verificare (in sessione). Ritorna quanti bandi ha aggiornato."""
+    with conn.cursor() as cur:
+        cur.execute("""UPDATE bandi SET
+                           tipo_procedura = coalesce(tipo_procedura, CASE WHEN preliminare->>'tipo_procedura'
+                               IN ('misura_di_legge', 'sportello', 'bando') THEN preliminare->>'tipo_procedura' END),
+                           verifica_documento = jsonb_build_object(
+                               'verificato', CASE WHEN preliminare->>'documento' = 'verificato' THEN 'si' ELSE 'no' END,
+                               'nome', nullif(preliminare->>'documento_nome', ''),
+                               'problema', CASE WHEN preliminare->>'documento' <> 'verificato' THEN preliminare->>'documento' END,
+                               'motivo', preliminare->>'motivo',
+                               'deciso_da', CASE WHEN preliminare->>'deciso_da' = 'sessione' THEN 'sessione' ELSE 'ia' END,
+                               'deciso_il', coalesce(preliminare->>'deciso_il', now()::text))
+                       WHERE preliminare->>'documento' IN ('verificato', 'manca', 'solo_sintesi', 'altro_bando',
+                                                           'edizione_vecchia', 'bozza', 'atto_generico', 'graduatoria')
+                         AND unito_a IS NULL
+                         AND (verifica_documento IS NULL
+                              OR (verifica_documento->>'deciso_da' = 'ia'
+                                  AND (verifica_documento->>'deciso_il')::timestamptz
+                                      < coalesce((preliminare->>'deciso_il')::timestamptz, now())))""")
+        n = cur.rowcount
+    conn.commit()
+    return n
+
+
 def ripasso(conn) -> dict:
     """I proponibili di oggi (vista bandi_situazione) passati con la regola nuova: quanti restano, quanti escono e
     perche', e i tipi di agevolazione."""

@@ -377,11 +377,14 @@ def giro() -> dict:
 
     with esecuzione("regista") as giro_intero:
         def controlli_schede(inizio):
+            from app.catena import procedura
             from app.schede import controlli
 
             with connetti() as conn:
+                riepilogo["procedura"] = procedura.copia_dal_preliminare(conn)
                 c = riepilogo["controlli"] = controlli.controlla(conn)
-            return f"{c['controllati']} schede controllate: {c['con_gravi']} con problemi gravi, {c['da_migliorare']} da migliorare"
+            return (f"{c['controllati']} schede controllate: {c['con_gravi']} con problemi gravi, {c['da_migliorare']} da "
+                    f"migliorare; {riepilogo['procedura']} verifiche del documento dal controllo preliminare")
 
         for nome, lavoro in (("smistamento", smistamento), ("doppioni", doppioni), ("pagine", pagine),
                              ("documenti", documenti), ("stato_pagine", stato_pagine), ("filtro", filtro),
