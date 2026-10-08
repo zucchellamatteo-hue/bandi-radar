@@ -108,15 +108,18 @@ def ripasso(conn) -> dict:
 
 def da_recuperare(conn, limite: int = 100) -> list[dict]:
     """Bandi aperti o in arrivo, per imprese, senza un documento ufficiale verificato: quelli "in disparte" (filtro o
-    scheda su sintesi) e quelli con la verifica del documento negativa. I piu' vicini alla scadenza prima."""
+    scheda su sintesi) e quelli con la verifica del documento negativa. Prima quelli italiani (i bandi del Portale UE
+    hanno priorita' bassa, PIANO_AZIONE punto 4), poi i piu' vicini alla scadenza; gli scaduti no."""
     with conn.cursor() as cur:
         cur.execute("""SELECT s.id, s.titolo, s.ente, s.stato, s.scadenza, s.situazione, s.fase, s.motivo,
-                              b.url, b.verifica_documento, b.tipo_procedura
+                              b.url, b.verifica_documento, b.tipo_procedura, ue.solo_ue
                        FROM bandi_situazione s JOIN bandi b ON b.id = s.id
-                       WHERE s.stato IS DISTINCT FROM 'chiuso'
+                       CROSS JOIN LATERAL (SELECT coalesce(bool_and(f.tipo = 'ue'), false) AS solo_ue
+                                           FROM annunci a JOIN fonti f ON f.id = a.fonte_id WHERE a.bando_id = b.id) ue
+                       WHERE s.stato IS DISTINCT FROM 'chiuso' AND (s.scadenza IS NULL OR s.scadenza >= current_date)
                          AND (s.situazione = 'in_disparte'
                               OR (s.situazione = 'proponibile' AND b.verifica_documento->>'verificato' = 'no'))
-                       ORDER BY s.scadenza NULLS LAST, s.id LIMIT %s""", (limite,))
+                       ORDER BY ue.solo_ue, s.scadenza NULLS LAST, s.id LIMIT %s""", (limite,))
         righe = [dict(r) for r in cur.fetchall()]
     for r in righe:
         if (r["verifica_documento"] or {}).get("verificato") == "no":
@@ -149,7 +152,7 @@ def main(argomenti: list[str] | None = None) -> int:
         if a.da_recuperare:
             righe = da_recuperare(conn, a.limite)
             print(f"Da recuperare (aperti o in arrivo senza documento verificato): {len(righe)} mostrati, "
-                  f"al massimo {a.limite}, scadenza piu' vicina prima")
+                  f"al massimo {a.limite}; prima gli italiani, scadenza piu' vicina prima")
             for r in righe:
                 print(f"[{r['id']}] {r['titolo'][:90]} · scade {r['scadenza'] or '-'}\n    {(r['motivo'] or '-')[:200]}")
             return 0

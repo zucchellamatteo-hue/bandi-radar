@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import html as html_mod
 import os
+import re
 from urllib.parse import urlparse
 
 import httpx
@@ -37,9 +38,24 @@ def con_avviso(testo: str, html: str | None) -> tuple[str, str | None]:
     return testo, html
 
 
+_LINK = re.compile(r"https?://[^\s<>\"]+")
+
+
+def html_da_testo(testo: str) -> str:
+    """Versione HTML di un'email scritta solo in testo (inviti, conferme, nuove password): paragrafi e link cliccabili.
+    Le email con solo testo e un link lungo sono un segnale tipico di spam; con le due versioni no (08/10/2026: i due
+    inviti mandati a Luca erano finiti nello spam)."""
+    paragrafi = []
+    for blocco in testo.strip().split("\n\n"):
+        righe = html_mod.escape(blocco).replace("\n", "<br>")
+        paragrafi.append("<p>" + _LINK.sub(lambda m: f'<a href="{m.group(0)}">{m.group(0)}</a>', righe) + "</p>")
+    return ('<html><body><div style="font-family:system-ui,-apple-system,\'Segoe UI\',Roboto,Arial,sans-serif;'
+            'max-width:640px;margin:0 auto;color:#1c2430;line-height:1.5">' + "\n".join(paragrafi) + "</div></body></html>")
+
+
 def invia(destinatario: str, oggetto: str, testo: str, html: str | None = None) -> str:
     """Ritorna 'inviata' oppure 'stampata' (nessuna chiave configurata)."""
-    testo, html = con_avviso(testo, html)
+    testo, html = con_avviso(testo, html or html_da_testo(testo))
     chiave = os.environ.get("RESEND_API_KEY")
     if not chiave:
         print(f"[email non inviata: manca RESEND_API_KEY]\nA: {destinatario}\nOggetto: {oggetto}\n\n{testo}")
@@ -47,6 +63,8 @@ def invia(destinatario: str, oggetto: str, testo: str, html: str | None = None) 
     corpo = {"from": mittente(), "to": [destinatario], "subject": oggetto, "text": testo}
     if html:
         corpo["html"] = html
+    if os.environ.get("EMAIL_CONTATTO"):     # chi risponde comunque arriva a una casella letta
+        corpo["reply_to"] = os.environ["EMAIL_CONTATTO"]
     risposta = httpx.post("https://api.resend.com/emails", json=corpo,
                           headers={"Authorization": f"Bearer {chiave}"}, timeout=30)
     risposta.raise_for_status()
