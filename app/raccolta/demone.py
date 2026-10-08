@@ -69,6 +69,17 @@ def main() -> int:
                     e.riepilogo = rapporto_seo.invia_rapporto(oggi=adesso.date())
         except Exception:  # noqa: BLE001
             traceback.print_exc()
+        try:                                            # IndexNow: una volta al giorno le pagine del blog cambiate (09/10)
+            from app.db.connessione import connetti
+            from app.pubblico import indexnow
+
+            if indexnow.attivo():
+                with connetti() as conn:
+                    if not indexnow.gia_fatto_oggi(conn, adesso.date()):
+                        with esecuzione("indexnow") as e:
+                            e.riepilogo = indexnow.invio_del_giorno(conn, adesso.date())
+        except Exception:  # noqa: BLE001
+            traceback.print_exc()
         if adesso.weekday() == 0 and adesso.hour >= 7:   # poi le email per le imprese, anche loro una volta sola
             try:
                 email_imprese_della_settimana()

@@ -7,16 +7,16 @@ import { eAdmin, usePuo, useUtente } from "../utente";
 // Il corpo e' Markdown semplice: "## titolo", "### sottotitolo", "- voce", "1. voce", **grassetto**, [testo](https://...).
 // La sezione "## Domande frequenti" con le domande in "### ..." diventa anche il dato strutturato FAQPage.
 
-type Modulo = { titolo: string; slug: string; sommario: string; corpo: string; fonti: string; bando_id: string; misura_id: string; autore: string };
-const VUOTO: Modulo = { titolo: "", slug: "", sommario: "", corpo: "", fonti: "", bando_id: "", misura_id: "", autore: "" };
+type Modulo = { titolo: string; titolo_seo: string; slug: string; sommario: string; corpo: string; fonti: string; bando_id: string; misura_id: string; autore: string };
+const VUOTO: Modulo = { titolo: "", titolo_seo: "", slug: "", sommario: "", corpo: "", fonti: "", bando_id: "", misura_id: "", autore: "" };
 const NOME_STATO: Record<string, string> = { bozza: "bozza", pubblicato: "pubblicato", archiviato: "archiviato" };
 
 const daArticolo = (a: Articolo): Modulo => ({
   titolo: a.titolo, slug: a.slug, sommario: a.sommario, corpo: a.corpo,
   fonti: (a.fonti || []).map((f) => `${f.nome} | ${f.url}`).join("\n"), bando_id: a.bando_id ? String(a.bando_id) : "",
-  misura_id: a.misura_id || "", autore: a.autore || "",
+  misura_id: a.misura_id || "", autore: a.autore || "", titolo_seo: a.titolo_seo || "",
 });
-const perApi = (m: Modulo) => ({ ...m, bando_id: m.bando_id.trim() || null, misura_id: m.misura_id || null, autore: m.autore || null, slug: m.slug || null });
+const perApi = (m: Modulo) => ({ ...m, bando_id: m.bando_id.trim() || null, misura_id: m.misura_id || null, autore: m.autore || null, titolo_seo: m.titolo_seo.trim() || null, slug: m.slug || null });
 
 export default function Articoli() {
   const modifiche = usePuo("modifiche");
@@ -108,6 +108,11 @@ function Campi({ m, misure, cambia }: { m: Modulo; misure: { id: string; nome: s
     <div className="modulo-news">
       <input type="text" placeholder="titolo" value={m.titolo} maxLength={200} required style={{ width: "100%" }}
         onChange={(e) => cambia({ titolo: e.target.value })} />
+      {/* Titolo breve per Google (09/10): il titolo intero resta in pagina; vuoto = accorciato da solo alla parola. */}
+      <input type="text" placeholder="titolo per Google, facoltativo: 50-60 caratteri (vuoto = il titolo accorciato da solo)"
+        value={m.titolo_seo} maxLength={70} style={{ width: "100%" }} onChange={(e) => cambia({ titolo_seo: e.target.value })} />
+      <p className="piccolo">{m.titolo_seo ? `${m.titolo_seo.length}/60 caratteri` : `titolo: ${m.titolo.length} caratteri`} (Google ne mostra circa 60;
+        se ci sta si aggiunge « | bandinQiaro»)</p>
       <div className="filtri">
         <input type="text" placeholder="indirizzo: /blog/... (vuoto = dal titolo)" value={m.slug} onChange={(e) => cambia({ slug: e.target.value })} />
         <input type="text" placeholder="n. del bando collegato" value={m.bando_id} style={{ minWidth: 0, width: "12rem" }}
@@ -119,7 +124,7 @@ function Campi({ m, misure, cambia }: { m: Modulo; misure: { id: string; nome: s
       </div>
       <textarea rows={2} placeholder="sommario: 1-2 frasi, è la descrizione che compare su Google" value={m.sommario} maxLength={300} required
         style={{ width: "100%" }} onChange={(e) => cambia({ sommario: e.target.value })} />
-      <p className="piccolo">{m.sommario.length}/300 caratteri (Google ne mostra circa 155)</p>
+      <p className="piccolo">{m.sommario.length}/300 caratteri (Google ne mostra circa 155: ideale 140-160, oltre si accorcia alla frase o alla parola)</p>
       <textarea rows={22} placeholder={"testo in Markdown semplice:\n## A chi serve\nParagrafo...\n- voce di elenco\n\n## Domande frequenti\n### Domanda?\nRisposta."}
         value={m.corpo} required style={{ width: "100%", fontFamily: "ui-monospace, monospace", fontSize: 16 }}
         onChange={(e) => cambia({ corpo: e.target.value })} />

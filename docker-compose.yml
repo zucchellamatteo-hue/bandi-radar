@@ -68,6 +68,7 @@ services:
       GOOGLE_ANALYTICS_ID: ${GOOGLE_ANALYTICS_ID:-}  # es. G-XXXXXXX: Google Analytics 4, solo con il consenso
       TITOLARE_SITO: ${TITOLARE_SITO:-}            # nel piede della landing: ragione sociale e P.IVA (Google Ads lo chiede)
       AUTORE_ARTICOLI: ${AUTORE_ARTICOLI:-}        # chi firma gli articoli del blog, es. "Mario Rossi, commercialista"
+      INDEXNOW_KEY: ${INDEXNOW_KEY:-}              # chiave IndexNow (avviso a Bing e altri motori), servita su /<chiave>.txt
       PROFILI_SOCIAL: ${PROFILI_SOCIAL:-}          # LinkedIn, Google Business Profile... (https, separati da virgola) per i dati strutturati
       # Abbonamenti (app/abbonamenti): spenti finche' ABBONAMENTI_ATTIVI non e' 1; solo chiavi di prova di Stripe
       # finche' STRIPE_PAGAMENTI_VERI non e' 1 (via di Matteo: termini, privacy, fatturazione elettronica).
@@ -141,6 +142,9 @@ services:
       SITO_URL: ${SITO_URL:-https://finanzagevolata.qiaro.it}      # link nelle email settimanali alle imprese
       EMAIL_IMPRESE_APPROVAZIONE: ${EMAIL_IMPRESE_APPROVAZIONE:-1}
       RAPPORTO_SEO: ${RAPPORTO_SEO:-giornaliero}    # email SEO/GEO a Matteo: giornaliero | settimanale | spento (07/10)
+      INDEXNOW_KEY: ${INDEXNOW_KEY:-}               # invio giornaliero delle pagine del blog cambiate a IndexNow (09/10)
+      BLOG_PUBBLICO: ${BLOG_PUBBLICO:-0}            # IndexNow avvisa solo con il blog aperto ai motori
+      PAGINA_PUBBLICA: ${PAGINA_PUBBLICA:-0}
       ALLEGATI_CARTELLA: /srv/allegati
     volumes:
       - allegati:/srv/allegati            # documenti dei bandi (PDF, moduli, FAQ), una cartella per annuncio

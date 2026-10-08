@@ -12,6 +12,8 @@ Le domande frequenti sono scritte UNA volta (FAQ) e finiscono sia nella pagina s
 from __future__ import annotations
 
 import logging
+import os
+import threading
 import time
 from datetime import date
 
@@ -19,7 +21,13 @@ from app.pubblico import seo, vetrina
 
 log = logging.getLogger(__name__)
 CACHE_SECONDI = 900
-_cache: dict = {}
+CACHE_PAGINA = 120          # la pagina intera, gia' scritta (09/10): da 1,1 s a pochi millisecondi
+# Variabili del .env che cambiano la pagina: se ne cambia una, la pagina in memoria non vale piu'.
+_VARIABILI_PAGINA = ("PAGINA_PUBBLICA", "BLOG_PUBBLICO", "SITO_URL", "TITOLARE_SITO", "ESEMPI_BANDI", "GOOGLE_ADS_ID",
+                     "GOOGLE_ANALYTICS_ID", "GOOGLE_SITE_VERIFICATION", "BING_SITE_VERIFICATION", "EMAIL_CONTATTO",
+                     "PROFILI_SOCIAL", "PROVA_GIORNI")
+_cache: dict = {}           # "dati"/"scade": numeri; "esempi": schede d'esempio; "pagina": l'HTML pronto
+_ricalcolo = threading.Lock()
 
 # Prezzo di lancio per i primi clienti (VISIONE.md, 06/10: 20 euro al mese IVA esclusa, poi si valuta 30).
 PREZZO_LANCIO = 20
@@ -67,11 +75,35 @@ def _calcola(conn) -> dict:
             "aggiornato": date.today()}
 
 
+def _ricalcola_in_disparte() -> None:
+    """Ricalcola i numeri in un filo a parte, con una connessione sua: chi visita intanto vede quelli di prima."""
+    if not _ricalcolo.acquire(blocking=False):          # un ricalcolo alla volta
+        return
+
+    def lavoro():
+        try:
+            from app.db.connessione import connetti
+
+            with connetti() as conn:
+                dati = _calcola(conn)
+            _cache.update(dati=dati, scade=time.monotonic() + CACHE_SECONDI)
+        except Exception:  # noqa: BLE001 - restano i numeri di prima
+            log.exception("numeri della pagina pubblica non ricalcolati")
+        finally:
+            _ricalcolo.release()
+    threading.Thread(target=lavoro, name="numeri-landing", daemon=True).start()
+
+
 def numeri(conn) -> dict | None:
-    """I numeri della pagina, tenuti in memoria CACHE_SECONDI. Se il database non risponde: None (la pagina si
-    mostra lo stesso, senza numeri)."""
+    """I numeri della pagina, tenuti in memoria CACHE_SECONDI. Calcolarli costa circa un secondo (09/10): quando
+    scadono la pagina usa ancora quelli di prima e li ricalcola in disparte, cosi' nessun visitatore aspetta; si
+    aspetta solo la prima volta dopo un riavvio. Se il database non risponde: None (la pagina si mostra lo stesso,
+    senza numeri)."""
     adesso = time.monotonic()
     if _cache.get("scade", 0) > adesso:
+        return _cache["dati"]
+    if _cache.get("dati"):
+        _ricalcola_in_disparte()
         return _cache["dati"]
     try:
         dati = _calcola(conn)
@@ -207,9 +239,47 @@ def _prezzo_html(giorni: int) -> str:
 <a href="/condizioni-supporto">Condizioni complete</a>.</p></div></div></div></section>"""
 
 
+def _firma_pagina() -> tuple:
+    """Cosa rende valida la pagina in memoria: il giorno, il file della vetrina e le variabili che la cambiano."""
+    return (date.today(), vetrina.FILE.stat().st_mtime if vetrina.FILE.is_file() else 0,
+            tuple(os.environ.get(k, "") for k in _VARIABILI_PAGINA))
+
+
+def da_cache() -> str | None:
+    """La pagina gia' pronta, se e' in memoria e valida: chi la chiede non apre nemmeno la connessione al database."""
+    p = _cache.get("pagina")
+    if p and p[0] > time.monotonic() and p[1] == _firma_pagina():
+        return p[2]
+    return None
+
+
+def _esempi(conn) -> list[dict]:
+    """Le schede d'esempio, in memoria come i numeri (la query costa circa 50 ms)."""
+    from app.pubblico import esempi
+
+    e = _cache.get("esempi")
+    if e and e[0] > time.monotonic() and e[1] == os.environ.get("ESEMPI_BANDI", ""):
+        return e[2]
+    voci = esempi(conn, 6)
+    _cache["esempi"] = (time.monotonic() + CACHE_SECONDI, os.environ.get("ESEMPI_BANDI", ""), voci)
+    return voci
+
+
 def presentazione(conn) -> str:
+    """La pagina di presentazione. Resta in memoria CACHE_PAGINA secondi (vedi da_cache)."""
+    pronta = da_cache()
+    if pronta:
+        return pronta
+    firma = _firma_pagina()
+    testo = _componi(conn)
+    if _cache.get("dati"):                              # senza numeri (database giu') non si tiene: si riprova subito
+        _cache["pagina"] = (time.monotonic() + CACHE_PAGINA, firma, testo)
+    return testo
+
+
+def _componi(conn) -> str:
     from app.abbonamenti import giorni_prova
-    from app.pubblico import _e, esempi, pagina, pubblica
+    from app.pubblico import _e, pagina, pubblica
 
     n = numeri(conn)
     giorni = giorni_prova()
@@ -217,7 +287,7 @@ def presentazione(conn) -> str:
     in_vetrina = vetrina.scegli(conn)                   # in alto i bandi in vetrina (app/pubblico/vetrina.yaml)
     gia = {v["id"] for v in in_vetrina if v["tipo"] == "bando"}
     try:
-        schede = [_carta_esempio(b) for b in esempi(conn, 6) if b["id"] not in gia][:3]
+        schede = [_carta_esempio(b) for b in _esempi(conn) if b["id"] not in gia][:3]
     except Exception:  # noqa: BLE001
         log.exception("esempi della pagina pubblica non letti")
         conn.rollback()

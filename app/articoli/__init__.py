@@ -24,9 +24,10 @@ import unicodedata
 from datetime import date
 
 STATI = {"bozza": "bozza", "pubblicato": "pubblicato", "archiviato": "archiviato"}
-CAMPI_TESTO = ("titolo", "slug", "sommario", "corpo", "fonti", "bando_id", "misura_id", "autore")
+CAMPI_TESTO = ("titolo", "slug", "sommario", "corpo", "fonti", "bando_id", "misura_id", "autore", "titolo_seo")
 CAMPI = CAMPI_TESTO + ("stato",)
 SOMMARIO_MAX = 300          # Google mostra circa 155-160 caratteri: oltre si taglia, ma il testo resta valido
+TITOLO_SEO_MAX = 70         # titolo breve per Google (09/10): l'ideale e' entro 60 caratteri, marchio compreso
 CORPO_MAX = 40000
 TITOLO_FAQ = "domande frequenti"
 AUTORE_SEGNAPOSTO = "[NOME E COGNOME], commercialista"
@@ -107,6 +108,10 @@ def _controlla(d: dict, nuovo: bool) -> dict:
                 raise ErroreArticoli(f"Misura nazionale sconosciuta: {v['misura_id']}.")
     if "autore" in v:
         v["autore"] = " ".join((v["autore"] or "").split()) or None
+    if "titolo_seo" in v:
+        v["titolo_seo"] = " ".join((v["titolo_seo"] or "").split()) or None
+        if v["titolo_seo"] and len(v["titolo_seo"]) > TITOLO_SEO_MAX:
+            raise ErroreArticoli(f"Titolo per Google troppo lungo (al massimo {TITOLO_SEO_MAX} caratteri, meglio 50-60).")
     if "stato" in v and v["stato"] not in STATI:
         raise ErroreArticoli("Stato non valido.")
     return v
@@ -293,6 +298,32 @@ def _testo_semplice(testo: str) -> str:
     return " ".join(_CORSIVO.sub(r"\1", t).split())
 
 
+_SEPARATORE = re.compile(r"^\|?\s*:?-{2,}:?\s*(\|\s*:?-{2,}:?\s*)*\|?$")
+
+
+def _righe_tabelle_chiuse(righe: list[str]) -> list[str]:
+    """Tabelle scritte senza le barre ai lati (stile GitHub: "Voce | Valore" e sotto "--- | ---"), come le scrivono
+    spesso i programmi di scrittura e le IA (09/10): si aggiungono le barre esterne, cosi' diventano tabelle anche loro.
+    Una riga con "|" diventa tabella solo se sotto c'e' la riga di separazione: il testo normale con "|" resta testo."""
+    fuori: list[str] = []
+    in_tabella = False
+    for i, riga in enumerate(righe):
+        s = riga.strip()
+        if not s:
+            in_tabella = False
+        elif "|" in s and not (s.startswith("|") and s.endswith("|")):
+            sotto = righe[i + 1].strip() if i + 1 < len(righe) else ""
+            if in_tabella or (_SEPARATORE.match(sotto) and "-" in sotto and "|" in sotto) or (_SEPARATORE.match(s) and "|" in s):
+                in_tabella = True
+                riga = "| " + s.strip("|").strip() + " |"
+        elif s.startswith("|") and s.endswith("|"):
+            in_tabella = True
+        else:
+            in_tabella = False
+        fuori.append(riga)
+    return fuori
+
+
 def _blocchi(md: str) -> list[tuple[str, object]]:
     """Il Markdown diviso in blocchi: ("h2"|"h3"|"p", testo), ("ul"|"ol", [voci]) o ("table", [righe di celle]).
     La prima riga di una tabella e' l'intestazione (07/10)."""
@@ -303,7 +334,7 @@ def _blocchi(md: str) -> list[tuple[str, object]]:
         if paragrafo:
             blocchi.append(("p", " ".join(s.strip() for s in paragrafo)))
             paragrafo.clear()
-    for riga in (md or "").replace("\r\n", "\n").split("\n"):
+    for riga in _righe_tabelle_chiuse((md or "").replace("\r\n", "\n").split("\n")):
         s = riga.strip()
         m_ol = re.match(r"^\d+[.)]\s+(.*)$", s)
         if not s:

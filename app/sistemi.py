@@ -87,6 +87,11 @@ SISTEMI: list[Sistema] = [
             "visite di persone, provenienze (Google, Bing, motori IA), letture dei programmi IA e dei motori, nuove "
             "registrazioni. Dai contatori anonimi della pagina Visite.",
             "ogni giorno dalle 7", 24 * 60, "Ogni giorno e ogni settimana", dati="rapporto_seo"),
+    Sistema("indexnow", "Avviso ai motori (IndexNow)",
+            "Avvisa Bing e gli altri motori che usano IndexNow (da Bing pescano ChatGPT e Copilot) delle pagine del blog "
+            "nuove o cambiate. Parte subito quando si pubblica o si modifica un articolo e, come rete di sicurezza, una "
+            "volta al giorno con le pagine della sitemap cambiate. Solo con il blog aperto e INDEXNOW_KEY nel .env.",
+            "una volta al giorno (e a ogni pubblicazione)", 24 * 60, "Ogni giorno e ogni settimana"),
     Sistema("aggiornamento", "Aggiornamento automatico del sito",
             "Sul server, ogni 5 minuti: scarica da GitHub la versione 'main' e, se e' cambiata, ricostruisce e riavvia i "
             "servizi. Unire una pull request vuol dire metterla in produzione entro pochi minuti.",

@@ -187,15 +187,16 @@ def _cookie() -> str:
 
 
 def pagina(titolo: str, corpo: str, descrizione: str = "", indicizza: bool = False, percorso: str | None = None,
-           testa: str = "") -> str:
+           testa: str = "", tipo_og: str = "website") -> str:
     """La cornice comune: intestazione, piede con i testi legali, banner dei cookie. Con `percorso` aggiunge l'URL
-    canonico e i dati per le anteprime (Open Graph); `testa` va nell'<head> (es. il JSON-LD)."""
+    canonico e i dati per le anteprime (Open Graph, `tipo_og` "article" per gli articoli del blog); `testa` va
+    nell'<head> (es. il JSON-LD)."""
     robots = "index, follow, max-snippet:-1, max-image-preview:large" if indicizza else "noindex, nofollow"
     meta = ""
     if percorso:
         url = seo.assoluto(percorso)
         immagine = seo.assoluto("/immagini/anteprima.png")
-        meta = (f'<link rel="canonical" href="{_e(url)}"><meta property="og:type" content="website">'
+        meta = (f'<link rel="canonical" href="{_e(url)}"><meta property="og:type" content="{_e(tipo_og)}">'
                 f'<meta property="og:site_name" content="{seo.NOME}"><meta property="og:locale" content="it_IT">'
                 f'<meta property="og:title" content="{_e(titolo)}"><meta property="og:description" content="{_e(descrizione)}">'
                 f'<meta property="og:url" content="{_e(url)}"><meta property="og:image" content="{_e(immagine)}">'
