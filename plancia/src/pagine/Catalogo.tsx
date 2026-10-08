@@ -100,6 +100,14 @@ export default function Catalogo() {
           <option value="non_profit">Destinatari: non profit (associazioni, ETS)</option>
           <option value="tutti">Destinatari: tutti</option>
         </select>
+        {/* Ordinamento (09/10): di base per pertinenza, cioè l'ordine dell'abbinamento. */}
+        <select value={parametri.get("ordina") || "pertinenza"} onChange={(e) => imposta("ordina", e.target.value === "pertinenza" ? "" : e.target.value)}
+          className={parametri.get("ordina") ? "filtro-attivo" : ""} title="Ordina per">
+          <option value="pertinenza">Ordina per pertinenza</option>
+          <option value="scadenza">Ordina per scadenza più vicina</option>
+          <option value="beneficio">Ordina per beneficio (contributo massimo)</option>
+          <option value="tipo">Ordina per tipo (prima il fondo perduto)</option>
+        </select>
       </form>
 
       <button type="button" className={`solo-mobile altri-filtri${altriFiltri ? " filtro-attivo" : ""}`} aria-expanded={altriFiltri}
