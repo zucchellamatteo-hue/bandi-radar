@@ -6,7 +6,8 @@ bando di nicchia, per farsi trovare da Google e dai motori di risposta IA e port
 - Solo l'admin pubblica, rimette in bozza o archivia; solo l'admin modifica un articolo gia' pubblicato.
 - Il corpo e' Markdown semplice (titoli ##/###, paragrafi, elenchi, grassetto, corsivo, link): qui diventa HTML
   sicuro, senza passare HTML scritto a mano. La sezione "## Domande frequenti" con le domande in "### ..." diventa
-  anche il JSON-LD FAQPage della pagina.
+  anche il JSON-LD FAQPage della pagina. Una riga `[[calcolatore:NOME]]` mette un calcolatore interattivo scritto da
+  noi (app/pubblico/calcolatori.py, 09/10).
 - Se l'articolo e' collegato a un bando chiuso o scaduto (vista bandi_situazione) o a una misura nazionale non piu'
   aperta, la pagina pubblica mostra da sola il riquadro "Bando chiuso".
 
@@ -337,8 +338,12 @@ def _blocchi(md: str) -> list[tuple[str, object]]:
     for riga in _righe_tabelle_chiuse((md or "").replace("\r\n", "\n").split("\n")):
         s = riga.strip()
         m_ol = re.match(r"^\d+[.)]\s+(.*)$", s)
+        m_calc = re.fullmatch(r"\[\[calcolatore:([a-z_]+)\]\]", s)
         if not s:
             chiudi()
+        elif m_calc:                                      # calcolatore interattivo (app/pubblico/calcolatori.py, 09/10)
+            chiudi()
+            blocchi.append(("calcolatore", m_calc.group(1)))
         elif s.startswith("|") and s.endswith("|"):     # riga di tabella: | a | b |
             chiudi()
             celle = [c.strip() for c in s.strip("|").split("|")]
@@ -380,6 +385,10 @@ def in_html(md: str) -> str:
     for tipo, contenuto in _blocchi(md):
         if tipo == "h2":
             parti.append(f'<h2 id="{crea_slug(contenuto)}">{_in_linea(contenuto)}</h2>')
+        elif tipo == "calcolatore":
+            from app.pubblico import calcolatori
+
+            parti.append(calcolatori.html(contenuto))
         elif tipo in ("h3", "p"):
             parti.append(f"<{tipo}>{_in_linea(contenuto)}</{tipo}>")
         elif tipo == "table":

@@ -231,3 +231,17 @@ def test_tabelle_nel_markdown():
     html = in_html("Testo\n\n| Voce | Valore |\n|---|---:|\n| Spesa | 200.000 € |\n| **Credito** | 27.000 € |\n\nFine")
     assert "<table>" in html and "<th>Voce</th>" in html and "<td><strong>Credito</strong></td>" in html
     assert "---" not in html
+
+
+def test_calcolatore_sabatini():
+    """La riga [[calcolatore:sabatini]] diventa il calcolatore; un nome sconosciuto non mostra niente; la formula
+    torna con le percentuali del foglio MIMIT (7,72%, 10,09%, 14,26%)."""
+    from app import articoli
+    from app.pubblico import calcolatori
+
+    h = articoli.in_html("Testo.\n\n[[calcolatore:sabatini]]\n\n[[calcolatore:inventato]]\n\nFine.")
+    assert 'id="calcolatore-sabatini"' in h and "<script>" in h and "inventato" not in h
+    assert "<script>" not in articoli.in_html("Nel testo [[calcolatore:sabatini]] in mezzo a una frase.")
+    assert round(calcolatori.contributo_sabatini(100000, 0.0275)) == 7717
+    assert round(calcolatori.contributo_sabatini(100000, 0.03575) / 1000, 1) == 10.1
+    assert round(calcolatori.contributo_sabatini(100000, 0.05) / 1000, 1) == 14.3

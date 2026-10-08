@@ -21,6 +21,12 @@ STILE_BLOG = """<style>
 .tabella table{border-collapse:collapse;width:100%;font-size:.95em}
 .tabella th,.tabella td{border:1px solid #d5e1f0;padding:.45em .6em;text-align:left;vertical-align:top}
 .tabella th{background:#eef4fb}
+.calcolatore{border:2px solid #d5e1f0;border-radius:14px;padding:1rem 1.2rem;margin:1.4rem 0;background:#f7faff;max-width:44rem}
+.calcolatore h3{margin-top:0}.calcolatore label{display:block;font-weight:600;margin:.3rem 0}
+.calcolatore input{font-size:1.15rem;padding:.45rem .6rem;width:100%;max-width:16rem;border:1px solid #b9c9de;border-radius:8px}
+.calcolatore table{border-collapse:collapse;width:100%;margin:.8rem 0;font-size:.95em}
+.calcolatore th,.calcolatore td{border-bottom:1px solid #d5e1f0;padding:.4em .5em;text-align:left}
+.calcolatore td[data-tasso]{font-weight:700;white-space:nowrap}.cs-nota{font-weight:600}
 .blog-testa{padding-bottom:1rem}.blog-testa h1{font-size:2.2rem}
 .briciole{font-size:.9rem;color:var(--grigio);margin:0 0 .4rem}.briciole a{color:var(--grigio)}
 .dati-articolo{color:var(--grigio);font-size:.92rem;margin:.2rem 0 1rem}
