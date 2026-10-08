@@ -68,6 +68,8 @@ def test_lettura_della_verifica(tmp_path):
     vecchia.write_text(json.dumps({"id": 124, "esito": "corretta", "problemi": []}))
     r = iv.leggi(vecchia, "giro", corrette=False)
     assert r["verifica_documento"] is None and r["tipo_procedura"] is None
+    vecchia.write_text(json.dumps({"id": 124, "esito": "da_correggere", "problemi": [{"gravita": "grave"}]}))
+    assert iv.leggi(vecchia, "giro", corrette=False)["secondo_controllo"]["esito"] == "grave"
     assert r["secondo_controllo"]["correzioni_applicate"] is False
 
 

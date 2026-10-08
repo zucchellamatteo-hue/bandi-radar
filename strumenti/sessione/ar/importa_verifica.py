@@ -21,7 +21,8 @@ def leggi(percorso: Path, cartella: str, corrette: bool) -> dict:
     fatto_il = datetime.fromtimestamp(percorso.stat().st_mtime, timezone.utc).isoformat()
     problemi = d.get("problemi") or []
     gravi = sum(1 for p in problemi if p.get("gravita") == "grave")
-    esito = d.get("esito") if d.get("esito") in ("corretta", "da_correggere", "grave") else ("grave" if gravi else "da_correggere")
+    # Un problema grave rende grave l'esito, anche se l'agente ha scritto "da_correggere" (08/10: 1598, 3626, 1290).
+    esito = "grave" if gravi else d.get("esito") if d.get("esito") in ("corretta", "da_correggere") else "da_correggere"
     r = {"id": int(percorso.parent.name),
          "secondo_controllo": {"esito": esito, "gravi": gravi, "minori": len(problemi) - gravi,
                                "correzioni_applicate": bool(corrette and gravi), "fatto_il": fatto_il, "da": "sessione",
