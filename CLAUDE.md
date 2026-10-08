@@ -1,6 +1,6 @@
 # bandinQiaro (progetto bandi-radar) — regole di lavoro
 
-Leggi questo file prima di qualunque lavoro. Obiettivi, priorità e modello di ricavi decisi da Matteo sono in `docs/VISIONE.md`; i due piani da eseguire in sequenza sono `docs/PIANO_QUALITA.md` (da 7 a 9) e `docs/PIANO_SEO_GEO.md`, da aggiornare a ogni passo (affidabilità 9/10 prima di vendere, non perdere le misure famose, IA entro 100 $ al mese). Il piano completo e le decisioni prese sono in `docs/PIANO_PROGETTO.md`: è la memoria condivisa del progetto, va tenuto aggiornato quando una decisione cambia.
+Leggi questo file prima di qualunque lavoro. Obiettivi, priorità e modello di ricavi decisi da Matteo sono in `docs/VISIONE.md`; i due piani da eseguire in sequenza sono `docs/PIANO_QUALITA.md` (da 7 a 9) e `docs/PIANO_SEO_GEO.md`, da aggiornare a ogni passo; il piano d'azione corrente, con le cose che spettano a Matteo, è in `docs/PIANO_AZIONE.md` (affidabilità 9/10 prima di vendere, non perdere le misure famose, IA entro 100 $ al mese). Il piano completo e le decisioni prese sono in `docs/PIANO_PROGETTO.md`: è la memoria condivisa del progetto, va tenuto aggiornato quando una decisione cambia.
 
 ## Cos'è
 
