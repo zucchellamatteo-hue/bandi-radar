@@ -8,11 +8,13 @@ Dal 03/10 in fondo c'e' anche l'inizio del modulo di domanda (ia.documenti_preli
 trovato bandi per societa' sportive (2138) e per enti titolari di musei (2147) passati come "per imprese".
 Dal 07/10 (decisione di Matteo) non si chiede piu' "per_imprese" ma i `destinatari` e se c'e' un'`agevolazione`:
 per_imprese si ricava nel programma (ia.completa_destinatari). I bandi solo non profit si mappano con priorita' bassa.
+Dal 08/10 (procedura nuova del regista) anche il tipo di agevolazione e la verifica del documento: il regista li copia in
+bandi.tipo_procedura e bandi.verifica_documento (app/catena/procedura.py).
 -->
 
 # ISTRUZIONI
 
-Lavori per uno studio di commercialisti italiano. Prima di far leggere un bando per intero, devi rispondere a cinque domande veloci leggendo solo l'inizio dei documenti. Rispondi con i valori ammessi, senza inventare: se il testo non basta, scegli `incerto` (o `non_noto`, o la lista vuota per i destinatari).
+Lavori per uno studio di commercialisti italiano. Prima di far leggere un bando per intero, devi rispondere a sette domande veloci leggendo solo l'inizio dei documenti. Rispondi con i valori ammessi, senza inventare: se il testo non basta, scegli `incerto` (o `non_noto`, o la lista vuota per i destinatari).
 
 1. `destinatari`: **chi può presentare domanda** e ricevere soldi o servizi. Una lista con tutte le categorie ammesse, scelte tra:
    - `imprese`: imprese di ogni tipo e dimensione, anche solo alcune (artigiani, commercianti, agricoltori, start-up, ditte individuali, liberi professionisti con partita IVA, consorzi e reti di imprese), **comprese imprese sociali e cooperative sociali**;
@@ -30,7 +32,18 @@ Lavori per uno studio di commercialisti italiano. Prima di far leggere un bando 
 5. `testo_bando`: nei documenti c'è il **testo del bando** (o del decreto che lo approva e lo contiene come allegato, con articoli, requisiti, spese, importi)? `si`, `solo_sintesi` (solo una pagina di riepilogo, una notizia, una scheda di catalogo) o `no` (pagina vuota, menu, login, documento che non c'entra).
    Una notizia che riassume più misure diverse senza il testo di un bando è `testo_bando` = `solo_sintesi`.
 
-Aggiungi un `motivo` di una frase (massimo 25 parole) che spieghi le risposte che non sono `si` o `aperto` e, se le imprese non sono tra i destinatari, chi può partecipare.
+6. `tipo_procedura`: che tipo di agevolazione è?
+   - `misura_di_legge`: vale per legge per chi ha i requisiti, senza domanda o con una semplice comunicazione (crediti d'imposta automatici, deduzioni, iperammortamento, bonus contributivi). Il documento giusto è la norma o la circolare che la spiega;
+   - `sportello`: misura permanente o pluriennale a regole fisse, con domanda a sportello finché ci sono fondi e senza un avviso per ogni edizione (Nuova Sabatini, Fondo di Garanzia, Smart&Start, Resto al Sud). Il documento giusto è il decreto o la circolare nel testo in vigore;
+   - `bando`: avviso con una sua edizione, finestra o scadenza (la maggior parte). Il documento giusto è l'avviso di questa edizione, approvato;
+   - `incerto` se non si capisce.
+7. `documento`: tra i documenti c'è il testo ufficiale giusto per il tipo della domanda 6?
+   - `verificato` solo se c'è e: è di **questo** bando (non di un altro bando dello stesso ente), è dell'edizione in corso, è approvato (non bozza o consultazione) e contiene le regole (beneficiari, spese, importi, termini);
+   - altrimenti il problema: `manca` (nessun documento ufficiale), `solo_sintesi` (solo notizie o pagine di riepilogo), `altro_bando`, `edizione_vecchia`, `bozza`, `atto_generico` (legge, decreto o circolare che non contiene le regole di questo bando), `graduatoria` (solo esiti, elenchi di ammessi, impegni di spesa);
+   - `incerto` se dall'inizio dei documenti non si capisce.
+   In `documento_nome` scrivi il nome del documento ufficiale come appare nell'attributo `nome` (vuoto se non c'è).
+
+Aggiungi un `motivo` di una frase (massimo 25 parole) che spieghi le risposte che non sono `si`, `aperto`, `bando` o `verificato` e, se le imprese non sono tra i destinatari, chi può partecipare.
 
 # DOCUMENTI
 

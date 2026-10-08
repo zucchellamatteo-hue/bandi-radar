@@ -87,3 +87,35 @@ def test_sql_uguale_al_python():
                              colonne.get("scheda_il")))
                 assert cur.fetchone()["esito"] == atteso, nome
         conn.rollback()
+
+
+@db
+def test_copia_dal_preliminare():
+    """Le risposte del controllo preliminare passano nelle colonne della procedura; la sessione non si sovrascrive."""
+    from app.db.connessione import connetti
+    from app.db.migrazioni import applica_migrazioni
+
+    pre = {"stato": "aperto", "tipo_procedura": "sportello", "documento": "verificato", "documento_nome": "Decreto",
+           "motivo": "ok", "deciso_da": "ia", "deciso_il": "2026-10-08T10:00:00+00:00"}
+    with connetti() as conn:
+        applica_migrazioni(conn)
+        with conn.cursor() as cur:
+            ids = []
+            for p, vd in ((pre, None), ({**pre, "documento": "edizione_vecchia", "motivo": "avviso 2024"}, None),
+                          ({**pre, "documento": "incerto"}, None),
+                          ({**pre, "documento": "manca"}, {"verificato": "si", "deciso_da": "sessione"})):
+                cur.execute("INSERT INTO bandi (titolo, preliminare, verifica_documento) VALUES ('prova procedura', %s, %s) "
+                            "RETURNING id", (json.dumps(p), json.dumps(vd) if vd else None))
+                ids.append(cur.fetchone()["id"])
+        procedura.copia_dal_preliminare(conn)
+        with conn.cursor() as cur:
+            cur.execute("SELECT id, tipo_procedura, verifica_documento FROM bandi WHERE id = ANY(%s) ORDER BY id", (ids,))
+            r = cur.fetchall()
+            assert r[0]["tipo_procedura"] == "sportello" and r[0]["verifica_documento"]["verificato"] == "si"
+            assert r[0]["verifica_documento"]["deciso_da"] == "ia" and r[0]["verifica_documento"]["nome"] == "Decreto"
+            assert r[1]["verifica_documento"]["verificato"] == "no"
+            assert r[1]["verifica_documento"]["problema"] == "edizione_vecchia"
+            assert r[2]["verifica_documento"] is None                         # incerto: resta da verificare
+            assert r[3]["verifica_documento"]["deciso_da"] == "sessione"      # la sessione non si tocca
+            cur.execute("DELETE FROM bandi WHERE id = ANY(%s)", (ids,))
+        conn.commit()
