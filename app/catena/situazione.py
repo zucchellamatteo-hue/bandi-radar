@@ -19,7 +19,8 @@ import sys
 # condizione vera: unito, per_non_profit, fuori_target, poi le altre.
 SITUAZIONI = [
     ("proponibile", "Proponibili",
-     "scheda fatta sul bando ufficiale, senza problemi gravi, non chiuso: si propone alle imprese"),
+     "scheda fatta sul bando ufficiale, documento verificato, secondo controllo fatto e senza problemi gravi, non "
+     "chiuso: si propone alle imprese"),
     ("nascosto_per_errori", "Nascosti per errori",
      "scheda sul bando ufficiale con problemi gravi trovati dal controllo senza IA: non si propone finche' non e' sistemata"),
     ("in_disparte", "In disparte",
@@ -44,6 +45,12 @@ FASI = {
     "scheda_pronta": ("Scheda pronta", "abbinamento ai profili"),
     "scheda_da_aggiornare": ("Scheda da aggiornare", "nuova scheda al prossimo lotto; intanto si propone la vecchia"),
     "problemi_gravi": ("Problemi gravi nella scheda", "correggere la scheda (pagina Lavorazione, Da rivedere)"),
+    # Procedura nuova del regista (app/catena/procedura.py, migrazione 036)
+    "documento_non_valido": ("Documento non valido: da recuperare", "cercare il testo ufficiale giusto "
+                             "(python -m app.catena.procedura --da-recuperare)"),
+    "documento_da_verificare": ("Documento da verificare", "verifica del documento (preliminare dell'IA o sessione)"),
+    "secondo_controllo_da_fare": ("Secondo controllo da fare", "verifica della scheda in sessione"),
+    "errori_da_correggere": ("Errori gravi del secondo controllo", "correggere la scheda (applica_verifica.py)"),
     "scheda_solo_sintesi": ("Scheda fatta su una sintesi", "si riguarda se arriva il testo ufficiale"),
     "scheda_nessun_documento": ("Scheda fatta senza documenti", "si riguarda se arrivano documenti"),
     "senza_scheda_sintesi": ("Solo sintesi o pagine web tra i documenti", "si riguarda se arrivano documenti"),

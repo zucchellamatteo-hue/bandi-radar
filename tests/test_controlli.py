@@ -9,6 +9,7 @@ import pytest
 from app.abbinamento.catalogo import proponibile
 from app.schede import controlli
 from app.schede.allegati import trova_allegati
+from conftest import PROCEDURA_FATTA
 
 
 def test_link_liferay_senza_estensione_e_un_documento():
@@ -33,8 +34,10 @@ def test_scheda_pulita_e_proponibile_solo_senza_gravi():
          "vincoli_spese": {"fornitore": {"stato": "nessun_vincolo"}}, "dati": {"risposta": {"sintesi": "Contributi."}}}
     assert controlli.problemi(b, [], ["bando"]) == ([], [])
     assert controlli.problemi({**b, "documentazione": "bando"}, [], ["pagina"])[0] == []
-    assert proponibile({**b, "controllo": {"gravi": [], "da_migliorare": ["x"]}})
-    assert not proponibile({**b, "controllo": {"gravi": ["x"], "da_migliorare": []}})
+    assert proponibile({**b, **PROCEDURA_FATTA, "controllo": {"gravi": [], "da_migliorare": ["x"]}})
+    assert not proponibile({**b, **PROCEDURA_FATTA, "controllo": {"gravi": ["x"], "da_migliorare": []}})
+    # Dal 08/10 solo a procedura finita: documento verificato e secondo controllo (app/catena/procedura.py).
+    assert not proponibile({**b, "controllo": {"gravi": [], "da_migliorare": []}})
 
 
 @pytest.mark.skipif(not os.environ.get("PGHOST"), reason="serve il database di prova")

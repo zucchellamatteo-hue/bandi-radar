@@ -67,9 +67,9 @@ def test_campagna_completa(monkeypatch):
         applica_migrazioni(conn)
         with conn.cursor() as cur:
             cur.execute("""INSERT INTO bandi (titolo, ente, stato, scadenza, completezza, territorio_regioni, dati, scheda_il,
-                                              contributo_massimo, percentuale, vincoli)
+                                              contributo_massimo, percentuale, vincoli, verifica_documento, secondo_controllo)
                            VALUES ('Bando campagna Lombardia', 'Regione Lombardia', 'aperto', current_date + 40, 'bando_ufficiale',
-                                   '{LOM}', %s, now(), 80000, 50, %s) RETURNING id""",
+                                   '{LOM}', %s, now(), 80000, 50, %s, '{"verificato": "si"}', '{"esito": "corretta", "fatto_il": "2099-01-01T00:00:00+00:00"}') RETURNING id""",
                         (json.dumps({"risposta": {}}), json.dumps(vincoli)))
             bando = cur.fetchone()["id"]
         conn.commit()

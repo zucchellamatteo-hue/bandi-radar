@@ -282,9 +282,10 @@ def test_vetrina_dal_file_e_in_automatico(tmp_path, monkeypatch):
         with conn.cursor() as cur:
             for titolo, stato, scadenza, importo, controllo in prove:
                 cur.execute("""INSERT INTO bandi (titolo, ente, stato, scadenza, data_apertura, completezza, controllo,
-                                                  tipi_agevolazione, fondo_perduto_massimo, percentuale_fondo_perduto, vincoli)
+                                                  tipi_agevolazione, fondo_perduto_massimo, percentuale_fondo_perduto, vincoli,
+                                                  verifica_documento, secondo_controllo)
                                VALUES (%s, %s, %s, %s, %s, 'bando_ufficiale', %s, '{fondo_perduto}', %s, 50,
-                                       '{"territorio": "nessun_vincolo"}') RETURNING id""",
+                                       '{"territorio": "nessun_vincolo"}', '{"verificato": "si"}', '{"esito": "corretta", "fatto_il": "2099-01-01T00:00:00+00:00"}') RETURNING id""",
                             (titolo, "Ente " + titolo, stato, scadenza, oggi + timedelta(days=30), json.dumps(controllo), importo))
                 ids[titolo] = cur.fetchone()["id"]
         try:

@@ -7,6 +7,7 @@ from pathlib import Path
 import pytest
 
 from app.catena import situazione
+from conftest import PROCEDURA_FATTA
 
 db = pytest.mark.skipif(not os.environ.get("PGHOST"), reason="serve un database Postgres di prova (PGHOST)")
 
@@ -65,12 +66,26 @@ CASI = [
                  "documentazione_motivo": "solo pagine web"}, "in_disparte", "senza_scheda_sintesi", "regole"),
     ("scheda su sintesi", {"completezza": "solo_sintesi", "stato": "aperto", "dati": {"modello": "claude-code (sessione)"}},
      "in_disparte", "scheda_solo_sintesi", "sessione"),
-    ("proponibile", {"completezza": "bando_ufficiale", "stato": "aperto", "dati": {"modello": "claude-opus-5-5"}},
-     "proponibile", "scheda_pronta", "ia"),
-    ("senza stato", {"completezza": "bando_ufficiale", "controllo": {"gravi": [], "da_migliorare": ["x"]}},
+    ("proponibile", {"completezza": "bando_ufficiale", "stato": "aperto", "dati": {"modello": "claude-opus-5-5"},
+                     **PROCEDURA_FATTA}, "proponibile", "scheda_pronta", "ia"),
+    ("senza stato", {"completezza": "bando_ufficiale", "controllo": {"gravi": [], "da_migliorare": ["x"]}, **PROCEDURA_FATTA},
      "proponibile", "scheda_pronta", None),
-    ("da aggiornare", {"completezza": "bando_ufficiale", "stato": "in_arrivo", "da_aggiornare": "proroga"},
+    ("da aggiornare", {"completezza": "bando_ufficiale", "stato": "in_arrivo", "da_aggiornare": "proroga", **PROCEDURA_FATTA},
      "proponibile", "scheda_da_aggiornare", None),
+    # Procedura nuova del regista (08/10, migrazione 036): senza documento verificato e secondo controllo non si propone.
+    ("documento da verificare", {"completezza": "bando_ufficiale", "stato": "aperto"},
+     "in_lavorazione", "documento_da_verificare", "regole"),
+    ("documento non valido", {"completezza": "bando_ufficiale", "stato": "aperto",
+                              "verifica_documento": {"verificato": "no", "problema": "edizione_vecchia", "deciso_da": "sessione"}},
+     "in_disparte", "documento_non_valido", "sessione"),
+    ("secondo controllo da fare", {"completezza": "bando_ufficiale", "stato": "aperto",
+                                   "verifica_documento": {"verificato": "si"}},
+     "in_lavorazione", "secondo_controllo_da_fare", "regole"),
+    ("errori del secondo controllo", {"completezza": "bando_ufficiale", "stato": "aperto",
+                                      "verifica_documento": {"verificato": "si"},
+                                      "secondo_controllo": {"esito": "grave", "gravi": 1,
+                                                            "fatto_il": "2099-01-01T00:00:00+00:00"}},
+     "in_lavorazione", "errori_da_correggere", "regole"),
     ("errori", {"completezza": "bando_ufficiale", "stato": "aperto",
                 "controllo": {"fatto_il": "2026-10-06T10:00:00+00:00", "gravi": ["scadenza prima dell'apertura"]}},
      "nascosto_per_errori", "problemi_gravi", "regole"),
@@ -90,8 +105,8 @@ def _inserisci(cur, titolo: str, colonne: dict) -> int:
 
 def test_ogni_situazione_ha_nome_e_ogni_fase_un_nome():
     assert len({k for k, _, _ in situazione.SITUAZIONI}) == len(situazione.SITUAZIONI)
-    # La vista in vigore e' quella dell'ultima migrazione che la ridefinisce (031, 07/10: non profit e fuori target).
-    sql = (Path(__file__).resolve().parent.parent / "app/db/migrazioni/031_situazione_non_profit.sql").read_text(encoding="utf-8")
+    # La vista in vigore e' quella dell'ultima migrazione che la ridefinisce (036, 08/10: procedura nuova).
+    sql = (Path(__file__).resolve().parent.parent / "app/db/migrazioni/036_procedura_attiva.sql").read_text(encoding="utf-8")
     for chiave in situazione.NOMI:
         assert f"'{chiave}'" in sql
     for fase in situazione.FASI:

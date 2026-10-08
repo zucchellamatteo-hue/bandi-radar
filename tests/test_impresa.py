@@ -38,10 +38,10 @@ def ambiente(monkeypatch):
         with conn.cursor() as cur:
             dati = json.dumps({"risposta": {"titolo": "x"}})
             cur.execute("""INSERT INTO bandi (titolo, ente, url, stato, scadenza, completezza, territorio_regioni, sintesi, dati,
-                                              tipi_agevolazione, contributo_massimo)
+                                              tipi_agevolazione, contributo_massimo, verifica_documento, secondo_controllo)
                            VALUES ('Bando digitale Lombardia', 'Regione Lombardia', 'https://esempio.it/l', 'aperto',
                                    current_date + 30, 'bando_ufficiale', '{LOM}', 'Contributi per il digitale.', %s,
-                                   '{fondo_perduto}', 50000) RETURNING id""", (dati,))
+                                   '{fondo_perduto}', 50000, '{"verificato": "si"}', '{"esito": "corretta", "fatto_il": "2099-01-01T00:00:00+00:00"}') RETURNING id""", (dati,))
             aperto = cur.fetchone()["id"]
             cur.execute("""INSERT INTO bandi (titolo, stato, completezza, territorio_regioni, dati)
                            VALUES ('Bando chiuso', 'chiuso', 'bando_ufficiale', '{LOM}', %s) RETURNING id""", (dati,))
