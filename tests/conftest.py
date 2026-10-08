@@ -4,6 +4,11 @@ from __future__ import annotations
 
 import uuid
 
+# Un bando che ha finito la procedura nuova del regista (app/catena/procedura.py, migrazione 036): documento verificato
+# e secondo controllo fatto. Serve ai test che vogliono un bando proponibile.
+PROCEDURA_FATTA = {"verifica_documento": {"verificato": "si"},
+                   "secondo_controllo": {"esito": "corretta", "fatto_il": "2099-01-01T00:00:00+00:00"}}
+
 
 class CookieSessione:
     """'auth' per httpx (TestClient): aggiunge il cookie di sessione alla richiesta, come farebbe il browser."""

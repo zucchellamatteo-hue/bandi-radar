@@ -211,9 +211,9 @@ _AMMESSI: set[int] = set()
 
 def _bando(cur, titolo, scadenza, vincoli, regioni=None, contributo=30000):
     cur.execute("""INSERT INTO bandi (titolo, ente, url, stato, scadenza, completezza, dati, vincoli, territorio_regioni,
-                                      sintesi, tipi_agevolazione, contributo_massimo)
+                                      sintesi, tipi_agevolazione, contributo_massimo, verifica_documento, secondo_controllo)
                    VALUES (%s, 'Regione Lombardia', 'https://esempio.it/b', 'aperto', %s, 'bando_ufficiale', '{}',
-                           %s, %s, 'Contributi per investimenti delle PMI.', '{fondo_perduto}', %s) RETURNING id""",
+                           %s, %s, 'Contributi per investimenti delle PMI.', '{fondo_perduto}', %s, '{"verificato": "si"}', '{"esito": "corretta", "fatto_il": "2099-01-01T00:00:00+00:00"}') RETURNING id""",
                 (titolo, scadenza, json.dumps(vincoli), regioni, contributo))
     bando_id = cur.fetchone()["id"]
     _AMMESSI.add(bando_id)

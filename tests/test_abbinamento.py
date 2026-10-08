@@ -1,6 +1,7 @@
 from datetime import date
 
 from app.abbinamento import ateco, catalogo, regole
+from conftest import PROCEDURA_FATTA
 from app.abbinamento.regole import COMPATIBILE, DA_VERIFICARE, ESCLUSO, classe_dimensionale, valuta
 
 OGGI = date(2026, 9, 29)
@@ -11,6 +12,7 @@ TUTTI_LIBERI = {k: "nessun_vincolo" for k in ("territorio", "soggetti", "forme_g
 
 def bando(**campi):
     base = {"id": 1, "titolo": "Bando", "stato": "aperto", "completezza": "bando_ufficiale", "vincoli": dict(TUTTI_LIBERI),
+            **PROCEDURA_FATTA,
             "scadenza": date(2026, 12, 31)}
     vincoli = campi.pop("vincoli", {})
     base["vincoli"].update(vincoli)
@@ -180,7 +182,8 @@ def test_ricerca_per_numero_del_bando():
 
     bandi = [{"id": 4092, "titolo": "Contributi", "ente": "Comune", "stato": "chiuso", "completezza": "solo_sintesi",
               "livelli": [], "vincoli": {}},
-             {"id": 7, "titolo": "Altro", "ente": "X", "stato": "aperto", "completezza": "bando_ufficiale", "livelli": [], "vincoli": {}}]
+             {"id": 7, "titolo": "Altro", "ente": "X", "stato": "aperto", "completezza": "bando_ufficiale", "livelli": [], "vincoli": {},
+              **PROCEDURA_FATTA}]
     for testo in ("4092", " n. 4092", "#4092", "numero:4092"):
         assert [b["id"] for b, _ in catalogo.filtra(bandi, catalogo.Filtri(q=testo))] == [4092], testo
     assert catalogo.filtra(bandi, catalogo.Filtri(q="999")) == []

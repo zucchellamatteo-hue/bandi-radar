@@ -22,7 +22,7 @@ COLONNE = """b.id, b.titolo, b.ente, b.gestore, b.territorio, b.url, b.stato, b.
     b.forme_giuridiche_ammesse, b.forme_giuridiche_escluse, b.dimensioni_ammesse, b.eta_impresa_min_mesi,
     b.eta_impresa_max_mesi, b.requisiti_speciali_obbligatori, b.requisiti_speciali_premiali, b.dipendenti_min,
     b.dipendenti_max, b.fatturato_min, b.fatturato_max, b.codici_ateco, b.codici_ateco_esclusi, b.ateco_versione,
-    b.regime_aiuto, b.qualita, b.a_chi_si_rivolge, b.scheda_il,
+    b.regime_aiuto, b.qualita, b.a_chi_si_rivolge, b.scheda_il, b.verifica_documento, b.secondo_controllo,
     b.preliminare->>'per_imprese' AS per_imprese, b.preliminare->'destinatari' AS destinatari,
     b.preliminare->>'agevolazione' AS agevolazione"""
 
@@ -189,8 +189,13 @@ def prima_il_fondo_perduto(risultati: list[tuple[dict, regole.Esito]]) -> list[t
 def proponibile(b: dict) -> bool:
     """Si propone ai clienti solo un bando con la scheda fatta sul bando ufficiale (Matteo, 01/10/2026): una sintesi,
     una notizia o la scheda del catalogo non bastano. Gli altri restano "in disparte"."""
-    # Dal 06/10 anche senza problemi gravi trovati dal controllo delle schede (app/schede/controlli.py).
-    return b.get("completezza") == "bando_ufficiale" and not ((b.get("controllo") or {}).get("gravi"))
+    # Dal 06/10 anche senza problemi gravi trovati dal controllo delle schede (app/schede/controlli.py); dal 08/10 solo a
+    # procedura finita: documento verificato e secondo controllo senza errori gravi aperti (app/catena/procedura.py,
+    # come la vista bandi_situazione della migrazione 036).
+    from app.catena import procedura
+
+    return (b.get("completezza") == "bando_ufficiale" and not ((b.get("controllo") or {}).get("gravi"))
+            and procedura.esito(b)[0] == "pronto")
 
 
 def abbina(bandi: list[dict], profilo: dict, oggi: date | None = None, anche_esclusi: bool = False,
