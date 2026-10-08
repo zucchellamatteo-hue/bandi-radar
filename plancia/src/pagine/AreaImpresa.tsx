@@ -174,7 +174,8 @@ function Card({ bandi, scheda, supporto }: { bandi: BandoImpresa[]; scheda: (b: 
           </div>}
           <h3><Link to={scheda(b)} className="titolo-annuncio">{b.titolo}</Link></h3>
           <div className="card-ente">{b.ente || "Ente non indicato"}{b.territorio ? ` · ${b.territorio.length > 70 ? b.territorio.slice(0, 70) + "…" : b.territorio}` : ""}</div>
-          <div className={`card-agevolazione ${b.fondo_perduto ? "fp" : ""}`}>{b.agevolazione}</div>
+          <div className={`card-agevolazione ${b.fondo_perduto ? "fp" : ""}`}>{b.agevolazione}
+            {b.secondo_piano && <span className="piccolo"> · senza contributo in denaro</span>}</div>
           <Scadenza b={b} />
           <div className={`card-motivo ${b.esito.livello}`}>
             <span className="segno">{b.esito.livello === "compatibile" ? "✓" : "?"}</span>

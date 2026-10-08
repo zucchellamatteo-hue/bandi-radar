@@ -178,12 +178,23 @@ def a_fondo_perduto(b: dict) -> bool:
         or b.get("tipo_agevolazione") in _A_FONDO_PERDUTO
 
 
+# Agevolazioni che non danno soldi (servizi gratuiti, riconoscimenti, spazi, iscrizioni a registri): restano proposte ma
+# in secondo piano, dopo le altre (Matteo, 09/10/2026: "se sono comunque incentivi di qualche genere teniamoli in
+# secondo rilievo").
+_SENZA_SOLDI = {"servizi", "altro"}
+
+
+def secondo_piano(b: dict) -> bool:
+    tipi = set(b.get("tipi_agevolazione") or []) or ({b["tipo_agevolazione"]} if b.get("tipo_agevolazione") else set())
+    return bool(tipi) and tipi <= _SENZA_SOLDI and not a_fondo_perduto(b)
+
+
 def prima_il_fondo_perduto(risultati: list[tuple[dict, regole.Esito]]) -> list[tuple[dict, regole.Esito]]:
     """Riordina un elenco gia' ordinato dall'abbinamento: dentro ogni livello (compatibili, da verificare) prima i bandi
     a fondo perduto, poi gli altri (prestiti, garanzie, crediti d'imposta), lasciando invariato il resto dell'ordine.
     E' solo l'ordine di presentazione: chi passa e chi no lo decidono le regole, uguali per tutti."""
     livelli = {regole.COMPATIBILE: 0, regole.DA_VERIFICARE: 1}
-    return sorted(risultati, key=lambda x: (livelli.get(x[1].livello, 2), not a_fondo_perduto(x[0])))
+    return sorted(risultati, key=lambda x: (livelli.get(x[1].livello, 2), secondo_piano(x[0]), not a_fondo_perduto(x[0])))
 
 
 def proponibile(b: dict) -> bool:
@@ -225,4 +236,4 @@ CAMPI_RIGA = ("id", "titolo", "ente", "territorio", "url", "stato", "data_apertu
 
 def riga(b: dict, esito: regole.Esito) -> dict:
     return {**{k: b.get(k) for k in CAMPI_RIGA}, "sintesi": (b.get("sintesi") or "")[:260], "esito": esito.come_dict(),
-            "solo_non_profit": solo_non_profit(b)}
+            "solo_non_profit": solo_non_profit(b), "secondo_piano": secondo_piano(b)}

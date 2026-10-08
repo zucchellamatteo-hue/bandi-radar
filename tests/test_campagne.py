@@ -50,6 +50,10 @@ def test_fondo_perduto_prima():
     contributo = ({"id": 2, "tipi_agevolazione": ["fondo_perduto"]}, e)
     dubbio = ({"id": 3, "tipi_agevolazione": ["fondo_perduto"]}, regole.Esito(livello=regole.DA_VERIFICARE))
     assert [b["id"] for b, _ in catalogo.prima_il_fondo_perduto([prestito, dubbio, contributo])] == [2, 1, 3]
+    # Senza soldi (servizi, riconoscimenti): in secondo piano, dopo gli altri dello stesso livello (09/10).
+    servizio = ({"id": 4, "tipi_agevolazione": ["servizi"]}, e)
+    assert catalogo.secondo_piano(servizio[0]) and not catalogo.secondo_piano(prestito[0])
+    assert [b["id"] for b, _ in catalogo.prima_il_fondo_perduto([servizio, prestito, contributo])] == [2, 1, 4]
 
 
 @db
