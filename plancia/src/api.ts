@@ -52,7 +52,7 @@ export interface SchedaRidotta {
 export type GruppoImpresa = "adatti" | "da_valutare" | "altre_regioni";
 export interface BandoImpresa extends BandoRiga {
   gruppo: GruppoImpresa; agevolazione: string; fondo_perduto: boolean; motivo: string; da_verificare_semplici: string[];
-  giorni_alla_scadenza: number | null; in_scadenza: boolean; nuovo: boolean;
+  giorni_alla_scadenza: number | null; in_scadenza: boolean; nuovo: boolean; secondo_piano?: boolean;
 }
 export interface MisuraPerProfilo extends MisuraBreve { sintesi: string; esempio: { testo: string; interesse: Interesse } | null }
 export interface VistaImpresa {
@@ -216,6 +216,7 @@ export interface BandoRiga {
   dotazione: number | null; modalita_selezione: string | null; completezza: string | null; livelli: string[];
   temi: string[] | null; qualita: number | null; sintesi: string; esito: EsitoRegole;
   solo_non_profit?: boolean;   // per associazioni ed enti del Terzo settore, non per imprese (07/10)
+  secondo_piano?: boolean;     // non da' soldi (servizi, riconoscimenti): in fondo all'elenco (09/10)
 }
 
 export interface RispostaCatalogo {

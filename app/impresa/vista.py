@@ -127,9 +127,11 @@ def gruppo(esito: regole.Esito) -> str:
 
 
 def ordina(risultati: list[tuple[dict, regole.Esito]]) -> list[tuple[dict, regole.Esito]]:
-    """Adatti, da valutare, altre regioni; in ogni gruppo prima il fondo perduto, poi la scadenza (senza in fondo)."""
+    """Adatti, da valutare, altre regioni; in ogni gruppo prima il fondo perduto, in fondo le agevolazioni senza soldi
+    (servizi, riconoscimenti: catalogo.secondo_piano), poi la scadenza (senza in fondo)."""
     posto = {"adatti": 0, "da_valutare": 1, "altre_regioni": 2}
-    return sorted(risultati, key=lambda x: (posto[gruppo(x[1])], not catalogo.a_fondo_perduto(x[0]),
+    return sorted(risultati, key=lambda x: (posto[gruppo(x[1])], catalogo.secondo_piano(x[0]),
+                                            not catalogo.a_fondo_perduto(x[0]),
                                             x[0].get("scadenza") is None, x[0].get("scadenza") or date.max))
 
 
@@ -139,7 +141,7 @@ def arricchisci(r: dict, b: dict, esito: regole.Esito, oggi: date) -> dict:
     giorni = (scadenza - oggi).days if scadenza else None
     schedato = _giorno(b.get("scheda_il"))
     return {**r, "gruppo": gruppo(esito), "agevolazione": agevolazione(b), "fondo_perduto": catalogo.a_fondo_perduto(b),
-            "motivo": motivo(esito), "da_verificare_semplici": motivi_semplici(esito),
+            "secondo_piano": catalogo.secondo_piano(b), "motivo": motivo(esito), "da_verificare_semplici": motivi_semplici(esito),
             "giorni_alla_scadenza": giorni, "in_scadenza": giorni is not None and 0 <= giorni <= GIORNI_IN_SCADENZA,
             "nuovo": bool(schedato and (oggi - schedato).days < GIORNI_NUOVO)}
 

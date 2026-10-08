@@ -174,6 +174,7 @@ function Riga({ b }: { b: BandoRiga }) {
       <td className="segno"><SegnoEsito livello={b.esito.livello} /></td>
       <td><Link to={`/bandi/${b.id}`} className="titolo-annuncio">{b.titolo}</Link>
         {b.solo_non_profit && <> <span className="etichetta-tipo" title="Non per imprese: per associazioni ed enti del Terzo settore">non profit</span></>}
+        {b.secondo_piano && <> <span className="etichetta-tipo" title="Non dà soldi: servizi gratuiti, riconoscimenti, spazi. In fondo all'elenco">senza contributo</span></>}
         {b.url && <> <a href={b.url} target="_blank" rel="noreferrer" className="piccolo" title="Pagina ufficiale">ufficiale ↗</a></>}
         {b.sintesi && <div className="riassunto">{b.sintesi}{b.sintesi.length >= 260 ? "…" : ""}</div>}
         {b.esito.da_verificare.length > 0 && (
