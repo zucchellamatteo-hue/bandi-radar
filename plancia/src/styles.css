@@ -67,6 +67,8 @@ ul.motivi.da_controllare li { color: var(--grigio); }
 .stato-bando.aperto { background: #e3f4ea; color: #1e6b3e; }
 /* Esempi delle misure per tipo di impresa: interesse alto/medio/basso/nullo. */
 .esempi-misura td:first-child { width: 14rem; } .esempi-misura td:nth-child(2) { width: 6rem; }
+/* Tabelle dei tassi e delle regole per dimensione nella scheda di una misura (campo tabella_intensita). */
+.tabella-misura table { margin-bottom: .3rem; } .tabella-misura td { vertical-align: top; }
 .interesse { display: inline-block; border-radius: 4px; padding: .1rem .45rem; font-size: .78rem; font-weight: 700; text-transform: uppercase; letter-spacing: .03em; }
 .interesse.alto { background: #e3f4ea; color: #1e6b3e; } .interesse.medio { background: #fff4d6; color: #8a6100; }
 .interesse.basso { background: #f0f2f5; color: var(--grigio); } .interesse.nullo { background: #fff; color: var(--pausa); border: 1px dashed var(--bordo); }
