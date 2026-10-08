@@ -6,6 +6,7 @@ from __future__ import annotations
 from fastapi import APIRouter, Depends, HTTPException
 
 from app import articoli
+from app.pubblico import indexnow
 from app.db.connessione import connetti
 from app.utenti.api import richiede
 
@@ -49,22 +50,27 @@ def crea(dati: dict, utente: dict = Depends(richiede("modifiche"))) -> dict:
 @router.patch("/articoli/{articolo_id}")
 def modifica(articolo_id: int, dati: dict, utente: dict = Depends(richiede("modifiche"))) -> dict:
     with connetti() as conn:
+        prima = articoli.leggi(conn, articolo_id)
         try:
             r = articoli.modifica(conn, articolo_id, dati, _chi(utente), admin=utente["ruolo"] == "admin")
         except (articoli.ErroreArticoli, PermissionError) as e:
             raise _errore(e) from e
         conn.commit()
+    indexnow.articolo_cambiato(prima, r)       # avvisa Bing e gli altri motori, in disparte (09/10)
     return r
 
 
 @router.delete("/articoli/{articolo_id}")
 def cancella(articolo_id: int, utente: dict = Depends(richiede("modifiche"))) -> dict:
     with connetti() as conn:
+        prima = articoli.leggi(conn, articolo_id)
         try:
             articoli.cancella(conn, articolo_id, admin=utente["ruolo"] == "admin")
         except (articoli.ErroreArticoli, PermissionError) as e:
             raise _errore(e) from e
         conn.commit()
+    if prima:
+        indexnow.articolo_cambiato(prima, prima | {"stato": "cancellato"})
     return {"cancellato": True}
 
 

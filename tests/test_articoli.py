@@ -220,7 +220,7 @@ def test_bozze_preparate_dalle_sessioni_sono_valide():
             v = articoli._controlla({k: a[k] for k in articoli.CAMPI_TESTO if k in a}, True)
             assert articoli._fonti(a["fonti"]) and len(v["sommario"]) <= 230, v["slug"]
             assert len(articoli.domande_frequenti(a["corpo"])) >= 3, v["slug"]
-            assert "|---" not in a["corpo"] and "<table" not in a["corpo"], v["slug"]    # niente tabelle (non supportate)
+            assert "<table" not in a["corpo"], v["slug"]    # niente HTML scritto a mano (le tabelle Markdown vanno bene)
             slug.append(v["slug"])
     assert len(slug) == len(set(slug))
 

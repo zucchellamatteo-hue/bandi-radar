@@ -126,7 +126,7 @@ export interface News {
 
 export interface Articolo {
   id: number; titolo: string; slug: string; sommario: string; corpo: string; fonti: { nome: string; url: string }[];
-  bando_id: number | null; misura_id: string | null; autore: string | null; stato: string; pubblicato_il: string | null;
+  bando_id: number | null; misura_id: string | null; autore: string | null; titolo_seo?: string | null; stato: string; pubblicato_il: string | null;
   aggiornato_il: string; creato_da?: string | null; aggiornato_da?: string | null; bando_titolo?: string | null;
   parole?: number; chiuso?: { cosa: string; titolo: string; motivo: string } | null;
 }

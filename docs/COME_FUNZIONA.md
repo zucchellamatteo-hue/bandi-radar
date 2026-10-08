@@ -214,6 +214,7 @@ Per ogni pezzo: **cosa fa**, **quando gira**, **dove si vede**, **file principal
 | `BLOG_PUBBLICO` | solo il blog aperto a motori e IA (landing chiusa) | spento finché Matteo non lo accende |
 | `GOOGLE_SITE_VERIFICATION`, `BING_SITE_VERIFICATION` | meta tag di verifica di Search Console e Bing | vuoti |
 | `RAPPORTO_SEO` | email SEO/GEO a Matteo: giornaliero, settimanale, spento | giornaliero |
+| `INDEXNOW_KEY` | avviso a Bing e agli altri motori (IndexNow) quando un articolo esce o cambia | vuota finché non si imposta |
 
 Come cambiarli: sezione "Gli interruttori nel file .env" della Guida (solo amministratore). I valori non vanno mai in chat né su GitHub.
 

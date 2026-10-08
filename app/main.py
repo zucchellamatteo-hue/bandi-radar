@@ -9,6 +9,7 @@ Espone:
 """
 
 import os
+from contextlib import asynccontextmanager
 from pathlib import Path
 
 import psycopg
@@ -31,14 +32,36 @@ from app.notifiche.api import router as api_notifiche
 from app.impresa.api import router as api_impresa
 from app.plancia.api import router as api_plancia
 from app import pubblico
-from app.pubblico import blog, landing, seo
+from app.pubblico import blog, indexnow, landing, seo
 from app.db.connessione import connetti
 from app.utenti.api import COOKIE, controlla_plancia
 from app.utenti.api import router as api_utenti
 from app import visite
 from app.visite.api import router as api_visite
 
-app = FastAPI(title="bandinQiaro", docs_url=None, redoc_url=None, openapi_url=None)
+
+def _prepara_landing() -> None:
+    """All'avvio calcola in disparte i numeri della presentazione (circa un secondo, 09/10), cosi' nemmeno il primo
+    visitatore dopo un aggiornamento aspetta. Senza database (test) non fa niente."""
+    if os.environ.get("PGHOST"):
+        import threading
+
+        def lavoro():
+            try:
+                with connetti() as conn:
+                    landing.numeri(conn)
+            except Exception:  # noqa: BLE001 - la pagina li calcolera' alla prima visita
+                pass
+        threading.Thread(target=lavoro, name="prepara-landing", daemon=True).start()
+
+
+@asynccontextmanager
+async def _avvio(_app):
+    _prepara_landing()
+    yield
+
+
+app = FastAPI(title="bandinQiaro", docs_url=None, redoc_url=None, openapi_url=None, lifespan=_avvio)
 CARTELLA_PLANCIA = Path(__file__).resolve().parents[1] / "plancia" / "dist"
 
 
@@ -98,6 +121,9 @@ async def conta_visite(request: Request, call_next):
 
 
 def _presentazione() -> HTMLResponse:
+    pronta = landing.da_cache()             # pagina gia' pronta in memoria: niente connessione al database (09/10)
+    if pronta:
+        return HTMLResponse(pronta)
     with connetti() as conn:
         return HTMLResponse(pubblico.presentazione(conn))
 
@@ -108,11 +134,16 @@ def presentazione():
     return _presentazione()
 
 
+# Pagine del blog e file per i motori (09/10): i browser e i programmi le possono tenere 5 minuti. La presentazione
+# su "/" no: e' lo stesso indirizzo della plancia, che dopo l'accesso deve comparire subito.
+CACHE_BREVE = {"Cache-Control": "public, max-age=300"}
+
+
 @app.get("/robots.txt", response_class=PlainTextResponse)
 def robots_txt():
     """Finche' la pagina pubblica e' spenta chiude tutto; da accesa apre solo le pagine pubbliche; con BLOG_PUBBLICO=1
     apre solo il blog (app/pubblico/seo.py)."""
-    return PlainTextResponse(seo.robots_txt(pubblico.pubblica(), pubblico.blog_pubblico()))
+    return PlainTextResponse(seo.robots_txt(pubblico.pubblica(), pubblico.blog_pubblico()), headers=CACHE_BREVE)
 
 
 @app.get("/sitemap.xml")
@@ -123,14 +154,15 @@ def sitemap_xml():
             voci = blog.voci_sitemap(conn)
     except Exception:  # noqa: BLE001 - la sitemap non deve cadere per il blog
         voci = []
-    return Response(seo.sitemap_xml(articoli=voci, solo_blog=pubblico.solo_blog()), media_type="application/xml")
+    return Response(seo.sitemap_xml(articoli=voci, solo_blog=pubblico.solo_blog()), media_type="application/xml",
+                    headers=CACHE_BREVE)
 
 
 @app.get("/blog", response_class=HTMLResponse)
 def blog_elenco():
     """Elenco degli articoli pubblicati (app/pubblico/blog.py)."""
     with connetti() as conn:
-        return HTMLResponse(blog.pagina_elenco(conn))
+        return HTMLResponse(blog.pagina_elenco(conn), headers=CACHE_BREVE)
 
 
 @app.get("/blog/{slug}", response_class=HTMLResponse)
@@ -141,7 +173,7 @@ def blog_articolo(slug: str):
     with connetti() as conn:
         a = articoli.per_slug(conn, slug)
         if a and a["stato"] == "pubblicato":
-            return HTMLResponse(blog.pagina_articolo(conn, a))
+            return HTMLResponse(blog.pagina_articolo(conn, a), headers=CACHE_BREVE)
     if a and a["stato"] == "archiviato":
         return HTMLResponse(pubblico.pagina("Articolo non più disponibile - bandinQiaro",
                                             '<section class="testo-legale"><h1>Articolo non più disponibile</h1><p>Questo '
@@ -157,7 +189,7 @@ def llms_txt():
     solo blog aperto descrive il blog e i suoi articoli (niente prezzi della landing, ancora da decidere)."""
     with connetti() as conn:
         testo = blog.llms_txt_blog(conn) if pubblico.solo_blog() else landing.llms_txt(conn)
-        return PlainTextResponse(testo, media_type="text/markdown; charset=utf-8")
+        return PlainTextResponse(testo, media_type="text/markdown; charset=utf-8", headers=CACHE_BREVE)
 
 
 @app.get("/favicon.svg")
@@ -190,6 +222,11 @@ def plancia(percorso: str, request: Request):
     """Serve la plancia: i file costruiti da Vite; qualunque altro percorso torna index.html (app a pagina singola).
     Con PAGINA_PUBBLICA=1 chi arriva su "/" senza aver fatto l'accesso vede la presentazione."""
     if percorso.startswith("api/"):
+        raise HTTPException(status_code=404, detail="non trovato")
+    if percorso.endswith(".txt") and "/" not in percorso:     # /<INDEXNOW_KEY>.txt: prova che gli avvisi sono nostri
+        chiave = indexnow.file_chiave(percorso)
+        if chiave:
+            return PlainTextResponse(chiave, headers={"Cache-Control": "public, max-age=86400"})
         raise HTTPException(status_code=404, detail="non trovato")
     if percorso == "" and pubblico.pubblica() and not request.cookies.get(COOKIE):
         return _presentazione()

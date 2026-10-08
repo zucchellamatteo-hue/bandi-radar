@@ -7,6 +7,25 @@
 
 {$SITE_ADDRESS} {
 	encode gzip
+	# Intestazioni di sicurezza su tutte le risposte (09/10/2026, valutazione SEO/GEO):
+	# - HSTS 1 anno, senza preload e senza sottodomini: il browser usa sempre https per questo sito;
+	# - nosniff: il browser non "indovina" il tipo dei file;
+	# - Referrer-Policy: agli altri siti arriva solo il dominio di provenienza, non l'indirizzo intero;
+	# - Permissions-Policy: niente fotocamera, microfono, posizione, pagamenti dal browser, USB;
+	# - X-Frame-Options SAMEORIGIN: le nostre pagine non si possono incorniciare in siti altrui (l'anteprima del blog in
+	#   plancia usa un iframe con il testo dentro, srcdoc, e non ne e' toccata);
+	# - via "Server" e "Via": non serve dire a tutti che programmi rispondono.
+	# La cache (Cache-Control) la decide l'applicazione pagina per pagina: blog e file per i motori 5 minuti, immagini e
+	# favicon 7 giorni (app/main.py).
+	header {
+		Strict-Transport-Security "max-age=31536000"
+		X-Content-Type-Options "nosniff"
+		Referrer-Policy "strict-origin-when-cross-origin"
+		Permissions-Policy "camera=(), microphone=(), geolocation=(), payment=(), usb=()"
+		X-Frame-Options "SAMEORIGIN"
+		-Server
+		-Via
+	}
 	reverse_proxy app:8000
 }
 
@@ -16,4 +35,3 @@
 {$SITE_ALTRI} {
 	redir https://{$SITE_ADDRESS}{uri} permanent
 }
-

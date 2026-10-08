@@ -19,6 +19,7 @@ from __future__ import annotations
 
 import json
 import os
+import re
 from datetime import date
 from xml.sax.saxutils import escape
 
@@ -63,6 +64,10 @@ def robots_txt(pubblica: bool, blog: bool = False) -> str:
         righe += ["Allow: /$", "Allow: /?"]                 # la home, anche con i parametri degli annunci
         righe += [f"Allow: {p}$" for p, _, _ in PAGINE_PUBBLICHE if p != "/"]
     righe += [f"Allow: {p}" for p in FILE_PUBBLICI + SEZIONI_PUBBLICHE]
+    from app.pubblico import indexnow
+
+    if indexnow.chiave():                                   # il file della chiave IndexNow (09/10) va letto da Bing
+        righe.append(f"Allow: /{indexnow.chiave()}.txt$")
     righe += ["Disallow: /", "", f"Sitemap: {assoluto('/sitemap.xml')}", ""]
     return "\n".join(righe)
 
@@ -97,6 +102,104 @@ def sitemap_xml(ultimo_aggiornamento: date | None = None, articoli: list[tuple[s
                     f"<changefreq>{freq}</changefreq><priority>{prio}</priority></url>")
     return ('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
             + "\n".join(voci) + "\n</urlset>\n")
+
+
+# --- titoli e descrizioni per Google (09/10/2026, valutazione SEO/GEO) ---
+
+TITOLO_MAX = 60             # Google mostra circa 60 caratteri del <title>
+HEADLINE_MAX = 110          # limite di Google per "headline" nei dati strutturati Article
+DESCRIZIONE_MIN, DESCRIZIONE_MAX = 140, 160
+MARCHIO = " | " + NOME
+# Parole che non possono chiudere un titolo accorciato ("... si risparmia su" -> "... si risparmia").
+_PAROLE_DEBOLI = {"a", "ad", "al", "allo", "alla", "ai", "agli", "alle", "con", "da", "dal", "dalla", "dai", "dalle",
+                  "di", "del", "dello", "della", "dei", "degli", "delle", "e", "ed", "o", "od", "in", "nel", "nella",
+                  "nei", "nelle", "per", "su", "sul", "sulla", "sui", "sulle", "tra", "fra", "il", "lo", "la", "i",
+                  "gli", "le", "un", "uno", "una", "che", "come", "ma", "se", "non", "anche", "più", "-", "–", "—"}
+_PUNTEGGIATURA = " ,;:.–—-|/(…"
+
+
+def _pulisci_coda(testo: str) -> str:
+    """Toglie punteggiatura e parole deboli in fondo (articoli, preposizioni, congiunzioni)."""
+    parole = testo.rstrip(_PUNTEGGIATURA).split()
+    while len(parole) > 1 and parole[-1].lower().strip(_PUNTEGGIATURA) in _PAROLE_DEBOLI | {""}:
+        parole.pop()
+    return " ".join(parole).rstrip(_PUNTEGGIATURA)
+
+
+def titolo_breve(testo: str, massimo: int) -> str:
+    """Accorcia un titolo entro `massimo` caratteri senza tagliare le parole: via le parentesi, poi si taglia a una
+    pausa naturale (due punti, virgola, trattino) se resta abbastanza testo, altrimenti all'ultima parola intera, e
+    si tolgono le parole che non possono chiudere una frase. Niente puntini: il titolo deve sembrare intero."""
+    t = " ".join((testo or "").split())
+    if len(t) <= massimo:
+        return t
+    senza = " ".join(re.sub(r"\s*\([^)]*\)", "", t).split())
+    if len(senza) <= massimo:
+        return _pulisci_coda(senza)
+    pezzo = senza[:massimo + 1]
+    taglio = pezzo.rsplit(" ", 1)[0] if " " in pezzo else senza[:massimo]
+    pause = [m.start() for m in re.finditer(r"[,;:–—]|\s-\s", taglio)]
+    if pause and pause[-1] >= massimo * 0.5:            # una pausa naturale abbastanza in fondo
+        taglio = taglio[:pause[-1]]
+    risultato = _pulisci_coda(taglio)
+    return risultato or senza[:massimo]
+
+
+def titolo_pagina(titolo: str, titolo_seo: str | None = None, massimo: int = TITOLO_MAX) -> str:
+    """Il <title> di un articolo, entro `massimo` caratteri: il titolo per Google se c'e' (scritto a mano), altrimenti
+    il titolo accorciato alla parola; col marchio " | bandinQiaro" in fondo solo se ci sta."""
+    base = " ".join((titolo_seo or "").split())
+    if not base:
+        intero = " ".join((titolo or "").split())
+        base = intero if len(intero) + len(MARCHIO) <= massimo else titolo_breve(intero, massimo - len(MARCHIO))
+        if len(base) < 25:                              # troppo corto col marchio: meglio piu' titolo e niente marchio
+            base = titolo_breve(intero, massimo)
+    if NOME.lower() not in base.lower() and len(base) + len(MARCHIO) <= massimo:
+        return base + MARCHIO
+    return base if len(base) <= massimo else titolo_breve(base, massimo)
+
+
+def headline(titolo: str, titolo_seo: str | None = None) -> str:
+    """"headline" dei dati strutturati: il titolo intero se sta in 110 caratteri, altrimenti il titolo per Google,
+    altrimenti il titolo accorciato alla parola (mai tagliato a meta' parola)."""
+    intero = " ".join((titolo or "").split())
+    if len(intero) <= HEADLINE_MAX:
+        return intero
+    breve = " ".join((titolo_seo or "").split())
+    return breve if breve and len(breve) <= HEADLINE_MAX else titolo_breve(intero, HEADLINE_MAX)
+
+
+def descrizione_meta(testo: str, coda: str = "", minimo: int = DESCRIZIONE_MIN, massimo: int = DESCRIZIONE_MAX) -> str:
+    """Meta description tra `minimo` e `massimo` caratteri. Troppo lunga: si tiene la frase intera piu' lunga che ci
+    sta, o si taglia all'ultima parola con "…". Troppo corta: si aggiunge `coda` (es. la data di aggiornamento) se ci sta."""
+    t = " ".join((testo or "").split())
+    if len(t) > massimo:
+        frasi = [m.end() for m in re.finditer(r"[.!?](?=\s|$)", t[:massimo + 1]) if m.end() <= massimo]
+        if frasi and frasi[-1] >= minimo:
+            t = t[:frasi[-1]]
+        else:
+            t = _pulisci_coda(t[:massimo].rsplit(" ", 1)[0]) + "…"
+    if len(t) < minimo and coda:
+        unione = t + ("" if t.endswith((".", "!", "?")) else ".") + " " + coda.strip()
+        if len(unione) <= massimo:
+            t = unione
+    return t
+
+
+def autore(nome: str | None) -> dict:
+    """L'autore per i dati strutturati. Una redazione (o il segnaposto ancora da riempire) e' una Organization:
+    "Redazione bandinQiaro – contenuti verificati da..." diventa "Redazione bandinQiaro" (la parte prima del trattino),
+    legata all'organizzazione del sito. Un nome di persona ("Mario Rossi, commercialista") resta una Person."""
+    testo = " ".join((nome or "").split())
+    principale = re.split(r"\s+[–—-]\s+|,", testo, maxsplit=1)[0].strip() if testo else ""
+    if not principale or "[" in principale or principale.lower().startswith(("redazione", NOME.lower())):
+        nome_org = principale if principale.lower().startswith("redazione") else f"Redazione {NOME}"
+        return {"@type": "Organization", "name": nome_org, "url": assoluto("/blog"),
+                "parentOrganization": {"@id": assoluto("/#organizzazione")}}
+    persona = {"@type": "Person", "name": principale}
+    if principale != testo:
+        persona["description"] = testo
+    return persona
 
 
 def json_ld(oggetti: list[dict]) -> str:

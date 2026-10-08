@@ -43,6 +43,13 @@ def _iso(x) -> str | None:
     return x.isoformat() if x else None
 
 
+def data_modifica(a: dict):
+    """La data di ultima modifica da mostrare: mai prima della pubblicazione (09/10). Un articolo scritto il 07/10
+    alle 15 e pubblicato alle 22 senza ritocchi risulta "aggiornato" alle 22, non prima di essere uscito."""
+    date = [d for d in (a.get("aggiornato_il"), a.get("pubblicato_il")) if d]
+    return max(date) if date else None
+
+
 def _riquadro_chiuso(chiuso: dict | None) -> str:
     from app.pubblico import _e
 
@@ -62,7 +69,7 @@ def pagina_articolo(conn, a: dict, anteprima: bool = False) -> str:
     percorso = f"/blog/{a['slug']}"
     url = seo.assoluto(percorso)
     autore = a.get("autore") or articoli.autore_predefinito()
-    aggiornato = a.get("aggiornato_il") or (datetime.now(timezone.utc) if anteprima else None)
+    aggiornato = data_modifica(a) or (datetime.now(timezone.utc) if anteprima else None)
     chiuso = articoli.situazione_collegata(conn, a)
     faq = articoli.domande_frequenti(a["corpo"])
     minuti = max(1, round(articoli.parole(a["corpo"]) / PAROLE_AL_MINUTO))
@@ -94,22 +101,28 @@ solo i bandi adatti alla tua impresa, con una scheda chiara. Prova gratis per {g
 la domanda leggi sempre il bando ufficiale: requisiti, importi e scadenze possono cambiare.</p>
 </div></section>"""
     org = seo.organizzazione("bandinQiaro: bandi e agevolazioni per imprese, schede chiare e segnalazioni su misura.")
-    articolo = {"@type": "Article", "@id": url + "#articolo", "headline": a["titolo"][:110], "description": a["sommario"],
-                "inLanguage": "it-IT", "mainEntityOfPage": url, "url": url, "image": seo.assoluto("/immagini/anteprima.png"),
-                "author": {"@type": "Person", "name": autore}, "publisher": {"@id": seo.assoluto("/#organizzazione")},
-                "isAccessibleForFree": True}
+    descrizione = seo.descrizione_meta(a["sommario"], f"Aggiornato il {_data(aggiornato)}, con le fonti ufficiali." if aggiornato else "")
+    articolo = {"@type": "Article", "@id": url + "#articolo", "headline": seo.headline(a["titolo"], a.get("titolo_seo")),
+                "description": a["sommario"], "inLanguage": "it-IT", "mainEntityOfPage": url, "url": url,
+                "image": seo.assoluto("/immagini/anteprima.png"), "author": seo.autore(autore),
+                "publisher": {"@id": seo.assoluto("/#organizzazione")}, "isAccessibleForFree": True}
     if a.get("pubblicato_il"):
         articolo["datePublished"] = _iso(a["pubblicato_il"])
     if aggiornato:
         articolo["dateModified"] = _iso(aggiornato)
+    og = ['<meta property="article:section" content="Bandi e agevolazioni">']
+    if a.get("pubblicato_il"):
+        og.append(f'<meta property="article:published_time" content="{_e(_iso(a["pubblicato_il"]))}">')
+    if aggiornato:
+        og.append(f'<meta property="article:modified_time" content="{_e(_iso(aggiornato))}">')
     # Con la landing chiusa (solo blog aperto) le briciole partono dal blog: "/" non e' ancora una pagina pubblica.
     passi = ([("bandinQiaro", seo.assoluto("/"))] if pubblica() else []) + [("Blog", seo.assoluto("/blog")), (a["titolo"], url)]
     briciole = {"@type": "BreadcrumbList", "itemListElement": [
         {"@type": "ListItem", "position": i, "name": nome, "item": dove} for i, (nome, dove) in enumerate(passi, 1)]}
     grafo = [org, articolo, briciole] + ([seo.domande_frequenti(faq, percorso)] if faq else [])
     indicizza = blog_pubblico() and not anteprima and a.get("stato") == "pubblicato"
-    return pagina(f"{a['titolo']} | bandinQiaro", corpo, a["sommario"], indicizza=indicizza, percorso=percorso,
-                  testa=STILE_BLOG + seo.json_ld(grafo))
+    return pagina(seo.titolo_pagina(a["titolo"], a.get("titolo_seo")), corpo, descrizione, indicizza=indicizza,
+                  percorso=percorso, testa="".join(og) + STILE_BLOG + seo.json_ld(grafo), tipo_og="article")
 
 
 def pagina_elenco(conn) -> str:
@@ -120,7 +133,7 @@ def pagina_elenco(conn) -> str:
     for a in voci:
         chiuso = articoli.situazione_collegata(conn, a)
         etichetta = ' <span class="etichetta-chiuso">bando chiuso</span>' if chiuso else ""
-        carte.append(f"""<article class="carta"><div class="piccolo">Aggiornato il {_data(a['aggiornato_il'])}{etichetta}</div>
+        carte.append(f"""<article class="carta"><div class="piccolo">Aggiornato il {_data(data_modifica(a))}{etichetta}</div>
 <h2><a href="/blog/{_e(a['slug'])}">{_e(a['titolo'])}</a></h2><p>{_e(a['sommario'])}</p>
 <p><a href="/blog/{_e(a['slug'])}">Leggi l'articolo →</a></p></article>""")
     avviso = "" if blog_pubblico() else '<p class="bozza">Anteprima: il sito non è ancora pubblico né indicizzato (BLOG_PUBBLICO=0).</p>'
@@ -136,10 +149,10 @@ cercati e su quelli che pochi conoscono, scritti sui documenti ufficiali.</p></d
 <p><a class="bottone grande bianco" href="/registrati">Inizia la prova gratuita</a></p></div></section>"""
     blog = {"@type": "Blog", "@id": seo.assoluto("/blog#blog"), "name": "Blog di bandinQiaro", "url": seo.assoluto("/blog"),
             "inLanguage": "it-IT", "publisher": {"@id": seo.assoluto("/#organizzazione")},
-            "blogPost": [{"@type": "Article", "headline": a["titolo"][:110], "url": seo.assoluto(f"/blog/{a['slug']}"),
-                          "datePublished": _iso(a["pubblicato_il"]), "dateModified": _iso(a["aggiornato_il"])} for a in voci]}
+            "blogPost": [{"@type": "Article", "headline": seo.headline(a["titolo"], a.get("titolo_seo")),
+                          "url": seo.assoluto(f"/blog/{a['slug']}"), "datePublished": _iso(a["pubblicato_il"]), "dateModified": _iso(data_modifica(a))} for a in voci]}
     org = seo.organizzazione("bandinQiaro: bandi e agevolazioni per imprese, schede chiare e segnalazioni su misura.")
-    return pagina("Blog: bandi e agevolazioni per imprese spiegati semplici | bandinQiaro", corpo,
+    return pagina("Blog: bandi e agevolazioni per imprese | bandinQiaro", corpo,
                   "Articoli brevi sui bandi per imprese più cercati e su quelli di nicchia: a chi servono, quanto valgono, "
                   "scadenze, come si chiedono ed errori da evitare.", indicizza=blog_pubblico(), percorso="/blog",
                   testa=STILE_BLOG + seo.json_ld([org, blog]))
@@ -150,8 +163,8 @@ def voci_sitemap(conn) -> list[tuple[str, str]]:
     voci = articoli.pubblicati(conn)
     if not voci:
         return []
-    ultimo = max(a["aggiornato_il"] for a in voci)
-    return [("/blog", ultimo.date().isoformat())] + [(f"/blog/{a['slug']}", a["aggiornato_il"].date().isoformat()) for a in voci]
+    ultimo = max(data_modifica(a) for a in voci)
+    return [("/blog", ultimo.date().isoformat())] + [(f"/blog/{a['slug']}", data_modifica(a).date().isoformat()) for a in voci]
 
 
 def righe_llms(conn) -> list[str]:
@@ -163,7 +176,7 @@ def righe_llms(conn) -> list[str]:
     for a in voci:
         chiuso = " (bando chiuso: solo consultazione)" if articoli.situazione_collegata(conn, a) else ""
         righe.append(f"- [{a['titolo']}]({seo.assoluto('/blog/' + a['slug'])}): {a['sommario']} "
-                     f"Aggiornato il {_data(a['aggiornato_il'])}.{chiuso}")
+                     f"Aggiornato il {_data(data_modifica(a))}.{chiuso}")
     return righe + [""]
 
 
