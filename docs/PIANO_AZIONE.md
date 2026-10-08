@@ -16,7 +16,7 @@ graduatorie per il bando.
 
 | # | Azione | Stato | Chi |
 |---|---|---|---|
-| 0 | **Procedura nuova del regista**: tipo di agevolazione → verifica del documento → scheda solo con documento verificato → secondo controllo obbligatorio → proponibile; senza documento lista "da recuperare" con il motivo | **pronta, spenta**: si accende con la PR 126 (ripasso: 400 restano, 25 escono) | Claude, via di **Matteo** |
+| 0 | **Procedura nuova del regista** | **attiva** dal 09/10 (25 bandi usciti finché non si recupera il documento) | Claude |
 | 1 | Secondo controllo su tutte le schede proponibili | **fatto** il 08/10 (379 + 97 solo documento; 58 gravi corretti) | Claude |
 | 2 | Automatizzare il secondo controllo con un modello economico (prova Gemini 3.8 Flash su server UE, < 10 $) | in attesa del via di Matteo | Matteo / Claude |
 | 3 | Regola automatica "chi presenta la domanda": se solo enti, associazioni o intermediari, non si propone alle imprese | in parte: 22 casi corretti il 08/10; la regola resta nel controllo preliminare e nel secondo controllo | Claude |
@@ -24,8 +24,8 @@ graduatorie per il bando.
 | 5 | Doppioni ed edizioni mescolate: stessa pagina ufficiale in due schede = grave (salvo pagine elenco) | da fare | Claude |
 | 6 | Ricerca settimanale dei bandi più discussi + aggiornamento della vetrina | da fare (primo giro 06/10) | Claude |
 | 7 | Fonti bloccate: certificati incompleti (MIT, ENEA, ISMEA), anti-robot (MUR, MAECI, Camera di Milano) | da fare | Claude |
-| 8 | Schede delle misure nazionali approfondite sul modello della Nuova Sabatini (tabelle, distinzioni per dimensione e categoria, formula del beneficio) | Sabatini fatta (PR 119); altre 10 da fare | Claude |
-| 9 | Ordinamenti in catalogo e pagina impresa (scadenza, pertinenza, beneficio, tipo di contributo) | da rifare (agente fermato) | Claude |
+| 8 | Schede delle misure nazionali approfondite sul modello della Nuova Sabatini | **fatto** il 09/10 (11 misure; punti da verificare in docs/ricerche/2026-10-09_misure_nazionali_approfondite.md) | Claude |
+| 9 | Ordinamenti in catalogo e pagina impresa (scadenza, pertinenza, beneficio, tipo di contributo) | **fatto** il 09/10; agevolazioni senza soldi in secondo piano | Claude |
 | 10 | Misura dell'affidabilità ogni 2 settimane (30 schede a caso, IA + giudizi di Luca) | prossima revisione 20/10 | Claude + Luca |
 
 Il prodotto è vendibile quando la misura del punto 10 dà ≥ 9 per due revisioni di fila.
@@ -47,7 +47,7 @@ cookie (pagina Visite) e rapporto SEO/GEO ogni mattina via email; landing in ant
 | 4 | Firma degli articoli: oggi "Redazione bandinQiaro – contenuti verificati da un dottore commercialista iscritto all'Albo"; con nome e iscrizione il segnale per Google è più forte | **Matteo** decide |
 | 5 | Dati di Search Console nel rapporto quotidiano (API) | Claude, dopo il punto 1 |
 | 6 | Pagine pubbliche delle misure nazionali e "bandi aperti in [regione]" | Claude |
-| 7 | Articolo "software su commessa: iperammortamento + R&S + patent box" (ricerca già fatta) | Claude, in bozza |
+| 7 | Articolo "software su commessa: iperammortamento + R&S + patent box" | **in bozza** (n. 18) dal 09/10: da rileggere e pubblicare | Matteo |
 | 8 | Prime menzioni: LinkedIn, Google Business Profile, rapporto mensile con i numeri per stampa di settore e Ordini | Matteo con testi di Claude |
 | 9 | Aprire la landing: prezzo allineato con Stripe e Termini, "Chi c'è dietro", titolare con P.IVA nel piede | **Matteo** decide, Claude esegue |
 | 10 | Google Ads con Consent Mode v2 | dopo la società |
@@ -55,11 +55,11 @@ cookie (pagina Visite) e rapporto SEO/GEO ogni mattina via email; landing in ant
 ## 3. Cose che deve fare Matteo, in ordine
 
 **Questa settimana**
-1. ~~Ok alla procedura nuova~~ (dato l'08/10). **Nuovo: via per accenderla** (PR 126): 25 bandi escono dalle proposte finché non si recupera il documento.
+1. ~~Ok e via alla procedura nuova~~ (accesa il 09/10).
 2. ~~Search Console e Bing~~ (fatto l'08/10). **Email nello spam**: chiedere a Luca "Non è spam", scegliere la casella per `EMAIL_CONTATTO` (prossimo passo n. 44).
 3. **Repository privato**: dire "ok chiave" → Claude prepara la chiave del server → Matteo la aggiunge su GitHub
    (Settings → Deploy keys) → poi rende privato il repository.
-4. Leggere la **scheda Nuova Sabatini** rifatta (pagina Misure) e dire se il modello va bene per le altre misure.
+4. ~~Scheda Nuova Sabatini~~ (approvata il 09/10, applicata alle altre misure). Rileggere l'**articolo Sabatini** rivisto (bozza n. 11, con il calcolatore) e l'**articolo sul cumulo** (bozza n. 18); decidere la **firma** degli articoli (formula stabile se la cancellazione dall'Albo è vicina); pubblicare prima gli articoli linkati (Fondo di garanzia, ZES, Conto Termico).
 5. Pubblicare 2-3 articoli del blog (pagina Blog: Anteprima → Pubblica).
 6. Mandare a **Luca** la richiesta di 20-30 giudizi sulle schede proponibili (Claude prepara il messaggio).
 
