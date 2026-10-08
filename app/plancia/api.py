@@ -363,6 +363,7 @@ def catalogo_bandi(
     tema: str | None = None, categoria_spesa: str | None = None, modalita: str | None = None,
     regime: str | None = None, in_disparte: Literal["no", "anche", "solo"] = "no",
     destinatari: Literal["imprese", "non_profit", "tutti"] = "imprese",
+    ordina: Literal["pertinenza", "scadenza", "beneficio", "tipo"] = "pertinenza",
     pagina: int = Query(1, ge=1), per_pagina: int = Query(50, ge=1, le=200),
 ) -> dict:
     """Catalogo dei bandi con scheda. I filtri su chi puo' partecipare seguono i tre stati dei vincoli: passano i bandi
@@ -382,7 +383,7 @@ def catalogo_bandi(
         with conn.cursor() as cur:
             cur.execute("SELECT count(*) AS n FROM bandi WHERE completezza IS NULL")
             senza_scheda = cur.fetchone()["n"]
-    trovati = catalogo.filtra(bandi, filtri)
+    trovati = catalogo.ordina_per(catalogo.filtra(bandi, filtri), ordina)
     conteggi = {"compatibile": 0, "da_verificare": 0}
     for _, esito in trovati:
         conteggi[esito.livello] += 1

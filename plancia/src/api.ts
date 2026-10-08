@@ -217,6 +217,8 @@ export interface BandoRiga {
   temi: string[] | null; qualita: number | null; sintesi: string; esito: EsitoRegole;
   solo_non_profit?: boolean;   // per associazioni ed enti del Terzo settore, non per imprese (07/10)
   secondo_piano?: boolean;     // non da' soldi (servizi, riconoscimenti): in fondo all'elenco (09/10)
+  beneficio?: number | null;   // beneficio potenziale per ordinare: massimo a fondo perduto o contributo (09/10)
+  rango_tipo?: number;         // 0 fondo perduto, 1 credito d'imposta, 2 finanziamento, 3 garanzia, 4 altro, 5 senza soldi
 }
 
 export interface RispostaCatalogo {

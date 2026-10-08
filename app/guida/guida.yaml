@@ -374,7 +374,10 @@ sezioni:
       - **Destinatari**: di base "imprese"; scegli "non profit" per vedere i bandi aperti ad associazioni ed enti del Terzo settore (anche quelli che ammettono pure le imprese), "tutti" per entrambi. I bandi solo per il non profit hanno l'etichetta **non profit** accanto al titolo e non vengono mai proposti alle imprese;
       - Chi partecipa: regioni (anche più di una), provincia, tipo di soggetto, forma giuridica, dimensione, codice ATECO, bandi riservati o con punti per un requisito;
       - Cosa e come: tipo di agevolazione, tema, spese finanziate, modalità di selezione, regime d'aiuto;
+      - **Ordina per**: pertinenza (di base: prima i compatibili e il fondo perduto), scadenza più vicina, beneficio (il contributo massimo a fondo perduto o il credito; prestiti e garanzie in fondo) o tipo (prima il fondo perduto, poi crediti d'imposta, finanziamenti, garanzie);
       - **Azzera filtri** toglie tutto.
+
+      Le agevolazioni che non danno soldi (servizi gratuiti, riconoscimenti, spazi, iscrizioni a registri) hanno l'etichetta **senza contributo** e stanno in fondo all'elenco.
 
       I filtri su chi partecipa danno due risultati:
       - **✓ compatibile**: il bando ammette quel valore o non pone limiti;
@@ -382,7 +385,7 @@ sezioni:
 
       I bandi esclusi non compaiono.
 
-      Proponibili e in disparte. Di base vedi solo i bandi **proponibili**: la scheda è fatta sul testo ufficiale del bando e il controllo automatico non ha trovato problemi gravi. Quelli **in disparte** hanno una scheda fatta solo su una sintesi o una pagina web, oppure un problema grave ancora da sistemare: non si propongono ai clienti. Per vederli usa l'ultimo menu dei filtri ("Anche quelli in disparte" o "Solo quelli in disparte").
+      Proponibili e in disparte. Di base vedi solo i bandi **proponibili**: la scheda è fatta sul testo ufficiale del bando, il documento è stato verificato (è davvero l'avviso di questo bando, dell'edizione in corso), il secondo controllo della scheda non ha trovato errori gravi aperti e il controllo automatico non ha trovato problemi gravi. Quelli **in disparte** hanno una scheda fatta solo su una sintesi o una pagina web, oppure un problema grave ancora da sistemare: non si propongono ai clienti. Per vederli usa l'ultimo menu dei filtri ("Anche quelli in disparte" o "Solo quelli in disparte").
 
       Leggere una scheda (clicca il titolo):
       - in cima: stato, ente, date, modalità di selezione e **pagina ufficiale ↗**;
@@ -537,14 +540,14 @@ sezioni:
 
       In alto, il riepilogo: quanti bandi sono adatti, quanti da valutare, quanti scadono entro 15 giorni (premi il riquadro per vedere solo quelli) e quanti sono nuovi, cioè arrivati in bandinQiaro negli ultimi 7 giorni. Se nel profilo manca un dato utile (codice ATECO, dimensione, data di costituzione) un avviso ti dice quanti bandi si chiarirebbero completandolo.
 
-      Sotto, due filtri: **tipo di agevolazione** (fondo perduto e voucher, credito d'imposta, finanziamento agevolato, garanzia, altre) e **scadenza** (entro 15 giorni, 30 giorni, 3 mesi, senza scadenza). **Togli i filtri** li azzera.
+      Sotto, due filtri: **tipo di agevolazione** (fondo perduto e voucher, credito d'imposta, finanziamento agevolato, garanzia, altre) e **scadenza** (entro 15 giorni, 30 giorni, 3 mesi, senza scadenza). **Togli i filtri** li azzera. Il terzo menu cambia l'**ordine**: pertinenza (di base), scadenza più vicina, beneficio più alto o prima il fondo perduto.
 
       I bandi sono in gruppi:
       - **Bandi adatti**: tutti i requisiti che il bando chiede sono verificati sui dati della tua impresa.
       - **Bandi potenzialmente applicabili**: c'è un requisito da controllare nel bando o un dato che manca nel profilo. Ogni bando dice il motivo in parole semplici, per esempio "serve verificare il codice ATECO".
       - **Bandi di altre regioni** (si apre con un clic, in fondo ai potenzialmente applicabili): bandi di enti di un'altra regione; servirebbe una sede o il progetto lì.
 
-      In ogni gruppo vengono prima i bandi a fondo perduto, poi quelli che scadono prima. I bandi a cui non puoi partecipare, compresi quelli per enti, associazioni e terzo settore, non compaiono.
+      In ogni gruppo vengono prima i bandi a fondo perduto, poi quelli che scadono prima; in fondo le agevolazioni senza contributo in denaro (servizi gratuiti, riconoscimenti). I bandi a cui non puoi partecipare, compresi quelli per enti, associazioni e terzo settore, non compaiono.
 
       Ogni bando è una scheda con titolo, ente e territorio, tipo e intensità dell'agevolazione (per esempio "Fondo perduto 50%, fino a 20.000 €"), scadenza (in rosso se entro 15 giorni), l'etichetta **Nuovo** o **In scadenza**, il motivo, e due pulsanti: **Apri la scheda** e **Richiedi supporto**. **Mostra altri** allunga l'elenco.
 

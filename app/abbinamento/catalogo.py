@@ -197,6 +197,43 @@ def prima_il_fondo_perduto(risultati: list[tuple[dict, regole.Esito]]) -> list[t
     return sorted(risultati, key=lambda x: (livelli.get(x[1].livello, 2), secondo_piano(x[0]), not a_fondo_perduto(x[0])))
 
 
+# Ordinamenti dell'elenco (09/10/2026, PIANO_AZIONE punto 9): "pertinenza" e' l'ordine dell'abbinamento; gli altri
+# riordinano lo stesso elenco (a parita' resta la pertinenza).
+ORDINAMENTI = ("pertinenza", "scadenza", "beneficio", "tipo")
+_RANGO_TIPO = {"credito_imposta": 1, "finanziamento_agevolato": 2, "garanzia": 3}
+
+
+def beneficio(b: dict) -> float | None:
+    """Beneficio potenziale per l'ordinamento: il massimo a fondo perduto, o il contributo massimo se e' un contributo o
+    un credito d'imposta. Prestiti e garanzie non hanno un "beneficio" confrontabile: None (vanno in fondo)."""
+    if b.get("fondo_perduto_massimo"):
+        return float(b["fondo_perduto_massimo"])
+    tipi = set(b.get("tipi_agevolazione") or []) | ({b["tipo_agevolazione"]} if b.get("tipo_agevolazione") else set())
+    if b.get("contributo_massimo") and (a_fondo_perduto(b) or "credito_imposta" in tipi or "misto" in tipi):
+        return float(b["contributo_massimo"])
+    return None
+
+
+def rango_tipo(b: dict) -> int:
+    """0 fondo perduto e voucher, 1 credito d'imposta, 2 finanziamento agevolato, 3 garanzia, 4 altro, 5 senza soldi."""
+    if secondo_piano(b):
+        return 5
+    if a_fondo_perduto(b):
+        return 0
+    tipi = set(b.get("tipi_agevolazione") or []) | ({b["tipo_agevolazione"]} if b.get("tipo_agevolazione") else set())
+    return min((_RANGO_TIPO.get(t, 4) for t in tipi), default=4)
+
+
+def ordina_per(risultati: list[tuple[dict, regole.Esito]], criterio: str) -> list[tuple[dict, regole.Esito]]:
+    if criterio == "scadenza":
+        return sorted(risultati, key=lambda x: (x[0].get("scadenza") is None, x[0].get("scadenza") or date.max))
+    if criterio == "beneficio":
+        return sorted(risultati, key=lambda x: (beneficio(x[0]) is None, -(beneficio(x[0]) or 0)))
+    if criterio == "tipo":
+        return sorted(risultati, key=lambda x: rango_tipo(x[0]))
+    return risultati
+
+
 def proponibile(b: dict) -> bool:
     """Si propone ai clienti solo un bando con la scheda fatta sul bando ufficiale (Matteo, 01/10/2026): una sintesi,
     una notizia o la scheda del catalogo non bastano. Gli altri restano "in disparte"."""
@@ -236,4 +273,5 @@ CAMPI_RIGA = ("id", "titolo", "ente", "territorio", "url", "stato", "data_apertu
 
 def riga(b: dict, esito: regole.Esito) -> dict:
     return {**{k: b.get(k) for k in CAMPI_RIGA}, "sintesi": (b.get("sintesi") or "")[:260], "esito": esito.come_dict(),
-            "solo_non_profit": solo_non_profit(b), "secondo_piano": secondo_piano(b)}
+            "solo_non_profit": solo_non_profit(b), "secondo_piano": secondo_piano(b), "beneficio": beneficio(b),
+            "rango_tipo": rango_tipo(b)}

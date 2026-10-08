@@ -106,3 +106,24 @@ def test_campagna_completa(monkeypatch):
     r = c.post("/api/campagne", auth=admin, json={"nome": "vuota", "profili": []})
     assert r.status_code == 422
     assert c.delete(f"/api/campagne/{cid}", auth=admin).status_code == 200
+
+
+def test_ordinamenti():
+    """Ordinamenti del catalogo e della pagina impresa (09/10): scadenza, beneficio potenziale, tipo di contributo."""
+    from datetime import date
+
+    from app.abbinamento import catalogo, regole
+
+    e = regole.Esito(livello=regole.COMPATIBILE)
+    a = ({"id": 1, "tipi_agevolazione": ["finanziamento_agevolato"], "contributo_massimo": 900000,
+          "scadenza": date(2026, 12, 1)}, e)
+    b = ({"id": 2, "tipi_agevolazione": ["fondo_perduto"], "fondo_perduto_massimo": 50000, "scadenza": None}, e)
+    c = ({"id": 3, "tipi_agevolazione": ["credito_imposta"], "contributo_massimo": 200000,
+          "scadenza": date(2026, 10, 20)}, e)
+    d = ({"id": 4, "tipi_agevolazione": ["servizi"]}, e)
+    elenco = [a, b, c, d]
+    ids = lambda r: [x[0]["id"] for x in r]
+    assert ids(catalogo.ordina_per(elenco, "pertinenza")) == [1, 2, 3, 4]
+    assert ids(catalogo.ordina_per(elenco, "scadenza")) == [3, 1, 2, 4]
+    assert ids(catalogo.ordina_per(elenco, "beneficio")) == [3, 2, 1, 4]    # il prestito non e' un beneficio
+    assert ids(catalogo.ordina_per(elenco, "tipo")) == [2, 3, 1, 4]

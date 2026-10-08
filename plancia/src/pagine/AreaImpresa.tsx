@@ -83,6 +83,21 @@ function passaTipo(b: BandoImpresa, t: FiltroTipo): boolean {
   return tipi.includes(t);
 }
 
+// Ordinamenti (09/10): "pertinenza" è l'ordine del server (adatti, fondo perduto prima, scadenza); gli altri riordinano
+// dentro ogni gruppo, a parità resta la pertinenza.
+type Ordine = "pertinenza" | "scadenza" | "beneficio" | "tipo";
+const ORDINI: [Ordine, string][] = [["pertinenza", "Ordina per pertinenza"], ["scadenza", "Scadenza più vicina"],
+  ["beneficio", "Beneficio più alto"], ["tipo", "Prima il fondo perduto"]];
+
+function ordinati(bandi: BandoImpresa[], o: Ordine): BandoImpresa[] {
+  const chiave = (b: BandoImpresa): [number, number] =>
+    o === "scadenza" ? [b.scadenza ? 0 : 1, b.scadenza ? Date.parse(b.scadenza) : 0]
+    : o === "beneficio" ? [b.beneficio != null ? 0 : 1, -(b.beneficio || 0)]
+    : o === "tipo" ? [b.rango_tipo ?? 4, 0] : [0, 0];
+  return bandi.map((b, i) => ({ b, i, k: chiave(b) }))
+    .sort((x, y) => x.k[0] - y.k[0] || x.k[1] - y.k[1] || x.i - y.i).map((x) => x.b);
+}
+
 function passaScadenza(b: BandoImpresa, s: string): boolean {
   if (!s) return true;
   if (s === "senza") return !b.scadenza;
@@ -95,7 +110,8 @@ export function VistaBandi({ r, scheda, supporto, misure, profilo }: {
 }) {
   const [tipo, setTipo] = useState<FiltroTipo>("");
   const [scadenza, setScadenza] = useState("");
-  const filtrati = r.bandi.filter((b) => passaTipo(b, tipo) && passaScadenza(b, scadenza));
+  const [ordine, setOrdine] = useState<Ordine>("pertinenza");
+  const filtrati = ordinati(r.bandi.filter((b) => passaTipo(b, tipo) && passaScadenza(b, scadenza)), ordine);
   const gruppo = (g: string) => filtrati.filter((b) => b.gruppo === g);
   const adatti = gruppo("adatti"), daValutare = gruppo("da_valutare"), altrove = gruppo("altre_regioni");
   const filtro = !!(tipo || scadenza);
@@ -122,6 +138,8 @@ export function VistaBandi({ r, scheda, supporto, misure, profilo }: {
           {TIPI_FILTRO.map(([v, t]) => <option key={v} value={v}>{t}</option>)}</select>
         <select value={scadenza} onChange={(e) => setScadenza(e.target.value)} aria-label="Scadenza">
           {SCADENZE_FILTRO.map(([v, t]) => <option key={v} value={v}>{t}</option>)}</select>
+        <select value={ordine} onChange={(e) => setOrdine(e.target.value as Ordine)} aria-label="Ordina">
+          {ORDINI.map(([v, t]) => <option key={v} value={v}>{t}</option>)}</select>
         {filtro && <button onClick={() => { setTipo(""); setScadenza(""); }}>Togli i filtri</button>}
         {filtro && <span className="piccolo">{filtrati.length} bandi su {r.bandi.length}</span>}
       </div>
