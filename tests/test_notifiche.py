@@ -42,3 +42,9 @@ def test_email_automatiche_dicono_di_non_rispondere(monkeypatch):
                         type("R", (), {"raise_for_status": lambda self: None})())
     assert email.invia("a@b.it", "Oggetto", "Testo") == "inviata"
     assert inviate[0]["from"] == "bandinQiaro <non-rispondere@esempio.it>" and "non rispondere" in inviate[0]["text"]
+    # Anche le email scritte solo in testo partono con la versione HTML (08/10: inviti nello spam), e le risposte
+    # vanno alla casella di contatto.
+    assert inviate[0]["reply_to"] == "info@esempio.it"
+    assert email.invia("a@b.it", "Invito", "Ciao <Luca>,\n\napri https://esempio.it/invito?c=abc&d=1\n") == "inviata"
+    h = inviate[1]["html"]
+    assert '<a href="https://esempio.it/invito?c=abc&amp;d=1">' in h and "Ciao &lt;Luca&gt;," in h and "non rispondere" in h
