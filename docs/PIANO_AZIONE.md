@@ -46,7 +46,7 @@ cookie (pagina Visite) e rapporto SEO/GEO ogni mattina via email; landing in ant
 | 3 | Pubblicare 2-3 articoli a settimana (uno per argomento: guida completa, non anche il breve) | **Matteo** pubblica, agenti rivedono |
 | 4 | Firma degli articoli: oggi "Redazione bandinQiaro – contenuti verificati da un dottore commercialista iscritto all'Albo"; con nome e iscrizione il segnale per Google è più forte | **Matteo** decide |
 | 5 | Dati di Search Console nel rapporto quotidiano (API) | Claude, dopo il punto 1 |
-| 6 | Pagine pubbliche delle misure nazionali e "bandi aperti in [regione]" | Claude |
+| 6 | ~~Pagine pubbliche delle misure nazionali~~ e "bandi aperti in [regione]" | pagine delle misure **tolte** (Matteo, 09/10: bastano le guide del blog); resta "bandi aperti in [regione]" | Claude |
 | 7 | Articolo "software su commessa: iperammortamento + R&S + patent box" | **in bozza** (n. 18) dal 09/10: da rileggere e pubblicare | Matteo |
 | 8 | Prime menzioni: LinkedIn, Google Business Profile, rapporto mensile con i numeri per stampa di settore e Ordini | Matteo con testi di Claude |
 | 9 | Aprire la landing: prezzo allineato con Stripe e Termini, "Chi c'è dietro", titolare con P.IVA nel piede | **Matteo** decide, Claude esegue |
