@@ -28,11 +28,13 @@ vetrina:
     ente: "MIMIT e MEF, con il GSE"
     riga: "Deduzione maggiorata del 180% del costo: vale fino a circa il 43% della spesa"
     motivo: "Nuovo Piano Transizione 5.0, tra i piu' discussi di ottobre 2026 (n. 22)"
-  - bando: 4407
+  - bando: 4628
     priorita: 3
-    riga: "Fondo perduto 100% della spesa, fino a 3.000 € (screening e defibrillatore)"
-    motivo: "Fondo screening e DAE: piccolo importo ma per tutte le imprese, rimborso totale"
+    motivo: "Brevetti+ 2026 (20 milioni, tutta Italia, domande dal 25/11/2026): tra i piu' discussi della ricerca del 09/10"
   - bando: 2969
     priorita: 4
     a: 2026-10-22
     motivo: "Tra i piu' discussi di ottobre 2026 (n. 56); fondo perduto all'80%, scade il 22/10/2026"
+  - misura: nuova_sabatini
+    priorita: 5
+    motivo: "Dal 23/10 al posto della 2969: misura nazionale sempre aperta, molto cercata (ricerca del 09/10)"
