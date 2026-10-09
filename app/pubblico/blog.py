@@ -28,6 +28,9 @@ STILE_BLOG = """<style>
 .calcolatore input{font-size:1.15rem;padding:.45rem .6rem;width:100%;max-width:16rem;border:1px solid #b9c9de;border-radius:8px}
 .calcolatore label.spunta{display:flex;gap:.6rem;align-items:flex-start;font-weight:500;margin:.5rem 0}
 .calcolatore label.spunta input{width:1.2rem;height:1.2rem;flex:none;margin:.2rem 0 0;padding:0}
+.ct-blocco{border:1px solid #d5e1f0;border-radius:10px;padding:.3rem .8rem;margin:.6rem 0;background:#fff}
+.ct-blocco summary{font-weight:650;cursor:pointer;min-height:44px;display:flex;align-items:center}
+.calcolatore table.ct-risultati{font-size:.86em;table-layout:fixed}.ct-risultati th,.ct-risultati td{padding:.35em .3em;overflow-wrap:anywhere}.calcolatore .ct-risultati td.cr{white-space:normal}
 .calcolatore table{border-collapse:collapse;width:100%;margin:.8rem 0;font-size:.95em}
 .calcolatore th,.calcolatore td{border-bottom:1px solid #d5e1f0;padding:.4em .5em;text-align:left}
 .calcolatore td[data-tasso]{font-weight:700;white-space:nowrap}.cs-nota{font-weight:600}

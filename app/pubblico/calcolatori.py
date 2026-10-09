@@ -267,62 +267,8 @@ tracciabili a favore dei beneficiari ammessi (portale artbonus.gov.it). Il credi
 })();
 </script>"""
 
-# Conto Termico 3.0 per le imprese (DM 7/8/2025 art. 27; Regole Applicative GSE 19/12/2025 par. 4.2.1, 4.6, 4.7):
-# Titolo II 25% (30% multi-intervento = due o piu' interventi del Titolo II sullo stesso edificio) + 20 piccole / 10
-# medie + 15 zona 107.3.a o 5 zona 107.3.c + 15 se l'energia primaria scende di almeno il 40%; tetto 65% PMI, 60%
-# grandi. Titolo III 45% + 20 piccole / 10 medie (tetti 65/55/45). Punti percentuali (tabella 11 delle Regole).
-# Pagamento: fino a 15.000 euro rata unica; oltre, 2 anni per pompe di calore, ibridi e scaldacqua fino a 35 kW,
-# 5 anni per il Titolo II e gli impianti piu' grandi (con piu' interventi la durata piu' lunga). Trattenuta GSE 1%,
-# al massimo 250 euro piu' IVA, sulla prima rata.
-_CONTO_TERMICO = """<div class="calcolatore" id="calcolatore-ct">
-<h3>Calcola il Conto Termico 3.0 della tua impresa</h3>
-<label for="ct-dim">Dimensione dell'impresa</label>
-<select id="ct-dim"><option value="20">Micro o piccola</option><option value="10">Media</option><option value="0">Grande</option></select>
-<label for="ct-t3">Spesa per impianti a fonti rinnovabili (Titolo III: pompe di calore, ibridi, biomassa, solare termico), euro IVA esclusa</label>
-<input id="ct-t3" type="number" inputmode="numeric" min="0" step="1000" value="30000">
-<label class="spunta"><input id="ct-piccolo" type="checkbox" checked> Pompa di calore, sistema ibrido o scaldacqua fino a 35 kW</label>
-<label for="ct-t2">Spesa per efficienza dell'edificio (Titolo II: cappotto, infissi, schermature, LED, building automation), euro IVA esclusa</label>
-<input id="ct-t2" type="number" inputmode="numeric" min="0" step="1000" value="0">
-<label class="spunta"><input id="ct-multi" type="checkbox"> Due o più interventi del Titolo II sullo stesso edificio (multi-intervento)</label>
-<label for="ct-zona">Zona dell'edificio (aiuti a finalità regionale)</label>
-<select id="ct-zona"><option value="0">Fuori dalle zone assistite</option><option value="5">Zona assistita art. 107.3.c</option>
-<option value="15">Zona assistita art. 107.3.a (Mezzogiorno)</option></select>
-<label class="spunta"><input id="ct-40" type="checkbox"> Il fabbisogno di energia primaria scende di almeno il 40% (APE prima e dopo)</label>
-<table><tbody>
-<tr><td>Percentuale Titolo III</td><td class="cr" id="ct-p3">-</td></tr>
-<tr><td>Percentuale Titolo II</td><td class="cr" id="ct-p2">-</td></tr>
-<tr><td>Contributo stimato</td><td class="cr" id="ct-tot">-</td></tr>
-<tr><td>Come arriva</td><td class="cr" id="ct-rate">-</td></tr>
-</tbody></table>
-<p class="cs-nota" aria-live="polite"></p>
-<p class="piccolo">Stima sulle percentuali del decreto. Il GSE calcola il contributo sui costi ammissibili entro i costi
-massimi unitari (euro al m², euro al kW) e può riconoscere meno. Dalla prima rata trattiene l'1% (al massimo 250 euro più
-IVA). Per le imprese la richiesta preliminare va inviata prima del primo ordine.</p>
-</div>
-<script>
-(function () {
-  var box = document.getElementById("calcolatore-ct"); if (!box) return;
-  function v(sel) { return box.querySelector(sel); }
-  function perc(x) { return x + "%"; }
-  function aggiorna() {
-    var dim = Number(v("#ct-dim").value), t3 = bqNum(box, "#ct-t3"), t2 = bqNum(box, "#ct-t2");
-    var p3 = Math.min(45 + dim, dim === 20 ? 65 : dim === 10 ? 55 : 45);
-    var p2 = Math.min((v("#ct-multi").checked ? 30 : 25) + dim + Number(v("#ct-zona").value) + (v("#ct-40").checked ? 15 : 0),
-                      dim > 0 ? 65 : 60);
-    var tot = t3 * p3 / 100 + t2 * p2 / 100, anni = 1;
-    if (tot > 15000) { anni = (t2 > 0 || (t3 > 0 && !v("#ct-piccolo").checked)) ? 5 : 2; }
-    v("#ct-p3").textContent = t3 ? perc(p3) : "-";
-    v("#ct-p2").textContent = t2 ? perc(p2) : "-";
-    v("#ct-tot").textContent = bqEuro.format(tot);
-    v("#ct-rate").textContent = !tot ? "-" : anni === 1 ? "rata unica" : anni + " rate annuali da " + bqEuro.format(tot / anni);
-    v(".cs-nota").textContent = t2 ? (v("#ct-multi").checked
-        ? "Multi-intervento: serve un risparmio di energia primaria di almeno il 20%, dimostrato con l'APE."
-        : "Intervento singolo del Titolo II: serve un risparmio di energia primaria di almeno il 10%, dimostrato con l'APE.") : "";
-  }
-  box.querySelectorAll("input,select").forEach(function (e) { e.addEventListener("input", aggiorna); e.addEventListener("change", aggiorna); });
-  aggiorna();
-})();
-</script>"""
+# Conto Termico 3.0: calcolatore completo per intervento in app/pubblico/calcolatore_ct.py (09/10).
+from app.pubblico.calcolatore_ct import HTML as _CONTO_TERMICO  # noqa: E402
 
 CALCOLATORI = {"sabatini": _SABATINI, "iperammortamento": _IPER, "credito_rs": _RS, "zes": _ZES,
                "maxi_deduzione": _MAXI, "art_bonus": _ARTBONUS, "conto_termico": _CONTO_TERMICO}
@@ -365,13 +311,3 @@ def credito_zes(costo: float, intensita: tuple[int, int, int], dimensione: int, 
 def art_bonus(donazione: float, ricavi: float) -> float:
     return min(0.65 * donazione, 0.005 * ricavi)
 
-
-def conto_termico(dimensione: int, titolo3: float = 0, titolo2: float = 0, multi: bool = False, zona: int = 0,
-                  risparmio_40: bool = False, pompa_piccola: bool = True) -> tuple[float, int]:
-    """(contributo, anni di pagamento). `dimensione`: 20 piccola, 10 media, 0 grande (punti in piu')."""
-    p3 = min(45 + dimensione, {20: 65, 10: 55}.get(dimensione, 45))
-    p2 = min((30 if multi else 25) + dimensione + zona + (15 if risparmio_40 else 0), 65 if dimensione else 60)
-    totale = titolo3 * p3 / 100 + titolo2 * p2 / 100
-    if totale <= 15_000:
-        return totale, 1
-    return totale, 5 if titolo2 > 0 or (titolo3 > 0 and not pompa_piccola) else 2
