@@ -38,7 +38,8 @@ Decisioni di Matteo del 10/10/2026 (sostituiscono quelle del 05-06/10):
 - **Abbonamento**: mensile **30 € al mese** con rinnovo automatico; annuale **20 € al mese** (240 € l'anno in 12 rate
   mensili). IVA esclusa. Prova gratuita senza carta.
 - **Domanda di bando compresa per gli abbonati**: preparazione e invio senza costi d'avvio (l'abbonamento copre il
-  costo fisso); per i **non abbonati** costo della pratica **da 100 a 300 €**.
+  costo fisso), se l'abbonamento resta attivo fino all'esito della domanda (altrimenti si paga il costo pratica dei non
+  abbonati: decisione del 10/10); per i **non abbonati** costo della pratica **da 100 a 300 €**.
 - **Compenso a successo**: fondo perduto 12% fino a 50.000 €, 10% fino a 150.000 €, 8% oltre (scaglioni progressivi);
   finanziamenti agevolati 1% / 0,75% / 0,5% (soglie 200.000 e 1.000.000 €); Nuova Sabatini e contributi in conto
   interessi come il fondo perduto, sul contributo; crediti d'imposta 6%; minimo 300 € a pratica accolta.
