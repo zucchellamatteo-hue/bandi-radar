@@ -24,7 +24,7 @@ LUNGHEZZA_MINIMA_TITOLO = 18
 LUNGHEZZA_MINIMA_CON_SELETTORE = 5
 _TESTI_GENERICI = re.compile(
     r"^(leggi( di piu'| tutto)?|vai( alla pagina)?|scopri( di piu')?|approfondisci|visita la pagina( dedicata)?|(ulteriori |maggiori )?dettagli|per saperne di pi(u'|ù)|"
-    r"apri|continua|home|privacy|cookie|"
+    r"apri|continua|home|privacy|cookie|visualizza( i documenti| il bando| la scheda)?(?= *(\(\d+\))?$)|"
     r"accedi|login|contatti|mappa del sito|torna su|scarica|download|prev|next|precedente|successivo)\b",
     re.IGNORECASE,
 )
@@ -115,6 +115,9 @@ def _paragrafo_con_titolo(a):
     return paragrafo, titolo
 
 
+_OGGETTO = re.compile(r"^\s*Oggetto\s*:\s*", re.IGNORECASE)
+
+
 def _titolo_della_scheda(a) -> str | None:
     riga = a.find_parent("tr")
     if riga is not None:
@@ -132,6 +135,13 @@ def _titolo_della_scheda(a) -> str | None:
                                and any(p is a for p in h.parents))), None)
         if titolo is not None:
             return _SPAZI.sub(" ", titolo.get_text(" ")).strip()
+        # "Oggetto: Bando ..." scritto come etichetta e testo nella scheda (Sardegna Ricerche, 10/10)
+        etichetta = scheda.find(string=_OGGETTO)
+        if etichetta is not None and etichetta.parent is not None and etichetta.parent.parent is not None:
+            testo = _SPAZI.sub(" ", etichetta.parent.parent.get_text(" ")).strip()
+            testo = _OGGETTO.sub("", testo, count=1).strip()
+            if testo:
+                return testo
         scheda = scheda.find_parent(["article", "li", "div", "tr", "section"])
     return None
 
