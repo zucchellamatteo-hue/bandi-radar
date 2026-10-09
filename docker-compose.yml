@@ -143,6 +143,8 @@ services:
       EMAIL_IMPRESE_APPROVAZIONE: ${EMAIL_IMPRESE_APPROVAZIONE:-1}
       RAPPORTO_SEO: ${RAPPORTO_SEO:-giornaliero}    # email SEO/GEO a Matteo: giornaliero | settimanale | spento (07/10)
       INDEXNOW_KEY: ${INDEXNOW_KEY:-}               # invio giornaliero delle pagine del blog cambiate a IndexNow (09/10)
+      GSC_CHIAVE_JSON_B64: ${GSC_CHIAVE_JSON_B64:-}  # Search Console nel rapporto SEO/GEO (09/10): chiave in base64
+      GSC_PROPRIETA: ${GSC_PROPRIETA:-sc-domain:bandinqiaro.it}
       BLOG_PUBBLICO: ${BLOG_PUBBLICO:-0}            # IndexNow avvisa solo con il blog aperto ai motori
       PAGINA_PUBBLICA: ${PAGINA_PUBBLICA:-0}
       ALLEGATI_CARTELLA: /srv/allegati
