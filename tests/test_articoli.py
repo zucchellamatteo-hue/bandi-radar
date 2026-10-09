@@ -267,3 +267,12 @@ def test_calcolatori_con_i_limiti_delle_misure():
     for nome in c.CALCOLATORI:                                    # ogni calcolatore si inserisce e porta il suo script
         h = articoli.in_html(f"[[calcolatore:{nome}]]")
         assert "bqEuro" in h and 'class="calcolatore"' in h
+
+
+def test_link_ad_articoli_in_bozza_diventano_testo():
+    from app import articoli
+    from app.pubblico.blog import senza_link_a_bozze
+
+    h = articoli.in_html("Vedi [Fondo](/blog/fondo-garanzia) e [iper](/blog/iper#a) e [MIMIT](https://www.mimit.gov.it).")
+    out = senza_link_a_bozze(h, {"iper"})
+    assert "Vedi Fondo e" in out and '<a href="/blog/iper#a">iper</a>' in out and "mimit.gov.it" in out
