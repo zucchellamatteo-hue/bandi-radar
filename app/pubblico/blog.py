@@ -26,6 +26,8 @@ STILE_BLOG = """<style>
 .calcolatore{border:2px solid #d5e1f0;border-radius:14px;padding:1rem 1.2rem;margin:1.4rem 0;background:#f7faff;max-width:44rem}
 .calcolatore h3{margin-top:0}.calcolatore label{display:block;font-weight:600;margin:.3rem 0}
 .calcolatore input{font-size:1.15rem;padding:.45rem .6rem;width:100%;max-width:16rem;border:1px solid #b9c9de;border-radius:8px}
+.calcolatore label.spunta{display:flex;gap:.6rem;align-items:flex-start;font-weight:500;margin:.5rem 0}
+.calcolatore label.spunta input{width:1.2rem;height:1.2rem;flex:none;margin:.2rem 0 0;padding:0}
 .calcolatore table{border-collapse:collapse;width:100%;margin:.8rem 0;font-size:.95em}
 .calcolatore th,.calcolatore td{border-bottom:1px solid #d5e1f0;padding:.4em .5em;text-align:left}
 .calcolatore td[data-tasso]{font-weight:700;white-space:nowrap}.cs-nota{font-weight:600}
