@@ -72,24 +72,33 @@ cookie (pagina Visite) e rapporto SEO/GEO ogni mattina via email; landing in ant
 **Dopo la società**
 10. Stripe, fattura elettronica (provider già scelto), Google Ads, LinkedIn e Google Business Profile.
 
-## 4. Prompt per avviare la nuova sessione
+## 4. Prompt per avviare la nuova sessione (aggiornato al 09/10/2026)
 
 ```
-Leggi CLAUDE.md e poi docs/PIANO_AZIONE.md, docs/PIANO_QUALITA.md e docs/PIANO_SEO_GEO.md: sono il piano d'azione
-deciso con me fino al 09/10/2026. Lavora sul server, in batch, al massimo 5 agenti insieme; unisci le PR con i
-controlli verdi senza chiedermi niente; fermati solo per spese, azioni irreversibili e decisioni mie.
-Le schede via API sono spente (IA_SCHEDE_API=0): le schede si fanno in sessione.
+Leggi CLAUDE.md e poi docs/PIANO_AZIONE.md, docs/PIANO_QUALITA.md, docs/PIANO_SEO_GEO.md e le voci del 08/10 e
+09/10 di docs/CRONOLOGIA.md: sono il piano deciso con me. Lavora sul server, in batch, al massimo 5 agenti insieme;
+unisci le PR con i controlli verdi senza chiedermi niente; fermati solo per spese, azioni irreversibili e decisioni
+mie. Le schede via API sono spente (IA_SCHEDE_API=0): schede e secondi controlli si fanno in sessione
+(strumenti/sessione/, istruzioni ISTRUZIONI_VERIFICA_IA.md e ISTRUZIONI_DOCUMENTO.md).
+Stato: dal 09/10 la procedura nuova del regista e' ACCESA (app/catena/procedura.py): un bando si propone solo con
+documento verificato e secondo controllo fatto, quindi ogni scheda nuova o rifatta resta fuori finche' non la
+controlli tu.
 Ordine di lavoro:
-1. Leggi prossimi passi e segnalazioni aperte (python -m app.passi, python -m app.segnalazioni) e dimmi se c'è
+1. Leggi prossimi passi e segnalazioni aperte (python -m app.passi, python -m app.segnalazioni) e dimmi se c'e'
    qualcosa di urgente.
-2. Piano qualità, azione 0: realizza la procedura nuova del regista (tipo di agevolazione: misura di legge /
-   sportello a regole fisse / bando vero; verifica del documento; lista "da recuperare" con il motivo; scheda
-   solo con documento verificato; secondo controllo obbligatorio prima di "proponibile"), in passi piccoli con
-   test. Prima di attivarla ripassa i bandi proponibili con la regola nuova e dimmi quanti cambiano.
-3. In parallelo: secondo controllo in sessione sulle schede proponibili non ancora controllate (scadenza più
-   vicina prima), correggendo subito gli errori gravi con strumenti/sessione/ar/applica_verifica.py.
-4. Schede delle misure nazionali approfondite sul modello della Nuova Sabatini (se l'ho approvata).
-5. Ordinamenti in catalogo e pagina impresa (scadenza, pertinenza, beneficio potenziale, tipo di contributo).
-6. SEO/GEO: articolo sul cumulo iperammortamento + R&S + patent box (bozza), pagine delle misure nazionali.
+2. Procedura: python -m app.catena.procedura (ripasso). Fai il secondo controllo delle schede in attesa
+   (esporta_verifica.py --prossimi, agenti, applica_verifica.py, importa_verifica.py --corrette; per i casi
+   "non per imprese" e i doppioni come nella sessione del 08/10: unisci.py in /tmp/claude-1000/ar se c'e' ancora,
+   altrimenti decidi_collegamento).
+3. Riscrivi in sessione le schede "da aggiornare" emerse dai controlli (1552, 4147, 4153, 4159, 3626, 2023, 1064)
+   e chiarisci i 3 casi con errori aperti (477 premio gia' assegnato, 1290 ordinanza Ischia 2023, 1306 SIMEST
+   alluvione 2023).
+4. Lista "da recuperare" (python -m app.catena.procedura --da-recuperare): cerca il testo ufficiale giusto dei
+   bandi italiani aperti, prima quelli in scadenza (Puglia 2021-2027, fondi Veneto Sviluppo, ecc.); poi
+   rifai_disparte.py sui bandi in disparte non UE.
+5. Piano qualita': doppioni periodici (azione 4), ricerca settimanale dei bandi piu' discussi (azione 5), fonti
+   bloccate MIT/ENEA/ISMEA e anti-robot (azione 6); prepara la revisione del 20/10 (azione 7).
+6. SEO/GEO: pagine "bandi aperti in [regione]" (PIANO_SEO_GEO punto 7); dati di Search Console nel rapporto
+   quotidiano (punto 5, Search Console e Bing sono gia' collegati).
 Alla fine di ogni passo aggiorna i tre piani e docs/CRONOLOGIA.md e dimmi in parole semplici cosa posso provare.
 ```
