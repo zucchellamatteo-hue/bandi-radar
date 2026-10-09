@@ -136,7 +136,8 @@ certificazione contabile fino a 5.000 euro. Il credito non è tassato.</p>
 
 # Credito ZES unica 2026 (istruzioni AdE, Carta aiuti 2022-2027): costo ammesso da 200.000 euro a 100 milioni;
 # intensita' per zona e dimensione; oltre 50 milioni intensita' delle grandi con importo corretto R x (A + 0,5 x B);
-# poi la percentuale di riparto (2025: 75%; 2026 non ancora nota).
+# meno gli altri aiuti di Stato sugli stessi beni (art. 16 c. 5; 09/10, richiesta di Matteo), poi la percentuale di
+# riparto (2025: 75%; 2026 non ancora nota).
 _ZES = """<div class="calcolatore" id="calcolatore-zes">
 <h3>Calcola il credito d'imposta ZES unica 2026</h3>
 <label for="cz-importo">Costo ammesso del progetto (euro, da 200.000 a 100 milioni)</label>
@@ -151,11 +152,13 @@ _ZES = """<div class="calcolatore" id="calcolatore-zes">
 </select>
 <label for="cz-dim">Dimensione dell'impresa</label>
 <select id="cz-dim"><option value="0">Micro o piccola</option><option value="1">Media</option><option value="2">Grande</option></select>
+<label for="cz-altri">Altri aiuti di Stato sugli stessi beni (es. bando regionale a fondo perduto, euro)</label>
+<input id="cz-altri" type="number" inputmode="numeric" min="0" step="1000" value="0">
 <label for="cz-rip">Percentuale di riparto (2025: 75%; quella 2026 si saprà a fine gennaio 2027)</label>
 <input id="cz-rip" type="number" min="1" max="100" step="1" value="75">
 <table><tbody>
 <tr><td>Intensità applicata</td><td class="cr" id="cz-int">-</td></tr>
-<tr><td>Credito teorico</td><td class="cr" id="cz-teo">-</td></tr>
+<tr><td>Credito teorico (meno gli altri aiuti)</td><td class="cr" id="cz-teo">-</td></tr>
 <tr><td>Credito con il riparto indicato</td><td class="cr" id="cz-eff">-</td></tr>
 </tbody></table>
 <p class="cs-nota" aria-live="polite"></p>
@@ -175,8 +178,12 @@ Esclusi produzione agricola primaria, pesca, trasporti, energia, siderurgia, ban
       var y = Math.min(x, 100000000);
       if (y > 50000000) { r = z[2]; teo = r / 100 * (Math.min(y, 55000000) + 0.5 * Math.max(0, y - 55000000)); }
       else { r = z[d]; teo = r / 100 * y; }
+      var altri = bqNum(box, "#cz-altri");
       nota.textContent = x > 100000000 ? "Oltre 100 milioni il costo in più non conta."
-        : y > 50000000 ? "Oltre 50 milioni vale l'intensità delle grandi imprese con l'importo corretto." : "";
+        : y > 50000000 ? "Oltre 50 milioni vale l'intensità delle grandi imprese con l'importo corretto."
+        : altri >= teo ? "Gli altri aiuti arrivano già all'intensità massima della zona: il credito ZES è zero."
+        : altri ? "Gli altri aiuti sugli stessi beni si tolgono prima del riparto." : "";
+      teo = Math.max(0, teo - altri);
     }
     box.querySelector("#cz-int").textContent = r ? r + "%" : "-";
     box.querySelector("#cz-teo").textContent = teo ? bqEuro.format(teo) : "-";
@@ -273,14 +280,14 @@ _CONTO_TERMICO = """<div class="calcolatore" id="calcolatore-ct">
 <select id="ct-dim"><option value="20">Micro o piccola</option><option value="10">Media</option><option value="0">Grande</option></select>
 <label for="ct-t3">Spesa per impianti a fonti rinnovabili (Titolo III: pompe di calore, ibridi, biomassa, solare termico), euro IVA esclusa</label>
 <input id="ct-t3" type="number" inputmode="numeric" min="0" step="1000" value="30000">
-<label><input id="ct-piccolo" type="checkbox" checked> Pompa di calore, sistema ibrido o scaldacqua fino a 35 kW</label>
+<label class="spunta"><input id="ct-piccolo" type="checkbox" checked> Pompa di calore, sistema ibrido o scaldacqua fino a 35 kW</label>
 <label for="ct-t2">Spesa per efficienza dell'edificio (Titolo II: cappotto, infissi, schermature, LED, building automation), euro IVA esclusa</label>
 <input id="ct-t2" type="number" inputmode="numeric" min="0" step="1000" value="0">
-<label><input id="ct-multi" type="checkbox"> Due o più interventi del Titolo II sullo stesso edificio (multi-intervento)</label>
+<label class="spunta"><input id="ct-multi" type="checkbox"> Due o più interventi del Titolo II sullo stesso edificio (multi-intervento)</label>
 <label for="ct-zona">Zona dell'edificio (aiuti a finalità regionale)</label>
 <select id="ct-zona"><option value="0">Fuori dalle zone assistite</option><option value="5">Zona assistita art. 107.3.c</option>
 <option value="15">Zona assistita art. 107.3.a (Mezzogiorno)</option></select>
-<label><input id="ct-40" type="checkbox"> Il fabbisogno di energia primaria scende di almeno il 40% (APE prima e dopo)</label>
+<label class="spunta"><input id="ct-40" type="checkbox"> Il fabbisogno di energia primaria scende di almeno il 40% (APE prima e dopo)</label>
 <table><tbody>
 <tr><td>Percentuale Titolo III</td><td class="cr" id="ct-p3">-</td></tr>
 <tr><td>Percentuale Titolo II</td><td class="cr" id="ct-p2">-</td></tr>
@@ -343,13 +350,16 @@ def credito_rs(ordinarie: float, al_150: float = 0, contributi: float = 0) -> fl
     return min(0.10 * max(0, ordinarie + 1.5 * al_150 - contributi), 5_000_000)
 
 
-def credito_zes(costo: float, intensita: tuple[int, int, int], dimensione: int) -> float:
+def credito_zes(costo: float, intensita: tuple[int, int, int], dimensione: int, altri_aiuti: float = 0) -> float:
+    """Credito teorico, prima del riparto, meno gli altri aiuti di Stato sugli stessi beni."""
     if costo < 200_000:
         return 0
     y = min(costo, 100_000_000)
     if y > 50_000_000:
-        return intensita[2] / 100 * (min(y, 55_000_000) + 0.5 * max(0, y - 55_000_000))
-    return intensita[dimensione] / 100 * y
+        teorico = intensita[2] / 100 * (min(y, 55_000_000) + 0.5 * max(0, y - 55_000_000))
+    else:
+        teorico = intensita[dimensione] / 100 * y
+    return max(0, teorico - altri_aiuti)
 
 
 def art_bonus(donazione: float, ricavi: float) -> float:

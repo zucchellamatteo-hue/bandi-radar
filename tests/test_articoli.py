@@ -262,6 +262,8 @@ def test_calcolatori_con_i_limiti_delle_misure():
     assert c.credito_zes(1_000_000, campania, 2) == 400_000
     assert c.credito_zes(199_999, campania, 0) == 0               # sotto la soglia di 200.000
     assert c.credito_zes(80_000_000, campania, 0) == 27_000_000   # importo corretto: 40% x (55 + 0,5 x 25)
+    assert c.credito_zes(400_000, campania, 0, altri_aiuti=100_000) == 140_000   # esempio dell'articolo (Puglia)
+    assert c.credito_zes(400_000, campania, 0, altri_aiuti=300_000) == 0
     assert round(c.art_bonus(153_846, 20_000_000)) == 100_000      # esempio del portale
     assert c.art_bonus(5_000, 1_000_000) == 3_250
     # Conto Termico: gli esempi dell'articolo (Regole Applicative GSE, par. 4.2.1 e 4.6)
