@@ -276,3 +276,22 @@ def test_link_ad_articoli_in_bozza_diventano_testo():
     h = articoli.in_html("Vedi [Fondo](/blog/fondo-garanzia) e [iper](/blog/iper#a) e [MIMIT](https://www.mimit.gov.it).")
     out = senza_link_a_bozze(h, {"iper"})
     assert "Vedi Fondo e" in out and '<a href="/blog/iper#a">iper</a>' in out and "mimit.gov.it" in out
+
+
+def test_lista_da_spuntare_e_paragrafi_condizionati(monkeypatch):
+    """Liste "- [ ]" con le caselle; blocchi [[se:...]] visibili solo con il servizio attivo (09/10)."""
+    from app import articoli
+
+    h = articoli.in_html("- [ ] Contratto a tempo e materiali\n- [x] Perizia")
+    assert '<ul class="spunte">' in h and h.count('type="checkbox"') == 2 and "checked" in h and "[ ]" not in h
+    md = "Prima.\n\n[[se:contatti]]\nScrivici a [[email_contatto]].\n[[fine]]\n\n[[se:abbonamenti]]\nAbbonati.\n[[fine]]\n\nDopo."
+    monkeypatch.delenv("EMAIL_CONTATTO", raising=False)
+    monkeypatch.setenv("PAGINA_PUBBLICA", "0")
+    h = articoli.in_html(md)
+    assert "Scrivici" not in h and "Abbonati" not in h and "Prima" in h and "Dopo" in h and "[[" not in h
+    assert "Nascosto ai lettori" in articoli.in_html(md, anteprima=True)
+    monkeypatch.setenv("EMAIL_CONTATTO", "info@esempio.it")
+    h = articoli.in_html(md)
+    assert '<a href="mailto:info@esempio.it">info@esempio.it</a>' in h and "Abbonati" not in h
+    monkeypatch.setenv("PAGINA_PUBBLICA", "1")
+    assert "Abbonati" in articoli.in_html(md)
