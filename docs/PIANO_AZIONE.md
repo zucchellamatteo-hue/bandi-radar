@@ -1,4 +1,4 @@
-# bandinQiaro — piano d'azione (aggiornato all'08/10/2026 sera)
+# bandinQiaro — piano d'azione (aggiornato al 09/10/2026 pomeriggio)
 
 Riepilogo di fine sessione (05-09/10/2026) chiesto da Matteo. Va letto insieme a `docs/VISIONE.md`,
 `docs/PIANO_QUALITA.md` e `docs/PIANO_SEO_GEO.md`, e aggiornato a ogni passo.
@@ -16,14 +16,14 @@ graduatorie per il bando.
 
 | # | Azione | Stato | Chi |
 |---|---|---|---|
-| 0 | **Procedura nuova del regista** | **attiva** dal 09/10 (25 bandi usciti finché non si recupera il documento) | Claude |
+| 0 | **Procedura nuova del regista** | **attiva** dal 09/10; proponibili 420 (09/10 pomeriggio) dopo 74 schede nuove e 30 secondi controlli | Claude |
 | 1 | Secondo controllo su tutte le schede proponibili | **fatto** il 08/10 (379 + 97 solo documento; 58 gravi corretti) | Claude |
 | 2 | Automatizzare il secondo controllo con un modello economico (prova Gemini 3.8 Flash su server UE, < 10 $) | in attesa del via di Matteo | Matteo / Claude |
 | 3 | Regola automatica "chi presenta la domanda": se solo enti, associazioni o intermediari, non si propone alle imprese | in parte: 22 casi corretti il 08/10; la regola resta nel controllo preliminare e nel secondo controllo | Claude |
-| 4 | Testi ufficiali mancanti: filtro più severo; ricerca a mano dei ~220 casi che il codice non risolve, dai più importanti; Portale UE (~345, ricerca Horizon) a bassa priorità | in corso (correzioni del 08/10: +71 bandi con documenti, molti falsi positivi del filtro) | Claude |
-| 5 | Doppioni ed edizioni mescolate: stessa pagina ufficiale in due schede = grave (salvo pagine elenco) | da fare | Claude |
-| 6 | Ricerca settimanale dei bandi più discussi + aggiornamento della vetrina | da fare (primo giro 06/10) | Claude |
-| 7 | Fonti bloccate: certificati incompleti (MIT, ENEA, ISMEA), anti-robot (MUR, MAECI, Camera di Milano) | da fare | Claude |
+| 4 | Testi ufficiali mancanti: filtro più severo; ricerca a mano dei ~220 casi che il codice non risolve, dai più importanti; Portale UE (~345, ricerca Horizon) a bassa priorità | in corso: 24 "documento non valido" esaminati il 09/10 (15 chiusi, 3 testi caricati); rifai_disparte in corso | Claude |
+| 5 | Doppioni ed edizioni mescolate: stessa pagina ufficiale in due schede = grave (salvo pagine elenco) | primo giro fatto il 09/10 (19 unioni), da ripetere ogni settimana | Claude |
+| 6 | Ricerca settimanale dei bandi più discussi + aggiornamento della vetrina | secondo giro 09/10 (73% OK; vetrina aggiornata) | Claude |
+| 7 | Fonti bloccate: certificati incompleti (MIT, ENEA, ISMEA), anti-robot (MUR, MAECI, Camera di Milano) | certificati risolti il 09/10; da mappare MIT ed ENEA, anti-robot da fare | Claude |
 | 8 | Schede delle misure nazionali approfondite sul modello della Nuova Sabatini | **fatto** il 09/10 (11 misure; punti da verificare in docs/ricerche/2026-10-09_misure_nazionali_approfondite.md) | Claude |
 | 9 | Ordinamenti in catalogo e pagina impresa (scadenza, pertinenza, beneficio, tipo di contributo) | **fatto** il 09/10; agevolazioni senza soldi in secondo piano | Claude |
 | 10 | Misura dell'affidabilità ogni 2 settimane (30 schede a caso, IA + giudizi di Luca) | prossima revisione 20/10 | Claude + Luca |
@@ -45,9 +45,9 @@ cookie (pagina Visite) e rapporto SEO/GEO ogni mattina via email; landing in ant
 | 2 | Rendere privato il repository GitHub (oggi pubblico: contiene le bozze e la strategia) dopo aver dato al server la chiave di accesso | Claude prepara la chiave, **Matteo** la aggiunge su GitHub |
 | 3 | Pubblicare 2-3 articoli a settimana (uno per argomento: guida completa, non anche il breve) | **Matteo** pubblica, agenti rivedono |
 | 4 | Firma degli articoli: oggi "Redazione bandinQiaro – contenuti verificati da un dottore commercialista iscritto all'Albo"; con nome e iscrizione il segnale per Google è più forte | **Matteo** decide |
-| 5 | Dati di Search Console nel rapporto quotidiano (API) | Claude, dopo il punto 1 |
-| 6 | ~~Pagine pubbliche delle misure nazionali~~ e "bandi aperti in [regione]" | pagine delle misure **tolte** (Matteo, 09/10: bastano le guide del blog); resta "bandi aperti in [regione]" | Claude |
-| 7 | Articolo "software su commessa: iperammortamento + R&S + patent box" | **in bozza** (n. 18) dal 09/10: da rileggere e pubblicare | Matteo |
+| 5 | Dati di Search Console nel rapporto quotidiano (API) | **pronto** (09/10): manca la chiave dell'account di servizio, la crea **Matteo** |
+| 6 | ~~Pagine pubbliche delle misure nazionali~~ e "bandi aperti in [regione]" | pagine delle misure **tolte** (Matteo, 09/10); "bandi aperti in [regione]" **fatte** il 09/10 | Claude |
+| 7 | Articolo "software su commessa: iperammortamento + R&S + patent box" | **pubblicato** il 09/10 (n. 19), con Fondo di garanzia, Conto Termico e ZES | Matteo |
 | 8 | Prime menzioni: LinkedIn, Google Business Profile, rapporto mensile con i numeri per stampa di settore e Ordini | Matteo con testi di Claude |
 | 9 | Aprire la landing: prezzo allineato con Stripe e Termini, "Chi c'è dietro", titolare con P.IVA nel piede | **Matteo** decide, Claude esegue |
 | 10 | Google Ads con Consent Mode v2 | dopo la società |
@@ -62,6 +62,8 @@ cookie (pagina Visite) e rapporto SEO/GEO ogni mattina via email; landing in ant
 4. ~~Scheda Nuova Sabatini~~ (approvata il 09/10, applicata alle altre misure). Rileggere l'**articolo Sabatini** rivisto (bozza n. 11, con il calcolatore) e l'**articolo sul cumulo** (bozza n. 18); decidere la **firma** degli articoli (formula stabile se la cancellazione dall'Albo è vicina); pubblicare prima gli articoli linkati (Fondo di garanzia, ZES, Conto Termico).
 5. Pubblicare 2-3 articoli del blog (pagina Blog: Anteprima → Pubblica).
 6. Mandare a **Luca** la richiesta di 20-30 giudizi sulle schede proponibili (Claude prepara il messaggio).
+
+7-bis. **Search Console nel rapporto**: creare su Google Cloud un account di servizio con la "Google Search Console API" attiva, scaricare la chiave JSON, aggiungere l'email dell'account come utente (Limitato) della proprietà bandinqiaro.it in Search Console; poi dire a Claude dove si trova il file sul server (la chiave non va scritta in chat).
 
 **Entro due settimane**
 7. Via (o no) alla **prova Gemini** (< 10 $): serve per automatizzare il secondo controllo.
