@@ -128,7 +128,7 @@ ol.passi b{display:block;color:var(--blu);font-size:1.1rem;margin-bottom:.3rem}o
 ul.fonti{list-style:none;padding:0;margin:.6rem 0 0;font-size:.95rem}ul.fonti b{color:var(--blu)}
 ul.regioni{list-style:none;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:.5rem}
 ul.regioni li{display:flex;justify-content:space-between;background:#fff;border:1px solid var(--bordo);border-radius:8px;padding:.45rem .8rem}
-ul.regioni b{color:var(--blu)}
+ul.regioni b{color:var(--blu)}ul.regioni a{display:flex;justify-content:space-between;width:100%;text-decoration:none;color:inherit;min-height:28px}
 .numero{font-size:2.2rem;font-weight:800;color:var(--blu)}.etichetta{color:var(--grigio);font-size:.82rem;text-transform:uppercase;letter-spacing:.04em;font-weight:650}
 .tipo{display:inline-block;background:#e3edf9;color:var(--blu);border-radius:4px;padding:.1rem .45rem;font-size:.78rem}
 .scadenza{color:#b0392f;font-weight:600}.prezzo{font-size:2.6rem;font-weight:800;color:var(--blu)}.prezzo small{font-size:1rem;color:var(--grigio);font-weight:500}
@@ -221,7 +221,7 @@ def pagina(titolo: str, corpo: str, descrizione: str = "", indicizza: bool = Fal
 <main>{corpo}</main>
 <footer><span>© bandinQiaro · {_e(dominio)}{(' · ' + _e(titolare)) if titolare else ''}</span><a href="/termini">Termini</a>
 <a href="/privacy">Privacy</a><a href="/cookie">Cookie</a><a href="/condizioni-supporto">Condizioni del supporto</a>
-<a href="/note-legali">Note legali</a><a href="/blog">Blog</a></footer>
+<a href="/note-legali">Note legali</a><a href="/blog">Blog</a><a href="/bandi-aperti">Bandi aperti per regione</a></footer>
 {_cookie()}</body></html>"""
 
 

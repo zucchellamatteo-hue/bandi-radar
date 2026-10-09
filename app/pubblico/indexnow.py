@@ -114,7 +114,7 @@ def invio_del_giorno(conn, oggi: date | None = None) -> str | None:
     """Una volta al giorno (servizio raccolta): gli indirizzi della sitemap del blog cambiati dall'ultimo invio (tutti,
     la prima volta). None se oggi e' gia' stato fatto o se IndexNow non e' attivo."""
     from app.notifiche.novita_settimana import gia_inviato, registra_invio
-    from app.pubblico import blog
+    from app.pubblico import blog, regioni
 
     if not attivo():
         return None
@@ -125,7 +125,7 @@ def invio_del_giorno(conn, oggi: date | None = None) -> str | None:
         cur.execute("SELECT max(chiave) AS ultimo FROM notifiche_inviate WHERE nome = %s", (NOME_INVIO,))
         r = cur.fetchone()
     ultimo = r["ultimo"] if r else None
-    voci = blog.voci_sitemap(conn)
+    voci = blog.voci_sitemap(conn) + regioni.voci_sitemap(conn)     # le pagine per regione cambiano ogni giorno
     da_avvisare = [seo.assoluto(p) for p, modificato in voci if not ultimo or modificato >= ultimo]
     esito = invia(da_avvisare) if da_avvisare else "IndexNow: nessuna pagina del blog cambiata dall'ultimo invio"
     registra_invio(conn, NOME_INVIO, oggi.isoformat(), esito[:500])

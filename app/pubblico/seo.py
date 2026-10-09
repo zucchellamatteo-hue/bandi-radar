@@ -32,7 +32,8 @@ PAGINE_PUBBLICHE = [("/", "daily", "1.0"), ("/condizioni-supporto", "monthly", "
 FILE_PUBBLICI = ["/llms.txt", "/sitemap.xml", "/favicon.svg", "/immagini/"]
 # Sezioni pubbliche con pagine figlie (07/10): il blog. Nella sitemap vanno solo gli articoli pubblicati
 # (app/pubblico/blog.voci_sitemap); bozze e articoli archiviati rispondono 404/410 e non vi compaiono mai.
-SEZIONI_PUBBLICHE = ["/blog"]
+# Dal 09/10 anche /bandi-aperti (pagine per regione, app/pubblico/regioni.py), aperte con il blog.
+SEZIONI_PUBBLICHE = ["/blog", "/bandi-aperti"]
 
 # Programmi dei motori di ricerca e di risposta IA a cui diciamo esplicitamente di si' (stesse regole di tutti).
 # OAI-SearchBot / ChatGPT-User: ricerca di ChatGPT; GPTBot: addestramento OpenAI; ClaudeBot, Claude-SearchBot,
@@ -90,14 +91,17 @@ def sitemap_xml(ultimo_aggiornamento: date | None = None, articoli: list[tuple[s
     `solo_blog` (blog aperto, landing chiusa): nella mappa vanno solo /blog e gli articoli."""
     oggi = (ultimo_aggiornamento or date.today()).isoformat()
     voci = []
-    if solo_blog and not articoli:
-        articoli = [("/blog", oggi)]
+    if solo_blog and not any(p == "/blog" for p, _ in articoli or []):
+        articoli = [("/blog", oggi)] + list(articoli or [])
     for percorso, freq, prio in ([] if solo_blog else PAGINE_PUBBLICHE):
         lastmod = f"<lastmod>{oggi}</lastmod>" if percorso == "/" else ""
         voci.append(f"<url><loc>{escape(assoluto(percorso))}</loc>{lastmod}<changefreq>{freq}</changefreq>"
                     f"<priority>{prio}</priority></url>")
     for percorso, modificato in articoli or []:
-        freq, prio = ("weekly", "0.6") if percorso == "/blog" else ("monthly", "0.7")
+        if percorso.startswith("/bandi-aperti"):        # pagine per regione: cambiano ogni giorno
+            freq, prio = "daily", "0.6"
+        else:
+            freq, prio = ("weekly", "0.6") if percorso == "/blog" else ("monthly", "0.7")
         voci.append(f"<url><loc>{escape(assoluto(percorso))}</loc><lastmod>{escape(modificato)}</lastmod>"
                     f"<changefreq>{freq}</changefreq><priority>{prio}</priority></url>")
     return ('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'

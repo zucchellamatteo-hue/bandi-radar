@@ -32,7 +32,7 @@ from app.notifiche.api import router as api_notifiche
 from app.impresa.api import router as api_impresa
 from app.plancia.api import router as api_plancia
 from app import pubblico
-from app.pubblico import blog, indexnow, landing, seo
+from app.pubblico import blog, indexnow, landing, regioni, seo
 from app.db.connessione import connetti
 from app.utenti.api import COOKIE, controlla_plancia
 from app.utenti.api import router as api_utenti
@@ -152,7 +152,7 @@ def sitemap_xml():
     """Pagine pubbliche e articoli del blog pubblicati; se il database non risponde, solo le pagine fisse."""
     try:
         with connetti() as conn:
-            voci = blog.voci_sitemap(conn)
+            voci = blog.voci_sitemap(conn) + regioni.voci_sitemap(conn)
     except Exception:  # noqa: BLE001 - la sitemap non deve cadere per il blog
         voci = []
     return Response(seo.sitemap_xml(articoli=voci, solo_blog=pubblico.solo_blog()), media_type="application/xml",
@@ -182,6 +182,23 @@ def blog_articolo(slug: str):
                                             '<a href="/blog">Vai al blog</a> o <a href="/registrati">prova bandinQiaro</a> '
                                             'per vedere i bandi aperti.</p></section>'), status_code=410)
     raise HTTPException(status_code=404, detail="non trovato")
+
+
+@app.get("/bandi-aperti", response_class=HTMLResponse)
+def bandi_aperti_elenco():
+    """Le regioni con il numero di bandi aperti (app/pubblico/regioni.py, 09/10)."""
+    with connetti() as conn:
+        return HTMLResponse(regioni.pagina_elenco(conn), headers=CACHE_BREVE)
+
+
+@app.get("/bandi-aperti/{regione}", response_class=HTMLResponse)
+def bandi_aperti_regione(regione: str):
+    """"Bandi aperti in <regione>": solo i proponibili della regione, aggiornati ogni giorno."""
+    with connetti() as conn:
+        testo = regioni.pagina_regione(conn, regione)
+    if testo is None:
+        raise HTTPException(status_code=404, detail="non trovato")
+    return HTMLResponse(testo, headers=CACHE_BREVE)
 
 
 @app.get("/llms.txt", response_class=PlainTextResponse)
