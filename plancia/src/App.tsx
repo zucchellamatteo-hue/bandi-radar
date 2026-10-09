@@ -30,7 +30,7 @@ import Account from "./pagine/Account";
 import { Abbonamento, MieImprese, MieiBandi, MieRichieste, ModuloImpresa, SchedaImpresa, VistaImpresaProfilo } from "./pagine/AreaImpresa";
 import { ContestoUtente, puo } from "./utente";
 import { useTabelleMobili } from "./tabelle";
-import { gruppiMenu } from "./menu";
+import { gruppiMenu, PAGINE_SITO } from "./menu";
 
 
 export default function App() {
@@ -64,6 +64,10 @@ export default function App() {
   // Sul telefono il pulsante del menu dice in che pagina si e'; le pagine di dettaglio prendono il nome della loro sezione.
   const nomePagina = attiva?.[1] || [["/bandi/", "Catalogo"], ["/fonti/", "Fonti"], ["/impresa/bandi/", "I miei bandi"], ["/account", "Il mio account"]]
     .find(([inizio]) => posizione.pathname.startsWith(inizio))?.[1] || "Menu";
+  // Le pagine del sito pubblico (il blog) non sono rotte della plancia: link normale, in una scheda nuova.
+  const collegamento = (to: string, testo: string, fine?: boolean) => PAGINE_SITO.includes(to)
+    ? <a href={to} target="_blank" rel="noopener">{testo} ↗</a>
+    : <NavLink to={to} end={fine} className={classe}>{testo}</NavLink>;
   return (
     <ContestoUtente.Provider value={utente}>
       <header className={gruppi.length > 1 ? "barra barra-gruppi" : "barra"}>
@@ -73,12 +77,12 @@ export default function App() {
           onClick={() => setMenuAperto(!menuAperto)}>{menuAperto ? "✕" : "☰"} {nomePagina}</button>
         <div id="menu-corpo" className={`menu-corpo${menuAperto ? " aperto" : ""}`}>
           {gruppi.length === 1 && <nav>{gruppi[0].voci.map(([to, testo, fine], i) => <span key={to}>
-            {i > 0 && <span className="sep">{" · "}</span>}<NavLink to={to} end={fine} className={classe}>{testo}</NavLink></span>)}</nav>}
+            {i > 0 && <span className="sep">{" · "}</span>}{collegamento(to, testo, fine)}</span>)}</nav>}
           {gruppi.length > 1 && <nav className="gruppi">{gruppi.map((g) =>
             <div key={g.chiave} className={`gruppo-menu gruppo-${g.chiave}`} role="group" aria-label={g.spiegazione} title={g.spiegazione}>
               <span className="titolo-gruppo" aria-hidden="true">{g.titolo}</span>
               {g.voci.map(([to, testo, fine], i) => <span key={to}>
-                {i > 0 && <span className="sep">{" · "}</span>}<NavLink to={to} end={fine} className={classe}>{testo}</NavLink></span>)}
+                {i > 0 && <span className="sep">{" · "}</span>}{collegamento(to, testo, fine)}</span>)}
             </div>)}</nav>}
           <span className="chi-sono">
             <NavLink to="/account" className={classe} title="Il mio account">{utente.nome || utente.email}</NavLink> <span className="piccolo">({NOMI_RUOLO_UTENTE[utente.ruolo]})</span>{" "}

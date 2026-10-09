@@ -37,10 +37,10 @@ sezioni:
     testo: |
       Il menu è la riga in alto. Ognuno vede solo le voci che gli servono.
 
-      - Impresa: **I miei bandi**, **Agevolazioni fiscali**, **Le mie imprese**, **Richieste di supporto**, **Abbonamento**.
+      - Impresa: **I miei bandi**, **Agevolazioni fiscali**, **Le mie imprese**, **Richieste di supporto**, **Abbonamento**, **Blog ↗** (gli articoli pubblicati, in una scheda nuova).
       - Revisore con i permessi di base: **Catalogo**, **Misure**, **I miei giudizi** (e **Imprese** se ha quel permesso).
       - Chi ha il permesso "lavoro": **Fonti**, **Catalogo**, **Misure**, **Profili**, **Annunci**, **Lavorazione**, **Supervisione**, **Doppioni**, **Novità**, **Feedback**, **Segnalazioni**, **News**, **Blog**, **Visite**, **Prossimi passi** (in sola lettura); con il permesso "imprese" anche **Imprese** e **Campagne**.
-      - Amministratore: tutto, più **Utenti** e l'anteprima dell'area clienti. Le voci sono divise in tre gruppi colorati secondo chi altro le vede: **Solo io** (giallo: Utenti), **Collaboratori** (azzurro: le pagine che vede anche un revisore con il permesso "lavoro" o "imprese"), **Clienti** (verde: I miei bandi, Agevolazioni fiscali, Le mie imprese, Richieste di supporto, Abbonamento, come le vede un'impresa, e la Guida). Sul computer i gruppi stanno su due righe (sotto, a tutta larghezza, Collaboratori); sul telefono, nel menu **☰**, ogni gruppo ha il suo titolo. Revisori e imprese vedono il loro menu senza gruppi.
+      - Amministratore: tutto, più **Utenti** e l'anteprima dell'area clienti. Le voci sono divise in tre gruppi colorati secondo chi altro le vede: **Solo io** (giallo: Utenti), **Collaboratori** (azzurro: le pagine che vede anche un revisore con il permesso "lavoro" o "imprese"), **Clienti** (verde: I miei bandi, Agevolazioni fiscali, Le mie imprese, Richieste di supporto, Abbonamento, come le vede un'impresa, il Blog pubblico ↗ con i soli articoli pubblicati e la Guida). Sul computer i gruppi stanno su due righe (sotto, a tutta larghezza, Collaboratori); sul telefono, nel menu **☰**, ogni gruppo ha il suo titolo. Revisori e imprese vedono il loro menu senza gruppi.
 
       La voce **Guida** apre questa pagina: mostra solo le parti che ti riguardano.
 
@@ -599,6 +599,12 @@ sezioni:
       Ogni scheda spiega a chi si rivolge, quali investimenti sono ammessi, quanto vale (beneficio stimato in percentuale sulla spesa), come si ottiene, i tempi, se si somma ai bandi e a cosa fare attenzione. In fondo trovi degli **esempi per tipo di impresa** (ufficio, negozio, hotel, laboratorio artigiano, capannone, logistica con più sedi, azienda agricola, startup): un caso con numeri indicativi e quanto la misura interessa a quel tipo di impresa.
 
       È un'informazione indicativa: prima di investire verifica la norma e le regole del gestore, magari con il tuo commercialista.
+
+  - id: impresa_blog
+    titolo: "Il blog"
+    per: [impresa]
+    testo: |
+      La voce **Blog ↗** del menu apre in una scheda nuova il blog di bandinQiaro: guide alle agevolazioni nazionali e ai bandi più cercati, con esempi e calcolatori (per esempio quanto vale la Nuova Sabatini o il Conto Termico sul tuo investimento). Ci sono solo gli articoli pubblicati; per tornare alla tua area basta chiudere la scheda.
 
   - id: impresa_email
     titolo: "L'email settimanale"

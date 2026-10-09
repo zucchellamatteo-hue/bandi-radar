@@ -1,15 +1,18 @@
 import { Utente } from "./api";
 import { puo } from "./utente";
 
-// Voce del menu: [indirizzo, nome, solo indirizzo esatto].
+// Voce del menu: [indirizzo, nome, solo indirizzo esatto]. Gli indirizzi in PAGINE_SITO sono pagine del sito pubblico
+// (fuori dalla plancia): si aprono in una scheda nuova con un link normale, non con il router.
 export type Voce = [string, string, boolean?];
+export const PAGINE_SITO = ["/blog"];
 // Gruppo di voci. Solo l'amministratore vede i gruppi con il titolo; per gli altri c'e' un gruppo solo, senza titolo.
 export type GruppoMenu = { chiave: "admin" | "collaboratori" | "clienti" | "tutto"; titolo: string; spiegazione: string; voci: Voce[] };
 
-// Le voci dell'area clienti (le pagine che vedono le imprese).
+// Le voci dell'area clienti (le pagine che vedono le imprese). Dal 09/10 anche il Blog pubblico (richiesta di Matteo):
+// /blog mostra solo gli articoli pubblicati, mai le bozze.
 const AREA_CLIENTI: Voce[] = [
   ["/impresa", "I miei bandi", true], ["/impresa/misure", "Agevolazioni fiscali"], ["/impresa/imprese", "Le mie imprese"],
-  ["/impresa/richieste", "Richieste di supporto"], ["/impresa/abbonamento", "Abbonamento"],
+  ["/impresa/richieste", "Richieste di supporto"], ["/impresa/abbonamento", "Abbonamento"], ["/blog", "Blog"],
 ];
 
 /** Le voci del menu secondo ruolo e permessi.
