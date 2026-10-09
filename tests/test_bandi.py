@@ -48,6 +48,41 @@ def test_ruolo_dal_titolo():
     assert ruolo_da_titolo("Bando Voucher Digitali 2026") is None
 
 
+def test_chiusure_e_sospensioni_dal_titolo():
+    # 09/10: i due decreti MIMIT della ricerca settimanale
+    assert ruolo_da_titolo("Decreto direttoriale 6 ottobre 2026 - Investimenti sostenibili 4.0 Bando 2026. "
+                           "Chiusura dello sportello agevolativo") == "chiusura"
+    assert ruolo_da_titolo("Decreto direttoriale 8 ottobre 2026 - Scoperta imprenditoriale II. Sospensione dei termini "
+                           "di presentazione delle domande di agevolazione") == "chiusura"
+    assert ruolo_da_titolo("Bando digitale: esaurimento delle risorse disponibili") == "chiusura"
+    assert ruolo_da_titolo("Chiusura anticipata del bando fiere") == "chiusura"
+    # la formula degli sportelli aperti non e' una chiusura
+    assert ruolo_da_titolo("Contributi alle imprese fino a esaurimento delle risorse") is None
+    assert ruolo_da_titolo("Proroga della chiusura dei termini del bando export") == "proroga"
+
+
+def test_decimale_non_e_un_edizione():
+    assert analizza_titolo("Investimenti sostenibili 4.0 Bando 2026").edizione == frozenset()
+    assert analizza_titolo("Bando voucher 2 sportello").edizione == {"sportello2"}
+
+
+def test_decreto_di_chiusura_trova_il_bando():
+    """Il titolo del decreto contiene tutto il nome del bando, con le parole dell'atto intorno: dubbio con il
+    candidato giusto (decide l'IA dei doppioni), non piu' "non trovo il bando"."""
+    mimit = "Ministero delle Imprese e del Made in Italy"
+    bando = ann(1, "Investimenti sostenibili 4.0 (2026)", fonte="mimit_incentivi", ente=mimit, territorio="ITA", bando=487)
+    decreto = ann(2, "Decreto direttoriale 6 ottobre 2026 - Investimenti sostenibili 4.0 Bando 2026. Chiusura dello "
+                     "sportello agevolativo", fonte="mimit_incentivi_aggiornamenti", ente=mimit, territorio="ITA")
+    piano = pianifica([bando, decreto], {487: [bando]}, anno_corrente=2026)
+    assert len(piano) == 1
+    esito = piano[0][1]
+    assert esito.azione == "dubbio" and esito.bando == 487 and esito.ruolo == "chiusura"
+    # senza ruolo la regola del contenimento non vale
+    altro = ann(3, "Decreto direttoriale 6 ottobre 2026 - Investimenti sostenibili 4.0 Bando 2026 nuove regole",
+                fonte="mimit_incentivi_aggiornamenti", ente=mimit, territorio="ITA")
+    assert pianifica([bando, altro], {487: [bando]}, anno_corrente=2026)[0][1].bando != 487
+
+
 def test_edizioni_e_parti_diverse_non_sono_lo_stesso_titolo():
     a = analizza_titolo("Bando Fiere - secondo sportello 2026")
     b = analizza_titolo("Bando Fiere - primo sportello 2026")

@@ -245,6 +245,37 @@ def ricontrolla_stato(conn, modulo) -> dict:
     return modulo.ricontrolla(conn, modulo.da_ricontrollare(conn))
 
 
+CHIUSURE_RECENTI_GIORNI = 120   # un avviso di chiusura piu' vecchio non chiude da solo un bando ancora aperto
+
+
+def applica_chiusure(conn) -> list[int]:
+    """Un decreto di chiusura o sospensione collegato a un bando aperto lo chiude subito (prossimo passo 48: il 09/10
+    Investimenti sostenibili 4.0 e Scoperta imprenditoriale II erano chiusi per fondi esauriti ma ancora proponibili,
+    perche' la scheda aspettava di essere rifatta). `chiuso_il` e' la data dell'avviso: lo stato ricalcolato ogni
+    giorno resta chiuso e la scheda va comunque aggiornata (segna_aggiornamenti). Solo avvisi recenti e non anteriori
+    all'apertura del bando: la chiusura di un'edizione vecchia non chiude quella nuova."""
+    with conn.cursor() as cur:
+        cur.execute("""SELECT DISTINCT ON (b.id) b.id, coalesce(a.pubblicato_il, a.trovato_il)::date AS il, a.id AS annuncio,
+                              a.titolo
+                       FROM annunci a JOIN bandi b ON b.id = a.bando_id
+                       WHERE a.ruolo = 'chiusura' AND b.unito_a IS NULL AND b.stato IN ('aperto', 'in_arrivo')
+                         AND b.chiuso_il IS NULL
+                         AND coalesce(a.pubblicato_il, a.trovato_il) >= now() - make_interval(days => %s)
+                         AND coalesce(a.pubblicato_il, a.trovato_il)::date >= coalesce(b.data_apertura, '1900-01-01')
+                         AND coalesce(a.pubblicato_il, a.trovato_il)::date <= current_date
+                       ORDER BY b.id, coalesce(a.pubblicato_il, a.trovato_il)""", (CHIUSURE_RECENTI_GIORNI,))
+        righe = [dict(r) for r in cur.fetchall()]
+        for r in righe:
+            motivo = f"avviso di chiusura o sospensione (annuncio {r['annuncio']}): {r['titolo']}"[:300]
+            cur.execute("SELECT set_config('bandi_radar.causa', %s, true)", (motivo,))
+            cur.execute("""UPDATE bandi SET chiuso_il = %s, stato = 'chiuso', stato_calcolato_il = current_date,
+                                  da_aggiornare = coalesce(da_aggiornare, %s)
+                           WHERE id = %s""", (r["il"], f"chiusura: {r['titolo']}"[:300], r["id"]))
+            evento(cur, "bando", r["id"], "chiusura", "bando chiuso", motivo)
+    conn.commit()
+    return [r["id"] for r in righe]
+
+
 def segna_aggiornamenti(conn) -> int:
     """Proroghe, rettifiche, chiusure e FAQ collegate al bando dopo la scheda: la scheda va aggiornata."""
     with conn.cursor() as cur:
@@ -321,12 +352,14 @@ def giro() -> dict:
         with connetti() as conn:
             riepilogo["documenti_nuovi"] = ricontrolla_documenti(conn)
             riepilogo["disparte_nuovi"] = ricontrolla_in_disparte(conn)
+            riepilogo["chiusi_da_avvisi"] = len(applica_chiusure(conn))
             riepilogo["schede_da_aggiornare"] = segna_aggiornamenti(conn)
         n = _conta("SELECT count(DISTINCT bando_id) AS b, count(*) FILTER (WHERE errore IS NULL) AS f, "
                    "count(*) FILTER (WHERE errore IS NOT NULL) AS e FROM allegati WHERE scaricato_il >= %s", inizio)
         return (f"{n['f']} file scaricati per {n['b']} bandi ({n['e']} non scaricati); ricontrollo: "
                 f"{riepilogo['documenti_nuovi']} bandi con documenti nuovi, {riepilogo['disparte_nuovi']} in disparte "
-                f"con documenti nuovi; {riepilogo['schede_da_aggiornare']} schede da aggiornare")
+                f"con documenti nuovi; {riepilogo['chiusi_da_avvisi']} chiusi da un avviso di chiusura; "
+                f"{riepilogo['schede_da_aggiornare']} schede da aggiornare")
 
     def stato_pagine(inizio):
         from app.schede import ricontrollo_stato
