@@ -24,9 +24,24 @@ QUF = {"A": 600, "B": 850, "C": 1100, "D": 1400, "E": 1700, "F": 1800}          
 CMAX_OPACHE = {"cop_est": 300, "cop_int": 150, "cop_vent": 350, "pav_est": 170, "pav_int": 150,
                "par_est": 200, "par_int": 100, "par_vent": 250}                    # tab. 15, euro/m2
 # Pompe di calore: Ci fino a 35 kW e oltre (tab. 27). Split e double duct solo fino a 12 kW / senza soglia.
-CI_PDC = {"aria_acqua": (0.15, 0.06), "vrf": (0.15, 0.055), "rooftop": (0.15, 0.055), "acqua": (0.16, 0.06),
-          "geotermica": (0.16, 0.06), "split": (0.07, 0.07), "double_duct": (0.20, 0.20)}
+CI_PDC = {"aria_acqua": (0.15, 0.06), "vrf": (0.15, 0.055), "rooftop": (0.15, 0.055), "acqua_aria": (0.16, 0.06),
+          "acqua_acqua": (0.16, 0.06), "geo_aria": (0.16, 0.06), "geo_acqua": (0.16, 0.06), "split": (0.07, 0.07),
+          "double_duct": (0.20, 0.20)}
+# Per le imprese gli ibridi con caldaia a gas non sono ammessi (art. 25 c. 2): restano quelli con caldaia a biomassa.
 K_IBRIDO = {"no": (1, 1), "factory": (1.25, 1.25), "bivalente": (1, 1.1)}         # tab. 29 (caldaia <=35 / >35 kW)
+
+
+def eta_minima(tipo: str, kw: float, temperatura: str = "media", gwp_basso: bool = False) -> float:
+    """eta_s minima Ecodesign (tab. 23-24 delle Regole, revisione del 09/10): split e salamoia/aria fino a 12 kW
+    149 (134 con refrigerante GWP <= 150); VRF, acqua/aria e salamoia/aria oltre 12 kW 137; rooftop 125; macchine ad
+    acqua (Reg. 813/2013) 110 a media temperatura, 125 a bassa."""
+    if tipo == "split" or (tipo == "geo_aria" and kw <= 12):
+        return 134 if gwp_basso else 149
+    if tipo in ("vrf", "acqua_aria", "geo_aria"):
+        return 137
+    if tipo == "rooftop":
+        return 125
+    return 125 if temperatura == "bassa" else 110
 CI_BIOMASSA = {"caldaia": (0.060, 0.025, 0.020), "stufa_legna": (0.045, None, None), "stufa_pellet": (0.055, None, None)}
 CI_SOLARE = {"acs": (0.35, 0.32, 0.13, 0.12, 0.11), "acs_risc": (0.36, 0.33, 0.13, 0.12, 0.11),
              "concentrazione": (0.38, 0.35, 0.13, 0.12, 0.11), "cooling": (0.43, 0.40, 0.17, 0.15, 0.14)}
@@ -42,16 +57,28 @@ def _ci_solare(tipo: str, superficie: float) -> float:
     return c[0] if superficie < 12 else c[1] if superficie <= 50 else c[2] if superficie <= 200 else c[3] if superficie <= 500 else c[4]
 
 
-def algoritmo_pdc(p: dict, zona: str) -> tuple[float, int]:
-    """(incentivo totale, anni) di una pompa di calore elettrica o di un sistema ibrido (tab. 26-29)."""
-    kw, scop = p.get("kw", 0), p.get("scop", 0)
-    if kw <= 0 or scop <= 1:
-        return 0, 0
-    ci = CI_PDC[p.get("tipo", "aria_acqua")][0 if kw <= 35 else 1]
-    kp = max(1.0, p.get("eta", 0) / p.get("eta_min", 110)) if p.get("eta") else 1.0
+def algoritmo_pdc(p: dict, zona: str) -> tuple[float, int, str | None]:
+    """(incentivo della formula, anni, problema) di una pompa di calore elettrica o di un ibrido con caldaia a
+    biomassa (tab. 26-29). kp = eta_s / eta_s minima del tipo (1 se eta_s non e' scritta); double duct: COP / 2,6."""
+    kw, scop, tipo = p.get("kw", 0), p.get("scop", 0), p.get("tipo", "aria_acqua")
+    if kw <= 0 or scop <= 1 or p.get("spesa", 0) <= 0:
+        return 0, 0, None
+    if tipo == "split" and kw > 12:
+        return 0, 0, "Gli split e multisplit sono ammessi fino a 12 kW."
+    if tipo == "double_duct":
+        minimo = 2.34 if p.get("gwp_basso") else 2.6
+        if scop < minimo:
+            return 0, 0, "COP sotto il minimo Ecodesign: macchina non ammessa."
+        kp = scop / minimo
+    else:
+        minimo = eta_minima(tipo, kw, p.get("temperatura", "media"), bool(p.get("gwp_basso")))
+        if p.get("eta") and p["eta"] < minimo:
+            return 0, 0, "Efficienza stagionale sotto il minimo Ecodesign: macchina non ammessa."
+        kp = p["eta"] / minimo if p.get("eta") else 1.0
+    ci = CI_PDC[tipo][0 if kw <= 35 else 1]
     k = K_IBRIDO[p.get("ibrido", "no")][0 if p.get("kw_caldaia", 0) <= 35 else 1]
     anni = 2 if kw <= 35 else 5
-    return k * kw * QUF[zona] * (1 - 1 / scop) * kp * ci * anni, anni
+    return k * kw * QUF[zona] * (1 - 1 / scop) * kp * ci * anni, anni, None
 
 
 def calcola(d: dict) -> dict:
@@ -65,12 +92,17 @@ def calcola(d: dict) -> dict:
         return min(spesa, cmax_totale) if cmax_totale is not None else spesa
 
     pdc = d.get("pdc") or {}
-    i_pdc, anni_pdc = algoritmo_pdc(pdc, zona)
+    i_pdc, anni_pdc, problema_pdc = algoritmo_pdc(pdc, zona)
     titolo3_pdc = i_pdc > 0
+    # Colonnine e fotovoltaico: solo con una pompa di calore elettrica (non con un ibrido), e mai oltre il suo
+    # incentivo GIA' ridotto dal tetto per le imprese (esempio del GSE, revisione del 09/10).
+    pdc_traina = titolo3_pdc and pdc.get("ibrido", "no") == "no"
+    dim_iii = 45 + dim
+    i_pdc_finale = min(i_pdc, dim_iii / 100 * pdc.get("spesa", 0)) if titolo3_pdc else 0
     biom = d.get("biomassa") or {}
     sol = d.get("solare") or {}
     sca = d.get("scaldacqua") or {}
-    con_titolo3 = titolo3_pdc or biom.get("kw", 0) > 0 or sca.get("spesa", 0) > 0
+    con_titolo3 = titolo3_pdc or (biom.get("kw", 0) > 0 and biom.get("spesa", 0) > 0) or sca.get("spesa", 0) > 0
     opache = [o for o in d.get("opache") or [] if o.get("spesa", 0) > 0 and o.get("m2", 0) > 0]
     ue = 1.1 if d.get("ue") else 1.0
     # II.A cappotto: 40% (50% zone E-F; 55% con un intervento III.A, III.B, III.C o III.E), Imax 1.000.000 in tutto
@@ -105,19 +137,19 @@ def calcola(d: dict) -> dict:
         cmax = 60 * ba["m2"]
         righe.append(("II.F", 2, min(0.4 * min(ba["spesa"], cmax), 100_000) * ue, min(ba["spesa"], cmax), 5))
     col = d.get("colonnine") or {}
-    if col.get("spesa", 0) > 0 and titolo3_pdc:                    # solo insieme a una pompa di calore elettrica
+    if col.get("spesa", 0) > 0 and pdc_traina:                     # solo insieme a una pompa di calore elettrica
         tipo, n = col.get("tipo", "mono"), max(1, col.get("n", 1))
         cmax = {"mono": 2400 * n, "tri": 8400 * n, "22_50": 1200 * col.get("kw", 0), "50_100": 60_000, "oltre_100": 110_000}[tipo]
-        righe.append(("II.G", 2, min(0.30 * min(col["spesa"], cmax), i_pdc), min(col["spesa"], cmax), anni_pdc))
+        righe.append(("II.G", 2, min(0.30 * min(col["spesa"], cmax), i_pdc_finale), min(col["spesa"], cmax), anni_pdc))
     fv = d.get("fotovoltaico") or {}
-    if (fv.get("spesa", 0) > 0 or fv.get("spesa_acc", 0) > 0) and titolo3_pdc:
+    if (fv.get("spesa", 0) > 0 or fv.get("spesa_acc", 0) > 0) and pdc_traina:
         kwp = fv.get("kwp", 0)
         c_fv = 1500 if kwp <= 20 else 1200 if kwp <= 200 else 1100 if kwp <= 600 else 1050
         perc = 0.20 + fv.get("registro", 0) / 100
         amm = min(fv.get("spesa", 0), c_fv * kwp) + min(fv.get("spesa_acc", 0), 1000 * fv.get("kwh", 0))
-        righe.append(("II.H", 2, min(perc * amm, i_pdc), amm, anni_pdc))
+        righe.append(("II.H", 2, min(perc * amm, i_pdc_finale), amm, anni_pdc))
     if titolo3_pdc:
-        righe.append(("III.A", 3, i_pdc, pdc.get("spesa", 0), anni_pdc))
+        righe.append(("III.B" if pdc.get("ibrido", "no") != "no" else "III.A", 3, i_pdc, pdc["spesa"], anni_pdc))
     if biom.get("kw", 0) > 0 and biom.get("spesa", 0) > 0:
         kw, tipo = biom["kw"], biom.get("tipo", "caldaia")
         ci = CI_BIOMASSA[tipo][0 if kw <= 35 else 1 if kw <= 500 else 2] or CI_BIOMASSA[tipo][0]
@@ -136,21 +168,23 @@ def calcola(d: dict) -> dict:
         cmax, imax = (200, 6_500) if kw <= 50 else (160, 15_000) if kw <= 150 else (130, 30_000)
         righe.append(("III.F", 3, min(0.65 * min(tlr["spesa"], cmax * kw), imax), min(tlr["spesa"], cmax * kw), 5))
 
-    lettere_ii = {r[0] for r in righe if r[1] == 2 and r[0] in ("II.A", "II.B", "II.C", "II.E", "II.F")}
-    multi = len(lettere_ii) >= 2 or any(r[0] in ("II.D", "II.G", "II.H") for r in righe)
-    tetto_ii = min((30 if len(lettere_ii) >= 2 else 25) + dim + d.get("zona_aiuti", 0) + (15 if d.get("risparmio_40") else 0),
+    multi = len({r[0] for r in righe if r[1] == 2}) >= 2 or any(r[0] in ("II.D", "II.G", "II.H") for r in righe)
+    # Multi-intervento (base 30%): due o piu' interventi del Titolo II, compresi II.D, II.G, II.H (par. 9.1.1).
+    n_ii = len({r[0] for r in righe if r[1] == 2})
+    tetto_ii = min((30 if n_ii >= 2 else 25) + dim + d.get("zona_aiuti", 0) + (15 if d.get("risparmio_40") else 0),
                    65 if dim else 60)
-    tetto_iii = 45 + dim
+    tetto_iii = dim_iii
     risultato = []
     for codice, titolo, alg, base, anni in righe:
-        tetto = (min(tetto_ii, 30) if codice in ("II.D", "II.G", "II.H") else tetto_ii) if titolo == 2 else tetto_iii
+        # II.D, II.G, II.H: sempre 30% (nota 6 del par. 4.2.1), anche per le grandi imprese
+        tetto = (30 if codice in ("II.D", "II.G", "II.H") else tetto_ii) if titolo == 2 else tetto_iii
         incentivo = min(alg, tetto / 100 * base)
         risultato.append({"codice": codice, "algoritmo": alg, "tetto": tetto, "base": base, "incentivo": incentivo,
                           "anni": anni})
     totale = sum(r["incentivo"] for r in risultato)
     anni = 1 if totale <= 15_000 else max([r["anni"] for r in risultato] or [1])
     return {"interventi": risultato, "totale": totale, "anni": anni, "multi": multi,
-            "trattenuta": min(0.01 * totale, 250), "risparmio_minimo": 20 if multi else 10}
+            "trattenuta": min(0.01 * totale, 250), "risparmio_minimo": 20 if multi else 10, "problema_pdc": problema_pdc}
 
 
 # --- la pagina: modulo e JavaScript (stessa logica di calcola) ---
@@ -191,16 +225,19 @@ _MODULO = "".join([
     _spunta("ct-ue", "Componenti principali prodotti nell'Unione europea (+10% sugli interventi II.A-II.F)"),
     _blocco("Pompa di calore elettrica o sistema ibrido (III.A, III.B)", "".join([
         _sel("ct-pdc-tipo", "Tipo", [("aria_acqua", "Aria/acqua"), ("vrf", "Aria/aria VRF/VRV"), ("rooftop", "Aria/aria rooftop"),
-                                     ("split", "Aria/aria split o multisplit fino a 12 kW"), ("acqua", "Acqua di falda"),
-                                     ("geotermica", "Geotermica"), ("double_duct", "Fixed double duct")]),
+                                     ("split", "Aria/aria split o multisplit fino a 12 kW"), ("acqua_acqua", "Acqua di falda/acqua"),
+                                     ("acqua_aria", "Acqua di falda/aria"), ("geo_acqua", "Geotermica (salamoia)/acqua"),
+                                     ("geo_aria", "Geotermica (salamoia)/aria"), ("double_duct", "Fixed double duct")]),
         _num("ct-pdc-kw", "Potenza nominale (Prated, kW, dalla scheda prodotto)", "30", "0.1"),
-        _num("ct-pdc-scop", "SCOP (o COP per i double duct), clima medio", "4", "0.01"),
-        _num("ct-pdc-eta", "Efficienza stagionale ηs in % (dalla scheda prodotto; vuoto = premialità 1)", "150"),
-        _num("ct-pdc-etamin", "ηs minima Ecodesign in % (di solito 110 a media temperatura, 125 a bassa)", "110"),
-        _sel("ct-pdc-ibr", "Configurazione", [("no", "Solo pompa di calore"), ("factory", "Sistema ibrido factory made (k 1,25)"),
-                                             ("bivalente", "Sistema bivalente o pompa di calore add-on")]),
-        _num("ct-pdc-kwc", "Potenza della caldaia del sistema ibrido (kW)", "0", "0.1"),
-        _num("ct-pdc-spesa", "Spesa (euro)", "30000", "100")]), aperto=True),
+        _num("ct-pdc-scop", "SCOP in clima medio (per i double duct il COP), dalla scheda prodotto", "4", "0.01"),
+        _num("ct-pdc-eta", "Efficienza stagionale ηs in % dalla scheda prodotto (se la lasci vuota la premialità vale 1)", "", "1"),
+        _sel("ct-pdc-temp", "Temperatura di mandata (solo macchine ad acqua)", [("media", "Media, 55 °C (radiatori)"), ("bassa", "Bassa, 35 °C (pannelli radianti)")]),
+        _spunta("ct-pdc-gwp", "Refrigerante con GWP fino a 150 (es. R290 propano)"),
+        _sel("ct-pdc-ibr", "Configurazione", [("no", "Solo pompa di calore"), ("factory", "Ibrido factory made con caldaia a biomassa (k 1,25)"),
+                                             ("bivalente", "Sistema bivalente con caldaia a biomassa")]),
+        _num("ct-pdc-kwc", "Potenza della caldaia dell'ibrido (kW)", "0", "0.1"),
+        _num("ct-pdc-spesa", "Spesa (euro)", "30000", "100"),
+        '<p class="piccolo">Per le imprese non sono ammessi le pompe di calore a gas e gli ibridi con caldaia a gas.</p>']), aperto=True),
     _blocco("Isolamento di coperture, pavimenti e pareti (II.A)", "".join(
         _sel(f"ct-op{i}-tipo", f"Superficie {i}", _OPACHE) + _num(f"ct-op{i}-m2", "m² isolati") + _num(f"ct-op{i}-spesa", "Spesa (euro)", "", "100")
         for i in (1, 2))),
@@ -258,28 +295,41 @@ _SCRIPT = """<script>
   function c(id) { return box.querySelector("#" + id).checked; }
   var QUF = {A: 600, B: 850, C: 1100, D: 1400, E: 1700, F: 1800};
   var CMAX_OP = {cop_est: 300, cop_int: 150, cop_vent: 350, pav_est: 170, pav_int: 150, par_est: 200, par_int: 100, par_vent: 250};
-  var CI_PDC = {aria_acqua: [0.15, 0.06], vrf: [0.15, 0.055], rooftop: [0.15, 0.055], acqua: [0.16, 0.06], geotermica: [0.16, 0.06],
-                split: [0.07, 0.07], double_duct: [0.20, 0.20]};
+  var CI_PDC = {aria_acqua: [0.15, 0.06], vrf: [0.15, 0.055], rooftop: [0.15, 0.055], acqua_aria: [0.16, 0.06], acqua_acqua: [0.16, 0.06],
+                geo_aria: [0.16, 0.06], geo_acqua: [0.16, 0.06], split: [0.07, 0.07], double_duct: [0.20, 0.20]};
   var K_IBR = {no: [1, 1], factory: [1.25, 1.25], bivalente: [1, 1.1]};
   var CI_BIO = {caldaia: [0.060, 0.025, 0.020], stufa_legna: [0.045, 0.045, 0.045], stufa_pellet: [0.055, 0.055, 0.055]};
   var CI_SOL = {acs: [0.35, 0.32, 0.13, 0.12, 0.11], acs_risc: [0.36, 0.33, 0.13, 0.12, 0.11],
                 concentrazione: [0.38, 0.35, 0.13, 0.12, 0.11], cooling: [0.43, 0.40, 0.17, 0.15, 0.14]};
   var NOMI = {"II.A": "Isolamento (II.A)", "II.B": "Infissi (II.B)", "II.C": "Schermature (II.C)", "II.D": "nZEB (II.D)",
               "II.E": "Illuminazione (II.E)", "II.F": "Building automation (II.F)", "II.G": "Colonnine (II.G)",
-              "II.H": "Fotovoltaico (II.H)", "III.A": "Pompa di calore (III.A/B)", "III.C": "Biomassa (III.C)",
+              "II.H": "Fotovoltaico (II.H)", "III.A": "Pompa di calore (III.A)", "III.B": "Sistema ibrido (III.B)", "III.C": "Biomassa (III.C)",
               "III.D": "Solare termico (III.D)", "III.E": "Scaldacqua PdC (III.E)", "III.F": "Teleriscaldamento (III.F)"};
   function aggiorna() {
     var dim = {piccola: 20, media: 10, grande: 0}[s("ct-dim")], zona = s("ct-zc"), ue = c("ct-ue") ? 1.1 : 1, righe = [], note = [];
-    // pompa di calore
-    var kw = n("ct-pdc-kw"), scop = n("ct-pdc-scop"), ipdc = 0, anniPdc = 0;
+    // pompa di calore (kp: eta_s / eta_s minima del tipo; double duct: COP / 2,6)
+    var kw = n("ct-pdc-kw"), scop = n("ct-pdc-scop"), ipdc = 0, anniPdc = 0, tipo = s("ct-pdc-tipo"), gwp = c("ct-pdc-gwp");
     if (kw > 0 && scop > 1 && n("ct-pdc-spesa") > 0) {
-      var tipo = s("ct-pdc-tipo"), ci = CI_PDC[tipo][kw <= 35 ? 0 : 1];
-      var kp = n("ct-pdc-eta") ? Math.max(1, n("ct-pdc-eta") / (n("ct-pdc-etamin") || 110)) : 1;
-      var k = K_IBR[s("ct-pdc-ibr")][n("ct-pdc-kwc") <= 35 ? 0 : 1];
-      anniPdc = kw <= 35 ? 2 : 5;
-      ipdc = k * kw * QUF[zona] * (1 - 1 / scop) * kp * ci * anniPdc;
-      if (tipo === "split" && kw > 12) note.push("Gli split e multisplit sono ammessi fino a 12 kW.");
+      var kp = 1, ammessa = true;
+      if (tipo === "split" && kw > 12) { ammessa = false; note.push("Gli split e multisplit sono ammessi fino a 12 kW."); }
+      else if (tipo === "double_duct") {
+        var copMin = gwp ? 2.34 : 2.6;
+        if (scop < copMin) { ammessa = false; note.push("COP sotto il minimo Ecodesign: macchina non ammessa."); } else kp = scop / copMin;
+      } else {
+        var etaMin = (tipo === "split" || (tipo === "geo_aria" && kw <= 12)) ? (gwp ? 134 : 149)
+          : (["vrf", "acqua_aria", "geo_aria"].indexOf(tipo) >= 0) ? 137 : tipo === "rooftop" ? 125 : (s("ct-pdc-temp") === "bassa" ? 125 : 110);
+        var eta = n("ct-pdc-eta");
+        if (eta && eta < etaMin) { ammessa = false; note.push("Efficienza stagionale sotto il minimo Ecodesign (" + etaMin + "%): macchina non ammessa."); }
+        else if (eta) kp = eta / etaMin;
+      }
+      if (ammessa) {
+        var ci = CI_PDC[tipo][kw <= 35 ? 0 : 1], k = K_IBR[s("ct-pdc-ibr")][n("ct-pdc-kwc") <= 35 ? 0 : 1];
+        anniPdc = kw <= 35 ? 2 : 5;
+        ipdc = k * kw * QUF[zona] * (1 - 1 / scop) * kp * ci * anniPdc;
+      }
     }
+    var ibrido = s("ct-pdc-ibr") !== "no", traina = ipdc > 0 && !ibrido;
+    var ipdcFinale = ipdc ? Math.min(ipdc, (45 + dim) / 100 * n("ct-pdc-spesa")) : 0;
     var bioKw = n("ct-bio-kw"), bioSp = n("ct-bio-spesa"), scaSp = n("ct-sca-spesa");
     var conT3 = ipdc > 0 || (bioKw > 0 && bioSp > 0) || scaSp > 0;
     // II.A
@@ -311,23 +361,23 @@ _SCRIPT = """<script>
     if (bm2 > 0 && bsp > 0) { var bb = Math.min(bsp, 60 * bm2); righe.push(["II.F", 2, Math.min(0.4 * bb, 100000) * ue, bb, 5]); }
     var csp = n("ct-col-spesa");
     if (csp > 0) {
-      if (!ipdc) note.push("Colonnine e fotovoltaico sono ammessi solo insieme a una pompa di calore elettrica.");
+      if (!traina) note.push("Colonnine e fotovoltaico sono ammessi solo insieme a una pompa di calore elettrica (non con un ibrido).");
       else {
         var np = Math.max(1, n("ct-col-n"));
         var cm = {mono: 2400 * np, tri: 8400 * np, "22_50": 1200 * n("ct-col-kw"), "50_100": 60000, oltre_100: 110000}[s("ct-col-tipo")];
-        var cb = Math.min(csp, cm); righe.push(["II.G", 2, Math.min(0.30 * cb, ipdc), cb, anniPdc]);
+        var cb = Math.min(csp, cm); righe.push(["II.G", 2, Math.min(0.30 * cb, ipdcFinale), cb, anniPdc]);
       }
     }
     var kwp = n("ct-fv-kwp"), fsp = n("ct-fv-spesa"), asp = n("ct-fv-spacc");
     if (fsp > 0 || asp > 0) {
-      if (!ipdc) { if (note.indexOf("Colonnine e fotovoltaico sono ammessi solo insieme a una pompa di calore elettrica.") < 0) note.push("Colonnine e fotovoltaico sono ammessi solo insieme a una pompa di calore elettrica."); }
+      if (!traina) { var msg = "Colonnine e fotovoltaico sono ammessi solo insieme a una pompa di calore elettrica (non con un ibrido)."; if (note.indexOf(msg) < 0) note.push(msg); }
       else {
         var cfv = kwp <= 20 ? 1500 : kwp <= 200 ? 1200 : kwp <= 600 ? 1100 : 1050;
         var fb = Math.min(fsp, cfv * kwp) + Math.min(asp, 1000 * n("ct-fv-kwh"));
-        righe.push(["II.H", 2, Math.min((0.20 + Number(s("ct-fv-reg")) / 100) * fb, ipdc), fb, anniPdc]);
+        righe.push(["II.H", 2, Math.min((0.20 + Number(s("ct-fv-reg")) / 100) * fb, ipdcFinale), fb, anniPdc]);
       }
     }
-    if (ipdc) righe.push(["III.A", 3, ipdc, n("ct-pdc-spesa"), anniPdc]);
+    if (ipdc) righe.push([ibrido ? "III.B" : "III.A", 3, ipdc, n("ct-pdc-spesa"), anniPdc]);
     if (bioKw > 0 && bioSp > 0) {
       var bt = s("ct-bio-tipo"), bci = CI_BIO[bt][bioKw <= 35 ? 0 : bioKw <= 500 ? 1 : 2], ba = bioKw <= 35 ? 2 : 5;
       if (bt !== "caldaia" && bioKw > 35) note.push("Stufe e termocamini: il coefficiente del GSE e' previsto fino a 35 kW.");
@@ -348,13 +398,13 @@ _SCRIPT = """<script>
       var tc = tkw <= 50 ? [200, 6500] : tkw <= 150 ? [160, 15000] : [130, 30000], tb = Math.min(tsp, tc[0] * tkw);
       righe.push(["III.F", 3, Math.min(0.65 * tb, tc[1]), tb, 5]);
     }
-    var lettere = {}; righe.forEach(function (r) { if (["II.A", "II.B", "II.C", "II.E", "II.F"].indexOf(r[0]) >= 0) lettere[r[0]] = 1; });
-    var nII = Object.keys(lettere).length;
+    var lettere = {}; righe.forEach(function (r) { if (r[1] === 2) lettere[r[0]] = 1; });
+    var nII = Object.keys(lettere).length;   // multi-intervento: due o piu' interventi del Titolo II, compresi D, G, H
     var multi = nII >= 2 || righe.some(function (r) { return ["II.D", "II.G", "II.H"].indexOf(r[0]) >= 0; });
     var tettoII = Math.min((nII >= 2 ? 30 : 25) + dim + Number(s("ct-za")) + (c("ct-40") ? 15 : 0), dim ? 65 : 60), tettoIII = 45 + dim;
     var tot = 0, anni = 1, html = "";
     righe.forEach(function (r) {
-      var tetto = r[1] === 2 ? (["II.D", "II.G", "II.H"].indexOf(r[0]) >= 0 ? Math.min(tettoII, 30) : tettoII) : tettoIII;
+      var tetto = r[1] === 2 ? (["II.D", "II.G", "II.H"].indexOf(r[0]) >= 0 ? 30 : tettoII) : tettoIII;
       var inc = Math.min(r[2], tetto / 100 * r[3]); tot += inc; anni = Math.max(anni, r[4]);
       html += "<tr><td>" + NOMI[r[0]] + "</td><td class='cr'>" + bqEuro.format(r[2]) + "</td><td class='cr'>" + tetto + "% = "
             + bqEuro.format(tetto / 100 * r[3]) + "</td><td class='cr'><b>" + bqEuro.format(inc) + "</b></td></tr>";
