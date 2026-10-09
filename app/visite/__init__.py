@@ -8,7 +8,10 @@ tipo di visitatore (persona, motore di ricerca, IA, altro programma) con il nome
 Privacy: NON si salvano indirizzi IP, User-Agent completi, cookie o altri identificativi; nessun cookie viene creato.
 Dallo User-Agent si ricava solo il nome di un programma noto (Googlebot, GPTBot...), poi lo User-Agent si butta.
 Non si contano le visite di chi ha fatto l'accesso (Matteo e i collaboratori che rileggono il blog) ne' le pagine
-che non esistono (si conta solo la risposta 200).
+che non esistono (si conta solo la risposta 200). Dal 09/10 (Matteo: "sta contando anche i nostri accessi") non si
+contano nemmeno: i browser in cui qualcuno ha gia' fatto l'accesso almeno una volta (cookie tecnico NON_CONTARE, messo
+all'accesso e lasciato dopo l'uscita), la pagina "/" finche' la presentazione e' spenta (e' solo la pagina d'accesso)
+e le persone che aprono robots.txt, sitemap.xml e llms.txt (file per i programmi: le apriamo noi per controllarle).
 
 La pagina "Visite" della plancia (permesso "lavoro") legge `riepilogo()` tramite /api/visite.
 """
@@ -21,6 +24,9 @@ import re
 from urllib.parse import parse_qs, urlparse
 
 log = logging.getLogger(__name__)
+
+NON_CONTARE = "br_non_contare"
+FILE_PER_PROGRAMMI = {"/robots.txt", "/sitemap.xml", "/llms.txt"}
 
 # Pagine contate: percorsi esatti, piu' gli articoli /blog/<slug>.
 PERCORSI = {"/", "/blog", "/llms.txt", "/sitemap.xml", "/robots.txt"}
@@ -151,11 +157,19 @@ def domini_propri() -> set[str]:
     return {d for d in propri if d}
 
 
+def _presentazione_accesa() -> bool:
+    from app.pubblico import pubblica
+
+    return pubblica()
+
+
 def registra(percorso: str, referer: str | None, user_agent: str | None, query: str) -> None:
     """Conta una visita (una riga per giorno e combinazione). Non solleva mai errori: la pagina non deve cadere."""
     if not os.environ.get("PGHOST"):
         return
     tipo, programma = visitatore(user_agent)
+    if tipo == "persona" and (percorso in FILE_PER_PROGRAMMI or (percorso == "/" and not _presentazione_accesa())):
+        return
     # Le provenienze e le campagne contano solo per le persone: i programmi non le mandano o le mandano a caso.
     da = provenienza(referer, domini_propri()) if tipo == "persona" else "diretto"
     sorgente, mezzo, campagna = utm(query) if tipo == "persona" else ("", "", "")

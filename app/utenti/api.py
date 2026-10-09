@@ -104,6 +104,15 @@ class RichiestaRecupero(BaseModel):
     email: str
 
 
+def _non_contare(response: Response) -> None:
+    """Cookie tecnico (09/10): chi ha fatto l'accesso almeno una volta da questo browser non entra nelle statistiche
+    delle visite anche dopo l'uscita (app/visite). Valore fisso, nessun identificativo."""
+    from app.visite import NON_CONTARE
+
+    response.set_cookie(NON_CONTARE, "1", max_age=365 * 24 * 3600, httponly=True, secure=_cookie_sicuro(),
+                        samesite="lax", path="/")
+
+
 @router.post("/accesso/entra")
 def entra(dati: Credenziali, request: Request, response: Response) -> dict:
     with connetti() as conn:
@@ -114,6 +123,7 @@ def entra(dati: Credenziali, request: Request, response: Response) -> dict:
         conn.commit()
     response.set_cookie(COOKIE, codice, max_age=int(u.DURATA_SESSIONE.total_seconds()), httponly=True,
                         secure=_cookie_sicuro(), samesite="lax", path="/")
+    _non_contare(response)
     return utente
 
 
@@ -171,6 +181,7 @@ def nuova_password(dati: NuovaPassword, response: Response, request: Request) ->
         conn.commit()
     response.set_cookie(COOKIE, codice, max_age=int(u.DURATA_SESSIONE.total_seconds()), httponly=True,
                         secure=_cookie_sicuro(), samesite="lax", path="/")
+    _non_contare(response)
     return pubblico
 
 
@@ -187,6 +198,7 @@ class Conferma(BaseModel):
 def _metti_cookie(response: Response, codice: str) -> None:
     response.set_cookie(COOKIE, codice, max_age=int(u.DURATA_SESSIONE.total_seconds()), httponly=True,
                         secure=_cookie_sicuro(), samesite="lax", path="/")
+    _non_contare(response)
 
 
 @router.get("/accesso/registrazione")
