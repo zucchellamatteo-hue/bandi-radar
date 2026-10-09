@@ -174,8 +174,8 @@ def faq(n: dict | None, giorni_prova: int) -> list[tuple[str, str]]:
          "indicative: prima di presentare la domanda va sempre letto il bando ufficiale, che trovi collegato in ogni scheda."),
         ("Mi aiutate a presentare la domanda? Quanto costa?",
          "Sì: da ogni scheda puoi chiedere una chiamata per valutare il bando e il supporto di un esperto per la domanda. "
-         "Per gli abbonati la preparazione e l'invio della domanda sono compresi nell'abbonamento: si paga solo un compenso "
-         "se la domanda è accolta. Sui contributi a fondo perduto il 12% fino a 50.000 euro, il 10% da 50.000 a 150.000 "
+         "Per gli abbonati la preparazione e l'invio della domanda sono compresi nell'abbonamento, se resta attivo fino "
+         "all'esito della domanda: si paga solo un compenso se la domanda è accolta. Sui contributi a fondo perduto il 12% fino a 50.000 euro, il 10% da 50.000 a 150.000 "
          "euro e l'8% oltre; sui finanziamenti agevolati dall'1% allo 0,5% secondo l'importo; sui crediti d'imposta il 6%. "
          "Per chi non è abbonato la pratica costa da 100 a 300 euro, più lo stesso compenso a successo. Importi IVA "
          "esclusa; le condizioni complete sono nella pagina Condizioni del supporto."),
