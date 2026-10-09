@@ -264,6 +264,15 @@ def test_calcolatori_con_i_limiti_delle_misure():
     assert c.credito_zes(80_000_000, campania, 0) == 27_000_000   # importo corretto: 40% x (55 + 0,5 x 25)
     assert round(c.art_bonus(153_846, 20_000_000)) == 100_000      # esempio del portale
     assert c.art_bonus(5_000, 1_000_000) == 3_250
+    # Conto Termico: gli esempi dell'articolo (Regole Applicative GSE, par. 4.2.1 e 4.6)
+    assert c.conto_termico(20, titolo3=30_000) == (19_500, 2)                       # pompa di calore 30 kW, piccola
+    assert c.conto_termico(10, titolo3=150_000, titolo2=450_000, multi=True) == (262_500, 5)  # manifattura media
+    assert c.conto_termico(20, titolo3=30_000, titolo2=40_000, pompa_piccola=False) == (37_500, 5)  # artigiano
+    assert c.conto_termico(20, titolo3=12_000, titolo2=6_000) == (10_500, 1)        # negozio: rata unica
+    assert c.conto_termico(10, titolo2=240_000) == (84_000, 5)                      # logistica: 35%
+    assert c.conto_termico(20, titolo2=100_000, multi=True, zona=15, risparmio_40=True)[0] == 65_000   # tetto PMI
+    assert c.conto_termico(0, titolo2=100_000, multi=True, zona=15, risparmio_40=True)[0] == 60_000    # tetto grandi
+    assert c.conto_termico(0, titolo3=100_000)[0] == 45_000
     for nome in c.CALCOLATORI:                                    # ogni calcolatore si inserisce e porta il suo script
         h = articoli.in_html(f"[[calcolatore:{nome}]]")
         assert "bqEuro" in h and 'class="calcolatore"' in h
