@@ -108,6 +108,9 @@ Ordine di lavoro:
    (Smart&Start, voucher digitalizzazione); le bozze brevi 2, 5, 6 restano finche' non le riscriviamo complete.
 9. Quando la SRLS esiste (decisione mia): landing accesa con i dati della societa', Stripe, misura delle registrazioni
    (GOOGLE_ADS_ID e banner), poi la prova pubblicitaria da circa 2.000 euro (Google circa 1.400, ChatGPT circa 600,
-   stop se un abbonato costa piu' di 150 euro). Chiave di Search Console: prossimo passo 49 (la creo io).
+   stop se un abbonato costa piu' di 150 euro). Le campagne si fanno sui bandi aperti piu' interessanti del momento,
+   con parole chiave che li richiamano o che cercano le imprese che possono accedervi, e annunci che portano alla
+   pagina del bando o della guida: prepara per ogni bando scelto parole chiave, testi degli annunci e pagina di arrivo.
+   Chiave di Search Console: prossimo passo 49 (la creo io).
 Alla fine di ogni passo aggiorna i piani e docs/CRONOLOGIA.md e dimmi in parole semplici cosa posso provare.
 ```

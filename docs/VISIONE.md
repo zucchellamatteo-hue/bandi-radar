@@ -46,6 +46,10 @@ Decisioni di Matteo del 10/10/2026 (sostituiscono quelle del 05-06/10):
 - **Collaboratori esperti** (es. Luca) per non fare del tempo di Matteo un collo di bottiglia: chi prepara e invia la
   domanda riceve il 30-40% del compenso a successo incassato.
 - **Pubblicità iniziale**: circa 2.000 € tra Google Ads e annunci su ChatGPT, dopo la costituzione della società.
+  Strategia (Matteo, 10/10): le campagne si costruiscono sui **bandi aperti più interessanti del momento** (dalla
+  ricerca settimanale dei bandi più discussi e dalla vetrina), con parole chiave che richiamano direttamente quei bandi
+  o le ricerche delle imprese che possono accedervi (settore, territorio, tipo di spesa); ogni annuncio porta a una
+  pagina sul bando o sull'argomento (guida del blog, pagina "Bandi aperti in [regione]") con l'invito alla prova.
 - Differenza dai concorrenti: al cliente arrivano solo i bandi adatti a lui (non tutte le novità), nell'area personale
   vede i bandi selezionati e può chiedere una chiamata per approfondirli.
 - Il ricavo principale resta il supporto alle domande; l'abbonamento fa entrare i clienti e copre i costi fissi.
