@@ -4,7 +4,7 @@ l'andamento delle pagine pubbliche, dai contatori anonimi della tabella `visite`
 Contenuto: visite di persone (ieri contro il giorno prima e totale degli ultimi 7 giorni; in modalita' settimanale
 ultimi 7 giorni contro i 7 prima), pagine piu' viste, provenienze (Google, Bing, motori IA evidenziati), letture dei
 programmi IA e dei motori di ricerca pagina per pagina, nuove registrazioni delle imprese e la riga di Google Search
-Console (per ora "non ancora collegato": il punto pronto e' `dati_search_console`).
+Console (dal 09/10 con la chiave GSC_CHIAVE_JSON_B64, app/pubblico/search_console.py; senza: "non ancora collegato").
 
 Frequenza: RAPPORTO_SEO nel .env = giornaliero (di base) | settimanale (il lunedi') | spento. Parte dalle 7 dal
 servizio di raccolta (app/raccolta/demone.py), una volta sola per giorno o settimana (tabella notifiche_inviate,
@@ -66,11 +66,30 @@ def periodi(oggi: date, freq: str) -> dict:
 
 
 def dati_search_console(conn, da: date, a: date) -> dict | None:
-    """Punto pronto per Google Search Console (impressioni, clic, posizione media, query e pagine principali).
-    Non ancora collegato: quando Matteo dara' l'accesso (account di servizio con la Search Console API,
-    searchanalytics.query sulla proprieta' "Dominio" bandinqiaro.it) questa funzione ritornera'
-    {"impressioni", "clic", "posizione", "query": [(testo, clic, impressioni)], "pagine": [...]}. Oggi: None."""
-    return None
+    """Google Search Console (09/10, app/pubblico/search_console.py): impressioni, clic, posizione media, query e
+    pagine principali degli ultimi 7 giorni disponibili (i dati arrivano con 2-3 giorni di ritardo). None senza la
+    chiave GSC_CHIAVE_JSON_B64 nel .env; {"errore": ...} se Google non risponde (il rapporto parte lo stesso)."""
+    from app.pubblico import search_console
+
+    try:
+        return search_console.dati()
+    except Exception as e:  # noqa: BLE001 - il rapporto non deve cadere per Search Console
+        return {"errore": f"Search Console non letta ({type(e).__name__})"}
+
+
+def righe_search_console(sc: dict | None) -> list[str]:
+    """Le righe di testo della sezione Search Console del rapporto."""
+    if sc is None:
+        return ["Search Console: non ancora collegato. Si accende con GSC_CHIAVE_JSON_B64 nel .env."]
+    if "errore" in sc:
+        return [f"Search Console: {sc['errore']}."]
+    righe = [f"Search Console dal {sc['da']:%d/%m} al {sc['a']:%d/%m} (i dati arrivano con 2-3 giorni di ritardo): "
+             f"{sc['impressioni']} impressioni, {sc['clic']} clic, CTR {sc['ctr']}%, posizione media {sc['posizione']}."]
+    for titolo, chiave_sc in (("Ricerche principali", "query"), ("Pagine principali", "pagine")):
+        if sc[chiave_sc]:
+            righe.append(f"{titolo}: " + "; ".join(f"{t} ({c} clic, {i} impressioni, pos. {p})"
+                                                   for t, c, i, p in sc[chiave_sc][:10]))
+    return righe
 
 
 def raccogli(conn, oggi: date, freq: str) -> dict:
@@ -157,16 +176,14 @@ def componi(d: dict, oggi: date) -> tuple[str, str, str]:
     ]
     reg = d["registrazioni"]
     righe_numeri.append(("Nuove imprese registrate", {"corrente": reg["corrente"], "precedente": reg["precedente"], "sette": reg["sette"]}))
-    sc = d["search_console"]
-    riga_sc = ("Search Console: non ancora collegato." if sc is None else
-               f"Search Console (7 giorni): {sc['impressioni']} impressioni, {sc['clic']} clic, posizione media {sc['posizione']}.")
+    righe_sc = righe_search_console(d["search_console"])
 
     t = [oggetto, "", f"Confronto: {nc} contro {np_}" + ("" if settimanale else f"; ultimi 7 giorni = {s1:%d/%m}–{s2:%d/%m}."), ""]
     for nome, v in righe_numeri:
         sette = "" if settimanale else f" · 7 giorni: {v['sette']}"
         t.append(f"- {nome}: {v['corrente']} ({_variazione(v['corrente'], v['precedente'])} su {v['precedente']}){sette}")
     t.append(f"  (registrate da sole dal sito negli ultimi 7 giorni: {reg['sette_da_sola']}; le altre su invito)")
-    t += ["", riga_sc, ""]
+    t += [""] + righe_sc + [""]
 
     def tabella_testo(titolo, voci, nome_voce):
         t.append(f"== {titolo}")
@@ -199,7 +216,8 @@ def componi(d: dict, oggi: date) -> tuple[str, str, str]:
                  f"<td style='{cella}'>{v['precedente']}</td>" + ("" if settimanale else f"<td style='{cella}'>{v['sette']}</td>") + "</tr>")
     h.append("</table>")
     h.append(f"<p style='color:#56606e;font-size:13px'>Imprese registrate da sole dal sito negli ultimi 7 giorni: "
-             f"{reg['sette_da_sola']}; le altre su invito.</p><p><b>{html.escape(riga_sc)}</b></p>")
+             f"{reg['sette_da_sola']}; le altre su invito.</p><p><b>{html.escape(righe_sc[0])}</b></p>"
+             + "".join(f"<p style='font-size:14px'>{html.escape(r)}</p>" for r in righe_sc[1:]))
 
     def tabella_html(titolo, voci, nome_voce, evidenzia=lambda k, v: False):
         h.append(f"<h3 style='color:#163e7a;margin-bottom:4px'>{html.escape(titolo)}</h3>")
