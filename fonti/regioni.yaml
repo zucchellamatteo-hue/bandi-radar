@@ -1586,3 +1586,24 @@
     comunicazione istituzionale. Utile solo come segnale secondario. Dal VPS il 24/09: feed RSS con 10 voci,
     ultima 16/09; per lo piu' notizie istituzionali.
 
+
+- id: sardegna_ricerche_bandi
+  nome: Sardegna Ricerche - Bandi aperti
+  ente: Sardegna Ricerche
+  tipo: regione
+  territorio: SAR
+  url: https://www.sardegnaricerche.it/index.php?xsl=558&v=9&s=13&c=4200&nc=1&tipodoc=3&esito=0&scaduti=0
+  modalita: html
+  feed_url: null
+  piattaforma: null
+  frequenza: tre_a_settimana
+  stato: attiva
+  verificato_il: '2026-10-10'
+  richiesta:
+    selettore: "div.half-lined"
+  note: >
+    Aggiunta il 10/10 (ricerca settimanale dei bandi discussi del 09/10: "Aiuti per progetti di collaborazione per
+    l'innovazione", 7 mln, 15/10-30/11/2026, era assente). Elenco dei bandi non scaduti (scaduti=0) dell'agenzia
+    regionale per la ricerca e l'innovazione (PR FESR 2021-2027: innovazione, PoC, appalti pre-commerciali, turismo):
+    ogni voce ha "Oggetto: <titolo>", date di pubblicazione e scadenza e il link "Visualizza i documenti" alla
+    pagina con i documenti del bando (il lettore prende il titolo dall'"Oggetto").

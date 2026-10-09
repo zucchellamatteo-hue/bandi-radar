@@ -251,3 +251,19 @@ def test_sitemap_tiene_solo_pagine_recenti_e_pertinenti():
     assert figli == []
     assert [a.url for a in annunci] == ["https://x.it/avvisi/bando-contributi-commercio-2026"]
     assert annunci[0].titolo == "Bando contributi commercio 2026"
+
+
+def test_osservatore_prende_l_oggetto_quando_il_link_dice_visualizza_i_documenti():
+    """Sardegna Ricerche (10/10): "Oggetto: <titolo>" in un div e il link "Visualizza i documenti (id)" sotto."""
+    scheda = """<div class="ext-center half-lined">
+      <div class="ext-center"><span class="title10b">Oggetto: </span>Aiuti per progetti di collaborazione per l'innovazione</div>
+      <div class="ext-center">Pubblicazione online: 27/05/2026 - Scadenza: 30/11/2026</div>
+      <div class="ext-center"><a class="title11" href="/index.php?id={id}">Visualizza i documenti<span class="hidden">({id})</span></a></div>
+    </div>"""
+    html = "<html><body><main>" + scheda.format(id=1) + scheda.format(id=2).replace("collaborazione", "reti") + "</main></body></html>"
+    annunci = estrai_link(html, "https://www.sardegnaricerche.it/bandi", "div.half-lined")
+    assert [a.titolo for a in annunci] == ["Aiuti per progetti di collaborazione per l'innovazione",
+                                           "Aiuti per progetti di reti per l'innovazione"]
+    # un titolo vero che comincia con "Visualizza" non e' un testo generico
+    html = '<html><body><main><a href="/b">Visualizza il bando Voucher digitali 2026 della Camera</a></main></body></html>'
+    assert [a.titolo for a in estrai_link(html, "https://x.it/bandi")] == ["Visualizza il bando Voucher digitali 2026 della Camera"]

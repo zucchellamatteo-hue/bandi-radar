@@ -313,7 +313,11 @@
     Dal 06/10 la scorta legge l''elenco a 30 per pagina (?delta=30&start=1,2,...; circa 37 pagine in tutto, dal
     2022): 4 pagine arrivano a maggio 2025. Elenco misto (bandi, decreti, gare, interpelli): niente scadenze nei
     dati, lo smistamento scarta il resto. Liferay aggiunge a ogni link ?p_l_back_url=<pagina di provenienza>, che il
-    lettore toglie. Il decreto "hard-to-abate" (DD 173/2026) non e'' in questo elenco.'
+    lettore toglie. Il decreto "hard-to-abate" (DD 173/2026) non e'' in questo elenco.
+
+    10/10: il DD 173 del 15/05/2026 (GU 156 dell''08/07/2026, 180 mln per la decarbonizzazione dei processi
+    industriali hard-to-abate e 50 mln per gli edifici pubblici) ripartisce i fondi: le domande partiranno con
+    avvisi attuativi non ancora pubblicati, che arriveranno da questo elenco.'
   richiesta:
     intestazioni:
       User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0 Safari/537.36
@@ -433,6 +437,8 @@
     User-Agent da browser; niente IPv6 (il nome non ha indirizzo AAAA). L'indirizzo e' quello della notizia
     "Riparte Generazione Terra" trovata con la ricerca web, non verificato nel contenuto. Le misure ISMEA
     (Generazione Terra, Piu' Impresa, bando trattori) arrivano oggi da incentivi.gov.it.
+    10/10: il certificato ora si completa (PR 148), ma anche il browser senza interfaccia riceve "Blocked" dal
+    firewall. Resta difficile.
 
 # --- Copertura dei ministeri e degli enti nazionali (ricerca docs/ricerche/2026-10-06_copertura_ministeri.md) ---
 
@@ -670,21 +676,24 @@
     Esclusa: rumore senza bandi; da riconsiderare se Matteo vuole anche le fiere ICE.
 
 - id: mit_incentivi
-  nome: Ministero delle Infrastrutture e dei Trasporti
+  nome: Ministero delle Infrastrutture e dei Trasporti - Notizie
   ente: Ministero delle Infrastrutture e dei Trasporti
   tipo: nazionale
   territorio: ITA
-  url: ''
+  url: https://www.mit.gov.it/comunicazione/news
   modalita: html
-  frequenza: settimanale
-  stato: difficile
-  verificato_il: '2026-10-06'
+  frequenza: tre_a_settimana
+  stato: attiva
+  verificato_il: '2026-10-10'
+  richiesta:
+    selettore: "article.node--type-notizia h2"
   note: >
-    Valutata il 06/10. Il MIT pubblica incentivi per le imprese di autotrasporto (investimenti, formazione, rinnovo
-    del parco), Marebonus e Ferrobonus. Dal VPS www.mit.gov.it non si legge: il certificato HTTPS e' incompleto
-    (manca il certificato intermedio; curl e la raccolta lo rifiutano, come ISMEA), in IPv6 nessuna risposta.
-    Nessuna pagina elenco aperta davvero, quindi nessun indirizzo. Le misure del MIT arrivano oggi da incentivi.gov.it
-    (6 schede con gestore MIT). Si sblocca insegnando alla raccolta a completare la catena dei certificati.
+    Valutata il 06/10, riaperta il 10/10 dopo i certificati intermedi (PR 148): il sito ora si legge. Il MIT pubblica
+    incentivi per le imprese di autotrasporto (investimenti, formazione, rinnovo del parco, esodo), Marebonus,
+    Ferrobonus, bonus patente, oltre a molte notizie non pertinenti (lavori, sicurezza stradale) che lo smistamento
+    scarta. Il feed http://www.mit.gov.it/rss.xml esiste ma e' rotto (titoli e link pieni dei commenti di debug del
+    tema Drupal), quindi si legge l'elenco HTML delle notizie. La pagina "Bonus e Finanziamenti" (/node/18419) e'
+    un'unica pagina con tutti i bonus (anche per i cittadini) e link "clicca qui": non adatta come elenco.
 
 - id: mur_bandi
   nome: Ministero dell'Universita' e della Ricerca
@@ -701,6 +710,8 @@
     PNRR, FIS). Dal VPS tutto il sito, anche robots.txt, risponde 403 con la verifica Cloudflare "Just a moment...
     Enable JavaScript and cookies", anche con User-Agent da browser. Nessuna pagina aperta, nessun indirizzo.
     Da riprovare con il browser senza interfaccia.
+    10/10: provato con il browser senza interfaccia (Chromium): la pagina resta "Ci siamo quasi..." di Cloudflare,
+    nessun contenuto. Resta difficile; le misure del MUR arrivano da incentivi.gov.it.
 
 - id: maeci_opportunita
   nome: Ministero degli Affari Esteri e della Cooperazione Internazionale
@@ -717,6 +728,8 @@
     Ministero del Turismo). Gli strumenti per l'export finanziati dal MAECI (Fondo 394/81, promozione integrata)
     sono gestiti da SIMEST e ICE e arrivano gia' dalle voci simest_*; incentivi.gov.it ha 4 schede con gestore
     MAECI. Nessuna pagina aperta, nessun indirizzo.
+    10/10: con il browser senza interfaccia la home si apre, ma ogni pagina interna (opportunita', sovvenzioni e
+    contributi) rimanda al captcha Radware (validate.perfdrive.com). Resta difficile.
 
 - id: enea_bandi
   nome: ENEA - Bandi
@@ -726,12 +739,15 @@
   url: ''
   modalita: html
   frequenza: mensile
-  stato: difficile
-  verificato_il: '2026-10-06'
+  stato: esclusa
+  verificato_il: '2026-10-10'
   note: >
-    Valutata il 06/10. Certificato HTTPS incompleto come MIT e ISMEA: www.enea.it non si legge dal VPS. ENEA gestisce
-    soprattutto i portali delle detrazioni (Ecobonus, Bonus casa) e bandi di ricerca; i contributi energetici per
-    le imprese passano da GSE e MASE, gia' letti. Nessuna pagina aperta, nessun indirizzo.
+    Valutata il 06/10 (certificato incompleto) e riprovata il 10/10: con i certificati intermedi (PR 148) www.enea.it
+    e opportunita.enea.it si leggono, ma non pubblicano agevolazioni per le imprese: concorsi e borse
+    (opportunita.enea.it/lavoro), gare e indagini di mercato (enea.ubuy.cineca.it), patrocini di eventi, controlli
+    sulle imprese energivore, call di ricerca EUROfusion. ENEA gestisce i portali delle detrazioni (Ecobonus, Bonus
+    casa), gia' coperti dalle misure nazionali; i contributi energetici per le imprese passano da GSE e MASE, gia'
+    letti. Esclusa finche' non compare un elenco di bandi per le imprese.
 
 - id: fondimpresa_avvisi
   nome: Fondimpresa - Avvisi
