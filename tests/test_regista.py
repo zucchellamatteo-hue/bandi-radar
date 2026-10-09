@@ -102,3 +102,52 @@ def test_giro_dei_passi_sul_database():
                 cur.execute("DELETE FROM annunci WHERE id = ANY(%s)", (annunci,))
                 cur.execute("DELETE FROM fonti WHERE id = 'prova_regista'")
             conn.commit()
+
+
+@pytest.mark.skipif(not os.environ.get("PGHOST"), reason="serve un database Postgres di prova (PGHOST)")
+def test_avviso_di_chiusura_chiude_il_bando():
+    """Prossimo passo 48: il decreto di chiusura collegato a un bando aperto lo chiude subito; un avviso piu' vecchio
+    dell'apertura (edizione precedente) no."""
+    from app.db.connessione import connetti
+    from app.db.migrazioni import applica_migrazioni
+
+    with connetti() as conn:
+        applica_migrazioni(conn)
+        with conn.cursor() as cur:
+            cur.execute("SELECT count(*) AS n FROM annunci WHERE NOT starts_with(fonte_id, 'prova_')")
+            if cur.fetchone()["n"]:
+                pytest.skip("il database contiene annunci veri")
+            cur.execute("""INSERT INTO fonti (id, nome, ente, tipo, territorio, modalita, frequenza, stato) VALUES
+                ('prova_chiusure', 'MIMIT', 'MIMIT', 'ministero', 'ITA', 'html', 'settimanale', 'attiva')
+                ON CONFLICT (id) DO NOTHING""")
+            bandi, annunci = [], []
+            for n, (apertura, giorni_fa) in enumerate([("2026-01-01", 3), (None, 400), ("2026-09-01", 60)], start=1):
+                cur.execute("""INSERT INTO annunci (fonte_id, url, titolo, impronta, pubblicato_il)
+                               VALUES ('prova_chiusure', %s, 'Decreto - Chiusura dello sportello', 'x',
+                                       now() - make_interval(days => %s)) RETURNING id""", (f"https://mimit.it/{n}", giorni_fa))
+                annuncio = cur.fetchone()["id"]
+                cur.execute("""INSERT INTO bandi (titolo, ente, stato, data_apertura, dati, scheda_il)
+                               VALUES (%s, 'MIMIT', 'aperto', %s, '{}', now() - interval '30 days') RETURNING id""",
+                            (f"Bando {n}", apertura))
+                bando = cur.fetchone()["id"]
+                cur.execute("UPDATE annunci SET bando_id = %s, ruolo = 'chiusura', collegato_il = now() WHERE id = %s",
+                            (bando, annuncio))
+                bandi.append(bando)
+                annunci.append(annuncio)
+        conn.commit()
+        try:
+            # il primo si chiude; il secondo e' un avviso di oltre 120 giorni fa; il terzo e' anteriore all'apertura
+            assert regista.applica_chiusure(conn) == [bandi[0]]
+            with conn.cursor() as cur:
+                cur.execute("SELECT stato, chiuso_il, da_aggiornare FROM bandi WHERE id = %s", (bandi[0],))
+                b = cur.fetchone()
+            assert b["stato"] == "chiuso" and b["chiuso_il"] is not None and b["da_aggiornare"].startswith("chiusura")
+            assert regista.applica_chiusure(conn) == []
+        finally:
+            with conn.cursor() as cur:
+                cur.execute("DELETE FROM eventi_catena WHERE oggetto_id = ANY(%s)", (bandi,))
+                cur.execute("UPDATE annunci SET bando_id = NULL WHERE id = ANY(%s)", (annunci,))
+                cur.execute("DELETE FROM bandi WHERE id = ANY(%s)", (bandi,))
+                cur.execute("DELETE FROM annunci WHERE id = ANY(%s)", (annunci,))
+                cur.execute("DELETE FROM fonti WHERE id = 'prova_chiusure'")
+            conn.commit()

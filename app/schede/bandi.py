@@ -164,8 +164,9 @@ _ORDINALI = {
     "primo": 1, "prima": 1, "i": 1, "secondo": 2, "seconda": 2, "ii": 2, "terzo": 3, "terza": 3, "iii": 3,
     "quarto": 4, "quarta": 4, "iv": 4, "quinto": 5, "quinta": 5, "v": 5, "sesto": 6, "sesta": 6, "vi": 6,
 }
+# Non le cifre dopo un punto o una virgola: in "Investimenti sostenibili 4.0 Bando 2026" lo 0 non e' il "bando 0".
 _EDIZIONE = re.compile(
-    r"\b(" + "|".join(_ORDINALI) + r"|\d)\s*(?:°|ª|o|a)?\s*(sportello|edizione|finestra|call|bando|avviso|apertura|tranche|semestre)\b"
+    r"\b(" + "|".join(_ORDINALI) + r"|(?<![.,])\d)\s*(?:°|ª|o|a)?\s*(sportello|edizione|finestra|call|bando|avviso|apertura|tranche|semestre)\b"
     r"|\b(sportello|edizione|finestra|call|tranche|semestre)\s+(" + "|".join(_ORDINALI) + r"|\d)\b"
 )
 _ANNO = re.compile(r"(?<!\d)(20[0-4]\d)(?!\d)")
@@ -195,8 +196,11 @@ RUOLI = {
     "proroga": r"prorog\w*|differiment\w*|riapertura (?:dei )?termini|riapertura|nuova scadenza|spostamento (?:dei )?termini",
     "rettifica": r"rettific\w*|errata corrige|modific\w* (?:al|del|dell'|della) (?:bando|avviso)|integrazion\w* (?:al|del|dell'|della) (?:bando|avviso)",
     "faq": r"faq|domande frequenti|chiarimenti",
-    "chiusura": r"chiusura (?:dello |anticipata )?(?:sportello|bando|domande|termini)|esaurimento (?:delle )?risorse|"
-                r"sospensione (?:dello |del )?(?:sportello|bando|domande)",
+    # 09/10: "Sospensione dei termini di presentazione delle domande" (Scoperta imprenditoriale II) non era riconosciuta.
+    # Non "fino a esaurimento delle risorse": e' la formula degli sportelli aperti.
+    "chiusura": r"chiusura (?:anticipata )?(?:dello |della |del |dei )?(?:sportello|bando|domande|termini|presentazione)|"
+                r"(?<!fino a )(?<!fino ad )(?<!fino all')esaurimento (?:delle |dei )?(?:risorse|fondi)|"
+                r"sospensione (?:dello |della |del |dei )?(?:sportello|bando|domande|termini|presentazione)",
 }
 _RUOLI = {ruolo: re.compile(r"(?<!\w)(?:" + espressione + r")(?!\w)") for ruolo, espressione in RUOLI.items()}
 
@@ -252,6 +256,17 @@ def somiglianza(a: Titolo, b: Titolo) -> float:
     piccolo = min(len(a.parole), len(b.parole))
     contenimento = comuni / piccolo if piccolo >= 4 else 0.0
     return max(jaccard, 0.9 * contenimento)
+
+
+# Un aggiornamento (chiusura, proroga...) che contiene tutto il nome del bando, con le parole dell'atto intorno:
+# "Decreto direttoriale 6 ottobre 2026 - Investimenti sostenibili 4.0 Bando 2026. Chiusura dello sportello" e
+# "Investimenti sostenibili 4.0 (2026)" (09/10: la somiglianza era 0,33 e il decreto restava senza bando). Sopra la
+# soglia del dubbio ma sotto quella dello stesso bando: decide l'IA dei doppioni, non le regole.
+SOMIGLIANZA_CONTENUTO = 0.85
+
+
+def contiene_il_bando(aggiornamento: Titolo, bando: Titolo) -> bool:
+    return len(bando.parole) >= 2 and bando.parole <= aggiornamento.parole
 
 
 def stessa_edizione(a: Titolo, b: Titolo) -> bool:
@@ -360,6 +375,8 @@ class Indice:
                 if not edizione_compatibile(a.titolo_an, b.titolo_an) or luoghi_diversi(a.titolo_an, b.titolo_an):
                     continue
                 s = somiglianza(a.titolo_an, b.titolo_an)
+                if a.ruolo and contiene_il_bando(a.titolo_an, b.titolo_an):
+                    s = max(s, SOMIGLIANZA_CONTENUTO)
                 j = jaccard(a.titolo_an, b.titolo_an)
                 # Due enti diversi dello stesso tipo (Camera di Bari e Camera di Foggia) fanno spesso bandi con
                 # lo stesso nome: sono doppioni possibili solo con titoli uguali (bandi comuni lombardi).
