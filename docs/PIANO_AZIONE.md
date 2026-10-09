@@ -74,33 +74,40 @@ cookie (pagina Visite) e rapporto SEO/GEO ogni mattina via email; landing in ant
 **Dopo la società**
 10. Stripe, fattura elettronica (provider già scelto), Google Ads, LinkedIn e Google Business Profile.
 
-## 4. Prompt per avviare la nuova sessione (aggiornato al 09/10/2026)
+## 4. Prompt per avviare la nuova sessione (aggiornato al 10/10/2026)
 
 ```
-Leggi CLAUDE.md e poi docs/PIANO_AZIONE.md, docs/PIANO_QUALITA.md, docs/PIANO_SEO_GEO.md e le voci del 08/10 e
-09/10 di docs/CRONOLOGIA.md: sono il piano deciso con me. Lavora sul server, in batch, al massimo 5 agenti insieme;
-unisci le PR con i controlli verdi senza chiedermi niente; fermati solo per spese, azioni irreversibili e decisioni
-mie. Le schede via API sono spente (IA_SCHEDE_API=0): schede e secondi controlli si fanno in sessione
-(strumenti/sessione/, istruzioni ISTRUZIONI_VERIFICA_IA.md e ISTRUZIONI_DOCUMENTO.md).
-Stato: dal 09/10 la procedura nuova del regista e' ACCESA (app/catena/procedura.py): un bando si propone solo con
-documento verificato e secondo controllo fatto, quindi ogni scheda nuova o rifatta resta fuori finche' non la
-controlli tu.
+Leggi CLAUDE.md e poi docs/VISIONE.md, docs/PIANO_AZIONE.md, docs/PIANO_QUALITA.md, docs/PIANO_SEO_GEO.md e le voci
+del 09/10 e 10/10 di docs/CRONOLOGIA.md: sono il piano deciso con me. Lavora sul server, in batch, al massimo 5 agenti
+insieme; unisci le PR con i controlli verdi senza chiedermi niente; fermati solo per spese, azioni irreversibili e
+decisioni mie. Le schede via API sono spente (IA_SCHEDE_API=0): schede e secondi controlli si fanno in sessione
+(strumenti/sessione/, istruzioni ISTRUZIONI_VERIFICA_IA.md e ISTRUZIONI_DOCUMENTO.md; per i bandi lunghissimi
+esporta_lunghi.py e ISTRUZIONI_LUNGHI.md). La procedura nuova del regista e' accesa: ogni scheda nuova o rifatta resta
+fuori dalle proposte finche' non fai il secondo controllo.
 Ordine di lavoro:
 1. Leggi prossimi passi e segnalazioni aperte (python -m app.passi, python -m app.segnalazioni) e dimmi se c'e'
    qualcosa di urgente.
-2. Procedura: python -m app.catena.procedura (ripasso). Fai il secondo controllo delle schede in attesa
-   (esporta_verifica.py --prossimi, agenti, applica_verifica.py, importa_verifica.py --corrette; per i casi
-   "non per imprese" e i doppioni come nella sessione del 08/10: unisci.py in /tmp/claude-1000/ar se c'e' ancora,
-   altrimenti decidi_collegamento).
-3. Riscrivi in sessione le schede "da aggiornare" emerse dai controlli (1552, 4147, 4153, 4159, 3626, 2023, 1064)
-   e chiarisci i 3 casi con errori aperti (477 premio gia' assegnato, 1290 ordinanza Ischia 2023, 1306 SIMEST
-   alluvione 2023).
-4. Lista "da recuperare" (python -m app.catena.procedura --da-recuperare): cerca il testo ufficiale giusto dei
-   bandi italiani aperti, prima quelli in scadenza (Puglia 2021-2027, fondi Veneto Sviluppo, ecc.); poi
-   rifai_disparte.py sui bandi in disparte non UE.
-5. Piano qualita': doppioni periodici (azione 4), ricerca settimanale dei bandi piu' discussi (azione 5), fonti
-   bloccate MIT/ENEA/ISMEA e anti-robot (azione 6); prepara la revisione del 20/10 (azione 7).
-6. SEO/GEO: pagine "bandi aperti in [regione]" (PIANO_SEO_GEO punto 7); dati di Search Console nel rapporto
-   quotidiano (punto 5, Search Console e Bing sono gia' collegati).
-Alla fine di ogni passo aggiorna i tre piani e docs/CRONOLOGIA.md e dimmi in parole semplici cosa posso provare.
+2. Procedura (python -m app.catena.procedura): schede in coda e da aggiornare in sessione (esporta.py, agenti Fase B,
+   importa.py subito), comprese 972 NIDI Puglia, 596 tax credit sale cinema e 1 Foncooper (testo in vigore caricato il
+   09/10); poi secondo controllo delle schede nuove (esporta_verifica.py 0 CARTELLA id..., applica_verifica.py,
+   importa_verifica.py --corrette). Le due schede non profit in coda (2301, 3809) per ultime.
+3. Prossimo passo 48 (priorita' 1): collegare al bando i decreti di chiusura o sospensione ("chiusura dello
+   sportello", "sospensione dei termini", "esaurimento delle risorse"): il 09/10 487 e 369 erano chiusi ma proponibili.
+4. Doppioni rimasti: 4180/833, 4618/1385, 1360/1435 (la scheda da togliere ha piu' documenti: decidi quale tenere o
+   sposta i documenti), dubbi 316/4112, 1326/4085, 1112/1188, 1150/1153; controllo periodico ogni settimana insieme
+   alla ricerca dei bandi piu' discussi (secondo giro fatto il 09/10, prossimo giro e aggiornamento della vetrina).
+5. Testi ufficiali mancanti: rifai_disparte.py ha dato solo 3 documenti su 352, quindi ricerca a mano con agenti
+   (come il 09/10 per i 24 "documento non valido": ISTRUZIONI in /tmp/claude-1000/ar/recupero/ se c'e' ancora,
+   scarica_manuali e carica_manuali.py) sui bandi italiani aperti in disparte, prima quelli in scadenza; fondi di
+   rotazione del Veneto (1292, 1294, 1305) da chiarire; 1306 SIMEST alluvione resta fuori finche' non c'e' una fonte.
+6. Fonti: mappa nel registro le pagine dei bandi di MIT ed ENEA (certificati risolti il 09/10); prova MUR, MAECI,
+   Camera di Milano e ISMEA con il browser; mancano Sardegna Ricerche e hard-to-abate MASE (ricerca del 09/10).
+7. Revisione dell'affidabilita' del 20/10 (PIANO_QUALITA azione 7): campione di 30 proponibili a caso, secondo
+   controllo con gli agenti, voto; prepara il messaggio per Luca.
+8. Blog: rileggi con me la bozza n. 20 (investimento in Puglia, cumuli); prepara un articolo per startup e digitale
+   (Smart&Start, voucher digitalizzazione); le bozze brevi 2, 5, 6 restano finche' non le riscriviamo complete.
+9. Quando la SRLS esiste (decisione mia): landing accesa con i dati della societa', Stripe, misura delle registrazioni
+   (GOOGLE_ADS_ID e banner), poi la prova pubblicitaria da circa 2.000 euro (Google circa 1.400, ChatGPT circa 600,
+   stop se un abbonato costa piu' di 150 euro). Chiave di Search Console: prossimo passo 49 (la creo io).
+Alla fine di ogni passo aggiorna i piani e docs/CRONOLOGIA.md e dimmi in parole semplici cosa posso provare.
 ```
