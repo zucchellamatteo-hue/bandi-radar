@@ -178,15 +178,20 @@ def test_visite_contate_senza_identificativi(monkeypatch):
     c = TestClient(app)
     campagna = "prova-" + uuid.uuid4().hex[:6]
     persona = {"user-agent": "Mozilla/5.0 (Windows NT 10.0) Chrome/129.0 Safari/537.36"}
-    assert c.get(f"/robots.txt?utm_source=LinkedIn&utm_campaign={campagna}", headers=persona).status_code == 200
-    c.get("/robots.txt", headers=persona | {"referer": "https://chatgpt.com/c/123"})
-    c.get("/robots.txt", headers=persona | {"referer": "https://chatgpt.com/c/456"})
+    assert c.get(f"/blog?utm_source=LinkedIn&utm_campaign={campagna}", headers=persona).status_code == 200
+    c.get("/blog", headers=persona | {"referer": "https://chatgpt.com/c/123"})
+    c.get("/blog", headers=persona | {"referer": "https://chatgpt.com/c/456"})
+    # Non si contano (09/10): le persone su robots.txt/sitemap/llms.txt, "/" con la presentazione spenta, e i browser
+    # in cui qualcuno ha gia' fatto l'accesso (cookie br_non_contare).
+    c.get("/robots.txt", headers=persona)
+    c.get("/", headers=persona)
+    c.get("/blog", headers=persona | {"cookie": "br_non_contare=1"})
     c.get("/robots.txt", headers={"user-agent": "Mozilla/5.0 (compatible; GPTBot/1.2; +https://openai.com/gptbot)",
                                   "referer": "https://esempio.it/"})
     c.get("/sitemap.xml", headers={"user-agent": "Mozilla/5.0 (compatible; Googlebot/2.1)"})
     c.get("/blog/non-esiste-davvero", headers=persona)                        # 404: non si conta
     admin = accesso_di_prova("admin")
-    c.get("/robots.txt", headers=persona, auth=admin)                         # chi ha fatto l'accesso non si conta
+    c.get("/blog", headers=persona, auth=admin)                               # chi ha fatto l'accesso non si conta
     with connetti() as conn:
         with conn.cursor() as cur:
             cur.execute("SELECT * FROM visite WHERE giorno = current_date ORDER BY percorso, provenienza")
@@ -195,8 +200,8 @@ def test_visite_contate_senza_identificativi(monkeypatch):
     assert colonne == {"giorno", "percorso", "provenienza", "utm_source", "utm_medium", "utm_campaign", "visitatore",
                        "programma", "conteggio"}                             # niente IP, User-Agent o identificativi
     per = {(r["percorso"], r["provenienza"], r["utm_source"], r["visitatore"], r["programma"]): r["conteggio"] for r in righe}
-    assert per[("/robots.txt", "chatgpt.com", "", "persona", "")] == 2
-    assert per[("/robots.txt", "diretto", "linkedin", "persona", "")] == 1
+    assert per[("/blog", "chatgpt.com", "", "persona", "")] == 2
+    assert per[("/blog", "diretto", "linkedin", "persona", "")] == 1
     assert per[("/robots.txt", "diretto", "", "ia", "GPTBot")] == 1         # dei programmi niente provenienza
     assert per[("/sitemap.xml", "diretto", "", "motore", "Googlebot")] == 1
     assert sum(per.values()) == 5 and not any(p.startswith("/blog/") for p, *_ in per)

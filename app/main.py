@@ -112,7 +112,8 @@ async def conta_visite(request: Request, call_next):
     """Statistiche senza cookie (app/visite): conta le visite riuscite alle sole pagine pubbliche, non quelle di chi ha
     fatto l'accesso. Il conteggio si scrive dopo aver mandato la pagina, cosi' non la rallenta."""
     risposta = await call_next(request)
-    if request.method == "GET" and risposta.status_code == 200 and not request.cookies.get(COOKIE):
+    if (request.method == "GET" and risposta.status_code == 200 and not request.cookies.get(COOKIE)
+            and not request.cookies.get(visite.NON_CONTARE)):
         percorso = visite.percorso_contato(request.url.path)
         if percorso and risposta.background is None:
             risposta.background = BackgroundTask(visite.registra, percorso, request.headers.get("referer"),
