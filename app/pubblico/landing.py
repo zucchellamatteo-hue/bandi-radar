@@ -208,7 +208,10 @@ def _numeri_html(n: dict | None) -> str:
 def _regioni_html(n: dict | None) -> str:
     if not n or not n["regioni"]:
         return ""
-    voci = "".join(f'<li><span>{nome}</span><b>{num}</b></li>' for _, nome, num in sorted(n["regioni"], key=lambda r: r[1]))
+    from app.pubblico.regioni import slug
+
+    voci = "".join(f'<li><a href="/bandi-aperti/{slug(nome)}"><span>{nome}</span><b>{num}</b></a></li>'
+                   for _, nome, num in sorted(n["regioni"], key=lambda r: r[1]))
     tipi = ", ".join(f"{nome} {_n(num)}" for nome, num in n["tipi"][:5])
     return f"""<section id="regioni" class="grigia"><div class="contenitore">
 <h2>Bandi aperti oggi, regione per regione</h2>
@@ -372,9 +375,11 @@ def llms_txt(conn) -> str:
     try:                                                    # articoli del blog pubblicati (app/pubblico/blog.py)
         from app.pubblico import blog
 
-        righe += blog.righe_llms(conn)
+        from app.pubblico import regioni
+
+        righe += blog.righe_llms(conn) + regioni.righe_llms(conn)
     except Exception:  # noqa: BLE001 - /llms.txt non deve cadere per il blog
-        log.exception("articoli del blog non letti per /llms.txt")
+        log.exception("articoli del blog o pagine delle regioni non letti per /llms.txt")
         conn.rollback()
     righe += ["## Optional", "",
               f"- [Registrazione e prova gratuita]({seo.assoluto('/registrati')})", ""]

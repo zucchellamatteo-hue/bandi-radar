@@ -216,4 +216,7 @@ def llms_txt_blog(conn) -> str:
              "documenti ufficiali, riporta la data di aggiornamento e le fonti.", "",
              "## Pagine", "", f"- [Blog di bandinQiaro]({seo.assoluto('/blog')}): elenco degli articoli", ""]
     righe += righe_llms(conn)
+    from app.pubblico import regioni
+
+    righe += regioni.righe_llms(conn)
     return "\n".join(righe)

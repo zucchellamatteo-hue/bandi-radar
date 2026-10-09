@@ -1,6 +1,6 @@
 """Statistiche delle pagine pubbliche senza cookie (08/10/2026, richiesta di Matteo per misurare SEO e GEO).
 
-Per le sole pagine pubbliche (/, /blog, /blog/<slug>, /llms.txt, /sitemap.xml, /robots.txt) si conta ogni visita in
+Per le sole pagine pubbliche (/, /blog, /blog/<slug>, /bandi-aperti e /bandi-aperti/<regione>, /llms.txt, /sitemap.xml, /robots.txt) si conta ogni visita in
 una riga aggregata per giorno della tabella `visite` (migrazione 033): percorso, dominio di provenienza (solo il
 dominio del Referer, es. google.com, chatgpt.com; "diretto" se manca), parametri utm_source/utm_medium/utm_campaign,
 tipo di visitatore (persona, motore di ricerca, IA, altro programma) con il nome del programma, e il conteggio.
@@ -28,9 +28,9 @@ log = logging.getLogger(__name__)
 NON_CONTARE = "br_non_contare"
 FILE_PER_PROGRAMMI = {"/robots.txt", "/sitemap.xml", "/llms.txt"}
 
-# Pagine contate: percorsi esatti, piu' gli articoli /blog/<slug>.
-PERCORSI = {"/", "/blog", "/llms.txt", "/sitemap.xml", "/robots.txt"}
-_ARTICOLO = re.compile(r"^/blog/[a-z0-9][a-z0-9-]{0,150}$")
+# Pagine contate: percorsi esatti, piu' gli articoli /blog/<slug> e le pagine /bandi-aperti/<regione> (09/10).
+PERCORSI = {"/", "/blog", "/llms.txt", "/sitemap.xml", "/robots.txt", "/bandi-aperti"}
+_ARTICOLO = re.compile(r"^/(blog|bandi-aperti)/[a-z0-9][a-z0-9-]{0,150}$")
 
 TIPI_VISITATORE = {"persona": "persone", "motore": "motori di ricerca", "ia": "programmi delle IA",
                    "altro": "altri programmi"}
