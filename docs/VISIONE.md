@@ -33,9 +33,18 @@ si aggiorna qui (e in `docs/CRONOLOGIA.md`).
 
 ## 4. Modello di ricavi
 
-- **Abbonamento**: partire da **20 € al mese** (IVA esclusa) per i primi mesi e i primi clienti, poi valutare **30 €**
-  in base ai feedback.
-- **La parte principale dei ricavi** verrà dal **seguire i bandi per conto dei clienti**: presentazione delle domande
-  e success fee (fondo perduto 12/10/8%, finanziamento 2/1,5/1%, credito d'imposta 6%: decisione del 05/10).
-- Quindi l'abbonamento serve soprattutto a far entrare i clienti e a far conoscere le opportunità: la qualità delle
-  schede e degli abbinamenti è ciò che li convince ad affidare la pratica.
+Decisioni di Matteo del 10/10/2026 (sostituiscono quelle del 05-06/10):
+
+- **Abbonamento**: mensile **30 € al mese** con rinnovo automatico; annuale **20 € al mese** (240 € l'anno in 12 rate
+  mensili). IVA esclusa. Prova gratuita senza carta.
+- **Domanda di bando compresa per gli abbonati**: preparazione e invio senza costi d'avvio (l'abbonamento copre il
+  costo fisso); per i **non abbonati** costo della pratica **da 100 a 300 €**.
+- **Compenso a successo**: fondo perduto 12% fino a 50.000 €, 10% fino a 150.000 €, 8% oltre (scaglioni progressivi);
+  finanziamenti agevolati 1% / 0,75% / 0,5% (soglie 200.000 e 1.000.000 €); Nuova Sabatini e contributi in conto
+  interessi come il fondo perduto, sul contributo; crediti d'imposta 6%; minimo 300 € a pratica accolta.
+- **Collaboratori esperti** (es. Luca) per non fare del tempo di Matteo un collo di bottiglia: chi prepara e invia la
+  domanda riceve il 30-40% del compenso a successo incassato.
+- **Pubblicità iniziale**: circa 2.000 € tra Google Ads e annunci su ChatGPT, dopo la costituzione della società.
+- Differenza dai concorrenti: al cliente arrivano solo i bandi adatti a lui (non tutte le novità), nell'area personale
+  vede i bandi selezionati e può chiedere una chiamata per approfondirli.
+- Il ricavo principale resta il supporto alle domande; l'abbonamento fa entrare i clienti e copre i costi fissi.
