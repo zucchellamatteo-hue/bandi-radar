@@ -1,4 +1,4 @@
-# bandinQiaro — piano d'azione (aggiornato al 09/10/2026 pomeriggio)
+# bandinQiaro — piano d'azione (aggiornato al 10/10/2026)
 
 Riepilogo di fine sessione (05-09/10/2026) chiesto da Matteo. Va letto insieme a `docs/VISIONE.md`,
 `docs/PIANO_QUALITA.md` e `docs/PIANO_SEO_GEO.md`, e aggiornato a ogni passo.
@@ -16,17 +16,17 @@ graduatorie per il bando.
 
 | # | Azione | Stato | Chi |
 |---|---|---|---|
-| 0 | **Procedura nuova del regista** | **attiva** dal 09/10; proponibili 420 (09/10 pomeriggio) dopo 74 schede nuove e 30 secondi controlli | Claude |
+| 0 | **Procedura nuova del regista** | **attiva** dal 09/10; proponibili da 408 a 430 il 10/10 (schede rifatte sui testi recuperati, tutte con il secondo controllo) | Claude |
 | 1 | Secondo controllo su tutte le schede proponibili | **fatto** il 08/10 (379 + 97 solo documento; 58 gravi corretti) | Claude |
 | 2 | Automatizzare il secondo controllo con un modello economico (prova Gemini 3.8 Flash su server UE, < 10 $) | in attesa del via di Matteo | Matteo / Claude |
 | 3 | Regola automatica "chi presenta la domanda": se solo enti, associazioni o intermediari, non si propone alle imprese | in parte: 22 casi corretti il 08/10; la regola resta nel controllo preliminare e nel secondo controllo | Claude |
-| 4 | Testi ufficiali mancanti: filtro più severo; ricerca a mano dei ~220 casi che il codice non risolve, dai più importanti; Portale UE (~345, ricerca Horizon) a bassa priorità | in corso: 24 "documento non valido" esaminati il 09/10 (15 chiusi, 3 testi caricati); rifai_disparte in corso | Claude |
-| 5 | Doppioni ed edizioni mescolate: stessa pagina ufficiale in due schede = grave (salvo pagine elenco) | primo giro fatto il 09/10 (19 unioni), da ripetere ogni settimana | Claude |
+| 4 | Testi ufficiali mancanti: filtro più severo; ricerca a mano dei ~220 casi che il codice non risolve, dai più importanti; Portale UE (~345, ricerca Horizon) a bassa priorità | in corso: 10/10 ricerca a mano sui 70 aperti in disparte con la scadenza più vicina (33 testi caricati, 21 chiusi o non per imprese); restano 288 aperti in disparte non UE | Claude |
+| 5 | Doppioni ed edizioni mescolate: stessa pagina ufficiale in due schede = grave (salvo pagine elenco) | primo giro fatto il 09/10 (19 unioni), rimasti chiusi il 10/10; prossimo giro il 16/10 | Claude |
 | 6 | Ricerca settimanale dei bandi più discussi + aggiornamento della vetrina | secondo giro 09/10 (73% OK; vetrina aggiornata) | Claude |
-| 7 | Fonti bloccate: certificati incompleti (MIT, ENEA, ISMEA), anti-robot (MUR, MAECI, Camera di Milano) | certificati risolti il 09/10; da mappare MIT ed ENEA, anti-robot da fare | Claude |
+| 7 | Fonti bloccate: certificati incompleti (MIT, ENEA, ISMEA), anti-robot (MUR, MAECI, Camera di Milano) | 10/10: MIT attiva, ENEA esclusa (niente bandi per imprese), Sardegna Ricerche aggiunta; MUR, MAECI, Milano e ISMEA bloccano anche il browser (coperti da incentivi.gov.it) | Claude |
 | 8 | Schede delle misure nazionali approfondite sul modello della Nuova Sabatini | **fatto** il 09/10 (11 misure; punti da verificare in docs/ricerche/2026-10-09_misure_nazionali_approfondite.md) | Claude |
 | 9 | Ordinamenti in catalogo e pagina impresa (scadenza, pertinenza, beneficio, tipo di contributo) | **fatto** il 09/10; agevolazioni senza soldi in secondo piano | Claude |
-| 10 | Misura dell'affidabilità ogni 2 settimane (30 schede a caso, IA + giudizi di Luca) | prossima revisione 20/10 | Claude + Luca |
+| 10 | Misura dell'affidabilità ogni 2 settimane (30 schede a caso, IA + giudizi di Luca) | prossima revisione 20/10: campione e messaggio per Luca pronti (`docs/revisioni/2026-10-20_campione_e_messaggio_luca.md`) | Claude + Luca |
 
 Il prodotto è vendibile quando la misura del punto 10 dà ≥ 9 per due revisioni di fila.
 
@@ -61,7 +61,8 @@ cookie (pagina Visite) e rapporto SEO/GEO ogni mattina via email; landing in ant
    (Settings → Deploy keys) → poi rende privato il repository.
 4. ~~Scheda Nuova Sabatini~~ (approvata il 09/10, applicata alle altre misure). Rileggere l'**articolo Sabatini** rivisto (bozza n. 11, con il calcolatore) e l'**articolo sul cumulo** (bozza n. 18); decidere la **firma** degli articoli (formula stabile se la cancellazione dall'Albo è vicina); pubblicare prima gli articoli linkati (Fondo di garanzia, ZES, Conto Termico).
 5. Pubblicare 2-3 articoli del blog (pagina Blog: Anteprima → Pubblica).
-6. Mandare a **Luca** la richiesta di 20-30 giudizi sulle schede proponibili (Claude prepara il messaggio).
+6. Mandare a **Luca** la richiesta di giudizi sui 30 bandi del campione (messaggio pronto in `docs/revisioni/2026-10-20_campione_e_messaggio_luca.md`, entro il 19/10).
+6-bis. Rileggere le bozze **n. 20** (investimento in Puglia, cumuli) e **n. 21** (startup e digitale: Smart&Start e voucher digitalizzazione) e dire se pubblicarle.
 
 7-bis. **Search Console nel rapporto**: creare su Google Cloud un account di servizio con la "Google Search Console API" attiva, scaricare la chiave JSON, aggiungere l'email dell'account come utente (Limitato) della proprietà bandinqiaro.it in Search Console; poi dire a Claude dove si trova il file sul server (la chiave non va scritta in chat).
 
@@ -74,43 +75,26 @@ cookie (pagina Visite) e rapporto SEO/GEO ogni mattina via email; landing in ant
 **Dopo la società**
 10. Stripe, fattura elettronica (provider già scelto), Google Ads, LinkedIn e Google Business Profile.
 
-## 4. Prompt per avviare la nuova sessione (aggiornato al 10/10/2026)
+## 4. Prompt per avviare la nuova sessione (aggiornato al 10/10/2026, sera)
 
 ```
 Leggi CLAUDE.md e poi docs/VISIONE.md, docs/PIANO_AZIONE.md, docs/PIANO_QUALITA.md, docs/PIANO_SEO_GEO.md e le voci
-del 09/10 e 10/10 di docs/CRONOLOGIA.md: sono il piano deciso con me. Lavora sul server, in batch, al massimo 5 agenti
-insieme; unisci le PR con i controlli verdi senza chiedermi niente; fermati solo per spese, azioni irreversibili e
-decisioni mie. Le schede via API sono spente (IA_SCHEDE_API=0): schede e secondi controlli si fanno in sessione
-(strumenti/sessione/, istruzioni ISTRUZIONI_VERIFICA_IA.md e ISTRUZIONI_DOCUMENTO.md; per i bandi lunghissimi
-esporta_lunghi.py e ISTRUZIONI_LUNGHI.md). La procedura nuova del regista e' accesa: ogni scheda nuova o rifatta resta
-fuori dalle proposte finche' non fai il secondo controllo.
+del 10/10 di docs/CRONOLOGIA.md: sono il piano deciso con me. Lavora sul server, in batch, al massimo 5 agenti insieme;
+unisci le PR con i controlli verdi senza chiedermi niente; fermati solo per spese, azioni irreversibili e decisioni mie.
+Schede e secondi controlli in sessione (strumenti/sessione/, IA_SCHEDE_API=0); procedura nuova del regista accesa.
 Ordine di lavoro:
-1. Leggi prossimi passi e segnalazioni aperte (python -m app.passi, python -m app.segnalazioni) e dimmi se c'e'
-   qualcosa di urgente.
-2. Procedura (python -m app.catena.procedura): schede in coda e da aggiornare in sessione (esporta.py, agenti Fase B,
-   importa.py subito), comprese 972 NIDI Puglia, 596 tax credit sale cinema e 1 Foncooper (testo in vigore caricato il
-   09/10); poi secondo controllo delle schede nuove (esporta_verifica.py 0 CARTELLA id..., applica_verifica.py,
-   importa_verifica.py --corrette). Le due schede non profit in coda (2301, 3809) per ultime.
-3. Prossimo passo 48 (priorita' 1): collegare al bando i decreti di chiusura o sospensione ("chiusura dello
-   sportello", "sospensione dei termini", "esaurimento delle risorse"): il 09/10 487 e 369 erano chiusi ma proponibili.
-4. Doppioni rimasti: 4180/833, 4618/1385, 1360/1435 (la scheda da togliere ha piu' documenti: decidi quale tenere o
-   sposta i documenti), dubbi 316/4112, 1326/4085, 1112/1188, 1150/1153; controllo periodico ogni settimana insieme
-   alla ricerca dei bandi piu' discussi (secondo giro fatto il 09/10, prossimo giro e aggiornamento della vetrina).
-5. Testi ufficiali mancanti: rifai_disparte.py ha dato solo 3 documenti su 352, quindi ricerca a mano con agenti
-   (come il 09/10 per i 24 "documento non valido": ISTRUZIONI in /tmp/claude-1000/ar/recupero/ se c'e' ancora,
-   scarica_manuali e carica_manuali.py) sui bandi italiani aperti in disparte, prima quelli in scadenza; fondi di
-   rotazione del Veneto (1292, 1294, 1305) da chiarire; 1306 SIMEST alluvione resta fuori finche' non c'e' una fonte.
-6. Fonti: mappa nel registro le pagine dei bandi di MIT ed ENEA (certificati risolti il 09/10); prova MUR, MAECI,
-   Camera di Milano e ISMEA con il browser; mancano Sardegna Ricerche e hard-to-abate MASE (ricerca del 09/10).
-7. Revisione dell'affidabilita' del 20/10 (PIANO_QUALITA azione 7): campione di 30 proponibili a caso, secondo
-   controllo con gli agenti, voto; prepara il messaggio per Luca.
-8. Blog: rileggi con me la bozza n. 20 (investimento in Puglia, cumuli); prepara un articolo per startup e digitale
-   (Smart&Start, voucher digitalizzazione); le bozze brevi 2, 5, 6 restano finche' non le riscriviamo complete.
-9. Quando la SRLS esiste (decisione mia): landing accesa con i dati della societa', Stripe, misura delle registrazioni
-   (GOOGLE_ADS_ID e banner), poi la prova pubblicitaria da circa 2.000 euro (Google circa 1.400, ChatGPT circa 600,
-   stop se un abbonato costa piu' di 150 euro). Le campagne si fanno sui bandi aperti piu' interessanti del momento,
-   con parole chiave che li richiamano o che cercano le imprese che possono accedervi, e annunci che portano alla
-   pagina del bando o della guida: prepara per ogni bando scelto parole chiave, testi degli annunci e pagina di arrivo.
-   Chiave di Search Console: prossimo passo 49 (la creo io).
+1. Prossimi passi e segnalazioni (python -m app.passi, python -m app.segnalazioni): dimmi se c'e' qualcosa di urgente.
+2. Procedura (python -m app.catena.procedura) ed esporta.py: schede in coda e da aggiornare (anche 1385 con il Decreto
+   37/2026), secondo controllo di ogni scheda nuova; le non profit per ultime.
+3. Testi ufficiali mancanti: continua la ricerca a mano sui bandi italiani aperti in disparte (lista in
+   /tmp/claude-1000/ar/recupero2/tutti.tsv se c'e' ancora, altrimenti rifalla dalla vista bandi_situazione; fatti i
+   primi 70 per scadenza il 10/10), con ISTRUZIONI_RECUPERO, scarica_manuali2.py e carica_manuali.py; 4161 (PDF
+   illeggibile: OCR) e 1339 (regolamento Art bonus FVG in vigore).
+4. 16/10: ricerca settimanale dei bandi piu' discussi + controllo dei doppioni + aggiornamento della vetrina e delle
+   campagne (docs/ricerche/2026-10-10_campagne_annunci.md).
+5. 20/10: revisione dell'affidabilita' sul campione di docs/revisioni/2026-10-20_campione_e_messaggio_luca.md, con i
+   giudizi di Luca; voto in docs/revisioni/2026-10-20_revisione.md.
+6. Blog: articolo Voucher Cloud completo (la bozza n. 2 e' breve) prima del 20/10; bozze 20 e 21 da rileggere con me.
+7. Quando la SRLS esiste (decisione mia): landing, Stripe, GOOGLE_ADS_ID, poi le campagne preparate.
 Alla fine di ogni passo aggiorna i piani e docs/CRONOLOGIA.md e dimmi in parole semplici cosa posso provare.
 ```
