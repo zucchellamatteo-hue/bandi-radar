@@ -237,7 +237,7 @@ def servizio(descrizione: str, prezzo_mese: float, giorni_prova: int) -> dict:
             "provider": {"@id": assoluto("/#organizzazione")}, "areaServed": {"@type": "Country", "name": "Italia"},
             "audience": {"@type": "BusinessAudience", "audienceType": "Imprese, PMI, professionisti e startup italiane"},
             "description": descrizione,
-            "offers": {"@type": "Offer", "name": "Abbonamento - prezzo di lancio", "price": f"{prezzo_mese:.2f}",
+            "offers": {"@type": "Offer", "name": "Abbonamento annuale (12 rate mensili)", "price": f"{prezzo_mese:.2f}",
                        "priceCurrency": "EUR", "url": assoluto("/registrati"), "availability": "https://schema.org/InStock",
                        "eligibleCustomerType": "https://schema.org/Business",
                        "description": f"Prova gratuita di {giorni_prova} giorni senza carta. Prezzo IVA esclusa.",

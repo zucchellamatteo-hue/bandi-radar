@@ -132,7 +132,7 @@ def test_landing_numeri_e_interruttore(monkeypatch):
     r = c.get("/presentazione")
     assert r.status_code == 200
     t = r.text
-    for pezzo in ("Come funziona, in 3 passi", "Prezzo di lancio", "Domande frequenti", "/registrati", "/privacy",
+    for pezzo in ("Come funziona, in 3 passi", "Abbonamento annuale", "Domande frequenti", "/registrati", "/privacy",
                   "/termini", "siti pubblici controllati", "misure nazionali", "Chi c'è dietro"):
         assert pezzo in t, pezzo
     assert '<link rel="canonical" href="https://bandinqiaro.it/">' in t
@@ -145,12 +145,12 @@ def test_landing_numeri_e_interruttore(monkeypatch):
     assert faq["mainEntity"][0]["name"] in t                          # le domande del JSON-LD sono quelle della pagina
 
     monkeypatch.setenv("PAGINA_PUBBLICA", "0")
-    assert "Prezzo di lancio" not in c.get("/").text                  # spenta: "/" porta all'accesso
+    assert "Abbonamento annuale" not in c.get("/").text                  # spenta: "/" porta all'accesso
     monkeypatch.setenv("PAGINA_PUBBLICA", "1")
     t = c.get("/").text
-    assert "Prezzo di lancio" in t and 'content="index, follow' in t and "Anteprima:" not in t
+    assert "Abbonamento annuale" in t and 'content="index, follow' in t and "Anteprima:" not in t
     c.cookies.set("br_sessione", "qualcosa")
-    assert "Prezzo di lancio" not in c.get("/").text                  # chi ha fatto l'accesso va alla plancia
+    assert "Abbonamento annuale" not in c.get("/").text                  # chi ha fatto l'accesso va alla plancia
 
 
 @db

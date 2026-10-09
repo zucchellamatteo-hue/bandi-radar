@@ -88,7 +88,7 @@ def test_landing_resta_chiusa_con_il_solo_blog(monkeypatch, tmp_path):
     (tmp_path / "index.html").write_text('<html><head><meta name="robots" content="noindex, nofollow" /></head><body>plancia</body></html>')
     monkeypatch.setattr(main, "CARTELLA_PLANCIA", tmp_path)
     t = TestClient(main.app).get("/").text
-    assert "plancia" in t and "Prezzo di lancio" not in t                  # "/" porta ancora all'accesso
+    assert "plancia" in t and "Abbonamento annuale" not in t                  # "/" porta ancora all'accesso
 
 
 def test_meta_di_verifica(monkeypatch, tmp_path):
