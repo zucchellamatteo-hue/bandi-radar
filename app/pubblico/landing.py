@@ -1,7 +1,8 @@
 """Pagina di atterraggio (landing) per chi arriva da Google, dagli annunci e dai motori di risposta IA (07/10/2026).
 
 Una sola pagina HTML leggera (niente React, niente font esterni, niente immagini pesanti): promessa, come funziona
-in 3 passi, cosa trovi con i numeri veri presi dal database, bandi aperti regione per regione, prezzo di lancio,
+in 3 passi, cosa trovi con i numeri veri presi dal database, i numeri delle agevolazioni in Italia, bandi aperti
+regione per regione, prezzi,
 chi c'e' dietro, domande frequenti, invito a provare. I numeri si calcolano al volo e restano in memoria per
 CACHE_SECONDI: la pagina resta veloce anche con molte visite dagli annunci.
 
@@ -29,8 +30,25 @@ _VARIABILI_PAGINA = ("PAGINA_PUBBLICA", "BLOG_PUBBLICO", "SITO_URL", "TITOLARE_S
 _cache: dict = {}           # "dati"/"scade": numeri; "esempi": schede d'esempio; "pagina": l'HTML pronto
 _ricalcolo = threading.Lock()
 
-# Prezzo di lancio per i primi clienti (VISIONE.md, 06/10: 20 euro al mese IVA esclusa, poi si valuta 30).
+# Prezzi dell'abbonamento (decisione di Matteo del 10/10/2026, come Termini e Stripe): mensile 30 euro al mese,
+# annuale 20 euro al mese (240 euro l'anno in 12 rate). IVA esclusa. PREZZO_LANCIO resta il prezzo piu' basso.
+PREZZO_MENSILE = 30
 PREZZO_LANCIO = 20
+# Numeri delle agevolazioni in Italia (fonti ufficiali, verificate il 10/10/2026), mostrati nella landing.
+MERCATO = [
+    ("17,2 miliardi", "di euro di agevolazioni concesse alle imprese nel 2024",
+     "MIMIT, Relazione sugli interventi di sostegno 2025",
+     "https://www.mimit.gov.it/images/stories/documenti/RELAZIONE_266_2025.pdf"),
+    ("1,24 milioni", "di domande di agevolazione approvate nel 2024",
+     "MIMIT, Relazione sugli interventi di sostegno 2025",
+     "https://www.mimit.gov.it/images/stories/documenti/RELAZIONE_266_2025.pdf"),
+    ("2.374", "misure di aiuto attive, di cui 2.074 regionali: ogni ente pubblica le sue, ognuna con le sue regole",
+     "MIMIT, Relazione sugli interventi di sostegno 2025",
+     "https://www.mimit.gov.it/images/stories/documenti/RELAZIONE_266_2025.pdf"),
+    ("3,5%", "delle imprese con almeno 3 addetti indica gli incentivi pubblici tra le sue fonti di finanziamento",
+     "ISTAT, Censimento permanente delle imprese 2023",
+     "https://www.istat.it/it/files/2023/11/REPORTCensimprese.pdf"),
+]
 TIPI_FONTE = [("regione", "Regioni e Province autonome"), ("nazionale", "Ministeri e agenzie nazionali"),
               ("ue", "Unione europea"), ("camera", "Camere di commercio"), ("capoluogo", "Comuni capoluogo"),
               ("provincia", "Province")]
@@ -141,9 +159,11 @@ def faq(n: dict | None, giorni_prova: int) -> list[tuple[str, str]]:
          "adatta, da una volta al giorno a una volta al mese, rispettando le regole dei siti. Ogni bando nuovo diventa una "
          "scheda fatta sul testo ufficiale."),
         ("Quanto costa?",
-         f"Il prezzo di lancio per i primi clienti è {PREZZO_LANCIO} euro al mese più IVA, con una prova gratuita di "
-         f"{giorni_prova} giorni senza carta di credito. Ogni impresa in più costa {PREZZI['impresa_in_piu']} euro al mese e "
-         f"ogni sede in più della stessa impresa {PREZZI['sede_in_piu']} euro al mese (IVA esclusa)."),
+         f"L'abbonamento mensile costa {PREZZO_MENSILE} euro al mese più IVA e si rinnova ogni mese finché non lo disdici; "
+         f"con l'abbonamento annuale costa {PREZZO_LANCIO} euro al mese più IVA ({PREZZO_LANCIO * 12} euro l'anno, in 12 rate "
+         f"mensili). Prima c'è una prova gratuita di {giorni_prova} giorni senza carta di credito. Ogni impresa in più costa "
+         f"{PREZZI['impresa_in_piu']} euro al mese e ogni sede in più della stessa impresa {PREZZI['sede_in_piu']} euro al "
+         "mese (IVA esclusa)."),
         ("Come scegliete i bandi adatti alla mia impresa?",
          "Descrivi la tua impresa con un modulo guidato: sedi, attività (codice ATECO), dimensione, forma giuridica e "
          "spese che hai in programma. Il sistema confronta il profilo con i requisiti di ogni bando (territorio, settore, "
@@ -153,11 +173,12 @@ def faq(n: dict | None, giorni_prova: int) -> list[tuple[str, str]]:
          "automatici: le schede con errori gravi non vengono proposte finché non sono corrette. Restano informazioni "
          "indicative: prima di presentare la domanda va sempre letto il bando ufficiale, che trovi collegato in ogni scheda."),
         ("Mi aiutate a presentare la domanda? Quanto costa?",
-         "Sì: da ogni scheda puoi chiedere il supporto di un commercialista per la domanda. Il compenso principale si paga "
-         "solo se la domanda è accolta: sui contributi a fondo perduto il 12% fino a 50.000 euro, il 10% da 50.000 a "
-         "150.000 euro e l'8% oltre; sui finanziamenti agevolati dal 2% all'1% secondo l'importo; sui crediti d'imposta il "
-         "6%. All'avvio c'è una quota di 250 euro, poi scalata dal compenso. Importi IVA esclusa; le condizioni complete "
-         "sono nella pagina Condizioni del supporto."),
+         "Sì: da ogni scheda puoi chiedere una chiamata per valutare il bando e il supporto di un esperto per la domanda. "
+         "Per gli abbonati la preparazione e l'invio della domanda sono compresi nell'abbonamento: si paga solo un compenso "
+         "se la domanda è accolta. Sui contributi a fondo perduto il 12% fino a 50.000 euro, il 10% da 50.000 a 150.000 "
+         "euro e l'8% oltre; sui finanziamenti agevolati dall'1% allo 0,5% secondo l'importo; sui crediti d'imposta il 6%. "
+         "Per chi non è abbonato la pratica costa da 100 a 300 euro, più lo stesso compenso a successo. Importi IVA "
+         "esclusa; le condizioni complete sono nella pagina Condizioni del supporto."),
         ("Che differenza c'è tra un bando e una misura nazionale?",
          "Un bando ha requisiti, una dotazione e di solito una scadenza. Le misure nazionali (" + misure + ") sono "
          "agevolazioni sempre aperte o a sportello che spesso si possono sommare a un bando per lo stesso investimento: "
@@ -222,23 +243,38 @@ di cui <b>{_n(n['tutta_italia'])} validi in tutta Italia</b> (nazionali ed europ
 <p><a class="bottone" href="/registrati">Scopri quali fanno per la tua impresa</a></p></div></section>"""
 
 
+def _mercato_html() -> str:
+    """I numeri delle agevolazioni in Italia (MERCATO), con la fonte ufficiale di ognuno."""
+    from app.pubblico import _e
+
+    celle = "".join(f'<div class="carta"><div class="numero">{_e(cifra)}</div><p>{_e(testo)}</p>'
+                    f'<p class="piccolo">Fonte: <a href="{_e(url)}" rel="noopener" target="_blank">{_e(fonte)}</a></p></div>'
+                    for cifra, testo, fonte, url in MERCATO)
+    return f"""<section id="mercato"><div class="contenitore"><h2>Le agevolazioni ci sono, ma poche imprese le usano</h2>
+<p class="sottotitolo">Ogni anno lo Stato e le Regioni concedono miliardi alle imprese, ma le regole sono sparse su migliaia di
+misure diverse. bandinQiaro le legge tutte e ti mostra solo quelle che fanno per te.</p>
+<div class="griglia">{celle}</div></div></section>"""
+
+
 def _prezzo_html(giorni: int) -> str:
     from app.pubblico import PREZZI
 
     return f"""<section id="prezzo"><div class="contenitore"><h2>Un prezzo semplice</h2><div class="due">
-<div class="carta evidenza"><div class="etichetta">Prezzo di lancio per i primi clienti</div>
+<div class="carta evidenza"><div class="etichetta">Abbonamento annuale</div>
 <div class="prezzo">{PREZZO_LANCIO} € <small>al mese + IVA</small></div>
-<ul class="spunte"><li>tutti i bandi adatti alla tua impresa, con la scheda</li><li>email ogni lunedì con le novità e le scadenze</li>
-<li>misure nazionali da sommare ai bandi</li><li>richiesta di supporto per la domanda con un clic</li></ul>
+<p class="piccolo">{PREZZO_LANCIO * 12} € l'anno, in 12 rate mensili. Con l'abbonamento mensile: <b>{PREZZO_MENSILE} € al mese + IVA</b>, disdici quando vuoi.</p>
+<ul class="spunte"><li>solo i bandi adatti alla tua impresa, non tutti quelli che escono</li><li>email ogni lunedì con le novità e le scadenze</li>
+<li>misure nazionali da sommare ai bandi</li><li>chiamata con un esperto per valutare un bando</li>
+<li><b>preparazione e invio della domanda compresi</b>: paghi solo se viene accolta</li></ul>
 <a class="bottone grande" href="/registrati">Prova gratis {giorni} giorni</a>
 <p class="piccolo">Senza carta di credito. Impresa in più {PREZZI['impresa_in_piu']} € al mese, sede in più {PREZZI['sede_in_piu']} € al mese (IVA esclusa).</p></div>
 <div class="carta"><div class="etichetta">Supporto alla domanda, a successo</div>
-<p>Se un bando fa per te, un commercialista prepara e segue la domanda. Il compenso principale si paga solo se la domanda è accolta.</p>
+<p>Se un bando fa per te, un esperto prepara e segue la domanda. Per gli abbonati la pratica è compresa: il compenso si paga solo se la domanda è accolta.</p>
 <table class="tariffe"><tr><th>Agevolazione</th><th>Compenso</th></tr>
 <tr><td>Fondo perduto</td><td>12% fino a 50.000 €, 10% fino a 150.000 €, 8% oltre</td></tr>
-<tr><td>Finanziamento agevolato</td><td>dal 2% all'1% secondo l'importo</td></tr>
+<tr><td>Finanziamento agevolato</td><td>dall'1% allo 0,5% secondo l'importo</td></tr>
 <tr><td>Credito d'imposta</td><td>6%</td></tr></table>
-<p class="piccolo">Quota d'avvio 250 € scalata dal compenso, minimo 500 € a pratica accolta. IVA esclusa.
+<p class="piccolo">Minimo 300 € a pratica accolta. Per chi non è abbonato la pratica costa da 100 a 300 €. IVA esclusa.
 <a href="/condizioni-supporto">Condizioni complete</a>.</p></div></div></div></section>"""
 
 
@@ -314,7 +350,7 @@ def _componi(conn) -> str:
 <p class="sottotitolo">{_e(SOTTOTITOLO.format(fonti=fonti))}</p>
 <p class="azioni"><a class="bottone grande" href="/registrati">Prova gratis {giorni} giorni</a>
 <a class="bottone chiaro grande" href="#come">Come funziona</a></p>
-<p class="rassicura">Senza carta di credito · {PREZZO_LANCIO} € al mese + IVA dopo la prova · I dati della tua impresa restano anonimi</p></div>
+<p class="rassicura">Senza carta di credito · da {PREZZO_LANCIO} € al mese + IVA dopo la prova · Il nome della tua impresa non va mai all'intelligenza artificiale</p></div>
 <div class="anteprima"{'' if in_vetrina else ' aria-hidden="true"'}>{prima}</div>
 </div></section>
 {_numeri_html(n)}
@@ -331,6 +367,7 @@ def _componi(conn) -> str:
 <div class="carta"><h3>Misure nazionali da sommare</h3><p>Conto Termico, Iperammortamento, Nuova Sabatini, crediti d'imposta: ti diciamo quando si possono aggiungere a un bando per lo stesso investimento.</p></div>
 </div>{f'<h3 class="titoletto">Esempi di schede di questi giorni</h3><div class="griglia">{carte}</div><p class="piccolo">Schede indicative: prima della domanda va sempre letto il bando ufficiale.</p>' if carte else ''}
 </div></section>
+{_mercato_html()}
 {_regioni_html(n)}
 {_prezzo_html(giorni)}
 <section id="chi" class="grigia"><div class="contenitore stretto">{_chi_siamo()}</div></section>
@@ -364,6 +401,8 @@ def llms_txt(conn) -> str:
                   f"- Misure nazionali sempre aperte seguite: {_n(n['misure'])}", ""]
         if n["regioni"]:
             righe += ["Bandi aperti per regione: " + "; ".join(f"{nome} {num}" for _, nome, num in n["regioni"]) + ".", ""]
+    righe += ["## Le agevolazioni per imprese in Italia", ""]
+    righe += [f"- {cifra} {testo} (fonte: [{fonte}]({url}))" for cifra, testo, fonte, url in MERCATO] + [""]
     righe += ["## Domande frequenti", ""]
     for d, r in faq(n, giorni):
         righe += [f"### {d}", "", r, ""]

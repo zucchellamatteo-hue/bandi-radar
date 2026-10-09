@@ -36,7 +36,7 @@ LEGALI = {"termini": ("termini.html", "Termini e condizioni"), "privacy": ("priv
           "note-legali": ("note_legali.html", "Note legali")}
 
 # Prezzi del modello commerciale, IVA esclusa (Matteo, 05/10: impresa in piu' 10 euro e sede in piu' 5 euro confermati).
-# Il prezzo di lancio mostrato nella landing (20 euro al mese) e' in landing.PREZZO_LANCIO.
+# Nella landing: landing.PREZZO_MENSILE (30) e landing.PREZZO_LANCIO (20 al mese con l'annuale), decisione del 10/10.
 PREZZI = {"mensile": 30, "annuale": 20, "impresa_in_piu": 10, "sede_in_piu": 5}
 
 
