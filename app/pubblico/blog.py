@@ -9,6 +9,8 @@ registrarsi. Dati strutturati: Article, FAQPage (se c'e' la sezione "Domande fre
 
 from __future__ import annotations
 
+import re
+
 from datetime import datetime, timezone
 
 from app import articoli
@@ -69,6 +71,15 @@ def _riquadro_chiuso(chiuso: dict | None) -> str:
             '<a href="/registrati">Registrati</a> per ricevere i bandi aperti adatti alla tua impresa.</div>')
 
 
+_LINK_BLOG = re.compile(r'<a href="/blog/([a-z0-9-]+)(?:#[^"]*)?">(.*?)</a>')
+
+
+def senza_link_a_bozze(html_testo: str, pubblicati: set[str]) -> str:
+    """I link interni a /blog/<slug> non ancora pubblicati diventano testo: niente pagine "non trovata" per chi legge
+    e per Google. Quando l'articolo collegato viene pubblicato il link torna da solo."""
+    return _LINK_BLOG.sub(lambda m: m.group(0) if m.group(1) in pubblicati else m.group(2), html_testo)
+
+
 def pagina_articolo(conn, a: dict, anteprima: bool = False) -> str:
     """La pagina di un articolo. Con anteprima=True (plancia) mostra anche le bozze, mai indicizzate."""
     from app.abbonamenti import giorni_prova
@@ -92,6 +103,9 @@ def pagina_articolo(conn, a: dict, anteprima: bool = False) -> str:
                   "non visibile al pubblico finché non è pubblicato.</p>")
     elif not blog_pubblico():
         avviso = '<p class="bozza">Anteprima: il sito non è ancora pubblico né indicizzato (BLOG_PUBBLICO=0).</p>'
+    testo = articoli.in_html(a["corpo"])
+    if not anteprima and conn is not None:  # link ad articoli ancora in bozza: testo normale finche' non escono (09/10)
+        testo = senza_link_a_bozze(testo, {x["slug"] for x in articoli.pubblicati(conn)})
     corpo = f"""<section class="blog-testa"><div class="contenitore stretto">{avviso}
 <p class="briciole"><a href="/blog">Blog</a> › {_e(a['titolo'])}</p>
 <h1>{_e(a['titolo'])}</h1>
@@ -99,7 +113,7 @@ def pagina_articolo(conn, a: dict, anteprima: bool = False) -> str:
 {_riquadro_chiuso(chiuso)}
 <p class="sottotitolo">{_e(a['sommario'])}</p></div></section>
 <section class="articolo"><div class="contenitore stretto">
-{articoli.in_html(a['corpo'])}
+{testo}
 {f'<h2 id="fonti-ufficiali">Fonti ufficiali</h2><ul>{fonti_html}</ul>' if fonti_html else ''}
 <div class="invito"><h2>Quali bandi fanno per la tua impresa?</h2>
 <p>bandinQiaro controlla ogni giorno i siti di Unione europea, ministeri, Regioni e Camere di commercio e ti segnala
