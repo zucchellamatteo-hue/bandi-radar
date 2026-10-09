@@ -30,6 +30,8 @@ STILE_BLOG = """<style>
 .calcolatore th,.calcolatore td{border-bottom:1px solid #d5e1f0;padding:.4em .5em;text-align:left}
 .calcolatore td[data-tasso]{font-weight:700;white-space:nowrap}.cs-nota{font-weight:600}
 .calcolatore select{font-size:1rem;padding:.4rem .5rem;width:100%;max-width:30rem;border:1px solid #b9c9de;border-radius:8px;background:#fff}
+.spunte{list-style:none;padding-left:0}.spunte li{margin:.45rem 0}.spunte label{display:flex;gap:.6rem;align-items:flex-start;cursor:pointer}
+.spunte input{width:1.15rem;height:1.15rem;margin-top:.2rem;flex:none}
 .calcolatore td.cr{font-weight:700;text-align:right;white-space:nowrap}
 .blog-testa{padding-bottom:1rem}.blog-testa h1{font-size:2.2rem}
 .briciole{font-size:.9rem;color:var(--grigio);margin:0 0 .4rem}.briciole a{color:var(--grigio)}
@@ -103,7 +105,7 @@ def pagina_articolo(conn, a: dict, anteprima: bool = False) -> str:
                   "non visibile al pubblico finché non è pubblicato.</p>")
     elif not blog_pubblico():
         avviso = '<p class="bozza">Anteprima: il sito non è ancora pubblico né indicizzato (BLOG_PUBBLICO=0).</p>'
-    testo = articoli.in_html(a["corpo"])
+    testo = articoli.in_html(a["corpo"], anteprima=anteprima)
     if not anteprima and conn is not None:  # link ad articoli ancora in bozza: testo normale finche' non escono (09/10)
         testo = senza_link_a_bozze(testo, {x["slug"] for x in articoli.pubblicati(conn)})
     corpo = f"""<section class="blog-testa"><div class="contenitore stretto">{avviso}

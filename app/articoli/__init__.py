@@ -7,7 +7,10 @@ bando di nicchia, per farsi trovare da Google e dai motori di risposta IA e port
 - Il corpo e' Markdown semplice (titoli ##/###, paragrafi, elenchi, grassetto, corsivo, link): qui diventa HTML
   sicuro, senza passare HTML scritto a mano. La sezione "## Domande frequenti" con le domande in "### ..." diventa
   anche il JSON-LD FAQPage della pagina. Una riga `[[calcolatore:NOME]]` mette un calcolatore interattivo scritto da
-  noi (app/pubblico/calcolatori.py, 09/10).
+  noi (app/pubblico/calcolatori.py, 09/10). Un elenco con le voci "- [ ] ..." diventa una lista da spuntare.
+- Paragrafi visibili solo quando un servizio e' attivo (09/10): il testo tra una riga `[[se:contatti]]` (c'e'
+  EMAIL_CONTATTO; dentro, `[[email_contatto]]` diventa l'indirizzo) o `[[se:abbonamenti]]` (PAGINA_PUBBLICA=1) e una
+  riga `[[fine]]` compare ai lettori solo allora; in anteprima dalla plancia si vede con un avviso.
 - Se l'articolo e' collegato a un bando chiuso o scaduto (vista bandi_situazione) o a una misura nazionale non piu'
   aperta, la pagina pubblica mostra da sola il riquadro "Bando chiuso".
 
@@ -271,6 +274,28 @@ def situazione_collegata(conn, articolo: dict, oggi: date | None = None) -> dict
 
 # --- Markdown semplice -> HTML sicuro ---
 
+# Paragrafi che si vedono solo quando il servizio e' attivo (09/10, Matteo: inviti a scriverci e ad abbonarsi).
+CONDIZIONI = {
+    "contatti": ("c'e' una casella per le risposte (EMAIL_CONTATTO)", lambda: bool(os.environ.get("EMAIL_CONTATTO", "").strip())),
+    "abbonamenti": ("la presentazione con i prezzi e' aperta (PAGINA_PUBBLICA=1)", lambda: os.environ.get("PAGINA_PUBBLICA") == "1"),
+}
+_SE = re.compile(r"^\[\[se:([a-z_]+)\]\][ \t]*\n(.*?)^\[\[fine\]\][ \t]*$", re.M | re.S)
+
+
+def con_condizioni(md: str, anteprima: bool = False) -> str:
+    """Toglie i blocchi [[se:...]] ... [[fine]] la cui condizione non e' vera (in anteprima li lascia con un avviso)."""
+    def blocco(m):
+        nome, testo = m.group(1), m.group(2)
+        spiegazione, vera = CONDIZIONI.get(nome, ("condizione sconosciuta", lambda: False))
+        email = os.environ.get("EMAIL_CONTATTO", "").strip()
+        if email:
+            testo = testo.replace("[[email_contatto]]", f"[{email}](mailto:{email})")
+        if vera():
+            return testo
+        return f"*(Nascosto ai lettori finché {spiegazione}.)*\n\n{testo}" if anteprima else ""
+    return _SE.sub(blocco, md or "")
+
+
 _LINK = re.compile(r"\[([^\]\n]+)\]\(([^)\s]+)\)")
 _GRASSETTO = re.compile(r"\*\*(.+?)\*\*")
 _CORSIVO = re.compile(r"(?<![\w*])\*(?!\s)(.+?)(?<!\s)\*(?![\w*])")
@@ -284,6 +309,8 @@ def _in_linea(testo: str) -> str:
         etichetta, url = m.group(1), html.unescape(m.group(2))
         if url.startswith(("https://", "http://")):
             return (f'<a href="{html.escape(url, quote=True)}" rel="noopener" target="_blank">{etichetta}</a>')
+        if url.startswith("mailto:") and "@" in url:
+            return f'<a href="{html.escape(url, quote=True)}">{etichetta}</a>'
         if url.startswith("/") and not url.startswith("//"):
             return f'<a href="{html.escape(url, quote=True)}">{etichetta}</a>'
         return etichetta                                     # javascript:, data: e simili: resta solo il testo
@@ -379,10 +406,10 @@ def _blocchi(md: str) -> list[tuple[str, object]]:
     return blocchi
 
 
-def in_html(md: str) -> str:
+def in_html(md: str, anteprima: bool = False) -> str:
     """Markdown semplice -> HTML sicuro. Ai titoli ## si aggiunge un id (ancora) per i link interni."""
     parti = []
-    for tipo, contenuto in _blocchi(md):
+    for tipo, contenuto in _blocchi(con_condizioni(md, anteprima)):
         if tipo == "h2":
             parti.append(f'<h2 id="{crea_slug(contenuto)}">{_in_linea(contenuto)}</h2>')
         elif tipo == "calcolatore":
@@ -396,6 +423,11 @@ def in_html(md: str) -> str:
             th = "".join(f"<th>{_in_linea(c)}</th>" for c in testa)
             righe = "".join("<tr>" + "".join(f"<td>{_in_linea(c)}</td>" for c in r) + "</tr>" for r in corpo)
             parti.append(f'<div class="tabella"><table><thead><tr>{th}</tr></thead><tbody>{righe}</tbody></table></div>')
+        elif tipo == "ul" and all(re.match(r"^\[[ xX]\] ", v) for v in contenuto):
+            # lista da spuntare (09/10): "- [ ] cosa fare"; le caselle si spuntano nella pagina, non si salvano
+            voci = "".join(f'<li><label><input type="checkbox"{" checked" if v[1] in "xX" else ""}> {_in_linea(v[4:])}'
+                           f"</label></li>" for v in contenuto)
+            parti.append(f'<ul class="spunte">{voci}</ul>')
         else:
             voci = "".join(f"<li>{_in_linea(v)}</li>" for v in contenuto)
             parti.append(f"<{tipo}>{voci}</{tipo}>")
@@ -406,7 +438,7 @@ def domande_frequenti(md: str) -> list[tuple[str, str]]:
     """Le FAQ dell'articolo: nella sezione "## Domande frequenti", ogni "### domanda" con il testo che la segue."""
     faq: list[tuple[str, list[str]]] = []
     dentro = False
-    for tipo, contenuto in _blocchi(md):
+    for tipo, contenuto in _blocchi(con_condizioni(md)):
         if tipo == "h2":
             dentro = contenuto.strip().lower().startswith(TITOLO_FAQ)
         elif dentro and tipo == "h3":
