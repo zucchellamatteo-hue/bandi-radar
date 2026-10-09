@@ -14,7 +14,7 @@ import re
 from datetime import datetime, timezone
 
 from app import articoli
-from app.pubblico import seo
+from app.pubblico import glossario, seo
 
 PAROLE_AL_MINUTO = 200
 
@@ -38,6 +38,8 @@ STILE_BLOG = """<style>
 .spunte{list-style:none;padding-left:0}.spunte li{margin:.45rem 0}.spunte label{display:flex;gap:.6rem;align-items:flex-start;cursor:pointer}
 .spunte input{width:1.15rem;height:1.15rem;margin-top:.2rem;flex:none}
 .calcolatore td.cr{font-weight:700;text-align:right;white-space:nowrap}
+.ct-avanzato{margin:1rem 0;border-top:1px solid #d5e1f0;padding-top:.3rem}
+.ct-avanzato>summary{font-weight:700;color:var(--accento);cursor:pointer;min-height:44px;display:flex;align-items:center}
 .blog-testa{padding-bottom:1rem}.blog-testa h1{font-size:2.2rem}
 .briciole{font-size:.9rem;color:var(--grigio);margin:0 0 .4rem}.briciole a{color:var(--grigio)}
 .dati-articolo{color:var(--grigio);font-size:.92rem;margin:.2rem 0 1rem}
@@ -48,8 +50,9 @@ STILE_BLOG = """<style>
 .invito h2{margin-top:0!important}.etichetta-chiuso{display:inline-block;background:#fdecea;color:#b0392f;border-radius:4px;padding:.05rem .45rem;font-size:.78rem;font-weight:650}
 .elenco-articoli .carta h2{font-size:1.15rem;margin:.2rem 0 .4rem}.elenco-articoli .carta h2 a{text-decoration:none;color:var(--blu)}
 .elenco-articoli .carta p{margin:.3rem 0}
+__GLOSSARIO__
 @media(max-width:700px){.blog-testa h1{font-size:1.7rem}.articolo h2{font-size:1.25rem}}
-</style>"""
+</style>""".replace("__GLOSSARIO__", glossario.STILE)
 
 
 def _data(x) -> str:
@@ -113,6 +116,8 @@ def pagina_articolo(conn, a: dict, anteprima: bool = False) -> str:
     testo = articoli.in_html(a["corpo"], anteprima=anteprima)
     if not anteprima and conn is not None:  # link ad articoli ancora in bozza: testo normale finche' non escono (09/10)
         testo = senza_link_a_bozze(testo, {x["slug"] for x in articoli.pubblicati(conn)})
+    testo, parole = glossario.applica(testo)    # sigle spiegate alla prima comparsa (10/10)
+    testo += glossario.sezione(parole)
     corpo = f"""<section class="blog-testa"><div class="contenitore stretto">{avviso}
 <p class="briciole"><a href="/blog">Blog</a> › {_e(a['titolo'])}</p>
 <h1>{_e(a['titolo'])}</h1>
@@ -170,8 +175,8 @@ def pagina_elenco(conn) -> str:
               else "<p>Stiamo preparando i primi articoli. Intanto puoi provare bandinQiaro gratis.</p>")
     corpo = f"""<section class="blog-testa eroe"><div class="contenitore">{avviso}
 <p class="occhiello">Blog di bandinQiaro</p><h1>Bandi e agevolazioni per imprese, spiegati semplici</h1>
-<p class="sottotitolo">A chi servono, quanto valgono, come si chiedono e gli errori da evitare: articoli brevi sui bandi più
-cercati e su quelli che pochi conoscono, scritti sui documenti ufficiali.</p></div></section>
+<p class="sottotitolo">A chi servono, quanto valgono, come si chiedono e gli errori da evitare: guide alle agevolazioni
+più cercate, con esempi e calcolatori, scritte sui documenti ufficiali.</p></div></section>
 <section><div class="contenitore">{elenco}</div></section>
 <section class="finale"><div class="contenitore"><h2>Scopri quali bandi aperti fanno per la tua impresa</h2>
 <p>Descrivi la tua impresa e guarda subito l'elenco, con una scheda chiara per ogni bando.</p>
@@ -182,7 +187,7 @@ cercati e su quelli che pochi conoscono, scritti sui documenti ufficiali.</p></d
                           "url": seo.assoluto(f"/blog/{a['slug']}"), "datePublished": _iso(a["pubblicato_il"]), "dateModified": _iso(data_modifica(a))} for a in voci]}
     org = seo.organizzazione("bandinQiaro: bandi e agevolazioni per imprese, schede chiare e segnalazioni su misura.")
     return pagina("Blog: bandi e agevolazioni per imprese | bandinQiaro", corpo,
-                  "Articoli brevi sui bandi per imprese più cercati e su quelli di nicchia: a chi servono, quanto valgono, "
+                  "Guide alle agevolazioni per imprese più cercate: a chi servono, quanto valgono, "
                   "scadenze, come si chiedono ed errori da evitare.", indicizza=blog_pubblico(), percorso="/blog",
                   testa=STILE_BLOG + seo.json_ld([org, blog]))
 
