@@ -73,3 +73,43 @@ def test_biomassa_scaldacqua_teleriscaldamento():
 def test_il_calcolatore_si_inserisce_nell_articolo():
     h = articoli.in_html("[[calcolatore:conto_termico]]")
     assert 'id="calcolatore-ct"' in h and "ct-pdc-kw" in h and "ct-tlr-spesa" in h and "<script>" in h
+
+
+# --- correzioni dopo la revisione del 09/10 (due agenti sulle fonti GSE) ---
+
+def test_minimi_ecodesign_per_tipo():
+    from app.pubblico.calcolatore_ct import algoritmo_pdc, eta_minima
+
+    assert eta_minima("split", 9) == 149 and eta_minima("split", 9, gwp_basso=True) == 134
+    assert eta_minima("vrf", 20) == 137 and eta_minima("rooftop", 40) == 125 and eta_minima("geo_aria", 10) == 149
+    assert eta_minima("aria_acqua", 30) == 110 and eta_minima("aria_acqua", 30, "bassa") == 125
+    # split 9 kW, zona D, SCOP 4,6, eta 181: 9 x 1400 x (1 - 1/4,6) x 181/149 x 0,07 x 2 (caso S6 del revisore)
+    i, anni, _ = algoritmo_pdc({"tipo": "split", "kw": 9, "scop": 4.6, "eta": 181, "spesa": 6000}, "D")
+    assert round(i, 2) == 1677.01 and anni == 2
+    assert algoritmo_pdc({"tipo": "split", "kw": 15, "scop": 4.6, "spesa": 6000}, "D")[0] == 0     # oltre 12 kW
+    assert algoritmo_pdc({"tipo": "aria_acqua", "kw": 10, "scop": 4, "eta": 100, "spesa": 9000}, "E")[2]   # sotto il minimo
+    i, _, _ = algoritmo_pdc({"tipo": "double_duct", "kw": 3, "scop": 3.12, "spesa": 2000}, "E")
+    assert round(i, 2) == round(3 * 1700 * (1 - 1 / 3.12) * (3.12 / 2.6) * 0.20 * 2, 2)
+    assert algoritmo_pdc({"tipo": "aria_acqua", "kw": 10, "scop": 4}, "E")[0] == 0              # senza spesa niente
+
+
+def test_nzeb_colonnine_fv_sempre_al_30_e_legati_alla_pompa_dopo_il_tetto():
+    r = calcola({"dimensione": "grande", "zona_climatica": "E", "nzeb": {"m2": 1000, "spesa": 1_300_000}})
+    assert _per(r, "II.D")["tetto"] == 30 and _per(r, "II.D")["incentivo"] == 390_000
+    r = calcola({"dimensione": "grande", "zona_climatica": "E", "pdc": dict(PDC, kw=60, spesa=30_000),
+                 "fotovoltaico": {"kwp": 50, "spesa": 60_000}})
+    pdc = _per(r, "III.A")
+    assert pdc["incentivo"] == 13_500                                   # 45% di 30.000, sotto la formula
+    assert _per(r, "II.H")["incentivo"] == 12_000                       # 20% di 60.000, sotto 13.500 e sotto il 30%
+    r = calcola({"dimensione": "grande", "zona_climatica": "E", "pdc": dict(PDC, kw=60, spesa=30_000),
+                 "fotovoltaico": {"kwp": 80, "spesa": 96_000}})
+    assert _per(r, "II.H")["incentivo"] == 13_500                       # limitato alla pompa DOPO il tetto
+
+
+def test_fv_e_colonnine_fanno_multi_intervento_ma_non_con_un_ibrido():
+    base = {"dimensione": "piccola", "zona_climatica": "E", "opache": [{"tipo": "cop_est", "m2": 400, "spesa": 40_000}]}
+    r = calcola(dict(base, pdc=dict(PDC, kw=10, spesa=12_000), colonnine={"tipo": "mono", "n": 1, "spesa": 3_000}))
+    assert r["multi"] and _per(r, "II.A")["tetto"] == 50                # 30 + 20: la colonnina conta come secondo intervento
+    r = calcola(dict(base, pdc=dict(PDC, kw=10, spesa=12_000, ibrido="factory", kw_caldaia=20),
+                     colonnine={"tipo": "mono", "n": 1, "spesa": 3_000}))
+    assert {x["codice"] for x in r["interventi"]} == {"II.A", "III.B"}  # un ibrido non traina le colonnine
