@@ -17,6 +17,7 @@ from dataclasses import dataclass
 import httpx
 
 from app.fonti.registro import CARTELLA_FONTI, ErroreRegistro, Fonte, carica_registro
+from app.raccolta.scarica import contesto_ssl
 
 USER_AGENT = "BandiRadar/0.1 (+https://finanzagevolata.qiaro.it; raccolta bandi per imprese)"
 
@@ -55,6 +56,7 @@ def verifica(fonti: list[Fonte], timeout: float = 20.0) -> list[Esito]:
         headers={"User-Agent": USER_AGENT, "Accept-Language": "it"},
         follow_redirects=True,
         timeout=timeout,
+        verify=contesto_ssl(),      # intermedi mancanti di MIT, ENEA, ISMEA (app/raccolta/scarica.py)
     ) as client:
         for fonte in fonti:
             esiti.append(controlla(fonte, client))
