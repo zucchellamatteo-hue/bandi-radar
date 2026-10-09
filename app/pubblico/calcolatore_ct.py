@@ -72,9 +72,10 @@ def algoritmo_pdc(p: dict, zona: str) -> tuple[float, int, str | None]:
         kp = scop / minimo
     else:
         minimo = eta_minima(tipo, kw, p.get("temperatura", "media"), bool(p.get("gwp_basso")))
-        if p.get("eta") and p["eta"] < minimo:
+        eta = p.get("eta") or (150 if p.get("classe") == "a3" else 0)       # classe A+++: eta_s almeno 150%
+        if eta and eta < minimo:
             return 0, 0, "Efficienza stagionale sotto il minimo Ecodesign: macchina non ammessa."
-        kp = p["eta"] / minimo if p.get("eta") else 1.0
+        kp = eta / minimo if eta else 1.0
     ci = CI_PDC[tipo][0 if kw <= 35 else 1]
     k = K_IBRIDO[p.get("ibrido", "no")][0 if p.get("kw_caldaia", 0) <= 35 else 1]
     anni = 2 if kw <= 35 else 5
@@ -214,30 +215,37 @@ _OPACHE = [("cop_est", "Copertura, isolamento esterno (max 300 €/m²)"), ("cop
 
 _MODULO = "".join([
     '<div class="calcolatore" id="calcolatore-ct"><h3>Calcola il Conto Termico 3.0 della tua impresa</h3>',
-    '<p class="piccolo">Apri gli interventi che ti interessano e scrivi spesa (IVA esclusa) e misure. Il calcolo segue '
-    'le formule del GSE per ogni intervento e poi il tetto per le imprese.</p>',
+    '<p class="piccolo">Bastano quattro dati per stimare il contributo su una pompa di calore. Per cappotto, infissi, LED '
+    'e gli altri interventi apri il calcolo avanzato in fondo.</p>',
     _sel("ct-dim", "Dimensione dell'impresa", [("piccola", "Micro o piccola"), ("media", "Media"), ("grande", "Grande")]),
     _sel("ct-zc", "Zona climatica del comune (A più calda, F più fredda; la trovi nell'APE)",
          [("E", "E (gran parte del Nord e dell'Appennino)"), ("D", "D"), ("C", "C"), ("B", "B"), ("A", "A"), ("F", "F (montagna)")]),
+    _num("ct-pdc-kw", "Potenza della pompa di calore (kW, dalla scheda prodotto)", "30", "0.1"),
+    _num("ct-pdc-spesa", "Spesa per la pompa di calore (euro, IVA esclusa)", "30000", "100"),
+    _sel("ct-pdc-classe", "Classe energetica della pompa di calore", [("a3", "A+++ (efficienza stagionale almeno 150%)"),
+                                                                       ("nonso", "A++ o non so")]),
+    '<table class="ct-risultati"><thead><tr><th>Intervento</th><th>Formula GSE</th><th>Tetto imprese</th><th>Incentivo</th></tr></thead>'
+    '<tbody id="ct-righe"></tbody><tfoot><tr><td colspan="3"><b>Contributo stimato</b></td><td class="cr" id="ct-tot">-</td></tr>'
+    '<tr><td colspan="3">Come arriva</td><td class="cr" id="ct-rate">-</td></tr></tfoot></table>',
+    '<p class="cs-nota" aria-live="polite"></p>',
+    '<details class="ct-avanzato"><summary>Calcolo avanzato: altri interventi e dati tecnici</summary>',
     _sel("ct-za", "Zona per gli aiuti a finalità regionale (solo per l'efficienza, Titolo II)",
          [("0", "Fuori dalle zone assistite"), ("5", "Zona assistita art. 107.3.c"), ("15", "Zona assistita art. 107.3.a (Mezzogiorno)")]),
     _spunta("ct-40", "Con i lavori il fabbisogno di energia primaria scende di almeno il 40% (APE prima e dopo)"),
     _spunta("ct-ue", "Componenti principali prodotti nell'Unione europea (+10% sugli interventi II.A-II.F)"),
-    _blocco("Pompa di calore elettrica o sistema ibrido (III.A, III.B)", "".join([
+    _blocco("Pompa di calore: dati tecnici e sistemi ibridi (III.A, III.B)", "".join([
         _sel("ct-pdc-tipo", "Tipo", [("aria_acqua", "Aria/acqua"), ("vrf", "Aria/aria VRF/VRV"), ("rooftop", "Aria/aria rooftop"),
                                      ("split", "Aria/aria split o multisplit fino a 12 kW"), ("acqua_acqua", "Acqua di falda/acqua"),
                                      ("acqua_aria", "Acqua di falda/aria"), ("geo_acqua", "Geotermica (salamoia)/acqua"),
                                      ("geo_aria", "Geotermica (salamoia)/aria"), ("double_duct", "Fixed double duct")]),
-        _num("ct-pdc-kw", "Potenza nominale (Prated, kW, dalla scheda prodotto)", "30", "0.1"),
         _num("ct-pdc-scop", "SCOP in clima medio (per i double duct il COP), dalla scheda prodotto", "4", "0.01"),
-        _num("ct-pdc-eta", "Efficienza stagionale ηs in % dalla scheda prodotto (se la lasci vuota la premialità vale 1)", "", "1"),
+        _num("ct-pdc-eta", "Efficienza stagionale ηs in % dalla scheda prodotto (se la scrivi, vale al posto della classe)", "", "1"),
         _sel("ct-pdc-temp", "Temperatura di mandata (solo macchine ad acqua)", [("media", "Media, 55 °C (radiatori)"), ("bassa", "Bassa, 35 °C (pannelli radianti)")]),
         _spunta("ct-pdc-gwp", "Refrigerante con GWP fino a 150 (es. R290 propano)"),
         _sel("ct-pdc-ibr", "Configurazione", [("no", "Solo pompa di calore"), ("factory", "Ibrido factory made con caldaia a biomassa (k 1,25)"),
                                              ("bivalente", "Sistema bivalente con caldaia a biomassa")]),
         _num("ct-pdc-kwc", "Potenza della caldaia dell'ibrido (kW)", "0", "0.1"),
-        _num("ct-pdc-spesa", "Spesa (euro)", "30000", "100"),
-        '<p class="piccolo">Per le imprese non sono ammessi le pompe di calore a gas e gli ibridi con caldaia a gas.</p>']), aperto=True),
+        '<p class="piccolo">Per le imprese non sono ammessi le pompe di calore a gas e gli ibridi con caldaia a gas.</p>'])),
     _blocco("Isolamento di coperture, pavimenti e pareti (II.A)", "".join(
         _sel(f"ct-op{i}-tipo", f"Superficie {i}", _OPACHE) + _num(f"ct-op{i}-m2", "m² isolati") + _num(f"ct-op{i}-spesa", "Spesa (euro)", "", "100")
         for i in (1, 2))),
@@ -277,10 +285,7 @@ _MODULO = "".join([
         _spunta("ct-sca-150", "Accumulo oltre 150 litri"), _num("ct-sca-spesa", "Spesa (euro)", "", "100")])),
     _blocco("Allaccio al teleriscaldamento efficiente (III.F)",
             _num("ct-tlr-kw", "Potenza della sottostazione (kW)", "", "0.1") + _num("ct-tlr-spesa", "Spesa (euro)", "", "100")),
-    '<table class="ct-risultati"><thead><tr><th>Intervento</th><th>Formula GSE</th><th>Tetto imprese</th><th>Incentivo</th></tr></thead>'
-    '<tbody id="ct-righe"></tbody><tfoot><tr><td colspan="3"><b>Contributo stimato</b></td><td class="cr" id="ct-tot">-</td></tr>'
-    '<tr><td colspan="3">Come arriva</td><td class="cr" id="ct-rate">-</td></tr></tfoot></table>',
-    '<p class="cs-nota" aria-live="polite"></p>',
+    '</details>',
     '<p class="piccolo">Stima con le formule dell\'Allegato 2 del DM 7/8/2025 e delle Regole Applicative GSE: per ogni '
     'intervento il minore tra la formula e il tetto percentuale per le imprese sui costi ammissibili (IVA esclusa, entro i '
     'costi massimi). Dalla prima rata il GSE trattiene l\'1% (al massimo 250 euro più IVA). La cifra vera la decide il GSE '
@@ -318,7 +323,7 @@ _SCRIPT = """<script>
       } else {
         var etaMin = (tipo === "split" || (tipo === "geo_aria" && kw <= 12)) ? (gwp ? 134 : 149)
           : (["vrf", "acqua_aria", "geo_aria"].indexOf(tipo) >= 0) ? 137 : tipo === "rooftop" ? 125 : (s("ct-pdc-temp") === "bassa" ? 125 : 110);
-        var eta = n("ct-pdc-eta");
+        var eta = n("ct-pdc-eta") || (s("ct-pdc-classe") === "a3" ? 150 : 0);   // classe A+++: eta_s almeno 150%
         if (eta && eta < etaMin) { ammessa = false; note.push("Efficienza stagionale sotto il minimo Ecodesign (" + etaMin + "%): macchina non ammessa."); }
         else if (eta) kp = eta / etaMin;
       }

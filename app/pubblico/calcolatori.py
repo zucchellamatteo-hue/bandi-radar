@@ -28,7 +28,7 @@ ufficiale lo calcola il Ministero sul finanziamento effettivo e può essere rido
   var box = document.getElementById("calcolatore-sabatini");
   if (!box) return;
   var campo = box.querySelector("#cs-importo"), nota = box.querySelector(".cs-nota");
-  var euro = new Intl.NumberFormat("it-IT", {style: "currency", currency: "EUR", maximumFractionDigits: 0});
+  var euro = {format: function (x) { return String(Math.round(x)).replace(/\B(?=(\d{3})+(?!\d))/g, ".") + " €"; }};
   function contributo(f, tasso) {
     var i = tasso / 2, rata = f * i / (1 - Math.pow(1 + i, -10));
     return 10 * rata - f;
@@ -50,7 +50,11 @@ ufficiale lo calcola il Ministero sul finanziamento effettivo e può essere rido
 
 # Funzioni comuni a tutti i calcolatori (una volta per pagina): formato euro e lettura dei campi numerici.
 _COMUNE = """<script>
-window.bqEuro = window.bqEuro || new Intl.NumberFormat("it-IT", {style: "currency", currency: "EUR", maximumFractionDigits: 0});
+// Formato euro con il punto delle migliaia sempre (Intl in italiano non lo mette sotto 10.000: "7717 €").
+window.bqEuro = window.bqEuro || {format: function (x) {
+  var n = Math.round(Number(x) || 0), segno = n < 0 ? "-" : "";
+  return segno + String(Math.abs(n)).replace(/\B(?=(\d{3})+(?!\d))/g, ".") + " €";
+}};
 window.bqNum = window.bqNum || function (box, sel) { var v = Number(box.querySelector(sel).value); return isFinite(v) && v > 0 ? v : 0; };
 </script>"""
 
@@ -173,7 +177,7 @@ Esclusi produzione agricola primaria, pesca, trasporti, energia, siderurgia, ban
     var x = bqNum(box, "#cz-importo"), z = box.querySelector("#cz-zona").value.split(",").map(Number);
     var d = Number(box.querySelector("#cz-dim").value), rip = Math.min(100, bqNum(box, "#cz-rip")) / 100;
     var nota = box.querySelector(".cs-nota"), teo = 0, r;
-    if (x < 200000) { nota.textContent = "Sotto 200.000 euro di progetto il credito ZES non spetta."; }
+    if (x < 200000) { nota.textContent = "Sotto 200.000 euro di costo del progetto il credito ZES non spetta."; }
     else {
       var y = Math.min(x, 100000000);
       if (y > 50000000) { r = z[2]; teo = r / 100 * (Math.min(y, 55000000) + 0.5 * Math.max(0, y - 55000000)); }
@@ -185,9 +189,10 @@ Esclusi produzione agricola primaria, pesca, trasporti, energia, siderurgia, ban
         : altri ? "Gli altri aiuti sugli stessi beni si tolgono prima del riparto." : "";
       teo = Math.max(0, teo - altri);
     }
-    box.querySelector("#cz-int").textContent = r ? r + "%" : "-";
-    box.querySelector("#cz-teo").textContent = teo ? bqEuro.format(teo) : "-";
-    box.querySelector("#cz-eff").textContent = teo ? bqEuro.format(teo * rip) : "-";
+    var sotto = x < 200000;
+    box.querySelector("#cz-int").textContent = sotto ? "non spetta" : r ? r + "%" : "-";
+    box.querySelector("#cz-teo").textContent = sotto ? "non spetta" : bqEuro.format(teo);
+    box.querySelector("#cz-eff").textContent = sotto ? "non spetta" : bqEuro.format(teo * rip);
   }
   box.querySelectorAll("input,select").forEach(function (e) { e.addEventListener("input", aggiorna); });
   aggiorna();
