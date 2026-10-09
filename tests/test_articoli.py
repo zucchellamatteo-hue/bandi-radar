@@ -245,3 +245,25 @@ def test_calcolatore_sabatini():
     assert round(calcolatori.contributo_sabatini(100000, 0.0275)) == 7717
     assert round(calcolatori.contributo_sabatini(100000, 0.03575) / 1000, 1) == 10.1
     assert round(calcolatori.contributo_sabatini(100000, 0.05) / 1000, 1) == 14.3
+
+
+def test_calcolatori_con_i_limiti_delle_misure():
+    """Le formule dei calcolatori (09/10) danno i numeri delle schede in app/misure/misure.yaml."""
+    from app import articoli
+    from app.pubblico import calcolatori as c
+
+    assert c.iperammortamento(100_000) == 180_000
+    assert c.iperammortamento(5_000_000) == 7_000_000            # 4.500.000 + 2.500.000
+    assert c.iperammortamento(20_000_000) == c.iperammortamento(30_000_000) == 17_000_000
+    assert round(c.credito_rs(155_000, 70_000, 20_000)) == 24_000  # esempio della scheda: base 240.000
+    assert c.credito_rs(100_000_000) == 5_000_000                # tetto annuo
+    campania = (60, 50, 40)
+    assert c.credito_zes(1_000_000, campania, 0) == 600_000
+    assert c.credito_zes(1_000_000, campania, 2) == 400_000
+    assert c.credito_zes(199_999, campania, 0) == 0               # sotto la soglia di 200.000
+    assert c.credito_zes(80_000_000, campania, 0) == 27_000_000   # importo corretto: 40% x (55 + 0,5 x 25)
+    assert round(c.art_bonus(153_846, 20_000_000)) == 100_000      # esempio del portale
+    assert c.art_bonus(5_000, 1_000_000) == 3_250
+    for nome in c.CALCOLATORI:                                    # ogni calcolatore si inserisce e porta il suo script
+        h = articoli.in_html(f"[[calcolatore:{nome}]]")
+        assert "bqEuro" in h and 'class="calcolatore"' in h
