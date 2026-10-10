@@ -40,6 +40,7 @@ Decisioni di Matteo del 10/10/2026 (sostituiscono quelle del 05-06/10):
 - **Domanda di bando compresa per gli abbonati**: preparazione e invio senza costi d'avvio (l'abbonamento copre il
   costo fisso), se l'abbonamento resta attivo fino all'esito della domanda (altrimenti si paga il costo pratica dei non
   abbonati: decisione del 10/10); per i **non abbonati** costo della pratica **da 100 a 300 €**.
+- **Bandi a click day** (sportello in ordine di arrivo che si esaurisce in poche ore; decisione di Matteo del 10/10): anche per gli abbonati c'è un **fisso basso** per la domanda, perché l'esito dipende dalla velocità e non dal merito; in più un **tetto al numero di domande** accettate su ogni bando di questo tipo.
 - **Compenso a successo**: fondo perduto 12% fino a 50.000 €, 10% fino a 150.000 €, 8% oltre (scaglioni progressivi);
   finanziamenti agevolati 1% / 0,75% / 0,5% (soglie 200.000 e 1.000.000 €); Nuova Sabatini e contributi in conto
   interessi come il fondo perduto, sul contributo; crediti d'imposta 6%; minimo 300 € a pratica accolta.
@@ -53,3 +54,14 @@ Decisioni di Matteo del 10/10/2026 (sostituiscono quelle del 05-06/10):
 - Differenza dai concorrenti: al cliente arrivano solo i bandi adatti a lui (non tutte le novità), nell'area personale
   vede i bandi selezionati e può chiedere una chiamata per approfondirli.
 - Il ricavo principale resta il supporto alle domande; l'abbonamento fa entrare i clienti e copre i costi fissi.
+
+## 5. Direzione di medio-lungo periodo (Matteo, 10/10/2026)
+
+- La sola segnalazione dei bandi diventerà poco vendibile in 2-4 anni (portale pubblico incentivi.gov.it con l'IA, banche e
+  associazioni che la danno gratis). bandinQiaro va pensato come **un modulo di una piattaforma più ampia**, insieme a
+  **Contract2Cache** e a una piattaforma per le **gare d'appalto pubbliche** (analisi preliminare, proposta ai clienti,
+  preparazione di una parte della domanda).
+- Obiettivo: una piattaforma il più possibile completa per l'impresa ("everything app" per il business) che unisca
+  contabilità, fiscalità, cash flow, rapporti con la banca, bandi e gare.
+- Conseguenza per le scelte di oggi: dati dell'impresa (profilo, ATECO, sedi, dimensione) e abbinamento pensati per essere
+  riusati dagli altri moduli; il valore che resta nel tempo è la qualità delle schede e l'assistenza sulle domande.
